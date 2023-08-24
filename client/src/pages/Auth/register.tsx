@@ -1,10 +1,4 @@
-// import {
-//     Input,
-//     initTE,
-// } from "tw-elements";
 
-// initTE({ Input });
-// import React from 'react'
 import type { FormInstance } from 'antd';
 import { Button, Form, Input, Space } from 'antd';
 
@@ -43,13 +37,13 @@ export default function Register({ }: Props) {
                                     <div className="mt-8 ">
                                         <div
                                             className="flex flex-row items-center justify-center">
-                                            <p className="mb-0 mr-4 text-lg">Sign in with</p>
+                                            <p className="mb-0 mr-4 text-lg">Register with</p>
 
                                             <button
                                                 type="button"
                                                 data-te-ripple-init
                                                 data-te-ripple-color="light"
-                                                className="mx-1 h-9 w-9 rounded-full bg-blue-500 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                                                className="mx-1 h-9 w-9 rounded-full bg-blue-500 hover:bg-gray-100 hover:text-blue-500 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     className="mx-auto h-3.5 w-3.5"
@@ -64,7 +58,7 @@ export default function Register({ }: Props) {
                                                 type="button"
                                                 data-te-ripple-init
                                                 data-te-ripple-color="light"
-                                                className="mx-1 h-9 w-9 rounded-full bg-blue-500 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                                                className="mx-1 h-9 w-9 rounded-full bg-blue-500 hover:bg-gray-100 hover:text-blue-500 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     className="mx-auto h-3.5 w-3.5"
@@ -79,7 +73,7 @@ export default function Register({ }: Props) {
                                                 type="button"
                                                 data-te-ripple-init
                                                 data-te-ripple-color="light"
-                                                className="mx-1 h-9 w-9 rounded-full bg-blue-500 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                                                className="mx-1 h-9 w-9 rounded-full bg-blue-500 hover:bg-gray-100 hover:text-blue-500 uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     className="mx-auto h-3.5 w-3.5"
@@ -102,8 +96,8 @@ export default function Register({ }: Props) {
                                         <Form name="validateOnly" layout="vertical" autoComplete="off">
                                             <div className="flex gap-8">
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="f-name" label="First Name" >
-                                                        <Input />
+                                                    <Form.Item name="f-name" label={<span className="text-gray-500">First Name</span>} >
+                                                        <Input className="bg-transparent border rounded w-full" />
                                                     </Form.Item>
                                                     {/* <label
                                                         className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
@@ -111,20 +105,20 @@ export default function Register({ }: Props) {
                                                     </label> */}
                                                 </div>
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="l-name" label="Last Name" >
-                                                        <Input />
+                                                    <Form.Item name="l-name" label={<span className="text-gray-500">Last Name</span>} >
+                                                        <Input className="bg-transparent border rounded w-full" />
                                                     </Form.Item>
                                                 </div>
                                             </div>
                                             <div className="flex gap-8">
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="birthday" label="Birthday" >
-                                                        <Input />
+                                                    <Form.Item name="password" label={<span className="text-gray-500">Password</span>}>
+                                                        <Input className="bg-transparent border rounded w-full" />
                                                     </Form.Item>
 
                                                 </div>
                                                 <div className="col-md-6 mb-4">
-                                                    <h6 className="mb-2 pb-1">Gender: </h6>
+                                                    <h6 className="mb-2 pb-1 text-gray-500">Gender: </h6>
                                                     <div className="flex gap-8">
                                                         <div className="flex items-center">
                                                             <input id="default-radio-1" type="radio" value="" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -143,13 +137,13 @@ export default function Register({ }: Props) {
                                             </div>
                                             <div className="flex gap-8">
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="email" label="Email" >
-                                                        <Input />
+                                                    <Form.Item name="email" label={<span className="text-gray-500">Email</span>} >
+                                                        <Input className="bg-transparent border rounded w-full" />
                                                     </Form.Item>
                                                 </div>
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="phone" label="Phone Number" >
-                                                        <Input />
+                                                    <Form.Item name="phone" label={<span className="text-gray-500">Phone Number</span>} >
+                                                        <Input className="bg-transparent border rounded w-full" />
                                                     </Form.Item>
                                                 </div>
                                             </div>
@@ -158,7 +152,7 @@ export default function Register({ }: Props) {
                                                 <Form.Item>
                                                     <Space>
                                                         {/* <SubmitButton form={form} /> */}
-                                                        <Button htmlType="reset">Submit</Button>
+                                                        <Button htmlType="reset" className='bg-blue-500 text-white hover:bg-gray-100 hover:text-blue-500'>Submit</Button>
                                                         <Button htmlType="reset">Reset</Button>
                                                     </Space>
                                                 </Form.Item>
@@ -166,7 +160,7 @@ export default function Register({ }: Props) {
                                                 <p className="mb-0 text-sm font-semibold flex gap-2">
                                                     Do have an account?
                                                     <a
-                                                        href="register"
+                                                        href="login"
                                                         className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
                                                     >Login</a>
                                                 </p>
