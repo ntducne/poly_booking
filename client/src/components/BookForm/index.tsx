@@ -1,15 +1,12 @@
+import { SearchOutlined } from '@ant-design/icons';
 import {
     Button,
-    Col,
     DatePicker,
     Form,
-    Input,
-    Row,
-    Select,
-    Space
+    Select
 } from 'antd';
-import './index.css'
-import { SearchOutlined } from '@ant-design/icons';
+import './index.css';
+
 
 type Props = {}
 const Option = Select.Option;

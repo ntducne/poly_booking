@@ -15,10 +15,7 @@ export default function LayoutClient({ }: Props) {
 
       <HeroSlide />
       <BookForm />
-      <div className='h-[1000px] lg:mt-[100px]'>
-
-        <Outlet />
-      </div>
+      <Outlet />
       <Footer />
     </div>
   )
