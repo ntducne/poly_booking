@@ -1,9 +1,12 @@
-import React from 'react'
 
 type Props = {}
 
 export default function Home({}: Props) {
   return (
-    <div>index</div>
+    <div>
+      
+      <div>Home</div>
+
+    </div>
   )
 }
