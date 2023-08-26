@@ -16,6 +16,7 @@ class Staff extends Eloquent
         'password',
         'phone',
         'address',
+        'image',
         'active',
     ];
 
