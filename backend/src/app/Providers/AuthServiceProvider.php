@@ -30,9 +30,9 @@ class AuthServiceProvider extends ServiceProvider
         }
 
         Passport::ignoreMigrations();
-        Passport::tokensExpireIn(now()->addMinutes());
-        Passport::refreshTokensExpireIn(now()->addMinutes(60));
-        Passport::personalAccessTokensExpireIn(now()->addMinutes(1));
+        Passport::tokensExpireIn(now()->addYear());
+        Passport::refreshTokensExpireIn(now()->addYear());
+        Passport::personalAccessTokensExpireIn(now()->addYear());
 
         Passport::tokensCan([
             'user'  => 'For User',
