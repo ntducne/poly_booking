@@ -5,26 +5,25 @@ type Props = {}
 
 export default function Login({ }: Props) {
     return (
-        <div className="flex items-center justify-center h-screen bg-blue-100">
-            <section className="h-screen " >
+        <div className="flex items-center justify-center h-[120vh] lg:h-screen md:h-screen bg-blue-100">
+            <section className="h-screen" >
                 <div className="flex items-center justify-center h-full">
-                    <div className="h-[600px] w-[1050px] bg-gray-100 rounded-md shadow-xl hover:shadow-2xl">
+                    <div className="w-[300px] h-[600px] lg:h-[600px] lg:w-[1050px] md:h-[450px] md:w-[725px] bg-gray-100 rounded-md shadow-xl hover:shadow-2xl ">
                         <div
-                            className="g-6 flex h-full flex-wrap items-center gap-12">
+                            className="md:flex md:flex-wrap md:items-center lg:flex lg:flex-wrap lg:items-center lg:gap-5 md:gap-2">
                             <div
-                                className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
+                                className="shrink-1 mb-12 grow-0 basis-auto lg:w-6/12 xl:w-6/12 md:w-6/12">
                                 <img
                                     src="https://cdn.alongwalk.info/vn/wp-content/uploads/2022/03/12183725/image-7-khach-san-5-sao-vung-tau-view-bien-cuc-dep-164705984460476.jpg"
-                                    className="w-full h-[600px] border rounded-l-md"
+                                    className="h-[150px] w-[300px] lg:w-full lg:h-[600px] md:h-[450px] md:w-full border rounded-md"
                                     alt="Sample image" />
                             </div>
 
-                            <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 ">
+                            <div className="w-5/6 mx-6 md:mb-12 lg:w-5/12 xl:w-5/12 md:w-5/12">
                                 <Form name="validateOnly" layout="vertical" autoComplete="off">
                                     <div
                                         className="flex flex-row items-center justify-center lg:justify-start">
                                         <p className="mb-0 mr-4 text-lg">Sign in with</p>
-
                                         <button
                                             type="button"
                                             data-te-ripple-init

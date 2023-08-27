@@ -5,15 +5,15 @@ type Props = {}
 
 export default function LoginAdmin({ }: Props) {
     return (
-        <div className="flex items-center justify-center h-screen bg-[url('https://img.lovepik.com/photo/40031/3067.jpg_wh860.jpg')] bg-cover">
+        <div className="flex items-center justify-center h-[125vh] lg:h-screen md:h-screen bg-[url('https://img.lovepik.com/photo/40031/3067.jpg_wh860.jpg')] bg-cover">
             <section className="h-screen">
                 <div className="flex items-center justify-center h-full">
-                    <div className="row flex gap-10 w-[900px] h-[600px] items-center align-items-center justify-content-center h-100 bg-white rounded-md hover:transform hover:scale-105 hover:z-10 transition-transform duration-500">
+                    <div className="row md:flex md:gap-4 lg:flex lg:gap-8 h-[600px] w-[320px] lg:w-[900px] lg:h-[600px] md:w-[720px] items-center align-items-center justify-content-center h-100 bg-white rounded-md lg:hover:transform lg:hover:scale-105 lg:hover:z-10 lg:transition-transform lg:duration-500 md:hover:transform md:hover:scale-105 md:hover:z-10 md:transition-transform md:duration-500">
                         <div className="col-md-8 col-lg-7 col-xl-6">
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                                className="img-fluid w-[500px] h-[500px]" alt="Phone image" />
+                                className="mx-auto img-fluid w-[180px] h-[180px] lg:w-[500px] lg:h-[500px] md:h-[500px] md:w-[350px]" alt="Phone image" />
                         </div>
-                        <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 w-[280px]">
+                        <div className="mx-5 col-md-7 col-lg-5 col-xl-5 offset-xl-1 w-[280px]">
                             <Form name="validateOnly" layout="vertical" autoComplete="off">
 
                                 <div

@@ -20,17 +20,17 @@ export default function Register({ }: Props) {
     //     );
     // }, [values]);
     return (
-        <div className="flex items-center justify-center h-[850px] bg-blue-100">
+        <div className="flex items-center justify-center h-[125vh] bg-blue-100">
             <section className="h-screen" >
                 <div className="flex items-center justify-center h-full">
-                    <div className="h-[750px] w-[1050px] bg-gray-100 rounded-md shadow-xl hover:shadow-2xl">
+                    <div className="h-[830px] w-[290px] lg:h-[800px] lg:w-[950px] md:h-[750px] md:w-[700px] bg-gray-100 rounded-md shadow-xl hover:shadow-2xl">
                         <div
                             className="g-6 flex h-[22px] flex-wrap items-center gap-12">
                             <div
                                 className="card rounded-3">
                                 <img
                                     src="https://bizweb.dktcdn.net/100/456/685/themes/865471/assets/img_banner_col_1.jpg?1668419812840"
-                                    className="h-[250px] w-[1050px] border rounded-t-md"
+                                    className="w-[290px] lg:h-[300px] lg:w-[950px] md:h-[250px] md:w-[700px] border rounded-t-md"
                                     alt="Sample image" />
                                 <div className="flex justify-center">
 
@@ -94,10 +94,10 @@ export default function Register({ }: Props) {
                                         </div>
 
                                         <Form name="validateOnly" layout="vertical" autoComplete="off">
-                                            <div className="flex gap-8">
+                                            <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                 <div className="relative" data-te-input-wrapper-init>
                                                     <Form.Item name="f-name" label={<span className="text-gray-500">First Name</span>} >
-                                                        <Input className="bg-transparent border rounded w-full" />
+                                                        <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
                                                     {/* <label
                                                         className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
@@ -106,14 +106,14 @@ export default function Register({ }: Props) {
                                                 </div>
                                                 <div className="relative" data-te-input-wrapper-init>
                                                     <Form.Item name="l-name" label={<span className="text-gray-500">Last Name</span>} >
-                                                        <Input className="bg-transparent border rounded w-full" />
+                                                        <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
                                                 </div>
                                             </div>
-                                            <div className="flex gap-8">
+                                            <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                 <div className="relative" data-te-input-wrapper-init>
                                                     <Form.Item name="password" label={<span className="text-gray-500">Password</span>}>
-                                                        <Input className="bg-transparent border rounded w-full" />
+                                                        <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
 
                                                 </div>
@@ -135,15 +135,15 @@ export default function Register({ }: Props) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="flex gap-8">
+                                            <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                 <div className="relative" data-te-input-wrapper-init>
                                                     <Form.Item name="email" label={<span className="text-gray-500">Email</span>} >
-                                                        <Input className="bg-transparent border rounded w-full" />
+                                                        <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
                                                 </div>
                                                 <div className="relative" data-te-input-wrapper-init>
                                                     <Form.Item name="phone" label={<span className="text-gray-500">Phone Number</span>} >
-                                                        <Input className="bg-transparent border rounded w-full" />
+                                                        <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
                                                 </div>
                                             </div>
