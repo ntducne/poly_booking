@@ -5,21 +5,39 @@ import { Button, Form, Input, Space } from 'antd';
 type Props = {}
 
 export default function Register({ }: Props) {
-    // const [submittable, setSubmittable] = React.useState(false);
+    const [form] = Form.useForm();
 
-    // const values = Form.useWatch([], form);
+    const onFinish = (values: any) => {
+        console.log('Dữ liệu biểu mẫu:', values);
+        // Thực hiện logic đăng ký ở đây
+    };
 
-    // React.useEffect(() => {
-    //     form.validateFields({ validateOnly: true }).then(
-    //         () => {
-    //             setSubmittable(true);
-    //         },
-    //         () => {
-    //             setSubmittable(false);
-    //         },
-    //     );
-    // }, [values]);
+    const passwordValidator = (_: any, value: any) => {
+        if (value && value.length <= 7) {
+            return Promise.reject('Mật khẩu phải có ít nhất 8 ký tự');
+        }
+        if (!/[A-Z]/.test(value)) {
+            return Promise.reject('Mật khẩu phải chứa ít nhất một chữ hoa');
+        }
+        if (!/[a-z]/.test(value)) {
+            return Promise.reject('Mật khẩu phải chứa ít nhất một chữ thường');
+        }
+        if (!/\d/.test(value)) {
+            return Promise.reject('Mật khẩu phải chứa ít nhất một chữ số');
+        }
+        return Promise.resolve();
+    };
+
+    const phonePattern = /^(?:\d{10}|\d{11})$/;
+    const validatePhoneNumber = (_: any, value: any) => {
+        if (!phonePattern.test(value)) {
+            return Promise.reject('Số điện thoại không hợp lệ!');
+        }
+        return Promise.resolve();
+    };
+
     return (
+
         <div className="flex items-center justify-center h-[125vh] bg-blue-100">
             <section className="h-screen" >
                 <div className="flex items-center justify-center h-full">
@@ -93,26 +111,44 @@ export default function Register({ }: Props) {
                                             </p>
                                         </div>
 
-                                        <Form name="validateOnly" layout="vertical" autoComplete="off">
+                                        <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
                                             <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="f-name" label={<span className="text-gray-500">First Name</span>} >
+                                                    <Form.Item name="f-name" label={<span className="text-gray-500">First Name</span>}
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Vui lòng nhập tên!',
+                                                            },
+                                                        ]}>
                                                         <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
-                                                    {/* <label
-                                                        className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                                                    >First Name
-                                                    </label> */}
                                                 </div>
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="l-name" label={<span className="text-gray-500">Last Name</span>} >
+                                                    <Form.Item name="l-name" label={<span className="text-gray-500">Last Name</span>}
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Vui lòng nhập họ!',
+                                                            },
+                                                        ]}>
                                                         <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
                                                 </div>
                                             </div>
                                             <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="password" label={<span className="text-gray-500">Password</span>}>
+                                                    <Form.Item name="password" label={<span className="text-gray-500">Password</span>}
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Vui lòng nhập mật khẩu!',
+                                                                validateTrigger: ['onBlur'],
+                                                            },
+                                                            {
+                                                                validator: passwordValidator,
+                                                            },
+                                                        ]}>
                                                         <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
 
@@ -137,12 +173,31 @@ export default function Register({ }: Props) {
                                             </div>
                                             <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="email" label={<span className="text-gray-500">Email</span>} >
+                                                    <Form.Item name="email" label={<span className="text-gray-500">Email</span>}
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Vui lòng nhập địa chỉ email!',
+                                                            },
+                                                            {
+                                                                type: 'email',
+                                                                message: 'Địa chỉ email không hợp lệ!',
+                                                            },
+                                                        ]}>
                                                         <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
                                                 </div>
                                                 <div className="relative" data-te-input-wrapper-init>
-                                                    <Form.Item name="phone" label={<span className="text-gray-500">Phone Number</span>} >
+                                                    <Form.Item name="phone" label={<span className="text-gray-500">Phone Number</span>}
+                                                        rules={[
+                                                            {
+                                                                required: true,
+                                                                message: 'Vui lòng nhập số điện thoại!',
+                                                            },
+                                                            {
+                                                                validator: validatePhoneNumber,
+                                                            },
+                                                        ]}>
                                                         <Input className="bg-transparent border rounded w-[250px] lg:w-[350px]" />
                                                     </Form.Item>
                                                 </div>
@@ -152,7 +207,7 @@ export default function Register({ }: Props) {
                                                 <Form.Item>
                                                     <Space>
                                                         {/* <SubmitButton form={form} /> */}
-                                                        <Button htmlType="reset" className='bg-blue-500 text-white hover:bg-gray-100 hover:text-blue-500'>Submit</Button>
+                                                        <Button htmlType="submit" className='bg-blue-500 text-white hover:bg-gray-100 hover:text-blue-500'>Submit</Button>
                                                         <Button htmlType="reset">Reset</Button>
                                                     </Space>
                                                 </Form.Item>

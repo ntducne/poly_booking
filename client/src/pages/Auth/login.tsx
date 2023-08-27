@@ -4,6 +4,13 @@ import { Button, Form, Input, Space } from 'antd';
 type Props = {}
 
 export default function Login({ }: Props) {
+    const [form] = Form.useForm();
+
+    const onFinish = (values: any) => {
+        console.log('Dữ liệu biểu mẫu:', values);
+        // Thực hiện logic đăng nhập ở đây
+    };
+
     return (
         <div className="flex items-center justify-center h-[120vh] lg:h-screen md:h-screen bg-blue-100">
             <section className="h-screen" >
@@ -20,7 +27,7 @@ export default function Login({ }: Props) {
                             </div>
 
                             <div className="w-5/6 mx-6 md:mb-12 lg:w-5/12 xl:w-5/12 md:w-5/12">
-                                <Form name="validateOnly" layout="vertical" autoComplete="off">
+                                <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
                                     <div
                                         className="flex flex-row items-center justify-center lg:justify-start">
                                         <p className="mb-0 mr-4 text-lg">Sign in with</p>
@@ -79,13 +86,33 @@ export default function Login({ }: Props) {
                                     </div>
 
                                     <div className="relative mb-6" data-te-input-wrapper-init>
-                                        <Form.Item name="email" label={<span className="text-gray-500">Email address</span>} >
+                                        <Form.Item name="email" label={<span className="text-gray-500">Email address</span>}
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Vui lòng nhập địa chỉ Email!',
+                                                },
+                                                {
+                                                    type: 'email',
+                                                    message: 'Địa chỉ email không hợp lệ!',
+                                                },
+                                            ]} >
                                             <Input className="bg-transparent border rounded w-full" />
                                         </Form.Item>
                                     </div>
 
                                     <div className="relative mb-6" data-te-input-wrapper-init>
-                                        <Form.Item name="password" label={<span className="text-gray-500">Password</span>}  >
+                                        <Form.Item name="password" label={<span className="text-gray-500">Password</span>}
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Vui lòng nhập mật khẩu!',
+                                                },
+                                                {
+                                                    min: 8,
+                                                    message: 'Mật khẩu phải có ít nhất 8 ký tự!',
+                                                },
+                                            ]} >
                                             <Input className="bg-transparent border rounded w-full " />
                                         </Form.Item>
                                     </div>
@@ -110,8 +137,7 @@ export default function Login({ }: Props) {
                                     <div className="text-center lg:text-left">
                                         <Form.Item>
                                             <Space>
-                                                {/* <SubmitButton form={form} /> */}
-                                                <Button htmlType="reset" className='bg-blue-500 text-white hover:bg-gray-100 hover:text-blue-500'>Login</Button>
+                                                <Button htmlType="submit" type="primary" className='bg-blue-500 text-white hover:bg-gray-100 hover:text-blue-500'>Login</Button>
                                                 <Button htmlType="reset">Reset</Button>
                                             </Space>
                                         </Form.Item>
