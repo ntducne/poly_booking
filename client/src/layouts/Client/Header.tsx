@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { UserOutlined } from '@ant-design/icons'
 type Props = {}
+import Logo from'../../assets/Logo/2587107.png'
 
 export default function Header({ }: Props) {
   const [header, setHeader] = useState(false)
@@ -15,13 +16,13 @@ export default function Header({ }: Props) {
       <div className="container mx-auto flex flex-col items-center gap-y-6 lg:flex-row lg:justify-between lg:gap-y-0">
         {/* logo */}
         <Link to=''>
-          {header ? <img className='w-[100px]' src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Android_O_Preview_Logo.png/480px-Android_O_Preview_Logo.png' />
+          {header ? <img className='w-[100px]' src={Logo} />
             :
-            <img className='w-[100px]' src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Android_O_Preview_Logo.png/480px-Android_O_Preview_Logo.png' />}
+            <img className='w-[100px]' src={Logo} />}
         </Link>
 
 
-        <div className={`${header ? "text-dark py-6" : "text-white"} flex gap-x-4 lg:gap-x-8 font-extralight tracking-[3px] text-[12px]  md:text-[15px] 
+        <div className={`${header ? "text-dark py-6" : "text-white"} flex gap-x-4 lg:gap-x-8 font-extralight md:tracking-[3px] tracking-[1px] text-[12px]  md:text-[15px] 
         items-center uppercase 
         `}>
           <Link to='' className='hover:text-red-500 transition'>
