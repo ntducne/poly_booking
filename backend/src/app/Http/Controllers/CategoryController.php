@@ -27,7 +27,7 @@ class CategoryController extends Controller
               'data' => $categories
             ];
         } else {
-            $categories = $this->category->paginate(5);
+            $categories = $this->category->paginate(6);
             Redis::set('category', json_encode($categories));
             $response = [
                 'message' => 'get Mongo',
@@ -52,6 +52,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $cachedCategory = Redis::get('category_' . $id);
+
         if ($cachedCategory !== null) {
             $category = json_decode($cachedCategory, true);
         }
