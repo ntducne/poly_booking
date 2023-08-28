@@ -1,10 +1,19 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import ReactDOM from 'react-dom/client';
+import { Provider } from "react-redux";
+import { BrowserRouter } from 'react-router-dom';
+import App from './App.tsx';
+import store, { persistor } from './app/store.tsx';
+import { PersistGate } from 'redux-persist/integration/react'
+import './index.css';
+import "swiper/css"
+import "swiper/css/autoplay"
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </BrowserRouter >
 )
