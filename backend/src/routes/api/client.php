@@ -1,8 +1,9 @@
 <?php
 
+use app\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
+
 Route::get('categories', [CategoryController::class, 'index']);
 
 
@@ -11,3 +12,4 @@ Route::get('categories', [CategoryController::class, 'index']);
 Route::resource('services',ServicesController::class);
 // Route::get('services',[ServicesController::class,'index']);
 // Route::get('services',[ServicesController::class,'index']);
+
