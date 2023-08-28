@@ -40,7 +40,7 @@ export default function BookForm({ }: Props) {
                             >
                                 <div className='h-full flex items-center justify-end relative'>
 
-                                    <RangePicker className='w-full  rounded-none min-h-[70px]' />
+                                    <RangePicker className='w-full  rounded-none min-h-[71.3px] boder-none' />
                                 </div>
                             </Form.Item>
                         </div>
