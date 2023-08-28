@@ -1,30 +1,33 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Staff;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UpdateStaffRequest extends FormRequest
+use App\Http\Requests\Request;
+use App\Models\Staff;
+use Illuminate\Validation\Rule;
+class UpdateStaffRequest extends Request
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            //
+            'fullname' => ['bail', 'required', 'string'],
+            'email'    => ['bail', 'required', 'email',
+                Rule::unique(Staff::class)->ignore($this->staff, $this->column_id),
+            ],
+            'phone'    => ['bail', 'required', 'regex:/^([0-9\s\-\+\(\)]*)$/','max: 10','min:10',
+                Rule::unique(Staff::class, 'phone')->ignore($this->staff,$this->column_id),
+            ],
+            'address' => [ 'required' ],
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'fullname' => 'Họ và Tên',
+            'email' => 'Email',
+            'password' => 'Mật khẩu',
+            'phone' => 'Số điện thoại',
+            'address' => 'Địa chỉ',
         ];
     }
 }
