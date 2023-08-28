@@ -1,0 +1,12 @@
+import ImageStyle1 from './imgStyle1.jpg'
+import ImageStyle2 from './imgStyle2.jpg'
+import ImageStyle3 from './imgStyle3.jpg'
+import ImageStyle4 from './imgStyle4.jpg'
+import ImageStyle5 from './imgStyle5.jpg'
+import ImageStyle6 from './imgStyle6.jpg'
+import ImageStyle7 from './imgStyle7.jpg'
+import ImageStyle8 from './imgStyle8.jpg'
+import ImageStyle9 from './imgStyle9.jpg'
+import ImageStyle10 from './imgStyle10.jpg'
+import ImageStyle11 from './imgStyle11.jpg'
+export {ImageStyle1, ImageStyle2, ImageStyle3, ImageStyle4, ImageStyle5, ImageStyle6, ImageStyle7, ImageStyle8, ImageStyle9, ImageStyle10, ImageStyle11}

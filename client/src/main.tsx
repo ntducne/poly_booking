@@ -5,6 +5,8 @@ import App from './App.tsx';
 import store, { persistor } from './app/store.tsx';
 import { PersistGate } from 'redux-persist/integration/react'
 import './index.css';
+import "swiper/css"
+import "swiper/css/autoplay"
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
