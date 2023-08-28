@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,5 +19,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          Category::factory(5)->create();
+         Staff::factory(5)->create();
     }
 }
