@@ -18,11 +18,8 @@
     "react-redux": "^8.1.2",
     "react-router-dom": "^6.15.0",
     "redux-persist": "^6.0.0",
-<<<<<<< HEAD
-    "tw-elements": "^1.0.0-beta3"
-=======
+    "tw-elements": "^1.0.0-beta3",
     "swiper": "^10.2.0"
->>>>>>> origin/trungduc
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
