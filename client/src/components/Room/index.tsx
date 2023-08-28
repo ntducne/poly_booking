@@ -8,14 +8,15 @@ export default function Room(data: any) {
     const { id, name, image, price, desc, maxPerson } = data.data
 
     return (
-        <div className='bg-white shadow-2xl group '>
+        <div className='bg-white  group rounded-[10px] overflow-hidden'>
             <div className='overflow-hidden'>
                 <img className='group-hover:scale-110 transition-all duration-300 w-full' src={image} alt="" />
 
             </div>
             {/* detail */}
-            <div className="bg-white shadow-lg max-w-[430px] mx-auto h-[60px]
+            <div className="bg-white shadow-md  max-w-[430px] mx-auto h-[60px]
             -translate-y-1/2 flex justify-center items-center uppercase font-medium tracking-[1px] text-[16px]
+            
             ">
                 <div className='flex justify-between flex-wrap gap-1 w-[80%]'>
                     <div className='flex items-center gap-x-2'>
@@ -38,19 +39,20 @@ export default function Room(data: any) {
                     </div>
                 </div>
             </div>
-            <div className='mx-[35px] font-text_2nd'>
+            <div className=' font-text_2nd'>
                 <div className=' w-full'>
                     <Link to=''>
                         <h3 className='text-[35px] font-bold '>{name}</h3>
                     </Link>
                     <div className='mb-3 text-[20px] flex flex-col md:flex-row justify-between'>
                         <div>
-                            <p className='font-bold'>Giường: <span className='font-medium'>đơn</span></p>
-                            <p className='max-w-[300px]  font-bold'>Mô tả: <span className='font-normal'>{desc.slice(0, 10)}</span></p>
+                        <p className='max-w-[300px]'><span className='font-normal'>{desc.slice(0, 70)}</span></p>
                         </div>
                         <div>
                             <p className='font-bold'>View: <span className='font-medium'>biển</span></p>
-                            <p className='font-bold'>View: <span className='font-medium'>biển</span></p>
+                            <p className='font-bold'>View: <span className='font-medium'>Thành phố</span></p>
+                            <p className='font-bold'>Giường: <span className='font-medium'>đơn</span></p>
+                            <p className='font-bold'>Diện tích: <span className='font-medium'>30m2</span></p>
                         </div>
                     </div>
                 </div>
