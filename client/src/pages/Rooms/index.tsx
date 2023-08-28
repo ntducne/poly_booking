@@ -87,11 +87,11 @@ export default function Rooms({ }: Props) {
                         className="mySwiper"
 
                     >
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover' src={SlideRooms1} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover' src={SlideRooms2} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover' src={SlideRooms3} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover' src={SlideRooms4} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover' src={SlideRooms5} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms1} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms2} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms3} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms4} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms5} alt="" /></SwiperSlide>
 
                     </Swiper>
                     <div className='flex justify-center mt-[60px]'>
