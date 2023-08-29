@@ -145,22 +145,23 @@ class ServicesController extends Controller
     public function destroy($id)
     {
         $service = Services::find($id);
-        if (!$service) {
+        if ($service) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Service không tồn tại !',
                 'data' => null
             ]);
-        }
-        $delete = $service->delete();
-        if ($delete) {
-            Redis::del('service_', $id);
-            Redis::del('servcie');
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Xóa thành công !',
-                'data' => $service
-            ]);
+        }else {
+            $delete = $service->delete();
+            if ($delete) {
+                Redis::del('service_', $id);
+                Redis::del('servcie');
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Xóa thành công !',
+                    'data' => $service
+                ]);
+            }
         }
     }
 }

@@ -12,9 +12,6 @@ use Laravel\Passport\HasApiTokens;
 class User extends Eloquent implements AuthenticatableContract
 {
     use Authenticatable, HasApiTokens, HasFactory, Notifiable;
-//    protected $connection = 'mongodb';
-//    protected $collection = 'users';
-//    protected $guarded = 'user';
     protected $fillable = [
         'image',
         'name',
