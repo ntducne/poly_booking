@@ -2,29 +2,26 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
+use App\Models\User;
+use Illuminate\Validation\Rule;
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends Request
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'name' => ['bail','required','string'],
+            'email' => ['bail','required','string','email', Rule::unique(User::class, 'email')],
+            'password' => ['bail','required','string','min:6'],
+        ];
+    }
+    public function attributes(): array
+    {
+        return [
+            'name' => 'Họ và tên',
+            'email' => 'Email',
+            'password' => 'Mật khẩu',
         ];
     }
 }
