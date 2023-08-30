@@ -4,6 +4,7 @@ import Home from "./pages/Home"
 import Login from "./pages/Auth/login"
 import Register from "./pages/Auth/register"
 import AboutPage from "./pages/Home/about"
+// import SmoothSlide from "./components/SmoothSlide/SmoothSlide"
 
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
         <Route path='/' element={<LayoutClient />}>
           <Route index element={<Home />} />
           <Route path="about" element={<AboutPage />} />
+          {/* <Route path="abc" element={<SmoothSlide />} /> */}
+
         </Route>
         <Route path='/auth'>
           <Route path="login" element={<Login />} />

@@ -2,7 +2,7 @@ import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 type Props = {}
 
-import { EffectFade,Autoplay } from 'swiper/modules';
+import { EffectFade, Autoplay } from 'swiper/modules';
 const slides = [
     {
         title: "Your Luxury Hotel For Vacation",
@@ -24,14 +24,14 @@ const slides = [
 export default function HeroSlide({ }: Props) {
     return (
         <Swiper
-        modules={[EffectFade, Autoplay]}
-        effect={'fade'}
-        loop= {true}
-        autoplay={{
-            delay: 3000,
-            disableOnInteraction: false
-        }}
-         className='heroSlider h-[600px] lg:h-[860px] bg-black '>
+            modules={[EffectFade, Autoplay]}
+            effect={'fade'}
+            loop={true}
+            autoplay={{
+                delay: 3000,
+                disableOnInteraction: false
+            }}
+            className='heroSlider h-[600px] lg:h-[860px] bg-black '>
             {slides.map((slide, index) => {
                 const { title, bg, btnText } = slide
                 return <SwiperSlide key={index} className='text-white h-full bg-pink-300 
