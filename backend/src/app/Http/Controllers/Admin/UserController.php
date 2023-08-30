@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Redis\Connections\Connection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
@@ -22,17 +23,25 @@ class UserController extends Controller
         $this->user = new User();
         $this->redis = Redis::connection();
     }
-    public function index()
+    public function index(Request $request)
     {
+
+        $this->redis->del('users');
         try {
             $cachedUsers = $this->redis->get('users');
             if ($cachedUsers !== null) {
                 $users = json_decode($cachedUsers, true);
             } else {
-                $users = $this->user->paginate(5);
-                $this->redis->set('users', json_encode($users));
+                $users = $this->user->simplePaginate(5);
+                if(count($users) > 0){
+                    $this->redis->set('users', json_encode($users));
+                }
             }
-            return UserResource::collection($users);
+            return response()->json([
+                'status' => true,
+                'message' => 'Danh sách người dùng !',
+                'data' => $users
+            ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([

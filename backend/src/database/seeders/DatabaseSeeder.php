@@ -18,7 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         Category::factory(5)->create();
-         Staff::factory(5)->create();
+//         Category::factory(5)->create();
+//         Staff::factory(5)->create();
+        User::factory(5)->create([
+            'name' => fake()->name(),
+            'email' => fake()->email(),
+            'password' => bcrypt('12345678'),
+        ]);
     }
 }
