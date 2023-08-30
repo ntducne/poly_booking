@@ -1,13 +1,12 @@
 import { Pagination } from 'antd'
-import { Autoplay, EffectFade, Navigation } from 'swiper/modules'
+import { useEffect, useState } from 'react'
+import { Navigation, Pagination as Pagination1 } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { SlideRooms1, SlideRooms2, SlideRooms3, SlideRooms4, SlideRooms5 } from '../../assets/images/Rooms/Slides'
 import BookForm from '../../components/BookForm'
-import { Pagination as Pagination1 } from 'swiper/modules';
 import HeroSlide from '../../components/HeroSlide'
 import Page from '../../components/Page'
 import Room from '../../components/Room'
-import { useEffect, useState } from 'react'
 type Props = {}
 
 const rooms = [
@@ -54,6 +53,9 @@ export default function Rooms({ }: Props) {
     return (
         <Page title='Phòng'>
             <div className='pb-[100px]'>
+                {/* <div className='h-[600px] lg:h-[860px] bg-black '>
+
+                </div> */}
                 <HeroSlide />
                 <BookForm />
                 <div className='mt-[100px] px-4'>
@@ -87,11 +89,11 @@ export default function Rooms({ }: Props) {
                         className="mySwiper"
 
                     >
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms1} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms2} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms3} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms4} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms5} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms1} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms2} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms3} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms4} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms5} alt="" /></SwiperSlide>
 
                     </Swiper>
                     <div className='flex justify-center mt-[60px]'>
