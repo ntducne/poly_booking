@@ -4,6 +4,7 @@ import Home from "./pages/Home"
 import Login from "./pages/Auth/login"
 import Register from "./pages/Auth/register"
 import AboutPage from "./pages/Home/about"
+import ForgotPassword from "./pages/Auth/forgot_password"
 // import SmoothSlide from "./components/SmoothSlide/SmoothSlide"
 
 
@@ -21,6 +22,7 @@ function App() {
         </Route>
         <Route path='/auth'>
           <Route path="login" element={<Login />} />
+          <Route path="forgot" element={<ForgotPassword />} />
           <Route path="register" element={<Register />} />
         </Route>
       </Routes>

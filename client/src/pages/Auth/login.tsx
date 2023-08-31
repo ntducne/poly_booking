@@ -131,7 +131,7 @@ export default function Login({ }: Props) {
                                             </label>
                                         </div>
 
-                                        <a href="#!">Forgot password?</a>
+                                        <a href="forgot">Forgot password?</a>
                                     </div>
 
                                     <div className="text-center lg:text-left">
