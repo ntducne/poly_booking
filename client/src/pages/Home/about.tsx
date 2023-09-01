@@ -32,7 +32,7 @@ export default function AboutPage({ }: Props) {
             }
             if (element2) {
                 const rect = element2.getBoundingClientRect();
-                const isOnScreen = rect.top < window.innerHeight - 300 && rect.bottom >= 900;
+                const isOnScreen = rect.top < window.innerHeight && rect.bottom >= 300;
                 setBg2(isOnScreen);
             }
 
@@ -60,15 +60,15 @@ export default function AboutPage({ }: Props) {
                 </div>
             </div>
             <SmoothSlide />
-            <div className='flex justify-center mb-[40px] mt-[140px]'>
-                <h2 className='text-[23px] text-center text-[#202020] max-w-[330px] lg:max-w-[600px] md:max-w-[600px] font-text font-light'>
+            <div ref={elementRef} className='flex justify-center mb-[40px] mt-[100px]'>
+                <h2 className='text-[23px] text-center text-white max-w-[330px] lg:max-w-[600px] md:max-w-[600px] font-text font-light'>
                     Tune Hotels tells potential customers what they can expect when they visit – a beautiful and luxurious 5-star sleeping experience, at a very affordable 1-star price.
                 </h2>
             </div>
 
             <div className='flex justify-center mb-[60px]'>
-                <h2 className='text-[23px] text-center text-[#202020] max-w-[600px] font-text font-light'>
-                    <Link to='' className='border-b hover:text-gray-500'>
+                <h2 className='text-[23px] text-center text-white max-w-[600px] font-text font-light'>
+                    <Link to='' className='border-b hover:text-yellow-50'>
                         Discover our rooms
                     </Link>
                 </h2>
@@ -110,7 +110,7 @@ export default function AboutPage({ }: Props) {
                     <img src={Img2} className='lg:w-[1170px] lg:h-[780px] mb-[100px]' alt="" />
                 </div>
 
-                <div ref={elementRef} className='lg:flex lg:justify-center mb-[100px] '>
+                <div ref={elementRef2} className='lg:flex lg:justify-center mb-[100px] '>
                     <div className='mt-auto mb-auto'>
                         <h3 className='lg:text-left text-center text-[17px] mb-[26px] text-white'>For luxury seekers</h3>
                         <div className='flex justify-center mb-[30px]'>

@@ -5,7 +5,7 @@ import Login from "./pages/Auth/login"
 import Register from "./pages/Auth/register"
 import AboutPage from "./pages/Home/about"
 import ForgotPassword from "./pages/Auth/forgot_password"
-// import SmoothSlide from "./components/SmoothSlide/SmoothSlide"
+import SmoothSlide from "./components/SmoothSlide"
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
         <Route path='/' element={<LayoutClient />}>
           <Route index element={<Home />} />
           <Route path="about" element={<AboutPage />} />
-          {/* <Route path="abc" element={<SmoothSlide />} /> */}
+          <Route path="abc" element={<SmoothSlide />} />
 
         </Route>
         <Route path='/auth'>

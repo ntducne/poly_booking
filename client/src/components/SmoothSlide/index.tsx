@@ -7,55 +7,72 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-// import './styles.css';
+import './styles.css';
 
 // import required modules
-import { Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 
 import Slide1 from '../../assets/images/Abouts/slide_1.jpg'
 import Slide2 from '../../assets/images/Abouts/slide_2.jpg'
 import Slide3 from '../../assets/images/Abouts/slide_3.jpg'
-
-
+import Slide4 from '../../assets/images/Abouts/slide_4.jpg'
+import Slide5 from '../../assets/images/Abouts/slide_5.jpg'
+import Slide7 from '../../assets/images/Abouts/slide_7.jpg'
+import Slide6 from '../../assets/images/Abouts/slide_6.jpg'
+import Slide8 from '../../assets/images/Abouts/slide_8.jpg'
+import Slide9 from '../../assets/images/Abouts/slide_9.jpg'
 
 type Props = {}
 
 export default function SmoothSlide({ }: Props) {
-    const [setSwiperRef] = useState<any>(null);
+    // const [setSwiperRef] = useState<any>(null);
 
     return (
         <>
             <Swiper
-                onSwiper={setSwiperRef}
-                slidesPerView={2}
-                centeredSlides={true}
-                spaceBetween={0}
+                slidesPerView={3}
+                spaceBetween={30}
                 pagination={{
+                    clickable: true,
                     type: 'fraction',
                 }}
+                autoplay={{
+                    delay: 2000,
+                    disableOnInteraction: false,
+                }}
                 navigation={true}
-                modules={[Pagination, Navigation]}
-            // className="mySwiper"
+                modules={[Autoplay, Pagination, Navigation]}
+                className="mySwiper"
             >
-                <div>
-
-                </div>
                 <SwiperSlide>
-                    <div className='w-[450px] h-[600px]'>
-                        <img src={Slide1} className='' alt="" />
-                    </div>
+                    <img src={Slide1} className='h-[200px] md:h-[450px] lg:h-[600px] lg:w-full' alt="" />
+                </SwiperSlide>
+                <SwiperSlide >
+                    <img src={Slide2} className='h-[200px] md:h-[450px] lg:h-[600px] lg:w-full' alt="" />
+                </SwiperSlide>
+                <SwiperSlide >
+                    <img src={Slide6} className='h-[200px] md:h-[450px] lg:h-[600px] lg:w-full' alt="" />
+                </SwiperSlide>
+                <SwiperSlide >
+                    <img src={Slide8} className='h-[200px] md:h-[450px] lg:h-[600px] lg:w-full' alt="" />
+                </SwiperSlide>
+                <SwiperSlide >
+                    <img src={Slide3} className='h-[200px] md:h-[450px] lg:h-[600px] lg:w-full' alt="" />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img src={Slide4} className='h-[200px] md:h-[450px] lg:h-[600px] lg:w-full' alt="" />
+                </SwiperSlide>
+                <SwiperSlide >
+                    <img src={Slide5} className='h-[200px] md:h-[450px] lg:h-[600px] lg:w-full' alt="" />
                 </SwiperSlide>
 
                 <SwiperSlide >
-                    <div className='w-[100px] h-[600px]'>
-                        <img src={Slide2} className='' alt="" />
-                    </div>
+                    <img src={Slide7} className='h-[200px] md:h-[450px] lg:h-[600px] lg:w-full' alt="" />
                 </SwiperSlide>
+
                 <SwiperSlide >
-                    <div className='w-[900px] h-[600px]'>
-                        <img src={Slide3} className='' alt="" />
-                    </div>
+                    <img src={Slide9} className='h-[200px] md:h-[450px] lg:h-[600px] lg:w-full' alt="" />
                 </SwiperSlide>
             </Swiper>
         </>
