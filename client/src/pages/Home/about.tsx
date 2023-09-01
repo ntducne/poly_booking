@@ -54,14 +54,14 @@ export default function AboutPage({ }: Props) {
             </div>
             <div className='flex justify-center'>
                 <div className="flex items-center justify-center h-[340px]">
-                    <p className="text-[53px] text-center text-[#202020] max-w-[800px] font-text font-light">
+                    <p className="text-[33px] lg:text-[53px] md:text-[45px] text-center text-[#202020] max-w-[300px] lg:max-w-[800px] md:max-w-[700px] font-text font-light">
                         Get Ready to live for unlimited living experience
                     </p>
                 </div>
             </div>
             <SmoothSlide />
             <div className='flex justify-center mb-[40px] mt-[140px]'>
-                <h2 className='text-[23px] text-center text-[#202020] max-w-[600px] font-text font-light'>
+                <h2 className='text-[23px] text-center text-[#202020] max-w-[330px] lg:max-w-[600px] md:max-w-[600px] font-text font-light'>
                     Tune Hotels tells potential customers what they can expect when they visit – a beautiful and luxurious 5-star sleeping experience, at a very affordable 1-star price.
                 </h2>
             </div>
@@ -78,97 +78,102 @@ export default function AboutPage({ }: Props) {
                 <img src={ImgAbout} className='max-w-full h-auto mb-[100px]' alt="" />
             </div>
 
-            <div className='flex justify-center mb-[100px] mr-[60px]'>
-                <div className='mr-[160px]'>
-                    <img src={Img1} className='h-[655px] hover:opacity-80 transition-opacity duration-150' alt="" />
+            <div className='lg:flex lg:justify-center mb-[100px] lg:mr-[60px]'>
+                <div className='lg:mr-[160px] flex justify-center'>
+                    <img src={Img1} className='h-[500px] md:h-[665px] lg:h-[655px] hover:opacity-80 transition-opacity duration-150' alt="" />
                 </div>
-                <div className='mt-auto mb-auto ml-[-60px]'>
-                    <h3 className='text-[17px] mb-[26px] text-gray-400'>Polydev Hotel</h3>
+                <div className='lg:mt-auto lg:mb-auto lg:ml-[-60px] md:mt-[60px] mt-[30px] '>
+                    <h3 className='lg:text-left text-center text-[17px] mb-[26px] text-gray-400'>Polydev Hotel</h3>
                     <div className='mb-[30px]'>
-                        <p className="text-[50px] text-[#202020] font-text font-light">
+                        <p className="lg:text-left text-center text-[40px] md:[50px] lg:[50px] text-[#202020] font-text font-light ">
                             Luxury Redefined
                         </p>
                     </div>
-                    <div className='mb-[30px]'>
-                        <h2 className='text-[18px] text-gray-500 max-w-[500px] font-text font-light'>
-                            Leather detail shoulder contrastic colour contour stunning silhouette working peplum. Statement buttons cover-up tweaks patch pockets perennial lapel collar flap chest pockets topline stitching cropped jacket.
-                        </h2>
-                    </div>
-                    <div>
-                        <h2 className='text-[18px] text-gray-500 max-w-[500px] font-text font-light'>
-                            Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum. Aliquip veniam delectus, Marfa eiusmod Pinterest in do umami readymade swag. Selfies iPhone Kickstarter, drinking vinegar
-                        </h2>
+                    <div className=''>
+
+                        <div className='flex justify-center mb-[30px]'>
+                            <p className='lg:text-left text-center text-[18px] text-gray-500 max-w-[450px] lg:max-w-[500px] md:max-w-[700px] font-text font-light'>
+                                Leather detail shoulder contrastic colour contour stunning silhouette working peplum. Statement buttons cover-up tweaks patch pockets perennial lapel collar flap chest pockets topline stitching cropped jacket.
+                            </p>
+                        </div>
+                        <div className='flex justify-center'>
+                            <h2 className='lg:text-left text-center text-[18px] text-gray-500 max-w-[450px] lg:max-w-[500px] md:max-w-[700px] font-text font-light'>
+                                Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum. Aliquip veniam delectus, Marfa eiusmod Pinterest in do umami readymade swag. Selfies iPhone Kickstarter, drinking vinegar
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </div >
 
             <div>
-                <div className='flex justify-center mb-[100px]'>
-                    <img src={Img2} className='w-[1170px] h-[780px] mb-[100px]' alt="" />
+                <div className='flex justify-center '>
+                    <img src={Img2} className='lg:w-[1170px] lg:h-[780px] mb-[100px]' alt="" />
                 </div>
 
-                <div ref={elementRef} className='flex justify-center mb-[100px] '>
+                <div ref={elementRef} className='lg:flex lg:justify-center mb-[100px] '>
                     <div className='mt-auto mb-auto'>
-                        <h3 className='text-[17px]  mb-[26px] text-white'>For luxury seekers</h3>
-                        <div className='mb-[30px]'>
-                            <p className="text-[50px] w-[545px] text-white font-text font-light">
+                        <h3 className='lg:text-left text-center text-[17px] mb-[26px] text-white'>For luxury seekers</h3>
+                        <div className='flex justify-center mb-[30px]'>
+                            <p className="lg:text-left text-center text-[35px] lg:text-[50px] md:text-[50px] w-[545px] text-white font-text font-light">
                                 Experience the passion of hospitality
                             </p>
                         </div>
-                        <div className='mb-[30px]'>
-                            <h2 className='text-[18px] text-white max-w-[500px] font-text font-light'>
-                                Leather detail shoulder contrastic colour contour stunning silhouette working peplum. Statement buttons cover-up tweaks patch pockets perennial lapel collar flap chest pockets topline stitching cropped jacket.
-                            </h2>
-                        </div>
                         <div>
-                            <h2 className='text-[18px] text-white max-w-[500px] font-text font-light'>
-                                Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum. Aliquip veniam delectus, Marfa eiusmod Pinterest in do umami readymade swag. Selfies iPhone Kickstarter, drinking vinegar
-                            </h2>
+                            <div className='flex justify-center mb-[30px]'>
+                                <h2 className='lg:text-left text-center  lg:ml-[-40px] text-[18px] text-white lg:max-w-[500px] md:max-w-[700px] max-w-[450px] font-text font-light'>
+                                    Leather detail shoulder contrastic colour contour stunning silhouette working peplum. Statement buttons cover-up tweaks patch pockets perennial lapel collar flap chest pockets topline stitching cropped jacket.
+                                </h2>
+                            </div>
+                            <div className='flex justify-center mb-[30px] lg:mb-0'>
+                                <h2 className='lg:text-left text-center lg:ml-[-40px] text-[18px] text-white lg:max-w-[500px] md:max-w-[700px] max-w-[450px] font-text font-light'>
+                                    Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum. Aliquip veniam delectus, Marfa eiusmod Pinterest in do umami readymade swag. Selfies iPhone Kickstarter, drinking vinegar
+                                </h2>
+                            </div>
                         </div>
                     </div>
-                    <div className='ml-[120px]'>
-                        <img src={Img3} className='h-[655px] hover:opacity-80 transition-opacity duration-150' alt="" />
+                    <div className='flex justify-center lg:ml-[120px]'>
+                        <img src={Img3} className='lg:text-left text-center h-[500px] md:h-[665px] lg:h-[655px] hover:opacity-80 transition-opacity duration-150' alt="" />
                     </div>
                 </div >
 
-                <div className='flex justify-center mb-[100px] mr-[60px]'>
-                    <div className='mr-[100px]'>
-                        <img src={Img4} className='h-[655px] hover:opacity-80 transition-opacity duration-150' alt="" />
+                <div className='lg:flex lg:justify-center lg:mb-[100px] lg:mr-[60px]'>
+                    <div className='flex justify-center lg:mr-[50px]'>
+                        <img src={Img4} className='lg:text-left text-center h-[500px] md:h-[665px] lg:h-[655px] hover:opacity-80 transition-opacity duration-150' alt="" />
                     </div>
                     <div className='mt-auto mb-auto ml-[20px]'>
-                        <div className='mb-[30px]'>
-                            <p className="text-[50px] w-[400px] text-[#202020] font-text font-light">
+                        <div className='flex justify-center mb-[30px] mt-[20px] lg:mt-0'>
+                            <p className="lg:text-left text-center text-[35px] lg:text-[50px] md:text-[50px] w-[545px] font-text font-light">
                                 Rest Journey in Single step
                             </p>
                         </div>
-                        <div className='mb-[30px]'>
-                            <h2 className='text-[18px] text-gray-500 max-w-[500px] font-text font-light'>
+                        <div className='flex justify-center mb-[30px]'>
+                            <h2 className='lg:text-left text-center text-[18px] lg:ml-[-40px] text-gray-500 lg:max-w-[500px] md:max-w-[700px]  font-text font-light'>
                                 Leather detail shoulder contrastic colour contour stunning silhouette working peplum. Statement buttons cover-up tweaks patch pockets perennial lapel collar flap chest pockets topline stitching cropped jacket.kets perennial lapel collar flap chest pockets topline stitching cropped jacket.
                             </h2>
                         </div>
-                        <div className=' mb-[20px]'>
-                            <h2 className='text-[23px] text-[#202020] max-w-[600px] font-text font-light'>
+                        <div className='flex justify-center mb-[20px]'>
+                            <p className="lg:text-left text-center text-[#202020] text-[15px] lg:text-[23px] md:text-[23px] w-[545px] font-text font-light">
                                 <Link to='/' className='border-b hover:text-gray-500'>
                                     See our rooms
                                 </Link>
-                            </h2>
+                            </p>
                         </div>
-                        <div className=' mb-[60px]'>
-                            <h2 className='text-[23px] text-[#202020] max-w-[600px] font-text font-light'>
+                        <div className='flex justify-center mb-[60px]'>
+                            <p className='lg:text-left text-center text-[#202020] text-[15px] lg:text-[23px] md:text-[23px] w-[545px] font-text font-light'>
                                 <Link to='/' className='border-b hover:text-gray-500'>
                                     See our restaurants
                                 </Link>
-                            </h2>
+                            </p>
                         </div>
                     </div>
                 </div >
 
                 <div className='flex justify-center gap-5 pb-[60px]'>
                     <div className=''>
-                        <img src={Img5} className='h-[377px] w-[578px] hover:opacity-80 transition-opacity duration-150' alt="" />
+                        <img src={Img5} className='h-[150px] w-[600px] lg:h-[377px] lg:w-[578px] md:h-[270px] md:w-[578px] hover:opacity-80 transition-opacity duration-150' alt="" />
                     </div>
                     <div className=''>
-                        <img src={Img6} className='h-[377px] w-[578px] hover:opacity-80 transition-opacity duration-150' alt="" />
+                        <img src={Img6} className='h-[150px] w-[600px] lg:h-[377px] lg:w-[578px] md:h-[270px] md:w-[578px] hover:opacity-80 transition-opacity duration-150' alt="" />
                     </div>
                 </div >
             </div>
