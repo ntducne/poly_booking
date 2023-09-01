@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Services;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
 class ServicesController extends Controller
