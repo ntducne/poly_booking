@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('room_type_id');
             $table->integer('num_of_room');
-            $table->boolean('single_room');
-            $table->boolean('double_room');
+            $table->boolean('single_bed');
+            $table->boolean('double_bed');
             $table->string('room_name');
             $table->timestamps();
         });

@@ -2,15 +2,6 @@
 
 namespace App\Models;
 
-<<<<<<< HEAD
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-
-class Booking extends Eloquent
-{
-    use HasFactory;
-}
-=======
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
@@ -32,4 +23,3 @@ class Booking extends Eloquent
         'deleted_at' => null
     ];
 }
->>>>>>> phamdung
