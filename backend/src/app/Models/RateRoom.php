@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 
-class PasswordReset extends Model
+class RateRoom extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'email',
-        'token',
-        'exp',
+        'room_id',
+        'user_id',
+        'images',
+        'rate',
+        'comment',
     ];
+
 }
