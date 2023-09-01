@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Staff\StoreStaffRequest;
 use App\Http\Requests\Staff\UpdateStaffRequest;
 use App\Models\Staff;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redis;
 
 class StaffController extends Controller
 {
@@ -19,22 +17,11 @@ class StaffController extends Controller
     }
     public function index()
     {
-        $cachedStaff = Redis::get('staffs');
-//        dd($cachedStaff);
-        if($cachedStaff !== null){
-            $staffs = json_decode($cachedStaff, true);
-            $response = [
-                'message' => 'get Resdis',
-                'data'    => $staffs
-            ];
-        }else{
-            $staffs = $this->staff->paginate(6);
-            Redis::set('staffs', json_encode($staffs));
-            $response = [
-                'message' => 'get Mongo',
-                'data'    => $staffs
-            ];
-        }
+        $staffs = $this->staff->paginate(6);
+        $response = [
+            'message' => 'Get Data',
+            'data'    => $staffs
+        ];
         return response()->json($response);
     }
     public function store(StoreStaffRequest $request)
@@ -46,7 +33,6 @@ class StaffController extends Controller
             $object['image'] = $uploadImage;
             $staff = new Staff($object);
             $staff->save();
-            Redis::del('staffs');
             $response = [
                 'status' => 'success',
                 'message' => 'Thêm nhân viên thành công ! ',
@@ -60,15 +46,9 @@ class StaffController extends Controller
             ];
         }
         return response()->json($response);
-
     }
     public function show( $id)
     {
-        $cachedStaff = Redis::get('staffs_' .$id);
-        if ($cachedStaff !== null) {
-            $staff = json_decode($cachedStaff, true);
-        }
-        else {
             $staff = $this->staff->find($id);
             if (!$staff) {
                 return response()->json([
@@ -77,8 +57,6 @@ class StaffController extends Controller
                     'data' => null
                 ]);
             }
-            Redis::set('staffs_' . $id, json_encode($staff));
-        }
         return response()->json([
             'status' => 'success',
             'message' => 'Chi tiết nhân viên !',
@@ -106,12 +84,10 @@ class StaffController extends Controller
             $request->image = $staff['image'];
         }
         $staff->update($request->all());
-        Redis::del('staffs_' .$id);
-        Redis::del('staffs');
         return response()->json([
            'status'   => 'success',
             'message' => 'Cập nhập nhân viên thành công !',
-            'dâta'    => $staff
+            'data'    => $staff
         ]);
     }
     public function destroy( $id)
@@ -125,8 +101,6 @@ class StaffController extends Controller
             ]);
         }
         $staff->delete();
-        Redis::del('staffs_' . $id);
-        Redis::del('staffs');
         return response()->json([
             'status' => 'success',
             'message' => 'Xoá thành công !',

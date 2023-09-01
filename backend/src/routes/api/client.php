@@ -5,6 +5,8 @@ use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 Route::get('categories', [CategoryController::class, 'index']);
 
+Route::resource('rooms', \App\Http\Controllers\RoomController::class);
+
 
 
 //Services

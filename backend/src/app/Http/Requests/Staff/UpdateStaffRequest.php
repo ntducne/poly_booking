@@ -12,7 +12,7 @@ class UpdateStaffRequest extends Request
         return [
             'fullname' => ['bail', 'required', 'string'],
             'email'    => ['bail', 'required', 'email',
-                Rule::unique(Staff::class)->ignore($this->staff, $this->column_id),
+                Rule::unique(Staff::class, 'email')->ignore($this->staff, $this->column_id),
             ],
             'phone'    => ['bail', 'required', 'regex:/^([0-9\s\-\+\(\)]*)$/','max: 10','min:10',
                 Rule::unique(Staff::class, 'phone')->ignore($this->staff,$this->column_id),
