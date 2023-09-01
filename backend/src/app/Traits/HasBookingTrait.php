@@ -1,6 +1,6 @@
 <?php
 namespace App\Traits;
-trait Booking {
+trait HasBookingTrait {
     public function bookingHistory()
     {
         return $this->bookings->all();

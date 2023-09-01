@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\Booking as BookingTrait;
+use App\Traits\HasBookingTrait as BookingTrait;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,6 +34,8 @@ class User extends Eloquent implements AuthenticatableContract
         'address' => '',
         'deleted_at' => null
     ];
+    private mixed $bookings;
+
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);

@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec70fbb8-68e1-4cae-8841-e5c079a2755a" name="Changes" comment="test">
-      <change beforePath="$PROJECT_DIR$/backend/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.idea/backend.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.idea/php.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.idea/phpunit.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/app/Repositories/BookingRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/app/Services/BookingService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_08_2023_9_24_CH__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_08_2023_9_24_CH__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Admin/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Admin/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/VerifyEmailController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Models/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Models/Booking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Policies/StaffPolicy.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Repositories/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Repositories/UserRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Services/UserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Services/UserService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app/Traits/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Traits/HasBookingTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/routes/api/client.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/api/client.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,27 +57,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Notification.DisplayName-DoNotAsk-Vcs Important Messages": "VCS important messages",
-    "Notification.DoNotAsk-Vcs Important Messages": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "nguyenduc",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/file/code/duantotnghiep",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.general",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-Vcs Important Messages&quot;: &quot;VCS important messages&quot;,
+    &quot;Notification.DoNotAsk-Vcs Important Messages&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nguyenduc&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/app_setup/laragon/www/aln&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\file\code\duantotnghiep" />
@@ -89,6 +97,11 @@
       <workItem from="1692762041195" duration="2756000" />
       <workItem from="1692765893645" duration="22000" />
       <workItem from="1692767239709" duration="3132000" />
+      <workItem from="1693359283142" duration="667000" />
+      <workItem from="1693401642252" duration="457000" />
+      <workItem from="1693402172532" duration="9606000" />
+      <workItem from="1693532379470" duration="140000" />
+      <workItem from="1693532569486" duration="1766000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />

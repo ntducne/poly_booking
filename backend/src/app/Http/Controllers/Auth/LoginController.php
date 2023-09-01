@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Models\Admin;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,6 +12,14 @@ use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
+
+    private Auth $auth;
+
+    public function __construct()
+    {
+        $this->auth = new Auth();
+    }
+
     public function removeUser($userId): void
     {
         DB::table('oauth_access_tokens')->where('user_id', $userId)->delete();
@@ -20,13 +27,13 @@ class LoginController extends Controller
 
     public function index(LoginRequest $request): JsonResponse
     {
-        $checkLogin = Auth::guard($request->segment(2))
+        $checkLogin = $this->auth->guard($request->segment(2))
             ->attempt([
                 'email' => $request->email,
                 'password' => $request->password
             ]);
         if ($checkLogin) {
-            $user = Auth::guard($request->segment(2))->user();
+            $user = $this->auth->guard($request->segment(2))->user();
             $this->removeUser($user->id);
             $tokenResult = $user->createToken(ucfirst($request->segment(2)) . ' Access Token', [$request->segment(2)]);
             $token = $tokenResult->token;
