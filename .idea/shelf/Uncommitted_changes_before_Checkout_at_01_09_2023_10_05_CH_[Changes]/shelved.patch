@@ -1,0 +1,71 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"ec70fbb8-68e1-4cae-8841-e5c079a2755a\" name=\"Changes\" comment=\"test\">\r\n      <change afterPath=\"$PROJECT_DIR$/backend/src/app/Repositories/BookingRepository.php\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/backend/src/app/Services/BookingService.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_08_2023_9_24_CH__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_08_2023_9_24_CH__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Http/Controllers/Admin/UserController.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/backend/src/app/Http/Controllers/Admin/UserController.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/LoginController.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/LoginController.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/RegisterController.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/RegisterController.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/VerifyEmailController.php\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Models/Booking.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/backend/src/app/Models/Booking.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Models/User.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/backend/src/app/Models/User.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Policies/StaffPolicy.php\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Repositories/UserRepository.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/backend/src/app/Repositories/UserRepository.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Services/UserService.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/backend/src/app/Services/UserService.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/app/Traits/Booking.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/backend/src/app/Traits/HasBookingTrait.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/backend/src/routes/api/client.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/backend/src/routes/api/client.php\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ComposerSettings\">\r\n    <execution />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"trungduc\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"PackageJsonUpdateNotifier\">\r\n    <dismissed value=\"$PROJECT_DIR$/admin/package.json\" />\r\n    <dismissed value=\"$PROJECT_DIR$/client/package.json\" />\r\n  </component>\r\n  <component name=\"PhpDebugGeneral\" listening_started=\"true\" />\r\n  <component name=\"PhpWorkspaceProjectConfiguration\" interpreter_name=\"D:\\app_setup\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php.exe\" />\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2ULM1MYCfqYfJM8h2XZZl7ElwzL\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,\r\n    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;Notification.DisplayName-DoNotAsk-Vcs Important Messages&quot;: &quot;VCS important messages&quot;,\r\n    &quot;Notification.DoNotAsk-Vcs Important Messages&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;nguyenduc&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/app_setup/laragon/www/aln&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\file\\code\\duantotnghiep\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"ec70fbb8-68e1-4cae-8841-e5c079a2755a\" name=\"Changes\" comment=\"\" />\r\n      <created>1692714191994</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1692714191994</updated>\r\n      <workItem from=\"1692714193483\" duration=\"1738000\" />\r\n      <workItem from=\"1692718768343\" duration=\"1024000\" />\r\n      <workItem from=\"1692759418867\" duration=\"887000\" />\r\n      <workItem from=\"1692762041195\" duration=\"2756000\" />\r\n      <workItem from=\"1692765893645\" duration=\"22000\" />\r\n      <workItem from=\"1692767239709\" duration=\"3132000\" />\r\n      <workItem from=\"1693359283142\" duration=\"667000\" />\r\n      <workItem from=\"1693401642252\" duration=\"457000\" />\r\n      <workItem from=\"1693402172532\" duration=\"9606000\" />\r\n      <workItem from=\"1693532379470\" duration=\"140000\" />\r\n      <workItem from=\"1693532569486\" duration=\"1766000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"test\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1692770856673</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1692770856673</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"test\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"test\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9f372920b2594e93e47d43e6833d603681da8ffe)
++++ b/.idea/workspace.xml	(date 1693580619245)
+@@ -4,23 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="ec70fbb8-68e1-4cae-8841-e5c079a2755a" name="Changes" comment="test">
+-      <change afterPath="$PROJECT_DIR$/backend/src/app/Repositories/BookingRepository.php" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/backend/src/app/Services/BookingService.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_08_2023_9_24_CH__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_08_2023_9_24_CH__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Admin/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Admin/UserController.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Http/Controllers/Auth/VerifyEmailController.php" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Models/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Models/Booking.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Models/User.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Policies/StaffPolicy.php" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Repositories/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Repositories/UserRepository.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Services/UserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Services/UserService.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/app/Traits/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app/Traits/HasBookingTrait.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/backend/src/routes/api/client.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/routes/api/client.php" afterDir="false" />
+-    </list>
++    <list default="true" id="ec70fbb8-68e1-4cae-8841-e5c079a2755a" name="Changes" comment="update user service" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -101,7 +85,7 @@
+       <workItem from="1693401642252" duration="457000" />
+       <workItem from="1693402172532" duration="9606000" />
+       <workItem from="1693532379470" duration="140000" />
+-      <workItem from="1693532569486" duration="1766000" />
++      <workItem from="1693532569486" duration="2135000" />
+     </task>
+     <task id="LOCAL-00001" summary="test">
+       <option name="closed" value="true" />
+@@ -111,7 +95,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1692770856673</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="update user service">
++      <option name="closed" value="true" />
++      <created>1693580602889</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1693580602889</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -119,6 +111,7 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="test" />
+-    <option name="LAST_COMMIT_MESSAGE" value="test" />
++    <MESSAGE value="update user service" />
++    <option name="LAST_COMMIT_MESSAGE" value="update user service" />
+   </component>
+ </project>
+\ No newline at end of file
