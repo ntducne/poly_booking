@@ -19,15 +19,27 @@ class UserRepository
         $this->folder = 'users';
     }
 
-    public function index(): LengthAwarePaginator|bool
+    public function index($request): LengthAwarePaginator|bool
     {
         try {
             $query = $this->user->newQuery();
-            if(request()->has('phone')){
-                $query->where('phone', 'like', request()->get('phone'));
+            if ($request->has('phone')) {
+                if($request->input('phone') != ''){
+                    $searchTerm = $request->input('phone');
+                    $query->where('phone', 'LIKE', '%' . $searchTerm . '%');
+                }
+                else {
+                    return false;
+                }
             }
-            if(request()->has('email')){
-                $query->where('email', 'like', request()->get('email'));
+            if ($request->has('email')) {
+                if($request->input('email') != ''){
+                    $searchTerm = $request->input('email');
+                    $query->where('email', 'LIKE', '%' . $searchTerm . '%');
+                }
+                else {
+                    return false;
+                }
             }
             return $query->paginate(10);
         } catch(Exception $e){
@@ -36,7 +48,17 @@ class UserRepository
         }
     }
 
-    public function create(array $request)
+    public function newUsers($attributes)
+    {
+        try {
+            return $this->user->create($attributes);
+        } catch(Exception $e){
+            Log::error($e->getMessage());
+            return false;
+        }
+    }
+
+    public function create($request)
     {
         try {
             $attributes = $request->validated();
@@ -62,7 +84,7 @@ class UserRepository
         }
     }
 
-    public function update(array $request, $id): bool
+    public function update($request, $id)
     {
         try {
             $user = $this->find($id);
@@ -78,7 +100,7 @@ class UserRepository
             }
             $arr['status'] = (integer)$request->status;
             $user->update($arr);
-            return true;
+            return $user;
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return false;
@@ -95,15 +117,27 @@ class UserRepository
         return true;
     }
 
-    public function trash()
+    public function trash($request)
     {
         try {
             $query = $this->user->newQuery();
-            if(request()->has('phone')){
-                $query->where('phone', 'like', request()->get('phone'));
+            if ($request->has('phone')) {
+                if($request->input('phone') != ''){
+                    $searchTerm = $request->input('phone');
+                    $query->where('phone', 'LIKE', '%' . $searchTerm . '%');
+                }
+                else {
+                    return false;
+                }
             }
-            if(request()->has('email')){
-                $query->where('email', 'like', request()->get('email'));
+            if ($request->has('email')) {
+                if($request->input('email') != ''){
+                    $searchTerm = $request->input('email');
+                    $query->where('email', 'LIKE', '%' . $searchTerm . '%');
+                }
+                else {
+                    return false;
+                }
             }
             return $query->onlyTrashed()->paginate(3);
         } catch(Exception $e){
@@ -158,7 +192,8 @@ class UserRepository
         }
     }
 
-    public function updateImage(array $request, $id){
+    public function updateAvatar($request, $id): bool
+    {
         try {
             $user = $this->find($id);
             if(!$user){
@@ -178,7 +213,7 @@ class UserRepository
         }
     }
 
-    public function updateInformation(array $request, $id): bool
+    public function updateProfile($request, $id): bool
     {
         try {
             $user = $this->find($id);
@@ -198,7 +233,7 @@ class UserRepository
         }
     }
 
-    public function updatePassword(array $request, $id): bool
+    public function updatePassword($request, $id): bool
     {
         try {
             $user = $this->find($id);
@@ -218,7 +253,7 @@ class UserRepository
         }
     }
 
-    public function userBookingHistory($id){
+    public function bookingHistory($id){
         try {
             $user = $this->find($id);
             if(!$user){
@@ -232,6 +267,4 @@ class UserRepository
             return false;
         }
     }
-
-
 }

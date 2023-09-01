@@ -5,42 +5,28 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Redis\Connections\Connection;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
-    private User $user;
-    private Connection $redis;
+    private UserService $user;
 
-    public function __construct()
+    public function __construct(UserService $userService)
     {
-        $this->user = new User();
-        $this->redis = Redis::connection();
+        $this->user = $userService;
     }
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-
-        $this->redis->del('users');
         try {
-            $cachedUsers = $this->redis->get('users');
-            if ($cachedUsers !== null) {
-                $users = json_decode($cachedUsers, true);
-            } else {
-                $users = $this->user->simplePaginate(5);
-                if(count($users) > 0){
-                    $this->redis->set('users', json_encode($users));
-                }
-            }
+            $users = $this->user->all($request);
             return response()->json([
                 'status' => true,
                 'message' => 'Danh sách người dùng !',
-                'data' => $users
+                'data' => UserResource::collection($users)
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
@@ -53,24 +39,18 @@ class UserController extends Controller
     public function show($id): JsonResponse
     {
         try {
-            $cachedUser = $this->redis->get('user_' . $id);
-            if ($cachedUser !== null) {
-                $user = json_decode($cachedUser, true);
-            }
-            else {
-                $user = $this->user->find($id);
-                if (!$user) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => 'Người dùng không tồn tại !',
-                    ]);
-                }
-                $this->redis->set('user_' . $id, json_encode($user));
+            $user = $this->user->find($id);
+            if (!$user) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Người dùng không tồn tại !',
+                ]);
             }
             return response()->json([
                 'status' => true,
                 'message' => 'Chi tiết người dùng !',
-                'data' => new UserResource($user)
+                'data' => new UserResource($user),
+//                'booking' => $user->bookingHistory()
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
@@ -83,26 +63,16 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, $id): JsonResponse
     {
         try {
-            $user = $this->user->find($id);
-            $input = $request->validated();
-            if(!$user){
+            $user = $this->user->update($request, $id);
+            if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Not found'
+                    'message' => 'Có lỗi xảy ra !',
                 ]);
             }
-            $image = $request->file('image');
-            if($image){
-                $this->DeleteImage($user->image);
-                $path = $this->UploadImage($image, 'users/'.$id.'/');
-                $input['image'] = $path;
-            }
-            $user->update($input);
-            $this->redis->del('user_' . $id);
-            $this->redis->del('users');
             return response()->json([
                 'status' => true,
-                'data' => $user
+                'message' => $user
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
@@ -115,19 +85,16 @@ class UserController extends Controller
     public function destroy($id): JsonResponse
     {
         try {
-            $user = $this->user->find($id);
+            $user = $this->user->delete($id);
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Người dùng không tồn tại !',
+                    'message' => 'Có lỗi xảy ra !',
                 ]);
             }
-            $this->redis->del('user_' . $id);
-            $this->redis->del('users');
-            $user->delete();
             return response()->json([
                 'status' => true,
-                'data' => $user
+                'message' => 'Xóa thành công !'
             ]);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());

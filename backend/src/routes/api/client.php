@@ -12,5 +12,6 @@ Route::get('categories', [CategoryController::class, 'index']);
 //Services
 Route::resource('services',ServicesController::class);
 Route::resource('users', UserController::class);
+Route::resource('billings', \App\Http\Controllers\Admin\BillingController::class);
 
 

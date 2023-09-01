@@ -1,7 +1,8 @@
 <?php
 
+namespace app\Services;
 
-use app\Repositories\UserRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class UserService {
@@ -12,20 +13,20 @@ class UserService {
         $this->user = $userRepository;
     }
 
-    public function all(): LengthAwarePaginator|bool
+    public function all($request): LengthAwarePaginator|bool
     {
-        return $this->user->index();
+        return $this->user->index($request);
     }
 
     public function find($id) {
         return $this->user->find($id);
     }
 
-    public function create(array $attributes) {
+    public function create($attributes) {
         return $this->user->create($attributes);
     }
 
-    public function update(array $attributes, $id): bool
+    public function update($attributes, $id)
     {
         return $this->user->update($attributes, $id);
     }
@@ -54,8 +55,28 @@ class UserService {
         return $this->user->emptyTrash();
     }
 
+    public function bookingHistory($id) {
+        return $this->user->bookingHistory($id);
+    }
 
+    public function updatePassword($attributes, $id): bool
+    {
+        return $this->user->updatePassword($attributes, $id);
+    }
 
+    public function updateProfile($attributes, $id): bool
+    {
+        return $this->user->updateProfile($attributes, $id);
+    }
+
+    public function updateAvatar($attributes, $id): bool
+    {
+        return $this->user->updateAvatar($attributes, $id);
+    }
+
+    public function newUsers($attributes) {
+        return $this->user->newUsers($attributes);
+    }
 
 
 
