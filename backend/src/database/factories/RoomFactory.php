@@ -19,8 +19,8 @@ class RoomFactory extends Factory
         return [
             'room_type_id'=>'64ec0bced418b71645087d32',
             'num_of_room'=>10,
-            'single_room'=>true,
-            'double_room'=>false,
+            'single_bed'=>true,
+            'double_bed'=>false,
             'room_name'=>fake()->name()
         ];
     }

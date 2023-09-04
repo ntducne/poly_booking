@@ -12,8 +12,8 @@ class Room extends Eloquent
     protected $fillable = [
         'room_type_id',
         'num_of_room',
-        'single_room',
-        'double_room',
+        'single_bed',
+        'double_bed',
         'room_name',
         'deleted_at'
     ];

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Services\ServicesRequest;
+use App\Http\Requests\Services\UpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Services;
 use Illuminate\Http\JsonResponse;
@@ -22,21 +24,21 @@ class ServicesController extends Controller
     }
     public function index(): JsonResponse
     {
-        $cachedServices = Redis::get('services');
-        if ($cachedServices !== null) {
-            $services = json_decode($cachedServices, true);
-            $response = [
-                'message' => 'get Redis',
-                'data' => $services
-            ];
-        } else {
-            $services = $this->services->paginate(5);
-            Redis::set('services', json_encode($services));
-            $response = [
-                'message' => 'get Mongo',
-                'data' => $services
-            ];
-        }
+        // $cachedServices = Redis::get('services');
+        // if ($cachedServices !== null) {
+        //     $services = json_decode($cachedServices, true);
+        //     $response = [
+        //         'message' => 'get Redis',
+        //         'data' => $services
+        //     ];
+        // } else {
+        $services = $this->services->paginate(5);
+        Redis::set('services', json_encode($services));
+        $response = [
+            'message' => 'get Mongo',
+            'data' => $services
+        ];
+        // }
         return response()->json($response);
     }
 
@@ -56,14 +58,15 @@ class ServicesController extends Controller
     //  * @param  \Illuminate\Http\Request  $request
     //  * @return \Illuminate\Http\Response
     //  */
-    public function store(Request $request)
+    public function store(ServicesRequest $request)
     {
-        $service = new Services($request->all());
-        Redis::del('service');
+
+        $service = new Services();
+        $create = $service->create($request->all());
         return response()->json([
             'status' => 'Success',
             'message' => 'Thêm thành công !',
-            'data' => $service
+            'data' => $create
         ]);
     }
 
@@ -114,7 +117,7 @@ class ServicesController extends Controller
     //  * @param  int  $id
     //  * @return \Illuminate\Http\Response
     //  */
-    public function update(Request $request, $id): JsonResponse|RedirectResponse
+    public function update(UpdateRequest $request, $id): JsonResponse|RedirectResponse
     {
         $service = Services::find($id);
         if (!$service) {
@@ -126,8 +129,8 @@ class ServicesController extends Controller
         }
         $update = $service->update($request->all());
         if ($update) {
-            Redis::del('service_', $id);
-            Redis::del('servcie');
+            // Redis::del('service_', $id);
+            // Redis::del('servcie');
             return response()->json([
                 'status' => 'success',
                 'message' => 'Cập nhật thành công !',
@@ -145,17 +148,17 @@ class ServicesController extends Controller
     public function destroy($id)
     {
         $service = Services::find($id);
-        if ($service) {
+        if (!$service) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Service không tồn tại !',
                 'data' => null
             ]);
-        }else {
+        } else {
             $delete = $service->delete();
             if ($delete) {
-                Redis::del('service_', $id);
-                Redis::del('servcie');
+                // Redis::del('service_', $id);
+                // Redis::del('servcie');
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Xóa thành công !',
