@@ -1,16 +1,15 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\ServicesController;
-// use App\Http\Controllers\BookingController;
-// use App\Http\Controllers\RatesController;
-// use App\Http\Controllers\BookDetailController;
+use App\Http\Controllers\Admin\RatesController;
+use App\Http\Controllers\Admin\BookDetailController;
+use App\Http\Controllers\Admin\BookingController;
+
 
 Route::resource('staffs', \App\Http\Controllers\StaffController::class);
-
-//Services
+// Quan Tri
 // Route::resource('services', ServicesController::class);
-// Route::resource('bookings', BookingController::class);
-// Route::resource('bookdetails', BookDetailController::class);
+// Route::resource('booking', BookingController::class);
+// Route::resource('bookdetail', BookDetailController::class);
 // Route::resource('rates', RatesController::class);
-

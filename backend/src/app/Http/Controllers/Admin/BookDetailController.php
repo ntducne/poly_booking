@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Room;
 use Illuminate\Http\Request;
@@ -12,32 +13,19 @@ use Illuminate\Support\Facades\Redis;
 
 class BookDetailController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     protected BookDetail $bookdetail;
-    public function __construct() {
+    public function __construct()
+    {
         $this->bookdetail = new BookDetail();
     }
     public function index()
     {
-        $cacheBookDetail = Redis::get('bookdetails');
-        if ($cacheBookDetail !== null) {
-            $bookDetails = json_decode($cacheBookDetail, true);
-            $response = [
-                'message' => 'Get Redis',
-                'data' => $bookDetails 
-            ];
-        } else {
-            $bookdetails = $this->bookdetail->paginate(5);
-            Redis::set('bookdetails', json_encode($bookdetails));
-            $response = [
-                'message' => 'Get MongoDB',
-                'data' => $bookdetails
-            ];
-        }
+        $bookdetails = $this->bookdetail->paginate(5);
+        Redis::set('bookdetails', json_encode($bookdetails));
+        $response = [
+            'message' => 'Get MongoDB',
+            'data' => $bookdetails
+        ];
         return response()->json($response);
     }
 
@@ -51,17 +39,13 @@ class BookDetailController extends Controller
                 'data' => null
             ]);
         } else {
-            $cachedbookdetail = Redis::get('bookdetails_' . $id);
-            if ($cachedbookdetail !== null) {
-                $bookdetail = json_decode($cachedbookdetail, true);
-            }
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chi tiết Booking !',
                 'data' => [
-                    'detail'=>$bookdetail ,
-                    'booking'=> Booking::find($bookdetail->booking_id),
-                    'room'=>Room::find($bookdetail->room_id)
+                    'detail' => $bookdetail,
+                    'booking' => Booking::find($bookdetail->booking_id),
+                    'room' => Room::find($bookdetail->room_id)
                 ]
             ]);
         }
@@ -72,8 +56,6 @@ class BookDetailController extends Controller
         if ($bookings) {
             $delete = $bookings->delete();
             if ($delete) {
-                Redis::del('bookdetails_', $id);
-                Redis::del('bookdetails');
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Xóa thành công !',

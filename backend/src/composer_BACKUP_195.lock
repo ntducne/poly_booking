@@ -3079,10 +3079,7 @@
         {
             "name": "league/oauth2-server",
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> 9b66b712e1ef0d66defc9dcca41073294e89d3ec
 <<<<<<< HEAD
             "version": "8.4.2",
             "source": {
@@ -3095,12 +3092,7 @@
                 "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/007dc5f6c0151a73b133fec36c9686cc956209d3",
                 "reference": "007dc5f6c0151a73b133fec36c9686cc956209d3",
 =======
-<<<<<<< HEAD
-=======
->>>>>>> 443a0bc0e369144eb7943244f8256bc85e8483c3
-=======
 >>>>>>> phamdung
->>>>>>> 9b66b712e1ef0d66defc9dcca41073294e89d3ec
             "version": "8.5.4",
             "source": {
                 "type": "git",
@@ -3112,15 +3104,9 @@
                 "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/ab7714d073844497fd222d5d0a217629089936bc",
                 "reference": "ab7714d073844497fd222d5d0a217629089936bc",
 <<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9bb963f6c48138e08954dd159a9a91f499271c36
-=======
->>>>>>> 443a0bc0e369144eb7943244f8256bc85e8483c3
-=======
 =======
 >>>>>>> 9bb963f6c48138e08954dd159a9a91f499271c36
 >>>>>>> phamdung
->>>>>>> 9b66b712e1ef0d66defc9dcca41073294e89d3ec
                 "shasum": ""
             },
             "require": {
@@ -3130,13 +3116,10 @@
                 "lcobucci/jwt": "^4.3 || ^5.0",
                 "league/event": "^2.2",
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
                 "league/uri": "^6.7 || ^7.0",
                 "php": "^8.0",
                 "psr/http-message": "^1.0.1 || ^2.0"
 =======
->>>>>>> 9b66b712e1ef0d66defc9dcca41073294e89d3ec
 <<<<<<< HEAD
                 "league/uri": "^6.4",
                 "php": "^7.2 || ^8.0",
@@ -3146,15 +3129,7 @@
                 "php": "^8.0",
                 "psr/http-message": "^1.0.1 || ^2.0"
 >>>>>>> 9bb963f6c48138e08954dd159a9a91f499271c36
-<<<<<<< HEAD
-=======
-                "league/uri": "^6.7 || ^7.0",
-                "php": "^8.0",
-                "psr/http-message": "^1.0.1 || ^2.0"
->>>>>>> 443a0bc0e369144eb7943244f8256bc85e8483c3
-=======
 >>>>>>> phamdung
->>>>>>> 9b66b712e1ef0d66defc9dcca41073294e89d3ec
             },
             "replace": {
                 "league/oauth2server": "*",
@@ -3211,23 +3186,14 @@
             "support": {
                 "issues": "https://github.com/thephpleague/oauth2-server/issues",
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
                 "source": "https://github.com/thephpleague/oauth2-server/tree/8.5.4"
 =======
->>>>>>> 9b66b712e1ef0d66defc9dcca41073294e89d3ec
 <<<<<<< HEAD
                 "source": "https://github.com/thephpleague/oauth2-server/tree/8.4.2"
 =======
                 "source": "https://github.com/thephpleague/oauth2-server/tree/8.5.4"
 >>>>>>> 9bb963f6c48138e08954dd159a9a91f499271c36
-<<<<<<< HEAD
-=======
-                "source": "https://github.com/thephpleague/oauth2-server/tree/8.5.4"
->>>>>>> 443a0bc0e369144eb7943244f8256bc85e8483c3
-=======
 >>>>>>> phamdung
->>>>>>> 9b66b712e1ef0d66defc9dcca41073294e89d3ec
             },
             "funding": [
                 {
@@ -3236,23 +3202,14 @@
                 }
             ],
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
             "time": "2023-08-25T22:35:12+00:00"
 =======
->>>>>>> 9b66b712e1ef0d66defc9dcca41073294e89d3ec
 <<<<<<< HEAD
             "time": "2023-08-02T22:54:39+00:00"
 =======
             "time": "2023-08-25T22:35:12+00:00"
 >>>>>>> 9bb963f6c48138e08954dd159a9a91f499271c36
-<<<<<<< HEAD
-=======
-            "time": "2023-08-25T22:35:12+00:00"
->>>>>>> 443a0bc0e369144eb7943244f8256bc85e8483c3
-=======
 >>>>>>> phamdung
->>>>>>> 9b66b712e1ef0d66defc9dcca41073294e89d3ec
         },
         {
             "name": "league/uri",
