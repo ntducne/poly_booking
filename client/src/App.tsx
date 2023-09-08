@@ -3,7 +3,7 @@ import LayoutClient from "./layouts/Client"
 import Home from "./pages/Home"
 import Login from "./pages/Auth/login"
 import Register from "./pages/Auth/register"
-import AboutPage from "./pages/Home/about"
+import AboutPage from "./pages/AboutPage/about"
 import ForgotPassword from "./pages/Auth/forgot_password"
 import SmoothSlide from "./components/SmoothSlide"
 
