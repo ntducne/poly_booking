@@ -6,7 +6,7 @@ type Props = {}
 
 export default function RoomsView({}: Props) {
   return (
-    <div className='mt-[100px]'>
+    <div className='mt-[100px] px-4'>
         <div className='flex justify-center mb-[60px]'>
           <h2 className='text-[23px] text-center text-[#202020] max-w-[600px] font-text font-light'>
             Tune Hotels tells potential customers what they can expect when they visit – a beautiful and luxurious 5-star sleeping experience, at a very affordable 1-star price.
