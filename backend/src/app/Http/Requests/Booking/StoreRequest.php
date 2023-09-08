@@ -26,7 +26,6 @@ class StoreRequest extends FormRequest
         return [
             'checkin' => 'required|date',
             'checkout' => 'required|date|after:checkin',
-            //    'pay_date'=>'required|date|after:checkout',
             'representative' => 'required',
             'amount_of_people' => 'required|numeric|min:0'
         ];

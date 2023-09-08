@@ -6,18 +6,12 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
-class Booking extends Eloquent
+class Branch extends Eloquent
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'user_id',
-        'booking_date',
-        'checkin',
-        'checkout',
-        'pay_date',
-        'representative',
-        'price_per_night',
-        'amount_of_people',
+        'name',
+        'address',
         'deleted_at'
     ];
     protected $attributes = [

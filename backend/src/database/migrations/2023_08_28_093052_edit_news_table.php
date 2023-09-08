@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->table('book_detail', function (Blueprint $table) {
+        Schema::connection('mongodb')->table('book_details', function (Blueprint $table) {
             $table->string('room_id');
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('mongodb')->table('book_detail', function (Blueprint $table) {
+        Schema::connection('mongodb')->table('book_details', function (Blueprint $table) {
             $table->dropColumn('room_id');
         });
     }

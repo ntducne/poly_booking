@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->create('booking', function (Blueprint $table) {
+        Schema::connection('mongodb')->create('bookings', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
             $table->date('booking_date');

@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->create('room', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->string('room_type_id');
-            $table->integer('num_of_room');
-            $table->boolean('single_bed');
-            $table->boolean('double_bed');
-            $table->string('room_name');
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('room');
+        Schema::dropIfExists('branches');
     }
 };

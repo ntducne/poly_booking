@@ -17,11 +17,10 @@ class RoomTypeFactory extends Factory
     public function definition()
     {
         return [
-            'room_type_name'=>fake()->name(),
+            'name' => fake()->name(),
             'description'=>fake()->text(),
-            'price_per_night'=>fake()->numberBetween($min = 100000,$max =300000 ),
-            'status'=>null,
-            'deleted_at' => null
+            'price_per_night' => fake()->numberBetween($min = 100000,$max = 300000),
+            'status' => null,
          ];
     }
 }

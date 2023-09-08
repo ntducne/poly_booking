@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->create('room_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('room_type_name');
-            $table->string('description');
+        Schema::connection('mongodb')->table('bookings', function (Blueprint $table) {
             $table->float('price_per_night',10,2);
-            $table->string('status');
-            $table->timestamps();
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('room_type');
+        Schema::connection('mongodb')->table('bookings', function (Blueprint $table) {
+            $table->dropColumn('price_per_night');
+        });
     }
 };

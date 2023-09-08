@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->create('book_detail', function (Blueprint $table) {
+        Schema::connection('mongodb')->create('book_details', function (Blueprint $table) {
             $table->id();
             $table->string('booking_id');
-            $table->string('room_type');
+            $table->string('room_id');
             $table->string('room_name');
-            $table->float('price_per_night',10,2);
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_detail');
+        Schema::dropIfExists('book_details');
     }
 };

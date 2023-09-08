@@ -3,7 +3,7 @@
 // use App\Http\Controllers\CategoryController;
 // use App\Http\Controllers\Admin\BookDetailController;
 use App\Http\Controllers\User\BookingController;
-use App\Http\Controllers\Admin\BookingController as AdminBooking;
+// use App\Http\Controllers\Admin\BookingController as AdminBooking;
 // use App\Http\Controllers\Admin\RatesController;
 use App\Http\Controllers\User\RoomController;
 use Illuminate\Support\Facades\Route;
@@ -20,4 +20,5 @@ use Illuminate\Support\Facades\Route;
 
 //Khach hang 
 Route::post('/dat-phong', [BookingController::class, 'datPhong']);
+Route::post('tim-kiem',[BookingController::class, 'timKiem']);
 Route::get('/room/{id}',[RoomController::class,'room_detail']);
