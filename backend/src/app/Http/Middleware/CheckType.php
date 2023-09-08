@@ -17,7 +17,7 @@ class CheckType
      * @param Closure(Request): (Response|RedirectResponse) $next
      * @return JsonResponse
      */
-    public function handle(Request $request, Closure $next): JsonResponse
+    public function handle(Request $request, Closure $next)
     {
         if($request->segment(2) !== 'user'){
             return response()->json(['message' => 'You do not have access !'], 403);
