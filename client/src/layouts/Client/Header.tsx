@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { UserOutlined } from '@ant-design/icons'
-import Logo from '../../assets/Logo/2587107.png'
-import { DownOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Dropdown, Space } from 'antd';
+import { Dropdown } from 'antd';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Logo from '../../assets/Logo/2587107.png';
 
 type Props = {}
 
@@ -35,7 +34,7 @@ export default function Header({ }: Props) {
     })
   })
   return (
-    <div className={`${header ? 'bg-white shadow-lg py-4' : 'bg-transparent   py-4'} fixed px-[50px] top-0 z-50 w-full transition-all duration-300`}>
+    <div className={`${header ? 'bg-white shadow-lg py-4' : 'bg-transparent py-4'} fixed px-[50px] top-0 z-40 w-full transition-all duration-300`}>
       <div className="container mx-auto flex flex-col items-center gap-y-6 lg:flex-row lg:justify-between lg:gap-y-0">
         {/* logo */}
         <Link to=''>
