@@ -36,30 +36,37 @@ import EditBill from "./pages/Admin/Bill/Edit";
 import ListFeedBack from "./pages/Admin/Feedback/List";
 import NotFound from "./pages/Admin/NotFound";
 
+import LoginAdmin from "./pages/Auth/login";
+import RegisterAdmin from "./pages/Auth/register";
 
 function App() {
   return (
     <>
       <Routes>
+        <Route path="login" element={<LoginAdmin />} />
+        <Route path="register" element={<RegisterAdmin />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
+          <Route path="login" element={<LoginAdmin />} />
+          <Route path="register" element={<RegisterAdmin />} />
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="booking" >
+          <Route path="booking">
             <Route index element={<ListBooking />} />
             <Route path="add" element={<AddBooking />} />
             <Route path="edit/:id" element={<EditBooking />} />
           </Route>
-          <Route path="offers" >
+          <Route path="offers">
             <Route index element={<ListOffers />} />
             <Route path="add" element={<AddOffers />} />
             <Route path="edit/:id" element={<EditOffers />} />
           </Route>
-          <Route path="policy" >
+          <Route path="policy">
             <Route index element={<ListPolicy />} />
             <Route path="add" element={<AddPolicy />} />
             <Route path="edit/:id" element={<EditPolicy />} />
           </Route>
-          <Route path="review" >
+          <Route path="review">
             <Route index element={<ListReview />} />
             <Route path="add" element={<AddReview />} />
             <Route path="edit/:id" element={<EditReview />} />
@@ -74,7 +81,7 @@ function App() {
             <Route path="add" element={<AddRoomType />} />
             <Route path="edit/:id" element={<EditRoomType />} />
           </Route>
-          <Route path="roomUtilities" >
+          <Route path="roomUtilities">
             <Route index element={<ListRoomUtilities />} />
             <Route path="add" element={<AddRoomUtilities />} />
             <Route path="edit/:id" element={<EditRoomUtilities />} />
@@ -84,27 +91,26 @@ function App() {
             <Route path="add" element={<AddRoomExtend />} />
             <Route path="edit/:id" element={<EditRoomExtend />} />
           </Route>
-          <Route path="services" >
+          <Route path="services">
             <Route index element={<ListServices />} />
             <Route path="add" element={<AddServices />} />
             <Route path="edit/:id" element={<EditServicer />} />
           </Route>
-          <Route path="bill" >
+          <Route path="bill">
             <Route index element={<ListBill />} />
             <Route path="add" element={<AddBill />} />
             <Route path="edit/:id" element={<EditBill />} />
           </Route>
-          <Route path="feedback" >
+          <Route path="feedback">
             <Route index element={<ListFeedBack />} />
           </Route>
-          <Route path="admin" >
+          <Route path="admin">
             <Route index element={<ListAdmin />} />
           </Route>
-          <Route path="user" >
+          <Route path="user">
             <Route index element={<ListUser />} />
           </Route>
         </Route>
-        <Route path="*" element={<NotFound/>} />
       </Routes>
     </>
   );
