@@ -1,8 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { UserOutlined } from '@ant-design/icons'
+import { UserOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Dropdown } from 'antd';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Logo from '../../assets/Logo/2587107.png';
+
 type Props = {}
-import Logo from'../../assets/Logo/2587107.png'
+
+
+const items: MenuProps['items'] = [
+  {
+    label: <Link className=' block px-3 py-[3px]' to=''>Thông tin</Link>,
+    key: '0',
+  },
+  {
+    label: <Link to='' className='block px-3 py-[3px]'>Phòng đã đặt</Link>,
+    key: '1',
+  },
+  {
+    type: 'divider',
+  },
+  {
+    label: <Link to='' className='block px-3 py-[3px]'>Đăng xuất</Link>,
+    key: '3',
+  },
+];
 
 export default function Header({ }: Props) {
   const [header, setHeader] = useState(false)
@@ -12,7 +34,7 @@ export default function Header({ }: Props) {
     })
   })
   return (
-    <div className={`${header ? 'bg-white shadow-lg py-4' : 'bg-transparent   py-4'} fixed px-[50px] top-0 z-50 w-full transition-all duration-300`}>
+    <div className={`${header ? 'bg-white shadow-lg py-4' : 'bg-transparent py-4'} fixed px-[50px] top-0 z-40 w-full transition-all duration-300`}>
       <div className="container mx-auto flex flex-col items-center gap-y-6 lg:flex-row lg:justify-between lg:gap-y-0">
         {/* logo */}
         <Link to=''>
@@ -35,7 +57,9 @@ export default function Header({ }: Props) {
             Liên hệ
           </Link>
           <Link to='' className='hover:text-red-500 transition flex'>
-            <UserOutlined />
+            <Dropdown className='' menu={{ items }} trigger={['click']}>
+              <UserOutlined />
+            </Dropdown>
           </Link>
 
         </div>

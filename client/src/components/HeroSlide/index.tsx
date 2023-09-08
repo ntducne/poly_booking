@@ -1,5 +1,6 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { motion } from "framer-motion"
 type Props = {}
 
 import { EffectFade, Autoplay } from 'swiper/modules';
@@ -37,11 +38,23 @@ export default function HeroSlide({ }: Props) {
                 return <SwiperSlide key={index} className='text-white h-full bg-pink-300 
                 relative' style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <div className='z-20 text-white text-center'>
-                        <div className='uppercase tracking-[6px] mb-5'>Just enjoy and relax</div>
-                        <h1 className='text-[32px] font-extralight uppercase tracking-[3px] 
+                        <motion.div
+                            variants={{
+                                hidden: { opacity: 0, y: 105 },
+                                visible: { opacity: 1, y: 0 }
+
+                            }}
+                            initial="hidden"
+                            animate='visible'
+                        >
+                            <div className='uppercase tracking-[6px] mb-5'>Just enjoy and relax</div>
+                            <h1 className='text-[32px] font-extralight uppercase tracking-[3px] 
                         max-w-[920px] lg:text-[68px] leading-tight mb-6'>{title}</h1>
-                        <button className='btn mx-auto'>{btnText}</button>
+                            <button className='btn mx-auto'>{btnText}</button>
+                        </motion.div>
                     </div>
+
+
                     <div className='absolute top-0 w-full h-full'>
                         <img className='object-cover h-full w-full' src={bg} alt="" />
                     </div>
