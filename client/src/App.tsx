@@ -6,6 +6,9 @@ import Home from "./pages/Home"
 import Login from "./pages/Auth/login"
 import Register from "./pages/Auth/register"
 import Rooms from "./pages/Rooms"
+import { Profiler } from "react"
+import Profile from "./pages/Auth/profile"
+import Checkout from "./pages/Checkout"
 
 
 function App() {
@@ -20,10 +23,13 @@ function App() {
           <Route path='rooms' element={<Rooms />} />
           <Route path="detail" element={<Detial />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="checkout" element={<Checkout />} />
         </Route>
         <Route path='/auth'>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+         
           
         </Route>
       </Routes>

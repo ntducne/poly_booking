@@ -44,7 +44,7 @@ export default function BookForm({ }: Props) {
                                 </div>
                             </Form.Item>
                         </div>
-                        <div className='relatetive flex items-center justify-end h-full'>
+                        <div className='flex-1 lg:border-r'>
 
                             <Form.Item name="Start-end2">
                                 <Select
@@ -59,7 +59,7 @@ export default function BookForm({ }: Props) {
                                 </Select>
                             </Form.Item>
                         </div>
-                        <div className='relatetive flex items-center justify-end h-full'>
+                        <div className='flex-1 lg:border-r'>
                             <Form.Item name="Start-end2 ">
                                 <Select
                                     placeholder='Người lớn'
