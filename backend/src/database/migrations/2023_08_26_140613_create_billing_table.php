@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->create('billing', function (Blueprint $table) {
+        Schema::connection('mongodb')->create('billings', function (Blueprint $table) {
             $table->id();
             $table->string('booking_id');
             $table->string('payment_method');
