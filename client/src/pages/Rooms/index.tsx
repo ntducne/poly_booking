@@ -1,13 +1,12 @@
 import { Pagination } from 'antd'
-import { Autoplay, EffectFade, Navigation } from 'swiper/modules'
+import { useEffect, useState } from 'react'
+import { Navigation, Pagination as Pagination1 } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { SlideRooms1, SlideRooms2, SlideRooms3, SlideRooms4, SlideRooms5 } from '../../assets/images/Rooms/Slides'
 import BookForm from '../../components/BookForm'
-import { Pagination as Pagination1 } from 'swiper/modules';
 import HeroSlide from '../../components/HeroSlide'
 import Page from '../../components/Page'
 import Room from '../../components/Room'
-import { useEffect, useState } from 'react'
 type Props = {}
 
 const rooms = [
@@ -54,7 +53,19 @@ export default function Rooms({ }: Props) {
     return (
         <Page title='Phòng'>
             <div className='pb-[100px]'>
-                <HeroSlide />
+                <div className='relative h-[500px] lg:h-[760px] bg-black bg-cover bg-no-repeat' style={{ backgroundImage: `url("https://png.pngtree.com/thumb_back/fw800/background/20230609/pngtree-resort-hotels-in-vancouver-image_2922772.jpg")` }}>
+                    <div className='relative h-full flex justify-center items-center'>
+                        <div className='absolute w-full h-full bg-black/50'></div>
+                        <div className='z-20 text-white text-center'>
+                            <div className='uppercase tracking-[6px] mb-5'>Just enjoy and relax</div>
+                            <h1 className='text-[32px] font-extralight uppercase tracking-[3px] 
+                        max-w-[920px] lg:text-[68px] leading-tight mb-6'>Retreat Hotel at Santorini</h1>
+                            <span className=' font-extralight tracking-[3px]  '>Unwind the clock of modern life. Unlock the door to a wonder of the world.</span>
+                        </div>
+
+                    </div>
+                </div>
+                {/* <HeroSlide /> */}
                 <BookForm />
                 <div className='mt-[100px] px-4'>
                     <div className='container mx-auto lg:px-0'>
@@ -87,21 +98,21 @@ export default function Rooms({ }: Props) {
                         className="mySwiper"
 
                     >
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms1} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms2} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms3} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms4} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[800px] object-cover rounded-[10px]' src={SlideRooms5} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms1} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms2} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms3} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms4} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms5} alt="" /></SwiperSlide>
 
                     </Swiper>
                     <div className='flex justify-center mt-[60px]'>
                         <h2 className='text-[23px] text-center text-[#202020] max-w-[600px] font-text font-light'>
                             Tune Hotels tells potential customers what they can expect when they visit – a beautiful and luxurious 5-star sleeping experience, at a very affordable 1-star price.
                         </h2>
-                        </div>
                     </div>
-
                 </div>
+
+            </div>
         </Page>
     )
 }
