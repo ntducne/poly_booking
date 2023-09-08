@@ -8,7 +8,10 @@ import Art2 from '../../assets/images/Home/Art/Image2.jpg'
 import { ImageStyle1, ImageStyle10, ImageStyle11, ImageStyle2, ImageStyle3, ImageStyle4, ImageStyle5, ImageStyle6, ImageStyle7, ImageStyle8, ImageStyle9 } from '../../assets/images/Home/ImsViews'
 import HeroSlide from '../../components/HeroSlide'
 import BookForm from '../../components/BookForm'
+<<<<<<< .merge_file_xO4ia0
 import Page from '../../components/Page'
+=======
+>>>>>>> .merge_file_qSh8i2
 type Props = {}
 
 export default function Home({ }: Props) {
@@ -44,12 +47,20 @@ export default function Home({ }: Props) {
     };
   }, [])
   return (
+<<<<<<< .merge_file_xO4ia0
     <Page title='Trang chủ'>
         <HeroSlide />
         <BookForm />
       <div className={`py-[80px] lg:py-[70px]  ${bg || bg2 ? 'bg-[#202020]' : 'bg-[#f9f8f6]'} transition-all duration-300`}>
 
         <div ref={elementRef} className="px-4 flex flex-col justify-center items-center lg:flex-row ">
+=======
+    <div>
+      <HeroSlide />
+      <BookForm />
+      <div className={`py-[80px] lg:py-[70px]  ${bg || bg2 ? 'bg-[#202020]' : 'bg-[#f9f8f6]'} transition-all duration-300`}>
+        <div ref={elementRef} className="flex flex-col justify-center items-center lg:flex-row ">
+>>>>>>> .merge_file_qSh8i2
           <div className='relative inline-block'>
             <img src={ImgHome} className='md:max-w-[780px] rounded lg:translate-x-[-20%]' alt="" />
             <div className='lg:absolute hidden lg:block lg:top-1/2 lg:right-[-25%] lg:transform lg:-translate-y-1/2
@@ -75,7 +86,11 @@ export default function Home({ }: Props) {
 
         <RoomsView />
         {/* restaurant */}
+<<<<<<< .merge_file_xO4ia0
         <div className='mt-[100px] px-4'>
+=======
+        <div className='mt-[100px] '>
+>>>>>>> .merge_file_qSh8i2
           <div className='flex justify-center  font-text_2nd mb-[60px]'>
             <div className='text-center'>
               <h2 className='text-[30px] md:text-[50px] max-w-[780px] text-center  font-medium'>We put a smile back on your face. Pleasing people the world over. The best surprise is no surprise.</h2>
@@ -98,7 +113,11 @@ export default function Home({ }: Props) {
           </div>
         </div>
         {/* art */}
+<<<<<<< .merge_file_xO4ia0
         <div className='mt-[100px] px-4'>
+=======
+        <div className='mt-[100px]'>
+>>>>>>> .merge_file_qSh8i2
           <div className='flex justify-center mb-[60px]'>
             <h2 className='text-[23px] text-center text-[#202020] max-w-[800px] font-text font-light'>
               Everything you need to live an unforgettable eco-luxury experience of health and well-being. The art of meeting your highest expectations.
@@ -153,6 +172,28 @@ export default function Home({ }: Props) {
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle8} alt="" /></div>
           </div>
 
+<<<<<<< .merge_file_xO4ia0
+=======
+        <div className='mt-[100px] ' ref={elementRef2}>
+          <div className='flex flex-col justify-center items-center text-white'>
+            <p className='text-center'>Hotel Gallery</p>
+            <h3 className='max-w-[800px] font-text_2nd text-center text-[30px]  md:text-[50px] font-medium'>Enjoy and join the handful of guests who already sent their best photographic memories of their stay.</h3>
+          </div>
+          <div className='w-full md:columns-3 columns-2 lg:w-[1400px] mt-[60px] mx-auto lg:columns-4 column gap-[30px]'>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle1} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle5} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle9} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle2} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle6} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle10} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle3} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle7} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle11} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle4} alt="" /></div>
+            <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full rounded' src={ImageStyle8} alt="" /></div>
+          </div>
+
+>>>>>>> .merge_file_qSh8i2
         </div>
       </div>
 

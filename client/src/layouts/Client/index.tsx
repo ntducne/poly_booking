@@ -10,6 +10,12 @@ export default function LayoutClient({ }: Props) {
   return (
     <div>
       <Header />
+<<<<<<< .merge_file_e3ca3a
+=======
+
+      {/* <HeroSlide />
+      <BookForm /> */}
+>>>>>>> .merge_file_CIRGVf
       <Outlet />
       <Footer />
     </div>
