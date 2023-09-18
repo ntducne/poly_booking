@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('branches', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::connection('mongodb')->table('services', function (Blueprint $table) {
+           $table->string('branch_id');
         });
     }
 
@@ -26,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branches');
+        Schema::connection('mongodb')->table('services', function (Blueprint $table) {
+            $table->dropColumn('branch_id');
+        });
     }
 };

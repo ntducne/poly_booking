@@ -18,9 +18,11 @@ class Booking extends Eloquent
         'representative',
         'price_per_night',
         'amount_of_people',
+        'status',
         'deleted_at'
     ];
     protected $attributes = [
+        'status'=>false,
         'deleted_at' => null
     ];
 }

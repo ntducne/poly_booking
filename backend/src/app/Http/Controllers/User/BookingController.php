@@ -58,9 +58,9 @@ class BookingController extends Controller
                         } else {
                             $chechoutMax = 0;
                             foreach ($checkRoom as $item) {
-                                $checkBookingRoom = Booking::find($item->booking_id); //lay ra du lieu bang booking cua cac room_id ben bang book detail
-                                if ($chechoutMax < strtotime($checkBookingRoom->checkout)) {
-                                    $chechoutMax = strtotime($checkBookingRoom->checkout); //so sanh thoi gian cac lich dat phong 
+                                $checkBookingRoom = Booking::where('_id','=',$item->booking_id)->where('status','=',false)->get(); //lay ra du lieu bang booking cua cac room_id ben bang book detail
+                                if ($chechoutMax < strtotime($checkBookingRoom[0]->checkout)) {
+                                    $chechoutMax = strtotime($checkBookingRoom[0]->checkout); //so sanh thoi gian cac lich dat phong 
                                 }
                             }
                             if ($chechoutMax < strtotime($create->checkin)) { // kiem tra lich dat phong co 
@@ -170,7 +170,7 @@ class BookingController extends Controller
         }
         return response()->json($response);
     }
-    public function update(Request $request, $id): JsonResponse|RedirectResponse
+    public function huyPhong(Request $request, $id)
     {
         $bookings = Booking::find($id);
         if (!$bookings) {
@@ -180,7 +180,7 @@ class BookingController extends Controller
                 'data' => null
             ]);
         }
-        $update = $bookings->update($request->all());
+        $update = $bookings->update(['status'=>true]);
         if ($update) {
             return response()->json([
                 'status' => 'success',

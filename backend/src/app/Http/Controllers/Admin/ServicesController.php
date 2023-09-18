@@ -1,28 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\Services;
 use App\Http\Requests\Services\ServicesRequest;
 use App\Http\Requests\Services\UpdateRequest;
 use Illuminate\Http\Request;
-use App\Models\Services;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redis;
 
 class ServicesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     private Services $services;
     public function __construct()
     {
         $this->services = new Services();
     }
-    public function index(): JsonResponse
+    public function index()
     {
         $services = $this->services->paginate(5);
         $response = [
@@ -50,8 +43,7 @@ class ServicesController extends Controller
     //  */
     public function store(ServicesRequest $request)
     {
-        $service = new Services($request->all());
-        Redis::del('service');
+        $service = $this->services->create($request->all());
         return response()->json([
             'status' => 'Success',
             'message' => 'Thêm thành công !',
@@ -67,19 +59,14 @@ class ServicesController extends Controller
      */
     public function show($id)
     {
-        $cachedServices = Redis::get('services_' . $id);
-        if ($cachedServices !== null) {
-            $services = json_decode($cachedServices, true);
-        } else {
-            $services = $this->services->find($id);
-            if (!$services) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Danh mục không tồn tại !',
-                    'data' => null
-                ]);
-            }
-            Redis::set('services_' . $id, json_encode($services));
+
+        $services = $this->services->find($id);
+        if (!$services) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Danh mục không tồn tại !',
+                'data' => null
+            ]);
         }
         return response()->json([
             'status' => 'success',
@@ -106,8 +93,7 @@ class ServicesController extends Controller
     //  * @param  int  $id
     //  * @return \Illuminate\Http\Response
     //  */
-    public function update(UpdateRequest $request, $id): JsonResponse|RedirectResponse
-    {
+    public function update(UpdateRequest $request, $id){
         $service = Services::find($id);
         if (!$service) {
             return response()->json([
