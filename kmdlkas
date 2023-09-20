@@ -1,0 +1,403 @@
+[33mcommit 4831b1780cc94fe8254672b83e435b0a854fcdb6[m[33m ([m[1;36mHEAD -> [m[1;32mnguyenduc[m[33m, [m[1;31morigin/beta[m[33m)[m
+Merge: 9558329 27b67e5
+Author: Trung Dao <trungddph27823@fpt.edu.vn>
+Date:   Fri Sep 8 21:21:14 2023 +0700
+
+    update daotrung
+
+[33mcommit 9558329ef483f8d19c6dc4a93375e639ad27d1f0[m
+Author: Trung Dao <trungddph27823@fpt.edu.vn>
+Date:   Fri Sep 8 21:16:15 2023 +0700
+
+    update
+
+[33mcommit 27b67e504cc0dd0518a6d0ae0c9bc94fb61a3e97[m
+Merge: 04a1c89 071f989
+Author: huyshine <huyshine1111@gmail.com>
+Date:   Fri Sep 8 21:14:53 2023 +0700
+
+    merge origin nguyenhuy
+
+[33mcommit 04a1c8995514c3ce9b6966b8ca6e1adc640a4201[m
+Author: huyshine <huyshine1111@gmail.com>
+Date:   Fri Sep 8 20:59:41 2023 +0700
+
+    push layout table form
+
+[33mcommit 071f989a9acf919fb17c162a3240715fd76b8fec[m
+Merge: 1df33db 8d0010b
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Fri Sep 8 20:56:51 2023 +0700
+
+    merge trungduc to beta
+
+[33mcommit 8d0010b02fc64e3bf4098ce538f41f3996704299[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Fri Sep 8 19:17:46 2023 +0700
+
+    add library framer and add animation observer
+
+[33mcommit 1df33db1fa49d14b5580eb00605174e43adaaf96[m
+Merge: 9b66b71 36c2d91
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Tue Sep 5 22:57:13 2023 +0700
+
+    Merge pull request #18 from ntducne/nguyenduc
+    
+    update code
+
+[33mcommit 36c2d91d4901f162bf21e81178a21f487f86acf1[m[33m ([m[1;31morigin/nguyenduc[m[33m)[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Tue Sep 5 22:56:12 2023 +0700
+
+    update code
+
+[33mcommit 9b66b712e1ef0d66defc9dcca41073294e89d3ec[m[33m ([m[1;32mbeta[m[33m)[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Fri Sep 1 22:16:22 2023 +0700
+
+    update
+
+[33mcommit e72179847b8ecb267643a523196dc7e7e2f0250f[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Fri Sep 1 22:13:42 2023 +0700
+
+    update
+
+[33mcommit d45ea87904db310777c0cbaa10dc42b685c25ce5[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Fri Sep 1 22:13:10 2023 +0700
+
+    update
+
+[33mcommit 7d7c914ff3f2710253f26990de0a449269eee2e0[m
+Merge: 9d2ea9d 65f8596
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Fri Sep 1 22:11:09 2023 +0700
+
+    fix conflict
+
+[33mcommit 9d2ea9dd1e8f7f15b9b5572341b6dbbbca787c68[m
+Merge: 38ef26e fb00f5c
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Fri Sep 1 22:08:39 2023 +0700
+
+    finishe pull
+
+[33mcommit 38ef26e6b9364a1bbfeaef02d21c3c03aba39708[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Fri Sep 1 22:07:19 2023 +0700
+
+    fix conflict
+
+[33mcommit fb00f5c9246a98857c4774ba007c22dd484cfba1[m
+Merge: 6679917 9f37292
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Fri Sep 1 22:04:16 2023 +0700
+
+    update user service
+    
+    update user service
+
+[33mcommit 9f372920b2594e93e47d43e6833d603681da8ffe[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Fri Sep 1 22:03:16 2023 +0700
+
+    update user service
+
+[33mcommit 6679917bb60f4cb9e2ad133eeffef17a1b91e8b0[m
+Merge: 443a0bc d395e05
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Fri Sep 1 09:00:59 2023 +0700
+
+    Merge pull request #16 from ntducne/nguyenduc
+    
+    Nguyenduc
+
+[33mcommit c0cafb24b985bcb20ec5eaea1ecbe2ec981d5cb5[m[33m ([m[1;31morigin/trungduc[m[33m)[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Wed Aug 30 20:45:55 2023 +0700
+
+    add roomBooked
+
+[33mcommit 7b4a6d5a20ee6d8055b6e6745a258615d1d63a0d[m[33m ([m[1;31morigin/daotrung[m[33m)[m
+Merge: 992365b 443a0bc
+Author: Trung Dao <trungddph27823@fpt.edu.vn>
+Date:   Wed Aug 30 08:42:56 2023 +0700
+
+    m
+
+[33mcommit d395e05d2b574d3507d28e097ce907264222e0d9[m
+Merge: aa99d3f 443a0bc
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Wed Aug 30 08:09:30 2023 +0700
+
+    Merge branch 'beta' of https://github.com/ntducne/poly_hotel into nguyenduc
+
+[33mcommit aa99d3fa926e498e3e290ab7ac8c5814222f99d3[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Wed Aug 30 08:09:23 2023 +0700
+
+    merge
+
+[33mcommit 992365bbda1e20209378bcb82dc037522b8aaae8[m
+Merge: 5aabd0e 5f0fa80
+Author: Trung Dao <trungddph27823@fpt.edu.vn>
+Date:   Wed Aug 30 07:46:52 2023 +0700
+
+    update detial contact
+
+[33mcommit 65f85966ed6abefa9431e69f8830a7f150fa30bc[m[33m ([m[1;31morigin/phamdung[m[33m, [m[1;32mphamdung[m[33m)[m
+Merge: 9d28baa 9bb963f
+Author: dungtuan1902 <phamtuandung923@gmail.com>
+Date:   Tue Aug 29 13:20:19 2023 +0700
+
+    chuc nang dat phong admin va chi tiet dat phong
+
+[33mcommit ed777c990e0e07271e2e70f694aa53ccbed3f256[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Mon Aug 28 22:46:03 2023 +0700
+
+    done auth, build module user
+
+[33mcommit b5d760fc6ab0fe02bfca28338b2f9ff5d93c73dd[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Mon Aug 28 20:29:20 2023 +0700
+
+    add slide
+
+[33mcommit 443a0bc0e369144eb7943244f8256bc85e8483c3[m
+Merge: f02fb2e 163f6f5
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Mon Aug 28 20:28:35 2023 +0700
+
+    Merge branch 'beta' of https://github.com/ntducne/poly_booking into beta
+
+[33mcommit f02fb2e446dff06daefcb464d72288e0686341cc[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Mon Aug 28 20:28:22 2023 +0700
+
+    merge code branch origin/trungduc
+
+[33mcommit 669779c7548cfc7c635caf8dfaf4ba2d3c81f552[m
+Merge: f6bf64f 3d602bc
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Mon Aug 28 20:26:48 2023 +0700
+
+    Merge remote-tracking branch 'origin/trungduc' into beta
+
+[33mcommit 3d602bc759bb3a72ca1f965cb95045ef32fad96a[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Mon Aug 28 20:26:27 2023 +0700
+
+    add animation roomsPage
+
+[33mcommit 163f6f5f7686124e64dc35467c8a6501fd1f50d9[m
+Merge: f6bf64f 2b86307
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Mon Aug 28 20:19:49 2023 +0700
+
+    merge nguyenmui to beta
+    
+    Nguyenmui
+
+[33mcommit 2b86307030454884ce366a63861c3b0d609359e5[m[33m ([m[1;31morigin/nguyenmui[m[33m)[m
+Author: muinguyen03 <muinguyen03@gmail.com>
+Date:   Mon Aug 28 20:14:21 2023 +0700
+
+    update code Staffs
+
+[33mcommit f6bf64f715a7a25144ffcaf8234f37f5d75b000b[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Mon Aug 28 18:31:30 2023 +0700
+
+    add swiper
+
+[33mcommit e6e81e00085628f5f6540fd19768969e5533b069[m
+Merge: 9bb963f 01241c9
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Mon Aug 28 18:29:59 2023 +0700
+
+    fix merge conflick
+
+[33mcommit 01241c9652258cef77558be60a956cb18b9381d2[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Mon Aug 28 18:27:42 2023 +0700
+
+    done rooms page
+
+[33mcommit 00e677d016edfe5624ef8ac195285f42a79eaadb[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Sun Aug 27 17:03:14 2023 +0700
+
+    done Homepage and fix header error
+
+[33mcommit dbb0a6944245f7c9fc4e9c695b6bd89780a27574[m
+Merge: 97541e3 9bb963f
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Sat Aug 26 22:25:57 2023 +0700
+
+    Merge beta to nguyenmui
+    
+    Beta to nguyenmui
+
+[33mcommit 97541e3d5c64e1d06c37e3aee5394158e1fa7932[m
+Author: muinguyen03 <muinguyen03@gmail.com>
+Date:   Sat Aug 26 22:24:39 2023 +0700
+
+    update code
+
+[33mcommit 69cd6ac7e8270cdd6811f6bfbe0344b6a9c6ac13[m
+Merge: ef90494 993d857
+Author: muinguyen03 <muinguyen03@gmail.com>
+Date:   Sat Aug 26 22:14:51 2023 +0700
+
+    Merge remote-tracking branch 'origin/beta' into nguyenmui
+
+[33mcommit ef90494c210c7a394ef7323eba4a7ac9ad8eb2e8[m
+Author: muinguyen03 <muinguyen03@gmail.com>
+Date:   Sat Aug 26 22:14:09 2023 +0700
+
+    update code
+
+[33mcommit 9bb963f6c48138e08954dd159a9a91f499271c36[m
+Merge: 993d857 7476b06
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Sat Aug 26 22:12:41 2023 +0700
+
+    Merge pull request #9 from ntducne/nguyenduc
+    
+    build module auth
+
+[33mcommit 7476b06130fc0d8dca3a563b0f177513054b26b0[m
+Merge: 9024f76 b18da01
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Sat Aug 26 07:49:37 2023 +0700
+
+    build module auth
+
+[33mcommit bdd7eef9e750009cab067e9bf87de5021bae7372[m
+Merge: 163bc97 9d28baa
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Sat Aug 26 17:17:53 2023 +0700
+
+    Merge pull request #8 from ntducne/phamdung
+    
+    Phamdung
+
+[33mcommit 9d28baaed3cc72168d0190ffffd478ca5b71526c[m
+Author: dungtuan1902 <phamtuandung923@gmail.com>
+Date:   Sat Aug 26 14:27:42 2023 +0700
+
+    migration and crud services
+
+[33mcommit 5aabd0e79f311f764da34c898794176ec8c7b886[m
+Merge: 163bc97 993d857
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Sat Aug 26 08:41:26 2023 +0700
+
+    Merge pull request #7 from ntducne/beta
+    
+    Beta to DaoTrung
+
+[33mcommit 993d8574e9d14d471a904b2ccdfe89b26b902e4c[m
+Merge: 9024f76 b18da01
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Sat Aug 26 07:49:37 2023 +0700
+
+    Merge pull request #3 from ntducne/donghang
+    
+    Merge Dong Hang to Beta
+
+[33mcommit cbf8357ad7f75da8f73e89e0ec71125c349c6ffd[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Fri Aug 25 21:47:34 2023 +0700
+
+    add HomePage
+
+[33mcommit 5f0fa80fd46094d6e5915bbd4866db4369b78997[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Fri Aug 25 20:09:18 2023 +0700
+
+    done layout client (header, footer, slide)
+
+[33mcommit b18da01f5a02bc0e7674ebc10bfb2782c8ff6e62[m
+Author: DT Hang <dongthihang7903@gmail.com>
+Date:   Fri Aug 25 14:07:31 2023 +0700
+
+    giao dien register admin
+
+[33mcommit 7f9fb73ad46d1d26099dc621ee03fce5c9d3d7c2[m
+Author: DT Hang <dongthihang7903@gmail.com>
+Date:   Fri Aug 25 13:37:54 2023 +0700
+
+    giao dien login admin
+
+[33mcommit 8a0a41a78b977a85c0f5e2035a724e1032f6702e[m
+Author: DT Hang <dongthihang7903@gmail.com>
+Date:   Thu Aug 24 20:52:11 2023 +0700
+
+    some more things
+
+[33mcommit 80101458f9a31ea07ff4e937734419d3982a83a5[m
+Author: DT Hang <dongthihang7903@gmail.com>
+Date:   Thu Aug 24 20:05:23 2023 +0700
+
+    giao dien register
+
+[33mcommit 2f077650cedf6c308f031a27580770100ecbb6b7[m
+Author: DT Hang <dongthihang7903@gmail.com>
+Date:   Wed Aug 23 17:51:29 2023 +0700
+
+    giao diện login
+
+[33mcommit 9024f76471fe075c7820c3cb7b9f82669d3534c1[m
+Merge: 3261ee8 d794739
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Wed Aug 23 13:08:47 2023 +0700
+
+    Merge pull request #1 from ntducne/nguyenduc
+    
+    Nguyenduc
+
+[33mcommit d79473996fd74b0f6254e360899e72b97d50e19c[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Wed Aug 23 13:07:33 2023 +0700
+
+    test
+
+[33mcommit 163bc972061fb6a99d7e4842dd48f19871bf4322[m[33m ([m[1;31morigin/nguyenhuy[m[33m)[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Tue Aug 22 21:21:38 2023 +0700
+
+    Update base backend
+
+[33mcommit 3261ee86ad2ebbdb051bfd120f88c9bbb08320c3[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Tue Aug 22 21:19:20 2023 +0700
+
+    Update base backend
+
+[33mcommit c3a3e584cc64abc86f48cef658b9a2753c581f74[m
+Author: Nguyễn Đức <nguyenduc10603@gmail.com>
+Date:   Tue Aug 22 21:19:03 2023 +0700
+
+    Update base backend
+
+[33mcommit 3add4d718c29685028305b1d34ec345b21c7b1e1[m
+Author: Nguyen Trung Duc <huyga612@gmail.com>
+Date:   Tue Aug 22 12:02:22 2023 +0700
+
+    base admin and client
+
+[33mcommit bae38f34d12d0acfe5fe1384688a19bfd79e13cf[m
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Mon Aug 21 12:06:21 2023 +0700
+
+    Create README.md
+
+[33mcommit cf9576d394e3183e84e3dfece1a1f87a4ce7e82d[m
+Author: Nguyễn Thiên Đức <nguyenduc10603@gmail.com>
+Date:   Mon Aug 21 12:05:56 2023 +0700
+
+    build base project
