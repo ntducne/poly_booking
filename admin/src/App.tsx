@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+import { Route, Routes } from "react-router-dom"
+import Home from "./pages/Home"
+import LoginAdmin from "./pages/Auth/login"
+=======
 import { Route, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
 import Dashboard from "./pages/Admin/Dashboard";
@@ -35,6 +40,7 @@ import AddBill from "./pages/Admin/Bill/Add";
 import EditBill from "./pages/Admin/Bill/Edit";
 import ListFeedBack from "./pages/Admin/Feedback/List";
 import NotFound from "./pages/Admin/NotFound";
+>>>>>>> 4831b1780cc94fe8254672b83e435b0a854fcdb6
 
 import LoginAdmin from "./pages/Auth/login";
 import RegisterAdmin from "./pages/Auth/register";
@@ -48,6 +54,8 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
           <Route path="login" element={<LoginAdmin />} />
+<<<<<<< HEAD
+=======
           <Route path="register" element={<RegisterAdmin />} />
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
@@ -110,6 +118,7 @@ function App() {
           <Route path="user">
             <Route index element={<ListUser />} />
           </Route>
+>>>>>>> 4831b1780cc94fe8254672b83e435b0a854fcdb6
         </Route>
       </Routes>
     </>
