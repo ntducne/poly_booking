@@ -47,8 +47,9 @@ class BookingRepository
         if($room_quantity > $numberOfPeople){
             return false;
         }
-        // kiểm tra xem có phòng nào trống hay không
-        $availableRooms = DB::table('rooms')
+
+        // kiểm tra các phòng còn trống
+        return DB::table('rooms')
             ->leftJoin('booking_detail', function ($join) use ($checkIn, $checkOut) {
                 $join->on('rooms.room_name', '=', 'booking_detail.room_name')
                     ->where(function ($query) use ($checkIn, $checkOut) {
