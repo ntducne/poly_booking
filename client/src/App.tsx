@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom"
-import Detial from "./pages/Room/Detial"
+import Detail from "./pages/Room/Detail"
 import Contact from "./pages/contact"
 import LayoutClient from "./layouts/Client"
 import Home from "./pages/Home"
@@ -21,7 +21,7 @@ function App() {
         <Route path='/' element={<LayoutClient />}>
           <Route index element={<Home />} />
           <Route path='rooms' element={<Rooms />} />
-          <Route path="detail" element={<Detial />} />
+          <Route path="detail" element={<Detail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
           <Route path="checkout" element={<Checkout />} />
