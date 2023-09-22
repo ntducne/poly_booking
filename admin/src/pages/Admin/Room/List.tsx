@@ -12,7 +12,7 @@ interface DataType {
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal , { } from "sweetalert";
+import swal, { } from "sweetalert";
 
 const ListRoom = () => {
   const [loadings, setLoadings] = useState<boolean[]>([]);
@@ -167,7 +167,7 @@ const ListRoom = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -196,7 +196,7 @@ const ListRoom = () => {
         </Col>
       </Row>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}

@@ -3,7 +3,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-],
+  ],
   theme: {
     extend: {
       container: {
@@ -13,7 +13,7 @@ export default {
       },
       fontFamily: {
         text: ['Heebo'],
-        text_2nd: ['Cormorant','serif']
+        text_2nd: ['Cormorant', 'serif']
       },
       keyframes: {
         hover: {
@@ -21,6 +21,9 @@ export default {
           '50%': { opacity: 50 },
           '100%': { opacity: 100 },
         }
+      },
+      backgroundColor: {
+        bgr: "#eeeeee"
       }
     },
   },

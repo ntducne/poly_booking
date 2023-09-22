@@ -111,11 +111,8 @@ export default function Home({ }: Props) {
               <h2 className='text-[23px] text-center text-[#202020] max-w-[800px] font-text font-light'>
                 Everything you need to live an unforgettable eco-luxury experience of health and well-being. The art of meeting your highest expectations.
               </h2>
-
             </ObserverAnimate>
-
           </div>
-
           <div className='flex justify-center flex-col md:flex-row gap-[30px] md:gap-[50px]'>
             <ObserverAnimate position={{ x: -150, duration: 1 }}>
               <Link to='' className='relative group'>

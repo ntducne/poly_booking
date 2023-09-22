@@ -2,21 +2,26 @@
 
 namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
-class RoomType extends Eloquent
+
+
+class Promotion extends Eloquent
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'room_type';
+
+    protected $table = 'promotion' ;
+
     protected $fillable = [
-        'room_type_name',
-        'description',
-        'price_per_night',
-        'status',
+        'code',
+        'start_date',
+        'start_end',
+        'conditions',
+        'branch_id',
     ];
+
     protected $attributes = [
       'deleted_at' => null,
     ];
 }
-

@@ -2,20 +2,21 @@
 
 namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
-
-class Branch extends Eloquent
+class Utilities extends Eloquent
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory , SoftDeletes;
+
+    protected $table = 'utilities';
+
     protected $fillable = [
         'name',
-        'address',
-        'phone',
-        'deleted_at'
+        'room_id',
     ];
+
     protected $attributes = [
-        'deleted_at' => null
+        'deleted_at' => null,
     ];
 }

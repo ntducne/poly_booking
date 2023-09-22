@@ -21,7 +21,9 @@ class Admin extends Eloquent implements AuthenticateContract
         'password',
         'phone',
         'address',
-        'status'
+        'status',
+        'branch_id',
+        'role',
     ];
     protected $hidden = [
         'password'
