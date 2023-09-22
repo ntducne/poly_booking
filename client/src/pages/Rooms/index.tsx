@@ -94,7 +94,7 @@ export default function Rooms({ }: Props) {
                         pagination={{
                             clickable: true,
                         }}
-                        modules={[Pagination1, Navigation]}
+                        modules={[Navigation]}
                         className="mySwiper"
 
                     >

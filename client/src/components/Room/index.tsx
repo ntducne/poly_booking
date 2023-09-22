@@ -8,7 +8,7 @@ export default function Room(data: any) {
     const { id, name, image, price, desc, maxPerson } = data.data
 
     return (
-        <div className='bg-white group rounded-[10px] overflow-hidden'>
+        <div className='bg-[#eeeeee] group rounded-[10px] overflow-hidden'>
             <div className='overflow-hidden'>
                 <img className='group-hover:scale-110 transition-all duration-300 w-full' src={image} alt="" />
 
