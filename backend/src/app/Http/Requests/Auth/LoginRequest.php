@@ -13,9 +13,6 @@ class LoginRequest extends Request
         return [
             'email' => [
                 'bail', 'required', 'string', 'email',
-                Rule::exists(User::class,'email')->where(function ($query) {
-                    $query->where('status', 0);
-                }),
             ],
             'password'  => [
                 'bail', 'required', 'string', 'min:1'

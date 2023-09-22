@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\LoginSocicalController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,16 +21,12 @@ Route::middleware(CheckReferer::class)->group(function () {
     });
     Route::middleware(CheckType::class)->group(function () {
         Route::post('register', [RegisterController::class,'register']);
-        Route::group(['middleware' => 'throttle:1,1'], function () {
+//        Route::group(['middleware' => 'throttle:1,1'], function () {
             Route::post('reset-password',        [ForgotPasswordController::class,'sendMail']);
             Route::get('reset-password/{token}', [ForgotPasswordController::class,'checkToken']);
             Route::put('reset-password/{token}', [ForgotPasswordController::class,'reset']);
-        });
+//        });
     });
-    Route::post('register', [RegisterController::class,'index']);
-//    Route::get('login/google',  [GoogleLoginController::class,'loginUrl']);
-//    Route::get('login/google/callback',[GoogleLoginController::class,'loginCallback']);
-
     Route::get('/login/{provider}', [LoginSocicalController::class,'redirect']);
     Route::get('/callback/{provider}', [LoginSocicalController::class,'callback']);
 });

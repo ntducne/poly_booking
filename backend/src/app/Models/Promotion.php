@@ -18,6 +18,7 @@ class Promotion extends Eloquent
         'start_date',
         'start_end',
         'conditions',
+        'branch_id',
     ];
 
     protected $attributes = [

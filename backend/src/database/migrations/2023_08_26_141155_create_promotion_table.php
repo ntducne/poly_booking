@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->create('promotion', function (Blueprint $table) {
+        Schema::connection('mongodb')->create('promotions', function (Blueprint $table) {
             $table->id();
             $table->string('code');
             $table->date('start_date');
             $table->date('end_date');
             $table->string('conditions');
+            $table->string('branch_id');
             $table->timestamps();
         });
     }

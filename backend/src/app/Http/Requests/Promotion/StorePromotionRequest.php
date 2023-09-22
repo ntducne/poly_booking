@@ -4,6 +4,7 @@ namespace app\Http\Requests\Promotion;
 
 use App\Http\Requests\Request;
 use App\Models\Promotion;
+use App\Models\Branch;
 use Illuminate\Validation\Rule;
 class StorePromotionRequest extends Request
 {
@@ -15,7 +16,9 @@ class StorePromotionRequest extends Request
                 Rule::unique(Promotion::class, 'code')],
             'start_date' => ['bail', 'required', 'date' ,'date_format:"d/m/Y"'],
             'end_date'   => ['bail', 'required','date', 'date_format:"d/m/Y"'],
-            'conditions' => ['bail', 'required', 'string']
+            'conditions' => ['bail', 'required', 'string'],
+            'branch_id'  => ['required',
+                Rule::exists(Branch::class, $this->column_id)]
         ];
     }
 
@@ -26,6 +29,7 @@ class StorePromotionRequest extends Request
             'start_date' => 'Ngày bắt đầu',
             'end_date'   => 'Ngày hết hạn ',
             'conditions' => 'Điều kiện',
+            'branch_id'  => 'Mã khách sạn'
         ];
     }
 }

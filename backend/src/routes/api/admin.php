@@ -1,16 +1,22 @@
 <?php
 
-use App\Http\Controllers\CancellationPolicyController;
-use App\Http\Controllers\PromotionController;
-use App\Http\Controllers\UtilitiesController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BranchController;
+use app\Http\Controllers\Admin\CancellationPolicyController;
+use app\Http\Controllers\Admin\PromotionController;
+use app\Http\Controllers\Admin\RoomTypeController;
+use App\Http\Controllers\Admin\UserController;
+use app\Http\Controllers\Admin\UtilitiesController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RoomTypeController;
-use App\Http\Controllers\StaffController;
 
-Route::resource('staffs', StaffController::class);
-Route::resource('roomtypes',RoomTypeController::class);
+Route::resource('admins', AdminController::class);
+Route::resource('roomtypes', RoomTypeController::class);
 Route::resource('promotions', PromotionController::class);
 Route::resource('utilities', UtilitiesController::class);
 Route::resource('cancelpolicies', CancellationPolicyController::class);
+Route::resource('branches', BranchController::class);
 
 
+
+//Route::resource('staffs', \app\Http\Controllers\Admin\StaffController::class);
+Route::resource('users', UserController::class);
