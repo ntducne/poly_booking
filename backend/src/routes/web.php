@@ -1,21 +1,38 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
 Route::get('error-message', function (){ return response()->json('Denied',403); });
 Route::get('/routes', function () {
-    $routeCollection = Route::getRoutes();
+    $dataPermissions = getNameRoute();
+    $guard = 'admin';
+    foreach ($dataPermissions as $key => $value) {
+        Permission::query()->updateOrCreate([
+            'name' => $key,
+            'guard_name' => $guard
+        ]);
+    };
+    Permission::query()
+        ->whereNotIn('name', array_keys($dataPermissions))
+        ->whereNotIn('guard_name', $guard)
+        ->delete();
+    $role = Role::updateOrCreate([
+        'name' => 'super-admin',
+        'guard_name' => $guard
+    ]);
+    $role->givePermissionTo(Permission::all());
+    echo 'done';
+});
 
-
-    echo "<table border='1'>";
-    echo "<tr>";
-    echo "<td width='10%'><h4>Route</h4></td>";
-    echo "<td width='10%'><h4>Name</h4></td>";
-    echo "</tr>";
-    foreach ($routeCollection as $value) {
-        echo "<tr>";
-        echo "<td>" . $value->uri() . "</td>";
-        echo "<td>" . $value->getName() . "</td>";
-        echo "</tr>";
+Route::get('/routes-del', function () {
+    $all = Permission::all();
+    foreach ($all as $key => $value) {
+        $value->delete();
     }
-    echo "</table>";
+    $all2 = Role::all();
+    foreach ($all2 as $key => $value) {
+        $value->delete();
+    }
 });
