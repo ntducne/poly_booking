@@ -81,7 +81,7 @@ export default function Home({ }: Props) {
         {/* restaurant */}
         <div className='mt-[100px] px-4'>
           <div className='flex justify-center  font-text_2nd mb-[60px]'>
-            <ObserverAnimate position={{ x: 0, y: 50, duration: 1.5 }}>
+            <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
               <div className='text-center'>
                 <h2 className='text-[30px] md:text-[50px] max-w-[780px] text-center  font-medium'>We put a smile back on your face. Pleasing people the world over. The best surprise is no surprise.</h2>
                 <Link to='' className='border-b text-[20px] md:text-[30px]'>Views our rooms</Link>
@@ -107,7 +107,7 @@ export default function Home({ }: Props) {
         {/* art */}
         <div className='mt-[100px] px-4'>
           <div className='flex justify-center mb-[60px]'>
-            <ObserverAnimate position={{ x: 0, y: 50, duration: 1.5 }}>
+            <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
               <h2 className='text-[23px] text-center text-[#202020] max-w-[800px] font-text font-light'>
                 Everything you need to live an unforgettable eco-luxury experience of health and well-being. The art of meeting your highest expectations.
               </h2>
