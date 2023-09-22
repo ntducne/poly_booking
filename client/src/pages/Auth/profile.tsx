@@ -7,7 +7,7 @@ const Profile = (props: Props) => {
     return (
         <div>
             <HeroSlide />
-            <div className="container mx-auto my-5 p-5 ">
+            <div className="container mx-auto my-5 p-5">
                 <div className="md:flex no-wrap md:-mx-2 ">
 
                     <div className="w-full md:w-3/12 md:mx-2">
@@ -138,63 +138,75 @@ const Profile = (props: Props) => {
 
 
                         <div className="bg-white p-3 shadow-sm rounded-sm">
-
-                            <div className="grid grid-cols-2">
-                                <div>
-                                    <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                                        <span className="text-green-500">
-                                            <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                            </svg>
-                                        </span>
-                                        <span className="tracking-wide">Experience</span>
+                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">Thay đổi thông tin</h1>
+                            <div className="grid grid-cols-2 mt-4">
+                                <form className="w-full max-w-lg">
+                                    <div className="flex flex-wrap -mx-3 mb-6">
+                                        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
+                                                First Name
+                                            </label>
+                                            <input className="appearance-none block w-full bg-gray-200 
+                                            text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 
+                                            leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
+                                            <p className="text-red-500 text-xs italic">Please fill out this field.</p>
+                                        </div>
+                                        <div className="w-full md:w-1/2 px-3">
+                                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
+                                                Last Name
+                                            </label>
+                                            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 
+                                            rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                                id="grid-last-name" type="text" placeholder="Doe" />
+                                        </div>
                                     </div>
-                                    <ul className="list-inside space-y-2">
-                                        <li>
-                                            <div className="text-teal-600">Owner at Her Company Inc.</div>
-                                            <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                                        </li>
-                                        <li>
-                                            <div className="text-teal-600">Owner at Her Company Inc.</div>
-                                            <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                                        </li>
-                                        <li>
-                                            <div className="text-teal-600">Owner at Her Company Inc.</div>
-                                            <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                                        </li>
-                                        <li>
-                                            <div className="text-teal-600">Owner at Her Company Inc.</div>
-                                            <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                                        <span className="text-green-500">
-                                            <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor">
-                                                <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
-                                                <path fill="#fff"
-                                                    d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-                                            </svg>
-                                        </span>
-                                        <span className="tracking-wide">Education</span>
+                                    <div className="flex flex-wrap -mx-3 mb-6">
+                                        <div className="w-full px-3">
+                                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
+                                                Password
+                                            </label>
+                                            <input className="appearance-none block w-full 
+                                            bg-gray-200 text-gray-700 border border-gray-200 
+                                            rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white 
+                                            focus:border-gray-500" id="grid-password" type="password" placeholder="******************" />
+                                            <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
+                                        </div>
                                     </div>
-                                    <ul className="list-inside space-y-2">
-                                        <li>
-                                            <div className="text-teal-600">Masters Degree in Oxford</div>
-                                            <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                                        </li>
-                                        <li>
-                                            <div className="text-teal-600">Bachelors Degreen in LPU</div>
-                                            <div className="text-gray-500 text-xs">March 2020 - Now</div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                    <div className="flex flex-wrap -mx-3 mb-2">
+                                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
+                                                City
+                                            </label>
+                                            <input className="appearance-none block w-full bg-gray-200 
+                                            text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none 
+                                            focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="Albuquerque" />
+                                        </div>
+                                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-state">
+                                                State
+                                            </label>
+                                            <div className="relative">
+                                                <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                                                    <option>New Mexico</option>
+                                                    <option>Missouri</option>
+                                                    <option>Texas</option>
+                                                </select>
+                                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
+                                                Zip
+                                            </label>
+                                            <input className="appearance-none block w-full bg-gray-200 
+                                            text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight 
+                                            focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
+                                        </div>
+                                    </div>
+                                    <button type="submit" className="py-3 text-2xl bg-blue-100 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Send message</button>
+                                </form>
                             </div>
 
                         </div>
