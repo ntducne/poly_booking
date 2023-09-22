@@ -13,12 +13,6 @@ return new class extends Migration
      */
     public function up()
     {
-<<<<<<< HEAD
-        // Schema::create('branches', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
-=======
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->string('address');
@@ -26,7 +20,6 @@ return new class extends Migration
             $table->string('number');
             $table->timestamps();
         });
->>>>>>> 17341beb6f41f490149bad63bcd7feaf5a738232
     }
 
     /**
