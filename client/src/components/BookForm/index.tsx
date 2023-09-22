@@ -25,7 +25,7 @@ export default function BookForm({ }: Props) {
             <div className=" mt-4  px-5 py-10 bg-[#a37d4c] w-full items-center lg:shadow-xl lg:absolute lg:left-0 lg:-top-12  lg:right-0 lg:p-0 lg:z-30">
 
                 <Form
-                    className='h-[300px] w-full lg:h-[70px]'
+                    className='h-[400px] w-full lg:h-[70px]'
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     wrapperCol={{ span: 180 }}
