@@ -1,0 +1,28 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/tailwindcss": "^6.8.0",
+    "nuxt": "^3.7.3"
+  },
+  "dependencies": {
+    "@element-plus/nuxt": "^1.0.6",
+    "axios": "^1.5.0",
+    "element-plus": "^2.3.14",
+    "flowbite": "^1.8.1",
+    "js-base64": "^3.7.5",
+    "nookies": "^2.5.2",
+    "preline": "^1.9.0",
+    "vee-validate": "^4.11.6",
+    "yup": "^1.2.0"
+  }
+}

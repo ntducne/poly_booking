@@ -36,6 +36,8 @@ import AddServices from "./pages/Admin/Services/Add";
 import EditServicer from "./pages/Admin/Services/Edit";
 import ListServices from "./pages/Admin/Services/List";
 import LoginAdmin from "./pages/Auth/login";
+import RoleList from "./pages/Admin/Role/List";
+import RoleCreate from "./pages/Admin/Role/Create";
 
 
 function App() {
@@ -105,6 +107,12 @@ function App() {
           </Route>
           <Route path="user">
             <Route index element={<ListUser />} />
+          </Route>
+          {/* <Route path="decentralization"> */}
+          <Route path="role">
+            <Route index element={<RoleList />} />
+            <Route path="create" element={<RoleCreate />} />
+            <Route path="edit" element={<RoleCreate />} />
           </Route>
         </Route>
       </Routes>
