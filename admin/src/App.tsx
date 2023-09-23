@@ -11,11 +11,6 @@ import ListFeedBack from "./pages/Admin/Feedback/List";
 import ListAdmin from "./pages/Admin/Guset/Admin/List";
 import ListUser from "./pages/Admin/Guset/User/List";
 import NotFound from "./pages/Admin/NotFound";
-<<<<<<< HEAD
-
-import LoginAdmin from "./pages/Auth/login";
-// import RegisterAdmin from "./pages/Auth/register";
-=======
 import AddOffers from "./pages/Admin/Offers/Add";
 import EditOffers from "./pages/Admin/Offers/Edit";
 import ListOffers from "./pages/Admin/Offers/List";
@@ -41,24 +36,17 @@ import AddServices from "./pages/Admin/Services/Add";
 import EditServicer from "./pages/Admin/Services/Edit";
 import ListServices from "./pages/Admin/Services/List";
 import LoginAdmin from "./pages/Auth/login";
+import RoleList from "./pages/Admin/Role/List";
+import RoleCreate from "./pages/Admin/Role/Create";
 
->>>>>>> 17341beb6f41f490149bad63bcd7feaf5a738232
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="login" element={<LoginAdmin />} />
-<<<<<<< HEAD
-        {/* <Route path="register" element={<RegisterAdmin />} /> */}
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
-          <Route path="login" element={<LoginAdmin />} />
-          {/* <Route path="register" element={<RegisterAdmin />} /> */}
-=======
-        <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<LayoutAdmin />}>
->>>>>>> 17341beb6f41f490149bad63bcd7feaf5a738232
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="booking">
@@ -119,6 +107,12 @@ function App() {
           </Route>
           <Route path="user">
             <Route index element={<ListUser />} />
+          </Route>
+          {/* <Route path="decentralization"> */}
+          <Route path="role">
+            <Route index element={<RoleList />} />
+            <Route path="create" element={<RoleCreate />} />
+            <Route path="edit" element={<RoleCreate />} />
           </Route>
         </Route>
       </Routes>

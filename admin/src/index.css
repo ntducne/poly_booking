@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ant-menu-item {
+    padding-left: 22px !important;
+}
