@@ -83,7 +83,8 @@ const AddRoom = () => {
             rate: 3.5,
             "color-picker": null,
           }}
-          style={{ maxWidth: 800 }}
+          style={{ maxWidth: 1000 }}
+          className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
             label="Khu vực"
@@ -122,7 +123,6 @@ const AddRoom = () => {
             <InputNumber min={1} max={10} />
           </Form.Item>
 
-
           <Form.Item
             label="Số giường"
             name="num_of_bed"
@@ -130,7 +130,6 @@ const AddRoom = () => {
           >
             <InputNumber min={1} max={10} />
           </Form.Item>
-
 
           <Form.Item name="bed_size" label="Số giường">
             <Checkbox.Group>
@@ -232,10 +231,10 @@ const AddRoom = () => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <Space>
+            <Space className="flex flex-col md:flex-row">
               <Button  className="flex items-center w-30 bg-[rgb(76,167,68)]  py-5 rounded-3xl hover:bg-sky-500" type="default" htmlType="submit">
                 <AiOutlineCheck className="text-[#fff] "/>
-                <Text className="text-[#fff] ml-2">Thêm</Text>
+                <Text className=" text-[#fff] ml-2">Thêm</Text>
               </Button>
               <Button className="flex items-center max-w-30 bg-[rgb(119,145,115)]  py-5 rounded-3xl hover:bg-indigo-400" htmlType="reset">
                  <BiReset className="text-[#fff]"/> 

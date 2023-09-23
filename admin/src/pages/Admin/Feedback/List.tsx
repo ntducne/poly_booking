@@ -1,178 +1,171 @@
 import React, { useState } from "react";
-import { Button, Carousel, Space, Table, Tabs } from "antd";
-import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlinePlus } from "react-icons/ai";
+import { Button, Image, Rate, Space, Table, Tabs } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
   age: number;
   address: string;
 }
+import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+import FormSearch from "../../../component/formSearch";
+import swal , { } from "sweetalert";
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: "Tên phòng",
-    dataIndex: "name",
-    filters: [
-      {
-        text: "Joe",
-        value: "Joe",
+const ListFeedback = () => {
+ 
+  const columns: ColumnsType<any> = [
+    {
+      title: "ID",
+      dataIndex: "review_id",
+      sorter: (a, b) => a.review_id - b.review_id,
+      sortDirections: ["descend"],
+      fixed: "left",
+    },
+    {
+      title: "Người đánh giá",
+      dataIndex: "user_id",
+      render: (user_id) => (
+        <div className="flex items-center">
+          {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
+          <Image
+            className="rounded-3xl "
+            width={150}
+            src={user_id?.image}
+          />
+          <div className="ml-3 text-gray-500">
+            <p>{user_id?.email}</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Số sao",
+      dataIndex: "star",
+      key: "star",
+      render: (star) => (
+        <Rate allowHalf defaultValue={star} />
+      )
+    },
+    {
+      title: "Ngày đánh giá",
+      dataIndex: "rate_at",
+      key: "rate_at",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          {/* <Button type="primary" style={{ backgroundColor: "#68e365" }}>
+            <Link to={`/room/edit/${record?.key}`}>
+              <AiOutlineEdit />
+            </Link>
+          </Button> */}
+          <Button
+            onClick={() => remove(record?.key)}
+            type="primary"
+            style={{ backgroundColor: "#e23428" }}
+          >
+            <MdDeleteForever />
+          </Button>
+        </Space>
+      ),
+      // fixed: "right",
+    },
+  ];
+
+  const data : any= [
+    {
+      key: "1",
+      review_id: 1,
+      user_id: {
+        image: "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
+        email: "huynguyen@gmail.com"
       },
-      {
-        text: "Jim",
-        value: "Jim",
+      content: "Đẹp quá nè",
+      rate_at: "2021-09-20",
+      images: "",
+      star: 5
+    },
+    {
+      key: "2",
+      review_id: 2,
+      user_id: {
+        image: "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
+        email: "huynguyen123@gmail.com"
       },
-      {
-        text: "Submenu",
-        value: "Submenu",
-        children: [
-          {
-            text: "Green",
-            value: "Green",
-          },
-          {
-            text: "Black",
-            value: "Black",
-          },
-        ],
-      },
-    ],
-    // specify the condition of filtering result
-    // here is that finding the name started with `value`
-    onFilter: (value: any, record) => record.name.indexOf(value) === 0,
-    sorter: (a, b) => a.name.length - b.name.length,
-    sortDirections: ["descend"],
-  },
-  {
-    title: "Loại phòng",
-    dataIndex: "age",
-    key : "age"
-  },
-  {
-    title: "Giá phòng",
-    dataIndex: "age",
-    key: "age",
-    sorter: (a, b) => a.name.length - b.name.length,
-
-  },
-  {
-    title: "Tầng phòng",
-    dataIndex: "age",
-    key: "age",
-  },
-  {
-    title: "Trạng thái",
-    dataIndex: "address",
-    filters: [
-      {
-        text: "Còn trống",
-        value: "Con",
-      },
-      {
-        text: "Hết phòng",
-        value: "Het",
-      },
-    ],
-    onFilter: (value: any, record) => record.address.indexOf(value) === 0,
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <Button type="primary" style={{backgroundColor:'#68e365'}}>Sửa</Button>
-        <Button type="primary" style={{backgroundColor:'#e23428'}}>Xóa</Button>
-      </Space>
-    ),    
-  },
-];
-
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "John Brown 123",
-    age: 35,
-    address: "New York No. 1 Lake Park",
-  },
-];
-
-const onChange: TableProps<DataType>["onChange"] = (
-  pagination,
-  filters,
-  sorter,
-  extra
-) => {
-  console.log("params", pagination, filters, sorter, extra);
-};
-
-// const operations = <Button>Extra Action</Button>;
-
-const items = new Array(3).fill(null).map((_, i) => {
-  const id = String(i + 1);
-  return {
-    label: `Tab ${id}`,
-    key: id,
-    children: `Content of tab ${id}`,
-  };
-});
+      content: "Đẹp quá nè ahihi",
+      rate_at: "2021-09-20",
+      images: "",
+      star: 4
+    },
+  ];
 
 
-
-const ListFeedBack = () => {
-  const [loadings, setLoadings] = useState<boolean[]>([]);
-
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-    }, 2000);
+  const remove = (id: any) => {
+    try {
+      swal({
+        title: "Are you sure you want to delete?",
+        text: "You cannot undo after deleting!",
+        icon: "warning",
+        buttons: ["Cancel", "Delete"],
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            // removeComment(id);
+            swal("You have successfully deleted", {
+              icon: "success",
+            });
+          }
+        })
+        .catch(() => {
+          swal("Error", {
+            icon: "error",
+          });
+        });
+    } catch (error) {}
   };
 
   return (
     <div className="">
-      <Row className="flex justify-around">
-        <Col span={8}>
-
-          <Tabs className="w-10%" items={items} />
-
-        </Col>
-        <Col className=""  span={8} offset={8}>
-          <Button
-            className="bg-teal-700	text-[#fff]"
+      <div className="flex flex-col-reverse md:flex-row md:justify-between ">
+        <div className="mb-3">
+          <FormSearch />
+        </div>
+        <div className="flex flex-col md:flex-row">
+          {/* <Button
+            className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl mb-2"
             type="default"
             icon={<AiOutlinePlus />}
-            loading={loadings[1]}
-            onClick={() => enterLoading(1)}
           >
             <Link to={`/room/add`}>Thêm phòng</Link>
+          </Button> */}
+          <Button
+            className="bg-red-400	text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
+            type="default"
+            icon={<MdOutlineDeleteOutline />}
+          >
+            <Link to={`/Feedback`}>Thùng rác</Link>
           </Button>
-        </Col>
-      </Row>
+          {/* <Button className=" bg-red-400 text-[#fff] hover:drop-shadow-2xl md:ml-auto">
+            <Link className="flex items-center px-10" to={`/admin`}>
+              <MdOutlineDeleteOutline />
+              <span className="ml-2">Thùng rác</span>
+            </Link> 
+          </Button> */}
+        </div>
+      </div>
       <Table
-        className="mt-3"
+        scroll={{x : true}}
+        className="max-w-full mt-3"
         columns={columns}
         dataSource={data}
-        onChange={onChange}
       />
     </div>
   );
 };
 
-export default ListFeedBack;
+export default ListFeedback;

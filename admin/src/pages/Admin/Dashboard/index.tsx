@@ -20,7 +20,7 @@ const Dashboard = (props: Props) => {
 
   return (
     <div>
-      <div className="grid 2xl:grid-cols-4 2xl:gap-4 md:grid-cols-2 md:gap-5 sm:grid-cols-1">
+      <div className="grid grid-cols-1 gap-5 2xl:grid-cols-4 2xl:gap-4 md:grid-cols-2 ">
         <button className="border rounded-xl sm:mb-4 drop-shadow-md hover:drop-shadow-xl">
           <div className="flex items-center">
             <div className=" rounded-xl m-5 p-2 bg-red-100  text-red-600  hover:bg-red-400 hover:text-white">
@@ -66,11 +66,11 @@ const Dashboard = (props: Props) => {
           </div>
         </button>
       </div>
-      <div className="grid 2xl:grid-cols-2">
+      <div className="grid grid-col-1 md:grid-cols-2">
         <div>
           <Calendar fullscreen={false} onPanelChange={onPanelChange} />
         </div>
-        <div className="bg-gray-100">
+        <div className="bg-gray-100 md:bg-gray-100">
           {/* <h1 className="text-2xl font-bold mb-4">Hotel Statistics</h1>
           <canvas id="chart"></canvas> */}
         </div>
@@ -79,22 +79,22 @@ const Dashboard = (props: Props) => {
         <div>
           <Title level={4}>Đánh giá mới của khách hàng</Title>
         </div>
-        <div className="grid gap-4 xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-          <div className="border rounded-xl p-7 text-base	text-[#6e6e6e] ">
-            <div className="mb-4">
+        <div className="grid gap-4 grid-cols-1 xl:grid-cols-3 md:grid-cols-2">
+          <div className="border rounded-xl p-2  md:p-7 text-base	text-[#6e6e6e] ">
+            <div className="">
               <p>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                 Itaque, animi.
               </p>
             </div>
-            <div className="flex justify-between items-center">
-              <div className="flex ">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col md:flex-row md:items-center">
                 <img
-                  className="w-12 h-12 rounded-xl"
+                  className="hidden md:w-12 md:h-12 md:rounded-xl md:block"
                   src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
                   alt=""
                 />
-                <div className="mx-4 ">
+                <div className="my-3 md:mx-4">
                   <div>Nguyễn Quốc Huy</div>
                   <div>4 phút trước</div>
                 </div>
@@ -109,21 +109,21 @@ const Dashboard = (props: Props) => {
               </div>
             </div>
           </div>
-          <div className="border rounded-xl p-7 text-base	text-[#6e6e6e]">
-            <div className="mb-4">
+          <div className="border rounded-xl p-2  md:p-7 text-base	text-[#6e6e6e] ">
+            <div className="">
               <p>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                 Itaque, animi.
               </p>
             </div>
-            <div className="flex justify-between items-center">
-              <div className="flex ">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col md:flex-row md:items-center">
                 <img
-                  className="w-12 h-12 rounded-xl"
+                  className="hidden md:w-12 md:h-12 md:rounded-xl md:block"
                   src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
                   alt=""
                 />
-                <div className="mx-4 ">
+                <div className="my-3 md:mx-4">
                   <div>Nguyễn Quốc Huy</div>
                   <div>4 phút trước</div>
                 </div>
@@ -138,21 +138,21 @@ const Dashboard = (props: Props) => {
               </div>
             </div>
           </div>
-          <div className="border rounded-xl p-7 text-base	text-[#6e6e6e]">
-            <div className="mb-4">
+          <div className="border rounded-xl p-2  md:p-7 text-base	text-[#6e6e6e] ">
+            <div className="">
               <p>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                 Itaque, animi.
               </p>
             </div>
-            <div className="flex justify-between items-center">
-              <div className="flex ">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+              <div className="flex flex-col md:flex-row md:items-center">
                 <img
-                  className="w-12 h-12 rounded-xl"
+                  className="hidden md:w-12 md:h-12 md:rounded-xl md:block"
                   src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
                   alt=""
                 />
-                <div className="mx-4 ">
+                <div className="my-3 md:mx-4">
                   <div>Nguyễn Quốc Huy</div>
                   <div>4 phút trước</div>
                 </div>

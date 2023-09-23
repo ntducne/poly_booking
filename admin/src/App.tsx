@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Router, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
 import Dashboard from "./pages/Admin/Dashboard";
 import ListBooking from "./pages/Admin/Booking/List";
@@ -104,11 +104,13 @@ function App() {
           <Route path="feedback">
             <Route index element={<ListFeedBack />} />
           </Route>
-          <Route path="admin">
-            <Route index element={<ListAdmin />} />
-          </Route>
-          <Route path="user">
-            <Route index element={<ListUser />} />
+          <Route path="auth">
+            <Route path="admin">
+              <Route index element={<ListAdmin />} />
+            </Route>
+            <Route path="user">
+              <Route index element={<ListUser />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

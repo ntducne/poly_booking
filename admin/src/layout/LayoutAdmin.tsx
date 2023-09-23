@@ -44,7 +44,7 @@ const LayoutAdmin = () => {
     getItem(
       "Đánh giá",
       "2",
-      <Link onClick={() => handleTitleChange("Đánh giá")} to={`review`}>
+      <Link onClick={() => handleTitleChange("Đánh giá")} to={`feedback`}>
         <VscFeedback />
       </Link>
     ),
@@ -53,15 +53,15 @@ const LayoutAdmin = () => {
       getItem("Loại Phòng", "4" , <Link onClick={() => handleTitleChange("Loại phòng")} to={`roomType`}/>),
       getItem("Tiện ích Phòng", "5" , <Link onClick={() => handleTitleChange("Tiện ích phòng")} to={`roomUtilities`}/>),
     ]),
-    getItem("Phòng Đặt", "6", <Link onClick={() => handleTitleChange("Phòng đặt")} to={`roomExtend`}> <BsBuildingFillCheck /></Link>), 
+    getItem("Phòng Đặt", "6", <Link onClick={() => handleTitleChange("Phòng đặt")} to={`booking`}> <BsBuildingFillCheck /></Link>), 
     getItem("Gia hạn Phòng", "7", <Link onClick={() => handleTitleChange("Gia hạn Phòng")}  to={`roomExtend`}><AiFillPushpin /></Link>), 
     getItem("Hóa đơn", "8", <Link onClick={() => handleTitleChange("Hóa đơn")} to={`bill`}><AiFillBank /></Link>), 
     getItem("Dịch vụ", "9", <Link onClick={() => handleTitleChange("Dịch vụ")} to={`services`}><AiOutlineCrown /></Link>), 
     getItem("Ưu đãi-Khuyến Mãi", "10", <Link onClick={() => handleTitleChange("Ưu đãi-Khuyến Mãi")} to={`offers`}><AiTwotoneGift /></Link>), 
     getItem("Chính sách", "11", <Link onClick={() => handleTitleChange("Chính sách")} to={`policy`}><AiTwotonePrinter /></Link>), 
     getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
-      getItem("Quản lý", "12", <Link onClick={() => handleTitleChange("Quản lý")} to={`admin`}/>),
-      getItem("Người dùng", "13", <Link onClick={() => handleTitleChange("Người dùng")} to={`user`}/>),
+      getItem("Quản lý", "12", <Link onClick={() => handleTitleChange("Quản lý")} to={`auth/admin`}/>),
+      getItem("Người dùng", "13", <Link onClick={() => handleTitleChange("Người dùng")} to={`auth/user`}/>),
     ]), 
     
   ];
@@ -87,7 +87,7 @@ const LayoutAdmin = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div className="demo-logo-vertical" />
+        {/* <div className="demo-logo-vertical" /> */}
         <img className="p-2" src="./public/image/logo.jpg" alt="" />
         <Menu
           className="text-[#737b8b] "

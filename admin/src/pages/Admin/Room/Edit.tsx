@@ -19,7 +19,7 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import { GrAdd } from "react-icons/gr";
 import { BiReset } from "react-icons/bi";
-import { AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link } from "react-router-dom";
 const { Option } = Select;
 
@@ -84,7 +84,8 @@ const EditRoom = () => {
             rate: 3.5,
             "color-picker": null,
           }}
-          style={{ maxWidth: 800 }}
+          style={{ maxWidth: 1000 }}
+          className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
             label="Khu vực"
@@ -114,7 +115,6 @@ const EditRoom = () => {
             </Select>
           </Form.Item>
 
-
           <Form.Item
             label="Số người"
             name="num_of_people"
@@ -122,7 +122,6 @@ const EditRoom = () => {
           >
             <InputNumber min={1} max={10} />
           </Form.Item>
-
 
           <Form.Item
             label="Số giường"
@@ -132,16 +131,15 @@ const EditRoom = () => {
             <InputNumber min={1} max={10} />
           </Form.Item>
 
-
           <Form.Item name="bed_size" label="Số giường">
             <Checkbox.Group>
               <Row className="flex items-center sm:flex-col">
-                <Col >
+                <Col>
                   <Checkbox value="A" style={{ lineHeight: "32px" }}>
                     2 lớn , 1 nhỏ
                   </Checkbox>
                 </Col>
-                <Col >
+                <Col>
                   <Checkbox value="C" style={{ lineHeight: "32px" }}>
                     1 lớn , 2 nhỏ
                   </Checkbox>
@@ -200,16 +198,12 @@ const EditRoom = () => {
             <Form.Item name="discount" noStyle>
               <InputNumber min={1} max={10} />
             </Form.Item>
-            <span className="ant-form-text" style={{ marginLeft: 8 }}>
-              
-            </span>
+            <span className="ant-form-text" style={{ marginLeft: 8 }}></span>
           </Form.Item>
-
 
           <Form.Item name="rate" label="Đánh giá">
             <Rate />
           </Form.Item>
-
 
           <Form.Item
             name="branch_id"
@@ -222,10 +216,7 @@ const EditRoom = () => {
               },
             ]}
           >
-            <Select
-              mode="multiple"
-              placeholder="Vui lòng chọn chi nhánh !"
-            >
+            <Select mode="multiple" placeholder="Vui lòng chọn chi nhánh !">
               <Option value="red">Hà Đông</Option>
               <Option value="green">Cầu Giấy</Option>
               <Option value="blue">Trịnh Văn Bô</Option>
@@ -233,17 +224,24 @@ const EditRoom = () => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <Space>
-              <Button  className="flex items-center w-30 bg-[rgb(76,167,68)]  py-5 rounded-3xl hover:bg-sky-500" type="default" htmlType="submit">
-                <AiOutlineCheck className="text-[#fff] "/>
-                <Text className="text-[#fff] ml-2">Sửa</Text>
+            <Space className="flex flex-col md:flex-row">
+              <Button
+                className="flex items-center w-30 bg-[rgb(76,167,68)]  py-5 rounded-3xl hover:bg-sky-500"
+                type="default"
+                htmlType="submit"
+              >
+                <AiOutlineCheck className="text-[#fff] " />
+                <Text className=" text-[#fff] ml-2">Sửa</Text>
               </Button>
-              <Button className="flex items-center max-w-30 bg-[rgb(119,145,115)]  py-5 rounded-3xl hover:bg-indigo-400" >
-                 <Link className="flex items-center" to={`/room`}> 
-                  <BiReset className="text-[#fff] "/>
-                  <Text className="text-[#fff] ml-3">Trở về</Text>
-                 </Link>
-              </Button>
+              <Link className="text-white" to={`/room`}>
+                <Button
+                  className="flex items-center max-w-30 bg-[rgb(119,145,115)]  py-5 rounded-3xl hover:bg-indigo-400"
+                  htmlType="reset"
+                >
+                  <AiOutlineRollback className="text-[#fff]" />
+                  <Text className="text-[#fff] ml-3">Quay trở lại</Text>
+                </Button>
+              </Link>
             </Space>
           </Form.Item>
         </Form>
