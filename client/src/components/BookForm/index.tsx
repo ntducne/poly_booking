@@ -35,12 +35,10 @@ export default function BookForm({ }: Props) {
 
                             <Form.Item
                                 name="Start-end h-full"
-                            // rules={[{ required: true, message: 'Vui lòng nhập tên' }]}
-
                             >
                                 <div className='h-full flex items-center justify-end relative'>
 
-                                    <RangePicker className='w-full  rounded-none min-h-[71.3px] boder-none' />
+                                    <RangePicker className='w-full rounded-none min-h-[70px] border-none' />
                                 </div>
                             </Form.Item>
                         </div>
