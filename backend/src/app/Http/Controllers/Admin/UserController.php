@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\UserResource;
-use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use Exception;
 use App\Services\UserService;
 
 class UserController extends Controller

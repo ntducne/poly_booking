@@ -179,6 +179,8 @@ return [
 
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+
+        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*

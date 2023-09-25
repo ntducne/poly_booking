@@ -1,20 +1,17 @@
 import { Route, Routes } from "react-router-dom"
-import Detial from "./pages/Room/Detial"
 import Contact from "./pages/contact"
 import LayoutClient from "./layouts/Client"
 import Home from "./pages/Home"
 import Login from "./pages/Auth/login"
 import Register from "./pages/Auth/register"
 import Rooms from "./pages/Rooms"
-import AboutPage from "./pages/AboutPage/about"
-import ForgotPassword from "./pages/Auth/forgot_password"
-import SmoothSlide from "./components/SmoothSlide"
-
-import { Profiler } from "react"
 import Profile from "./pages/Auth/profile"
 import Checkout from "./pages/Checkout"
-
 import RoomBooked from "./pages/RoomBooked"
+import Detail from "./pages/Room/Detail"
+import React from "react"
+import AboutPage from "./pages/AboutPage/about"
+import ForgotPassword from "./pages/Auth/forgot_password"
 
 
 function App() {
@@ -27,24 +24,19 @@ function App() {
         <Route path='/' element={<LayoutClient />}>
           <Route index element={<Home />} />
           <Route path='rooms' element={<Rooms />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="abc" element={<SmoothSlide />} />
-
-          <Route path="detail" element={<Detial />} />
+          <Route path="detail" element={<Detail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="about" element={<AboutPage />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path='user'>
             <Route path='roomBooked' element={<RoomBooked />} />
           </Route>
         </Route>
-
         <Route path='/auth'>
           <Route path="login" element={<Login />} />
-          <Route path="forgot" element={<ForgotPassword />} />
           <Route path="register" element={<Register />} />
-
-
+          <Route path="forGotPassword" element={<ForgotPassword />} />
         </Route>
       </Routes>
     </>
