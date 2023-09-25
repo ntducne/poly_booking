@@ -54,7 +54,7 @@ export default function Home({ }: Props) {
         <div ref={elementRef} className="px-4 flex flex-col justify-center items-center lg:flex-row ">
           <ObserverAnimate position={{ y: 70 }}>
             <div className='relative inline-block'>
-              <img src={ImgHome} className='md:max-w-[780px] lg:translate-x-[-20%]' alt="" />
+              <img src={ImgHome} className='md:max-w-[780px] rounded lg:translate-x-[-20%]' alt="" />
               <div className='lg:absolute hidden lg:block lg:top-1/2 lg:right-[-25%] lg:transform lg:-translate-y-1/2
              text-white'>
                 <div className='mb-5'>
@@ -79,25 +79,25 @@ export default function Home({ }: Props) {
 
         <RoomsView />
         {/* restaurant */}
-        <div className='mt-primary'>
+        <div className='mt-primary px-4'>
           <div className='flex justify-center  font-text_2nd mb-[60px]'>
             <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
               <div className='text-center'>
                 <h2 className='text-h3 md:text-h1 max-w-[780px] text-center  font-medium'>We put a smile back on your face. Pleasing people the world over. The best surprise is no surprise.</h2>
-                <Link to='' className='border-b hover:border-b-primary text-[20px] md:text-h3'>Views our rooms</Link>
+                <Link to='' className='border-b text-[20px] md:text-h3'>Views our rooms</Link>
               </div>
             </ObserverAnimate>
           </div>
           <div className=' bg-[#111111] relative font-text_2nd lg:h-[675px] flex flex-col-reverse gap-5 lg:gap-0 lg:flex-row items-center justify-center text-white'>
-            <div className='absolute md:static z-50'>
-              <ObserverAnimate position={{ x: 100, duration: 1.5 }}>
+            <ObserverAnimate position={{ x: 100, duration: 1.5 }}>
+              <div className='absolute md:static z-50'>
                 <p className='text-desc'>Restaurant</p>
                 <h3 className='text-h3 md:text-h1 font-medium max-w-[300px] md:max-w-[580px] mb-4'>
                   The art of meeting your highest expectations. Life’s better at the Garden
                 </h3>
                 <Link to='' className='border-b text-[20px] md:text-h3'>Views our restaurant</Link>
-              </ObserverAnimate>
-            </div>
+              </div>
+            </ObserverAnimate>
             <div className='absolute inset-0 bg-black opacity-50'></div>
             <div className='max-w-[600px]'>
               <img src={ImageRestaurant} className='w-full' alt="" />
@@ -155,7 +155,7 @@ export default function Home({ }: Props) {
             </div>
 
           </ObserverAnimate>
-          <div className='lg:max-w-[1400px] lg:px-0 px-4 md:columns-3 column-1 sm:columns-2  mt-[60px] mx-auto lg:columns-4 column gap-[30px]'>
+          <div className='w-full md:columns-3 column-1 sm:columns-2 px-4 mt-[60px] mx-auto lg:columns-4 column gap-[30px]'>
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full' src={ImageStyle1} alt="" /></div>
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full' src={ImageStyle5} alt="" /></div>
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full' src={ImageStyle9} alt="" /></div>

@@ -46,6 +46,13 @@ export default {
       },
       padding: {
         primary: "100px"
+      },
+      borderRadius: {
+        primary: "10px",
+        btn: "50px"
+      },
+      height: {
+        inputHeight: "50px"
       }
     },
   },
