@@ -38,7 +38,8 @@ export default {
         small: "16px"
       },
       colors: {
-        primary: "#202020"
+        primary: "#202020",
+        secondary: "#f9f8f6"
       },
       margin: {
         primary: "100px"
