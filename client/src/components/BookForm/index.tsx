@@ -21,8 +21,8 @@ export default function BookForm({ }: Props) {
         console.log('Failed:', errorInfo);
     };
     return (
-        <div className='container mx-auto relative max-w-[1440px]'>
-            <div className=" mt-4  px-5 py-10 bg-[#a37d4c] w-full items-center lg:shadow-xl lg:absolute lg:left-0 lg:-top-12  lg:right-0 lg:p-0 lg:z-30">
+        <div className='container mx-auto relative max-w-[1440px] bg-bgr'>
+            <div className=" pt-4  px-5 py-10  w-full items-center  lg:shadow-xl lg:absolute lg:left-0 lg:-top-12  lg:right-0 lg:p-0 lg:z-30">
 
                 <Form
                     className='h-[400px] w-full lg:h-[70px]'
@@ -34,7 +34,7 @@ export default function BookForm({ }: Props) {
                         <div className='flex-1 lg:border-r h-full '>
 
                             <Form.Item
-                                name="Start-end h-full"
+                                name="Start-end h-full border"
                             >
                                 <div className='h-full flex items-center justify-end relative'>
 
