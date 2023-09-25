@@ -147,7 +147,7 @@ export default function AboutPage({ }: Props) {
                             </p>
                         </div>
                         <div className='flex justify-center mb-[30px]'>
-                            <h2 className='lg:text-left text-center text-[18px] lg:ml-[-40px] text-gray-500 lg:max-w-[500px] md:max-w-[700px]  font-text font-light'>
+                            <h2 className='lg:text-left text-center text-[18px] lg:ml-[-40px] text-[#202020] lg:max-w-[500px] md:max-w-[700px]  font-text font-light'>
                                 Leather detail shoulder contrastic colour contour stunning silhouette working peplum. Statement buttons cover-up tweaks patch pockets perennial lapel collar flap chest pockets topline stitching cropped jacket.kets perennial lapel collar flap chest pockets topline stitching cropped jacket.
                             </h2>
                         </div>

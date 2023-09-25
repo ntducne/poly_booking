@@ -90,7 +90,6 @@ function ForgotPassword() {
                                                     className='bg-blue-500 text-white hover:bg-gray-100 hover:text-blue-500'>
                                                     {showOTP ? 'Xác nhận' : 'Gửi liên kết'}
                                                 </Button>
-                                                <Button htmlType="reset">Reset</Button>
                                             </Space>
                                         </Form.Item>
 
