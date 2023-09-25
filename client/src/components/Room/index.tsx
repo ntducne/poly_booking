@@ -8,7 +8,7 @@ export default function Room(data: any) {
     const { id, name, image, price, desc, maxPerson } = data.data
 
     return (
-        <div className='bg-white  group rounded-[10px] overflow-hidden'>
+        <div className='bg-[#eeeeee] group rounded-[10px] overflow-hidden'>
             <div className='overflow-hidden'>
                 <img className='group-hover:scale-110 transition-all duration-300 w-full' src={image} alt="" />
 
@@ -46,7 +46,7 @@ export default function Room(data: any) {
                     </Link>
                     <div className='mb-3 text-[20px] flex flex-col md:flex-row justify-between'>
                         <div>
-                        <p className='max-w-[300px]'><span className='font-normal'>{desc.slice(0, 70)}</span></p>
+                            <p className='max-w-[300px]'><span className='font-normal'>{desc.slice(0, 70)}</span></p>
                         </div>
                         <div>
                             <p className='font-bold'>View: <span className='font-medium'>biển</span></p>
