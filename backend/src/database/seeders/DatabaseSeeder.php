@@ -2,10 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\CancellationPolicy;
+use App\Models\Category;
+use App\Models\Promotion;
+use App\Models\RoomType;
+use App\Models\Staff;
+use App\Models\User;
+use App\Models\Utilities;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Branch;
 use App\Models\Room;
-use App\Models\RoomType;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -78,6 +84,11 @@ class DatabaseSeeder extends Seeder
 //        RoomType::factory($this->num_seed)->create();
 //        Room::factory($this->num_seed)->create();
 //        User::factory($this->num_seed)->create();
+//        Category::factory($this->num_seed)->create();
+//         Staff::factory($this->num_seed)->create();
+//         Promotion::factory($this->num_seed)->create();
+//         Utilities::factory($this->num_seed)->create();
+//         CancellationPolicy::factory($this->num_seed)->create();
         foreach ($this->branchs as $branch) {
             Branch::create($branch);
         }

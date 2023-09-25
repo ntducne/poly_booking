@@ -52,7 +52,7 @@ export default function Rooms({ }: Props) {
     }, [window.innerWidth])
     return (
         <Page title='Phòng'>
-            <div className='pb-[100px]'>
+            <div className='pb-[100px] bg-bgr'>
                 <div className='relative h-[500px] lg:h-[760px] bg-black bg-cover bg-no-repeat' style={{ backgroundImage: `url("https://png.pngtree.com/thumb_back/fw800/background/20230609/pngtree-resort-hotels-in-vancouver-image_2922772.jpg")` }}>
                     <div className='relative h-full flex justify-center items-center'>
                         <div className='absolute w-full h-full bg-black/50'></div>
@@ -67,7 +67,7 @@ export default function Rooms({ }: Props) {
                 </div>
                 {/* <HeroSlide /> */}
                 <BookForm />
-                <div className='mt-[100px] px-4'>
+                <div className='pt-primary px-4 '>
                     <div className='container mx-auto lg:px-0'>
                         <div className='grid grid-cols-1 max-w-sm mx-auto gap-[60px] lg:grid-cols-3 lg:max-w-none lg:mx-0'>
                             {rooms.map((room: any) => {
@@ -80,29 +80,29 @@ export default function Rooms({ }: Props) {
                         <Pagination defaultCurrent={6} total={500} />
                     </div>
                 </div>
-                <div className='mt-[100px] px-4'>
+                <div className='mt-primary px-4'>
                     <div className='flex justify-center  font-text_2nd mb-[60px]'>
                         <div className='text-center'>
-                            <h2 className='text-[30px] md:text-[50px] max-w-[780px] text-center  font-medium'>Get Ready to live for unlimited living experience</h2>
+                            <h2 className='text-[30px] md:text-h1 max-w-[780px] text-center  font-medium'>Get Ready to live for unlimited living experience</h2>
                         </div>
                     </div>
                     <Swiper
                         slidesPerView={width <= 768 ? 1 : 4}
-                        navigation={true}
+
                         mousewheel={true}
                         spaceBetween={20}
                         pagination={{
                             clickable: true,
                         }}
-                        modules={[Pagination1, Navigation]}
+                        modules={[Navigation]}
                         className="mySwiper"
 
                     >
-                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms1} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms2} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms3} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms4} alt="" /></SwiperSlide>
-                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover rounded-[10px]' src={SlideRooms5} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover' src={SlideRooms1} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover' src={SlideRooms2} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover' src={SlideRooms3} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover' src={SlideRooms4} alt="" /></SwiperSlide>
+                        <SwiperSlide><img className='h-[600px] w-[100%] object-cover' src={SlideRooms5} alt="" /></SwiperSlide>
 
                     </Swiper>
                     <div className='flex justify-center mt-[60px]'>

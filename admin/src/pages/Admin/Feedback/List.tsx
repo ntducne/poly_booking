@@ -12,6 +12,7 @@ interface DataType {
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal , { } from "sweetalert";
+import Page from "../../../component/page";
 
 const ListFeedback = () => {
  
@@ -130,7 +131,7 @@ const ListFeedback = () => {
   };
 
   return (
-    <div className="">
+    <Page title={`Đánh giá`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <div className="mb-3">
           <FormSearch />
@@ -164,7 +165,7 @@ const ListFeedback = () => {
         columns={columns}
         dataSource={data}
       />
-    </div>
+    </Page>
   );
 };
 

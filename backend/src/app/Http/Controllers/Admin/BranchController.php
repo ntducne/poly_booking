@@ -1,87 +1,91 @@
 <?php
 
-namespace app\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use app\Http\Requests\Branch\StoreBranchRequest;
-use app\Http\Requests\Branch\UpdateBranchRequest;
+use App\Http\Requests\Branch\StoreBranchRequest;
+use App\Http\Requests\Branch\UpdateBranchRequest;
+use Illuminate\Http\JsonResponse;
 use App\Models\Branch;
 
 class BranchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private Branch $branch;
+
+    public function __construct(){
+        $this->branch = new Branch();
+    }
     public function index()
     {
-        //
+        $branches = $this->branch->paginate(6);
+        return response()->json([
+            'message' => 'Get Data',
+            'data'    => $branches,
+        ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \app\Http\Requests\Branch\StoreBranchRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreBranchRequest $request)
     {
-        //
+        $object = $request->all();
+        $branch = new Branch($object);
+        $branch->save();
+        return response()->json([
+            'status'    => 'success',
+            'message'   => 'Thêm chi nhánh thành công !',
+            'data'      => $branch
+        ]);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Branch  $branch
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Branch $branch)
+    public function show( $id)
     {
-        //
+        $branch = $this->branch->find($id);
+        if(!$branch){
+            $response = [
+                'status'   => 'error',
+                'message'  => 'Chi nhánh không tồn tại !',
+                'data'     => null,
+            ];
+        }else{
+            $response = [
+                'status'   => 'success',
+                'message'  => 'Chi tiết chi nhánh !',
+                'data'     => $branch,
+            ];
+        }
+        return response()->json($response);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Branch  $branch
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Branch $branch)
+    public function update(UpdateBranchRequest $request, $id)
     {
-        //
+        $branch = Branch::find($id);
+        if(!$branch){
+            $reponse = [
+                'status'  => 'error',
+                'message' => 'Chi nhánh đãi không tồn tại !',
+                'data'    => null,
+            ];
+        }else{
+            $branch->update($request->all());
+            $reponse = [
+                'status'  => 'success',
+                'message' => 'Cập nhập chi nhánh thành công !',
+                'data'    => $branch,
+            ];
+        }
+        return response()->json($reponse);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \app\Http\Requests\Branch\UpdateBranchRequest  $request
-     * @param  \App\Models\Branch  $branch
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateBranchRequest $request, Branch $branch)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Branch  $branch
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Branch $branch)
-    {
-        //
+        $branch = Branch::find($id);
+        if(!$branch){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Chi nhánh không tồn tại !',
+                'data' => null
+            ]);
+        }
+        $branch->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Xoá chi nhánh thành công !',
+            'data' => $branch
+        ]);
     }
 }

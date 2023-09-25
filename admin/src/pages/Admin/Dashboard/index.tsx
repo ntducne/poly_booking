@@ -16,6 +16,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
+import Page from "../../../component/page";
 
 const { Title } = Typography;
 const Dashboard = () => {
@@ -25,7 +26,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <Page title={`Dashboard`}>
       <div className="grid grid-cols-1 gap-5 2xl:grid-cols-4 2xl:gap-4 md:grid-cols-2 ">
         <button className="border rounded-xl sm:mb-4 drop-shadow-md hover:drop-shadow-xl">
           <div className="flex items-center">
@@ -85,97 +86,8 @@ const Dashboard = () => {
         <div>
           <Title level={4}>Đánh giá mới của khách hàng</Title>
         </div>
-        {/* <div className="grid gap-4 grid-cols-1 xl:grid-cols-3 md:grid-cols-2">
-          <div className="border rounded-xl p-2  md:p-7 text-base	text-[#6e6e6e] ">
-            <div className="">
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Itaque, animi.
-              </p>
-            </div>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-              <div className="flex flex-col md:flex-row md:items-center">
-                <img
-                  className="hidden md:w-12 md:h-12 md:rounded-xl md:block"
-                  src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
-                  alt=""
-                />
-                <div className="my-3 md:mx-4">
-                  <div>Nguyễn Quốc Huy</div>
-                  <div>4 phút trước</div>
-                </div>
-              </div>
-              <div className="flex">
-                <button className="border border-[#68e365] rounded-[50%] p-1 text-[#68e365] mr-1">
-                  <AiOutlineCheck className="w-4 h-4 " />
-                </button>
-                <button className="border border-[#e23428] rounded-[50%] p-1 ml-2 text-[#e23428]">
-                  <AiOutlineClose className="w-4 h-4 " />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="border rounded-xl p-2  md:p-7 text-base	text-[#6e6e6e] ">
-            <div className="">
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Itaque, animi.
-              </p>
-            </div>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-              <div className="flex flex-col md:flex-row md:items-center">
-                <img
-                  className="hidden md:w-12 md:h-12 md:rounded-xl md:block"
-                  src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
-                  alt=""
-                />
-                <div className="my-3 md:mx-4">
-                  <div>Nguyễn Quốc Huy</div>
-                  <div>4 phút trước</div>
-                </div>
-              </div>
-              <div className="flex">
-                <button className="border border-[#68e365] rounded-[50%] p-1 text-[#68e365] mr-1">
-                  <AiOutlineCheck className="w-4 h-4 " />
-                </button>
-                <button className="border border-[#e23428] rounded-[50%] p-1 ml-2 text-[#e23428]">
-                  <AiOutlineClose className="w-4 h-4 " />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="border rounded-xl p-2  md:p-7 text-base	text-[#6e6e6e] ">
-            <div className="">
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Itaque, animi.
-              </p>
-            </div>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-              <div className="flex flex-col md:flex-row md:items-center">
-                <img
-                  className="hidden md:w-12 md:h-12 md:rounded-xl md:block"
-                  src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
-                  alt=""
-                />
-                <div className="my-3 md:mx-4">
-                  <div>Nguyễn Quốc Huy</div>
-                  <div>4 phút trước</div>
-                </div>
-              </div>
-              <div className="flex">
-                <button className="border border-[#68e365] rounded-[50%] p-1 text-[#68e365] mr-1">
-                  <AiOutlineCheck className="w-4 h-4 " />
-                </button>
-                <button className="border border-[#e23428] rounded-[50%] p-1 ml-2 text-[#e23428]">
-                  <AiOutlineClose className="w-4 h-4 " />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> */}
         <Swiper
-          autoplay={{delay: 2000, disableOnInteraction: false}}
+          autoplay={{delay: 2000}}
           slidesPerView={3}
           spaceBetween={30}
           pagination={{
@@ -376,7 +288,7 @@ const Dashboard = () => {
           <SwiperSlide>Slide 9</SwiperSlide> */}
         </Swiper>
       </div>
-    </div>
+    </Page>
   );
 };
 

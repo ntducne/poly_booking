@@ -15,6 +15,9 @@ export default function LayoutClient({ }: Props) {
         style={{ scaleX: scrollYProgress }}
       />
       <Header />
+
+      {/* <HeroSlide />
+      <BookForm /> */}
       <Outlet />
       <Footer />
     </div>
