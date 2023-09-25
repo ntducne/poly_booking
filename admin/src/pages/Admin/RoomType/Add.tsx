@@ -6,8 +6,10 @@ import {
   Button,
   Select,
   message,
+  Breadcrumb,
   Typography,
   InputNumber,
+  Switch,
   Checkbox,
   Row,
   Col,
@@ -15,6 +17,7 @@ import {
   Space,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { GrAdd } from "react-icons/gr";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
 const { Option } = Select;
@@ -84,158 +87,60 @@ const AddRoomType = () => {
           className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
-            label="Khu vực"
-            name="area"
-            rules={[{ required: true, message: "Vui lòng nhập khu vực!" }]}
+            label="Tên loại phòng"
+            name="room_type_name"
+            rules={[
+              { required: true, message: "Vui lòng nhập tên loại phòng!" },
+            ]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Tên phòng"
-            name="name"
-            rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
+            label="Giá mỗi đêm"
+            name="price_per_night"
+            rules={[{ required: true, message: "Vui lòng nhập giá mỗi đêm" }]}
           >
-            <Input />
+            <InputNumber min={1} />
+          </Form.Item>
+
+          <Form.Item name="description" label="Mô tả">
+            <Input.TextArea />
           </Form.Item>
 
           <Form.Item
-            name="room_type_id"
-            label="Loại phòng"
+            name="status"
+            label="Trạng thái"
             hasFeedback
-            rules={[{ required: true, message: "Vui lòng nhập loại phòng!" }]}
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập trạng thái loại phòng!",
+              },
+            ]}
           >
             <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value="BinhDan">Bình dân</Option>
-              <Option value="V.I.P">V.I.P</Option>
-            </Select>
-          </Form.Item>
-
-
-          <Form.Item
-            label="Số người"
-            name="num_of_people"
-            rules={[{ required: true, message: "Vui lòng nhập số người" }]}
-          >
-            <InputNumber min={1} max={10} />
-          </Form.Item>
-
-          <Form.Item
-            label="Số giường"
-            name="num_of_bed"
-            rules={[{ required: true, message: "Vui lòng nhập số giường" }]}
-          >
-            <InputNumber min={1} max={10} />
-          </Form.Item>
-
-          <Form.Item name="bed_size" label="Số giường">
-            <Checkbox.Group>
-              <Row className="flex items-center sm:flex-col">
-                <Col >
-                  <Checkbox value="A" style={{ lineHeight: "32px" }}>
-                    2 lớn , 1 nhỏ
-                  </Checkbox>
-                </Col>
-                <Col >
-                  <Checkbox value="C" style={{ lineHeight: "32px" }}>
-                    1 lớn , 2 nhỏ
-                  </Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>
-          </Form.Item>
-
-          <Form.Item
-            label="Ảnh"
-            name="image"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            rules={[{ required: true, message: "Vui lòng tải lên ảnh!" }]}
-          >
-            <Upload
-              name="avatar"
-              beforeUpload={handleBeforeUpload}
-              customRequest={dummyRequest}
-              onChange={handleOnChange}
-              listType="picture"
-              maxCount={4}
-              fileList={fileList}
-              multiple
-            >
-              {fileList.length === 4 ? (
-                ""
-              ) : (
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              )}
-            </Upload>
-          </Form.Item>
-
-          <Form.Item
-            name="policies_and_information"
-            label="Chính sách"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn chính sách phòng!",
-                type: "array",
-              },
-            ]}
-          >
-            <Select
-              mode="multiple"
-              placeholder="Vui lòng chọn chính sách phòng!"
-            >
-              <Option value="red">Chính sách 1</Option>
-              <Option value="green">Chính sách 2</Option>
-              <Option value="blue">Chính sách 3</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item label="Giảm giá">
-            <Form.Item name="discount" noStyle>
-              <InputNumber min={1} max={10} />
-            </Form.Item>
-            <span className="ant-form-text" style={{ marginLeft: 8 }}>
-              
-            </span>
-          </Form.Item>
-
-
-          <Form.Item name="rate" label="Đánh giá">
-            <Rate />
-          </Form.Item>
-
-
-          <Form.Item
-            name="branch_id"
-            label="Chi nhánh"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn chi nhánh!",
-                type: "array",
-              },
-            ]}
-          >
-            <Select
-              mode="multiple"
-              placeholder="Vui lòng chọn chi nhánh !"
-            >
-              <Option value="red">Hà Đông</Option>
-              <Option value="green">Cầu Giấy</Option>
-              <Option value="blue">Trịnh Văn Bô</Option>
+              <Option value="BinhDan">Còn</Option>
+              <Option value="V.I.P">Hết</Option>
             </Select>
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-              <Button  className="flex items-center w-30 bg-[rgb(76,167,68)]  py-5 rounded-3xl hover:bg-sky-500" type="default" htmlType="submit">
-                <AiOutlineCheck className="text-[#fff] "/>
+              <Button
+                className="flex items-center w-30 bg-[rgb(76,167,68)]  py-5 rounded-3xl hover:bg-sky-500"
+                type="default"
+                htmlType="submit"
+              >
+                <AiOutlineCheck className="text-[#fff] " />
                 <Text className=" text-[#fff] ml-2">Thêm</Text>
               </Button>
-              <Button className="flex items-center max-w-30 bg-[rgb(119,145,115)]  py-5 rounded-3xl hover:bg-indigo-400" htmlType="reset">
-                 <BiReset className="text-[#fff]"/> 
-                 <Text className="text-[#fff] ml-3">Làm mới</Text>
+              <Button
+                className="flex items-center max-w-30 bg-[rgb(119,145,115)]  py-5 rounded-3xl hover:bg-indigo-400"
+                htmlType="reset"
+              >
+                <BiReset className="text-[#fff]" />
+                <Text className="text-[#fff] ml-3">Làm mới</Text>
               </Button>
             </Space>
           </Form.Item>

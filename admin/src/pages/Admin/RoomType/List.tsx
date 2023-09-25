@@ -15,64 +15,53 @@ import FormSearch from "../../../component/formSearch";
 import swal , { } from "sweetalert";
 
 const ListRoomType = () => {
-  const [loadings, setLoadings] = useState<boolean[]>([]);
 
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-    }, 2000);
-  };
-
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<any> = [
     {
-      title: "Tên phòng",
-      dataIndex: "name",
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "ID",
+      dataIndex: "room_type_id",
+      sorter: (a, b) => a.room_type_id - b.room_type_id,
       sortDirections: ["descend"],
       fixed: "left",
     },
+    // {
+    //   title: "Loại phòng",
+    //   dataIndex: "imageType",
+    //   render: (_, record) => (
+    //     <div className="flex items-center">
+    //       {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
+    //       <Image
+    //         className="rounded-3xl "
+    //         width={150}
+    //         src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg"
+    //       />
+    //       <div className="ml-3 text-gray-500">
+    //         <p>#68e365</p>
+    //         <p>2 giường ngủ</p>
+    //       </div>
+    //     </div>
+    //   ),
+    // },
     {
-      title: "Loại phòng",
-      dataIndex: "imageType",
-      render: (_, record) => (
-        <div className="flex items-center">
-          {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-          <Image
-            className="rounded-3xl "
-            width={150}
-            src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg"
-          />
-          <div className="ml-3 text-gray-500">
-            <p>#68e365</p>
-            <p>2 giường ngủ</p>
-          </div>
-        </div>
-      ),
+      title: "Tên loại phòng",
+      dataIndex: "room_type_name",
+      key: "room_type_name",
+      sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
     },
     {
-      title: "Giá phòng",
-      dataIndex: "age",
-      key: "age",
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "Giá mỗi đêm",
+      dataIndex: "price_per_night",
+      key: "price_per_night",
+      sorter: (a, b) => a.price_per_night - b.price_per_night,
     },
     {
-      title: "Tầng phòng",
-      dataIndex: "age",
-      key: "age",
+      title: "Mô tả",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Trạng thái",
-      dataIndex: "address",
+      dataIndex: "status",
       filters: [
         {
           text: "Còn trống",
@@ -104,7 +93,7 @@ const ListRoomType = () => {
       render: (_, record) => (
         <Space size="middle">
           <Button type="primary" style={{ backgroundColor: "#68e365" }}>
-            <Link to={`/room/edit/${record?.key}`}>
+            <Link to={`/roomType/edit/${record?.key}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
@@ -121,18 +110,22 @@ const ListRoomType = () => {
     },
   ];
 
-  const data = [
+  const data : any = [
     {
       key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "Còn",
+      room_type_id: 1,
+      room_type_name: "Phòng V.I.P",
+      description: "Phòng đẹp nhất",
+      price_per_night: 1560000,
+      status: "Còn",
     },
     {
       key: "2",
-      name: "John Brown 123",
-      age: 35,
-      address: "Hết",
+      room_type_id: 2,
+      room_type_name: "Phòng bình dân",
+      description: "Phòng giá rẻ",
+      price_per_night: 2060000,
+      status: "Hết",
     },
   ];
 
@@ -181,26 +174,17 @@ const ListRoomType = () => {
             className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl mb-2"
             type="default"
             icon={<AiOutlinePlus />}
-            loading={loadings[1]}
-            onClick={() => enterLoading(1)}
           >
-            <Link to={`/room/add`}>Thêm phòng</Link>
+            <Link to={`/roomType/add`}>Thêm loại phòng</Link>
           </Button>
           <Button
-            className="bg-red-400	text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
+            className="bg-red-400  text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
             type="default"
             icon={<MdOutlineDeleteOutline />}
-            loading={loadings[1]}
-            onClick={() => enterLoading(1)}
           >
-            <Link to={`/room/add`}>Thùng rác</Link>
+            <Link to={`/roomType`}>Thùng rác</Link>
           </Button>
-          {/* <Button className=" bg-red-400 text-[#fff] hover:drop-shadow-2xl md:ml-auto">
-            <Link className="flex items-center px-10" to={`/admin`}>
-              <MdOutlineDeleteOutline />
-              <span className="ml-2">Thùng rác</span>
-            </Link> 
-          </Button> */}
+        
         </div>
       </div>
       <Table
@@ -208,7 +192,7 @@ const ListRoomType = () => {
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}
-        onChange={onChange}
+        onChange={onChange} 
       />
     </div>
   );

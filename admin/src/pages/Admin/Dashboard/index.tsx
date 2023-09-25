@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type { Dayjs } from "dayjs";
 import {
   AiOutlineCheck,
@@ -9,11 +9,17 @@ import {
 import { BiBed } from "react-icons/bi";
 import { Calendar, Typography, theme } from "antd";
 import type { CalendarProps } from "antd";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
+
 const { Title } = Typography;
+const Dashboard = () => {
 
-type Props = {};
-
-const Dashboard = (props: Props) => {
   const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
     console.log(value.format("YYYY-MM-DD"), mode);
   };
@@ -79,7 +85,7 @@ const Dashboard = (props: Props) => {
         <div>
           <Title level={4}>Đánh giá mới của khách hàng</Title>
         </div>
-        <div className="grid gap-4 grid-cols-1 xl:grid-cols-3 md:grid-cols-2">
+        {/* <div className="grid gap-4 grid-cols-1 xl:grid-cols-3 md:grid-cols-2">
           <div className="border rounded-xl p-2  md:p-7 text-base	text-[#6e6e6e] ">
             <div className="">
               <p>
@@ -167,7 +173,208 @@ const Dashboard = (props: Props) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <Swiper
+          autoplay={{delay: 2000, disableOnInteraction: false}}
+          slidesPerView={3}
+          spaceBetween={30}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+          className="mySwiper"
+        >
+          <SwiperSlide>
+            <div className="border rounded-xl p-2 pb-9 xl:p-7 text-base	text-[#6e6e6e] ">
+              <div className="">
+                <p>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Itaque, animi.
+                </p>
+              </div>
+              <div className="flex flex-col xl:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col xl:flex-row xl:items-center">
+                  <img
+                    className="hidden xl:w-12 xl:h-12 xl:rounded-xl xl:block"
+                    src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
+                    alt=""
+                  />
+                  <div className="my-3 ml-2">
+                    <div>Nguyễn Quốc Huy</div>
+                    <div>4 phút trước</div>
+                  </div>
+                </div>
+                <div className="flex">
+                  <button className="border border-[#68e365] rounded-[50%] p-1 text-[#68e365] mr-1">
+                    <AiOutlineCheck className="w-4 h-4 " />
+                  </button>
+                  <button className="border border-[#e23428] rounded-[50%] p-1 ml-2 text-[#e23428]">
+                    <AiOutlineClose className="w-4 h-4 " />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="border rounded-xl p-2 pb-9 xl:p-7 text-base	text-[#6e6e6e] ">
+              <div className="">
+                <p>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Itaque, animi.
+                </p>
+              </div>
+              <div className="flex flex-col xl:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col xl:flex-row xl:items-center">
+                  <img
+                    className="hidden xl:w-12 xl:h-12 xl:rounded-xl xl:block"
+                    src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
+                    alt=""
+                  />
+                  <div className="my-3 ml-2">
+                    <div>Nguyễn Quốc Huy</div>
+                    <div>4 phút trước</div>
+                  </div>
+                </div>
+                <div className="flex">
+                  <button className="border border-[#68e365] rounded-[50%] p-1 text-[#68e365] mr-1">
+                    <AiOutlineCheck className="w-4 h-4 " />
+                  </button>
+                  <button className="border border-[#e23428] rounded-[50%] p-1 ml-2 text-[#e23428]">
+                    <AiOutlineClose className="w-4 h-4 " />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="border rounded-xl p-2 pb-9 xl:p-7 text-base	text-[#6e6e6e] ">
+              <div className="">
+                <p>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Itaque, animi.
+                </p>
+              </div>
+              <div className="flex flex-col xl:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col xl:flex-row xl:items-center">
+                  <img
+                    className="hidden xl:w-12 xl:h-12 xl:rounded-xl xl:block"
+                    src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
+                    alt=""
+                  />
+                  <div className="my-3 ml-2">
+                    <div>Nguyễn Quốc Huy</div>
+                    <div>4 phút trước</div>
+                  </div>
+                </div>
+                <div className="flex">
+                  <button className="border border-[#68e365] rounded-[50%] p-1 text-[#68e365] mr-1">
+                    <AiOutlineCheck className="w-4 h-4 " />
+                  </button>
+                  <button className="border border-[#e23428] rounded-[50%] p-1 ml-2 text-[#e23428]">
+                    <AiOutlineClose className="w-4 h-4 " />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="border rounded-xl p-2 pb-9 xl:p-7 text-base	text-[#6e6e6e] ">
+              <div className="">
+                <p>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Itaque, animi.
+                </p>
+              </div>
+              <div className="flex flex-col xl:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col xl:flex-row xl:items-center">
+                  <img
+                    className="hidden xl:w-12 xl:h-12 xl:rounded-xl xl:block"
+                    src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
+                    alt=""
+                  />
+                  <div className="my-3 ml-2">
+                    <div>Nguyễn Quốc Huy</div>
+                    <div>4 phút trước</div>
+                  </div>
+                </div>
+                <div className="flex">
+                  <button className="border border-[#68e365] rounded-[50%] p-1 text-[#68e365] mr-1">
+                    <AiOutlineCheck className="w-4 h-4 " />
+                  </button>
+                  <button className="border border-[#e23428] rounded-[50%] p-1 ml-2 text-[#e23428]">
+                    <AiOutlineClose className="w-4 h-4 " />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="border rounded-xl p-2 pb-9 xl:p-7 text-base	text-[#6e6e6e] ">
+              <div className="">
+                <p>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Itaque, animi.
+                </p>
+              </div>
+              <div className="flex flex-col xl:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col xl:flex-row xl:items-center">
+                  <img
+                    className="hidden xl:w-12 xl:h-12 xl:rounded-xl xl:block"
+                    src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
+                    alt=""
+                  />
+                  <div className="my-3 ml-2">
+                    <div>Nguyễn Quốc Huy</div>
+                    <div>4 phút trước</div>
+                  </div>
+                </div>
+                <div className="flex">
+                  <button className="border border-[#68e365] rounded-[50%] p-1 text-[#68e365] mr-1">
+                    <AiOutlineCheck className="w-4 h-4 " />
+                  </button>
+                  <button className="border border-[#e23428] rounded-[50%] p-1 ml-2 text-[#e23428]">
+                    <AiOutlineClose className="w-4 h-4 " />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="border rounded-xl p-2 pb-9 xl:p-7 text-base	text-[#6e6e6e] ">
+              <div className="">
+                <p>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Itaque, animi.
+                </p>
+              </div>
+              <div className="flex flex-col xl:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col xl:flex-row xl:items-center">
+                  <img
+                    className="hidden xl:w-12 xl:h-12 xl:rounded-xl xl:block"
+                    src="https://hinhnen4k.com/wp-content/uploads/2023/01/anh-trai-cute-dau-nam-5.jpg"
+                    alt=""
+                  />
+                  <div className="my-3 ml-2">
+                    <div>Nguyễn Quốc Huy</div>
+                    <div>4 phút trước</div>
+                  </div>
+                </div>
+                <div className="flex">
+                  <button className="border border-[#68e365] rounded-[50%] p-1 text-[#68e365] mr-1">
+                    <AiOutlineCheck className="w-4 h-4 " />
+                  </button>
+                  <button className="border border-[#e23428] rounded-[50%] p-1 ml-2 text-[#e23428]">
+                    <AiOutlineClose className="w-4 h-4 " />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+          {/* <SwiperSlide>Slide 6</SwiperSlide>
+          <SwiperSlide>Slide 7</SwiperSlide>
+          <SwiperSlide>Slide 8</SwiperSlide>
+          <SwiperSlide>Slide 9</SwiperSlide> */}
+        </Swiper>
       </div>
     </div>
   );

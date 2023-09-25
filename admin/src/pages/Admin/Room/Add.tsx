@@ -204,9 +204,9 @@ const AddRoom = () => {
           </Form.Item>
 
 
-          <Form.Item name="rate" label="Đánh giá">
+          {/* <Form.Item name="rate" label="Đánh giá">
             <Rate />
-          </Form.Item>
+          </Form.Item> */}
 
 
           <Form.Item

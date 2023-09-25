@@ -200,10 +200,10 @@ const EditRoom = () => {
             </Form.Item>
             <span className="ant-form-text" style={{ marginLeft: 8 }}></span>
           </Form.Item>
-
+{/* 
           <Form.Item name="rate" label="Đánh giá">
             <Rate />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             name="branch_id"

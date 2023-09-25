@@ -33,6 +33,7 @@ const ListBill = () => {
       title: "Giá tiền",
       dataIndex: "total",
       key: "total",
+      sorter: (a, b) => a.total - b.total,
     },
     {
       title: "Thời gian",
