@@ -38,6 +38,7 @@ import ListServices from "./pages/Admin/Services/List";
 import LoginAdmin from "./pages/Auth/login";
 import RoleList from "./pages/Admin/Role/List";
 import RoleCreate from "./pages/Admin/Role/Create";
+import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
     <>
       <Routes>
         <Route path="login" element={<LoginAdmin />} />
+        <Route path="forGotPassword" element={<ForgotPasswordAdmin />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
           <Route index element={<Dashboard />} />

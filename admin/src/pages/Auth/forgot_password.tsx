@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Space } from 'antd';
-import Page from '../../components/Page';
+import Page from '../../component/page';
 
 // import './ForgotPassword.css';
 
-function ForgotPassword() {
+function ForgotPasswordAdmin() {
     const [form] = Form.useForm();
     const [showOTP, setShowOTP] = useState(false); // State để kiểm soát việc hiển thị mã OTP
 
@@ -29,18 +29,18 @@ function ForgotPassword() {
             <div className="flex items-center justify-center h-[120vh] lg:h-screen md:h-screen bg-bgr">
                 <section className="h-screen" >
                     <div className="flex items-center justify-center h-full">
-                        <div className="w-[300px] h-[600px] lg:h-[600px] lg:w-[1050px] md:h-[450px] md:w-[725px] bg-white rounded-md shadow-2xl hover:shadow-2xl ">
+                        <div className="w-[300px] h-[480px] lg:h-[550px] lg:w-[950px] md:h-[450px] md:w-[725px] bg-white rounded-md lg:hover:transform  lg:hover:scale-105 lg:hover:z-10 lg:transition-transform lg:duration-500 md:hover:transform md:hover:scale-105 md:hover:z-10 md:transition-transform md:duration-500 shadow-2xl hover:shadow-2xl ">
                             <div
-                                className="md:flex md:flex-wrap md:items-center lg:flex lg:flex-wrap lg:items-center lg:gap-5 md:gap-2">
+                                className="md:flex md:flex-wrap md:items-center lg:flex lg:flex-wrap lg:items-center lg:gap-10 md:gap-2">
                                 <div
                                     className="shrink-1 mb-12 grow-0 basis-auto lg:w-6/12 xl:w-6/12 md:w-6/12">
                                     <img
                                         src="https://cdn.alongwalk.info/vn/wp-content/uploads/2022/03/12183725/image-7-khach-san-5-sao-vung-tau-view-bien-cuc-dep-164705984460476.jpg"
-                                        className="h-[150px] w-[300px] lg:w-full lg:h-[600px] md:h-[450px] md:w-full border rounded-md"
+                                        className="h-[150px] w-[300px] lg:w-full lg:h-[550px] md:h-[450px] md:w-full border rounded-md"
                                         alt="Sample image" />
                                 </div>
 
-                                <div className="w-5/6 mx-6 md:mb-12 lg:w-5/12 xl:w-5/12 md:w-5/12">
+                                <div className="w-5/6 mx-6 md:mb-12 lg:w-[350px] xl:w-[350px] md:w-5/12">
                                     <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
                                         <div className="relative mb-6" data-te-input-wrapper-init>
                                             <Form.Item name="email" label={<span className="text-gray-500 text-small">Email address</span>}
@@ -87,7 +87,7 @@ function ForgotPassword() {
                                             <button
                                                 className='bg-primary w-[100px] lg:h-full active:bg-black justify-center md:h-[65px] flex items-center border rounded-[5px] transition-transform transform hover:scale-95'
                                             >
-                                                <p className='text-secondary p-2'>{showOTP ? 'Xác nhận' : 'Gửi liên kết'}</p>
+                                                <p className='text-white p-2'>{showOTP ? 'Xác nhận' : 'Gửi liên kết'}</p>
                                             </button>
 
 
@@ -110,4 +110,4 @@ function ForgotPassword() {
     );
 }
 
-export default ForgotPassword;
+export default ForgotPasswordAdmin;
