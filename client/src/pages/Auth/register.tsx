@@ -157,7 +157,7 @@ export default function Register({ }: Props) {
                                                         Do have an account?
                                                         <a
                                                             href="login"
-                                                            className="text-danger transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+                                                            className="text-danger text-blue-500 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
                                                         >Login</a>
                                                     </p>
                                                 </div>
