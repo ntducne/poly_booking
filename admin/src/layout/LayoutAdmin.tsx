@@ -41,8 +41,10 @@ const LayoutAdmin = () => {
         <PieChartOutlined />
       </Link>
     ),
-    getItem("Đánh giá","2",
-      <Link onClick={() => handleTitleChange("Đánh giá")} to={`review`}>
+    getItem(
+      "Đánh giá",
+      "2",
+      <Link onClick={() => handleTitleChange("Đánh giá")} to={`feedback`}>
         <VscFeedback />
       </Link>
     ),
@@ -50,7 +52,7 @@ const LayoutAdmin = () => {
       getItem( "Phòng", "3", <Link onClick={() => handleTitleChange("Phòng")} to={`room`} />),
       getItem("Loại Phòng", "4", <Link onClick={() => handleTitleChange("Loại phòng")} to={`roomType`} />),
       getItem("Tiện ích Phòng", "5", <Link onClick={() => handleTitleChange("Tiện ích phòng")} to={`roomUtilities`} />),
-    ]),
+    ]), 
     getItem("Phòng Đặt", "6", <Link onClick={() => handleTitleChange("Phòng đặt")} to={`roomExtend`}> <BsBuildingFillCheck /></Link>),
     getItem("Gia hạn Phòng", "7", <Link onClick={() => handleTitleChange("Gia hạn Phòng")} to={`roomExtend`}><AiFillPushpin /></Link>),
     getItem("Hóa đơn", "8", <Link onClick={() => handleTitleChange("Hóa đơn")} to={`bill`}><AiFillBank /></Link>),
