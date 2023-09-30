@@ -32,7 +32,7 @@ export default function HeroSlide({ }: Props) {
                 delay: 3000,
                 disableOnInteraction: false
             }}
-            className='heroSlider h-[600px] lg:h-[860px] bg-black '>
+            className='heroSlider h-[600px] pb-0 lg:h-[860px] bg-black '>
             {slides.map((slide, index) => {
                 const { title, bg, btnText } = slide
                 return <SwiperSlide key={index} className='text-white h-full bg-pink-300 

@@ -1,62 +1,52 @@
-<<<<<<< HEAD
-import { Route, Routes } from "react-router-dom"
-import Home from "./pages/Home"
-import LoginAdmin from "./pages/Auth/login"
-=======
-import { Route, Routes } from "react-router-dom";
+import { Route, Router, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
-import Dashboard from "./pages/Admin/Dashboard";
-import ListBooking from "./pages/Admin/Booking/List";
-import AddBooking from "./pages/Admin/Booking/Add";
-import EditBooking from "./pages/Admin/Booking/Edit";
-import ListOffers from "./pages/Admin/Offers/List";
-import AddOffers from "./pages/Admin/Offers/Add";
-import EditOffers from "./pages/Admin/Offers/Edit";
-import ListPolicy from "./pages/Admin/Policy/List";
-import AddPolicy from "./pages/Admin/Policy/Add";
-import EditPolicy from "./pages/Admin/Policy/Edit";
-import ListReview from "./pages/Admin/Review/List";
-import AddReview from "./pages/Admin/Review/Add";
-import EditReview from "./pages/Admin/Review/Edit";
-import ListRoom from "./pages/Admin/Room/List";
-import AddRoom from "./pages/Admin/Room/Add";
-import EditRoom from "./pages/Admin/Room/Edit";
-import ListRoomType from "./pages/Admin/RoomType/List";
-import AddRoomType from "./pages/Admin/RoomType/Add";
-import EditRoomType from "./pages/Admin/RoomType/Edit";
-import ListRoomUtilities from "./pages/Admin/RoomUtilities/List";
-import AddRoomUtilities from "./pages/Admin/RoomUtilities/Add";
-import EditRoomUtilities from "./pages/Admin/RoomUtilities/Edit";
-import ListServices from "./pages/Admin/Services/List";
-import AddServices from "./pages/Admin/Services/Add";
-import EditServicer from "./pages/Admin/Services/Edit";
-import ListAdmin from "./pages/Admin/Guset/Admin/List";
-import ListUser from "./pages/Admin/Guset/User/List";
-import ListRoomExtend from "./pages/Admin/RoomExtend/List";
-import AddRoomExtend from "./pages/Admin/RoomExtend/Add";
-import EditRoomExtend from "./pages/Admin/RoomExtend/Edit";
-import ListBill from "./pages/Admin/Bill/List";
 import AddBill from "./pages/Admin/Bill/Add";
 import EditBill from "./pages/Admin/Bill/Edit";
+import ListBill from "./pages/Admin/Bill/List";
+import AddBooking from "./pages/Admin/Booking/Add";
+import EditBooking from "./pages/Admin/Booking/Edit";
+import ListBooking from "./pages/Admin/Booking/List";
+import Dashboard from "./pages/Admin/Dashboard";
 import ListFeedBack from "./pages/Admin/Feedback/List";
+import ListAdmin from "./pages/Admin/Guset/Admin/List";
+import ListUser from "./pages/Admin/Guset/User/List";
 import NotFound from "./pages/Admin/NotFound";
->>>>>>> 4831b1780cc94fe8254672b83e435b0a854fcdb6
-
+import AddOffers from "./pages/Admin/Offers/Add";
+import EditOffers from "./pages/Admin/Offers/Edit";
+import ListOffers from "./pages/Admin/Offers/List";
+import AddPolicy from "./pages/Admin/Policy/Add";
+import EditPolicy from "./pages/Admin/Policy/Edit";
+import ListPolicy from "./pages/Admin/Policy/List";
+import AddReview from "./pages/Admin/Review/Add";
+import EditReview from "./pages/Admin/Review/Edit";
+import ListReview from "./pages/Admin/Review/List";
+import AddRoom from "./pages/Admin/Room/Add";
+import EditRoom from "./pages/Admin/Room/Edit";
+import ListRoom from "./pages/Admin/Room/List";
+import AddRoomExtend from "./pages/Admin/RoomExtend/Add";
+import EditRoomExtend from "./pages/Admin/RoomExtend/Edit";
+import ListRoomExtend from "./pages/Admin/RoomExtend/List";
+import AddRoomType from "./pages/Admin/RoomType/Add";
+import EditRoomType from "./pages/Admin/RoomType/Edit";
+import ListRoomType from "./pages/Admin/RoomType/List";
+import AddRoomUtilities from "./pages/Admin/RoomUtilities/Add";
+import EditRoomUtilities from "./pages/Admin/RoomUtilities/Edit";
+import ListRoomUtilities from "./pages/Admin/RoomUtilities/List";
+import AddServices from "./pages/Admin/Services/Add";
+import EditServicer from "./pages/Admin/Services/Edit";
+import ListServices from "./pages/Admin/Services/List";
 import LoginAdmin from "./pages/Auth/login";
-import RegisterAdmin from "./pages/Auth/register";
+import RoleList from "./pages/Admin/Role/List";
+import RoleCreate from "./pages/Admin/Role/Create";
+
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="login" element={<LoginAdmin />} />
-        <Route path="register" element={<RegisterAdmin />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
-          <Route path="login" element={<LoginAdmin />} />
-<<<<<<< HEAD
-=======
-          <Route path="register" element={<RegisterAdmin />} />
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="booking">
@@ -112,13 +102,20 @@ function App() {
           <Route path="feedback">
             <Route index element={<ListFeedBack />} />
           </Route>
-          <Route path="admin">
-            <Route index element={<ListAdmin />} />
+          <Route path="auth">
+            <Route path="admin">
+              <Route index element={<ListAdmin />} />
+            </Route>
+            <Route path="user">
+              <Route index element={<ListUser />} />
+            </Route>
           </Route>
-          <Route path="user">
-            <Route index element={<ListUser />} />
+          {/* <Route path="decentralization"> */}
+          <Route path="role">
+            <Route index element={<RoleList />} />
+            <Route path="create" element={<RoleCreate />} />
+            <Route path="edit" element={<RoleCreate />} />
           </Route>
->>>>>>> 4831b1780cc94fe8254672b83e435b0a854fcdb6
         </Route>
       </Routes>
     </>

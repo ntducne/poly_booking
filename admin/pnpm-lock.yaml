@@ -41,6 +41,9 @@ dependencies:
   sweetalert:
     specifier: ^2.1.2
     version: 2.1.2
+  swiper:
+    specifier: ^10.3.0
+    version: 10.3.0
 
 devDependencies:
   '@types/react':
@@ -2757,6 +2760,11 @@ packages:
     dependencies:
       es6-object-assign: 1.1.0
       promise-polyfill: 6.1.0
+    dev: false
+
+  /swiper@10.3.0:
+    resolution: {integrity: sha512-o81KZH4phL/dJxKFWpZ/zf78QxOyFMood+c86vJJO0ZeSOoniyzV8HWDsw12KOlQdm4WRxrc/6kfGImAcxcS3w==}
+    engines: {node: '>= 4.7.0'}
     dev: false
 
   /tailwindcss@3.3.3:

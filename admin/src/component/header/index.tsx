@@ -27,22 +27,12 @@ const Head = () => {
   const menu: MenuProps["items"] = [
     {
       label: (
-        <Menu>
-          <Menu.Item key="profile">
-            <Link to={`/admin`}>
-              <UserOutlined /> Thông tin cá nhân
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="message">
-            <Link to={`/admin`}>
-              <MessageOutlined className="bg-sky" /> Tin nhắn
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="logout">
-            <a href="/logout">
-              <LogoutOutlined /> Đăng xuất
-            </a>
-          </Menu.Item>
+        <Menu items={[
+          {key: "profile", label: <Link to={`/admin`}><UserOutlined /> Thông tin cá nhân</Link>},
+          {key: "message", label: <Link to={`/admin`}><MessageOutlined className="bg-sky" /> Tin nhắn</Link>},
+          {key: "logout", label: <a href="/logout"><LogoutOutlined /> Đăng xuất</a>},
+
+        ]}>
         </Menu>
       ),
       key: "0",
@@ -126,21 +116,21 @@ const Head = () => {
   return (
     <Row className="flex justify-center items-center mx-10 ">
       <Col span={12}>
-        <p className="font-semibold text-3xl overflow-hidden ">{title}</p>
+        <p className="font-semibold text-xl md:text-3xl overflow-hidden ">{title}</p>
       </Col>
       <Col span={12} className="flex justify-end ">
         <Space size="large">
-          <Dropdown menu={{ items : bell}} trigger={["click"]}>
+          <Dropdown className="hover:cursor-pointer hidden md:block" menu={{ items : bell}} trigger={["click"]}>
             <Badge count={99}>
               <Avatar className="bg-white" size={38} icon={<BellFilled  className="text-blue-400 font-black"/>} />
             </Badge>
           </Dropdown>
-          <Dropdown menu={{ items : message}} trigger={["click"]}>
+          <Dropdown className="hover:cursor-pointer hidden md:block" menu={{ items : message}} trigger={["click"]}>
             <Badge count={99}>
               <Avatar className="bg-white" size={38} icon={<MessageOutlined  className="text-blue-400 font-black"/>} />
             </Badge>
           </Dropdown>
-          <Dropdown menu={{items : menu}} trigger={["click"]}>
+          <Dropdown className="hover:cursor-pointer" menu={{items : menu}} trigger={["click"]}>
             <Avatar size={40} icon={<UserOutlined />} />
           </Dropdown>
         </Space>

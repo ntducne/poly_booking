@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::create('branches', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
+        Schema::create('branches', function (Blueprint $table) {
+            $table->id();
+            $table->string('address');
+            $table->string('name');
+            $table->string('number');
+            $table->timestamps();
+        });
     }
 
     /**
