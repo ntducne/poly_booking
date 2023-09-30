@@ -18,7 +18,7 @@ const Detail = (props: Props) => {
             <SlideRooms />
 
 
-            <div className=' max-w-[1425px] bg-white  m-auto  h-full py-24 mt-[-140px] z-50'>
+            <div className=' max-w-[1425px] bg-white  m-auto  h-full py-24 mt-[-140px] '>
                 <div className='p-[50px]  flex flex-col lg:flex-row'>
                     <div className='w-full h-full lg:w-[60%] mr-[30px]'>
                         <p className='pt-[15px] pb-[15px] '>
