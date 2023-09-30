@@ -5,7 +5,7 @@ type Props = {}
 
 const Profile = (props: Props) => {
     return (
-        <div>
+        <div className='mb-[300px]'>
             <HeroSlide />
             <div className="container mx-auto my-5 p-5">
                 <div className="md:flex no-wrap md:-mx-2 ">
@@ -50,32 +50,15 @@ const Profile = (props: Props) => {
                                 </span>
                                 <span>Similar Profiles</span>
                             </div>
-                            <div className="grid grid-cols-3">
+                           
                                 <div className="text-center my-2">
-                                    <img className="h-16 w-16 rounded-full mx-auto"
+                                    <img className="h-full w-full rounded-full mx-auto"
                                         src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
                                         alt="" />
-                                    <a href="#" className="text-main-color">Kojstantin</a>
+                                    
                                 </div>
-                                <div className="text-center my-2">
-                                    <img className="h-16 w-16 rounded-full mx-auto"
-                                        src="https://avatars2.githubusercontent.com/u/24622175?s=60&amp;v=4"
-                                        alt="" />
-                                    <a href="#" className="text-main-color">James</a>
-                                </div>
-                                <div className="text-center my-2">
-                                    <img className="h-16 w-16 rounded-full mx-auto"
-                                        src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
-                                        alt="" />
-                                    <a href="#" className="text-main-color">Natie</a>
-                                </div>
-                                <div className="text-center my-2">
-                                    <img className="h-16 w-16 rounded-full mx-auto"
-                                        src="https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/f04b52da-12f2-449f-b90c-5e4d5e2b1469_361x361.png"
-                                        alt="" />
-                                    <a href="#" className="text-main-color">Casey</a>
-                                </div>
-                            </div>
+                              
+                           
                         </div>
 
                     </div>
@@ -140,7 +123,7 @@ const Profile = (props: Props) => {
                         <div className="bg-white p-3 shadow-sm rounded-sm">
                             <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">Thay đổi thông tin</h1>
                             <div className="grid grid-cols-2 mt-4">
-                                <form className="w-full max-w-lg">
+                                <form className="w-full max-w-lg ml-10" >
                                     <div className="flex flex-wrap -mx-3 mb-6">
                                         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
@@ -205,7 +188,8 @@ const Profile = (props: Props) => {
                                             focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210" />
                                         </div>
                                     </div>
-                                    <button type="submit" className="py-3 text-2xl bg-blue-100 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Send message</button>
+                                    <button className='w-full bg-cyan-500 rounded-2xl h-[60px] mt-[30px] text-xl font-semibold text-white'> <span>Thay đổi</span></button>
+
                                 </form>
                             </div>
 
