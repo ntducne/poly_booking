@@ -9,16 +9,41 @@ import { AiOutlineRight } from 'react-icons/Ai'
 import SlideRooms from './SlideRoom'
 import SlideImages from './Slideimage'
 
+import { motion } from "framer-motion"
 
 type Props = {}
 
 const Detail = (props: Props) => {
     return (
         <div className='pb-[100px] '>
-            <SlideRooms />
-
-
-            <div className=' max-w-[1425px] bg-white  m-auto  h-full py-24 mt-[-140px] z-50'>
+            {/* <SlideRooms /> */}
+            <div className='h-[600px] lg:h-[860px]'>
+                <div className='text-white h-full bg-pink-300 relative flex items-center justify-center'>
+                    <div className='z-20 text-white text-center'>
+                    <motion.div
+                        variants={{
+                            hidden: { opacity: 0, y: 105 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        initial="hidden"
+                        animate='visible'
+                    >
+                        <div className='uppercase tracking-[6px] mb-5'>Just enjoy and relax</div>
+                        <h1 className='text-[32px] font-extralight uppercase tracking-[3px] max-w-[920px] lg:text-[68px] leading-tight mb-6'>Luxury Hotel</h1>
+                        <button className='btn mx-auto'>Great for business trip</button>
+                    </motion.div>
+                    </div>
+                    <div className='absolute top-0 w-full h-full'>
+                        <img src="https://images.pexels.com/photos/5615059/pexels-photo-5615059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className='object-cover h-full w-full' />
+                    </div>
+                    <div className='absolute w-full h-full bg-black/70'></div>
+                </div>
+            </div>
+            <div className=' max-w-[1425px] bg-white m-auto  h-full pb-16 z-50'
+                style={{
+                    transform: 'translateY(-20%)'
+                }}
+            >
                 <div className='p-[50px]  flex flex-col lg:flex-row'>
                     <div className='w-full h-full lg:w-[60%] mr-[30px]'>
                         <p className='pt-[15px] pb-[15px] '>
@@ -52,7 +77,7 @@ const Detail = (props: Props) => {
                             gravida ut rutrum dignissim, malesuada vitae nulla. Sed viverra, nisl dapibus lobortis porttitor.</p>
                     </div>
                     <div className='w-full h-full lg:w-[30%] border-s-4 float-left'>
-                        <div className='w-full pt-[20px] ml-[50px]'>
+                        <div className='w-full  ml-[50px]'>
                             <div className='text-base font-semibold tracking-wide '>
                                 Form
                             </div>
@@ -62,7 +87,7 @@ const Detail = (props: Props) => {
                             </div>
                             <button className='w-full bg-cyan-500 rounded-2xl h-[60px] mt-[30px] text-2xl font-semibold text-white'> <span>Book now</span></button>
                         </div>
-                        <div className='w-full pt-[20px] ml-[50px] mt-[30px] '>
+                        <div className='w-full  ml-[50px] mt-[30px] '>
                             <div>
                                 <div className='flex'>
                                     <MdOutlineKingBed className='w-[90px] h-[50px]' />
@@ -88,90 +113,94 @@ const Detail = (props: Props) => {
                     </div>
                 </div>
             </div>
-            <div className='max-w-full bg-black text-white m-auto flex flex-col lg:flex-row pt-[80px] pb-[80px]'>
+            <div 
+                style={{
+                    transform: 'translateY(-26%)'
+                }}
+            className='max-w-full bg-black text-white m-auto flex flex-col lg:flex-row pt-[80px] pb-[80px]'>
                 <div className='w-full h-full lg:w-[50%] m-auto  flex flex-col lg:flex-row '>
                     <div className='w-full h-full lg:w-[30%] flex text-xl ml-[480px]'>
-                        <div><AiOutlineShake className="w-[40px] h-[45px]"/></div>
+                        <div><AiOutlineShake className="w-[40px] h-[45px]" /></div>
                         <span className='mt-[5px] ml-[20px] text-2xl font-semibold'>Amenities			</span>
                     </div>
                     <div className='w-full h-full lg:w-[50%]  mt-3'>
                         <div className='flex '>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                     </div>
                 </div>
                 <div className='w-full h-full lg:w-[50%] flex flex-col lg:flex-row'>
-                    <div  className='w-full h-full lg:w-[30%] flex text-xl'>
+                    <div className='w-full h-full lg:w-[30%] flex text-xl'>
                         <div>
-                            <AiOutlineCoffee className="w-[40px] h-[45px]"/>
+                            <AiOutlineCoffee className="w-[40px] h-[45px]" />
                         </div>
                         <span className='mt-[5px] ml-[20px] font-semibold text-2xl'>Services</span>
                     </div>
                     <div className='w-full h-full lg:w-[50%]  mt-3'>
                         <div className='flex '>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5'>40-inch Samsung® LED TV</span>
                         </div>
                         <div className='flex mt-4'>
-                            <div className='mt-1'> <AiOutlineRight/></div>
+                            <div className='mt-1'> <AiOutlineRight /></div>
                             <span className='ml-5 font-light'>40-inch Samsung® LED TV</span>
                         </div>
-                       
+
                     </div>
                 </div>
 
             </div>
 
-            <div className='mt-10'>
+            <div className='mt-[-120px]'>
                 <SlideImages />
             </div>
 
@@ -395,7 +424,7 @@ const Detail = (props: Props) => {
 
             </div>
         </div>
-        
+
 
     )
 }
