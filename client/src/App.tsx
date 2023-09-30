@@ -11,6 +11,7 @@ import RoomBooked from "./pages/RoomBooked"
 import Detail from "./pages/Room/Detail"
 import React from "react"
 import AboutPage from "./pages/AboutPage/about"
+import ForgotPassword from "./pages/Auth/forgot_password"
 
 
 function App() {
@@ -32,10 +33,10 @@ function App() {
             <Route path='roomBooked' element={<RoomBooked />} />
           </Route>
         </Route>
-
         <Route path='/auth'>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="forGotPassword" element={<ForgotPassword />} />
         </Route>
       </Routes>
     </>

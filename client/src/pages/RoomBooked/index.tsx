@@ -2,7 +2,7 @@ import React from 'react'
 import HeroSlide from '../../components/HeroSlide'
 import BookForm from '../../components/BookForm'
 import { ImageStyle1 } from '../../assets/images/Home/ImsViews'
-import { Divider } from 'antd'
+import { Divider, Pagination } from 'antd'
 
 type Props = {}
 
@@ -101,6 +101,9 @@ export default function RoomBooked({ }: Props) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className='flex justify-end mt-6'>
+                        <Pagination defaultCurrent={6} total={500} />
                     </div>
                 </div>
             </div>

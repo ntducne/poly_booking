@@ -9,7 +9,12 @@ export default {
       container: {
         padding: {
           DEFAULT: '15px',
+          primary: "100px"
+
         },
+        margin: {
+
+        }
       },
       fontFamily: {
         text: ['Heebo'],
@@ -23,7 +28,31 @@ export default {
         }
       },
       backgroundColor: {
-        bgr: "#eeeeee"
+        bgr: "#f9f8f6"
+      },
+      fontSize: {
+        h1: "50px",
+        normal: "23px",
+        desc: "20px",
+        h3: "35px",
+        small: "16px"
+      },
+      colors: {
+        primary: "#202020",
+        secondary: "#f9f8f6"
+      },
+      margin: {
+        primary: "100px"
+      },
+      padding: {
+        primary: "100px"
+      },
+      borderRadius: {
+        primary: "10px",
+        btn: "50px"
+      },
+      height: {
+        inputHeight: "50px"
       }
     },
   },

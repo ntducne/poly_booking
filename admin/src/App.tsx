@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Router, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
 import AddBill from "./pages/Admin/Bill/Add";
 import EditBill from "./pages/Admin/Bill/Edit";
@@ -36,6 +36,8 @@ import AddServices from "./pages/Admin/Services/Add";
 import EditServicer from "./pages/Admin/Services/Edit";
 import ListServices from "./pages/Admin/Services/List";
 import LoginAdmin from "./pages/Auth/login";
+import RoleList from "./pages/Admin/Role/List";
+import RoleCreate from "./pages/Admin/Role/Create";
 
 
 function App() {
@@ -100,11 +102,19 @@ function App() {
           <Route path="feedback">
             <Route index element={<ListFeedBack />} />
           </Route>
-          <Route path="admin">
-            <Route index element={<ListAdmin />} />
+          <Route path="auth">
+            <Route path="admin">
+              <Route index element={<ListAdmin />} />
+            </Route>
+            <Route path="user">
+              <Route index element={<ListUser />} />
+            </Route>
           </Route>
-          <Route path="user">
-            <Route index element={<ListUser />} />
+          {/* <Route path="decentralization"> */}
+          <Route path="role">
+            <Route index element={<RoleList />} />
+            <Route path="create" element={<RoleCreate />} />
+            <Route path="edit" element={<RoleCreate />} />
           </Route>
         </Route>
       </Routes>

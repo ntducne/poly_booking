@@ -15,23 +15,6 @@ import FormSearch from "../../../component/formSearch";
 import swal, { } from "sweetalert";
 
 const ListRoom = () => {
-  const [loadings, setLoadings] = useState<boolean[]>([]);
-
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-    }, 2000);
-  };
 
   const columns: ColumnsType<DataType> = [
     {
@@ -117,7 +100,7 @@ const ListRoom = () => {
           </Button>
         </Space>
       ),
-      fixed: "right",
+      // fixed: "right",
     },
   ];
 
@@ -142,7 +125,7 @@ const ListRoom = () => {
     sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   };
 
   const remove = (id: any) => {
@@ -172,35 +155,34 @@ const ListRoom = () => {
 
   return (
     <div className="">
-      <Row className="flex justify-between items-center mb-6 ">
-        <Col>
-          {/* <Tabs className="w-10%" items={items} /> */}
+      <div className="flex flex-col-reverse md:flex-row md:justify-between ">
+        <div className="mb-3">
           <FormSearch />
-        </Col>
-        <Col className="flex items-center justify-end">
+        </div>
+        <div className="flex flex-col md:flex-row">
           <Button
-            className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl"
+            className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl mb-2"
             type="default"
             icon={<AiOutlinePlus />}
-            loading={loadings[1]}
-            onClick={() => enterLoading(1)}
           >
             <Link to={`/room/add`}>Thêm phòng</Link>
           </Button>
-          <Button className="ml-5 bg-red-400 text-[#fff] hover:drop-shadow-2xl">
-            <Link className="flex items-center " to={`/admin`}>
-              <MdOutlineDeleteOutline />
-              <span className="ml-2">Thùng rác</span>
-            </Link>
+          <Button
+            className="bg-red-400  text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
+            type="default"
+            icon={<MdOutlineDeleteOutline />}
+          >
+            <Link to={`/room`}>Thùng rác</Link>
           </Button>
-        </Col>
-      </Row>
+        
+        </div>
+      </div>
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}
-        onChange={onChange}
+        onChange={onChange} 
       />
     </div>
   );
