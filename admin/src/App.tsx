@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Router, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
 import AddBill from "./pages/Admin/Bill/Add";
 import EditBill from "./pages/Admin/Bill/Edit";
@@ -102,11 +102,13 @@ function App() {
           <Route path="feedback">
             <Route index element={<ListFeedBack />} />
           </Route>
-          <Route path="admin">
-            <Route index element={<ListAdmin />} />
-          </Route>
-          <Route path="user">
-            <Route index element={<ListUser />} />
+          <Route path="auth">
+            <Route path="admin">
+              <Route index element={<ListAdmin />} />
+            </Route>
+            <Route path="user">
+              <Route index element={<ListUser />} />
+            </Route>
           </Route>
           {/* <Route path="decentralization"> */}
           <Route path="role">
