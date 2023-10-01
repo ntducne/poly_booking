@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Form,
   Input,
@@ -6,18 +6,14 @@ import {
   Button,
   Select,
   message,
-  Breadcrumb,
   Typography,
   InputNumber,
-  Switch,
   Checkbox,
   Row,
   Col,
-  Rate,
   Space,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { GrAdd } from "react-icons/gr";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
 const { Option } = Select;
@@ -68,7 +64,7 @@ const AddRoom = () => {
 
   return (
     <div>
-      <div className="max-w-[80%] mr-auto m-10">
+      <div className="max-w-[80%] mr-auto ml-10">
         <div className="mb-5">
           <Title level={3}>Thêm mới</Title>
         </div>
@@ -232,13 +228,13 @@ const AddRoom = () => {
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-              <Button  className="flex items-center w-30 bg-[rgb(76,167,68)]  py-5 rounded-3xl hover:bg-sky-500" type="default" htmlType="submit">
+              <Button  className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
                 <AiOutlineCheck className="text-[#fff] "/>
-                <Text className=" text-[#fff] ml-2">Thêm</Text>
+                <Text className=" text-[#fff] ml-1">Thêm</Text>
               </Button>
-              <Button className="flex items-center max-w-30 bg-[rgb(119,145,115)]  py-5 rounded-3xl hover:bg-indigo-400" htmlType="reset">
+              <Button className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" htmlType="reset">
                  <BiReset className="text-[#fff]"/> 
-                 <Text className="text-[#fff] ml-3">Làm mới</Text>
+                 <Text className="text-[#fff] ml-1">Làm mới</Text>
               </Button>
             </Space>
           </Form.Item>
