@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Button, Carousel, Image, Space, Table, Tabs } from "antd";
-import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
+import React from "react";
+import { Button, Space, Table } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+// import { Col, Row } from "antd";
+// interface DataType {
+//   key: React.Key;
+//   name: string;
+//   age: number;
+//   address: string;
+// }
 import FormSearch from "../../../component/formSearch";
-import swal , { } from "sweetalert";
+// import swal , { } from "sweetalert";
+import Page from "../../../component/page";
 
 const ListBill = () => {
   
@@ -73,7 +73,10 @@ const ListBill = () => {
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" style={{ backgroundColor: "#68e365" }}>
+          <Button
+           type="primary" 
+           className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
+           >
             <Link to={`/bill/edit/${record?.key}`}>
               <AiOutlineEdit />
             </Link>
@@ -114,33 +117,33 @@ const ListBill = () => {
 
 
 
-  const remove = (id: any) => {
-    try {
-      swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            // removeComment(id);
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
-          }
-        })
-        .catch(() => {
-          swal("Error", {
-            icon: "error",
-          });
-        });
-    } catch (error) {}
-  };
+  // const remove = (id: any) => {
+  //   try {
+  //     swal({
+  //       title: "Are you sure you want to delete?",
+  //       text: "You cannot undo after deleting!",
+  //       icon: "warning",
+  //       buttons: ["Cancel", "Delete"],
+  //       dangerMode: true,
+  //     })
+  //       .then((willDelete) => {
+  //         if (willDelete) {
+  //           // removeComment(id);
+  //           swal("You have successfully deleted", {
+  //             icon: "success",
+  //           });
+  //         }
+  //       })
+  //       .catch(() => {
+  //         swal("Error", {
+  //           icon: "error",
+  //         });
+  //       });
+  //   } catch (error) {}
+  // };
 
   return (
-    <div className="">
+    <Page title={`Hóa đơn`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <div className="mb-3">
           <FormSearch />
@@ -154,7 +157,7 @@ const ListBill = () => {
         columns={columns}
         dataSource={data}
       />
-    </div>
+    </Page>
   );
 };
 
