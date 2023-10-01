@@ -5,24 +5,16 @@ type Props = {}
 
 import { EffectFade, Autoplay } from 'swiper/modules';
 const slides = [
+
     {
-        title: "Your Luxury Hotel For Vacation",
-        bg: "https://images.pexels.com/photos/1838554/pexels-photo-1838554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        btnText: "Room & Suites"
-    },
-    {
-        title: "Your Luxury Hotel For Vacation",
+        title: "Luxury Hotel ",
         bg: "https://images.pexels.com/photos/5615059/pexels-photo-5615059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        btnText: "Room & Suites"
+        btnText: "Great for business trip"
     },
-    {
-        title: "Your Luxury Hotel For Vacation",
-        bg: "https://images.pexels.com/photos/17871424/pexels-photo-17871424/free-photo-of-buildings-on-shore.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        btnText: "Room & Suites"
-    }
+
 ]
 
-export default function HeroSlide({ }: Props) {
+export default function SlideRooms({ }: Props) {
     return (
         <Swiper
             modules={[EffectFade, Autoplay]}
@@ -32,7 +24,7 @@ export default function HeroSlide({ }: Props) {
                 delay: 3000,
                 disableOnInteraction: false
             }}
-            className='heroSlider h-[600px] lg:h-[860px] bg-black p-0 '>
+            className='heroSlider  h-[600px] lg:h-[860px] '>
             {slides.map((slide, index) => {
                 const { title, bg, btnText } = slide
                 return <SwiperSlide key={index} className='text-white h-full bg-pink-300 
