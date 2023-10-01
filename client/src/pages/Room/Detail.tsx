@@ -204,7 +204,7 @@ const Detail = (props: Props) => {
                 <SlideImages />
             </div>
 
-            <section className="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased max-w-[70%] m-auto">
+            <section className="bg-white  py-8 lg:py-16 antialiased max-w-[70%] m-auto">
                 <div className="w-70% mx-auto px-4">
                     <div className="flex   mb-6">
                         <h2 className="lg:text-2xl font-bold text-gray-900 text-3xl dark:text-white">Discussion (20)</h2>
