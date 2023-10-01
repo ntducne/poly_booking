@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { Button, Carousel, Image, Space, Table, Tabs } from "antd";
+import React from "react";
+import { Button, Image, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
+// import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
   age: number;
   address: string;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import FormSearch from "../../../../component/formSearch";
 import swal , { } from "sweetalert";
 import Page from "../../../../component/page";
@@ -133,15 +133,16 @@ const ListUser = () => {
   ];
 
   const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
+    // pagination,
+    // filters,
+    // sorter,
+    // extra
   ) => {
     // console.log("params", pagination, filters, sorter, extra);
   };
 
   const remove = (id: any) => {
+    console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",

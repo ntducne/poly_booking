@@ -37,6 +37,7 @@ const ListRoom = () => {
           <div className="ml-3 text-gray-500">
             <p>#68e365</p>
             <p>2 giường ngủ</p>
+            <p>{record?.key}</p>
           </div>
         </div>
       ),
@@ -121,15 +122,16 @@ const ListRoom = () => {
   ];
 
   const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
+    // pagination,
+    // filters,
+    // sorter,
+    // extra
   ) => {
     // console.log("params", pagination, filters, sorter, extra);
   };
 
   const remove = (id: any) => {
+    console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",

@@ -3,9 +3,10 @@ import { Image } from "antd";
 import { Link } from "react-router-dom";
 import Page from "../../../component/page";
 
-type Props = {};
+// type Props = {};
 
-const NotFound = (props: Props) => {
+// const NotFound = (props: Props) => {
+  const NotFound = () => {
   return (
     <Page title={`404 Not Found`}>
       <section className="bg-white dark:bg-gray-900 ">

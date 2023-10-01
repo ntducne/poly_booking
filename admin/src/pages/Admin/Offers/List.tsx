@@ -102,6 +102,7 @@ const ListOffers = () => {
   };
 
   const remove = (id: any) => {
+    console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",

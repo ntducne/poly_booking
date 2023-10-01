@@ -10,6 +10,8 @@ type FieldType = {
 };
 
 const EditRoomExtend = (props: Props) => {
+  console.log(props);
+  
   const onFinish = (values: any) => {
     console.log('Success:', values);
   };

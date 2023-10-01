@@ -2,9 +2,10 @@ import { Input } from "antd";
 import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
-type Props = {};
+// type Props = {};
 
-const FormSearch = (props: Props) => {
+// const FormSearch = (props: Props) => {
+const FormSearch = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearchChange = (e: any) => {

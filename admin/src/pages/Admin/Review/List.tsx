@@ -36,6 +36,7 @@ const ListReview = () => {
           <div className="ml-3 text-gray-500">
             <p>#68e365</p>
             <p>2 giường ngủ</p>
+            <p>{record?.id}</p>
           </div>
         </div>
       ),
@@ -127,6 +128,8 @@ const ListReview = () => {
   };
 
   const remove = (id: any) => {
+    console.log(id);
+    
     try {
       swal({
         title: "Are you sure you want to delete?",

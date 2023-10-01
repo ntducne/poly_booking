@@ -11,7 +11,7 @@ interface DataType {
 }
 // import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../../component/formSearch";
-import swal , { } from "sweetalert";
+// import swal , { } from "sweetalert";
 import Page from "../../../../component/page";
 
 const ListAdmin = () => {
@@ -147,30 +147,32 @@ const ListAdmin = () => {
     // console.log("params", pagination, filters, sorter, extra);
   };
 
-  const remove = (id: any) => {
-    try {
-      swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            // removeComment(id);
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
-          }
-        })
-        .catch(() => {
-          swal("Error", {
-            icon: "error",
-          });
-        });
-    } catch (error) {}
-  };
+  // const remove = (id: any) => {
+  //   console.log(id);
+    
+  //   try {
+  //     swal({
+  //       title: "Are you sure you want to delete?",
+  //       text: "You cannot undo after deleting!",
+  //       icon: "warning",
+  //       buttons: ["Cancel", "Delete"],
+  //       dangerMode: true,
+  //     })
+  //       .then((willDelete) => {
+  //         if (willDelete) {
+  //           // removeComment(id);
+  //           swal("You have successfully deleted", {
+  //             icon: "success",
+  //           });
+  //         }
+  //       })
+  //       .catch(() => {
+  //         swal("Error", {
+  //           icon: "error",
+  //         });
+  //       });
+  //   } catch (error) {}
+  // };
 
   return (
     <Page title={`Tài khoản quản trị`}>
