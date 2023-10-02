@@ -20,15 +20,9 @@ export default {
         text: ['Heebo'],
         text_2nd: ['Cormorant', 'serif']
       },
-      keyframes: {
-        hover: {
-          '0%': { opacity: 0 },
-          '50%': { opacity: 50 },
-          '100%': { opacity: 100 },
-        }
-      },
       backgroundColor: {
         bgr: "#f9f8f6"
+
       },
       fontSize: {
         h1: "50px",
@@ -38,13 +32,21 @@ export default {
         small: "16px"
       },
       colors: {
-        primary: "#202020"
+        primary: "#202020",
+        secondary: "#f9f8f6"
       },
       margin: {
         primary: "100px"
       },
       padding: {
         primary: "100px"
+      },
+      borderRadius: {
+        primary: "10px",
+        btn: "50px"
+      },
+      height: {
+        inputHeight: "50px"
       }
     },
   },

@@ -1,4 +1,4 @@
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
 import AddBill from "./pages/Admin/Bill/Add";
 import EditBill from "./pages/Admin/Bill/Edit";
@@ -33,11 +33,12 @@ import AddRoomUtilities from "./pages/Admin/RoomUtilities/Add";
 import EditRoomUtilities from "./pages/Admin/RoomUtilities/Edit";
 import ListRoomUtilities from "./pages/Admin/RoomUtilities/List";
 import AddServices from "./pages/Admin/Services/Add";
-import EditServicer from "./pages/Admin/Services/Edit";
 import ListServices from "./pages/Admin/Services/List";
 import LoginAdmin from "./pages/Auth/login";
 import RoleList from "./pages/Admin/Role/List";
 import RoleCreate from "./pages/Admin/Role/Create";
+import EditServices from "./pages/Admin/Services/Edit";
+import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
     <>
       <Routes>
         <Route path="login" element={<LoginAdmin />} />
+        <Route path="forGotPassword" element={<ForgotPasswordAdmin />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
           <Route index element={<Dashboard />} />
@@ -92,7 +94,7 @@ function App() {
           <Route path="services">
             <Route index element={<ListServices />} />
             <Route path="add" element={<AddServices />} />
-            <Route path="edit/:id" element={<EditServicer />} />
+            <Route path="edit/:id" element={<EditServices />} />
           </Route>
           <Route path="bill">
             <Route index element={<ListBill />} />
@@ -105,9 +107,11 @@ function App() {
           <Route path="auth">
             <Route path="admin">
               <Route index element={<ListAdmin />} />
+              <Route path="edit/:id" element={<ListAdmin />} />
             </Route>
             <Route path="user">
               <Route index element={<ListUser />} />
+              <Route path="edit/:id" element={<ListUser />} />
             </Route>
           </Route>
           {/* <Route path="decentralization"> */}

@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { Button, Image, Rate, Space, Table, Tabs } from "antd";
+// import React from "react";
+import { Button, Image, Rate, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
+// interface DataType {
+//   key: React.Key;
+//   name: string;
+//   age: number;
+//   address: string;
+// }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal , { } from "sweetalert";
@@ -59,15 +58,10 @@ const ListFeedback = () => {
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          {/* <Button type="primary" style={{ backgroundColor: "#68e365" }}>
-            <Link to={`/room/edit/${record?.key}`}>
-              <AiOutlineEdit />
-            </Link>
-          </Button> */}
           <Button
             onClick={() => remove(record?.key)}
             type="primary"
-            style={{ backgroundColor: "#e23428" }}
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
           >
             <MdDeleteForever />
           </Button>
@@ -106,6 +100,8 @@ const ListFeedback = () => {
 
 
   const remove = (id: any) => {
+    console.log(id);
+    
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -132,31 +128,18 @@ const ListFeedback = () => {
 
   return (
     <Page title={`Đánh giá`}>
-      <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <div className="mb-3">
+      <div className="flex flex-col-reverse md:flex-row md:justify-between  ">
+        <div className="">
           <FormSearch />
         </div>
         <div className="flex flex-col md:flex-row">
-          {/* <Button
-            className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl mb-2"
-            type="default"
-            icon={<AiOutlinePlus />}
+          <Link
+            to={`/Feedback`}
+            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center md:ml-2 my-1 md:my-0"
           >
-            <Link to={`/room/add`}>Thêm phòng</Link>
-          </Button> */}
-          <Button
-            className="bg-red-400	text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
-            type="default"
-            icon={<MdOutlineDeleteOutline />}
-          >
-            <Link to={`/Feedback`}>Thùng rác</Link>
-          </Button>
-          {/* <Button className=" bg-red-400 text-[#fff] hover:drop-shadow-2xl md:ml-auto">
-            <Link className="flex items-center px-10" to={`/admin`}>
-              <MdOutlineDeleteOutline />
-              <span className="ml-2">Thùng rác</span>
-            </Link> 
-          </Button> */}
+            <MdOutlineDeleteOutline />
+            Thùng rác
+          </Link>
         </div>
       </div>
       <Table

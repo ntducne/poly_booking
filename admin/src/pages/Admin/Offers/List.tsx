@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Button, Carousel, Image, Space, Table, Tabs } from "antd";
+import React from "react";
+import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
+// import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
@@ -13,6 +13,7 @@ interface DataType {
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal , { } from "sweetalert";
+import Page from "../../../component/page";
 
 const ListOffers = () => {
 
@@ -51,7 +52,10 @@ const ListOffers = () => {
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" style={{ backgroundColor: "#68e365" }}>
+          <Button 
+          type="primary" 
+          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
+          >
             <Link to={`/offers/edit/${record?.key}`}>
               <AiOutlineEdit />
             </Link>
@@ -59,7 +63,7 @@ const ListOffers = () => {
           <Button
             onClick={() => remove(record?.key)}
             type="primary"
-            style={{ backgroundColor: "#e23428" }}
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
           >
             <MdDeleteForever />
           </Button>
@@ -89,15 +93,16 @@ const ListOffers = () => {
   ];
 
   const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
+    // pagination,
+    // filters,
+    // sorter,
+    // extra
   ) => {
     // console.log("params", pagination, filters, sorter, extra);
   };
 
   const remove = (id: any) => {
+    console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -123,32 +128,24 @@ const ListOffers = () => {
   };
 
   return (
-    <div className="">
+    <Page title={`Ưu đãi - Khuyến mại`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <div className="mb-3">
-          <FormSearch />
-        </div>
-        <div className="flex flex-col md:flex-row">
-          <Button
-            className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl mb-2"
-            type="default"
-            icon={<AiOutlinePlus />}   
+      <FormSearch />
+        <div className="flex flex-col md:flex-row md:ml-2">
+          <Link
+            to={`/offers/add`}
+            className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
           >
-            <Link to={`/services/add`}>Thêm dịch vụ</Link>
-          </Button>
-          <Button
-            className="bg-red-400	text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
-            type="default"
-            icon={<MdOutlineDeleteOutline />}
+            <AiOutlinePlus />
+            Thêm ưu đãi
+          </Link>
+          <Link
+            to={`/offers`}
+            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
           >
-            <Link to={`/services/add`}>Thùng rác</Link>
-          </Button>
-          {/* <Button className=" bg-red-400 text-[#fff] hover:drop-shadow-2xl md:ml-auto">
-            <Link className="flex items-center px-10" to={`/admin`}>
-              <MdOutlineDeleteOutline />
-              <span className="ml-2">Thùng rác</span>
-            </Link> 
-          </Button> */}
+            <MdOutlineDeleteOutline />
+            Thùng rác
+          </Link>
         </div>
       </div>
       <Table
@@ -158,7 +155,7 @@ const ListOffers = () => {
         dataSource={data}
         onChange={onChange}
       />
-    </div>
+    </Page>
   );
 };
 

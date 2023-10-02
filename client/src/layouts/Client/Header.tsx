@@ -1,5 +1,4 @@
 import { BarsOutlined, LockOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/Logo/2587107.png';
@@ -7,23 +6,6 @@ import Logo from '../../assets/Logo/2587107.png';
 type Props = {}
 
 
-const items: MenuProps['items'] = [
-  {
-    label: <Link className=' block px-3 py-[3px]' to=''>Thông tin</Link>,
-    key: '0',
-  },
-  {
-    label: <Link to='' className='block px-3 py-[3px]'>Phòng đã đặt</Link>,
-    key: '1',
-  },
-  {
-    type: 'divider',
-  },
-  {
-    label: <Link to='' className='block px-3 py-[3px]'>Đăng xuất</Link>,
-    key: '3',
-  },
-];
 
 export default function Header({ }: Props) {
   const [header, setHeader] = useState(false)

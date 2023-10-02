@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import type { Dayjs } from "dayjs";
 import {
   AiOutlineCheck,
@@ -7,7 +7,7 @@ import {
   AiOutlineImport,
 } from "react-icons/ai";
 import { BiBed } from "react-icons/bi";
-import { Calendar, Typography, theme } from "antd";
+import { Calendar, Typography } from "antd";
 import type { CalendarProps } from "antd";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -26,7 +26,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Page title={`Dashboard`}>
+    <Page title={`Trang chủ`}>
       <div className="grid grid-cols-1 gap-5 2xl:grid-cols-4 2xl:gap-4 md:grid-cols-2 ">
         <button className="border rounded-xl sm:mb-4 drop-shadow-md hover:drop-shadow-xl">
           <div className="flex items-center">

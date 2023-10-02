@@ -1,37 +1,32 @@
-import React from 'react'
-import { MdOutlineKingBed } from 'react-icons/Md'
-import { ImManWoman } from 'react-icons/Im'
-import { FaHotel } from 'react-icons/Fa'
+import { AiOutlineCoffee, AiOutlineRight, AiOutlineShake } from 'react-icons/Ai'
 import { BsFillSunFill } from 'react-icons/Bs'
-import { AiOutlineShake } from 'react-icons/Ai'
-import { AiOutlineCoffee } from 'react-icons/Ai'
-import { AiOutlineRight } from 'react-icons/Ai'
-import SlideRooms from './SlideRoom'
+import { FaHotel } from 'react-icons/Fa'
+import { ImManWoman } from 'react-icons/Im'
+import { MdOutlineKingBed } from 'react-icons/Md'
 import SlideImages from './Slideimage'
 
 import { motion } from "framer-motion"
 
-type Props = {}
 
-const Detail = (props: Props) => {
+const Detail = () => {
     return (
         <div className='pb-[100px] '>
             {/* <SlideRooms /> */}
             <div className='h-[600px] lg:h-[860px]'>
                 <div className='text-white h-full bg-pink-300 relative flex items-center justify-center'>
                     <div className='z-20 text-white text-center'>
-                    <motion.div
-                        variants={{
-                            hidden: { opacity: 0, y: 105 },
-                            visible: { opacity: 1, y: 0 }
-                        }}
-                        initial="hidden"
-                        animate='visible'
-                    >
-                        <div className='uppercase tracking-[6px] mb-5'>Just enjoy and relax</div>
-                        <h1 className='text-[32px] font-extralight uppercase tracking-[3px] max-w-[920px] lg:text-[68px] leading-tight mb-6'>Luxury Hotel</h1>
-                        <button className='btn mx-auto'>Great for business trip</button>
-                    </motion.div>
+                        <motion.div
+                            variants={{
+                                hidden: { opacity: 0, y: 105 },
+                                visible: { opacity: 1, y: 0 }
+                            }}
+                            initial="hidden"
+                            animate='visible'
+                        >
+                            <div className='uppercase tracking-[6px] mb-5'>Just enjoy and relax</div>
+                            <h1 className='text-[32px] font-extralight uppercase tracking-[3px] max-w-[920px] lg:text-[68px] leading-tight mb-6'>Luxury Hotel</h1>
+                            <button className='btn mx-auto'>Great for business trip</button>
+                        </motion.div>
                     </div>
                     <div className='absolute top-0 w-full h-full'>
                         <img src="https://images.pexels.com/photos/5615059/pexels-photo-5615059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className='object-cover h-full w-full' />
@@ -113,11 +108,11 @@ const Detail = (props: Props) => {
                     </div>
                 </div>
             </div>
-            <div 
+            <div
                 style={{
                     transform: 'translateY(-26%)'
                 }}
-            className='max-w-full bg-black text-white m-auto flex flex-col lg:flex-row pt-[80px] pb-[80px]'>
+                className='max-w-full bg-black text-white m-auto flex flex-col lg:flex-row pt-[80px] pb-[80px]'>
                 <div className='w-full h-full lg:w-[50%] m-auto  flex flex-col lg:flex-row '>
                     <div className='w-full h-full lg:w-[30%] flex text-xl ml-[480px]'>
                         <div><AiOutlineShake className="w-[40px] h-[45px]" /></div>
@@ -204,7 +199,7 @@ const Detail = (props: Props) => {
                 <SlideImages />
             </div>
 
-            <section className="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased max-w-[70%] m-auto">
+            <section className="bg-white  py-8 lg:py-16 antialiased max-w-[70%] m-auto">
                 <div className="w-70% mx-auto px-4">
                     <div className="flex   mb-6">
                         <h2 className="lg:text-2xl font-bold text-gray-900 text-3xl dark:text-white">Discussion (20)</h2>
@@ -212,7 +207,7 @@ const Detail = (props: Props) => {
                     <form className="mb-6">
                         <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                             <label htmlFor="comment" className="sr-only">Your comment</label>
-                            <textarea id="comment" rows="6"
+                            <textarea id="comment"
                                 className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
                                 placeholder="Write a comment..." required></textarea>
                         </div>

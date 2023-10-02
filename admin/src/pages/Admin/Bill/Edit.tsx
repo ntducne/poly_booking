@@ -1,8 +1,9 @@
-import React from 'react'
+// import React from 'react'
 
-type Props = {}
+// type Props = {}
 
-const EditBill = (props: Props) => {
+// const EditBill = (props: Props) => {
+  const EditBill = () => {
   return (
     <div>EditBill</div>
   )

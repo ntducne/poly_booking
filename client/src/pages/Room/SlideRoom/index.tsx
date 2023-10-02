@@ -1,9 +1,8 @@
-import React from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from 'swiper/react';
 type Props = {}
 
-import { EffectFade, Autoplay } from 'swiper/modules';
+import { Autoplay, EffectFade } from 'swiper/modules';
 const slides = [
 
     {
@@ -24,7 +23,7 @@ export default function SlideRooms({ }: Props) {
                 delay: 3000,
                 disableOnInteraction: false
             }}
-            className='heroSlider z-40 h-[600px] lg:h-[860px] '>
+            className='heroSlider  h-[600px] lg:h-[860px] '>
             {slides.map((slide, index) => {
                 const { title, bg, btnText } = slide
                 return <SwiperSlide key={index} className='text-white h-full bg-pink-300 
