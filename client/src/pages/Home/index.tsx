@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion } from "framer-motion"
 import { Link } from 'react-router-dom'
-import ImgHome from '../../assets/images/Home/view.jpg'
-import RoomsView from '../../sections/Home/RoomsView'
-import ImageRestaurant from '../../assets/images/Home/Restaurant/Img2.jpg'
 import Art1 from '../../assets/images/Home/Art/Image1.jpg'
 import Art2 from '../../assets/images/Home/Art/Image2.jpg'
 import { ImageStyle1, ImageStyle10, ImageStyle11, ImageStyle2, ImageStyle3, ImageStyle4, ImageStyle5, ImageStyle6, ImageStyle7, ImageStyle8, ImageStyle9 } from '../../assets/images/Home/ImsViews'
-import HeroSlide from '../../components/HeroSlide'
+import ImageRestaurant from '../../assets/images/Home/Restaurant/Img2.jpg'
+import ImgHome from '../../assets/images/Home/view.jpg'
 import BookForm from '../../components/BookForm'
-import Page from '../../components/Page'
+import HeroSlide from '../../components/HeroSlide'
 import ObserverAnimate from '../../components/ObserverAnimation'
+import Page from '../../components/Page'
+import RoomsView from '../../sections/Home/RoomsView'
 type Props = {}
 
 export default function Home({ }: Props) {
