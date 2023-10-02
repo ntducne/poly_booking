@@ -5,20 +5,19 @@ import {
     Select
 } from 'antd';
 import './index.css';
-import React from 'react';
 
 
 type Props = {}
-const Option = Select.Option;
 const { RangePicker } = DatePicker;
 
 export default function BookForm({ }: Props) {
     const onFinish = (values: any) => {
+        console.log(values)
 
     };
 
     const onFinishFailed = (errorInfo: any) => {
-
+        console.log(errorInfo)
     };
     return (
         <div className='container mx-auto relative max-w-[1440px] bg-bgr'>
