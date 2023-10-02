@@ -16,22 +16,22 @@ import storage from 'redux-persist/lib/storage';
 const persistConfig = {
     key: 'root',
     storage,
-    whileList: ['auth','cartUser'], // luu strorage 
+    whileList: ['auth', 'cartUser'], // luu strorage 
     backlist: ['products'] // k luu vaoo storage
 }
 
 
 const rootReducer = combineReducers({
-       // [api.something] : appendFile.reducer
+    // [api.something] : appendFile.reducer
 })
-   
+
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-const middlewares = []
+// const middlewares = []
 const store = configureStore({
     reducer: persistedReducer,
-    middleware: (getDefaultMiddleware:any)=>
+    middleware: (getDefaultMiddleware: any) =>
         getDefaultMiddleware({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

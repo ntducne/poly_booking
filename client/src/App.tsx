@@ -9,7 +9,6 @@ import Profile from "./pages/Auth/profile"
 import Checkout from "./pages/Checkout"
 import RoomBooked from "./pages/RoomBooked"
 import Detail from "./pages/Room/Detail"
-import React from "react"
 import AboutPage from "./pages/AboutPage/about"
 import ForgotPassword from "./pages/Auth/forgot_password"
 

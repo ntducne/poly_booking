@@ -1,6 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
 import {
-    Button,
     DatePicker,
     Form,
     Select
@@ -9,15 +8,15 @@ import './index.css';
 
 
 type Props = {}
-const Option = Select.Option;
+// const Option = Select.Option;
 const { RangePicker } = DatePicker;
 
 export default function BookForm({ }: Props) {
-    const onFinish = (values: any) => {
+    const onFinish = () => {
 
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
 
     };
     return (

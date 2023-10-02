@@ -1,10 +1,10 @@
-import React from 'react'
+// import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { motion } from "framer-motion"
 type Props = {}
 
 import { EffectFade, Autoplay } from 'swiper/modules';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import ObserverAnimate from '../ObserverAnimation';
 const slides = [
     {

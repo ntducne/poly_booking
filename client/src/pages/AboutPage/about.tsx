@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import ImgAbout from '../../assets/images/Abouts/Img_boi.jpg'
@@ -12,7 +11,6 @@ import Img6 from '../../assets/images/Abouts/Img_6.jpg'
 import SmoothSlide from '../../components/SmoothSlide'
 import AboutUsSlide from '../../components/AboutUsSlide';
 import Page from '../../components/Page';
-import ObserverAnimate from '../../components/ObserverAnimation';
 
 type Props = {}
 
