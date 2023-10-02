@@ -1,11 +1,9 @@
 import { ArrowsAltOutlined, UsergroupAddOutlined } from '@ant-design/icons'
-import React from 'react'
 import { Link } from 'react-router-dom'
 
-type Props = {}
 
 export default function Room(data: any) {
-    const { id, name, image, price, desc, maxPerson } = data.data
+    const { name, image, desc } = data.data
 
     return (
         <div className='bg-bgr group overflow-hidden'>

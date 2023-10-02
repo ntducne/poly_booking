@@ -5,6 +5,7 @@ interface BreadcrumbProps {
     pageName: string;
     path: string;
     action: string;
+    // children : any;
 }
 
 export default function BreadCrumb(props :BreadcrumbProps){

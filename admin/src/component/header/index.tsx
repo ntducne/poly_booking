@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import {
   Col,
   MenuProps,
@@ -17,7 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import { LayoutContext } from "../../layout/LayoutAdmin";
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 
 const Head = () => {
@@ -30,6 +30,7 @@ const Head = () => {
         <Menu items={[
           {key: "profile", label: <Link to={`/admin`}><UserOutlined /> Thông tin cá nhân</Link>},
           {key: "message", label: <Link to={`/admin`}><MessageOutlined className="bg-sky" /> Tin nhắn</Link>},
+          // {key: "notification", label: <Link className="hidden" to={`/admin`}><MessageOutlined className="bg-sky" />Thông báo</Link>},
           {key: "logout", label: <a href="/logout"><LogoutOutlined /> Đăng xuất</a>},
 
         ]}>
@@ -114,9 +115,9 @@ const Head = () => {
  
 
   return (
-    <Row className="flex justify-center items-center mx-10 ">
+    <Row className="flex justify-center items-center mx-4 ">
       <Col span={12}>
-        <p className="font-semibold text-xl md:text-3xl overflow-hidden ">{title}</p>
+        <p className="md:text-3xl  ">{title}</p>
       </Col>
       <Col span={12} className="flex justify-end ">
         <Space size="large">

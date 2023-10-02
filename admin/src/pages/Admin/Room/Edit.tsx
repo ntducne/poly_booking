@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Form,
   Input,
@@ -6,19 +6,14 @@ import {
   Button,
   Select,
   message,
-  Breadcrumb,
   Typography,
   InputNumber,
-  Switch,
   Checkbox,
   Row,
   Col,
-  Rate,
   Space,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { GrAdd } from "react-icons/gr";
-import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link } from "react-router-dom";
 const { Option } = Select;
@@ -69,7 +64,7 @@ const EditRoom = () => {
 
   return (
     <div>
-      <div className="max-w-[80%] mr-auto m-10">
+      <div className="max-w-[80%] mr-auto ml-10">
         <div className="mb-5">
           <Title level={3}>Thêm mới</Title>
         </div>
@@ -200,7 +195,7 @@ const EditRoom = () => {
             </Form.Item>
             <span className="ant-form-text" style={{ marginLeft: 8 }}></span>
           </Form.Item>
-{/* 
+          {/* 
           <Form.Item name="rate" label="Đánh giá">
             <Rate />
           </Form.Item> */}
@@ -226,20 +221,20 @@ const EditRoom = () => {
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
               <Button
-                className="flex items-center w-30 bg-[rgb(76,167,68)]  py-5 rounded-3xl hover:bg-sky-500"
+                className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
                 type="default"
                 htmlType="submit"
               >
                 <AiOutlineCheck className="text-[#fff] " />
-                <Text className=" text-[#fff] ml-2">Sửa</Text>
+                <Text className=" text-[#fff] ml-1">Thêm</Text>
               </Button>
               <Link className="text-white" to={`/room`}>
                 <Button
-                  className="flex items-center max-w-30 bg-[rgb(119,145,115)]  py-5 rounded-3xl hover:bg-indigo-400"
+                  className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
                   htmlType="reset"
                 >
                   <AiOutlineRollback className="text-[#fff]" />
-                  <Text className="text-[#fff] ml-3">Quay trở lại</Text>
+                  <Text className="text-[#fff] ml-1">Quay trở lại</Text>
                 </Button>
               </Link>
             </Space>

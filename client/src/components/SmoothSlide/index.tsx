@@ -1,27 +1,26 @@
-import React, { useRef, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 import './styles.css';
 
 // import required modules
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 
-import Slide1 from '../../assets/images/Abouts/slide_1.jpg'
-import Slide2 from '../../assets/images/Abouts/slide_2.jpg'
-import Slide3 from '../../assets/images/Abouts/slide_3.jpg'
-import Slide4 from '../../assets/images/Abouts/slide_4.jpg'
-import Slide5 from '../../assets/images/Abouts/slide_5.jpg'
-import Slide7 from '../../assets/images/Abouts/slide_7.jpg'
-import Slide6 from '../../assets/images/Abouts/slide_6.jpg'
-import Slide8 from '../../assets/images/Abouts/slide_8.jpg'
-import Slide9 from '../../assets/images/Abouts/slide_9.jpg'
+import Slide1 from '../../assets/images/Abouts/slide_1.jpg';
+import Slide2 from '../../assets/images/Abouts/slide_2.jpg';
+import Slide3 from '../../assets/images/Abouts/slide_3.jpg';
+import Slide4 from '../../assets/images/Abouts/slide_4.jpg';
+import Slide5 from '../../assets/images/Abouts/slide_5.jpg';
+import Slide6 from '../../assets/images/Abouts/slide_6.jpg';
+import Slide7 from '../../assets/images/Abouts/slide_7.jpg';
+import Slide8 from '../../assets/images/Abouts/slide_8.jpg';
+import Slide9 from '../../assets/images/Abouts/slide_9.jpg';
 
 type Props = {}
 

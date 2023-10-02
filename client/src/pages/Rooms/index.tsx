@@ -1,10 +1,9 @@
 import { Pagination } from 'antd'
 import { useEffect, useState } from 'react'
-import { Navigation, Pagination as Pagination1 } from 'swiper/modules'
+import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { SlideRooms1, SlideRooms2, SlideRooms3, SlideRooms4, SlideRooms5 } from '../../assets/images/Rooms/Slides'
 import BookForm from '../../components/BookForm'
-import HeroSlide from '../../components/HeroSlide'
 import Page from '../../components/Page'
 import Room from '../../components/Room'
 type Props = {}
