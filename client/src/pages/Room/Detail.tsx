@@ -1,183 +1,210 @@
 import React from 'react'
-import { AiOutlineWifi } from 'react-icons/Ai'
-import { PiCoffee } from 'react-icons/Pi'
-import { LuBath } from 'react-icons/Lu'
-import { FaParking, FaBreadSlice, FaCheck } from 'react-icons/Fa'
-import { TbSwimming } from 'react-icons/Tb'
-import { CgGym } from 'react-icons/Cg'
-import BookForm from '../../components/BookForm'
-import Checkin from './Bookformdetial/checkin'
-import Checkout from './Bookformdetial/checkout'
-import {
-    Button,
-    Col,
-    DatePicker,
-    Form,
-    Input,
-    Row,
-    Select,
-    Space
-} from 'antd';
-import HeroSlide from '../../components/HeroSlide'
+import { MdOutlineKingBed } from 'react-icons/Md'
+import { ImManWoman } from 'react-icons/Im'
+import { FaHotel } from 'react-icons/Fa'
+import { BsFillSunFill } from 'react-icons/Bs'
+import { AiOutlineShake } from 'react-icons/Ai'
+import { AiOutlineCoffee } from 'react-icons/Ai'
+import { AiOutlineRight } from 'react-icons/Ai'
+import SlideRooms from './SlideRoom'
 import SlideImages from './Slideimage'
-import Room from '../../components/Room'
+
+import { motion } from "framer-motion"
+
 type Props = {}
 
 const Detail = (props: Props) => {
     return (
-        <div className='pb-[100px]'>
-            <HeroSlide />
-            <div className='container mx-auto'>
-
-                <div className='flex flex-col lg:flex-row h-full py-24 '>
-                    <div className='w-full h-full lg:w-[60%] px-6 '>
-                        <h2 className='mb-4 text-4xl tracking-tight font-extrabold  text-gray-900 dark:text-white'>
-                            Great choice for a relaxing vacation for families with children or a group of friends.
-                        </h2>
-                        <p className=' lg:mb-16 font-light  text-gray-500 dark:text-gray-400 sm:text-xl'>
-                            Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed.
-                            Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum.
-                            Aliquip veniam delectus, Marfa eiusmod Pinterest in do umami readymade swag.
-                            Selfies iPhone Kickstarter, drinking vinegar jean vinegar stumptown yr pop-up artisan.
-                        </p>
-                        <p className='mb-8 lg:mb-16 font-light  text-gray-500 dark:text-gray-400 sm:text-xl'>
-                            See-through delicate embroidered organza blue lining luxury acetate-mix stretch pleat detailing.
-                            Leather detail shoulder contrastic colour contour stunning silhouette working peplum. Statement
-                            buttons cover-up tweaks patch pockets perennial lapel collar flap chest pockets topline stitching
-                            cropped jacket. Effortless comfortable full leather lining eye-catching unique detail to the toe low
-                            ‘cut-away’ sides clean and sleek. Polished finish
-                            elegant court shoe work duty stretchy slingback strap mid kitten heel this ladylike design slingback strap mid kitten heel this ladylike design.
-                        </p>
-                        <img className='mb-8' src="https://www.duyenharesorts.com/Data/Sites/1/News/103/lnom2253.jpg" alt="" />
-                        <div className='mt-12'>
-                            <h3 className='h3 mb-3 text-3xl font-extrabold'>
-                                Tiện nghi phòng
-                            </h3>
-                            <p className='mb-12'>  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Integer vel molestie nisl. Duis ac mi leo. Mauris at convallis erat. Aliquam interdum semper luctus.
-                                Aenean ex tellus,
-                                gravida ut rutrum dignissim, malesuada vitae nulla. Sed viverra, nisl dapibus lobortis porttitor.</p>
-                            <div className='grid grid-cols-3 gap-6 mb-12 fonr-text'>
-                                <div className='flex items-center -gap-x-3 flex-1 '>
-                                    <div className='text-3xl text-accent' ><AiOutlineWifi /></div>
-                                    <div className='text-base ml-1'>Wifi</div>
-                                </div>
-                                <div className='flex items-center -gap-x-3 flex-1 '>
-                                    <div className='text-3xl text-accent' ><PiCoffee /></div>
-                                    <div className='text-base ml-1'>Coffee</div>
-                                </div>
-                                <div className='flex items-center -gap-x-3 flex-1 '>
-                                    <div className='text-3xl text-accent' ><LuBath /></div>
-                                    <div className='text-base ml-1'>Bath</div>
-                                </div>
-                                <div className='flex items-center -gap-x-3 flex-1 '>
-                                    <div className='text-3xl text-accent' ><FaParking /></div>
-                                    <div className='text-base ml-1'>Parking</div>
-                                </div>
-                                <div className='flex items-center -gap-x-3 flex-1 '>
-                                    <div className='text-3xl text-accent' ><TbSwimming /></div>
-                                    <div className='text-base ml-1'>Swimming</div>
-                                </div>
-                                <div className='flex items-center -gap-x-3 flex-1 '>
-                                    <div className='text-3xl text-accent' ><FaBreadSlice /></div>
-                                    <div className='text-base ml-1'>Breakfast</div>
-                                </div>
-                                <div className='flex items-center -gap-x-3 flex-1 '>
-                                    <div className='text-3xl text-accent' ><CgGym /></div>
-                                    <div className='text-base ml-1'>Gym</div>
-                                </div>
-                            </div>
-
-                        </div>
-
+        <div className='pb-[100px] '>
+            {/* <SlideRooms /> */}
+            <div className='h-[600px] lg:h-[860px]'>
+                <div className='text-white h-full bg-pink-300 relative flex items-center justify-center'>
+                    <div className='z-20 text-white text-center'>
+                    <motion.div
+                        variants={{
+                            hidden: { opacity: 0, y: 105 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        initial="hidden"
+                        animate='visible'
+                    >
+                        <div className='uppercase tracking-[6px] mb-5'>Just enjoy and relax</div>
+                        <h1 className='text-[32px] font-extralight uppercase tracking-[3px] max-w-[920px] lg:text-[68px] leading-tight mb-6'>Luxury Hotel</h1>
+                        <button className='btn mx-auto'>Great for business trip</button>
+                    </motion.div>
                     </div>
-                    <div className='w-full h-full lg:w-[40%]'>
-                        <div className='py-8 px-6 bg-yellow-100 mb-12'>
-                            <div className='flex flex-col space-y-4 mb-4'>
-                                <h3 className='h3 mb-3 text-4xl font-extrabold'>
+                    <div className='absolute top-0 w-full h-full'>
+                        <img src="https://images.pexels.com/photos/5615059/pexels-photo-5615059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className='object-cover h-full w-full' />
+                    </div>
+                    <div className='absolute w-full h-full bg-black/70'></div>
+                </div>
+            </div>
+            <div className=' max-w-[1425px] bg-white m-auto  h-full pb-16 z-50'
+                style={{
+                    transform: 'translateY(-20%)'
+                }}
+            >
+                <div className='p-[50px]  flex flex-col lg:flex-row'>
+                    <div className='w-full h-full lg:w-[60%] mr-[30px]'>
+                        <p className='pt-[15px] pb-[15px] '>
+                            <span className='text-2xl'>
+                                <b>
+                                    Great choice for a relaxing vacation for families with children or a group of friends.
+                                </b>
+                            </span>
+                        </p>
+                        <p className='pt-[15px] pb-[15px]'>
+                            Exercitation photo booth stumptown tote bag Banksy, elit small batch freegan sed. Craft beer elit seitan exercitation, photo booth et 8-bit kale chips proident chillwave deep v laborum.&nbsp;
+                            <em>
 
-                                    Đặt phòng của bạn
-                                </h3>
-                                <div className='h-[60px]'>
-                                    <Checkin />
-                                </div>
-                                <div className='h-[60px]'>
-                                    <Checkout />
-                                </div>
-                                <div className='flex-1 lg:border-r h-[60px]'>
+                                <strong>Aliquip veniam delectus, Marfa eiusmod Pinterest</strong>
 
-                                    <Form.Item name="Start-end2">
-                                        <Select
-                                            placeholder='Trẻ nhỏ'
-                                            className=''
-                                        >
-                                            <Select.Option value="1">1</Select.Option>
-                                            <Select.Option value="2">2</Select.Option>
-                                            <Select.Option value="3">3</Select.Option>
-                                            <Select.Option value="4">4</Select.Option>
-                                            <Select.Option value="5">5</Select.Option>
-                                        </Select>
-                                    </Form.Item>
-                                </div>
-                                <div className='flex-1 lg:border-r h-[60px]'>
-                                    <Form.Item name="Start-end2 ">
-                                        <Select
-                                            placeholder='Người lớn'
-                                            className='rounded-none'
-                                        >
-                                            <Select.Option value="1">1</Select.Option>
-                                            <Select.Option value="2">2</Select.Option>
-                                            <Select.Option value="3">3</Select.Option>
-                                            <Select.Option value="4">4</Select.Option>
-                                            <Select.Option value="5">5</Select.Option>
-                                        </Select>
-                                    </Form.Item>
-                                </div>
-                                <div className="mb-4">
-                                    <button type="button" className=' h-[50px] flex max-w-sm w-full b text-white  
-                                    uppercase bg-orange-500 hover:bg-orange-600 font-bold shadow-md rounded-full mx-auto items-center'>
+                            </em>
+                            &nbsp;in do umami readymade swag.&nbsp;Selfies iPhone Kickstarter, drinking vinegar jean vinegar stumptown&nbsp;yr pop-up artisan.
+                        </p>
 
-                                        <p className="mx-auto">Dat phong</p>
+                        <p className='pt-[15px] pb-[15px]'>See-through delicate embroidered organza blue
+                            lining luxury acetate-mix stretch pleat detailing.
+                            Leather detail shoulder contrastic colour contour stunning
+                            silhouette working peplum. Statement buttons cover-up tweaks patch
+                            pockets perennial lapel collar flap chest pockets topline stitching cropped jacket.
+                            Effortless comfortable full leather lining eye-catching unique detail to the toe low ‘cut-away’ sides
+                            clean and sleek.&nbsp;Polished finish elegant court shoe work duty stretchy slingback strap mid kitten
+                            heel this ladylike design&nbsp;slingback strap mid kitten heel this ladylike design.
+                        </p>
 
-                                    </button>
+                        <p className="pt-[15px] pb-[15px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel molestie nisl. Duis ac mi leo. Mauris at convallis erat. Aliquam interdum semper luctus. Aenean ex tellus,
+                            gravida ut rutrum dignissim, malesuada vitae nulla. Sed viverra, nisl dapibus lobortis porttitor.</p>
+                    </div>
+                    <div className='w-full h-full lg:w-[30%] border-s-4 float-left'>
+                        <div className='w-full  ml-[50px]'>
+                            <div className='text-base font-semibold tracking-wide '>
+                                Form
+                            </div>
+                            <div className='font-mono text-6xl font-black ml-[50px]'>
+                                <span>$</span>
+                                <span>200</span>
+                            </div>
+                            <button className='w-full bg-cyan-500 rounded-2xl h-[60px] mt-[30px] text-2xl font-semibold text-white'> <span>Book now</span></button>
+                        </div>
+                        <div className='w-full  ml-[50px] mt-[30px] '>
+                            <div>
+                                <div className='flex'>
+                                    <MdOutlineKingBed className='w-[90px] h-[50px]' />
+                                    <span className='ml-[50px] text-2xl'>King bed</span>
+                                </div>
+                                <div className='flex mt-[10px]'>
+                                    <ImManWoman className='w-[90px] h-[50px] mt-[10px]' />
+                                    <span className='ml-[50px] text-2xl mt-[3px]'>
+                                        3&nbsp;Adults&nbsp;
+                                        1&nbsp;Children&nbsp;
+                                    </span>
+                                </div>
+                                <div className='flex mt-[10px]'>
+                                    <FaHotel className='w-[90px] h-[50px] mt-[10px]' />
+                                    <span className='ml-[50px] text-2xl mt-[3px]'>55m²</span>
+                                </div>
+                                <div className='flex mt-[10px]'>
+                                    <BsFillSunFill className='w-[90px] h-[50px] mt-[10px]' />
+                                    <span className='ml-[50px] text-2xl mt-[3px]'>Sea view</span>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <h3 className='text-3xl font-extrabold'>Nội quy phòng</h3>
-                            <p className='mb-6 mt-[20px] font-text'>
-                                The spacious room is decorated with modern furnishings and luxurious amenities,
-                                offering skyline view from the balcony
-                            </p>
-                            <ul className='font-text'>
-                                <li className='flex items-center gap-x-4'>
-                                    <FaCheck />
-                                    Check-in : 3:00 PM - 9:00 PM
-                                </li>
-                                <li className='flex items-center gap-x-4 mt-2'>
-                                    <FaCheck />
-                                    Check-out : 10:00 AM
-                                </li>
-                                <li className='flex items-center gap-x-4 mt-2'>
-                                    <FaCheck />
-                                    No Pets
-                                </li>
-                                <li className='flex items-center gap-x-4 mt-2'>
-                                    <FaCheck />
-                                    No Smoking
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div 
+                style={{
+                    transform: 'translateY(-26%)'
+                }}
+            className='max-w-full bg-black text-white m-auto flex flex-col lg:flex-row pt-[80px] pb-[80px]'>
+                <div className='w-full h-full lg:w-[50%] m-auto  flex flex-col lg:flex-row '>
+                    <div className='w-full h-full lg:w-[30%] flex text-xl ml-[480px]'>
+                        <div><AiOutlineShake className="w-[40px] h-[45px]" /></div>
+                        <span className='mt-[5px] ml-[20px] text-2xl font-semibold'>Amenities			</span>
+                    </div>
+                    <div className='w-full h-full lg:w-[50%]  mt-3'>
+                        <div className='flex '>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                    </div>
+                </div>
+                <div className='w-full h-full lg:w-[50%] flex flex-col lg:flex-row'>
+                    <div className='w-full h-full lg:w-[30%] flex text-xl'>
+                        <div>
+                            <AiOutlineCoffee className="w-[40px] h-[45px]" />
+                        </div>
+                        <span className='mt-[5px] ml-[20px] font-semibold text-2xl'>Services</span>
+                    </div>
+                    <div className='w-full h-full lg:w-[50%]  mt-3'>
+                        <div className='flex '>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5'>40-inch Samsung® LED TV</span>
+                        </div>
+                        <div className='flex mt-4'>
+                            <div className='mt-1'> <AiOutlineRight /></div>
+                            <span className='ml-5 font-light'>40-inch Samsung® LED TV</span>
+                        </div>
 
+                    </div>
+                </div>
 
             </div>
-            <div>
+
+            <div className='mt-[-120px]'>
                 <SlideImages />
             </div>
-         
-            <section className="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased w-70%">
+
+            <section className="bg-white  py-8 lg:py-16 antialiased max-w-[70%] m-auto">
                 <div className="w-70% mx-auto px-4">
                     <div className="flex   mb-6">
                         <h2 className="lg:text-2xl font-bold text-gray-900 text-3xl dark:text-white">Discussion (20)</h2>
@@ -200,8 +227,8 @@ const Detail = (props: Props) => {
                                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
                                     className="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                                    alt="Michael Gough"/>Michael Gough</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400"><time 
+                                    alt="Michael Gough" />Michael Gough</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400"><time
                                     title="February 8th, 2022">Feb. 8, 2022</time></p>
                             </div>
                             <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
@@ -212,7 +239,7 @@ const Detail = (props: Props) => {
                                 </svg>
                                 <span className="sr-only">Comment settings</span>
                             </button>
-                        
+
                             <div id="dropdownComment1"
                                 className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200"
@@ -251,8 +278,8 @@ const Detail = (props: Props) => {
                                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
                                     className="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                    alt="Jese Leos"/>Jese Leos</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400"><time 
+                                    alt="Jese Leos" />Jese Leos</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400"><time
                                     title="February 12th, 2022">Feb. 12, 2022</time></p>
                             </div>
                             <button id="dropdownComment2Button" data-dropdown-toggle="dropdownComment2"
@@ -263,7 +290,7 @@ const Detail = (props: Props) => {
                                 </svg>
                                 <span className="sr-only">Comment settings</span>
                             </button>
-                        
+
                             <div id="dropdownComment2"
                                 className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200"
@@ -300,7 +327,7 @@ const Detail = (props: Props) => {
                                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
                                     className="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                                    alt="Bonnie Green"/>Bonnie Green</p>
+                                    alt="Bonnie Green" />Bonnie Green</p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400"><time
                                     title="March 12th, 2022">Mar. 12, 2022</time></p>
                             </div>
@@ -312,7 +339,7 @@ const Detail = (props: Props) => {
                                 </svg>
                                 <span className="sr-only">Comment settings</span>
                             </button>
-                       
+
                             <div id="dropdownComment3"
                                 className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200"
@@ -349,8 +376,8 @@ const Detail = (props: Props) => {
                                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
                                     className="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
-                                    alt="Helene Engels"/>Helene Engels</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400"><time 
+                                    alt="Helene Engels" />Helene Engels</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400"><time
                                     title="June 23rd, 2022">Jun. 23, 2022</time></p>
                             </div>
                             <button id="dropdownComment4Button" data-dropdown-toggle="dropdownComment4"
@@ -360,7 +387,7 @@ const Detail = (props: Props) => {
                                     <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
                                 </svg>
                             </button>
-                       
+
                             <div id="dropdownComment4"
                                 className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                 <ul className="py-1 text-sm text-gray-700 dark:text-gray-200"
@@ -397,6 +424,7 @@ const Detail = (props: Props) => {
 
             </div>
         </div>
+
 
     )
 }

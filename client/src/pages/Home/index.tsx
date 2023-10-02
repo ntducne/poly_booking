@@ -49,7 +49,6 @@ export default function Home({ }: Props) {
       <HeroSlide />
       <BookForm />
       <div className={`py-[80px] lg:py-[70px]  ${bg || bg2 ? 'bg-[#202020]' : 'bg-[#f9f8f6]'} transition-all duration-300`}>
-
         <div ref={elementRef} className="px-4 flex flex-col justify-center items-center lg:flex-row ">
           <ObserverAnimate position={{ y: 70 }}>
             <div className='relative inline-block'>

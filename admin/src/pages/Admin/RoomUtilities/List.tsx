@@ -1,177 +1,140 @@
-import React, { useState } from "react";
-import { Button, Carousel, Space, Table, Tabs } from "antd";
+import React from "react";
+import { Button, Space, Table, } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
   age: number;
   address: string;
 }
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: "Tên phòng",
-    dataIndex: "name",
-    filters: [
-      {
-        text: "Joe",
-        value: "Joe",
-      },
-      {
-        text: "Jim",
-        value: "Jim",
-      },
-      {
-        text: "Submenu",
-        value: "Submenu",
-        children: [
-          {
-            text: "Green",
-            value: "Green",
-          },
-          {
-            text: "Black",
-            value: "Black",
-          },
-        ],
-      },
-    ],
-    // specify the condition of filtering result
-    // here is that finding the name started with `value`
-    onFilter: (value: any, record) => record.name.indexOf(value) === 0,
-    sorter: (a, b) => a.name.length - b.name.length,
-    sortDirections: ["descend"],
-  },
-  {
-    title: "Loại phòng",
-    dataIndex: "age",
-    key : "age"
-  },
-  {
-    title: "Giá phòng",
-    dataIndex: "age",
-    key: "age",
-    sorter: (a, b) => a.name.length - b.name.length,
-
-  },
-  {
-    title: "Tầng phòng",
-    dataIndex: "age",
-    key: "age",
-  },
-  {
-    title: "Trạng thái",
-    dataIndex: "address",
-    filters: [
-      {
-        text: "Còn trống",
-        value: "Con",
-      },
-      {
-        text: "Hết phòng",
-        value: "Het",
-      },
-    ],
-    onFilter: (value: any, record) => record.address.indexOf(value) === 0,
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <Button type="primary" style={{backgroundColor:'#68e365'}}>Sửa</Button>
-        <Button type="primary" style={{backgroundColor:'#e23428'}}>Xóa</Button>
-      </Space>
-    ),    
-  },
-];
-
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "John Brown 123",
-    age: 35,
-    address: "New York No. 1 Lake Park",
-  },
-];
-
-const onChange: TableProps<DataType>["onChange"] = (
-  pagination,
-  filters,
-  sorter,
-  extra
-) => {
-  console.log("params", pagination, filters, sorter, extra);
-};
-
-// const operations = <Button>Extra Action</Button>;
-
-const items = new Array(3).fill(null).map((_, i) => {
-  const id = String(i + 1);
-  return {
-    label: `Tab ${id}`,
-    key: id,
-    children: `Content of tab ${id}`,
-  };
-});
-
-
+import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+import FormSearch from "../../../component/formSearch";
+import swal from "sweetalert";
+import Page from "../../../component/page";
 
 const ListRoomUtilities = () => {
-  const [loadings, setLoadings] = useState<boolean[]>([]);
+  const columns: ColumnsType<any> = [
+    {
+      title: "ID",
+      dataIndex: "_id",
+      sorter: (a, b) => a._id - b._id,
+      sortDirections: ["descend"],
+      fixed: "left",
+    },
 
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
+    {
+      title: "Tên tiện ích",
+      dataIndex: "name",
+      key: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+    },
 
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-    }, 2000);
+    {
+      title: "Action",
+      dataIndex: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button
+            type="primary"
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
+          >
+            <Link to={`/roomUtilities/edit/${record?.key}`}>
+              <AiOutlineEdit />
+            </Link>
+          </Button>
+          <Button
+            onClick={() => remove(record?.key)}
+            type="primary"
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
+          >
+            <MdDeleteForever />
+          </Button>
+        </Space>
+      ),
+      // fixed: "right",
+    },
+  ];
+
+  const data : any = [
+    {
+      key: "1",
+      _id: "1",
+      name: "John Brown",
+      room_id: "1",
+    },
+    {
+      key: "2",
+      _id: "2",
+      name: "John Brown 123",
+      room_id: "2",
+    },
+  ];
+
+  const onChange: TableProps<DataType>["onChange"] = (
+    // pagination,
+    // filters,
+    // sorter,
+    // extra
+  ) => {
+    // console.log("params", pagination, filters, sorter, extra);
+  };
+
+  const remove = (id: any) => {
+    try {
+      swal({
+        title: "Are you sure you want to delete?",
+        text: "You cannot undo after deleting!",
+        icon: "warning",
+        buttons: ["Cancel", "Delete"],
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            // removeComment(id);
+            swal("You have successfully deleted", {
+              icon: "success",
+            });
+          }
+        })
+        .catch(() => {
+          swal("Error", {
+            icon: "error",
+          });
+        });
+    } catch (error) {}
   };
 
   return (
-    <div className="">
-      <Row className="flex justify-around">
-        <Col span={8}>
-
-          <Tabs className="w-10%" items={items} />
-
-        </Col>
-        <Col className=""  span={8} offset={8}>
-          <Button
-            className="bg-teal-700	text-[#fff]"
-            type="default"
-            icon={<AiOutlinePlus />}
-            loading={loadings[1]}
-            onClick={() => enterLoading(1)}
+    <Page title={`Tiện ích phòng`}>
+      <div className="flex flex-col-reverse md:flex-row md:justify-between ">
+        <FormSearch />
+        <div className="flex flex-col md:flex-row md:ml-2">
+          <Link
+            to={`/roomUtilities/add`}
+            className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
           >
-            <Link to={`/room/add`}>Thêm phòng</Link>
-          </Button>
-        </Col>
-      </Row>
+            <AiOutlinePlus />
+            Thêm tiện ích phòng
+          </Link>
+          <Link
+            to={`/roomUtilities`}
+            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
+          >
+            <MdOutlineDeleteOutline />
+            Thùng rác
+          </Link>
+        </div>
+      </div>
       <Table
-        className="mt-3"
+        scroll={{ x: true }}
+        className="max-w-full mt-3"
         columns={columns}
         dataSource={data}
         onChange={onChange}
       />
-    </div>
+    </Page>
   );
 };
 

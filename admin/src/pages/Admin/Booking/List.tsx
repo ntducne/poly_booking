@@ -1,177 +1,204 @@
-import React, { useState } from "react";
-import { Button, Carousel, Space, Table, Tabs } from "antd";
+import React from "react";
+import { Button, Image, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
+// import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
   age: number;
   address: string;
 }
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: "Tên phòng",
-    dataIndex: "name",
-    filters: [
-      {
-        text: "Joe",
-        value: "Joe",
-      },
-      {
-        text: "Jim",
-        value: "Jim",
-      },
-      {
-        text: "Submenu",
-        value: "Submenu",
-        children: [
-          {
-            text: "Green",
-            value: "Green",
-          },
-          {
-            text: "Black",
-            value: "Black",
-          },
-        ],
-      },
-    ],
-    // specify the condition of filtering result
-    // here is that finding the name started with `value`
-    onFilter: (value: any, record) => record.name.indexOf(value) === 0,
-    sorter: (a, b) => a.name.length - b.name.length,
-    sortDirections: ["descend"],
-  },
-  {
-    title: "Loại phòng",
-    dataIndex: "age",
-    key : "age"
-  },
-  {
-    title: "Giá phòng",
-    dataIndex: "age",
-    key: "age",
-    sorter: (a, b) => a.name.length - b.name.length,
-
-  },
-  {
-    title: "Tầng phòng",
-    dataIndex: "age",
-    key: "age",
-  },
-  {
-    title: "Trạng thái",
-    dataIndex: "address",
-    filters: [
-      {
-        text: "Còn trống",
-        value: "Con",
-      },
-      {
-        text: "Hết phòng",
-        value: "Het",
-      },
-    ],
-    onFilter: (value: any, record) => record.address.indexOf(value) === 0,
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <Button type="primary" style={{backgroundColor:'#68e365'}}>Sửa</Button>
-        <Button type="primary" style={{backgroundColor:'#e23428'}}>Xóa</Button>
-      </Space>
-    ),    
-  },
-];
-
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "John Brown 123",
-    age: 35,
-    address: "New York No. 1 Lake Park",
-  },
-];
-
-const onChange: TableProps<DataType>["onChange"] = (
-  pagination,
-  filters,
-  sorter,
-  extra
-) => {
-  console.log("params", pagination, filters, sorter, extra);
-};
-
-// const operations = <Button>Extra Action</Button>;
-
-const items = new Array(3).fill(null).map((_, i) => {
-  const id = String(i + 1);
-  return {
-    label: `Tab ${id}`,
-    key: id,
-    children: `Content of tab ${id}`,
-  };
-});
-
-
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import FormSearch from "../../../component/formSearch";
+import swal , { } from "sweetalert";
+import Page from "../../../component/page";
 
 const ListBooking = () => {
-  const [loadings, setLoadings] = useState<boolean[]>([]);
+ 
+  const columns: ColumnsType<any> = [
+    {
+      title: "ID đặt phòng",
+      dataIndex: "booking_id",
+      sorter: (a, b) => a.booking_id - b.booking_id,
+      sortDirections: ["descend"],
+      fixed: "left",
+    },
+    {
+      title: "Người đặt",
+      dataIndex: "user_id",
+      render: (user) => (
+        <div className="flex items-center">
+          {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
+          <Image
+            className="rounded-3xl "
+            width={150}
+            src={user?.image}
+          />
+          <div className="ml-3 text-gray-500">
+            <p>{user?.name}</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Ngày đặt",
+      dataIndex: "booking_date",
+      key: "booking_date",
+      sorter: (a, b) => a.booking_date - b.booking_date,
+    },
+    {
+      title: "Loại phòng",
+      dataIndex: "room_type",
+      key: "room_type",
+    },
+    {
+      title: "Số người",
+      dataIndex: "amount_of_people",
+      key: "amount_of_people",
+    },
+    // {
+    //   title: "Trạng thái",
+    //   dataIndex: "address",
+    //   filters: [
+    //     {
+    //       text: "Còn trống",
+    //       value: "Còn",
+    //     },
+    //     {
+    //       text: "Hết phòng",
+    //       value: "Hết",
+    //     },
+    //   ],
+    //   render: (text) => (
+    //     <div className="font-semibold">
+    //       {text === "Còn" ? (
+    //         <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
+    //           Còn
+    //         </span>
+    //       ) : (
+    //         <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
+    //           Hết
+    //         </span>
+    //       )}
+    //     </div>
+    //   ),
+    //   onFilter: (value: any, record) => record.address.indexOf(value) === 0,
+    // },
+    {
+      title: "Action",
+      dataIndex: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button type="primary" 
+          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
+          >
+            <Link to={`/room/edit/${record?.key}`}>
+              <AiOutlineEdit />
+            </Link>
+          </Button>
+          {/* <Button
+            onClick={() => remove(record?.key)}
+            type="primary"
+            style={{ backgroundColor: "#e23428" }}
+          >
+            <MdDeleteForever />
+          </Button> */}
+        </Space>
+      ),
+      // fixed: "right",
+    },
+  ];
 
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
+  const data : any = [
+    {
+      key: "1",
+      booking_id: 1,
+      user_id: {
+        name: "Nguyễn Huy",
+        image: "https://static2.yan.vn/YanNews/2167221/202008/bang-xep-hang10-my-nam-han-dep-trai-nhat-chau-a-exo-va-bts-dan-dau-d2073ea4.jpg"
+      },
+      booking_date: "2021-09-20",
+      check_in: "2021-09-20",
+      check_out: "2021-09-20",
+      pay_date: "2021-09-20",
+      room_type: "Phòng đơn",
+      amount_of_people : 2,
+    },
+    {
+      key: "2",
+      booking_id: 2,
+      user_id: {
+        name: "Nguyễn Đức",
+        image: "https://static2.yan.vn/YanNews/2167221/202008/bang-xep-hang10-my-nam-han-dep-trai-nhat-chau-a-exo-va-bts-dan-dau-d2073ea4.jpg"
+      },
+      booking_date: "2021-09-20",
+      check_in: "2021-09-20",
+      check_out: "2021-09-20",
+      pay_date: "2021-09-20",
+      room_type: "Phòng đôi",
+      amount_of_people : 4,
+    },
+  ];
 
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-    }, 2000);
+  const onChange: TableProps<DataType>["onChange"] = (
+    // pagination,
+    // filters,
+    // sorter,
+    // extra
+  ) => {
+    // console.log("params", pagination, filters, sorter, extra);
   };
 
+  // const remove = (id: any) => {
+  //   try {
+  //     swal({
+  //       title: "Are you sure you want to delete?",
+  //       text: "You cannot undo after deleting!",
+  //       icon: "warning",
+  //       buttons: ["Cancel", "Delete"],
+  //       dangerMode: true,
+  //     })
+  //       .then((willDelete) => {
+  //         if (willDelete) {
+  //           // removeComment(id);
+  //           swal("You have successfully deleted", {
+  //             icon: "success",
+  //           });
+  //         }
+  //       })
+  //       .catch(() => {
+  //         swal("Error", {
+  //           icon: "error",
+  //         });
+  //       });
+  //   } catch (error) {}
+  // };
+
   return (
-    <div className="">
-      <Row className="flex justify-around">
-        <Col span={8}>
-
-          <Tabs className="w-10%" items={items} />
-
-        </Col>
-        <Col className=""  span={8} offset={8}>
-          <Button
-            className="bg-teal-700	text-[#fff]"
-            type="default"
-            icon={<AiOutlinePlus />}
-            loading={loadings[1]}
-            onClick={() => enterLoading(1)}
+    <Page title={`Đặt phòng`}>
+      <div className="flex flex-col-reverse md:flex-row md:justify-between ">
+        <FormSearch />
+        <div className="flex flex-col md:flex-row md:ml-2">
+          
+          <Link
+            to={`/booking`}
+            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
           >
-            <Link to={`/room/add`}>Thêm phòng</Link>
-          </Button>
-        </Col>
-      </Row>
+            <MdOutlineDeleteOutline />
+            Thùng rác
+          </Link>
+        </div>
+      </div>
       <Table
-        className="mt-3"
+        scroll={{x : true}}
+        className="max-w-full mt-3"
         columns={columns}
         dataSource={data}
         onChange={onChange}
       />
-    </div>
+    </Page>
   );
 };
 

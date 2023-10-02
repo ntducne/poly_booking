@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Button, Carousel, Image, Space, Table, Tabs } from "antd";
+import React from "react";
+import { Button, Image, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
@@ -12,27 +11,10 @@ interface DataType {
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal, { } from "sweetalert";
+import swal from "sweetalert";
+import Page from "../../../component/page";
 
 const ListRoom = () => {
-  const [loadings, setLoadings] = useState<boolean[]>([]);
-
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-    }, 2000);
-  };
-
   const columns: ColumnsType<DataType> = [
     {
       title: "Tên phòng",
@@ -103,21 +85,23 @@ const ListRoom = () => {
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" style={{ backgroundColor: "#68e365" }}>
+          <Button 
+          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
+          type="primary" >
             <Link to={`/room/edit/${record?.key}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
           <Button
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
             onClick={() => remove(record?.key)}
             type="primary"
-            style={{ backgroundColor: "#e23428" }}
           >
             <MdDeleteForever />
           </Button>
         </Space>
       ),
-      fixed: "right",
+      // fixed: "right",
     },
   ];
 
@@ -142,7 +126,7 @@ const ListRoom = () => {
     sorter,
     extra
   ) => {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   };
 
   const remove = (id: any) => {
@@ -167,34 +151,30 @@ const ListRoom = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
-    <div className="">
-      <Row className="flex justify-between items-center mb-6 ">
-        <Col>
-          {/* <Tabs className="w-10%" items={items} /> */}
-          <FormSearch />
-        </Col>
-        <Col className="flex items-center justify-end">
-          <Button
-            className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl"
-            type="default"
-            icon={<AiOutlinePlus />}
-            loading={loadings[1]}
-            onClick={() => enterLoading(1)}
+    <Page title={`Phòng`}>
+      <div className="flex flex-col-reverse md:flex-row md:justify-between md:items-center ">
+        <FormSearch />
+        <div className="flex flex-col md:flex-row md:ml-2">
+          <Link
+            to={`/room/add`}
+            className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
           >
-            <Link to={`/room/add`}>Thêm phòng</Link>
-          </Button>
-          <Button className="ml-5 bg-red-400 text-[#fff] hover:drop-shadow-2xl">
-            <Link className="flex items-center " to={`/admin`}>
-              <MdOutlineDeleteOutline />
-              <span className="ml-2">Thùng rác</span>
-            </Link>
-          </Button>
-        </Col>
-      </Row>
+            <AiOutlinePlus />
+            Thêm phòng
+          </Link>
+          <Link
+            to={`/room`}
+            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
+          >
+            <MdOutlineDeleteOutline />
+            Thùng rác
+          </Link>
+        </div>
+      </div>
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
@@ -202,7 +182,7 @@ const ListRoom = () => {
         dataSource={data}
         onChange={onChange}
       />
-    </div>
+    </Page>
   );
 };
 
