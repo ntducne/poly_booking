@@ -4,25 +4,31 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
-Route::get('error-message', function (){ return response()->json('Denied',403); });
+Route::get('error-message', function (){ return response()->json([
+    'message' => 'Do not have permission to access this page'
+], 401); });
 Route::get('/routes', function () {
     $dataPermissions = getNameRoute();
     $guard = 'admin';
+    $permission = Permission::all();
+
     foreach ($dataPermissions as $key => $value) {
         Permission::query()->updateOrCreate([
             'name' => $key,
             'guard_name' => $guard
         ]);
-    };
-    Permission::query()
-        ->whereNotIn('name', array_keys($dataPermissions))
-        ->whereNotIn('guard_name', $guard)
-        ->delete();
-    $role = Role::updateOrCreate([
+    }
+
+    foreach ($permission as $value) {
+        if (!array_key_exists($value->name, $dataPermissions)) {
+            $value->delete();
+        }
+    }
+
+    Role::updateOrCreate([
         'name' => 'super-admin',
         'guard_name' => $guard
-    ]);
-    $role->givePermissionTo(Permission::all());
+    ])->givePermissionTo($permission);
     echo 'done';
 });
 

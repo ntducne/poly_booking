@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Button, Carousel, Image, Space, Table, Tabs } from "antd";
+import React from "react";
+import { Button, Image, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
@@ -27,7 +25,7 @@ const ListReview = () => {
     {
       title: "Loại phòng",
       dataIndex: "imageType",
-      render: (_, record) => (
+      render: (_, record :any) => (
         <div className="flex items-center">
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
           <Image
@@ -120,10 +118,10 @@ const ListReview = () => {
   ];
 
   const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
+    // pagination,
+    // filters,
+    // sorter,
+    // extra
   ) => {
     // console.log("params", pagination, filters, sorter, extra);
   };

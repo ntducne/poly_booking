@@ -1,8 +1,9 @@
 import { Table, Modal, Collapse } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { CollapseProps } from 'antd';
 import { Link } from 'react-router-dom';
+import Page from '../../../component/page';
 
 interface DataType {
     id: string;
@@ -58,9 +59,10 @@ export default function RoleList() {
             )
         },
     ];
-    useEffect(() => {
-        document.title = "Danh sách vai trò";
-    }, []);
 
-    return <Table columns={columns} dataSource={data} />
+    return (
+        <Page title={`Phân quyền tài khoản`}>
+            <Table columns={columns} dataSource={data} />
+        </Page>
+    )
 }

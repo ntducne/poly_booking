@@ -130,7 +130,7 @@ class BookingController extends Controller
         }
 
     }
-    public function update(Request $request, $id): JsonResponse|RedirectResponse
+    public function update(Request $request, $id): JsonResponse
     {
         $bookings = Booking::find($id);
         if (!$bookings) {
