@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Button, Carousel, Image, Space, Table, Tabs } from "antd";
+import React from "react";
+import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
@@ -153,6 +152,8 @@ const ListRoomType = () => {
         .then((willDelete) => {
           if (willDelete) {
             // removeComment(id);
+            console.log(id);
+            
             swal("You have successfully deleted", {
               icon: "success",
             });

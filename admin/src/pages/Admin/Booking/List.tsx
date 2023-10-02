@@ -12,7 +12,7 @@ interface DataType {
 }
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal , { } from "sweetalert";
+// import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 
 const ListBooking = () => {

@@ -27,6 +27,7 @@ const ListReview = () => {
       dataIndex: "imageType",
       render: (_, record :any) => (
         <div className="flex items-center">
+          
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
           <Image
             className="rounded-3xl "
@@ -35,7 +36,7 @@ const ListReview = () => {
           />
           <div className="ml-3 text-gray-500">
             <p>#68e365</p>
-            <p>2 giường ngủ</p>
+            <p>2 record ngủ , {record?.key}</p>
           </div>
         </div>
       ),
@@ -138,6 +139,8 @@ const ListReview = () => {
         .then((willDelete) => {
           if (willDelete) {
             // removeComment(id);
+            console.log(id);
+            
             swal("You have successfully deleted", {
               icon: "success",
             });

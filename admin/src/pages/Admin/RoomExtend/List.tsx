@@ -11,7 +11,7 @@ interface DataType {
 }
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal , { } from "sweetalert";
+// import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 
 const ListRoomExtend = () => {
@@ -143,30 +143,30 @@ const ListRoomExtend = () => {
     // console.log("params", pagination, filters, sorter, extra);
   };
 
-  const remove = (id: any) => {
-    try {
-      swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            // removeComment(id);
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
-          }
-        })
-        .catch(() => {
-          swal("Error", {
-            icon: "error",
-          });
-        });
-    } catch (error) {}
-  };
+  // const remove = (id: any) => {
+  //   try {
+  //     swal({
+  //       title: "Are you sure you want to delete?",
+  //       text: "You cannot undo after deleting!",
+  //       icon: "warning",
+  //       buttons: ["Cancel", "Delete"],
+  //       dangerMode: true,
+  //     })
+  //       .then((willDelete) => {
+  //         if (willDelete) {
+  //           // removeComment(id);
+  //           swal("You have successfully deleted", {
+  //             icon: "success",
+  //           });
+  //         }
+  //       })
+  //       .catch(() => {
+  //         swal("Error", {
+  //           icon: "error",
+  //         });
+  //       });
+  //   } catch (error) {}
+  // };
 
   return (
     <Page title={`Gia hạn phòng`}>

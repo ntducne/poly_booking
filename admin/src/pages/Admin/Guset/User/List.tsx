@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-import { Button, Carousel, Image, Space, Table, Tabs } from "antd";
+import React from "react";
+import { Button, Image, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
   age: number;
   address: string;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import FormSearch from "../../../../component/formSearch";
 import swal , { } from "sweetalert";
 import Page from "../../../../component/page";
@@ -70,13 +69,13 @@ const ListUser = () => {
       render: (text) => (
         <div className="font-semibold">
           {text === "Online" ? (
-            <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
+            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
               Hoạt động
-            </span>
+            </button>
           ) : (
-            <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
+            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
               Không hoạt động
-            </span>
+            </button>
           )}
         </div>
       ),
@@ -133,10 +132,10 @@ const ListUser = () => {
   ];
 
   const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
+    // pagination,
+    // filters,
+    // sorter,
+    // extra
   ) => {
     // console.log("params", pagination, filters, sorter, extra);
   };
@@ -153,6 +152,7 @@ const ListUser = () => {
         .then((willDelete) => {
           if (willDelete) {
             // removeComment(id);
+            console.log(id);
             swal("You have successfully deleted", {
               icon: "success",
             });
