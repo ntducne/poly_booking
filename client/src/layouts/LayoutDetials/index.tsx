@@ -1,10 +1,8 @@
-import React from 'react'
 import { Outlet } from 'react-router-dom'
 
 import HeroSlide from '../../components/HeroSlide'
-import BookForm from '../../components/BookForm'
-import Header from '../Client/Header'
 import Footer from '../Client/Footer'
+import Header from '../Client/Header'
 
 type Props = {}
 

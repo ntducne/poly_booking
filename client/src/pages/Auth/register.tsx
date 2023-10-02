@@ -1,6 +1,5 @@
 
-import type { FormInstance } from 'antd';
-import { Button, Form, Input, Space } from 'antd';
+import { Form, Input } from 'antd';
 import Page from '../../components/Page';
 
 type Props = {}
