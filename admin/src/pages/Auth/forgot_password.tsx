@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Form, Input, Space } from 'antd';
+import { useState } from 'react';
+import { Form, Input } from 'antd';
 import Page from '../../component/page';
 
 // import './ForgotPassword.css';

@@ -15,12 +15,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import Page from "../../../component/page";
 
 const { Title } = Typography;
 const Dashboard = () => {
-
   const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
     console.log(value.format("YYYY-MM-DD"), mode);
   };
@@ -87,13 +86,25 @@ const Dashboard = () => {
           <Title level={4}>Đánh giá mới của khách hàng</Title>
         </div>
         <Swiper
-          autoplay={{delay: 2000}}
-          slidesPerView={3}
+          loop={true}
+          speed={2000}
+          autoplay={{ delay: 3000 ,disableOnInteraction: false }}
+          slidesPerView={1}
+          breakpoints={{
+            800: {
+              width: 678,
+              slidesPerView: 2,
+            },
+            1280: {
+              width: 1280,
+              slidesPerView: 3,
+            },
+          }}
           spaceBetween={30}
           pagination={{
             clickable: true,
           }}
-          modules={[Pagination]}
+          modules={[Pagination , Autoplay]}
           className="mySwiper"
         >
           <SwiperSlide>
