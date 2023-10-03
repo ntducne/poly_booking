@@ -12,6 +12,7 @@ class Branch extends Eloquent
     protected $fillable = [
         'name',
         'address',
+        'phone',
         'deleted_at'
     ];
     protected $attributes = [

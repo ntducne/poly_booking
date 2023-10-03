@@ -3,17 +3,22 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-],
+  ],
   theme: {
     extend: {
       container: {
         padding: {
           DEFAULT: '15px',
+          primary: "100px"
+
         },
+        margin: {
+
+        }
       },
       fontFamily: {
         text: ['Heebo'],
-        text_2nd: ['Cormorant','serif']
+        text_2nd: ['Cormorant', 'serif']
       },
       keyframes: {
         hover: {
@@ -21,6 +26,25 @@ export default {
           '50%': { opacity: 50 },
           '100%': { opacity: 100 },
         }
+      },
+      backgroundColor: {
+        bgr: "#f9f8f6"
+      },
+      fontSize: {
+        h1: "50px",
+        normal: "23px",
+        desc: "20px",
+        h3: "35px",
+        small: "16px"
+      },
+      colors: {
+        primary: "#202020"
+      },
+      margin: {
+        primary: "100px"
+      },
+      padding: {
+        primary: "100px"
       }
     },
   },

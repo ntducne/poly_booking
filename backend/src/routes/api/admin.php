@@ -1,15 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BranchController;
+use app\Http\Controllers\Admin\CancellationPolicyController;
+use app\Http\Controllers\Admin\PromotionController;
+use app\Http\Controllers\Admin\RoomTypeController;
 use App\Http\Controllers\Admin\UserController;
+use app\Http\Controllers\Admin\UtilitiesController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\RatesController;
-use App\Http\Controllers\Admin\BookDetailController;
-use App\Http\Controllers\Admin\BookingController;
 
-
-Route::resource('staffs', \App\Http\Controllers\StaffController::class);
-// Quan Tri
-// Route::resource('services', ServicesController::class);
-// Route::resource('booking', BookingController::class);
-// Route::resource('bookdetail', BookDetailController::class);
-// Route::resource('rates', RatesController::class);
+Route::resource('staffs', \app\Http\Controllers\Admin\StaffController::class);
+Route::resource('users', UserController::class);

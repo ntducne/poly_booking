@@ -2,6 +2,7 @@
 
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
 
 function UploadImage($image, $folder)
 {
@@ -34,4 +35,23 @@ function DeleteImage($image): void
 function DeleteDirectory($folder): void
 {
     Http::delete(env('CLOUDINARY_RESOURCE').'folders/'.$folder)->json();
+}
+
+
+function getNameRoute(): array
+{
+    $routeCollection = Route::getRoutes();
+    $arr = [];
+    foreach ($routeCollection as $route) {
+        if($route->getName() != null){
+            if (str_contains($route->getName(), 'admin.')) {
+                $parts = explode('.', $route->getName());
+                $arr_item = [
+                    $route->getName() => ucfirst($parts[1]) .' '. ucfirst($parts[2])
+                ];
+                $arr = array_merge($arr, $arr_item);
+            }
+        }
+    }
+    return $arr;
 }

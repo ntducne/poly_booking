@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Eloquent implements AuthenticateContract
 {
-    use Authenticatable, HasApiTokens, HasFactory, Notifiable;
+    use Authenticatable, HasApiTokens, HasFactory, Notifiable, HasRoles;
     protected $fillable = [
         'image',
         'name',
@@ -20,7 +21,9 @@ class Admin extends Eloquent implements AuthenticateContract
         'password',
         'phone',
         'address',
-        'status'
+        'status',
+        'branch_id',
+        'role',
     ];
     protected $hidden = [
         'password'

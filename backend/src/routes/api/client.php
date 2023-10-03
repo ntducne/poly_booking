@@ -10,16 +10,12 @@ use App\Http\Controllers\Admin\ServicesController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('categories', [CategoryController::class, 'index']);
-
-//Quan Tri
+//Services
 Route::resource('services', ServicesController::class);
-// // Route::resource('booking', BookingController::class);
+// Route::resource('booking', BookingController::class);
 // Route::resource('bookdetail', BookDetailController::class);
 // Route::resource('rates', RatesController::class);
-// Route::resource('booking', AdminBooking::class);
-
-
-//Khach hang 
+//khach hang
 Route::post('/dat-phong', [BookingController::class, 'datPhong']);
 Route::post('/tim-kiem',[BookingController::class, 'timKiem']);
 Route::get('/room/{id}',[RoomController::class,'room_detail']);
