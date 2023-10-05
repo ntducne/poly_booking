@@ -69,13 +69,13 @@ const ListAdmin = () => {
       render: (text) => (
         <div className="font-semibold">
           {text === "Online" ? (
-            <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
+            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
               Hoạt động
-            </span>
+            </button>
           ) : (
-            <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
+            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
               Không hoạt động
-            </span>
+            </button>
           )}
         </div>
       ),
@@ -148,8 +148,6 @@ const ListAdmin = () => {
   };
 
   // const remove = (id: any) => {
-  //   console.log(id);
-    
   //   try {
   //     swal({
   //       title: "Are you sure you want to delete?",

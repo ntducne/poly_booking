@@ -103,6 +103,8 @@ const ListServices = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
+            console.log(id);
+            
             // removeComment(id);
             swal("You have successfully deleted", {
               icon: "success",

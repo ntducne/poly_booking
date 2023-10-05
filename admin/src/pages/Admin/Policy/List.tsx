@@ -142,7 +142,8 @@ const ListPolicy = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            // removeComment(id);
+            console.log(id);
+            
             swal("You have successfully deleted", {
               icon: "success",
             });

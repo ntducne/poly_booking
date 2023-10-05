@@ -99,9 +99,7 @@ const ListFeedback = () => {
   ];
 
 
-  const remove = (id: any) => {
-    console.log(id);
-    
+  const remove = (id : number) => {
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -113,6 +111,7 @@ const ListFeedback = () => {
         .then((willDelete) => {
           if (willDelete) {
             // removeComment(id);
+            console.log(id);
             swal("You have successfully deleted", {
               icon: "success",
             });
