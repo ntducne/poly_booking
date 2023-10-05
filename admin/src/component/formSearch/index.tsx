@@ -4,7 +4,6 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 // type Props = {};
 
-// const FormSearch = (props: Props) => {
 const FormSearch = () => {
   const [searchValue, setSearchValue] = useState("");
 
