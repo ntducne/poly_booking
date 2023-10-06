@@ -90,7 +90,7 @@ const LayoutAdmin = () => {
           onCollapse={(value) => setCollapsed(value)}
         >
           <div className="demo-logo-vertical" />
-          <img className="p-2" src="./public/image/logo.jpg" alt="" />
+          <img className="p-2" src={`https://res.cloudinary.com/dteefej4w/image/upload/v1696338661/logo_30_zwmslg.png?fbclid=IwAR10Y-hXzDQPpRouXISq1hQq8Za9BjkHEEdJHbppdUkJc-bfdOm47C_O-P4`} alt="" />
           <Menu
             className="text-[#737b8b] "
             theme="light"
