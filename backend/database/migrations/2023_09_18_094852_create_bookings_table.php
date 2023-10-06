@@ -22,6 +22,8 @@ return new class extends Migration
             $table->date('pay_date');
             $table->string('representative');
             $table->integer('amount_of_people');
+            $table->float('price_per_night',10,2);
+            $table->boolean('status')->default(false); //false : chua huy //true da huy
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('booking');
+        Schema::dropIfExists('bookings');
     }
 };
