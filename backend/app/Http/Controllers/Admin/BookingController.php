@@ -3,36 +3,35 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Booking;
-use App\Models\Room;
 use Illuminate\Http\Request;
-use App\Models\BookDetail;
+use App\Models\Booking;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redis;
 
-class BookDetailController extends Controller
+class BookingController extends Controller
 {
-    protected BookDetail $bookdetail;
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected Booking $booking;
     public function __construct()
     {
-        $this->bookdetail = new BookDetail();
+        $this->booking = new Booking();
     }
-    public function index()
+    public function index(): JsonResponse
     {
-        $bookdetails = $this->bookdetail->paginate(5);
-        Redis::set('bookdetails', json_encode($bookdetails));
+        $bookings = $this->booking->paginate(5);
         $response = [
             'message' => 'Get MongoDB',
-            'data' => $bookdetails
+            'data' => $bookings
         ];
         return response()->json($response);
     }
-
     public function show($id)
     {
-        $bookdetail = $this->bookdetail->find($id);
-        if (!$bookdetail) {
+        $bookings = $this->booking->find($id);
+        if (!$bookings) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Booking không tồn tại !',
@@ -42,17 +41,13 @@ class BookDetailController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chi tiết Booking !',
-                'data' => [
-                    'detail' => $bookdetail,
-                    'booking' => Booking::find($bookdetail->booking_id),
-                    'room' => Room::find($bookdetail->room_id)
-                ]
+                'data' => $bookings
             ]);
         }
     }
     public function destroy($id)
     {
-        $bookings = BookDetail::find($id);
+        $bookings = Booking::find($id);
         if ($bookings) {
             $delete = $bookings->delete();
             if ($delete) {

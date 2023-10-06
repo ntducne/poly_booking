@@ -2,8 +2,7 @@
 
 // type Props = {}
 
-// const EditBill = (props: Props) => {
-  const EditBill = () => {
+const EditBill = () => {
   return (
     <div>EditBill</div>
   )
