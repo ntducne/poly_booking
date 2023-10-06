@@ -1,6 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
 import {
-    Button,
     DatePicker,
     Form,
     Select
@@ -9,16 +8,16 @@ import './index.css';
 
 
 type Props = {}
-const Option = Select.Option;
 const { RangePicker } = DatePicker;
 
 export default function BookForm({ }: Props) {
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        console.log(values)
+
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        console.log(errorInfo)
     };
     return (
         <div className='container mx-auto relative max-w-[1440px] bg-bgr'>
@@ -35,10 +34,11 @@ export default function BookForm({ }: Props) {
 
                             <Form.Item
                                 name="Start-end h-full border"
+
                             >
                                 <div className='h-full flex items-center justify-end relative'>
 
-                                    <RangePicker className='w-full rounded-none min-h-[70px] border-none' />
+                                    <RangePicker className='w-full rounded-none min-h-[70px] border-none my-custom-range-picker' />
                                 </div>
                             </Form.Item>
                         </div>
@@ -86,11 +86,11 @@ export default function BookForm({ }: Props) {
                             </Form.Item>
                         </div>
                         <div className=''>
-                            <Form.Item className=''>
-                                <Button type="primary" className='bg-green-500 p lg:h-[70px] px-5 py-[20px] w-full justify-center flex items-center rounded-none' htmlType="submit">
-                                    <SearchOutlined className='lg:px-5 text-[14px] lg:text-[20px]' />
-                                </Button>
-                            </Form.Item>
+                            {/* <Form.Item className='p-0 m-0'> */}
+                            <button className='bg-primary  p lg:h-full h-[40px] active:bg-black px-5 w-full justify-center md:h-[65px] flex items-center rounded-none'>
+                                <SearchOutlined className='lg:px-5 text-[18px] lg:text-[20px] text-secondary' />
+                            </button>
+                            {/* </Form.Item> */}
 
                         </div>
 

@@ -1,9 +1,8 @@
-import React from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from 'swiper/react';
 type Props = {}
 
-import { EffectFade, Autoplay } from 'swiper/modules';
+import { Autoplay, EffectFade } from 'swiper/modules';
 const slides = [
     {
         title: "Your Luxury Hotel For Vacation",
@@ -32,7 +31,7 @@ export default function HeroSlide({ }: Props) {
                 delay: 3000,
                 disableOnInteraction: false
             }}
-            className='heroSlider h-[600px] pb-0 lg:h-[860px] bg-black '>
+            className='heroSlider h-[600px] lg:h-[860px] bg-black p-0 '>
             {slides.map((slide, index) => {
                 const { title, bg, btnText } = slide
                 return <SwiperSlide key={index} className='text-white h-full bg-pink-300 
