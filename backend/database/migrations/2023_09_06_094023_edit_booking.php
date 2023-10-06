@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->table('book_details', function (Blueprint $table) {
-            $table->string('room_id');
+        Schema::connection('mongodb')->table('bookings', function (Blueprint $table) {
+            $table->float('price_per_night',10,2);
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('mongodb')->table('book_details', function (Blueprint $table) {
-            $table->dropColumn('room_id');
+        Schema::connection('mongodb')->table('bookings', function (Blueprint $table) {
+            $table->dropColumn('price_per_night');
         });
     }
 };

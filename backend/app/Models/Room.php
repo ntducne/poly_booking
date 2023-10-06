@@ -14,16 +14,11 @@ class Room extends Eloquent
         'area',
         'num_of_people',
         'room_type_id',
-        'pay_upon_check_in',
-        'description',
-        'discount',
-        'status',
-        'policies_and_information',
-        'num_of_bed',
-        'bed_size',
-        'branch_id',
-        'name',
-        'images'
+        'num_of_room',
+        'single_room',
+        'double_room',
+        'room_name',
+        'deleted_at'
     ];
     protected $attributes = [
         'deleted_at' => null,

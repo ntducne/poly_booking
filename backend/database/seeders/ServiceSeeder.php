@@ -4,10 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Services;
 
-use App\Models\Room;
-
-class RoomSeeder extends Seeder
+class ServiceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +15,6 @@ class RoomSeeder extends Seeder
      */
     public function run()
     {
-        Room::factory(5)->create();
+        Services::factory(5)->create();
     }
 }

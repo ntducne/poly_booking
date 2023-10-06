@@ -21,7 +21,6 @@ class BookDetailController extends Controller
     public function index()
     {
         $bookdetails = $this->bookdetail->paginate(5);
-        Redis::set('bookdetails', json_encode($bookdetails));
         $response = [
             'message' => 'Get MongoDB',
             'data' => $bookdetails
