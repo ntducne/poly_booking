@@ -1,95 +1,65 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\BookDetail;
 use App\Models\Booking;
+use App\Models\RateRoom;
 use App\Models\Room;
+use app\Repositories\UserRepository;
+use Illuminate\Http\Request;
 
-class BookingRepository
+class UserController extends Controller
 {
-    public function search($request){
-        $arrRoomId = []; //chua id cac phong
-        $room = Room::all();
-        foreach ($room as $item) {
-            $arrRoomId[] = [$item->_id, ''];
-        }
-        $arrCheckinCheckout = [];
-        //check in check out cung ton tai
-        if ($request->has('checkin') && $request->has('checkout')) {
-            foreach ($arrRoomId as $book => $value) {
-                //check qua book detail room da co ai dat hay chua
-                $bookDetail = BookDetail::where('room_id', '=', $value[0])->get();
-                if ($bookDetail) {
-                    foreach ($bookDetail as $item) {
-                        //data cua booking tra ve cho tung book detail cua phong da dat
-                        $booking = Booking::find($item->booking_id);
-                        //kiem tra check in check out trong khoang thoi gian tu $booking->checkin den $booking->checkout neu co se xoa id room
-                        if ($request->checkin >= $booking->checkin && $request->checkout <= $booking->checkout && $request->checkin != '' && $request->checkout != '') {
-                            unset($arrRoomId[$book]);
-                        } else {
-                            $arrCheckinCheckout[] = [$booking->checkin, $booking->checkout];
-                        }
-                    }
-                    if ($arrCheckinCheckout) {
-                        //kiem tra check in check out trong khoang tu thoi gian tu checkin min den checkout max neu co se xoa room_id
-                        if ($request->checkin > min($arrCheckinCheckout[0]) && $request->checkout < max($arrCheckinCheckout[1]) && $request->checkin != '' && $request->checkout != '') {
-                            unset($arrRoomId[$book]);
-                        } elseif ($request->checkin != '' && $request->checkout != '') {
-                            $min = min($arrCheckinCheckout);
-                            $max = max($arrCheckinCheckout);
-                            $arrRoomId[$book][1] = 'Phòng có thể đặt ';
-                        }
-                        if ($request->checkin != '' || $request->checkout != '') {
-                            foreach ($arrCheckinCheckout as $key => $value) {
-                                if ($request->checkin > $value[0] && $request->checkin < $value[1]) {
-                                    unset($arrRoomId[$book]);
-                                } else {
-                                    $min = min($arrCheckinCheckout);
-                                    $max = max($arrCheckinCheckout);
-                                    $arrRoomId[$book][1] = 'Phòng có thể đặt ';
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        //check so luong
-        if ($request->has('soNguoi') && $request->soNguoi != 0) {
-            foreach ($arrRoomId as $key => $value) {
-                $room = Room::where('_id', '=', $value[0])->get();
-                if ($room[0]->num_of_people != $request->soNguoi) {
-                    unset($arrRoomId[$key]);
-                }
-            }
-        }
-        if ($request->has('branch_id') && $request->branch_id != '') {
-            foreach ($arrRoomId as $key => $value) {
-                $room = Room::where('_id', '=', $value[0])->get();
-                if ($room[0]->branch_id != $request->branch_id) {
-                    unset($arrRoomId[$key]);
-                }
-            }
-        }
-        if ($arrRoomId) {
-            $arrFitRoom = [];
-            foreach ($arrRoomId as $item) {
-                $arrFitRoom[] = ['room' => Room::find($item[0]), 'status' => $item[1]];
-            }
-            $response = [
-                'status' => 'Tìm thành công',
-                'data' => $arrFitRoom
-            ];
-        } else {
-            $response = [
-                'status' => 'Không tìm thấy'
-            ];
-        }
-        return response()->json($response);
+    private RateRoom $rate_room;
+    private Room $room;
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->rate_room = new RateRoom();
+        $this->room = new Room();
     }
 
-    public function create($request){
+    public function profile(Request $request){
+        $user = $this->userRepository->find($request->user()->id);
+        return response()->json([
+            'message' => 'Get user successfully',
+            'data'    => new UserResource($user)
+        ], 200);
+    }
+    public function updateAvatar(Request $request){
+        $this->userRepository->updateAvatar($request, $request->user()->id);
+        return response()->json([
+            'message' => 'Update avatar successfully',
+            'data'    => $request->user()
+        ], 200);
+    }
+    public function updateProfile(Request $request){
+        $this->userRepository->updateProfile($request, $request->user()->id);
+        return response()->json([
+            'message' => 'Update profile successfully',
+            'data'    => $request->user()
+        ], 200);
+    }
+    public function changePassword(Request $request){
+        $this->userRepository->updatePassword($request, $request->user()->id);
+        return response()->json([
+            'message' => 'Change password successfully',
+            'data'    => $request->user()
+        ], 200);
+    }
+    public function bookingHistory(Request $request){
+        $history = $this->userRepository->bookingHistory($request->user()->id);
+        return response()->json([
+            'message' => 'Get booking history successfully',
+            'data'    => $history
+        ], 200);
+    }
+    public function booking(Request $request)
+    {
         $booking = new Booking();
         $soLuong = $request->soLuong;
         $room_id = $request->room_id; // id phong ma khach dat
@@ -166,8 +136,7 @@ class BookingRepository
         }
         return response()->json($response);
     }
-
-    public function cancel($id){
+    public function cancelBooking($id){
         $bookings = Booking::find($id);
         if (!$bookings) {
             return response()->json([
@@ -185,8 +154,36 @@ class BookingRepository
             ]);
         }
     }
-
-
-
+    public function bookingDetail($id){
+        $booking = Booking::find($id);
+        $detail = $booking->getDetail();
+        return response()->json([
+            'message' => 'Get booking detail successfully',
+            'data'    => [
+                'booking' => $booking,
+                'detail'  => $detail
+            ]
+        ], 200);
+    }
+    public function rate(Request $request, $id_room){
+        $room = $this->room->find($id_room);
+        if(!$room){
+            return response()->json([
+                'message' => 'Room not found'
+            ], 404);
+        }
+        $input  = $request->validated();
+        $images = $request->file('images');
+        if($images){
+            $uploadedFileUrl = $this->UploadMultiImage($images,'rate_room/'.$id_room.'/');
+            $input['images'] = json_encode($uploadedFileUrl);
+        }
+        $rate = $this->rate_room->create($request->validated());
+        $this->rate_room->create($input);
+        return response()->json([
+            'message' => 'Rate room successfully',
+            'data'    => $rate
+        ], 201);
+    }
 
 }

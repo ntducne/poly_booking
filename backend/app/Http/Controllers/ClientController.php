@@ -1,14 +1,26 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Http\Controllers;
 
+use App\Http\Resources\RoomResource;
 use App\Models\BookDetail;
 use App\Models\Booking;
+use App\Models\Rates;
 use App\Models\Room;
+use Illuminate\Http\Request;
 
-class BookingRepository
+class ClientController extends Controller
 {
-    public function search($request){
+    public function roomDetail($id)
+    {
+        $room = Room::find($id);
+        return response()->json([
+            'room' => new RoomResource($room),
+            'rate' => $room->getRate()
+        ]);
+    }
+    public function search(Request $request)
+    { //duyet cac phong
         $arrRoomId = []; //chua id cac phong
         $room = Room::all();
         foreach ($room as $item) {
@@ -88,8 +100,7 @@ class BookingRepository
         }
         return response()->json($response);
     }
-
-    public function create($request){
+    public function booking(Request $request){
         $booking = new Booking();
         $soLuong = $request->soLuong;
         $room_id = $request->room_id; // id phong ma khach dat
@@ -166,27 +177,6 @@ class BookingRepository
         }
         return response()->json($response);
     }
-
-    public function cancel($id){
-        $bookings = Booking::find($id);
-        if (!$bookings) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Booking không tồn tại !',
-                'data' => null
-            ]);
-        }
-        $update = $bookings->update(['status' => true]);
-        if ($update) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Cập nhật thành công !',
-                'data' => $bookings
-            ]);
-        }
-    }
-
-
 
 
 }

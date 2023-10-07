@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Admin;
+use App\Models\AdminPermission;
+use App\Models\Permission;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -37,21 +40,40 @@ function DeleteDirectory($folder): void
     Http::delete(env('CLOUDINARY_RESOURCE').'folders/'.$folder)->json();
 }
 
-
-function getNameRoute(): array
+function create_permision()
 {
     $routeCollection = Route::getRoutes();
-    $arr = [];
+    $dataPermissions = [];
     foreach ($routeCollection as $route) {
         if($route->getName() != null){
             if (str_contains($route->getName(), 'admin.')) {
                 $parts = explode('.', $route->getName());
-                $arr_item = [
-                    $route->getName() => ucfirst($parts[1]) .' '. ucfirst($parts[2])
-                ];
-                $arr = array_merge($arr, $arr_item);
+                if (count($parts) >= 3) {
+                    $arr_item = [
+                        $route->getName() => ucfirst($parts[1]) .' '. ucfirst($parts[2])
+                    ];
+                    $dataPermissions = array_merge($dataPermissions, $arr_item);
+                }
             }
         }
     }
-    return $arr;
+    $permission = Permission::all();
+    foreach ($permission as $value) {
+        if (!array_key_exists($value->name, $dataPermissions)) {
+            $value->delete();
+        }
+    }
+    foreach ($dataPermissions as $key => $value) {
+        Permission::query()->updateOrCreate([
+            'name' => $key,
+        ]);
+    }
+    $user = Admin::where('email', 'superadmin@gmail.com')->first();
+    foreach ($permission as $value) {
+        AdminPermission::query()->updateOrCreate([
+            'id_admin' => $user->id,
+            'id_permission' => $value->id,
+        ]);
+    }
+    echo "Create permission success";
 }
