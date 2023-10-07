@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
     {
 //        RoomType::factory($this->num_seed)->create();
 //        Room::factory($this->num_seed)->create();
-//        User::factory($this->num_seed)->create();
+        User::factory($this->num_seed)->create();
 //        Category::factory($this->num_seed)->create();
 //         Staff::factory($this->num_seed)->create();
 //         Promotion::factory($this->num_seed)->create();
