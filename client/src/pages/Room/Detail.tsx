@@ -14,9 +14,9 @@ import {
 
 initTE({ Rating });
 
-type Props = {}
 
-const Detail = (props: Props) => {
+
+const Detail = () => {
     return (
         <div className='pb-[100px] '>
             {/* <SlideRooms /> */}

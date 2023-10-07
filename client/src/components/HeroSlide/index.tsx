@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { motion } from "framer-motion"
 type Props = {}

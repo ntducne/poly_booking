@@ -1,9 +1,9 @@
-import React from 'react'
+
 import HeroSlide from '../../components/HeroSlide'
 
-type Props = {}
 
-const Checkout = (props: Props) => {
+
+const Checkout = () => {
     return (
         <div>
             <HeroSlide />

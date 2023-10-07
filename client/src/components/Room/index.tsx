@@ -1,5 +1,4 @@
 import { ArrowsAltOutlined, UsergroupAddOutlined } from '@ant-design/icons'
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 type Props = {}
