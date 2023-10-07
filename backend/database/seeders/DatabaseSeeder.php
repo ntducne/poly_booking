@@ -2,30 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\CancellationPolicy;
-use App\Models\Category;
-use App\Models\Promotion;
-use App\Models\RoomType;
-use App\Models\Staff;
-use App\Models\User;
-use App\Models\Utilities;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Admin;
 use App\Models\Branch;
-use App\Models\Room;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    private int $num_seed;
-    /**
-     * @var array|array[]
-     */
-    private array $branchs;
+    private array $branches;
 
     public function __construct()
     {
-        $this->num_seed = 5;
-        $this->branchs = [
+        $this->branches = [
             [
                 'name' => 'PolyDev Hotel Quang Ninh',
                 'address' => 'Quang Ninh',
@@ -81,16 +68,17 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-//        RoomType::factory($this->num_seed)->create();
-//        Room::factory($this->num_seed)->create();
-//        User::factory($this->num_seed)->create();
-//        Category::factory($this->num_seed)->create();
-//         Staff::factory($this->num_seed)->create();
-//         Promotion::factory($this->num_seed)->create();
-//         Utilities::factory($this->num_seed)->create();
-//         CancellationPolicy::factory($this->num_seed)->create();
-        foreach ($this->branchs as $branch) {
+        Admin::create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@gmail.com',
+            'password' => bcrypt('Polydev@123'),
+            'phone' => '0123456789',
+            'branch_id' => 'all',
+            'role' => 0,
+        ]);
+        foreach ($this->branches as $branch) {
             Branch::create($branch);
         }
+//        createPermission();
     }
 }
