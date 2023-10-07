@@ -1,16 +1,64 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Booking;
+use App\Http\Resources\UserResource;
 use App\Models\BookDetail;
+use App\Models\Booking;
+use App\Models\RateRoom;
 use App\Models\Room;
+use app\Repositories\UserRepository;
+use Illuminate\Http\Request;
 
-class BookingController extends Controller
+class UserController extends Controller
 {
-    public function datPhong(Request $request)
+    private RateRoom $rate_room;
+    private Room $room;
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->rate_room = new RateRoom();
+        $this->room = new Room();
+    }
+
+    public function profile(Request $request){
+        $user = $this->userRepository->find($request->user()->id);
+        return response()->json([
+            'message' => 'Get user successfully',
+            'data'    => new UserResource($user)
+        ], 200);
+    }
+    public function updateAvatar(Request $request){
+        $this->userRepository->updateAvatar($request, $request->user()->id);
+        return response()->json([
+            'message' => 'Update avatar successfully',
+            'data'    => $request->user()
+        ], 200);
+    }
+    public function updateProfile(Request $request){
+        $this->userRepository->updateProfile($request, $request->user()->id);
+        return response()->json([
+            'message' => 'Update profile successfully',
+            'data'    => $request->user()
+        ], 200);
+    }
+    public function changePassword(Request $request){
+        $this->userRepository->updatePassword($request, $request->user()->id);
+        return response()->json([
+            'message' => 'Change password successfully',
+            'data'    => $request->user()
+        ], 200);
+    }
+    public function bookingHistory(Request $request){
+        $history = $this->userRepository->bookingHistory($request->user()->id);
+        return response()->json([
+            'message' => 'Get booking history successfully',
+            'data'    => $history
+        ], 200);
+    }
+    public function booking(Request $request)
     {
         $booking = new Booking();
         $soLuong = $request->soLuong;
@@ -88,8 +136,7 @@ class BookingController extends Controller
         }
         return response()->json($response);
     }
-    public function huyPhong(Request $request, $id)
-    {
+    public function cancelBooking($id){
         $bookings = Booking::find($id);
         if (!$bookings) {
             return response()->json([
@@ -107,4 +154,36 @@ class BookingController extends Controller
             ]);
         }
     }
+    public function bookingDetail($id){
+        $booking = Booking::find($id);
+        $detail = $booking->getDetail();
+        return response()->json([
+            'message' => 'Get booking detail successfully',
+            'data'    => [
+                'booking' => $booking,
+                'detail'  => $detail
+            ]
+        ], 200);
+    }
+    public function rate(Request $request, $id_room){
+        $room = $this->room->find($id_room);
+        if(!$room){
+            return response()->json([
+                'message' => 'Room not found'
+            ], 404);
+        }
+        $input  = $request->validated();
+        $images = $request->file('images');
+        if($images){
+            $uploadedFileUrl = $this->UploadMultiImage($images,'rate_room/'.$id_room.'/');
+            $input['images'] = json_encode($uploadedFileUrl);
+        }
+        $rate = $this->rate_room->create($request->validated());
+        $this->rate_room->create($input);
+        return response()->json([
+            'message' => 'Rate room successfully',
+            'data'    => $rate
+        ], 201);
+    }
+
 }

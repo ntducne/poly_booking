@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\CheckReferer;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -59,7 +61,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::prefix('admin')
                 ->as('admin.')
-                ->middleware(['api','auth:admin-api','scopes:admin'])
+                ->middleware(['api','auth:admin-api','scopes:admin', CheckPermission::class])
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api/admin.php'));
 

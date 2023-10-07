@@ -17,6 +17,7 @@ class Rates extends Eloquent
         'images',
         'star',
         'deleted_at',
+        'room_id'
     ];
     protected $attributes = [
         'deleted_at' => null

@@ -61,7 +61,7 @@ class UserRepository
     public function create($request)
     {
         try {
-            $attributes = $request->validated();
+            $attributes = $request->all();
             $image = $request->file('image');
             if($image){
                 $image_url = UploadImage($image, $this->folder);
@@ -91,7 +91,7 @@ class UserRepository
             if(!$user){
                 return false;
             }
-            $arr = $request->validated();
+            $arr = $request->all();
             $image = $request->file('image');
             if($image){
                 DeleteImage($user->image);
@@ -220,11 +220,9 @@ class UserRepository
             if(!$user){
                 return false;
             }
-            $arr = $request->validated();
+            $arr = $request->all();
             $user->name = $arr['name'];
-            $user->email = $arr['email'];
             $user->phone = $arr['phone'];
-            $user->address = $arr['address'];
             $user->save();
             return true;
         } catch (Exception $e) {
@@ -240,7 +238,7 @@ class UserRepository
             if(!$user){
                 return false;
             }
-            $arr = $request->validated();
+            $arr = $request->all();
             if(!Hash::check($arr['old_password'], $user->password)){
                 return false;
             }
