@@ -40,7 +40,7 @@ class LoginController extends Controller
             $tokenResult = $user->createToken(ucfirst($guard).' Access Token',[ $request->segment(2) ]);
             $token = $tokenResult->token;
             $token->save();
-            return response()->json([
+            $response = [
                 'status'        => true,
                 'user'          => [
                     'image' => $user->image,
@@ -49,8 +49,12 @@ class LoginController extends Controller
                 'accessToken'   => [
                     'token'         => $tokenResult->accessToken,
                     'expires_at'    => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
-                ]
-            ]);
+                ],
+            ];
+            if($guard == 'admin'){
+                $response['permission'] = $user->getAllPermission();
+            }
+            return response()->json($response);
         }
         else {
             return response()->json([
