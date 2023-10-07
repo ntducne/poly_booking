@@ -11,5 +11,8 @@ class Permission extends Eloquent
     protected $fillable = [
         'name',
     ];
+    protected $hidden = [
+        '_id',
+    ];
     public $timestamps = false;
 }
