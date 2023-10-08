@@ -25,6 +25,12 @@ class ClientController extends Controller
     public function roomDetail($id)
     {
         $room = Room::find($id);
+        if(!$room){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Phòng không tồn tại !',
+            ]);
+        }
         return response()->json([
             'room' => new RoomResource($room),
             'rate' => $room->getRate()
