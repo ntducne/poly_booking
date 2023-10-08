@@ -107,7 +107,9 @@ class RoomRepository
 
         // so sánh room vs bookDetail để lấy ra các phòng còn trống trong khoảng thời gian đặt phòng và trả phòng cùng với số người lớn và trẻ em
          
-
+        $roomAvailable = $rooms->diff($bookDetails);
+        
+        
 
 
 

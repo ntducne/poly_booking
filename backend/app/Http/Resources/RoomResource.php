@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\RoomImage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoomResource extends JsonResource
@@ -21,7 +22,8 @@ class RoomResource extends JsonResource
             'bed_size' => $this->bed_size,
             'branch_id' => $this->branch_id,
             'name' => $this->name,
-            'images' => $this->images,
+            'images' => RoomImage::where('room_id', $this->_id)->get(),
+            'rate' => $this->getRate(),
         ];
     }
 }
