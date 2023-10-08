@@ -7,10 +7,21 @@ use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Rates;
 use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+
+
+    public function roomType(){
+        return response()->json(RoomType::all());
+    }
+
+    public function rooms(){
+        return RoomResource::collection(Room::paginate(10));
+    }
+
     public function roomDetail($id)
     {
         $room = Room::find($id);
