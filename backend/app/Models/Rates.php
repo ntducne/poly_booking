@@ -9,7 +9,7 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 class Rates extends Eloquent
 {
     use HasFactory, SoftDeletes;
-    // protected $table = "rates";
+     protected $table = "rates";
     protected $fillable = [
         'user_id',
         'content',
