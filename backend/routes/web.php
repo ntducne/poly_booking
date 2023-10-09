@@ -7,7 +7,3 @@ Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Fou
 Route::get('error-message', function (){ return response()->json([
     'message' => 'Do not have permission to access this page'
 ], 401); });
-
-Route::get('/ahihi', function (){
-    create_permision();
-});

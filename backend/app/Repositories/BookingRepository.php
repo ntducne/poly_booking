@@ -186,7 +186,4 @@ class BookingRepository
         }
     }
 
-
-
-
 }
