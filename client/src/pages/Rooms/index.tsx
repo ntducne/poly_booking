@@ -46,9 +46,9 @@ const rooms = [
 export default function Rooms({ }: Props) {
     const [width, setWidth] = useState(0)
     const { data, isLoading } = useGetRoomsQuery({})
-    if(isLoading){
+    if (isLoading) {
         return <>loading...</>
-   }
+    }
     useEffect(() => {
         setWidth(window.innerWidth)
     }, [window.innerWidth])
