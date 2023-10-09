@@ -20,23 +20,6 @@ class RateRoomController extends Controller
     }
     public function store(RateStoreRequest $request, $id_room): JsonResponse
     {
-        $room = $this->room->find($id_room);
-        if(!$room){
-            return response()->json([
-                'message' => 'Room not found'
-            ], 404);
-        }
-        $input  = $request->validated();
-        $images = $request->file('images');
-        if($images){
-            $uploadedFileUrl = $this->UploadMultiImage($images,'rate_room/'.$id_room.'/');
-            $input['images'] = json_encode($uploadedFileUrl);
-        }
-        $rate = $this->rate_room->create($request->validated());
-        $this->rate_room->create($input);
-        return response()->json([
-            'message' => 'Rate room successfully',
-            'data'    => $rate
-        ], 201);
+
     }
 }

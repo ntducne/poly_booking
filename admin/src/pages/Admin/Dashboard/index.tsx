@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import type { Dayjs } from "dayjs";
 import {
   AiOutlineCheck,
@@ -7,7 +7,7 @@ import {
   AiOutlineImport,
 } from "react-icons/ai";
 import { BiBed } from "react-icons/bi";
-import { Calendar, Typography, theme } from "antd";
+import { Calendar, Typography } from "antd";
 import type { CalendarProps } from "antd";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,18 +15,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import Page from "../../../component/page";
 
 const { Title } = Typography;
 const Dashboard = () => {
-
   const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
     console.log(value.format("YYYY-MM-DD"), mode);
   };
 
   return (
-    <Page title={`Dashboard`}>
+    <Page title={`Trang chủ`}>
       <div className="grid grid-cols-1 gap-5 2xl:grid-cols-4 2xl:gap-4 md:grid-cols-2 ">
         <button className="border rounded-xl sm:mb-4 drop-shadow-md hover:drop-shadow-xl">
           <div className="flex items-center">
@@ -87,13 +86,25 @@ const Dashboard = () => {
           <Title level={4}>Đánh giá mới của khách hàng</Title>
         </div>
         <Swiper
-          autoplay={{delay: 2000}}
-          slidesPerView={3}
+          loop={true}
+          speed={2000}
+          autoplay={{ delay: 3000 ,disableOnInteraction: false }}
+          slidesPerView={1}
+          breakpoints={{
+            800: {
+              width: 678,
+              slidesPerView: 2,
+            },
+            1280: {
+              width: 1280,
+              slidesPerView: 3,
+            },
+          }}
           spaceBetween={30}
           pagination={{
             clickable: true,
           }}
-          modules={[Pagination]}
+          modules={[Pagination , Autoplay]}
           className="mySwiper"
         >
           <SwiperSlide>

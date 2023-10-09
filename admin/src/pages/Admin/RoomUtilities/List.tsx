@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Button, Carousel, Image, Space, Table, Tabs } from "antd";
+import React from "react";
+import { Button, Space, Table, } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
 interface DataType {
   key: React.Key;
   name: string;
@@ -12,106 +11,43 @@ interface DataType {
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal , { } from "sweetalert";
+import swal from "sweetalert";
+import Page from "../../../component/page";
 
 const ListRoomUtilities = () => {
-  const [loadings, setLoadings] = useState<boolean[]>([]);
-
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
-      });
-    }, 2000);
-  };
-
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<any> = [
     {
-      title: "Tên phòng",
-      dataIndex: "name",
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "ID",
+      dataIndex: "_id",
+      sorter: (a, b) => a._id - b._id,
       sortDirections: ["descend"],
       fixed: "left",
     },
+
     {
-      title: "Loại phòng",
-      dataIndex: "imageType",
-      render: (_, record) => (
-        <div className="flex items-center">
-          {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-          <Image
-            className="rounded-3xl "
-            width={150}
-            src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg"
-          />
-          <div className="ml-3 text-gray-500">
-            <p>#68e365</p>
-            <p>2 giường ngủ</p>
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: "Giá phòng",
-      dataIndex: "age",
-      key: "age",
+      title: "Tên tiện ích",
+      dataIndex: "name",
+      key: "name",
       sorter: (a, b) => a.name.length - b.name.length,
     },
-    {
-      title: "Tầng phòng",
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "address",
-      filters: [
-        {
-          text: "Còn trống",
-          value: "Còn",
-        },
-        {
-          text: "Hết phòng",
-          value: "Hết",
-        },
-      ],
-      render: (text) => (
-        <div className="font-semibold">
-          {text === "Còn" ? (
-            <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
-              Còn
-            </span>
-          ) : (
-            <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
-              Hết
-            </span>
-          )}
-        </div>
-      ),
-      onFilter: (value: any, record) => record.address.indexOf(value) === 0,
-    },
+
     {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" style={{ backgroundColor: "#68e365" }}>
-            <Link to={`/room/edit/${record?.key}`}>
+          <Button
+            type="primary"
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
+          >
+            <Link to={`/roomUtilities/edit/${record?.key}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
           <Button
             onClick={() => remove(record?.key)}
             type="primary"
-            style={{ backgroundColor: "#e23428" }}
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
           >
             <MdDeleteForever />
           </Button>
@@ -121,31 +57,32 @@ const ListRoomUtilities = () => {
     },
   ];
 
-  const data = [
+  const data : any = [
     {
       key: "1",
+      _id: "1",
       name: "John Brown",
-      age: 32,
-      address: "Còn",
+      room_id: "1",
     },
     {
       key: "2",
+      _id: "2",
       name: "John Brown 123",
-      age: 35,
-      address: "Hết",
+      room_id: "2",
     },
   ];
 
   const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
+    // pagination,
+    // filters,
+    // sorter,
+    // extra
   ) => {
     // console.log("params", pagination, filters, sorter, extra);
   };
 
   const remove = (id: any) => {
+    console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -157,6 +94,9 @@ const ListRoomUtilities = () => {
         .then((willDelete) => {
           if (willDelete) {
             // removeComment(id);
+
+            console.log(id);
+            
             swal("You have successfully deleted", {
               icon: "success",
             });
@@ -171,46 +111,34 @@ const ListRoomUtilities = () => {
   };
 
   return (
-    <div className="">
+    <Page title={`Tiện ích phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <div className="mb-3">
-          <FormSearch />
-        </div>
-        <div className="flex flex-col md:flex-row">
-          <Button
-            className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl mb-2"
-            type="default"
-            icon={<AiOutlinePlus />}
-            loading={loadings[1]}
-            onClick={() => enterLoading(1)}
+        <FormSearch />
+        <div className="flex flex-col md:flex-row md:ml-2">
+          <Link
+            to={`/roomUtilities/add`}
+            className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
           >
-            <Link to={`/room/add`}>Thêm phòng</Link>
-          </Button>
-          <Button
-            className="bg-red-400	text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
-            type="default"
-            icon={<MdOutlineDeleteOutline />}
-            loading={loadings[1]}
-            onClick={() => enterLoading(1)}
+            <AiOutlinePlus />
+            Thêm tiện ích phòng
+          </Link>
+          <Link
+            to={`/roomUtilities`}
+            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
           >
-            <Link to={`/room/add`}>Thùng rác</Link>
-          </Button>
-          {/* <Button className=" bg-red-400 text-[#fff] hover:drop-shadow-2xl md:ml-auto">
-            <Link className="flex items-center px-10" to={`/admin`}>
-              <MdOutlineDeleteOutline />
-              <span className="ml-2">Thùng rác</span>
-            </Link> 
-          </Button> */}
+            <MdOutlineDeleteOutline />
+            Thùng rác
+          </Link>
         </div>
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}
         onChange={onChange}
       />
-    </div>
+    </Page>
   );
 };
 

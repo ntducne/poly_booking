@@ -14,6 +14,7 @@ class RegisterRequest extends Request
             'name' => ['bail','required','string'],
             'email' => ['bail','required','string','email', Rule::unique(User::class, 'email')],
             'password' => ['bail','required','string','min:6'],
+            'password_confirmation' => ['bail','required','string','min:6','same:password'],
         ];
     }
     public function attributes(): array

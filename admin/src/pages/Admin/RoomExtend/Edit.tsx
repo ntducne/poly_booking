@@ -1,7 +1,6 @@
-import React from 'react'
+// import React from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 
-type Props = {}
 
 type FieldType = {
   username?: string;
@@ -9,7 +8,7 @@ type FieldType = {
   remember?: string;
 };
 
-const EditRoomExtend = (props: Props) => {
+const EditRoomExtend = () => {
   const onFinish = (values: any) => {
     console.log('Success:', values);
   };

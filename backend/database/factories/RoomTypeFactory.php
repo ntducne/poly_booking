@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RoomTypeFactory extends Factory
+class gitRoomTypeFactory extends Factory
 {
 
     public function definition()

@@ -20,6 +20,7 @@ class ServicesFactory extends Factory
            'service_name'=>fake()->name(),
            'price'=>'1000',
            'description'=>fake()->text(),
+           'branch_id'=>'64ff40fd5ffa501a07081bdb',
            'deleted_at' => null
         ];
     }

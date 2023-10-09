@@ -1,9 +1,7 @@
-import React from 'react'
 import HeroSlide from '../../components/HeroSlide'
 
-type Props = {}
 
-const Profile = (props: Props) => {
+const Profile = () => {
     return (
         <div className='mb-[300px]'>
             <HeroSlide />
@@ -50,15 +48,15 @@ const Profile = (props: Props) => {
                                 </span>
                                 <span>Similar Profiles</span>
                             </div>
-                           
-                                <div className="text-center my-2">
-                                    <img className="h-full w-full rounded-full mx-auto"
-                                        src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
-                                        alt="" />
-                                    
-                                </div>
-                              
-                           
+
+                            <div className="text-center my-2">
+                                <img className="h-full w-full rounded-full mx-auto"
+                                    src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
+                                    alt="" />
+
+                            </div>
+
+
                         </div>
 
                     </div>

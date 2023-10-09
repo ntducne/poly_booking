@@ -16,10 +16,17 @@ class Booking extends Eloquent
         'checkout',
         'pay_date',
         'representative',
+        'price_per_night',
         'amount_of_people',
+        'status',
         'deleted_at'
     ];
     protected $attributes = [
+        'status'=>false,
         'deleted_at' => null
     ];
+
+    public function getDetail(){
+        return BookDetail::where('booking_id', $this->_id)->get();
+    }
 }

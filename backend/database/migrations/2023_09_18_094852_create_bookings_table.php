@@ -13,12 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->create('book_detail', function (Blueprint $table) {
+        Schema::connection('mongodb')->create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('booking_id');
-            $table->string('room_type');
-            $table->string('room_name');
+            $table->string('user_id');
+            $table->date('booking_date');
+            $table->date('checkin');
+            $table->date('checkout');
+            $table->date('pay_date');
+            $table->string('representative');
+            $table->integer('amount_of_people');
             $table->float('price_per_night',10,2);
+            $table->boolean('status')->default(false); //false : chua huy //true da huy
             $table->timestamps();
         });
     }
@@ -30,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_detail');
+        Schema::dropIfExists('bookings');
     }
 };

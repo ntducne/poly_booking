@@ -1,7 +1,6 @@
 // import React from 'react'
-import { Button, Form, Input, Space } from 'antd';
+import { Form, Input } from 'antd';
 import Page from '../../components/Page';
-import { LoginOutlined, SearchOutlined } from '@ant-design/icons';
 
 type Props = {}
 

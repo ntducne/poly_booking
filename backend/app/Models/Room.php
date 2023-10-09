@@ -9,7 +9,6 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 class Room extends Eloquent
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'rooms';
     protected $fillable = [
         'area',
         'num_of_people',
@@ -28,5 +27,10 @@ class Room extends Eloquent
     protected $attributes = [
         'deleted_at' => null,
     ];
+
+    public function getRate()
+    {
+       return Rates::where('room_id', $this->id)->get();
+    }
 
 }

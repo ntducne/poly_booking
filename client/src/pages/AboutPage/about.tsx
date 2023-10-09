@@ -1,18 +1,16 @@
-import React from 'react';
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ImgAbout from '../../assets/images/Abouts/Img_boi.jpg'
-import Img1 from '../../assets/images/Abouts/Img_1.jpg'
-import Img2 from '../../assets/images/Abouts/Img_2.jpg'
-import Img3 from '../../assets/images/Abouts/Img_3.jpg'
-import Img4 from '../../assets/images/Abouts/Img_4.jpg'
-import Img5 from '../../assets/images/Abouts/Img_5.jpg'
-import Img6 from '../../assets/images/Abouts/Img_6.jpg'
+import Img1 from '../../assets/images/Abouts/Img_1.jpg';
+import Img2 from '../../assets/images/Abouts/Img_2.jpg';
+import Img3 from '../../assets/images/Abouts/Img_3.jpg';
+import Img4 from '../../assets/images/Abouts/Img_4.jpg';
+import Img5 from '../../assets/images/Abouts/Img_5.jpg';
+import Img6 from '../../assets/images/Abouts/Img_6.jpg';
+import ImgAbout from '../../assets/images/Abouts/Img_boi.jpg';
 
-import SmoothSlide from '../../components/SmoothSlide'
 import AboutUsSlide from '../../components/AboutUsSlide';
 import Page from '../../components/Page';
-import ObserverAnimate from '../../components/ObserverAnimation';
+import SmoothSlide from '../../components/SmoothSlide';
 
 type Props = {}
 

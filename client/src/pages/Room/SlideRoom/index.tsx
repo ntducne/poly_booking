@@ -1,9 +1,8 @@
-import React from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from 'swiper/react';
 type Props = {}
 
-import { EffectFade, Autoplay } from 'swiper/modules';
+import { Autoplay, EffectFade } from 'swiper/modules';
 const slides = [
 
     {
