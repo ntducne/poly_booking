@@ -6,6 +6,7 @@ import { SlideRooms1, SlideRooms2, SlideRooms3, SlideRooms4, SlideRooms5 } from 
 import BookForm from '../../components/BookForm'
 import Page from '../../components/Page'
 import Room from '../../components/Room'
+import { useGetRoomsQuery } from '../../api/Room'
 type Props = {}
 
 const rooms = [
@@ -44,10 +45,12 @@ const rooms = [
 ]
 export default function Rooms({ }: Props) {
     const [width, setWidth] = useState(0)
+    const { data, isLoading } = useGetRoomsQuery({})
+    if(isLoading){
+        return <>loading...</>
+   }
     useEffect(() => {
         setWidth(window.innerWidth)
-        console.log('check');
-
     }, [window.innerWidth])
     return (
         <Page title='Phòng'>
@@ -69,7 +72,7 @@ export default function Rooms({ }: Props) {
                 <div className='pt-primary px-4 '>
                     <div className='container mx-auto lg:px-0'>
                         <div className='grid grid-cols-1 max-w-sm mx-auto gap-[60px] lg:grid-cols-3 lg:max-w-none lg:mx-0'>
-                            {rooms.map((room: any) => {
+                            {data.data.map((room: any) => {
                                 return <Room key={room.id} data={room} />
                             })}
 
