@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BookDetailController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\RatesController;
 use App\Http\Controllers\Admin\RoomController;
@@ -36,10 +37,18 @@ Route::resource('cancel-policies', CancellationPolicyController::class);
 Route::resource('promotions', PromotionController::class);
 
 // dịch vụ
-Route::resource('services', ServicesController::class);
+// Route::resource('services', ServicesController::class);
+Route::prefix('/services')->group(function () {
+
+    Route::get('', [ServicesController::class, 'index']);
+    Route::get('/{id}', [ServicesController::class, 'show']);
+    Route::post('', [ServicesController::class, 'store']);
+    Route::put('/{id}', [ServicesController::class, 'update']);
+    Route::delete('/{id}', [ServicesController::class, 'delete']);
+});
 
 // đặt phòng + chi tiết đặt phòng
-Route::resource('bookings', BookingController::class);
+Route::resource('booking', BookingController::class);
 
 // phòng
 Route::prefix('/rooms')->group(function () {
