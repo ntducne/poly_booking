@@ -25,4 +25,8 @@ class Booking extends Eloquent
         'status'=>false,
         'deleted_at' => null
     ];
+
+    public function getDetail(){
+        return BookDetail::where('booking_id', $this->_id)->get();
+    }
 }

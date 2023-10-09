@@ -4,29 +4,27 @@ namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticateContract;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Eloquent implements AuthenticateContract
 {
-    use Authenticatable, HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use Authenticatable, HasApiTokens, Notifiable, SoftDeletes;
     protected $fillable = [
         'image',
         'name',
-        'username',
         'email',
         'password',
         'phone',
-        'address',
         'status',
         'branch_id',
         'role',
+        'created_by'
     ];
     protected $hidden = [
-        'password'
+        'password', 'role', 'created_by'
     ];
     protected $attributes = [
         'status'  => 0,
@@ -34,4 +32,23 @@ class Admin extends Eloquent implements AuthenticateContract
         'phone'   => '',
         'address' => '',
     ];
+    public function getAllPermission()
+    {
+        $adminPermission = AdminPermission::where('id_admin', $this->id)->get();
+        $arr = [];
+        foreach ($adminPermission as $item) {
+            $permission = Permission::where('_id', $item->id_permission)->first();
+            $arr[] = $permission->name;
+        }
+        return $arr;
+    }
+    public function syncPermission(array $permission)
+    {
+        foreach ($permission as $item) {
+            AdminPermission::query()->updateOrCreate([
+                'id_admin'      => $this->id,
+                'id_permission' => $item,
+            ]);
+        }
+    }
 }

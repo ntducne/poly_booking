@@ -8,19 +8,43 @@ use App\Http\Controllers\Admin\BranchController;
 use app\Http\Controllers\Admin\CancellationPolicyController;
 use app\Http\Controllers\Admin\PromotionController;
 use app\Http\Controllers\Admin\RoomTypeController;
+use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\UserController;
 use app\Http\Controllers\Admin\UtilitiesController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('staffs', \app\Http\Controllers\Admin\StaffController::class);
-//Route::resource('admins', AdminController::class);
-//Route::resource('roomtypes', RoomTypeController::class);
-//Route::resource('rooms', RoomController::class);
-//Route::resource('promotions', PromotionController::class);
-//Route::resource('utilities', UtilitiesController::class);
-//Route::resource('cancelpolicies', CancellationPolicyController::class);
-//Route::resource('branches', BranchController::class);
-//Route::resource('staffs', \app\Http\Controllers\Admin\StaffController::class);
-// Route::resource('booking',BookingController::class);
-// Route::resource('rate',RatesController::class);
+// chi nhánh
+Route::resource('branches', BranchController::class);
+
+// tiện ích phòng
+Route::resource('utilities', UtilitiesController::class);
+
+// người dùng
 Route::resource('users', UserController::class);
+
+// nhân sự
+Route::resource('personnel', AdminController::class);
+Route::post('personnel/assignPermission', [AdminController::class, 'assignPermission']);
+
+// đánh gía
+Route::resource('rate', RatesController::class);
+
+// chính sách hủy
+Route::resource('cancel-policies', CancellationPolicyController::class);
+
+// ưu đãi
+Route::resource('promotions', PromotionController::class);
+
+// dịch vụ
+Route::resource('services', ServicesController::class);
+
+// đặt phòng + chi tiết đặt phòng
+Route::resource('booking', BookingController::class);
+
+// phòng
+Route::prefix('/rooms')->group(function () {
+    // loại phòng
+    Route::resource('types', RoomTypeController::class);
+    // danh sách phòng
+    Route::resource('', RoomController::class);
+});
