@@ -1,4 +1,8 @@
+
 import HeroSlide from '../../components/HeroSlide'
+
+
+
 
 const Checkout = () => {
     return (
