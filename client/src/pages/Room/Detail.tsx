@@ -213,7 +213,7 @@ const Detail = () => {
                         <h2 className="lg:text-2xl font-bold text-gray-900 text-3xl dark:text-white">Discussion (20)</h2>
                     </div>
                     <form className="mb-6">
-                        <ul className="my-1 flex list-none gap-1 p-0 mb-2" data-te-rating-init>
+                        <ul className="my-1 flex list-none gap-1 p-0 mb-5" data-te-rating-init>
                             <li>
                                 <span
                                     className="text-primary [&>svg]:h-5 [&>svg]:w-5"

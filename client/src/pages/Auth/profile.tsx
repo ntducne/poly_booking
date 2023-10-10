@@ -1,9 +1,9 @@
-import React from 'react'
+
 import HeroSlide from '../../components/HeroSlide'
 
-type Props = {}
 
-const Profile = (props: Props) => {
+
+const Profile = () => {
     return (
         <div className='mb-[300px]'>
             <HeroSlide />
