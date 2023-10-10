@@ -33,7 +33,7 @@ const ListAdmin = () => {
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
           <Image
             className="rounded-3xl "
-            width={150}
+            width={80}
             src={record?.image}
           />
           <div className="ml-3 text-gray-500">
