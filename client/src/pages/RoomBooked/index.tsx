@@ -1,8 +1,7 @@
-import React from 'react'
-import HeroSlide from '../../components/HeroSlide'
-import BookForm from '../../components/BookForm'
-import { ImageStyle1 } from '../../assets/images/Home/ImsViews'
 import { Divider, Pagination } from 'antd'
+import { ImageStyle1 } from '../../assets/images/Home/ImsViews'
+import BookForm from '../../components/BookForm'
+import HeroSlide from '../../components/HeroSlide'
 
 type Props = {}
 

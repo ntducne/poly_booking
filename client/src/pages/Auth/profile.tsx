@@ -1,6 +1,4 @@
-
 import HeroSlide from '../../components/HeroSlide'
-
 
 
 const Profile = () => {
@@ -50,15 +48,15 @@ const Profile = () => {
                                 </span>
                                 <span>Similar Profiles</span>
                             </div>
-                           
-                                <div className="text-center my-2">
-                                    <img className="h-full w-full rounded-full mx-auto"
-                                        src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
-                                        alt="" />
-                                    
-                                </div>
-                              
-                           
+
+                            <div className="text-center my-2">
+                                <img className="h-full w-full rounded-full mx-auto"
+                                    src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
+                                    alt="" />
+
+                            </div>
+
+
                         </div>
 
                     </div>

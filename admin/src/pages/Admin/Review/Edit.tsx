@@ -1,8 +1,7 @@
-import React from 'react'
+// import React from 'react'
 
-type Props = {}
 
-const EditReview = (props: Props) => {
+const EditReview = () => {
   return (
     <div>EditReview</div>
   )

@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion } from "framer-motion"
 import { Link } from 'react-router-dom'
-import ImgHome from '../../assets/images/Home/view.jpg'
-import RoomsView from '../../sections/Home/RoomsView'
-import ImageRestaurant from '../../assets/images/Home/Restaurant/Img2.jpg'
 import Art1 from '../../assets/images/Home/Art/Image1.jpg'
 import Art2 from '../../assets/images/Home/Art/Image2.jpg'
 import { ImageStyle1, ImageStyle10, ImageStyle11, ImageStyle2, ImageStyle3, ImageStyle4, ImageStyle5, ImageStyle6, ImageStyle7, ImageStyle8, ImageStyle9 } from '../../assets/images/Home/ImsViews'
-import HeroSlide from '../../components/HeroSlide'
+import ImageRestaurant from '../../assets/images/Home/Restaurant/Img2.jpg'
+import ImgHome from '../../assets/images/Home/view.jpg'
 import BookForm from '../../components/BookForm'
-import Page from '../../components/Page'
+import HeroSlide from '../../components/HeroSlide'
 import ObserverAnimate from '../../components/ObserverAnimation'
+import Page from '../../components/Page'
+import RoomsView from '../../sections/Home/RoomsView'
 type Props = {}
 
 export default function Home({ }: Props) {
@@ -50,7 +49,6 @@ export default function Home({ }: Props) {
       <HeroSlide />
       <BookForm />
       <div className={`py-[80px] lg:py-[70px]  ${bg || bg2 ? 'bg-[#202020]' : 'bg-[#f9f8f6]'} transition-all duration-300`}>
-
         <div ref={elementRef} className="px-4 flex flex-col justify-center items-center lg:flex-row ">
           <ObserverAnimate position={{ y: 70 }}>
             <div className='relative inline-block'>
@@ -155,7 +153,7 @@ export default function Home({ }: Props) {
             </div>
 
           </ObserverAnimate>
-          <div className='w-full md:columns-3 column-1 sm:columns-2 px-4 mt-[60px] mx-auto lg:columns-4 column gap-[30px]'>
+          <div className='max-w-[1222px] md:columns-3 column-1 sm:columns-2 px-4 mt-[60px] mx-auto lg:columns-4 column gap-[30px]'>
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full' src={ImageStyle1} alt="" /></div>
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full' src={ImageStyle5} alt="" /></div>
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full' src={ImageStyle9} alt="" /></div>

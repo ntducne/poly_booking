@@ -3,6 +3,7 @@ import HeroSlide from '../../components/HeroSlide'
 
 
 
+
 const Checkout = () => {
     return (
         <div>
@@ -136,7 +137,7 @@ const Checkout = () => {
                             <input type="text" name="billing-zip" className="flex-shrink-0 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none sm:w-1/6 focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="ZIP" />
                         </div>
 
-                     
+
                         <div className="mt-6 border-t border-b py-2">
                             <div className="flex items-center justify-between">
                                 <p className="text-sm font-medium text-gray-900">Subtotal</p>
