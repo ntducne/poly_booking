@@ -18,4 +18,9 @@ class Branch extends Eloquent
     protected $attributes = [
         'deleted_at' => null
     ];
+    protected $hidden = [
+        'deleted_at',
+        'created_at',
+        'updated_at',
+    ];
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Resources\RoomImageResource;
+use App\Http\Resources\RoomTypeResource;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
@@ -9,10 +11,10 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 class Room extends Eloquent
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'rooms';
     protected $fillable = [
         'area',
-        'num_of_people',
+        'adults',
+        'children',
         'room_type_id',
         'pay_upon_check_in',
         'description',
@@ -23,10 +25,38 @@ class Room extends Eloquent
         'bed_size',
         'branch_id',
         'name',
-        'images'
     ];
     protected $attributes = [
         'deleted_at' => null,
+        'status' => 0
     ];
+
+    public function getRate()
+    {
+        $arr = [];
+        $rates = Rates::where('room_id', $this->id)->get();
+        foreach ($rates as $rate) {
+            $arr[] = [
+                'user' => [
+                    'name' => User::where('_id', $rate->user_id)->first()->name,
+                    'image' => User::where('_id', $rate->user_id)->first()->image,
+                ],
+                'content' => $rate->content,
+                'star' => $rate->star
+            ];
+        }
+        return $arr;
+    }
+
+    public function getType()
+    {
+       return new RoomTypeResource(RoomType::where('_id', $this->room_type_id)->first());
+    }
+
+    public function getImages()
+    {
+        return RoomImageResource::collection(RoomImage::where('room_id', $this->id)->get());
+
+    }
 
 }

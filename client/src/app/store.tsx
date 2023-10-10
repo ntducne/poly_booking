@@ -12,6 +12,7 @@ import {
     persistStore,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import roomApi, { roomReducer } from '../api/Room';
 
 const persistConfig = {
     key: 'root',
@@ -22,11 +23,15 @@ const persistConfig = {
 
 
 const rootReducer = combineReducers({
-    // [api.something] : appendFile.reducer
+    [roomApi.reducerPath]: roomReducer
 })
 
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+const middlewares = [
+    roomApi.middleware
+]
 
 const store = configureStore({
     reducer: persistedReducer,
@@ -35,7 +40,7 @@ const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }) //.concat(...middlewares)
+        }).concat(...middlewares)
 
 })
 
