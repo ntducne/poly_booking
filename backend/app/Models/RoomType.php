@@ -8,7 +8,6 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 class RoomType extends Eloquent
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'room_type';
     protected $fillable = [
         'room_type_name',
         'description',
@@ -16,7 +15,13 @@ class RoomType extends Eloquent
         'status',
     ];
     protected $attributes = [
-      'deleted_at' => null,
+        'deleted_at' => null,
+        'status' => 0
+    ];
+    protected $hidden = [
+        'deleted_at',
+        'created_at',
+        'updated_at',
     ];
 }
 
