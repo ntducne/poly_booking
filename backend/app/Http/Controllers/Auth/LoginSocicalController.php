@@ -9,16 +9,21 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginSocicalController extends Controller
 {
+    public function removeUser($userId): void
+    {
+        DB::table('oauth_access_tokens')->where('user_id', $userId)->delete();
+    }
     public function redirect(Request $request): RedirectResponse
     {
         return Redirect::to(Socialite::driver($request->segment(4))->stateless()->redirect()->getTargetUrl());
     }
-    
+
     public function callback(Request $request)
     {
         $guard = $request->segment(2);
@@ -49,11 +54,15 @@ class LoginSocicalController extends Controller
             $token = $tokenResult->token;
             $token->save();
             $response = [
-                'access_token' => $tokenResult->accessToken,
-                'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                    $tokenResult->token->expires_at
-                )->toDateTimeString(),
+                'status'        => true,
+                'user'          => [
+                    'image' => $user->image,
+                    'name'  => $user->name,
+                ],
+                'accessToken'   => [
+                    'token'         => $tokenResult->accessToken,
+                    'expires_at'    => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
+                ],
             ];
             if($guard == 'admin'){
                 $response['permission'] = $user->getAllPermission();
