@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 
 
 export default function Room(data: any) {
-    const { name, description, area, adults, children, num_of_bed , branch_id} = data.data
-    console.log(data.data)
-
+    const { name, description, area, adults, children, num_of_bed , branch} = data.data
+    console.log(data.data);
+    
     return (
         <div className='bg-bgr group overflow-hidden'>
             <div className='overflow-hidden'>
-                <Link to=''>
+                <Link to='/'>
                     <img className='group-hover:scale-110 transition-all duration-300 w-full' src={"https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"} alt="" />
                 </Link>
             </div>
@@ -50,7 +50,7 @@ export default function Room(data: any) {
                             <p className='max-w-[300px]'><span className='font-normal text-desc'>{ description.length > 70 ? description?.slice(0,70) + "..." : description}</span></p>
                         </div>
                         <div>
-                            <p className='font-bold'>Vị trí: <span className='font-medium'>{branch_id.address}</span></p>
+                            <p className='font-bold'>Vị trí: <span className='font-medium'>{branch.address}</span></p>
                             <p className='font-bold'>Diện tích: <span className='font-medium'>Thành phố</span></p>
                             <p className='font-bold'>Số giường: <span className='font-medium'>{num_of_bed}</span></p>
                             <p className='font-bold'>Diện tích: <span className='font-medium'>30m2</span></p>
@@ -59,7 +59,7 @@ export default function Room(data: any) {
                 </div>
                 <div className='mb-5 md:mb-[30px]'>
 
-                    <Link to='' className='text-normal  font-bold border-b hover:text-[#a27b49] hover:border-b-[#a27b49] transition-all duration-600'>Xem chi tiết</Link>
+                    <Link to='/' className='text-normal  font-bold border-b hover:text-[#a27b49] hover:border-b-[#a27b49] transition-all duration-600'>Xem chi tiết</Link>
                 </div>
             </div>
         </div>
