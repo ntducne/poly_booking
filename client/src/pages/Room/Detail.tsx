@@ -11,21 +11,21 @@ import {
 } from "tw-elements";
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetDetialQuery, useGetRoomsQuery } from '../../api/Room'
-import { log } from 'console'
+
 
 initTE({ Rating });
 
 
 
 const Detail = () => {
-    const navigate = useNavigate()
-    const { id } = useParams()
-    console.log(id)
-    const { data } = useGetDetialQuery(id)
-    console.log(data);
-    console.log(data.data[0].id);
-    
-    const item = data?.data
+    // const navigate = useNavigate()
+    // const { id } = useParams()
+    // console.log(id)
+    // const { data } = useGetDetialQuery(id)
+    // console.log(data);
+    // console.log(data.data[0].id);
+
+    // const item = data?.data
 
     return (
         <div className='pb-[100px] '>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 export default function Room(data: any) {
-    const { name, description, area, adults, children, num_of_bed , branch_id} = data.data
+    const { name, description, area, adults, children, num_of_bed , branch} = data?.data
     console.log(data.data)
 
     return (
@@ -50,7 +50,7 @@ export default function Room(data: any) {
                             <p className='max-w-[300px]'><span className='font-normal text-desc'>{ description.length > 70 ? description?.slice(0,70) + "..." : description}</span></p>
                         </div>
                         <div>
-                            <p className='font-bold'>Vị trí: <span className='font-medium'>{branch_id.address}</span></p>
+                            <p className='font-bold'>Vị trí: <span className='font-medium'>{branch.address}</span></p>
                             <p className='font-bold'>Diện tích: <span className='font-medium'>Thành phố</span></p>
                             <p className='font-bold'>Số giường: <span className='font-medium'>{num_of_bed}</span></p>
                             <p className='font-bold'>Diện tích: <span className='font-medium'>30m2</span></p>

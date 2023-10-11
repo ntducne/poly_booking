@@ -20,11 +20,11 @@ function App() {
   return (
     <>
       <Routes>
-
+s
         <Route path='/' element={<LayoutClient />}>
           <Route index element={<Home />} />
-          <Route path='/client/room' element={<Rooms />} />
-          <Route path="client/room/:id" element={<Detail />} />
+          <Route path='rooms' element={<Rooms />} />
+          <Route path="detial/:id" element={<Detail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
           <Route path="about" element={<AboutPage />} />
