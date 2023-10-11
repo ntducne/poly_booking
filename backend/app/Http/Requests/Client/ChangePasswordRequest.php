@@ -9,13 +9,8 @@ class ChangePasswordRequest extends Request
     public function rules()
     {
         return [
-            //
+            'password' => ['required', 'string', 'min:8'],
         ];
     }
-    public function attributes()
-    {
-        return [
-           //
-        ];
-    }
+
 }
