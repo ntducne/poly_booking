@@ -1,15 +1,42 @@
 // import React from 'react'
-import { Form, Input } from 'antd';
+import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
+import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../api/Auth';
+import { useAppDispatch } from '../../app/hooks';
+import { getUser } from '../../slices/User';
 
 type Props = {}
 
 export default function Login({ }: Props) {
+    const navigate = useNavigate()
+    const [Login] = useLoginMutation()
+    const dispatch = useAppDispatch()
+
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
         console.log('Dữ liệu biểu mẫu:', values);
         // Thực hiện logic đăng nhập ở đây
+        if (values) {
+            Login(values).unwrap().then((values: any) => {
+                const valuesUser = {
+                    accessToken: values.accessToken,
+                    ...values.user
+                }
+                // form.resetFields(); // Đặt lại trạng thái của mẫu sau khi đăng nhập thành công
+                console.log('loginSuccess');
+                dispatch(getUser(valuesUser))
+                message.success("Đăng nhập thành công");
+                setTimeout(() => {
+                    navigate('/')
+
+                }, 1000);
+            }).catch((error: any) => {
+                console.log(error);
+                message.error(error?.values?.message || "some thing error");
+            })
+        }
     };
 
     return (
