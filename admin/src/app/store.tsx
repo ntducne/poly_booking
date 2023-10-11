@@ -12,6 +12,8 @@ import {
     persistStore,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import authApi, { authReducer } from '../api/auth';
+import userSlicer from '../Slices/Auth'
 
 const persistConfig = {
     key: 'root',
@@ -23,6 +25,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
        // [api.something] : appendFile.reducer
+       [authApi.reducerPath]: authReducer,
+       user: userSlicer
 })
    
 
@@ -37,6 +41,7 @@ const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }) //.concat(...middlewares)
+        .concat(authApi.middleware)
 
 })
 
