@@ -11,6 +11,7 @@ import Detail from "./pages/Room/Detail"
 import RoomBooked from "./pages/RoomBooked"
 import Rooms from "./pages/Rooms"
 import Contact from "./pages/contact"
+import Demo from "./pages/demo"
 
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="forGotPassword" element={<ForgotPassword />} />
         </Route>
+
+         <Route path="demo" element={<Demo/>}/>
       </Routes>
     </>
   )

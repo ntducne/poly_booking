@@ -13,5 +13,10 @@ class RoomImage extends Model
         'room_id',
         'image',
     ];
+    protected $hidden = [
+        'room_id',
+        'created_at',
+        'updated_at',
+    ];
 
 }

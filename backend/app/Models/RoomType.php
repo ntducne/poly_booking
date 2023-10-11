@@ -18,5 +18,10 @@ class RoomType extends Eloquent
         'deleted_at' => null,
         'status' => 0
     ];
+    protected $hidden = [
+        'deleted_at',
+        'created_at',
+        'updated_at',
+    ];
 }
 
