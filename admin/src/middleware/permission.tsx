@@ -1,6 +1,6 @@
 import { cookies } from "../config/cookies"
 export const permission = () => { 
-    const userPermissions = JSON.parse(cookies().Get('AuthUser') as any)[3];
+    const userPermissions = JSON.parse(cookies().Get('permission') as any);
     if(!userPermissions) {
         window.location.href = '/login';
     }
