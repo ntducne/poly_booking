@@ -1,7 +1,6 @@
-import React from "react";
-import { Button, Image, Space, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import {  Checkbox, Collapse, Image, Modal, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
@@ -9,14 +8,51 @@ interface DataType {
   age: number;
   address: string;
 }
-// import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../../component/formSearch";
-// import swal , { } from "sweetalert";
 import Page from "../../../../component/page";
 
 const ListAdmin = () => {
- 
+  const [valuePermission, setPermission] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://api.polydevhotel.site/api/permission');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setPermission(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const items = valuePermission.map((item :any, index) => ({
+    key: `${index}`,
+    label: item.label,
+    children: (
+      <>
+        {item.permissions.map((permission :any, index :number) => {
+          const key = Object.keys(permission)[0];
+          const value = permission[key];
+          return (
+            <Checkbox key={index}>{value}</Checkbox>
+          );
+        })}
+      </>
+    ),
+  }));
   const columns: ColumnsType<any> = [
     {
       title: "ID Người dùng",
@@ -87,28 +123,17 @@ const ListAdmin = () => {
       key: "role",
     },
     {
-      title: "Action",
-      dataIndex: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button type="primary" 
-          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
-          >
-            <Link to={`/admin/${record?.key}`}>
-              <AiOutlineEdit />
-            </Link>
-          </Button>
-          {/* <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            style={{ backgroundColor: "#e23428" }}
-          >
-            <MdDeleteForever />
-          </Button> */}
-        </Space>
-      ),
-      // fixed: "right",
-    },
+      title: 'Hành động', key: 'action', render: () => (
+        <>
+          <button type="button"  onClick={showModal} className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center">Quyền</button>
+          <Link to="/role/edit" className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-brfont-medium rounded-lg text-sm px-5 py-2.5 text-center ml-1">Sửa</Link>&nbsp;
+          <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2">Xoá</button>
+          <Modal title="Danh sách quyền" open={isModalOpen} onCancel={handleCancel} footer={[]} style={{ minWidth: '60%' }}>
+            <Collapse ghost items={items} />
+          </Modal>
+        </>
+      )
+  },
   ];
 
   const data :any = [

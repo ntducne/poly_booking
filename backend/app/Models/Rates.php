@@ -9,7 +9,7 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 class Rates extends Eloquent
 {
     use HasFactory, SoftDeletes;
-    // protected $table = "rates";
+     protected $table = "rates";
     protected $fillable = [
         'user_id',
         'content',
@@ -21,5 +21,11 @@ class Rates extends Eloquent
     ];
     protected $attributes = [
         'deleted_at' => null
+    ];
+    protected $hidden = [
+        'deleted_at',
+        'room_id',
+        'created_at',
+        'updated_at',
     ];
 }
