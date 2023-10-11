@@ -1,4 +1,7 @@
+
 import HeroSlide from '../../components/HeroSlide'
+
+
 
 const Contact = () => {
     return (

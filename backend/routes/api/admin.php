@@ -23,11 +23,11 @@ Route::resource('utilities', UtilitiesController::class);
 Route::resource('users', UserController::class);
 
 // nhân sự
-Route::resource('personnel', AdminController::class);
-Route::post('personnel/assignPermission', [AdminController::class, 'assignPermission']);
+Route::resource('staffs', AdminController::class);
+Route::post('staffs/assignPermission', [AdminController::class, 'assignPermission']);
 
 // đánh gía
-Route::resource('rate', RatesController::class);
+Route::resource('rates', RatesController::class);
 
 // chính sách hủy
 Route::resource('cancel-policies', CancellationPolicyController::class);
@@ -39,7 +39,7 @@ Route::resource('promotions', PromotionController::class);
 Route::resource('services', ServicesController::class);
 
 // đặt phòng + chi tiết đặt phòng
-Route::resource('booking', BookingController::class);
+Route::resource('bookings', BookingController::class);
 
 // phòng
 Route::prefix('/rooms')->group(function () {

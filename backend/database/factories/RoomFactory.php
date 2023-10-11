@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Branch;
+use App\Models\RoomType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,13 +19,14 @@ class RoomFactory extends Factory
     public function definition()
     {
         return [
-            'room_type_id' => '64ec0bced418b71645087d32',
+            'room_type_id' => RoomType::orDerBy('id', 'desc')->first()->id,
             'room_name' => fake()->name(),
             'name' => fake()->name(),
             // tên phòng
             'area' => fake()->numberBetween($min = 20, $max = 100) . 'm2',
             // diện tích
-            'num_of_people' => 10,
+            'adults' => fake()->numberBetween($min = 1, $max = 3), // số người lớn
+            'children' => fake()->numberBetween($min = 0, $max = 2),
             // số người
             // 'room_type_id' => '64ec0bced418b71645087d32', // loại phòng
             'pay_upon_check_in' => true,
@@ -32,7 +35,6 @@ class RoomFactory extends Factory
             // mô tả
             'discount' => fake()->numberBetween($min = 100000, $max = 300000),
             // giảm giá
-            'status' => 0,
             // trạng thái  0:trong 1:co ng
             'policies_and_information' => [
                 'check_in_time' => '14:00',
@@ -41,8 +43,8 @@ class RoomFactory extends Factory
                 // giờ trả phòng
             ],
             'num_of_bed' => fake()->numberBetween($min = 1, $max = 3),
-            'bed_size' => 2 ,
-            'branch_id' => '64ec0bced418b71645087d32'
+            'bed_size' => 2,
+            'branch_id' => Branch::orDerBy('id', 'desc')->first()->id,
         ];
     }
 }
