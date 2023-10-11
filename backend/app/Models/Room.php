@@ -11,7 +11,8 @@ class Room extends Eloquent
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'area',
-        'num_of_people',
+        'adults',
+        'children',
         'room_type_id',
         'pay_upon_check_in',
         'description',
@@ -22,10 +23,10 @@ class Room extends Eloquent
         'bed_size',
         'branch_id',
         'name',
-        'images'
     ];
     protected $attributes = [
         'deleted_at' => null,
+        'status' => 0
     ];
 
     public function getRate()

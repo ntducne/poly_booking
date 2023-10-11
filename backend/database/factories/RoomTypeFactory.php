@@ -13,7 +13,6 @@ class gitRoomTypeFactory extends Factory
             'name' => fake()->name(),
             'description'=>fake()->text(),
             'price_per_night' => fake()->numberBetween($min = 100000,$max = 300000),
-            'status' => null,
          ];
     }
 }

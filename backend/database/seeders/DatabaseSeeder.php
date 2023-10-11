@@ -4,70 +4,24 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Branch;
+use App\Models\Rates;
+use App\Models\Room;
+use App\Models\RoomImage;
+use App\Models\RoomType;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
-    private array $branches;
 
     public function __construct()
     {
-        $this->branches = [
-            [
-                'name' => 'PolyDev Hotel Quang Ninh',
-                'address' => 'Quang Ninh',
-                'phone' => '0123456789'
-            ],
-            [
-                'name' => 'PolyDev Hotel Ha Noi',
-                'address' => 'Ha Noi',
-                'phone' => '0123456789'
-            ],
-            [
-                'name' => 'PolyDev Hotel Hai Phong',
-                'address' => 'Hai Phong',
-                'phone' => '0123456789'
-            ],
-            [
-                'name' => 'PolyDev Hotel Da Nang',
-                'address' => 'Da Nang',
-                'phone' => '0123456789'
-            ],
-            [
-                'name' => 'PolyDev Hotel Ho Chi Minh',
-                'address' => 'Ho Chi Minh',
-                'phone' => '0123456789'
-            ],
-            [
-                'name' => 'PolyDev Hotel Can Tho',
-                'address' => 'Can Tho',
-                'phone' => '0123456789'
-            ],
-            [
-                'name' => 'PolyDev Hotel Nha Trang',
-                'address' => 'Nha Trang',
-                'phone' => '0123456789'
-            ],
-            [
-                'name' => 'PolyDev Hotel Da Lat',
-                'address' => 'Da Lat',
-                'phone' => '0123456789'
-            ],
-            [
-                'name' => 'PolyDev Hotel Vung Tau',
-                'address' => 'Vung Tau',
-                'phone' => '0123456789'
-            ],
-            [
-                'name' => 'PolyDev Hotel Phu Quoc',
-                'address' => 'Phu Quoc',
-                'phone' => '0123456789'
-            ]
-        ];
     }
 
     public function run(): void
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
 //        RoomType::factory($this->num_seed)->create();
 //        Room::factory($this->num_seed)->create();
@@ -79,6 +33,11 @@ class DatabaseSeeder extends Seeder
 //         CancellationPolicy::factory($this->num_seed)->create();
         foreach ($this->branchs as $branch) {
 =======
+=======
+        $this->call([
+            BranchSeeder::class,
+        ]);
+>>>>>>> bf4a1ca3958bf8433a93a8f2c4b15e65c18dbf7a
         Admin::create([
             'name' => 'Super Admin',
             'email' => 'superadmin@gmail.com',
@@ -87,10 +46,25 @@ class DatabaseSeeder extends Seeder
             'branch_id' => 'all',
             'role' => 0,
         ]);
+<<<<<<< HEAD
         foreach ($this->branches as $branch) {
 >>>>>>> c1432f29fcbd9bfb1fdcc7ac75235c8d701fcf2a
             Branch::create($branch);
         }
 //        createPermission();
+=======
+        User::create([
+            'name' => 'User',
+            'email' => 'user@gmail.com',
+            'password' => bcrypt('Polydev@123'),
+            'phone' => '0123456789',
+            'address' => 'Hà Nội',
+        ]);
+        create_permision();
+        RoomType::factory()->count(1)->create();
+        Room::factory()->count(1)->create();
+        Rates::factory()->count(1)->create();
+        RoomImage::factory()->count(5)->create();
+>>>>>>> bf4a1ca3958bf8433a93a8f2c4b15e65c18dbf7a
     }
 }

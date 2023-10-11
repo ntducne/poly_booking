@@ -35,12 +35,12 @@ class LoginController extends Controller
             ]);
         }
         $user = Auth::guard($guard)->user();
-        if ($user->status == 0){
+        if ($user->status == 0) {
             $this->removeUser($user->id);
-            $tokenResult = $user->createToken(ucfirst($guard).' Access Token',[ $request->segment(2) ]);
+            $tokenResult = $user->createToken(ucfirst($guard) . ' Access Token', [$request->segment(2)]);
             $token = $tokenResult->token;
             $token->save();
-            return response()->json([
+            $response = [
                 'status'        => true,
                 'user'          => [
                     'image' => $user->image,
@@ -49,10 +49,13 @@ class LoginController extends Controller
                 'accessToken'   => [
                     'token'         => $tokenResult->accessToken,
                     'expires_at'    => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
-                ]
-            ]);
-        }
-        else {
+                ],
+            ];
+            if ($guard == 'admin') {
+                $response['permission'] = $user->getAllPermission();
+            }
+            return response()->json($response);
+        } else {
             return response()->json([
                 'status'    => false,
                 'message'   => 'Tài khoản của bạn đã bị khóa !'
@@ -78,5 +81,4 @@ class LoginController extends Controller
         $this->removeUser($user_id);
         return response()->json(['status' => true, 'msg' => 'Bạn đã đăng xuất !']);
     }
-
 }

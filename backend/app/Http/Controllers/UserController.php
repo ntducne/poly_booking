@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RateRoom\RateStoreRequest;
 use App\Http\Resources\UserResource;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\RateRoom;
 use App\Models\Room;
-use app\Repositories\UserRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class UserController extends Controller

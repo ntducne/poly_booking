@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Support\Facades\Storage;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-class RoomImage extends Eloquent
+use Jenssegers\Mongodb\Eloquent\Model;
+
+class RoomImage extends Model
 {
     use HasFactory;
     public $timestamps = false;
