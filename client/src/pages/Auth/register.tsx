@@ -10,7 +10,6 @@ export default function Register({ }: Props) {
     const [register] = useRegisterMutation()
     const navigate = useNavigate()
 
-
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
@@ -52,6 +51,13 @@ export default function Register({ }: Props) {
     const validatePhoneNumber = (_: any, value: any) => {
         if (!phonePattern.test(value)) {
             return Promise.reject('Số điện thoại không hợp lệ!');
+        }
+        return Promise.resolve();
+    };
+
+    const confirmPasswordValidator = (_: any, value: any) => {
+        if (value && value !== form.getFieldValue('password')) {
+            return Promise.reject('Không trùng khớp với mật khẩu.');
         }
         return Promise.resolve();
     };
@@ -144,7 +150,10 @@ export default function Register({ }: Props) {
                                                             rules={[
                                                                 {
                                                                     required: true,
-                                                                    message: 'Vui lòng nhập họ!',
+                                                                    message: 'Vui lòng xác nhận mật khẩu!',
+                                                                },
+                                                                {
+                                                                    validator: confirmPasswordValidator,
                                                                 },
                                                             ]}>
                                                             <Input className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
