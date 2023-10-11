@@ -14,10 +14,13 @@ const roomApi = createApi({
     endpoints: (builder) =>({
         getRooms: builder.query<any, any>({
             query: () => `/client/room`
+        }),
+        getDetial: builder.query<any, any>({
+            query: (id) => `/client/room/${id}`
         })
     })
 })
 
-export const {useGetRoomsQuery} = roomApi
+export const {useGetRoomsQuery, useGetDetialQuery} = roomApi
 export const roomReducer = roomApi.reducer
 export default roomApi

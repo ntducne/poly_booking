@@ -6,13 +6,15 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useLoginMutation } from '../../api/auth';
 import { signin } from '../../Slices/Auth';
+import { cookies } from '../../config/cookies';
+
 
 type Props = {}
 
 export default function LoginAdmin({ }: Props) {
     const [form] = Form.useForm();
     const [Login] = useLoginMutation()
-    const data = useAppSelector(state => state.user)
+    const data = useAppSelector((state: { user: any; }) => state.user)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     useEffect(() => {
@@ -36,6 +38,7 @@ export default function LoginAdmin({ }: Props) {
                 return message.error(data.data.message || 'error')
             }
             dispatch(signin(dataUser))
+            cookies().Set('AuthUser', JSON.stringify(Object.values(data.data)), 1000*60*60*24*30)
             message.success("Đăng nhập thành công")
         } catch (error) {
 

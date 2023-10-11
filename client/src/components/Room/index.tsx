@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom'
 
 
 export default function Room(data: any) {
+<<<<<<< HEAD
     const { name, description, area, adults, children, num_of_bed , branch} = data.data
     console.log(data.data);
     
+=======
+    const { name, description, area, adults, children, num_of_bed , branch} = data?.data
+    console.log(data.data)
+
+>>>>>>> 771b59d813aaa7b06800543d4c034732a2029f48
     return (
         <div className='bg-bgr group overflow-hidden'>
             <div className='overflow-hidden'>
