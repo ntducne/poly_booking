@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../api/Auth';
 import { useAppDispatch } from '../../app/hooks';
 import { getUser } from '../../slices/User';
+import { log } from 'console';
 
 type Props = {}
 
@@ -24,6 +25,8 @@ export default function Login({ }: Props) {
                     accessToken: values.accessToken,
                     ...values.user
                 }
+                console.log('aa:', values);
+
                 // form.resetFields(); // Đặt lại trạng thái của mẫu sau khi đăng nhập thành công
                 console.log('loginSuccess');
                 dispatch(getUser(valuesUser))
