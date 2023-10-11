@@ -13,6 +13,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import roomApi, { roomReducer } from '../api/Room';
+import authApi, { authReducer } from '../api/Auth';
 
 const persistConfig = {
     key: 'root',
@@ -23,14 +24,16 @@ const persistConfig = {
 
 
 const rootReducer = combineReducers({
-    [roomApi.reducerPath]: roomReducer
+    [roomApi.reducerPath]: roomReducer,
+    [authApi.reducerPath]: authReducer
 })
 
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const middlewares = [
-    roomApi.middleware
+    roomApi.middleware,
+    authApi.middleware
 ]
 
 const store = configureStore({
