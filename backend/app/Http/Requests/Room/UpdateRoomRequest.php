@@ -2,6 +2,7 @@
 
 namespace app\Http\Requests\Room;
 
+use App\Enums\StatusEnum;
 use App\Http\Requests\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Branch;
@@ -14,26 +15,25 @@ class UpdateRoomRequest extends Request
     {
         return [
             'area' => ['required', 'numeric', 'min:0'],
-            'num_of_people' => ['required','numeric', 'min:0'],
-            'room_type_id' => ['required', 'string',
-                Rule::exists(RoomType::class, 'id')],
+            'adults' => ['required','numeric', 'min:0'],
+            'children' => ['required','numeric', 'min:0'],
+            'room_type_id' => ['required', 'string', Rule::exists(RoomType::class, 'id')],
             'pay_upon_check_in' => ['required'],
-            'description' => ['required', 'string'],
-            'discount'    => ['required', 'numeric', 'min:0'],
-            'status'      => ['required'],
+            'description' => ['nullable', 'string'],
+            'discount'    => ['nullable', 'numeric', 'min:0'],
+            'status'      => ['bail','required','integer', Rule::in(StatusEnum::asArray()),],
             'num_of_bed'  => ['required', 'numeric', 'min:0'],
             'bed_size'    => ['required', 'numeric', 'min:0'],
-            'branch_id'   => ['required','string',
-                Rule::exists(Branch::class, 'id')],
-            'name'        => ['required', 'string',
-                Rule::unique(Room::class, 'name')->ignore($this->room, $this->column_id)],
+            'branch_id'   => ['required','string', Rule::exists(Branch::class, 'id')],
+            'name'        => ['required', 'string', Rule::unique(Room::class, 'name')->ignore($this->room, $this->column_id)],
         ];
     }
     public function attributes()
     {
         return [
             'area' => "Diện tích phòng",
-            'num_of_people' => "Số người trên một phòng",
+            'adults' => "Số người lớn",
+            'children' => "Số trẻ em",
             'room_type_id' => "Loại phòng",
             'pay_upon_check_in' => "Thanh toán khi nhận phòng",
             'description' => 'Mô tả ',

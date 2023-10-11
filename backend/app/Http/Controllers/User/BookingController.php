@@ -19,6 +19,7 @@ class BookingController extends Controller
         $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->get(); //tra ve du lieu phong ma khach muon dat
         //dat phong
         $param = $request->except(['soLuong', 'room_id', 'branch_id']);
+        $param['booking_date'] = date("Y-m-d");
         $price_per_night = 100000;
         $param['price_per_night'] = ($price_per_night == null ? 100000 : $price_per_night);
         $create = $booking->create($param);
