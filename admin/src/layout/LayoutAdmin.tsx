@@ -1,11 +1,11 @@
 import React, { createContext, useState } from "react";
-import { PieChartOutlined } from "@ant-design/icons";
+import { MenuOutlined, PieChartOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme } from "antd";
+import { Button, Layout, Menu, theme } from "antd";
 import { Link, Outlet } from "react-router-dom";
 import Head from "../component/header";
 import Footer from "../component/footer";
-import { ToastContainer } from "react-toastify"
+import { ToastContainer } from "react-toastify";
 const { Header, Content, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -37,8 +37,7 @@ import {
 } from "react-icons/ai";
 import { BsBuildingFillCheck } from "react-icons/bs";
 import { BiSolidBed } from "react-icons/bi";
-import 'react-toastify/dist/ReactToastify.css';
-
+import "react-toastify/dist/ReactToastify.css";
 
 export const LayoutContext = createContext("");
 
@@ -161,6 +160,10 @@ const LayoutAdmin = () => {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const toggleSider = () => {
+    setCollapsed(!collapsed);
+  };
+
   const [title, setTitle] = useState("Dashboard");
 
   const handleTitleChange = (title: any) => {
@@ -172,9 +175,12 @@ const LayoutAdmin = () => {
       <Layout style={{ minHeight: "100vh" }}>
         <Sider
           theme="light"
+          breakpoint="xs"
+          collapsedWidth="70"
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
+          className={collapsed ? '!fixed z-10' : ''}
         >
           {/* <div className="demo-logo-vertical" /> */}
           <img
@@ -192,10 +198,17 @@ const LayoutAdmin = () => {
         </Sider>
         <Layout>
           <Header
-            className="p-6"
+            className="flex items-center p-6"
             style={{ padding: 0, background: colorBgContainer }}
           >
-            <Head />
+            {/* <Button
+              className="flex-none ml-4 w-5"
+              icon={<MenuOutlined />}
+              onClick={toggleSider}
+            /> */}
+            <div className="flex-initial w-full">
+              <Head />
+            </div>
           </Header>
           <Content style={{ margin: "16px" }}>
             {/* <div
