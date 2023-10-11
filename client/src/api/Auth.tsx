@@ -18,7 +18,8 @@ const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_URL_API,
         prepareHeaders: (headers) => {
-            const token = localStorage.getItem("access_token");
+            // localStorage.getItem("access_token");
+            const token = Object.fromEntries(new URLSearchParams(document.cookie));
             headers.set("authorization", `Bearer ${token}`)
             // modify header theo từng request
             return headers;

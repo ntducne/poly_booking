@@ -6,6 +6,7 @@ import { useLoginMutation } from '../../api/Auth';
 import { useAppDispatch } from '../../app/hooks';
 import { getUser } from '../../slices/User';
 import { log } from 'console';
+import { useCookies } from 'react-cookie';
 
 type Props = {}
 
@@ -13,8 +14,10 @@ export default function Login({ }: Props) {
     const navigate = useNavigate()
     const [Login] = useLoginMutation()
     const dispatch = useAppDispatch()
-
     const [form] = Form.useForm();
+
+    // Sử dụng hook useCookies
+    const [, setCookie] = useCookies(['userInfo']);
 
     const onFinish = (values: any) => {
         console.log('Dữ liệu biểu mẫu:', values);
@@ -27,13 +30,14 @@ export default function Login({ }: Props) {
                 }
                 console.log('aa:', values);
 
-                // form.resetFields(); // Đặt lại trạng thái của mẫu sau khi đăng nhập thành công
+                // Lưu thông tin người dùng vào cookie
+                setCookie('userInfo', valuesUser, { path: '/' });
+
                 console.log('loginSuccess');
                 dispatch(getUser(valuesUser))
                 message.success("Đăng nhập thành công");
                 setTimeout(() => {
                     navigate('/')
-
                 }, 1000);
             }).catch((error: any) => {
                 console.log(error);

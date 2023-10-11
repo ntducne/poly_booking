@@ -23,8 +23,7 @@ export default function Register({ }: Props) {
                     message.success("Đăng ký thành công");
                     setTimeout(() => {
                         navigate('/auth/login')
-
-                    }, 2000);
+                    }, 1000);
                 })
                 .catch((error) => {
                     console.log(error);
