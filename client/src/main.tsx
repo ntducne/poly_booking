@@ -7,13 +7,18 @@ import { PersistGate } from 'redux-persist/integration/react'
 import './index.css';
 import "swiper/css"
 import "swiper/css/autoplay"
+import { CookiesProvider } from "react-cookie";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
+  <CookiesProvider>
+
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <App />
       </PersistGate>
     </Provider>
+  </CookiesProvider>
+
   </BrowserRouter >
 )
