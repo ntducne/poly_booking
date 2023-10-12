@@ -1,47 +1,28 @@
-// import React from 'react'
 import { Form, Input, message } from 'antd';
 import Page from '../../component/page';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useLoginMutation } from '../../api/auth';
-import { signin } from '../../Slices/Auth';
 import { cookies } from '../../config/cookies';
 
-
-type Props = {}
-
-export default function LoginAdmin({ }: Props) {
+export default function LoginAdmin() {
     const [form] = Form.useForm();
     const [Login] = useLoginMutation()
-    const data = useAppSelector((state: { user: any; }) => state.user)
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     useEffect(() => {
-        if (data.isLogin) {
-            navigate("/")
+        const userPermissions = JSON.parse(cookies().Get('permission') as any);
+        if(userPermissions) {
+            navigate('/')
         }
-    }, [data.isLogin])
+    }, [])
 
     const onFinish = async (values: any) => {
         console.log('Success:', values);
         try {
             const data: any = await Login(values);
-
-            const dataUser = {
-                accessToken: data?.data?.accessToken,
-                ...data?.data?.user,
-                permission: data?.data?.permission,
-            }
-            if (data.data?.message) {
-                console.log(data)
-                return message.error(data.data.message || 'error')
-            }
-            dispatch(signin(dataUser))
             cookies().Set('AuthUser', JSON.stringify(Object.values(data.data)), 1000*60*60*24*30)
             message.success("Đăng nhập thành công")
         } catch (error) {
-
             console.log(error);
         }
     };
@@ -127,7 +108,6 @@ export default function LoginAdmin({ }: Props) {
                     </div>
                 </section>
             </div>
-
         </Page>
     )
 }
