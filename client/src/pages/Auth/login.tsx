@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../api/Auth';
 import { useAppDispatch } from '../../app/hooks';
 import { getUser } from '../../slices/User';
-import { log } from 'console';
 import { useCookies } from 'react-cookie';
 
 type Props = {}
@@ -15,7 +14,6 @@ export default function Login({ }: Props) {
     const [Login] = useLoginMutation()
     const dispatch = useAppDispatch()
     const [form] = Form.useForm();
-
     // Sử dụng hook useCookies
     const [, setCookie] = useCookies(['userInfo']);
 
@@ -28,17 +26,22 @@ export default function Login({ }: Props) {
                     accessToken: values.accessToken,
                     ...values.user
                 }
-                console.log('aa:', values);
+                console.log('Thông tin người dùng:', values);
 
-                // Lưu thông tin người dùng vào cookie
-                setCookie('userInfo', valuesUser, { path: '/' });
+                if (values.accessToken && values.user) {
+                    // Lưu thông tin người dùng vào cookie
+                    setCookie('userInfo', valuesUser, { path: '/' });
 
-                console.log('loginSuccess');
-                dispatch(getUser(valuesUser))
-                message.success("Đăng nhập thành công");
-                setTimeout(() => {
-                    navigate('/')
-                }, 1000);
+                    console.log('loginSuccess');
+                    dispatch(getUser(valuesUser))
+                    message.success("Đăng nhập thành công");
+                    setTimeout(() => {
+                        navigate('/')
+                    }, 1000);
+                } else {
+                    console.log('Lỗi xác thực, không thể đăng nhập');
+                    message.error("Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại.");
+                }
             }).catch((error: any) => {
                 console.log(error);
                 message.error(error?.values?.message || "some thing error");

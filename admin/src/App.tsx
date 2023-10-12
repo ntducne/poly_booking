@@ -42,7 +42,6 @@ import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
 import Demo from "./pages/demo";
 
-
 function App() {
   return (
     <>

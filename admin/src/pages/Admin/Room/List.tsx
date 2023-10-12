@@ -35,9 +35,9 @@ const ListRoom = () => {
             src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg"
           />
           <div className="ml-3 text-gray-500">
-            <p>#68e365 {record?.key}</p>
+            <p>#68e365 {record?.name}</p>
             <p>2 giường ngủ</p>
-            <p>{record?.key}</p>
+            {/* <p>{record?.key}</p> */}
           </div>
         </div>
       ),

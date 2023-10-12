@@ -1,44 +1,36 @@
-// import React from 'react'
-import { Form, Input, message } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import Page from '../../component/page';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useLoginMutation } from '../../api/auth';
-import { signin } from '../../Slices/Auth';
+import { cookies } from '../../config/cookies';
+import { useState } from 'react';
 
-type Props = {}
-
-export default function LoginAdmin({ }: Props) {
+export default function LoginAdmin() {
+    const userPermissions = JSON.parse(cookies().Get('AuthUser') as any);
+    if(userPermissions) {
+        return <Navigate to='/' />
+    }
     const [form] = Form.useForm();
     const [Login] = useLoginMutation()
-    const data = useAppSelector(state => state.user)
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    useEffect(() => {
-        if (data.isLogin) {
-            navigate("/")
-        }
-    }, [data.isLogin])
-
+    const [is_loading, setIsLoading] = useState(false)
+    
     const onFinish = async (values: any) => {
-        console.log('Success:', values);
         try {
+            setIsLoading(true)
             const data: any = await Login(values);
-
-            const dataUser = {
-                accessToken: data?.data?.accessToken,
-                ...data?.data?.user,
-                permission: data?.data?.permission,
+            const response = data.data
+            console.log(response);
+            if(response.status === false) {
+                message.error(response.message)
+                setIsLoading(false)
             }
-            if (data.data?.message) {
-                console.log(data)
-                return message.error(data.data.message || 'error')
+            if(response.status === true) {
+                message.success('Đăng nhập thành công')
+                cookies().Set('AuthUser', JSON.stringify(Object.values(response.data)), response.accessToken.expires_at)
+                navigate('/')
             }
-            dispatch(signin(dataUser))
-            message.success("Đăng nhập thành công")
         } catch (error) {
-
             console.log(error);
         }
     };
@@ -112,11 +104,9 @@ export default function LoginAdmin({ }: Props) {
                                         </Form.Item>
                                     </div>
                                     <div className="text-small lg:text-left">
-                                        <button
-                                            className='bg-primary w-[100px] lg:h-full md:h-full active:bg-black justify-center flex items-center border rounded-[5px] transition-transform transform hover:scale-95'
-                                        >
-                                            <p className='text-white p-2'>Đăng nhập</p>
-                                        </button>
+                                        <Button htmlType="submit" type="primary" loading={is_loading} className='bg-primary w-[200px] lg:h-full md:h-full active:bg-black justify-center flex items-center border rounded-[5px] transition-transform transform hover:scale-95'>
+                                            {is_loading ? 'Đang đăng nhập' : 'Đăng nhập'}
+                                        </Button>
                                     </div>
                                 </Form>
                             </div>
@@ -124,7 +114,6 @@ export default function LoginAdmin({ }: Props) {
                     </div>
                 </section>
             </div>
-
         </Page>
     )
 }

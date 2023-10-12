@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Client\ChangePasswordRequest;
+use App\Http\Requests\Client\UpdateAvatarRequest;
+use App\Http\Requests\Client\UpdateProfileRequest;
+use App\Http\Requests\RateRoom\RateStoreRequest;
 use App\Http\Resources\UserResource;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\RateRoom;
 use App\Models\Room;
-use app\Repositories\UserRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -29,21 +33,21 @@ class UserController extends Controller
             'message' => $request->user(),
         ], 200);
     }
-    public function updateAvatar(Request $request){
+    public function updateAvatar(UpdateAvatarRequest $request){
         $this->userRepository->updateAvatar($request, $request->user()->id);
         return response()->json([
             'message' => 'Update avatar successfully',
             'data'    => $request->user()
         ], 200);
     }
-    public function updateProfile(Request $request){
+    public function updateProfile(UpdateProfileRequest $request){
         $this->userRepository->updateProfile($request, $request->user()->id);
         return response()->json([
             'message' => 'Update profile successfully',
             'data'    => $request->user()
         ], 200);
     }
-    public function changePassword(Request $request){
+    public function changePassword(ChangePasswordRequest $request){
         $this->userRepository->updatePassword($request, $request->user()->id);
         return response()->json([
             'message' => 'Change password successfully',
