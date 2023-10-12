@@ -176,11 +176,11 @@ const LayoutAdmin = () => {
         <Sider
           theme="light"
           breakpoint="xs"
-          collapsedWidth="70"
+          collapsedWidth="1"
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
-          className={collapsed ? '!fixed z-10' : ''}
+          className={(!collapsed ? 'fixed z-10' : '') + ' h-screen'}
         >
           {/* <div className="demo-logo-vertical" /> */}
           <img
@@ -196,16 +196,17 @@ const LayoutAdmin = () => {
             items={items}
           />
         </Sider>
-        <Layout>
+        {!collapsed ? <div className='fixed top-0 right-0 z-[1] w-screen h-full bg-[rgba(0,0,0,0.1)] md:hidden md:opacity-0 md:invisible'></div> : ''}
+        <Layout className={!collapsed ? 'md:pl-[200px]' : ''}>
           <Header
-            className="flex items-center p-6"
+            className="flex items-center p-5"
             style={{ padding: 0, background: colorBgContainer }}
           >
-            {/* <Button
-              className="flex-none ml-4 w-5"
+            <Button
+              className="flex-none w-8"
               icon={<MenuOutlined />}
               onClick={toggleSider}
-            /> */}
+            />
             <div className="flex-initial w-full">
               <Head />
             </div>

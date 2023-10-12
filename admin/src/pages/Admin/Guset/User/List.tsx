@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Image, Space, Table } from "antd";
+import { Image, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";

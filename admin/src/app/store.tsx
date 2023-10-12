@@ -13,7 +13,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authApi, { authReducer } from '../api/auth';
-// import userSlicer from '../Slices/Auth'
+import userSlicer from '../Slices/Auth'
 import { usersApi } from '../api/account/users';
 import  { staffsApi } from '../api/account/staffs';
  '../api/account/staffs';
@@ -31,6 +31,7 @@ const rootReducer = combineReducers({
        [authApi.reducerPath]: authReducer,
        [usersApi.reducerPath]: usersApi.reducer,
        [staffsApi.reducerPath]: staffsApi.reducer,
+       user: userSlicer
 })
    
 
