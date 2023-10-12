@@ -55,10 +55,5 @@ Route::prefix('/rooms')->group(function () {
     // loại phòng
     Route::resource('types', RoomTypeController::class)->except(['create','edit']);
     // danh sách phòng
-<<<<<<< HEAD
-    Route::resource('', RoomController::class);
-});
-=======
     Route::resource('', RoomController::class)->except(['create','edit']);
 });
->>>>>>> 10acdd4902e5bba231e88c88b00278b8f4a7dfc3

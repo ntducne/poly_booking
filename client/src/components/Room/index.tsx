@@ -48,11 +48,7 @@ export default function Room(data: any) {
                             <p className='max-w-[300px]'><span className='font-normal text-desc'>{description.length > 70 ? description?.slice(0, 70) + "..." : description}</span></p>
                         </div>
                         <div>
-<<<<<<< HEAD
-                            <p className='font-bold'>Vị trí: <span className='font-medium'>{branch.address}</span></p>
-=======
                             <p className='font-bold'>Vị trí: <span className='font-medium'>{branch?.address}</span></p>
->>>>>>> 10acdd4902e5bba231e88c88b00278b8f4a7dfc3
                             <p className='font-bold'>Diện tích: <span className='font-medium'>Thành phố</span></p>
                             <p className='font-bold'>Số giường: <span className='font-medium'>{num_of_bed}</span></p>
                             <p className='font-bold'>Diện tích: <span className='font-medium'>30m2</span></p>

@@ -22,6 +22,7 @@ export default function LoginAdmin() {
             const data: any = await Login(values);
             cookies().Set('AuthUser', JSON.stringify(Object.values(data.data)), 1000*60*60*24*30)
             message.success("Đăng nhập thành công")
+            navigate('/')
         } catch (error) {
             console.log(error);
         }
