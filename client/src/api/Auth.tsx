@@ -12,6 +12,11 @@ interface IRegister {
     name: string
 }
 
+interface IForgotPassword {
+    email: string;
+}
+
+
 const authApi = createApi({
     reducerPath: 'auth',
     tagTypes: ['Auth'],
@@ -21,7 +26,6 @@ const authApi = createApi({
             // localStorage.getItem("access_token");
             const token = Object.fromEntries(new URLSearchParams(document.cookie));
             headers.set("authorization", `Bearer ${token}`)
-            // modify header theo từng request
             return headers;
         },
     }),
@@ -34,6 +38,7 @@ const authApi = createApi({
             }),
             invalidatesTags: ['Auth']
         }),
+
         register: builder.mutation({
             query: (data: IRegister) => ({
                 url: `/auth/user/register`,
@@ -41,11 +46,27 @@ const authApi = createApi({
                 body: data
             }),
             invalidatesTags: ['Auth']
-        })
+        }),
+
+        forgotPassword: builder.mutation({
+            query: (data: IForgotPassword) => ({
+                url: `/auth/user/reset-password`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['Auth']
+        }),
+
+        getToken: builder.query({
+            query: () => ({
+                url: `/auth/user/reset-password/{token}`,
+                method: "GET",
+            }),
+        }),
     })
 })
 
 
-export const { useLoginMutation, useRegisterMutation } = authApi
+export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery } = authApi;
 export const authReducer = authApi.reducer
 export default authApi

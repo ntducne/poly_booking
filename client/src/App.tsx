@@ -12,15 +12,16 @@ import RoomBooked from "./pages/RoomBooked"
 import Rooms from "./pages/Rooms"
 import Contact from "./pages/contact"
 import Demo from "./pages/demo"
+import ResetPassword from "./pages/Auth/reset-passwork"
+import { useGetTokenQuery } from "./api/Auth"
 
 
 function App() {
-
+  const { data } = useGetTokenQuery({});
 
   return (
     <>
       <Routes>
-
         <Route path='/' element={<LayoutClient />}>
           <Route index element={<Home />} />
           <Route path='rooms' element={<Rooms />} />
@@ -37,9 +38,14 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="forGotPassword" element={<ForgotPassword />} />
+          {/* <Route path="resetpassword" element={data && data.token ? <ResetPassword /> : <Login />} /> */}
+          <Route path="resetpassword" element={<ResetPassword />} />
+
         </Route>
 
-         <Route path="demo" element={<Demo/>}/>
+        <Route path="demo" element={<Demo />} />
+
+
       </Routes>
     </>
   )

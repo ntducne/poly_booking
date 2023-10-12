@@ -1,28 +1,28 @@
-import { Form, Input } from 'antd';
-import { useState } from 'react';
+import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
-
+import { useForgotPasswordMutation } from '../../api/Auth';
 // import './ForgotPassword.css';
 
 function ForgotPassword() {
     const [form] = Form.useForm();
-    const [showOTP, setShowOTP] = useState(false); // State để kiểm soát việc hiển thị mã OTP
+    const [ForgotPassword] = useForgotPasswordMutation(); // Lấy mutate function từ useForgotPasswordMutation
 
     const onFinish = (values: any) => {
-        if (showOTP) {
-            // Kiểm tra nếu mã OTP chỉ chứa chữ số
-            if (/^[0-9]*$/.test(values.otp)) {
-                // Xử lý khi mã OTP hợp lệ
-                // Không cần thay đổi trạng thái showOTP
-            } else {
-                // Xử lý khi mã OTP không hợp lệ (không chỉ chứa chữ số)
-                // Ví dụ: Hiển thị thông báo lỗi
-            }
-        } else {
-            setShowOTP(true); // Hiển thị trường nhập mã OTP sau khi nhấn "Gửi liên kết"
-        }
-    };
+        console.log(values);
+        const email = values.email;
 
+        // Gửi yêu cầu quên mật khẩu bằng cách sử dụng useForgotPasswordMutation
+        ForgotPassword({ email })
+            .then((response: any) => {
+                message.success('Liên kết đặt lại mật khẩu đã được gửi qua email !');
+                // Xử lý phản hồi từ máy chủ, ví dụ: hiển thị thông báo thành công
+                console.log('Yêu cầu đã được gửi thành công', response.data);
+            })
+            .catch((error: any) => {
+                // Xử lý lỗi, ví dụ: hiển thị thông báo lỗi
+                console.error('Lỗi khi gửi yêu cầu', error);
+            });
+    };
 
     return (
         <Page title='Quên mật khẩu'>
@@ -58,36 +58,11 @@ function ForgotPassword() {
                                             </Form.Item>
                                         </div>
 
-                                        {showOTP && ( // Hiển thị trường nhập mã OTP nếu showOTP là true
-                                            <div className="relative mb-6" data-te-input-wrapper-init>
-                                                <Form.Item
-                                                    name="otp"
-                                                    label={<span className="text-gray-500 text-small">Mã OTP</span>}
-                                                    rules={[
-                                                        {
-                                                            required: true,
-                                                            message: 'Vui lòng nhập mã OTP!',
-                                                        },
-                                                        {
-                                                            min: 6,
-                                                            message: 'Mật khẩu phải có ít nhất 6 ký tự!',
-                                                        },
-                                                        {
-                                                            pattern: /^[0-9]*$/, // Chỉ chấp nhận các chữ số
-                                                            message: 'Mã OTP phải là chữ số!',
-                                                        },
-                                                    ]}
-                                                >
-                                                    <Input className="bg-transparent border rounded w-full h-[35px]" />
-                                                </Form.Item>
-                                            </div>
-                                        )}
-
                                         <div className="text-center lg:text-left">
                                             <button
                                                 className='bg-primary w-[100px] lg:h-full active:bg-black justify-center md:h-[65px] flex items-center border rounded-[5px] transition-transform transform hover:scale-95'
                                             >
-                                                <p className='text-secondary p-2'>{showOTP ? 'Xác nhận' : 'Gửi liên kết'}</p>
+                                                <p className='text-secondary p-2'>Gửi liên kết</p>
                                             </button>
 
 
