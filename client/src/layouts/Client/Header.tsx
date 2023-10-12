@@ -48,7 +48,7 @@ export default function Header({ }: Props) {
         <div className={`${header ? "text-dark py-6" : "text-white  py-4"} flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] 
           items-center
           `}>
-          <Link to='' className='relative transition text-[16px] flex items-center gap-x-2 group'>
+          <Link to='auth/login' className='relative transition text-[16px] flex items-center gap-x-2 group'>
             <LockOutlined className='text-[15px] mb-1' />
             <span>
               Đăng nhập
