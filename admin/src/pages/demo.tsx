@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { cookies } from "../config/cookies"
-import { permission } from "../middleware/permission"
+// import { permission } from "../middleware/permission"
 export default function Demo(){
     const [token, setToken] = useState(null as any)
     // permission().checkPermission('category.index')
@@ -95,6 +95,8 @@ export default function Demo(){
                 return obj;
             }, {});
             setToken(myObject)   
+            console.log(token);
+            
         }
         
     },[])
