@@ -2,13 +2,21 @@
 import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
 import { useNavigate } from 'react-router-dom';
+import { useResetPasswordMutation } from '../../api/Auth';
 
 type Props = {}
 
 export default function ResetPassword({ }: Props) {
     const [form] = Form.useForm();
     const navigate = useNavigate()
-
+    const [resetPassword] = useResetPasswordMutation();
+    const token = new URLSearchParams(location.search).get('token'); // Lấy token từ URL
+    if (typeof token !== 'string') {
+        // Xử lý trường hợp token không hợp lệ (ví dụ: null)
+        message.error('Token không hợp lệ');
+        navigate('/auth/login');
+        return null;
+    }
 
     const passwordValidator = (_: any, value: any) => {
         if (value && value.length <= 7) {
@@ -34,17 +42,18 @@ export default function ResetPassword({ }: Props) {
     };
 
     const onFinish = (values: any) => {
-        const { password, confirmPassword } = values;
+        const { newPassword, confirmPassword } = values;
         console.log(values);
 
-        if (password === confirmPassword) {
-            // Gửi yêu cầu đặt lại mật khẩu với mật khẩu mới và mã thông báo
-            // Xử lý yêu cầu đặt lại mật khẩu trên máy chủ và xử lý kết quả
-            // Điều hướng người dùng tới trang đăng nhập sau khi hoàn thành
-            message.success('Mật khẩu đã được đặt lại thành công!');
-            setTimeout(() => {
-                navigate('/auth/login')
-            }, 1000);
+        if (newPassword === confirmPassword) {
+            resetPassword({ token, newPassword })
+                .unwrap()
+                .then(() => {
+                    message.success('Mật khẩu đã được đặt lại thành công!');
+                    setTimeout(() => {
+                        navigate('/auth/login')
+                    }, 1000);
+                })
         } else {
             // Xử lý trường hợp mật khẩu không khớp
             message.error('Mật khẩu không khớp. Vui lòng thử lại.');
@@ -71,7 +80,7 @@ export default function ResetPassword({ }: Props) {
                                 <div className="w-5/6 mx-6 md:mb-12 lg:w-5/12 xl:w-5/12 md:w-5/12">
                                     <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
                                         <div className="relative mb-6" data-te-input-wrapper-init>
-                                            <Form.Item name="password" label={<span className="text-gray-500 text-small">Password</span>}
+                                            <Form.Item name="newPassword" label={<span className="text-gray-500 text-small">Password</span>}
                                                 rules={[
                                                     {
                                                         required: true,

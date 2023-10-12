@@ -16,6 +16,11 @@ interface IForgotPassword {
     email: string;
 }
 
+interface IResetPassword {
+    token: string;
+    newPassword: string;
+}
+
 
 const authApi = createApi({
     reducerPath: 'auth',
@@ -63,10 +68,18 @@ const authApi = createApi({
                 method: "GET",
             }),
         }),
+
+        resetPassword: builder.mutation({
+            query: (data: IResetPassword) => ({
+                url: `/auth/user/reset-password/{token}`,
+                body: data,
+            }),
+            invalidatesTags: ['Auth']
+        }),
     })
 })
 
 
-export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery } = authApi;
+export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery, useResetPasswordMutation } = authApi;
 export const authReducer = authApi.reducer
 export default authApi

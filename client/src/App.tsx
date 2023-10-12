@@ -38,8 +38,8 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="forGotPassword" element={<ForgotPassword />} />
-          {/* <Route path="resetpassword" element={data && data.token ? <ResetPassword /> : <Login />} /> */}
-          <Route path="resetpassword" element={<ResetPassword />} />
+          <Route path="resetpassword" element={data && data.token ? <ResetPassword /> : <Login />} />
+          {/* <Route path="resetpassword" element={<ResetPassword />} /> */}
 
         </Route>
 
