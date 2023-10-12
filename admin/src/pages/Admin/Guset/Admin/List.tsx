@@ -1,7 +1,6 @@
-import React from "react";
-import { Button, Image, Space, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { Checkbox, Collapse, Image, Modal, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
@@ -9,21 +8,67 @@ interface DataType {
   age: number;
   address: string;
 }
-// import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../../component/formSearch";
-// import swal , { } from "sweetalert";
 import Page from "../../../../component/page";
+import { useGetAllStaffsQuery } from "../../../../api/account/staffs";
 
 const ListAdmin = () => {
- 
+  const { data: staffs } = useGetAllStaffsQuery([]);
 
+  const [valuePermission, setPermission] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://api.polydevhotel.site/api/permission"
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setPermission(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const items = valuePermission.map((item: any, index) => ({
+    key: `${index}`,
+    label: item.label,
+    children: (
+      <>
+        {item.permissions.map((permission: any, index: number) => {
+          const key = Object.keys(permission)[0];
+          const value = permission[key];
+          return <Checkbox key={index}>{value}</Checkbox>;
+        })}
+      </>
+    ),
+  }));
   const columns: ColumnsType<any> = [
     {
-      title: "ID Người dùng",
-      dataIndex: "user_id",
-      sorter: (a, b) => a.user_id - b.user_id,
+      title: "STT",
+      dataIndex: "key",
+      sorter: (a, b) => a.key - b.key,
       sortDirections: ["descend"],
       fixed: "left",
+    },
+    {
+      title: "Tên",
+      dataIndex: "name",
+      key: "name",
+      sorter: (a, b) => a.address.localeCompare(b.name),
     },
     {
       title: "Email",
@@ -31,11 +76,7 @@ const ListAdmin = () => {
       render: (_, record) => (
         <div className="flex items-center">
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-          <Image
-            className="rounded-3xl "
-            width={150}
-            src={record?.image}
-          />
+          <Image className="rounded-3xl " width={80} src={record?.image} />
           <div className="ml-3 text-gray-500">
             <p>{record?.email}</p>
           </div>
@@ -48,108 +89,94 @@ const ListAdmin = () => {
       key: "phone",
     },
     {
-      title: "Ngày sinh",
-      dataIndex: "birthdate",
-      key: "birthdate",
-      sorter: (a, b) =>  a.birthdate - b.birthdate,
-    },
-    {
       title: "Trạng thái",
-      dataIndex: "active",
+      dataIndex: "status",
       filters: [
         {
           text: "Hoạt động",
-          value: "Online",
+          value: 1,
         },
         {
           text: "Không hoạt động",
-          value: "Offline",
+          value: 0,
         },
       ],
       render: (text) => (
         <div className="font-semibold">
-          {text === "Online" ? (
-            <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
+          {text === 1 ? (
+            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
               Hoạt động
-            </span>
+            </button>
           ) : (
-            <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
+            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
               Không hoạt động
-            </span>
+            </button>
           )}
         </div>
       ),
-      onFilter: (value: any, record) => record.active.indexOf(value) === 0,
+      onFilter: (value: any, record) => record.status === value,
     },
     {
-      title: "Quyền",
-      dataIndex: "role",
-      key: "role",
-    },
-    {
-      title: "Action",
-      dataIndex: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button type="primary" 
-          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
+      title: "Hành động",
+      key: "action",
+      render: () => (
+        <>
+          <button
+            type="button"
+            onClick={showModal}
+            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
-            <Link to={`/admin/${record?.key}`}>
-              <AiOutlineEdit />
-            </Link>
-          </Button>
-          {/* <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            style={{ backgroundColor: "#e23428" }}
+            Quyền
+          </button>
+          <Link
+            to="/role/edit"
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-brfont-medium rounded-lg text-sm px-5 py-2.5 text-center ml-1"
           >
-            <MdDeleteForever />
-          </Button> */}
-        </Space>
+            Sửa
+          </Link>
+          &nbsp;
+          <button
+            type="button"
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
+          >
+            Xoá
+          </button>
+          <Modal
+            title="Danh sách quyền"
+            open={isModalOpen}
+            onCancel={handleCancel}
+            footer={[]}
+            style={{ minWidth: "60%" }}
+          >
+            <Collapse ghost items={items} />
+          </Modal>
+        </>
       ),
-      // fixed: "right",
     },
   ];
 
-  const data :any = [
-    {
-      key: "1",
-      user_id: 1,
-      name: "John Brown",
-      email: "Nguyen@gamil.com",
-      image: "https://antimatter.vn/wp-content/uploads/2022/05/anh-trai-han-quoc-moi-nhat.jpg",
-      phone: "012345678",
-      birthdate: "12/12/1999",
-      active: "Online",
-      role: "Admin",
-      // address: "Còn",
-    },
-    {
-      key: "2",
-      user_id : 2,
-      name: "John Brown",
-      email: "NguyenABC@gamil.com",
-      image: "https://antimatter.vn/wp-content/uploads/2022/05/anh-trai-han-quoc-moi-nhat.jpg",
-      phone: "012345678",
-      birthdate: "12/15/1999",
-      active: "Offline",
-      role: "Admin",
-      // address: "Còn",
-    },
-  ];
+  const data: any = staffs?.data?.map((item: any, index: number) => ({
+    key: index + 1,
+    id: item?.id,
+    name: item?.name,
+    email: item?.email,
+    image: item?.image,
+    phone: item?.phone,
+    status: item?.status,
+    branch_id: item?.branch_id,
+    // address: item?.address,
+  }));
 
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<DataType>["onChange"] = () =>
     // pagination,
     // filters,
     // sorter,
     // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+    {
+      // console.log("params", pagination, filters, sorter, extra);
+    };
 
   // const remove = (id: any) => {
-  //   console.log(id);
-    
   //   try {
   //     swal({
   //       title: "Are you sure you want to delete?",
@@ -198,7 +225,7 @@ const ListAdmin = () => {
         </div>
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}

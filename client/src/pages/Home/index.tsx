@@ -77,7 +77,7 @@ export default function Home({ }: Props) {
 
         <RoomsView />
         {/* restaurant */}
-        <div className='mt-primary px-4'>
+        <div className='mt-primary'>
           <div className='flex justify-center  font-text_2nd mb-[60px]'>
             <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
               <div className='text-center'>
@@ -153,7 +153,7 @@ export default function Home({ }: Props) {
             </div>
 
           </ObserverAnimate>
-          <div className='w-full md:columns-3 column-1 sm:columns-2 px-4 mt-[60px] mx-auto lg:columns-4 column gap-[30px]'>
+          <div className='max-w-[1222px] md:columns-3 column-1 sm:columns-2 px-4 mt-[60px] mx-auto lg:columns-4 column gap-[30px]'>
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full' src={ImageStyle1} alt="" /></div>
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full' src={ImageStyle5} alt="" /></div>
             <div className='w-full mb-[30px] break-inside-avoid'><img className='w-full' src={ImageStyle9} alt="" /></div>

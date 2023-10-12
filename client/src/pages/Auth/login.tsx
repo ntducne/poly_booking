@@ -1,15 +1,52 @@
 // import React from 'react'
-import { Form, Input } from 'antd';
+import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
+import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../api/Auth';
+import { useAppDispatch } from '../../app/hooks';
+import { getUser } from '../../slices/User';
+import { useCookies } from 'react-cookie';
 
 type Props = {}
 
 export default function Login({ }: Props) {
+    const navigate = useNavigate()
+    const [Login] = useLoginMutation()
+    const dispatch = useAppDispatch()
     const [form] = Form.useForm();
+    // Sử dụng hook useCookies
+    const [, setCookie] = useCookies(['userInfo']);
 
     const onFinish = (values: any) => {
         console.log('Dữ liệu biểu mẫu:', values);
         // Thực hiện logic đăng nhập ở đây
+        if (values) {
+            Login(values).unwrap().then((values: any) => {
+                const valuesUser = {
+                    accessToken: values.accessToken,
+                    ...values.user
+                }
+                console.log('Thông tin người dùng:', values);
+
+                if (values.accessToken && values.user) {
+                    // Lưu thông tin người dùng vào cookie
+                    setCookie('userInfo', valuesUser, { path: '/' });
+
+                    console.log('loginSuccess');
+                    dispatch(getUser(valuesUser))
+                    message.success("Đăng nhập thành công");
+                    setTimeout(() => {
+                        navigate('/')
+                    }, 1000);
+                } else {
+                    console.log('Lỗi xác thực, không thể đăng nhập');
+                    message.error("Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại.");
+                }
+            }).catch((error: any) => {
+                console.log(error);
+                message.error(error?.values?.message || "some thing error");
+            })
+        }
     };
 
     return (

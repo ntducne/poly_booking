@@ -1,5 +1,7 @@
-import { motion } from "framer-motion";
-import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { motion } from "framer-motion"
+
 type Props = {}
 
 import { Autoplay, EffectFade } from 'swiper/modules';

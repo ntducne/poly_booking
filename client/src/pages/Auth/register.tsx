@@ -1,15 +1,34 @@
 
-import { Form, Input } from 'antd';
+import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
+import { useRegisterMutation } from '../../api/Auth';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {}
 
 export default function Register({ }: Props) {
+    const [register] = useRegisterMutation()
+    const navigate = useNavigate()
+
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
         console.log('Dữ liệu biểu mẫu:', values);
         // Thực hiện logic đăng ký ở đây
+        if (values) {
+            register(values)
+                .then((response) => {
+                    console.log(response);
+                    message.success("Đăng ký thành công");
+                    setTimeout(() => {
+                        navigate('/auth/login')
+                    }, 1000);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    message.error(error?.values?.message || "some thing error");
+                })
+        }
     };
 
     const passwordValidator = (_: any, value: any) => {
@@ -36,6 +55,13 @@ export default function Register({ }: Props) {
         return Promise.resolve();
     };
 
+    const confirmPasswordValidator = (_: any, value: any) => {
+        if (value && value !== form.getFieldValue('password')) {
+            return Promise.reject('Không trùng khớp với mật khẩu.');
+        }
+        return Promise.resolve();
+    };
+
     return (
         <Page title='Đăng ký'>
             <div className="flex items-center justify-center h-[125vh] bg-bgr">
@@ -56,7 +82,7 @@ export default function Register({ }: Props) {
                                             <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
                                                 <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                     <div className="relative" data-te-input-wrapper-init>
-                                                        <Form.Item name="f-name" label={<span className="text-gray-500 text-small">First Name</span>}
+                                                        <Form.Item name="name" label={<span className="text-gray-500 text-small">Name</span>}
                                                             rules={[
                                                                 {
                                                                     required: true,
@@ -67,16 +93,21 @@ export default function Register({ }: Props) {
                                                         </Form.Item>
                                                     </div>
                                                     <div className="relative" data-te-input-wrapper-init>
-                                                        <Form.Item name="l-name" label={<span className="text-gray-500 text-small">Last Name</span>}
+                                                        <Form.Item name="email" label={<span className="text-gray-500 text-small">Email</span>}
                                                             rules={[
                                                                 {
                                                                     required: true,
-                                                                    message: 'Vui lòng nhập họ!',
+                                                                    message: 'Vui lòng nhập địa chỉ email!',
+                                                                },
+                                                                {
+                                                                    type: 'email',
+                                                                    message: 'Địa chỉ email không hợp lệ!',
                                                                 },
                                                             ]}>
                                                             <Input className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
                                                         </Form.Item>
                                                     </div>
+
                                                 </div>
                                                 <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                     <div className="relative" data-te-input-wrapper-init>
@@ -115,15 +146,14 @@ export default function Register({ }: Props) {
                                                 </div>
                                                 <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                     <div className="relative" data-te-input-wrapper-init>
-                                                        <Form.Item name="email" label={<span className="text-gray-500 text-small">Email</span>}
+                                                        <Form.Item name="password_confirmation" label={<span className="text-gray-500 text-small">Confirm Password</span>}
                                                             rules={[
                                                                 {
                                                                     required: true,
-                                                                    message: 'Vui lòng nhập địa chỉ email!',
+                                                                    message: 'Vui lòng xác nhận mật khẩu!',
                                                                 },
                                                                 {
-                                                                    type: 'email',
-                                                                    message: 'Địa chỉ email không hợp lệ!',
+                                                                    validator: confirmPasswordValidator,
                                                                 },
                                                             ]}>
                                                             <Input className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
