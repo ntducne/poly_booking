@@ -14,6 +14,9 @@ import {
 import storage from 'redux-persist/lib/storage';
 import authApi, { authReducer } from '../api/auth';
 import userSlicer from '../Slices/Auth'
+import { usersApi } from '../api/account/users';
+import  { staffsApi } from '../api/account/staffs';
+ '../api/account/staffs';
 
 const persistConfig = {
     key: 'root',
@@ -26,13 +29,20 @@ const persistConfig = {
 const rootReducer = combineReducers({
        // [api.something] : appendFile.reducer
        [authApi.reducerPath]: authReducer,
+       [usersApi.reducerPath]: usersApi.reducer,
+       [staffsApi.reducerPath]: staffsApi.reducer,
        user: userSlicer
 })
    
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-// const middlewares = []
+const middlewares = [
+    authApi.middleware,
+    usersApi.middleware,
+    staffsApi.middleware
+]
+
 const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware:any)=>
@@ -40,8 +50,8 @@ const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }) //.concat(...middlewares)
-        .concat(authApi.middleware)
+        }).concat(...middlewares)
+        // .concat(authApi.middleware)
 
 })
 

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Col, MenuProps, Row, Timeline, Typography } from "antd";
+import { MenuProps, Timeline, Typography } from "antd";
 import { Avatar, Badge, Space } from "antd";
 import { Menu, Dropdown } from "antd";
 import {
@@ -127,11 +127,11 @@ const Head = () => {
   ];
 
   return (
-    <Row className="flex justify-center items-center mx-4 ">
-      <Col span={12}>
+    <div className="flex justify-between items-center mx-4">
+      <div >
         <p className="md:text-3xl  ">{title}</p>
-      </Col>
-      <Col span={12} className="flex justify-end ">
+      </div>
+      <div>
         <Space size="large">
           <Dropdown
             className="hover:cursor-pointer hidden md:block"
@@ -167,8 +167,8 @@ const Head = () => {
             <Avatar size={40} icon={<UserOutlined />} />
           </Dropdown>
         </Space>
-      </Col>
-    </Row>
+      </div>  
+    </div>
   );
 };
 

@@ -49,7 +49,14 @@ Route::prefix('/services')->group(function () {
 
 // đặt phòng + chi tiết đặt phòng
 Route::resource('booking', BookingController::class);
-
+Route::prefix('booking')->group(function(){
+    Route::get('/',[BookingController::class,'index']);
+    Route::get('/{id}',[BookingController::class,'show']);
+    Route::delete('/{id}',[BookingController::class,'destroy']);
+    Route::get('/bookdetail',[BookDetailController::class,'index']);
+    Route::get('/bookdetail/{id}',[BookDetailController::class,'show']);
+    Route::delete('/bookdetail/{id}',[BookDetailController::class,'destroy']);
+});
 // phòng
 Route::prefix('/rooms')->group(function () {
     // loại phòng
