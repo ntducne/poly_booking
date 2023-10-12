@@ -13,8 +13,11 @@ import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
+import { useGetRoomsQuery } from "../../../api/room";
 
 const ListRoom = () => {
+  const { data, isLoading } = useGetRoomsQuery({});
+  console.log(data)
   const columns: ColumnsType<DataType> = [
     {
       title: "Tên phòng",
@@ -86,9 +89,9 @@ const ListRoom = () => {
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button 
-          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
-          type="primary" >
+          <Button
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
+            type="primary" >
             <Link to={`/room/edit/${record?.key}`}>
               <AiOutlineEdit />
             </Link>
@@ -106,7 +109,7 @@ const ListRoom = () => {
     },
   ];
 
-  const data = [
+  const data1 = [
     {
       key: "1",
       name: "John Brown",
@@ -144,7 +147,7 @@ const ListRoom = () => {
           if (willDelete) {
             // removeComment(id);
             console.log(id);
-            
+
             swal("You have successfully deleted", {
               icon: "success",
             });
@@ -155,7 +158,7 @@ const ListRoom = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -183,7 +186,7 @@ const ListRoom = () => {
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
-        dataSource={data}
+        dataSource={data1}
         onChange={onChange}
       />
     </Page>

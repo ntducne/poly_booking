@@ -77,7 +77,7 @@ export default function Home({ }: Props) {
 
         <RoomsView />
         {/* restaurant */}
-        <div className='mt-primary px-4'>
+        <div className='mt-primary'>
           <div className='flex justify-center  font-text_2nd mb-[60px]'>
             <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
               <div className='text-center'>

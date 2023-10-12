@@ -8,25 +8,26 @@ import { convertFromNowToSeconds } from '../../config/convertDate';
 
 export default function LoginAdmin() {
     const userPermissions = JSON.parse(cookies().Get('AuthUser') as any);
-    if(userPermissions) {
+    if (userPermissions) {
         return <Navigate to='/' />
     }
     const [form] = Form.useForm();
     const [Login] = useLoginMutation()
     const navigate = useNavigate()
     const [is_loading, setIsLoading] = useState(false)
-    
+
     const onFinish = async (values: any) => {
         try {
             setIsLoading(true)
             const data: any = await Login(values);
             const response = data.data
-            if(response.status === false) {
+            if (response.status === false) {
                 message.error(response.message)
                 setIsLoading(false)
             }
-            if(response.status === true) {
+            if (response.status === true) {
                 message.success('Đăng nhập thành công')
+
                 cookies().Set('AuthUser', JSON.stringify(Object.values(response)), convertFromNowToSeconds(response.accessToken.expires_at))
                 navigate('/')
             }
@@ -50,11 +51,11 @@ export default function LoginAdmin() {
                             <div className="mx-5 col-md-7 col-lg-5 col-xl-5 offset-xl-1 w-[280px] lg:w-[350px]">
                                 <div className='mb-6 flex justify-center'>
                                     <div className="flex items-center mb-2 text-xl font-semibold text-gray-900">
-                                        <img className="w-32 h-30 mr-6" src="https://res.cloudinary.com/dteefej4w/image/upload/v1696338661/logo_30_zwmslg.png" alt="logo"/>
+                                        <img className="w-32 h-30 mr-6" src="https://res.cloudinary.com/dteefej4w/image/upload/v1696338661/logo_30_zwmslg.png" alt="logo" />
                                         <p className="text-md font-bold leading-tight tracking-tight text-gray-900">Đăng nhập<br /> <span className='text-sm'>Hệ thống quản lý khách sạn</span></p>
                                     </div>
                                 </div>
-                                <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish}  onFinishFailed={onFinishFailed}>
+                                <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                                     <div className="relative mb-6" data-te-input-wrapper-init>
                                         <Form.Item name="email" label={<span className="text-gray-500 text-small">Email</span>}
                                             rules={[
