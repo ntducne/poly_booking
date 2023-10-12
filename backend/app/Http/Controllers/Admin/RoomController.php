@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\Http\Requests\Room\StoreRoomRequest;
 use App\Http\Requests\Room\UpdateRoomRequest;
+use App\Http\Resources\RoomResource;
 use App\Models\Room;
 use App\Models\RoomImage;
 
@@ -22,11 +23,7 @@ class RoomController extends Controller
 
     public function index()
     {
-        $rooms = $this->room->paginate(6);
-        return response()->json([
-            'message'   => 'Get Data',
-            'data'      => $rooms,
-        ]);
+        return RoomResource::collection(Room::paginate(10));
     }
     public function store(StoreRoomRequest $request)
     {

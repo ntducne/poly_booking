@@ -14,20 +14,19 @@ class UserController extends Controller
 {
     private RateRoom $rate_room;
     private Room $room;
-    private UserRepository $userRepository;
+    // private UserRepository $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct()
     {
-        $this->userRepository = $userRepository;
+        // $this->userRepository = $userRepository;
         $this->rate_room = new RateRoom();
         $this->room = new Room();
     }
 
     public function profile(Request $request){
-        $user = $this->userRepository->find($request->user()->id);
+        // $user = $this->userRepository->find(->id);
         return response()->json([
-            'message' => 'Get user successfully',
-            'data'    => new UserResource($user)
+            'message' => $request->user(),
         ], 200);
     }
     public function updateAvatar(Request $request){

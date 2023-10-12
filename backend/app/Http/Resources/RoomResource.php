@@ -16,7 +16,6 @@ class RoomResource extends JsonResource
             'area' => $this->area,
             'adults' => $this->adults,
             'children' => $this->children,
-            'room_type_id' => $this->room_type_id,
             'pay_upon_check_in' => $this->pay_upon_check_in,
             'description' => $this->description,
             'discount' => $this->discount,
@@ -24,11 +23,11 @@ class RoomResource extends JsonResource
             'policies_and_information' => $this->policies_and_information,
             'num_of_bed' => $this->num_of_bed,
             'bed_size' => $this->bed_size,
-            'branch_id' => Branch::where('_id', $this->branch_id)->first(),
+            'branch' => new BranchResource(Branch::where('_id', $this->branch_id)->first()),
             'name' => $this->name,
-            'images' => RoomImage::where('room_id', $this->id)->get(),
+            'images' => $this->getImages(),
             'rate' => $this->getRate(),
-            'type' => RoomType::where('_id', $this->room_type_id)->first(),
+            'type' => $this->getType(),
         ];
     }
 }

@@ -1,15 +1,35 @@
 
-import { Form, Input } from 'antd';
+import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
+import { useRegisterMutation } from '../../api/Auth';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {}
 
 export default function Register({ }: Props) {
+    const [register] = useRegisterMutation()
+    const navigate = useNavigate()
+
+
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
         console.log('Dữ liệu biểu mẫu:', values);
         // Thực hiện logic đăng ký ở đây
+        if (values) {
+            register(values)
+                .then((response) => {
+                    console.log(response);
+                    message.success("Đăng ký thành công");
+                    setTimeout(() => {
+                        navigate('/auth/login')
+                    }, 1000);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    message.error(error?.values?.message || "some thing error");
+                })
+        }
     };
 
     const passwordValidator = (_: any, value: any) => {
