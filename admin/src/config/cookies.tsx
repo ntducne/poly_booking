@@ -16,7 +16,11 @@ export const cookies = () => {
         })
     }
     const Delete = (name: string) => {
-        destroyCookie(null, name)
+        destroyCookie(null, name, {
+            maxAge: 0, 
+            path: '/' , 
+            secure: true,
+        })
     }
     return {
         Get,

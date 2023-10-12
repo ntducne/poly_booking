@@ -44,8 +44,8 @@ import "react-toastify/dist/ReactToastify.css";
 export const LayoutContext = createContext("");
 
 const LayoutAdmin = () => {
-  const userPermissions = JSON.parse(cookies().Get('permission') as any);
-  if(!userPermissions) {
+  const checkLogin = JSON.parse(cookies().Get('AuthUser') as any);
+  if(!checkLogin) {
     return <Navigate to='/login' />
   }
   const items: MenuItem[] = [
