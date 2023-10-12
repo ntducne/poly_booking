@@ -7,7 +7,8 @@ export const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.polydevhotel.site/admin",
     prepareHeaders: (headers) => {
-      headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('AuthUser') as any)[2]}`)
+      headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('AuthUser') as any)[2].token}`)
+      return headers
     }
   }),
   endpoints: (builder) => ({
@@ -18,7 +19,7 @@ export const usersApi = createApi({
       }),
       providesTags: ["Users"],
     }),
-    
+
   }),
 
 });

@@ -45,7 +45,7 @@ export const LayoutContext = createContext("");
 
 const LayoutAdmin = () => {
   const checkLogin = JSON.parse(cookies().Get('AuthUser') as any);
-  if(!checkLogin) {
+  if (!checkLogin) {
     return <Navigate to='/login' />
   }
   const items: MenuItem[] = [
