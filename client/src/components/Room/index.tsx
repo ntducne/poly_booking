@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 
 
 export default function Room(data: any) {
+    console.log(data.data);
+
     const { name, description, area, adults, children, num_of_bed, branch } = data.data
     return (
         <div className='bg-bgr group overflow-hidden'>
@@ -12,7 +14,7 @@ export default function Room(data: any) {
                 </Link>
             </div>
             {/* detail */}
-            <div className="bg-bgr shadow-md  max-w-[430px] mx-auto h-[60px]
+            <div className="bg-bgr shadow-md border md:border-0 max-w-[430px] mx-auto h-[60px]
             -translate-y-1/2 flex justify-center items-center uppercase font-medium tracking-[1px] text-[16px]
             
             ">
@@ -43,13 +45,13 @@ export default function Room(data: any) {
                         <h3 className='text-h3 font-bold '>{name}</h3>
                         <h3 className='text-h3 font-bold '>112.000.000 vnđ</h3>
                     </Link>
-                    <div className='mb-3 text-[20px] flex flex-col md:flex-row justify-between'>
+                    <div className='mb-3 text-[20px] flex flex-col md:gap-4 gap-0 md:flex-row justify-between'>
                         <div className='max-w-[250px]'>
                             <p className='max-w-[300px]'><span className='font-normal text-desc'>{description.length > 70 ? description?.slice(0, 70) + "..." : description}</span></p>
                         </div>
-                        <div>
+                        <div className='max-w-[250px]'>
                             <p className='font-bold'>Vị trí: <span className='font-medium'>{branch?.address}</span></p>
-                            <p className='font-bold'>Diện tích: <span className='font-medium'>Thành phố</span></p>
+                            <p className='font-bold'>Tổng người: <span className='font-medium'>{adults} người lớn + {children} trẻ con</span></p>
                             <p className='font-bold'>Số giường: <span className='font-medium'>{num_of_bed}</span></p>
                             <p className='font-bold'>Diện tích: <span className='font-medium'>30m2</span></p>
                         </div>

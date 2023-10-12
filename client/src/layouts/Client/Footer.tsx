@@ -9,8 +9,8 @@ export default function Footer({ }: Props) {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <Link to="#" className="flex items-center">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Android_O_Preview_Logo.png/480px-Android_O_Preview_Logo.png" className="h-8 mr-3" alt="FlowBite Logo" />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+              <img src="https://res.cloudinary.com/dteefej4w/image/upload/v1696338751/logo_31_olx95j.png" className="h-8 mr-3" alt="FlowBite Logo" />
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">FolyDev Hotel</span>
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
