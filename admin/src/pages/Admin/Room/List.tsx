@@ -16,7 +16,7 @@ import Page from "../../../component/page";
 import { useGetRoomsQuery } from "../../../api/room";
 
 const ListRoom = () => {
-  const { data, isLoading } = useGetRoomsQuery({});
+  const { data } = useGetRoomsQuery({});
   console.log(data)
   const columns: ColumnsType<DataType> = [
     {
