@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Services;
-use App\Http\Requests\Services\ServicesRequest;
+use App\Http\Requests\Services\StoreRequest;
 use App\Http\Requests\Services\UpdateRequest;
 use Illuminate\Http\Request;
 
@@ -25,7 +25,7 @@ class ServicesController extends Controller
         return response()->json($response);
     }
 
-    public function store(ServicesRequest $request)
+    public function store(StoreRequest $request)
     {
         $service = $this->services->create($request->all());
         return response()->json([
