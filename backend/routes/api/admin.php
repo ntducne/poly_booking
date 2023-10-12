@@ -15,26 +15,26 @@ use app\Http\Controllers\Admin\UtilitiesController;
 use Illuminate\Support\Facades\Route;
 
 // chi nhánh
-Route::resource('branches', BranchController::class);
+Route::resource('branches', BranchController::class)->except(['create','edit']);
 
 // tiện ích phòng
-Route::resource('utilities', UtilitiesController::class);
+Route::resource('utilities', UtilitiesController::class)->except(['create','edit']);
 
 // người dùng
-Route::resource('users', UserController::class);
+Route::resource('users', UserController::class)->except(['create','edit']);
 
 // nhân sự
-Route::resource('staffs', AdminController::class);
+Route::resource('staffs', AdminController::class)->except(['create','edit']);
 Route::post('staffs/assignPermission', [AdminController::class, 'assignPermission']);
 
 // đánh gía
-Route::resource('rates', RatesController::class);
+Route::resource('rates', RatesController::class)->except(['create','edit']);
 
 // chính sách hủy
-Route::resource('cancel-policies', CancellationPolicyController::class);
+Route::resource('cancel-policies', CancellationPolicyController::class)->except(['create','edit']);
 
 // ưu đãi
-Route::resource('promotions', PromotionController::class);
+Route::resource('promotions', PromotionController::class)->except(['create','edit']);
 
 // dịch vụ
 // Route::resource('services', ServicesController::class);
@@ -53,7 +53,12 @@ Route::resource('booking', BookingController::class);
 // phòng
 Route::prefix('/rooms')->group(function () {
     // loại phòng
-    Route::resource('types', RoomTypeController::class);
+    Route::resource('types', RoomTypeController::class)->except(['create','edit']);
     // danh sách phòng
+<<<<<<< HEAD
     Route::resource('', RoomController::class);
 });
+=======
+    Route::resource('', RoomController::class)->except(['create','edit']);
+});
+>>>>>>> 10acdd4902e5bba231e88c88b00278b8f4a7dfc3
