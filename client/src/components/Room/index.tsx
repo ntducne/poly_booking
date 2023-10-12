@@ -7,7 +7,7 @@ export default function Room(data: any) {
     return (
         <div className='bg-bgr group overflow-hidden'>
             <div className='overflow-hidden'>
-                <Link to=''>
+                <Link to='/'>
                     <img className='group-hover:scale-110 transition-all duration-300 w-full' src={"https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"} alt="" />
                 </Link>
             </div>
@@ -57,7 +57,7 @@ export default function Room(data: any) {
                 </div>
                 <div className='mb-5 md:mb-[30px]'>
 
-                    <Link to='' className='text-normal  font-bold border-b hover:text-[#a27b49] hover:border-b-[#a27b49] transition-all duration-600'>Xem chi tiết</Link>
+                    <Link to='/' className='text-normal  font-bold border-b hover:text-[#a27b49] hover:border-b-[#a27b49] transition-all duration-600'>Xem chi tiết</Link>
                 </div>
             </div>
         </div>

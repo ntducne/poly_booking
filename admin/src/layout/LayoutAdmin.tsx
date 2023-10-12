@@ -8,6 +8,7 @@ import { Link, Outlet } from "react-router-dom";
 import Head from "../component/header";
 import Footer from "../component/footer"
 const { Header, Content, Sider } = Layout;
+import { Navigate } from 'react-router-dom'
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -30,10 +31,15 @@ import { VscFeedback } from "react-icons/vsc";
 import { AiFillBank, AiFillPushpin, AiOutlineCrown, AiOutlineUserSwitch, AiTwotoneGift, AiTwotonePrinter, AiFillLock } from "react-icons/ai";
 import { BsBuildingFillCheck } from "react-icons/bs";
 import { BiSolidBed } from "react-icons/bi";
+import { cookies } from "../config/cookies";
 
 export const LayoutContext = createContext("");
 
 const LayoutAdmin = () => {
+  const userPermissions = JSON.parse(cookies().Get('permission') as any);
+  if(!userPermissions) {
+    return <Navigate to='/login' />
+  }
   const items: MenuItem[] = [
     getItem("Thống kê","1",
       <Link onClick={() => handleTitleChange("Thống kê")} to={`dashboard`}>
@@ -68,18 +74,14 @@ const LayoutAdmin = () => {
     ]),
 
   ];
-
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
   const [title, setTitle] = useState("Dashboard");
-
   const handleTitleChange = (title: any) => {
     setTitle(title);
   }
-
   return (
     <LayoutContext.Provider value={title}>
       <Layout style={{ minHeight: "100vh" }}>
@@ -136,5 +138,4 @@ const LayoutAdmin = () => {
     </LayoutContext.Provider>
   );
 };
-
 export default LayoutAdmin;
