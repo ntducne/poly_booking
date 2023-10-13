@@ -1,11 +1,12 @@
 // import React from 'react'
-import { Form, Input, message } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import Page from '../../components/Page';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../api/Auth';
 import { useAppDispatch } from '../../app/hooks';
 import { getUser } from '../../slices/User';
 import { useCookies } from 'react-cookie';
+import { useState } from 'react';
 
 type Props = {}
 
@@ -14,6 +15,8 @@ export default function Login({ }: Props) {
     const [Login] = useLoginMutation()
     const dispatch = useAppDispatch()
     const [form] = Form.useForm();
+    const [is_loading, setIsLoading] = useState(false)
+
     // Sử dụng hook useCookies
     const [, setCookie] = useCookies(['userInfo']);
 
@@ -21,31 +24,34 @@ export default function Login({ }: Props) {
         console.log('Dữ liệu biểu mẫu:', values);
         // Thực hiện logic đăng nhập ở đây
         if (values) {
-            Login(values).unwrap().then((values: any) => {
-                const valuesUser = {
-                    accessToken: values.accessToken,
-                    ...values.user
-                }
-                console.log('Thông tin người dùng:', values);
+            setIsLoading(true)
+            Login(values)
+                .unwrap()
+                .then((values: any) => {
+                    const valuesUser = {
+                        accessToken: values.accessToken,
+                        ...values.user
+                    }
+                    console.log('Thông tin người dùng:', values);
 
-                if (values.accessToken && values.user) {
-                    // Lưu thông tin người dùng vào cookie
-                    setCookie('userInfo', valuesUser, { path: '/' });
-
-                    console.log('loginSuccess');
-                    dispatch(getUser(valuesUser))
-                    message.success("Đăng nhập thành công");
-                    setTimeout(() => {
-                        navigate('/')
-                    }, 1000);
-                } else {
-                    console.log('Lỗi xác thực, không thể đăng nhập');
-                    message.error("Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại.");
-                }
-            }).catch((error: any) => {
-                console.log(error);
-                message.error(error?.values?.message || "some thing error");
-            })
+                    if (values.accessToken && values.user) {
+                        // Lưu thông tin người dùng vào cookie
+                        setCookie('userInfo', valuesUser, { path: '/' });
+                        console.log('loginSuccess');
+                        dispatch(getUser(valuesUser))
+                        message.success("Đăng nhập thành công");
+                        setTimeout(() => {
+                            navigate('/')
+                        }, 1000);
+                    } else {
+                        setIsLoading(false)
+                        console.log('Lỗi xác thực, không thể đăng nhập');
+                        message.error("Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại.");
+                    }
+                }).catch((error: any) => {
+                    console.log(error);
+                    message.error(error?.values?.message || "some thing error");
+                })
         }
     };
 
@@ -118,7 +124,7 @@ export default function Login({ }: Props) {
                                                         message: 'Mật khẩu phải có ít nhất 8 ký tự!',
                                                     },
                                                 ]} >
-                                                <Input className="bg-transparent border rounded w-full h-[35px] " />
+                                                <Input.Password className="bg-transparent border rounded w-full h-[35px] " />
                                             </Form.Item>
                                         </div>
 
@@ -140,11 +146,11 @@ export default function Login({ }: Props) {
                                         </div>
 
                                         <div className="text-small lg:text-left">
-                                            <button
-                                                className='bg-primary w-[100px] lg:h-full active:bg-black justify-center md:h-full flex items-center border rounded-[5px] transition-transform transform hover:scale-95'
-                                            >
-                                                <p className='text-secondary p-2'>Đăng nhập</p>
-                                            </button>
+                                            <div className="text-small lg:text-left flex justify-center">
+                                                <Button htmlType="submit" type="primary" loading={is_loading} className='bg-primary w-[200px] h-[35px] active:bg-black justify-center flex items-center border rounded-[5px] transition-transform transform hover:scale-95'>
+                                                    {is_loading ? 'Đang đăng nhập' : 'Đăng nhập'}
+                                                </Button>
+                                            </div>
 
 
                                             <p className="mb-0 mt-2 pt-1 text-sm font-semibold flex gap-2">

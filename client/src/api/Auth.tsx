@@ -12,6 +12,16 @@ interface IRegister {
     name: string
 }
 
+interface IForgotPassword {
+    email: string;
+}
+
+interface IResetPassword {
+    token: string;
+    newPassword: string;
+}
+
+
 const authApi = createApi({
     reducerPath: 'auth',
     tagTypes: ['Auth'],
@@ -21,7 +31,6 @@ const authApi = createApi({
             // localStorage.getItem("access_token");
             const token = Object.fromEntries(new URLSearchParams(document.cookie));
             headers.set("authorization", `Bearer ${token}`)
-            // modify header theo từng request
             return headers;
         },
     }),
@@ -34,6 +43,7 @@ const authApi = createApi({
             }),
             invalidatesTags: ['Auth']
         }),
+
         register: builder.mutation({
             query: (data: IRegister) => ({
                 url: `/auth/user/register`,
@@ -41,11 +51,35 @@ const authApi = createApi({
                 body: data
             }),
             invalidatesTags: ['Auth']
-        })
+        }),
+
+        forgotPassword: builder.mutation({
+            query: (data: IForgotPassword) => ({
+                url: `/auth/user/reset-password`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['Auth']
+        }),
+
+        getToken: builder.query({
+            query: () => ({
+                url: `/auth/user/reset-password/{token}`,
+                method: "GET",
+            }),
+        }),
+
+        resetPassword: builder.mutation({
+            query: (data: IResetPassword) => ({
+                url: `/auth/user/reset-password/{token}`,
+                body: data,
+            }),
+            invalidatesTags: ['Auth']
+        }),
     })
 })
 
 
-export const { useLoginMutation, useRegisterMutation } = authApi
+export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery, useResetPasswordMutation } = authApi;
 export const authReducer = authApi.reducer
 export default authApi

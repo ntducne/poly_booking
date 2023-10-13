@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 type Props = {}
 
 export default function Register({ }: Props) {
-    const [register] = useRegisterMutation()
+    const [Register] = useRegisterMutation()
     const navigate = useNavigate()
 
     const [form] = Form.useForm();
@@ -16,13 +16,28 @@ export default function Register({ }: Props) {
         console.log('Dữ liệu biểu mẫu:', values);
         // Thực hiện logic đăng ký ở đây
         if (values) {
-            register(values)
+            Register(values)
+                .unwrap()
                 .then((response) => {
-                    console.log(response);
-                    message.success("Đăng ký thành công");
-                    setTimeout(() => {
-                        navigate('/auth/login')
-                    }, 1000);
+                    if (response.status === false && response.message === "Validation errors") {
+                        // Có lỗi validation
+                        const errorData = response.error;
+
+                        if (errorData.email) {
+                            // Email đã được sử dụng
+                            message.error(errorData.email);
+                            // Nếu bạn muốn ngăn người dùng đăng ký, bạn có thể thực hiện điều này tại đây
+                            // Ví dụ: chặn hoặc hiển thị thông báo và ngăn người dùng đăng nhập
+                        } else {
+                            // Xử lý các lỗi khác ở đây
+                        }
+                    } else {
+                        console.log(response);
+                        message.success("Đăng ký thành công");
+                        setTimeout(() => {
+                            navigate('/auth/login');
+                        }, 1000);
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -34,15 +49,6 @@ export default function Register({ }: Props) {
     const passwordValidator = (_: any, value: any) => {
         if (value && value.length <= 7) {
             return Promise.reject('Mật khẩu phải có ít nhất 8 ký tự');
-        }
-        if (!/[A-Z]/.test(value)) {
-            return Promise.reject('Mật khẩu phải chứa ít nhất một chữ hoa');
-        }
-        if (!/[a-z]/.test(value)) {
-            return Promise.reject('Mật khẩu phải chứa ít nhất một chữ thường');
-        }
-        if (!/\d/.test(value)) {
-            return Promise.reject('Mật khẩu phải chứa ít nhất một chữ số');
         }
         return Promise.resolve();
     };
@@ -122,7 +128,7 @@ export default function Register({ }: Props) {
                                                                     validator: passwordValidator,
                                                                 },
                                                             ]}>
-                                                            <Input className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
+                                                            <Input.Password className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
                                                         </Form.Item>
 
                                                     </div>
@@ -156,7 +162,7 @@ export default function Register({ }: Props) {
                                                                     validator: confirmPasswordValidator,
                                                                 },
                                                             ]}>
-                                                            <Input className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
+                                                            <Input.Password className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
                                                         </Form.Item>
                                                     </div>
                                                     <div className="relative" data-te-input-wrapper-init>
