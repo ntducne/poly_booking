@@ -21,14 +21,14 @@ const ListBooking = () => {
     {
       title: "ID đặt phòng",
       dataIndex: "booking_id",
-      sorter: (a, b) => a.booking_id - b.booking_id,
+      sorter: (a :any, b:any) => a.booking_id - b.booking_id,
       sortDirections: ["descend"],
       fixed: "left",
     },
     {
       title: "Người đặt",
       dataIndex: "user_id",
-      render: (user) => (
+      render: (user :any) => (
         <div className="flex items-center">
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
           <Image
@@ -177,7 +177,7 @@ const ListBooking = () => {
   // };
 
   return (
-    <Page title={`Đặt phòng`}>
+    <Page title={`Đặt phòng`} >
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <FormSearch />
         <div className="flex flex-col md:flex-row md:ml-2">
