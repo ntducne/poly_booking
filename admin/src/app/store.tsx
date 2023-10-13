@@ -14,35 +14,46 @@ import {
 import storage from 'redux-persist/lib/storage';
 import authApi, { authReducer } from '../api/auth';
 import userSlicer from '../Slices/Auth'
+import { usersApi } from '../api/account/users';
+import { staffsApi } from '../api/account/staffs';
+import roomApi from '../api/room';
+'../api/account/staffs';
 
 const persistConfig = {
     key: 'root',
     storage,
-    whileList: ['auth','cartUser'], // luu strorage 
-    backlist: ['products'] // k luu vaoo storage
+    whileList: ['auth', 'cartUser'],
+    backlist: ['products']
 }
 
 
 const rootReducer = combineReducers({
-       // [api.something] : appendFile.reducer
-       [authApi.reducerPath]: authReducer,
-       user: userSlicer
+    // [api.something] : appendFile.reducer
+    [authApi.reducerPath]: authReducer,
+    [usersApi.reducerPath]: usersApi.reducer,
+    [staffsApi.reducerPath]: staffsApi.reducer,
+    user: userSlicer,
+    [roomApi.reducerPath]: roomApi.reducer
 })
-   
+
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-// const middlewares = []
+const middlewares = [
+    authApi.middleware,
+    usersApi.middleware,
+    staffsApi.middleware,
+    roomApi.middleware
+]
+
 const store = configureStore({
     reducer: persistedReducer,
-    middleware: (getDefaultMiddleware:any)=>
+    middleware: (getDefaultMiddleware: any) =>
         getDefaultMiddleware({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }) //.concat(...middlewares)
-        .concat(authApi.middleware)
-
+        }).concat(...middlewares)
 })
 
 

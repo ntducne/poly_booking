@@ -10,26 +10,21 @@ export default function ResetPassword({ }: Props) {
     const [form] = Form.useForm();
     const navigate = useNavigate()
     const [resetPassword] = useResetPasswordMutation();
-    const token = new URLSearchParams(location.search).get('token'); // Lấy token từ URL
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const token = urlSearchParams.get('token'); // Lấy token từ URL
+
     if (typeof token !== 'string') {
-        // Xử lý trường hợp token không hợp lệ (ví dụ: null)
+        console.log('Token:', token);
         message.error('Token không hợp lệ');
         navigate('/auth/login');
         return null;
+    } else {
+        console.log('Không có token trong URL.');
     }
 
     const passwordValidator = (_: any, value: any) => {
         if (value && value.length <= 7) {
             return Promise.reject('Mật khẩu phải có ít nhất 8 ký tự');
-        }
-        if (!/[A-Z]/.test(value)) {
-            return Promise.reject('Mật khẩu phải chứa ít nhất một chữ hoa');
-        }
-        if (!/[a-z]/.test(value)) {
-            return Promise.reject('Mật khẩu phải chứa ít nhất một chữ thường');
-        }
-        if (!/\d/.test(value)) {
-            return Promise.reject('Mật khẩu phải chứa ít nhất một chữ số');
         }
         return Promise.resolve();
     };
@@ -59,7 +54,6 @@ export default function ResetPassword({ }: Props) {
             message.error('Mật khẩu không khớp. Vui lòng thử lại.');
         }
     };
-
 
     return (
         <Page title='Nhập lại mật khẩu'>

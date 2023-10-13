@@ -40,7 +40,7 @@ import RoleCreate from "./pages/Admin/Role/Create";
 import EditServices from "./pages/Admin/Services/Edit";
 import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
-
+import Demo from "./pages/demo";
 
 function App() {
   return (
@@ -123,6 +123,7 @@ function App() {
           </Route>
         </Route>
         <Route path="/403" element={<Page403/>}></Route>
+        <Route path="/demo" element={<Demo/>}></Route>
       </Routes>
     </>
   );

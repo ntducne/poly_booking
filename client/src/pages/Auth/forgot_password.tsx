@@ -14,12 +14,16 @@ function ForgotPassword() {
         // Gửi yêu cầu quên mật khẩu bằng cách sử dụng useForgotPasswordMutation
         ForgotPassword({ email })
             .then((response: any) => {
-                message.success('Liên kết đặt lại mật khẩu đã được gửi qua email !');
-                // Xử lý phản hồi từ máy chủ, ví dụ: hiển thị thông báo thành công
-                console.log('Yêu cầu đã được gửi thành công', response.data);
+                if (response.data.status === true) {
+                    // Email tồn tại, hiển thị thông báo thành công
+                    message.success('Liên kết đặt lại mật khẩu đã được gửi qua email !');
+                } else {
+                    // Email không tồn tại, hiển thị thông báo lỗi
+                    message.error('Email không tồn tại. Vui lòng kiểm tra lại.');
+                }
+                console.log('aa:', response.data);
             })
             .catch((error: any) => {
-                // Xử lý lỗi, ví dụ: hiển thị thông báo lỗi
                 console.error('Lỗi khi gửi yêu cầu', error);
             });
     };

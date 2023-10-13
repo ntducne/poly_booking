@@ -19,9 +19,9 @@ Route::fallback(function () {
 });
 
 Route::middleware(CheckReferer::class)->group(function () {
-    Route::group(['middleware' => 'throttle:3,5'], function () {
+    // Route::group(['middleware' => 'throttle:3,5'], function () {
         Route::post('login', [LoginController::class, 'login']);
-    });
+    // });
     Route::middleware(CheckType::class)->group(function () {
         Route::post('register', [LoginController::class, 'register']);
         Route::group(['middleware' => 'throttle:1,1'], function () {

@@ -18,14 +18,16 @@ import { useGetTokenQuery } from "./api/Auth"
 
 function App() {
   const { data } = useGetTokenQuery({});
+  console.log(data);
 
   return (
     <>
       <Routes>
+        s
         <Route path='/' element={<LayoutClient />}>
           <Route index element={<Home />} />
           <Route path='rooms' element={<Rooms />} />
-          <Route path="detail" element={<Detail />} />
+          <Route path="detial/:id" element={<Detail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
           <Route path="about" element={<AboutPage />} />
@@ -38,13 +40,11 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="forGotPassword" element={<ForgotPassword />} />
-          <Route path="resetpassword" element={data && data.token ? <ResetPassword /> : <Login />} />
+          <Route path="reset/:token" element={data && data.token ? <ResetPassword /> : <Login />} />
           {/* <Route path="resetpassword" element={<ResetPassword />} /> */}
-
         </Route>
 
         <Route path="demo" element={<Demo />} />
-
 
       </Routes>
     </>
