@@ -41,9 +41,9 @@ Route::prefix('booking')->as('booking.')->group(function(){
     Route::get('/{id}',[BookingController::class,'show'])->name('show');
     Route::delete('/{id}',[BookingController::class,'destroy'])->name('destroy');
 });
-
-Route::prefix('booking/detail')->as('booking-detail.')->group(function(){
-    Route::get('/',[BookDetailController::class,'index'])->name('index');
-    Route::get('/{id}',[BookDetailController::class,'show'])->name('show');
-    Route::delete('/{id}',[BookDetailController::class,'destroy'])->name('destroy');
-});
+//
+//Route::prefix('booking/detail')->as('booking-detail.')->group(function(){
+//    Route::get('/',[BookDetailController::class,'index'])->name('index');
+//    Route::get('/{id}',[BookDetailController::class,'show'])->name('show');
+//    Route::delete('/{id}',[BookDetailController::class,'destroy'])->name('destroy');
+//});
