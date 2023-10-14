@@ -19,9 +19,6 @@ class RoomTypeController extends Controller
     }
     public function index()
     {
-<<<<<<< HEAD
-        return response()->json($this->roomType->paginate(6));
-=======
         try {
             $roomTypes = $this->roomType->paginate(6);
             $respose = [
@@ -37,7 +34,6 @@ class RoomTypeController extends Controller
             ]);
         }
 
->>>>>>> c310d7d8c71133e3c8c1cae5b8f36b44b8b79aa9
     }
     public function store(StoreRoomTypeRequest $request)
     {
