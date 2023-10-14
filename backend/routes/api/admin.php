@@ -28,7 +28,6 @@ Route::resource('staffs', AdminController::class)->except(['create','edit']);
 
 Route::post('staffs/assignPermission', [AdminController::class, 'assignPermission'])->name('staffs.assignPermission');
 
-<<<<<<< HEAD
 Route::resource('rates', RatesController::class)->except(['create','edit']);
 
 Route::resource('cancel-policies', CancellationPolicyController::class)->except(['create','edit']);
@@ -41,21 +40,19 @@ Route::prefix('booking')->as('booking.')->group(function(){
     Route::get('/',[BookingController::class,'index'])->name('index');
     Route::get('/{id}',[BookingController::class,'show'])->name('show');
     Route::delete('/{id}',[BookingController::class,'destroy'])->name('destroy');
-=======
 // dịch vụ
 // Route::resource('services', ServicesController::class);
-Route::prefix('/services')->group(function () {
+// Route::prefix('/services')->group(function () {
     
-    Route::get('', [ServicesController::class, 'index']);
-    Route::get('/{id}', [ServicesController::class, 'show']);
-    Route::post('', [ServicesController::class, 'store']);
-    Route::put('/{id}', [ServicesController::class, 'update']);
-    Route::delete('/{id}', [ServicesController::class, 'delete']);
->>>>>>> 046aa3f97f194e9dc303aed7b1d846ac47b67018
-});
+//     Route::get('', [ServicesController::class, 'index']);
+//     Route::get('/{id}', [ServicesController::class, 'show']);
+//     Route::post('', [ServicesController::class, 'store']);
+//     Route::put('/{id}', [ServicesController::class, 'update']);
+//     Route::delete('/{id}', [ServicesController::class, 'delete']);
+// });
 //
 //Route::prefix('booking/detail')->as('booking-detail.')->group(function(){
 //    Route::get('/',[BookDetailController::class,'index'])->name('index');
 //    Route::get('/{id}',[BookDetailController::class,'show'])->name('show');
 //    Route::delete('/{id}',[BookDetailController::class,'destroy'])->name('destroy');
-//});
+});
