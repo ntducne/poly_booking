@@ -39,7 +39,7 @@ Route::resource('promotions', PromotionController::class);
 // dịch vụ
 // Route::resource('services', ServicesController::class);
 Route::prefix('/services')->group(function () {
-
+    
     Route::get('', [ServicesController::class, 'index']);
     Route::get('/{id}', [ServicesController::class, 'show']);
     Route::post('', [ServicesController::class, 'store']);
