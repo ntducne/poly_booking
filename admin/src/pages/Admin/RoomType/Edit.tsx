@@ -9,7 +9,10 @@ import {
   Space,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useGetDetailRoomTypeQuery, useUpdateRoomTypeMutation } from "../../../api/roomTypes";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -20,11 +23,53 @@ const formItemLayout = {
 };
 
 const EditRoomType = () => {
+  const { id } = useParams()
+  console.log(id);
+
+  const navigate = useNavigate()
+  const [form] = Form.useForm()
+  const { data, isLoading } = useGetDetailRoomTypeQuery(id)
+  console.log(data);
+
+  const [updateData] = useUpdateRoomTypeMutation()
+
   const onFinish = (values: any) => {
-    console.log(values.image);
+    console.log(values);
     // Xử lý dữ liệu khi nhấn nút Submit
+    const data = {
+      ...values,
+      pay_upon_check_in: 1,
+    }
+    const dataUpload = {
+      id,
+      data
+    }
+
+    updateData(dataUpload) // id là id của loại phòng cần cập nhật
+      .unwrap()
+      .then((result) => {
+        if (result.status === 'success') {
+          // Cập nhật thành công, bạn có thể thực hiện các hành động sau đây, ví dụ:
+          toast.success('Cập nhật thông tin loại phòng thành công');
+          navigate('/roomType'); // Điều hướng đến trang danh sách loại phòng sau khi cập nhật
+        } else {
+          // Cập nhật không thành công, hiển thị thông báo lỗi hoặc xử lý lỗi khác
+          toast.error(result.error.message);
+        }
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu có lỗi xảy ra trong quá trình gọi mutation hoặc xử lý kết quả
+        toast.error('Có lỗi xảy ra khi cập nhật thông tin loại phòng');
+        console.error(error);
+      });
   };
 
+  useEffect(() => {
+    form.setFieldsValue(data?.data)
+  }, [isLoading, data?.data])
+  if (isLoading) {
+    return <>loading...</>
+  }
 
   return (
     <div>
@@ -34,6 +79,7 @@ const EditRoomType = () => {
         </div>
 
         <Form
+          form={form}
           name="validate_other"
           {...formItemLayout}
           onFinish={onFinish}
@@ -80,8 +126,8 @@ const EditRoomType = () => {
             ]}
           >
             <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value="BinhDan">Còn</Option>
-              <Option value="V.I.P">Hết</Option>
+              <Option value="0">Còn</Option>
+              <Option value="1">Hết</Option>
             </Select>
           </Form.Item>
 

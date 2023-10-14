@@ -32,11 +32,10 @@ class LoginController extends Controller
             return response()->json([
                 'status'    => false,
                 'message'   => 'Thông tin đăng nhập không hợp lệ !'
-            ]);
+            ], 401);
         }
         $user = Auth::guard($guard)->user();
         if ($user->status == 0) {
-            $this->removeUser($user->id);
             $tokenResult = $user->createToken(ucfirst($guard) . ' Access Token', [$request->segment(2)]);
             $token = $tokenResult->token;
             $token->save();
@@ -54,12 +53,12 @@ class LoginController extends Controller
             if ($guard == 'admin') {
                 $response['permission'] = $user->getAllPermission();
             }
-            return response()->json($response);
+            return response()->json($response, 200);
         } else {
             return response()->json([
                 'status'    => false,
                 'message'   => 'Tài khoản của bạn đã bị khóa !'
-            ]);
+            ], 401);
         }
     }
 
@@ -71,7 +70,7 @@ class LoginController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Đăng ký thành công !'
-        ]);
+        ], 200);
     }
 
     public function logout(Request $request): JsonResponse
@@ -79,6 +78,6 @@ class LoginController extends Controller
         $user_id = $request->user()->_id;
         $request->user()->token()->revoke();
         $this->removeUser($user_id);
-        return response()->json(['status' => true, 'msg' => 'Bạn đã đăng xuất !']);
+        return response()->json(['status' => true, 'msg' => 'Bạn đã đăng xuất !'], 200);
     }
 }

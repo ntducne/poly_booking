@@ -3,49 +3,68 @@ import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import FormatPrice from "../../../utils/FormatPrice";
+
 interface DataType {
   key: React.Key;
-  name: string;
-  age: number;
-  address: string;
+  room_type_name: string;
+  description: string;
+  price_per_night: number;
+  status: number
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useGetRoomTypesQuery } from "../../../api/room";
+import { useGetRoomTypeQuery } from "../../../api/roomTypes";
 
 const ListRoomType = () => {
-  const { data, isLoading } = useGetRoomTypesQuery({});
-  // const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data)
+  const { data, isLoading } = useGetRoomTypeQuery({});
+  const [dataFetching, setDataFetching] = useState<any>([])
+  console.log(data.data)
 
+  useEffect(() => {
+    setDataFetching(data?.data.data.map((item: any) => {
+      return {
+        key: item._id,
+        room_type_name: item.room_type_name,
+        description: item.description,
+        price_per_night: item.price_per_night,
+        status: item.status,
+      }
+    }))
+  }, [isLoading])
 
-
-  const columns: ColumnsType<any> = [
-    {
-      title: "ID",
-      dataIndex: "room_type_id",
-      sorter: (a, b) => a.room_type_id - b.room_type_id,
-      sortDirections: ["descend"],
-      fixed: "left",
-    },
+  const columns: ColumnsType<DataType> = [
+    // {
+    //   title: "ID",
+    //   dataIndex: "room_type_id",
+    //   sorter: (a, b) => a.room_type_id - b.room_type_id,
+    //   sortDirections: ["descend"],
+    //   fixed: "left",
+    // },
     {
       title: "Tên loại phòng",
       dataIndex: "room_type_name",
       key: "room_type_name",
       sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
+      fixed: "left",
     },
     {
       title: "Giá mỗi đêm",
       dataIndex: "price_per_night",
       key: "price_per_night",
-      sorter: (a, b) => a.price_per_night - b.price_per_night,
+      sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
+      render: (text) => {
+        // Sử dụng hàm định dạng (format) ở đây để định dạng giá phòng theo ý muốn
+        return <span className="font-bold">{FormatPrice({ price: text })}</span>
+      }
     },
     {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
+      sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
     },
     {
       title: "Trạng thái",
@@ -60,9 +79,9 @@ const ListRoomType = () => {
           value: "Hết",
         },
       ],
-      render: (text) => (
-        <div className="font-semibold">
-          {text === "Còn" ? (
+      render: (_, record) => (
+        < div className="font-semibold" >
+          {record.status !== 0 ? (
             <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
               Còn
             </span>
@@ -71,9 +90,9 @@ const ListRoomType = () => {
               Hết
             </span>
           )}
-        </div>
+        </div >
       ),
-      onFilter: (value: any, record) => record.address.indexOf(value) === 0,
+      // onFilter: (value: any, record) => record.address.indexOf(value) === 0,
     },
     {
       title: "Action",
@@ -101,16 +120,16 @@ const ListRoomType = () => {
     },
   ];
 
-  const data1: any = [
-    {
-      key: "1",
-      room_type_id: 1,
-      room_type_name: "Phòng V.I.P",
-      description: "Phòng đẹp nhất",
-      price_per_night: 1560000,
-      status: "Còn",
-    },
-  ];
+  // const data1: any = [
+  //   {
+  //     key: "1",
+  //     room_type_id: 1,
+  //     room_type_name: "Phòng V.I.P",
+  //     description: "Phòng đẹp nhất",
+  //     price_per_night: 1560000,
+  //     status: "Còn",
+  //   },
+  // ];
 
   const onChange: TableProps<DataType>["onChange"] = (
     // pagination,
@@ -174,7 +193,7 @@ const ListRoomType = () => {
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
-        dataSource={data || []}
+        dataSource={dataFetching}
         onChange={onChange}
       />
     </Page>

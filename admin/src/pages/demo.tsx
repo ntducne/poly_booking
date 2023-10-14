@@ -26,6 +26,7 @@ export default function Demo(){
             console.log(token);
         }
         
+        
     },[])
     function handleSet(){
         cookies().Set('ahihi', JSON.stringify(Object.values(data)), 1000*60*60*24*30)
