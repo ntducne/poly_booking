@@ -6,12 +6,12 @@ use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\RatesController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\BranchController;
-use app\Http\Controllers\Admin\CancellationPolicyController;
-use app\Http\Controllers\Admin\PromotionController;
-use app\Http\Controllers\Admin\RoomTypeController;
+use App\Http\Controllers\Admin\CancellationPolicyController;
+use App\Http\Controllers\Admin\PromotionController;
+use App\Http\Controllers\Admin\RoomTypeController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\UserController;
-use app\Http\Controllers\Admin\UtilitiesController;
+use App\Http\Controllers\Admin\UtilitiesController;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('branches', BranchController::class)->except(['create','edit']);
