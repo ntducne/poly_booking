@@ -1,21 +1,23 @@
-import { useState } from "react";
+import { UploadOutlined } from "@ant-design/icons";
 import {
+  Button,
   Form,
   Input,
-  Upload,
-  Button,
-  Select,
-  message,
-  Typography,
   InputNumber,
-  Checkbox,
-  Row,
-  Col,
+  Select,
   Space,
+  Typography,
+  Upload,
+  message
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { BiReset } from "react-icons/bi";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useGetAllBranchesQuery } from "../../../api/branches";
+import { useGetDetailRoomQuery, useUpdateRoomMutation } from "../../../api/room";
+import { useGetRoomTypeQuery } from "../../../api/roomTypes";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -24,10 +26,45 @@ const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 14 },
 };
+const { TextArea } = Input;
 
 const EditRoom = () => {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const [form] = Form.useForm()
+  const { data, isLoading, refetch } = useGetDetailRoomQuery(id)
+  const { data: dataRoomTypes, isLoading: isLoadingTypes } = useGetRoomTypeQuery({})
+  const { data: dataBranch, isLoading: isLoadingBranch } = useGetAllBranchesQuery({})
+  const [updateData, { isLoading: isLoadingUpdate }] = useUpdateRoomMutation()
   const onFinish = (values: any) => {
-    console.log(values.image);
+    const data = {
+      ...values,
+      pay_upon_check_in: 1,
+      status: 1
+    }
+    delete data.images
+
+
+    const dataUpload = {
+      id,
+      data
+    }
+    updateData(dataUpload).unwrap().then((item: any) => {
+      if (item.status == 'success') {
+        toast("Sửa thành công", {
+          autoClose: 3000,
+          theme: "light",
+        });
+        navigate("/room")
+      } else {
+        console.log(item)
+        toast(item?.error?.name || "Lỗi rồi bạn", {
+          autoClose: 3000,
+          theme: "light",
+        });
+      }
+    })
+
     // Xử lý dữ liệu khi nhấn nút Submit
   };
 
@@ -61,7 +98,17 @@ const EditRoom = () => {
   const handleOnChange = ({ fileList }: any) => {
     setFileList(fileList);
   };
+  useEffect(() => {
+    refetch();
+    window.scrollTo(0, 0);
+  }, [id]);
 
+  useEffect(() => {
+    form.setFieldsValue(data?.data)
+  }, [isLoading, data?.data])
+  if (isLoading) {
+    return <>loading...</>
+  }
   return (
     <div>
       <div className="max-w-[80%] mr-auto ml-10">
@@ -70,6 +117,7 @@ const EditRoom = () => {
         </div>
 
         <Form
+          form={form}
           name="validate_other"
           {...formItemLayout}
           onFinish={onFinish}
@@ -83,19 +131,19 @@ const EditRoom = () => {
           className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
-            label="Khu vực"
-            name="area"
-            rules={[{ required: true, message: "Vui lòng nhập khu vực!" }]}
+            label="Tên phòng"
+            name="name"
+            rules={[{ required: true, message: "Vui lòng nhập tên phòng" }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Tên phòng"
-            name="name"
-            rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
+            label="Diện tích"
+            name="area"
+            rules={[{ required: true, message: "Vui lòng nhập diện tích" }]}
           >
-            <Input />
+            <InputNumber min={1} />
           </Form.Item>
 
           <Form.Item
@@ -105,50 +153,55 @@ const EditRoom = () => {
             rules={[{ required: true, message: "Vui lòng nhập loại phòng!" }]}
           >
             <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value="BinhDan">Bình dân</Option>
-              <Option value="V.I.P">V.I.P</Option>
+              {dataRoomTypes?.data?.data?.map((item: any) => {
+                return <Option key={item._id} value={item._id}>{item.name}</Option>
+              })}
             </Select>
           </Form.Item>
 
+
           <Form.Item
-            label="Số người"
-            name="num_of_people"
-            rules={[{ required: true, message: "Vui lòng nhập số người" }]}
+            label="Người lớn"
+            name="adults"
+            rules={[{ required: true, message: "Vui lòng nhập tối đa số người lớn" }]}
           >
-            <InputNumber min={1} max={10} />
+            <InputNumber min={1} />
           </Form.Item>
+
+          <Form.Item
+            label="Trẻ con"
+            name="children"
+            rules={[{ required: true, message: "Vui lòng nhập tối đa trẻ em" }]}
+          >
+            <InputNumber min={1} />
+          </Form.Item>
+
 
           <Form.Item
             label="Số giường"
             name="num_of_bed"
             rules={[{ required: true, message: "Vui lòng nhập số giường" }]}
           >
-            <InputNumber min={1} max={10} />
+            <InputNumber min={1} />
           </Form.Item>
 
           <Form.Item name="bed_size" label="Số giường">
-            <Checkbox.Group>
-              <Row className="flex items-center sm:flex-col">
-                <Col>
-                  <Checkbox value="A" style={{ lineHeight: "32px" }}>
-                    2 lớn , 1 nhỏ
-                  </Checkbox>
-                </Col>
-                <Col>
-                  <Checkbox value="C" style={{ lineHeight: "32px" }}>
-                    1 lớn , 2 nhỏ
-                  </Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>
+            <InputNumber min={0} max={1} />
+          </Form.Item>
+
+          <Form.Item
+            label="Giá tiền"
+            name="discount"
+            rules={[{ required: true, message: "Vui lòng nhập giá tiền" }]}
+          >
+            <InputNumber min={1} />
           </Form.Item>
 
           <Form.Item
             label="Ảnh"
-            name="image"
+            name="images"
             valuePropName="fileList"
             getValueFromEvent={normFile}
-            rules={[{ required: true, message: "Vui lòng tải lên ảnh!" }]}
           >
             <Upload
               name="avatar"
@@ -168,7 +221,24 @@ const EditRoom = () => {
             </Upload>
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item name="bed_size" label="Số giường">
+            <Checkbox.Group>
+              <Row className="flex items-center sm:flex-col">
+                <Col >
+                  <Checkbox value="A" style={{ lineHeight: "32px" }}>
+                    2 lớn , 1 nhỏ
+                  </Checkbox>
+                </Col>
+                <Col >
+                  <Checkbox value="C" style={{ lineHeight: "32px" }}>
+                    1 lớn , 2 nhỏ
+                  </Checkbox>
+                </Col>
+              </Row>
+            </Checkbox.Group>
+          </Form.Item> */}
+
+          {/* <Form.Item
             name="policies_and_information"
             label="Chính sách"
             rules={[
@@ -187,18 +257,12 @@ const EditRoom = () => {
               <Option value="green">Chính sách 2</Option>
               <Option value="blue">Chính sách 3</Option>
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
-          <Form.Item label="Giảm giá">
-            <Form.Item name="discount" noStyle>
-              <InputNumber min={1} max={10} />
-            </Form.Item>
-            <span className="ant-form-text" style={{ marginLeft: 8 }}></span>
-          </Form.Item>
-          {/* 
-          <Form.Item name="rate" label="Đánh giá">
+          {/* <Form.Item name="rate" label="Đánh giá">
             <Rate />
           </Form.Item> */}
+
 
           <Form.Item
             name="branch_id"
@@ -207,36 +271,41 @@ const EditRoom = () => {
               {
                 required: true,
                 message: "Vui lòng chọn chi nhánh!",
-                type: "array",
               },
             ]}
           >
-            <Select mode="multiple" placeholder="Vui lòng chọn chi nhánh !">
-              <Option value="red">Hà Đông</Option>
-              <Option value="green">Cầu Giấy</Option>
-              <Option value="blue">Trịnh Văn Bô</Option>
+            <Select
+            // mode="multiple"
+            // placeholder="Vui lòng chọn chi nhánh !"
+            >
+              {dataBranch?.data?.data.map((item: any) => {
+                return <Option key={item._id} value={item._id}>{item.name}</Option>
+              })}
             </Select>
+          </Form.Item>
+
+
+          <Form.Item
+            label="Mô tả"
+            name="description"
+          >
+            <TextArea rows={4} />
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-              <Button
-                className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
-                type="default"
-                htmlType="submit"
-              >
-                <AiOutlineCheck className="text-[#fff] " />
-                <Text className=" text-[#fff] ml-1">Thêm</Text>
+              <Button className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
+                {isLoadingUpdate ?
+                  <AiOutlineLoading3Quarters className="animate-spin" />
+                  :
+                  <AiOutlineCheck className="text-[#fff] " />
+                }
+                <Text className=" text-[#fff] ml-1">Sửa</Text>
               </Button>
-              <Link className="text-white" to={`/room`}>
-                <Button
-                  className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
-                  htmlType="reset"
-                >
-                  <AiOutlineRollback className="text-[#fff]" />
-                  <Text className="text-[#fff] ml-1">Quay trở lại</Text>
-                </Button>
-              </Link>
+              <Button className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" htmlType="reset">
+                <BiReset className="text-[#fff]" />
+                <Text className="text-[#fff] ml-1">Làm mới</Text>
+              </Button>
             </Space>
           </Form.Item>
         </Form>
