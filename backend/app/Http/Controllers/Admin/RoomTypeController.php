@@ -17,12 +17,7 @@ class RoomTypeController extends Controller
     }
     public function index()
     {
-        $roomTypes = $this->roomType->paginate(6);
-        $respose = [
-            'message'   => 'Get Data' ,
-            'data'      => $roomTypes
-        ];
-        return response()->json($respose);
+        return response()->json($this->roomType->paginate(6));
     }
     public function store(StoreRoomTypeRequest $request)
     {
