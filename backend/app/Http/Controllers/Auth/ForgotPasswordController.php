@@ -31,20 +31,20 @@ class ForgotPasswordController extends Controller
             return response()->json([
                 'status' => false,
                 'error' => 'Email không tồn tại !',
-            ]);
+            ], 422);
         }
         $this->passwordReset->where('email', $user->email)->delete();
         $passwordReset = $this->passwordReset->create([
             'email' => $user->email,
             'token' => Str::random(50),
-        ]);
+        ], 200);
         if ($passwordReset) {
             $user->notify(new ResetPasswordRequest($passwordReset->token));
         }
         return response()->json([
             'status' => true,
-            'message' => 'We have e-mailed your password reset link!',
-        ]);
+            'message' => 'Chúng tôi đã gửi một email để đặt lại mật khẩu của bạn !',
+        ], 200);
     }
     public function checkToken(Request $request): JsonResponse
     {
@@ -55,19 +55,19 @@ class ForgotPasswordController extends Controller
                 $passwordReset->delete();
                 return response()->json([
                     'status' => false,
-                    'message' => 'This password reset token is invalid.',
-                ]);
+                    'message' => 'Token không hợp lệ !',
+                ], 422);
             }
             return response()->json([
                 'status' => true,
-                'message' => 'This password reset token is valid.',
-            ]);
+                'message' => 'Token hợp lệ !',
+            ], 200);
         }
         else {
             return response()->json([
                 'status' => false,
                 'message' => 'Token is invalid.',
-            ]);
+            ], 422);
         }
 
     }
@@ -79,21 +79,21 @@ class ForgotPasswordController extends Controller
             $passwordReset->delete();
             return response()->json([
                 'status' => false,
-                'message' => 'This password reset token is invalid.',
+                'message' => 'Token không hợp lệ !',
             ], 422);
         }
         $user = $this->user->where('email', $passwordReset->email)->first();
         if (!$user) {
             return response()->json([
                 'status' => false,
-                'message' => 'We can\'t find a user with that e-mail address.',
-            ]);
+                'message' => 'Chúng tôi không thể tìm thấy người dùng với địa chỉ email này !',
+            ], 422);
         }
         $user->update(array('password' => Hash::make($request->new_password)));
         $passwordReset->delete();
         return response()->json([
             'status' => true,
-            'success' => 'Password reset successfully!',
-        ]);
+            'success' => 'Đặt lại mật khẩu thành công !',
+        ], 200);
     }
 }

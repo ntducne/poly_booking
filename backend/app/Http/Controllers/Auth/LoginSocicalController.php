@@ -46,7 +46,7 @@ class LoginSocicalController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Unauthorized'
-            ]);
+            ], 401);
         }
         if($user->status == 0){
             $this->removeUser($user->id);
@@ -67,13 +67,13 @@ class LoginSocicalController extends Controller
             if($guard == 'admin'){
                 $response['permission'] = $user->getAllPermission();
             }
-            return response()->json($response);
+            return response()->json($response, 200);
         }
         else {
             return response()->json([
                 'status' => false,
                 'message' => 'Tài khoản của bạn đã bị khóa !'
-            ]);
+            ], 401);
         }
     }
 }
