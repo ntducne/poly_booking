@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
@@ -13,8 +13,15 @@ import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
+import { useGetRoomTypesQuery } from "../../../api/room";
 
 const ListRoomType = () => {
+  const { data, isLoading } = useGetRoomTypesQuery({});
+  // const [dataFetching, setDataFetching] = useState<any>([])
+  console.log(data)
+
+
+
   const columns: ColumnsType<any> = [
     {
       title: "ID",
@@ -23,24 +30,6 @@ const ListRoomType = () => {
       sortDirections: ["descend"],
       fixed: "left",
     },
-    // {
-    //   title: "Loại phòng",
-    //   dataIndex: "imageType",
-    //   render: (_, record) => (
-    //     <div className="flex items-center">
-    //       {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-    //       <Image
-    //         className="rounded-3xl "
-    //         width={150}
-    //         src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg"
-    //       />
-    //       <div className="ml-3 text-gray-500">
-    //         <p>#68e365</p>
-    //         <p>2 giường ngủ</p>
-    //       </div>
-    //     </div>
-    //   ),
-    // },
     {
       title: "Tên loại phòng",
       dataIndex: "room_type_name",
@@ -112,7 +101,7 @@ const ListRoomType = () => {
     },
   ];
 
-  const data: any = [
+  const data1: any = [
     {
       key: "1",
       room_type_id: 1,
@@ -120,14 +109,6 @@ const ListRoomType = () => {
       description: "Phòng đẹp nhất",
       price_per_night: 1560000,
       status: "Còn",
-    },
-    {
-      key: "2",
-      room_type_id: 2,
-      room_type_name: "Phòng bình dân",
-      description: "Phòng giá rẻ",
-      price_per_night: 2060000,
-      status: "Hết",
     },
   ];
 
@@ -154,7 +135,7 @@ const ListRoomType = () => {
           if (willDelete) {
             // removeComment(id);
             console.log(id);
-            
+
             swal("You have successfully deleted", {
               icon: "success",
             });
@@ -165,7 +146,7 @@ const ListRoomType = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -193,7 +174,7 @@ const ListRoomType = () => {
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
-        dataSource={data}
+        dataSource={data || []}
         onChange={onChange}
       />
     </Page>

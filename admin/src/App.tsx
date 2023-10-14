@@ -122,8 +122,8 @@ function App() {
             <Route path="edit" element={<RoleCreate />} />
           </Route>
         </Route>
-        <Route path="/403" element={<Page403/>}></Route>
-        <Route path="/demo" element={<Demo/>}></Route>
+        <Route path="/403" element={<Page403 />}></Route>
+        <Route path="/demo" element={<Demo />}></Route>
       </Routes>
     </>
   );

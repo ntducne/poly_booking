@@ -13,10 +13,13 @@ const roomApi = createApi({
     endpoints: (builder) => ({
         getRooms: builder.query<any, any>({
             query: () => `/admin/rooms`
-        })
+        }),
+        getRoomTypes: builder.query<any, any>({
+            query: () => `/admin/types-rooms`
+        }),
     })
 })
 
-export const { useGetRoomsQuery } = roomApi
+export const { useGetRoomsQuery, useGetRoomTypesQuery } = roomApi
 export const roomReducer = roomApi.reducer
 export default roomApi
