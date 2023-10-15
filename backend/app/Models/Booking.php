@@ -29,4 +29,9 @@ class Booking extends Eloquent
     public function getDetail(){
         return BookDetail::where('booking_id', $this->_id)->get();
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
 }
