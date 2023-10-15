@@ -4,7 +4,6 @@ namespace App\Http\Requests\Auth;
 
 use App\Http\Requests\Request;
 use App\Models\PasswordReset;
-use App\Models\User;
 use Illuminate\Validation\Rule;
 
 class ForgotPassword extends Request
