@@ -204,17 +204,19 @@ class BookingRepository
         }
     }
 
-    private function check_room($checkin, $checkout, $branch_id, $adults, $children)
+    private function check_room($checkin, $checkout, $branch_id, $adults, $children, $room_type_id)
     {
         $room_book = $this->booking
             ->where('check_in', '<=', $checkin)
             ->where('check_out', '>=', $checkout)
+            ->where('room_type', $room_type_id)
             ->where('branch', $branch_id)
             ->where('status', '0')
             ->get();
         $room = $this->room
             ->where('adult', '>=', $adults)
             ->where('child', '>=', $children)
+            ->where('room_type_id', $room_type_id)
             ->where('branch', $branch_id)
             ->get();
         $room_booked = [];
