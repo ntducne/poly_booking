@@ -19,6 +19,8 @@ import { staffsApi } from '../api/account/staffs';
 import roomApi from '../api/room';
 import roomTypesApi from '../api/roomTypes';
 import branchApi from '../api/branches';
+import serviceApi from '../api/services';
+import bookingApi from '../api/booking';
 '../api/account/staffs';
 
 const persistConfig = {
@@ -38,6 +40,8 @@ const rootReducer = combineReducers({
     [roomApi.reducerPath]: roomApi.reducer,
     [roomTypesApi.reducerPath]: roomTypesApi.reducer,
     [branchApi.reducerPath]: branchApi.reducer,
+    [serviceApi.reducerPath]: serviceApi.reducer,
+    [bookingApi.reducerPath]: bookingApi.reducer,
 })
 
 
@@ -49,7 +53,9 @@ const middlewares = [
     staffsApi.middleware,
     roomApi.middleware,
     roomTypesApi.middleware,
-    branchApi.middleware
+    branchApi.middleware,
+    serviceApi.middleware,
+    bookingApi.middleware
 ]
 
 const store = configureStore({
