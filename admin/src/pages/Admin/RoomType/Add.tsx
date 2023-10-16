@@ -23,7 +23,7 @@ const formItemLayout = {
 
 const AddRoomType = () => {
   const navigate = useNavigate()
-  const [createRoomsType, { isLoading: isLoadingCreate }] = useCreateRoomTypeMutation({})
+  const [createRoomsType] = useCreateRoomTypeMutation({})
 
 
   const onFinish = (values: any) => {

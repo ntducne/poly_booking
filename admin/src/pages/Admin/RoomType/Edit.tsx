@@ -38,22 +38,19 @@ const EditRoomType = () => {
     // Xử lý dữ liệu khi nhấn nút Submit
     const data = {
       ...values,
-      pay_upon_check_in: 1,
     }
     const dataUpload = {
       id,
-      data
+      ...data
     }
 
-    updateData(dataUpload) // id là id của loại phòng cần cập nhật
+    updateData(dataUpload)
       .unwrap()
       .then((result) => {
         if (result.status === 'success') {
-          // Cập nhật thành công, bạn có thể thực hiện các hành động sau đây, ví dụ:
           toast.success('Cập nhật thông tin loại phòng thành công');
-          navigate('/roomType'); // Điều hướng đến trang danh sách loại phòng sau khi cập nhật
+          navigate('/roomType');
         } else {
-          // Cập nhật không thành công, hiển thị thông báo lỗi hoặc xử lý lỗi khác
           toast.error(result.error.message);
         }
       })
@@ -126,8 +123,8 @@ const EditRoomType = () => {
             ]}
           >
             <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value="0">Còn</Option>
-              <Option value="1">Hết</Option>
+              <Option value={1}>Còn</Option>
+              <Option value={0}>Hết</Option>
             </Select>
           </Form.Item>
 

@@ -13,7 +13,8 @@ const roomTypesApi = createApi({
     }),
     endpoints: (builder) => ({
         getRoomType: builder.query<any, any>({
-            query: () => `/admin/types-rooms`,
+            query: (query) => `/admin/types-rooms?page=${query.page || 1}`,
+            // query: () => `/admin/types-rooms`,
             providesTags: ['roomType']
         }),
         createRoomType: builder.mutation<any, any>({
@@ -36,7 +37,7 @@ const roomTypesApi = createApi({
                 return {
                     url: `/admin/types-rooms/${data.id}`,
                     method: "PUT",
-                    body: data.data
+                    body: data
                 }
             },
             invalidatesTags: ['roomType']

@@ -19,30 +19,31 @@ import Page from "../../../component/page";
 import { useGetRoomTypeQuery } from "../../../api/roomTypes";
 
 const ListRoomType = () => {
-  const { data, isLoading } = useGetRoomTypeQuery({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading, refetch } = useGetRoomTypeQuery({ page: currentPage || 1 }); // Sử dụng trang hiện tại hoặc mặc định là trang 1
+
+  // Số lượng mục trên mỗi trang
+  const ITEMS_PER_PAGE = 10;
+  const totalItems = data?.data?.length || 0;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
   const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data.data)
+  console.log(data?.data)
 
   useEffect(() => {
-    setDataFetching(data?.data.data.map((item: any) => {
+    setDataFetching(data?.data?.map((item: any) => {
       return {
-        key: item._id,
+        key: item.id,
         room_type_name: item.room_type_name,
         description: item.description,
         price_per_night: item.price_per_night,
         status: item.status,
       }
+      refetch()
     }))
   }, [isLoading])
 
   const columns: ColumnsType<DataType> = [
-    // {
-    //   title: "ID",
-    //   dataIndex: "room_type_id",
-    //   sorter: (a, b) => a.room_type_id - b.room_type_id,
-    //   sortDirections: ["descend"],
-    //   fixed: "left",
-    // },
     {
       title: "Tên loại phòng",
       dataIndex: "room_type_name",
@@ -120,23 +121,13 @@ const ListRoomType = () => {
     },
   ];
 
-  // const data1: any = [
-  //   {
-  //     key: "1",
-  //     room_type_id: 1,
-  //     room_type_name: "Phòng V.I.P",
-  //     description: "Phòng đẹp nhất",
-  //     price_per_night: 1560000,
-  //     status: "Còn",
-  //   },
-  // ];
-
   const onChange: TableProps<DataType>["onChange"] = (
-    // pagination,
+    pagination,
     // filters,
     // sorter,
     // extra
   ) => {
+    setCurrentPage(pagination.current || 1);
     // console.log("params", pagination, filters, sorter, extra);
   };
 
@@ -167,6 +158,9 @@ const ListRoomType = () => {
         });
     } catch (error) { }
   };
+  if (isLoading) {
+    return <>loading...</>
+  }
 
   return (
     <Page title={`Loại phòng`}>
