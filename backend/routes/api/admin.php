@@ -34,7 +34,7 @@ Route::resource('cancel-policies', CancellationPolicyController::class)->except(
 
 Route::resource('promotions', PromotionController::class)->except(['create','edit']);
 
-// Route::resource('services', ServicesController::class)->except(['create','edit']);
+Route::resource('services', ServicesController::class)->except(['create','edit']);
 
 Route::prefix('booking')->as('booking.')->group(function(){
     Route::get('/',[BookingController::class,'index'])->name('index');
