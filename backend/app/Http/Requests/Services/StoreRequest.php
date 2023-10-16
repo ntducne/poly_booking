@@ -12,6 +12,7 @@ class StoreRequest extends FormRequest
            'service_name'=>['required'],
            'price'=>['required','numeric'],
            'description'=>['required'],
+           'branch_id'=>['required']
         ];
     }
     public function attributes()
@@ -20,6 +21,7 @@ class StoreRequest extends FormRequest
             'service_name'   => 'Tên dịch vụ',
             'price'      => 'Giá',
             'description'     => 'Mô tả',
+            'branch_id'     => 'ID chi nhánh',
         ];
     }
 }

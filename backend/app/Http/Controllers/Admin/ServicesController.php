@@ -112,7 +112,7 @@ class ServicesController extends Controller
     {
         try {
             $service = Services::find($id);
-            if ($service) {
+            if (!$service) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Service không tồn tại !',
