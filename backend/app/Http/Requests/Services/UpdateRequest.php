@@ -31,6 +31,7 @@ class UpdateRequest extends FormRequest
             ],
             'price' => ['required', 'numeric'],
             'description' => ['required'],
+            'branch_id'=>['required']
         ];
     }
     public function attributes()
@@ -39,6 +40,7 @@ class UpdateRequest extends FormRequest
             'service_name' => 'Tên dịch vụ',
             'price' => 'Giá',
             'description' => 'Mô tả',
+            'branch_id'     => 'ID chi nhánh',
         ];
     }
 }

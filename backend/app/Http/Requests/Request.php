@@ -81,8 +81,8 @@ class Request extends FormRequest
 
         throw new HttpResponseException(response()->json([
             'status' => false,
-            'message' => 'Validation errors',
+            'message' => 'Lỗi dữ liệu !',
             'error' => $formattedErrors
-        ]));
+        ], 422));
     }
 }

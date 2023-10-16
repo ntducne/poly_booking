@@ -2,13 +2,29 @@
 
 namespace App\Repositories;
 
+use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Room;
+use App\Models\RoomType;
 
 class BookingRepository
 {
-    public function search($request){
+    private Booking $booking;
+    private BookDetail $booking_detail;
+    private Room $room;
+    private RoomType $room_type;
+
+    public function __construct()
+    {
+        $this->booking = new Booking();
+        $this->booking_detail = new BookDetail();
+        $this->room = new Room();
+        $this->room_type = new RoomType();
+    }
+
+    public function search($request)
+    {
         $arrRoomId = []; //chua id cac phong
         $room = Room::all();
         foreach ($room as $item) {
@@ -89,7 +105,8 @@ class BookingRepository
         return response()->json($response);
     }
 
-    public function create($request){
+    public function create($request)
+    {
         $booking = new Booking();
         $soLuong = $request->soLuong;
         $room_id = $request->room_id; // id phong ma khach dat
@@ -167,7 +184,8 @@ class BookingRepository
         return response()->json($response);
     }
 
-    public function cancel($id){
+    public function cancel($id)
+    {
         $bookings = Booking::find($id);
         if (!$bookings) {
             return response()->json([
@@ -185,5 +203,72 @@ class BookingRepository
             ]);
         }
     }
+
+    private function check_room($checkin, $checkout, $branch_id, $adults, $children, $room_type_id)
+    {
+        $room_book = $this->booking
+            ->where('check_in', '<=', $checkin)
+            ->where('check_out', '>=', $checkout)
+            ->where('room_type', $room_type_id)
+            ->where('branch', $branch_id)
+            ->where('status', '0')
+            ->get();
+        $room = $this->room
+            ->where('adult', '>=', $adults)
+            ->where('child', '>=', $children)
+            ->where('room_type_id', $room_type_id)
+            ->where('branch', $branch_id)
+            ->get();
+        $room_booked = [];
+        foreach ($room_book as $item) {
+            $room_booked[] = BookDetail::find($item->id)->room_id;
+        }
+        $room_available = [];
+        foreach ($room as $item) {
+            if (!in_array($item->id, $room_booked)) {
+                $room_available[] = $item->id;
+            }
+        }
+        return $room_available;
+    }
+
+    public function book($request)
+    {
+        // thong tin khach hang
+        $name = $request->name;
+        $email = $request->email;
+        $phone = $request->phone;
+
+        // thong tin dat phong
+        $check_in = $request->check_in;
+        $check_out = $request->check_out;
+        $room_id = $request->room_id;
+        $branch_id = $request->branch_id;
+        $adults = $request->adults;
+        $children = $request->children;
+        $room_type = $request->room_type;
+        $branch = $request->branch;
+        $amount_room = $request->amount_room;
+
+        $bookings = [
+            'user' => [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+            ],
+            'booking_date' => date('Y-m-d'),
+            'check_in' => $check_in,
+            'check_out' => $check_out,
+            'room_type' => $room_type,
+            'adults' => $adults,
+            'children' => $children,
+            'branch' => $request->branch,
+            'detail' => [
+
+            ]
+        ];
+    }
+
+
 
 }
