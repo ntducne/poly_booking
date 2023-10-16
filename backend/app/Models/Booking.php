@@ -17,7 +17,8 @@ class Booking extends Eloquent
         'pay_date',
         'representative',
         'price_per_night',
-        'amount_of_people',
+        'adults',
+        'children',
         'status',
         'deleted_at'
     ];
