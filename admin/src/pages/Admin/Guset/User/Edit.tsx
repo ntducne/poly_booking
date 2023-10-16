@@ -1,9 +1,9 @@
-// import React, { useState } from "react";
+import { useEffect } from "react";
+
 import {
   Form,
   Input,
   Button,
-  Select,
   Typography,
   InputNumber,
   Space,
@@ -11,12 +11,10 @@ import {
 // import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useGetAllBranchesQuery } from "../../../api/branches";
-import { useGetDetailServicesQuery, useUpdateServicesMutation } from "../../../api/services";
+import { useGetDetailUsersQuery, useUpdateUsersMutation } from "../../../../api/account/users";
 import { useForm } from "antd/es/form/Form";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
-const { Option } = Select;
+
 
 const { Title, Text } = Typography;
 
@@ -25,33 +23,39 @@ const formItemLayout = {
   wrapperCol: { span: 14 },
 };
 
-const EditServices = () => {
-  const {  data:dataBranches , isLoading : loadingBranch } = useGetAllBranchesQuery({});
-  const { id }  = useParams();
-  const { data : serviceDetail  , isLoading : loadingData } = useGetDetailServicesQuery(id || "")
-  const [form] = useForm();
-  const [updateServices] = useUpdateServicesMutation();
-  const navigate = useNavigate();
+const EditUser = () => {
+    const {id} = useParams();
+    const { data , isLoading } = useGetDetailUsersQuery(id);
+    const [ updateUsers ] = useUpdateUsersMutation();
+    const [form] = useForm();
+    const navigate = useNavigate();
 
-  
-  useEffect(() => {
-    form.setFieldsValue(serviceDetail?.data)
-  }, [serviceDetail?.data])
+    // console.log("data" ,data);
+
+
+    useEffect(()=> {
+        form.setFieldsValue(data?.data);
+    } , [data?.data])
+
+    if(isLoading){
+      return <div>Loading...</div>
+    }
+    
 
   const onFinish = (values: any) => {
-    const data = {
+    console.log(values.image);
+    const data = {...values };
+    const updateData = {
       id: id,
-      data: values
+      data : data
     }
-    updateServices(data).unwrap().then((item) => {
+    updateUsers(updateData).unwrap().then((item: any) => {
       if (item.status == 'success') {
-        toast("Update thành công", {
+        toast("Sửa thành công", {
           autoClose: 3000,
           theme: "light",
         });
-        setTimeout(() => {
-          navigate("/services")
-        }, 3000)
+        navigate("/auth/user")
       } else {
         console.log(item)
         toast(item?.error?.name || "Lỗi rồi bạn", {
@@ -59,20 +63,16 @@ const EditServices = () => {
           theme: "light",
         });
       }
-      
-    })
-  };
-
-  if(loadingData && loadingBranch){
-    return <div>Loading...</div>
+    });
   }
 
+    // Xử lý dữ liệu khi nhấn nút Submit
 
   return (
     <div>
       <div className="max-w-[80%] mr-auto ml-10">
         <div className="mb-5">
-          <Title level={3}>Sửa dịch vụ</Title>
+          <Title level={3}>Sửa thông tin khách</Title>
         </div>
 
         <Form
@@ -90,38 +90,43 @@ const EditServices = () => {
           className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
-            label="Tên dịch vụ"
-            name="service_name"
-            rules={[{ required: true, message: "Vui lòng nhập dịch vụ!" }]}
+            label="Tên khách"
+            name="name"
+            rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Giá dịch vụ"
-            name="price"
-            rules={[{ required: true, message: "Vui lòng nhập giá" }]}
+            label="Email khách"
+            name="email"
+            rules={[{ required: true, message: "Vui lòng nhập email!" }]}
           >
-            <InputNumber min={1} />
-          </Form.Item>
-
-          <Form.Item name="description" label="Mô tả">
-            <Input.TextArea rows={5}/>
+            <Input />
           </Form.Item>
 
           <Form.Item
-            name="branch_id"
-            label="Chi nhánh"
-            rules={[{ required: true, message: "Vui lòng chọn chi nhánh!" }]}
+            label="Số điện thoại"
+            name="phone"
+            rules={[{ required: true, message: "Vui lòng nhập số điện thoại" }]}
           >
-            <Select
-            //  placeholder="Vui lòng chọn chi nhánh!"
-             >
-              {dataBranches?.data?.data?.map((item: any) => {
-                return  <Option key={item?._id} value={item?._id}>{item?.name}</Option>
-              }
-              )}
-            </Select>
+            <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            label="Địa chỉ"
+            name="address"
+            rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="status"
+            label="Trạng thái"
+            rules={[{ required: true, message: "Vui lòng chọn trạng thái" }]}
+          >
+            <Input />
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
@@ -132,7 +137,7 @@ const EditServices = () => {
                 htmlType="submit"
               >
                 <AiOutlineCheck className="text-[#fff] " />
-                <Text className=" text-[#fff] ml-1">Update</Text>
+                <Text className=" text-[#fff] ml-1">Sửa</Text>
               </Button>
               <Link className="text-white" to={`/services`}>
                 <Button
@@ -151,4 +156,4 @@ const EditServices = () => {
   );
 };
 
-export default EditServices;
+export default EditUser;
