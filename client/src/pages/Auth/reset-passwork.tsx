@@ -1,8 +1,9 @@
 // import React from 'react'
 import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
-import { useNavigate } from 'react-router-dom';
-import { useResetPasswordMutation } from '../../api/Auth';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetTokenQuery, useResetPasswordMutation } from '../../api/Auth';
+import { useEffect } from 'react';
 
 type Props = {}
 
@@ -10,50 +11,50 @@ export default function ResetPassword({ }: Props) {
     const [form] = Form.useForm();
     const navigate = useNavigate()
     const [resetPassword] = useResetPasswordMutation();
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const token = urlSearchParams.get('token'); // Lấy token từ URL
+    const { token } = useParams(); // Lấy token từ URL
 
-    if (typeof token !== 'string') {
-        console.log('Token:', token);
-        message.error('Token không hợp lệ');
-        navigate('/auth/login');
-        return null;
-    } else {
-        console.log('Không có token trong URL.');
-    }
+    const { data } = useGetTokenQuery(token);
+    console.log(data);
 
-    const passwordValidator = (_: any, value: any) => {
-        if (value && value.length <= 7) {
-            return Promise.reject('Mật khẩu phải có ít nhất 8 ký tự');
+    const confirmPasswordValidator = (rule: any, value: any) => {
+        const newPassword = form.getFieldValue('newPassword');
+        if (newPassword !== value) {
+            return Promise.reject('Mật khẩu xác nhận không khớp với mật khẩu.');
         }
         return Promise.resolve();
     };
 
-    const confirmPasswordValidator = (_: any, value: any) => {
-        if (value && value !== form.getFieldValue('password')) {
-            return Promise.reject('Không trùng khớp với mật khẩu.');
-        }
-        return Promise.resolve();
-    };
 
     const onFinish = (values: any) => {
-        const { newPassword, confirmPassword } = values;
-        console.log(values);
-
-        if (newPassword === confirmPassword) {
-            resetPassword({ token, newPassword })
+        const dataUpload = {
+            token: token || "",
+            data: values
+        }
+        if (token) {
+            resetPassword(dataUpload)
                 .unwrap()
-                .then(() => {
+                .then((item: any) => {
+                    console.log(item)
                     message.success('Mật khẩu đã được đặt lại thành công!');
                     setTimeout(() => {
-                        navigate('/auth/login')
+                        navigate('/auth/login');
                     }, 1000);
                 })
+                .catch((error: any) => {
+                    console.log(error)
+                    message.error('Có lỗi xảy ra trong quá trình đặt lại mật khẩu.');
+                });
         } else {
-            // Xử lý trường hợp mật khẩu không khớp
-            message.error('Mật khẩu không khớp. Vui lòng thử lại.');
+            // Xử lý trường hợp token là null
+            message.error('Token không hợp lệ.');
         }
     };
+
+    useEffect(() => {
+        if (data?.status !== true) {
+            navigate("/login")
+        }
+    }, [data?.status])
 
     return (
         <Page title='Nhập lại mật khẩu'>
@@ -82,7 +83,8 @@ export default function ResetPassword({ }: Props) {
                                                         validateTrigger: ['onBlur'],
                                                     },
                                                     {
-                                                        validator: passwordValidator,
+                                                        min: 8,
+                                                        message: 'Mật khẩu phải có ít nhất 8 ký tự.',
                                                     },
                                                 ]}>
                                                 <Input className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />

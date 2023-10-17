@@ -21,6 +21,7 @@ import FormatPrice from "../../../utils/FormatPrice";
 const ListRoom = () => {
   const { data, isLoading } = useGetRoomsQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
+  console.log(data?.data)
 
   useEffect(() => {
     setDataFetching(data?.data.map((item: any) => {
@@ -99,7 +100,7 @@ const ListRoom = () => {
       ],
       render: (_, record) => (
         <div className="font-semibold">
-          {record?.status !== 0 ? (
+          {record?.status != 0 ? (
             <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
               Còn
             </span>
