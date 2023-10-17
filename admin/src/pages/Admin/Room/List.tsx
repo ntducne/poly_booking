@@ -21,6 +21,7 @@ import FormatPrice from "../../../utils/FormatPrice";
 const ListRoom = () => {
   const { data, isLoading } = useGetRoomsQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
+  console.log(data?.data)
 
   useEffect(() => {
     setDataFetching(data?.data.map((item: any) => {
