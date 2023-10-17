@@ -3,6 +3,7 @@ import { cookies } from '../config/cookies';
 
 const roomTypesApi = createApi({
     reducerPath: "roomType",
+    tagTypes: ['roomType'],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.polydevhotel.site",
         prepareHeaders: (headers) => {
@@ -12,11 +13,38 @@ const roomTypesApi = createApi({
     }),
     endpoints: (builder) => ({
         getRoomType: builder.query<any, any>({
-            query: () => `/admin/types-rooms`
-        })
+            query: (query) => `/admin/types-rooms?page=${query.page || 1}`,
+            // query: () => `/admin/types-rooms`,
+            providesTags: ['roomType']
+        }),
+        createRoomType: builder.mutation<any, any>({
+            query: (data) => ({
+                url: `/admin/types-rooms`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['roomType']
+        }),
+        getDetailRoomType: builder.query<any, any>({
+            query: (id) => ({
+                url: `/admin/types-rooms/${id}`,
+                method: "GET"
+            }),
+            providesTags: ['roomType']
+        }),
+        updateRoomType: builder.mutation<any, any>({
+            query: (data) => {
+                return {
+                    url: `/admin/types-rooms/${data.id}`,
+                    method: "PUT",
+                    body: data
+                }
+            },
+            invalidatesTags: ['roomType']
+        }),
     })
 })
 
-export const { useGetRoomTypeQuery } = roomTypesApi
+export const { useGetRoomTypeQuery, useCreateRoomTypeMutation, useGetDetailRoomTypeQuery, useUpdateRoomTypeMutation } = roomTypesApi
 export const roomReducer = roomTypesApi.reducer
 export default roomTypesApi

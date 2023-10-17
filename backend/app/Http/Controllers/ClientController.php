@@ -75,9 +75,9 @@ class ClientController extends Controller
         }
         if ($room_completed = []) {
             $response = [
-                'message'=>'Hết phòng '
+                'message' => 'Hết phòng '
             ];
-        }else {
+        } else {
             $response = [
                 'message' => 'Tìm thành công',
                 'data' => $room_completed
@@ -96,19 +96,27 @@ class ClientController extends Controller
         $param['booking_date'] = now()->toDateTimeString();
         $param['price_per_night'] = RoomType::find($room[0]->room_type_id)->price_per_night;
         $create = $booking->create($param);
+        $room_book = [];
         if ($create) {
             $bookDetail = new BookDetail();
-            $bookDetail->create(
-                [
-                    'booking_id' => $create->_id,
-                    'room_id' => $room_id,
-                    'room_name' => $room[0]->room_name,
+            $room_book[] = [
+                $bookDetail->create(
+                    [
+                        'booking_id' => $create->_id,
+                        'room_id' => $room_id,
+                        'room_name' => $room[0]->room_name,
+                    ]
+                ),
+                'info_room' => [
+                    'name' => Room::find($room_id)->room_name,
+                    'price' => RoomType::find(Room::find($room_id)->room_type_id)->price_per_night
                 ]
-            );
+            ];
             $response = [
                 'status' => 'success',
                 'message' => 'Đặt thành công',
                 'data' => $create,
+                'room_booking' => $room_book
             ];
             if ($soLuong > 1) {
                 $listroom = Room::where('room_type_id', '=', $room[0]->room_type_id)
@@ -148,15 +156,22 @@ class ClientController extends Controller
                             'status' => 'success',
                             'message' => 'Đặt thành công',
                             'data' => $create,
+                            'room_booking' => $room_book
                         ];
                     }
-                    $bookDetail->create(
-                        [
-                            'booking_id' => $create->_id,
-                            'room_id' => $value,
-                            'room_name' => Room::find($value)->room_name,
+                    $room_book[] = [
+                        $bookDetail->create(
+                            [
+                                'booking_id' => $create->_id,
+                                'room_id' => $value,
+                                'room_name' => Room::find($value)->room_name,
+                            ]
+                        ),
+                        'info_room' => [
+                            'name' => Room::find($value)->room_name,
+                            'price' => RoomType::find(Room::find($value->room_type_id))->price_per_night
                         ]
-                    );
+                    ];
                     $count++;
                 }
             }

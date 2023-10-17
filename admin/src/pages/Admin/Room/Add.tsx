@@ -148,7 +148,7 @@ const AddRoom = () => {
           >
             <Select placeholder="Vui lòng nhập loại phòng!">
               {data?.data?.data?.map((item: any) => {
-                return <Option key={item._id} value={item._id}>{item.name}</Option>
+                return <Option key={item._id} value={item._id}>{item.room_type_name}</Option>
               })}
             </Select>
           </Form.Item>
