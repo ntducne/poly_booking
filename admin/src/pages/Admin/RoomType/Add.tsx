@@ -98,8 +98,8 @@ const AddRoomType = () => {
             ]}
           >
             <Select placeholder="Vui lòng nhập trạng thái!">
-              <Option value=" ">Còn</Option>
-              <Option value="Hết">Hết</Option>
+              <Option value={1}>Còn</Option>
+              <Option value={0}>Hết</Option>
             </Select>
           </Form.Item>
 

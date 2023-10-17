@@ -28,7 +28,7 @@ const EditRoomType = () => {
 
   const navigate = useNavigate()
   const [form] = Form.useForm()
-  const { data, isLoading } = useGetDetailRoomTypeQuery(id)
+  const { data, isLoading, refetch } = useGetDetailRoomTypeQuery(id)
   console.log(data);
 
   const [updateData] = useUpdateRoomTypeMutation()
@@ -60,6 +60,11 @@ const EditRoomType = () => {
         console.error(error);
       });
   };
+
+  useEffect(() => {
+    refetch();
+    window.scrollTo(0, 0);
+  }, [id]);
 
   useEffect(() => {
     form.setFieldsValue(data?.data)
