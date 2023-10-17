@@ -1,7 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
 Route::get('error-message', function (){ return response()->json([

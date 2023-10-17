@@ -1,20 +1,9 @@
 
 import React, { useState } from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Space, Modal, Drawer, Checkbox, Carousel } from 'antd';
+import { Button, Form, Input, Space, Modal, Drawer, Checkbox } from 'antd';
 
-const contentStyle: React.CSSProperties = {
-    margin: 0,
-    height: '100%',
-    color: '#fff',
-    lineHeight: '160px',
-    textAlign: 'center',
-    background: '#364d79',
-  }
 const App: React.FC = () => {
-    const onChange = (currentSlide: number) => {
-        console.log(currentSlide);
-      };
     const onFinish = (values: any) => {
         console.log('Received values of form:', values);
     };
@@ -58,20 +47,6 @@ const App: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4">
                 <div className="bg-white border border-gray-200 rounded-lg shadow">
                     <a href="#">
-                    {/* <Carousel afterChange={onChange}>
-      <div>
-        <h3 style={contentStyle}>1</h3>
-      </div>
-      <div>
-        <h3 style={contentStyle}>2</h3>
-      </div>
-      <div>
-        <h3 style={contentStyle}>3</h3>
-      </div>
-      <div>
-        <h3 style={contentStyle}>4</h3>
-      </div>
-    </Carousel> */}
                         <img className="rounded-t-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg" alt="" />
                     </a>
                     <div className="p-5">
