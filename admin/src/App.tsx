@@ -43,6 +43,7 @@ import Page403 from "./pages/403";
 import Demo from "./pages/demo";
 import EditUser from "./pages/Admin/Guset/User/Edit";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
+import Test from "./pages/test";
 
 function App() {
   return (
@@ -123,9 +124,10 @@ function App() {
             <Route path="create" element={<RoleCreate />} />
             <Route path="edit" element={<RoleCreate />} />
           </Route>
+          <Route path="/demo" element={<Demo />}></Route>
+          <Route path="/test" element={<Test />}></Route>
         </Route>
         <Route path="/403" element={<Page403 />}></Route>
-        <Route path="/demo" element={<Demo />}></Route>
       </Routes>
     </>
   );
