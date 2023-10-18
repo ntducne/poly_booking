@@ -10,7 +10,7 @@ import {
     initTE,
 } from "tw-elements";
 import { useNavigate, useParams } from 'react-router-dom'
-import { useGetDetialQuery, useGetRoomsQuery } from '../../api/Room'
+import { useGetDetialQuery} from '../../api/Room'
 
 
 initTE({ Rating });
