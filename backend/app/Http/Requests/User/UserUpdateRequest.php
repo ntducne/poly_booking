@@ -33,7 +33,7 @@ class UserUpdateRequest extends Request
                 Rule::unique(User::class)->ignore($this->user, $this->column_id),
             ],
             'phone' => [
-                'bail','required', 'numeric', 'digits:10', 'max:255', 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/g',
+                'bail','required', 'numeric', 'digits:10', 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/g',
                 Rule::unique(User::class, 'phone')->ignore($this->user,$this->column_id),
             ],
             'address' => [ 'required' ],
