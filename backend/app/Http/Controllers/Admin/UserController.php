@@ -72,7 +72,7 @@ class UserController extends Controller
             }
             return response()->json([
                 'status' => true,
-                'message' => $user
+                'message' => new UserResource($user),
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
