@@ -9,3 +9,4 @@ Route::prefix('room')->group(function (){
     Route::post('/search', [ClientController::class, 'search']);
     Route::post('/booking', [ClientController::class, 'booking']);
 });
+

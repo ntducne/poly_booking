@@ -9,6 +9,7 @@ class UpdateRoomTypeRequest extends Request
 {
     public function rules(): array
     {
+        dd($this->type);
         return [
             'room_type_name' => ['bail', 'required', 'string', Rule::unique(RoomType::class)->ignore($this->rooms_types, $this->column_id)],
             'description' => ['bail', 'required', 'string'],
