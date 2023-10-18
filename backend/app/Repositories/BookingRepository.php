@@ -234,41 +234,57 @@ class BookingRepository
 
     public function book($request)
     {
-        // thong tin khach hang
+        // Đọc thông tin từ request
         $name = $request->name;
         $email = $request->email;
         $phone = $request->phone;
-
-        // thong tin dat phong
         $check_in = $request->check_in;
         $check_out = $request->check_out;
-        $room_id = $request->room_id;
+        $room_type_id = $request->room_type_id;
         $branch_id = $request->branch_id;
         $adults = $request->adults;
         $children = $request->children;
-        $room_type = $request->room_type;
-        $branch = $request->branch;
         $amount_room = $request->amount_room;
 
-        $bookings = [
+        // Kiểm tra sự có sẵn của phòng
+        $available_rooms = $this->check_room($check_in, $check_out, $branch_id, $adults, $children, $room_type_id);
+
+        // Kiểm tra xem có đủ số phòng cần đặt không
+        if (count($available_rooms) < $amount_room) {
+            return response()->json(['error' => 'Không đủ phòng trống !'], 400);
+        }
+
+        // Lấy ra danh sách phòng cần đặt
+        $selected_rooms = array_slice($available_rooms, 0, $amount_room);
+
+        // Tạo một mảng chi tiết đặt phòng
+        $details = [];
+        foreach ($selected_rooms as $room_id) {
+            $details[] = [
+                'room_id' => $room_id,
+                'room_name' => Room::find($room_id)->name,
+            ];
+        }
+
+        // Tạo đối tượng booking
+        $booking = [
             'user' => [
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
             ],
             'booking_date' => date('Y-m-d'),
             'check_in' => $check_in,
             'check_out' => $check_out,
-            'room_type' => $room_type,
+            'room_type' => $room_type_id,
             'adults' => $adults,
             'children' => $children,
-            'branch' => $request->branch,
-            'detail' => [
-
-            ]
+            'branch' => $branch_id,
+            'detail' => $details,
         ];
+        Booking::create($booking);
+        return response()->json([
+            'message' => 'Đặt phòng thành công !',
+        ], 200);
     }
-
-
-
 }

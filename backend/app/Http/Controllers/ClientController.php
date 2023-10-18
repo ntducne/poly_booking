@@ -50,7 +50,7 @@ class ClientController extends Controller
             ->where('checkout', '<=', $request->checkout)
             ->where('status', '=', false)
             ->get();
-        //Chua id cac room da dat 
+        //Chua id cac room da dat
         $room_id_booked = [];
         foreach ($room_booked as $item) {
             $room_bookdetail = $this->book_detail->where('booking_id', '=', $item->_id)->get();
@@ -58,7 +58,7 @@ class ClientController extends Controller
                 $room_id_booked[] = Room::find($room->room_id)->_id;
             }
         }
-        //Danh sach cac room 
+        //Danh sach cac room
         $room = Room::where('adults', '=', $request->adult)
             ->where('children', '=', $request->child)
             ->where('branch_id', '=', $request->branch_id)
