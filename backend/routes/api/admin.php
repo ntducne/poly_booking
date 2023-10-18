@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('branches', BranchController::class)->except(['create','edit']);
 
-Route::resource('types-rooms', RoomTypeController::class)->except(['create','edit']);
+Route::resource('types_rooms', RoomTypeController::class)->except(['create','edit']);
 
 Route::resource('rooms', RoomController::class)->except(['create','edit']);
 
