@@ -88,3 +88,16 @@ function create_permision(): void
     }
     echo "Create permission success";
 }
+
+function convertToSlug($text) {
+    // Loại bỏ khoảng trắng ở đầu và cuối chuỗi
+    $text = trim($text);
+
+    // Thay thế khoảng trắng và các ký tự đặc biệt bằng dấu gạch ngang
+    $text = preg_replace('/[^A-Za-z0-9-]+/', '-', $text);
+
+    // Chuyển tất cả ký tự thành chữ thường
+    $text = strtolower($text);
+
+    return $text;
+}
