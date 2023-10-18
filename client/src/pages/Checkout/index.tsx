@@ -8,152 +8,310 @@ const Checkout = () => {
     return (
         <div>
             <HeroSlide />
-            <div className="flex flex-col items-center border-b bg-white py-4 sm:flex-row sm:px-10 lg:px-20 xl:px-32">
-                <a href="#" className="text-2xl font-bold text-gray-800">Check out</a>
-                <div className="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base">
-                    <div className="relative">
-                        <ul className="relative flex w-full items-center justify-between space-x-2 sm:space-x-4">
-                            <li className="flex items-center space-x-3 text-left sm:space-x-4">
-                                <a className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-200 text-xs font-semibold text-emerald-700" href="#"
-                                ><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg
-                                    ></a>
-                                <span className="font-semibold text-gray-900">Shop</span>
-                            </li>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                            <li className="flex items-center space-x-3 text-left sm:space-x-4">
-                                <a className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-600 text-xs font-semibold text-white ring ring-gray-600 ring-offset-2" href="#">2</a>
-                                <span className="font-semibold text-gray-900">Shipping</span>
-                            </li>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                            <li className="flex items-center space-x-3 text-left sm:space-x-4">
-                                <a className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-400 text-xs font-semibold text-white" href="#">3</a>
-                                <span className="font-semibold text-gray-500">Payment</span>
-                            </li>
-                        </ul>
-                    </div>
+
+            <div className=' max-w-[973px]  m-auto  h-full pb-16 z-50' >
+                <div>
+                    <p className='pt-[15px] pb-[15px] '>
+                        <span className='text-2xl'>
+                            <b>
+                                Đặt phòng khách sạn
+                            </b>
+                        </span>
+                    </p>
+                    <p className='pt-[15px] pb-[15px]'>
+                        Hãy chắc chắn rằng tất cả thông tin trên trang này là chính xác trước khi tiến hành thanh toán.
+                    </p>
                 </div>
-            </div>
-            <div className="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
-                <div className="px-4 pt-8">
-                    <p className="text-xl font-medium">Order Summary</p>
-                    <p className="text-gray-400">Check your items. And select a suitable shipping method.</p>
-                    <div className="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
-                        <div className="flex flex-col rounded-lg bg-white sm:flex-row">
-                            <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=htmlFormat&fit=crop&w=500&q=60" alt="" />
-                            <div className="flex w-full flex-col px-4 py-4">
-                                <span className="font-semibold">Nike Air Max Pro 8888 - Super Light</span>
-                                <span className="float-right text-gray-400">42EU - 8.5US</span>
-                                <p className="text-lg font-bold">$138.99</p>
+                <div className='  flex flex-col lg:flex-row'>
+
+                    <div className='w-full h-full lg:w-[60%] mr-[30px]'>
+                        <div className='bg-white max-w-[973px] max-h-[154px] flex p-[16px] rounded-md mb-[32px]'>
+                            <div>
+                                <img className='min-w-[100px] h-[100px]' src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/3/334a43706b543daaa27995a60d895f2a.png" alt="" />
+                            </div>
+                            <div className='w-70% ml-[16px]'>
+                                <div><span className='text-xl'>
+                                    <b>
+                                        Đăng nhập hoặc Đăng ký và tận hưởng ưu đãi dành riêng cho thành viên
+                                    </b>
+                                </span></div>
+                                <div className='mt-[20px] text-cyan-400 text-xl font-bold'><a href="">Đăng nhập hoặc đăng ký</a></div>
                             </div>
                         </div>
-                        <div className="flex flex-col rounded-lg bg-white sm:flex-row">
-                            <img className="m-2 h-24 w-28 rounded-md border object-cover object-center" src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=htmlFormat&fit=crop&w=500&q=60" alt="" />
-                            <div className="flex w-full flex-col px-4 py-4">
-                                <span className="font-semibold">Nike Air Max Pro 8888 - Super Light</span>
-                                <span className="float-right text-gray-400">42EU - 8.5US</span>
-                                <p className="mt-auto text-lg font-bold">$238.99</p>
+
+                        <div className='mb-[32px]'>
+                            <div><span className='text-xl'>
+                                <b>
+                                    Chi tiết liên hệ (cho Vé điện tử/Phiếu xác nhận)
+                                </b>
+                            </span></div>
+                            <div className='bg-white max-w-[973px]  flex p-[16px] rounded-md mt-[16px]'>
+                                <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                                    <div className="lg:col-span-2">
+                                        <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                                            <div className="md:col-span-5">
+                                                <label htmlFor="full_name" className='text-bold'>Full Name</label>
+                                                <input type="text" name="full_name" id="full_name" className="h-10 border mt-1 rounded px-4 min-w-[530px] bg-gray-50" value="" />
+                                            </div>
+
+                                            <div className="md:col-span-5">
+                                                <label htmlFor="email">Email Address</label>
+                                                <input type="text" name="email" id="email" className="h-10 border mt-1 rounded px-4 min-w-[530px] bg-gray-50" value="" placeholder="email@domain.com" />
+                                            </div>
+
+                                            <div className="md:col-span-3">
+                                                <label htmlFor="address">Address / Street</label>
+                                                <input type="text" name="address" id="address" className="h-10 border mt-1 rounded px-4 min-w-[280px] bg-gray-50" value="" placeholder="" />
+                                            </div>
+
+                                            <div className="md:col-span-2 ml-[100px]">
+                                                <label htmlFor="city">City</label>
+                                                <input type="text" name="city" id="city" className="h-10 border mt-1 rounded px-4 min-w-[180px] bg-gray-50" value="" placeholder="" />
+                                            </div>
+
+                                            <div className="md:col-span-2">
+                                                <label htmlFor="country">Country / region</label>
+                                                <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
+                                                    <input name="country" id="country" placeholder="Country" className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent" value="" />
+                                                    <button className="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
+                                                        <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                        </svg>
+                                                    </button>
+                                                    <button className="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
+                                                        <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div className="md:col-span-2 ">
+                                                <label htmlFor="state">State / province</label>
+                                                <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
+                                                    <input name="state" id="state" placeholder="State" className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent" value="" />
+                                                    <button className="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
+                                                        <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                        </svg>
+                                                    </button>
+                                                    <button className="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
+                                                        <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div className="md:col-span-1  ml-[24px]">
+                                                <label htmlFor="zipcode">Zipcode</label>
+                                                <input type="text" name="zipcode" id="zipcode" className="transition-all flex items-center h-10 min-w-[180px] border mt-1 rounded px-4  bg-gray-50" placeholder="" value="" />
+                                            </div>
+
+                                            <div className="md:col-span-5">
+                                                <div className="inline-flex items-center">
+                                                    <input type="checkbox" name="billing_same" id="billing_same" className="htmlForm-checkbox" />
+                                                    <label htmlFor="billing_same" className="ml-2">My billing address is different than above.</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
                             </div>
                         </div>
+
+                        <div>
+                            <div ><span className='text-xl'>
+                                <b>
+                                    Yêu cầu đặc biệt
+                                </b>
+                            </span></div>
+                            <div className=' max-w-[973px] max-h-[154px]  rounded-md mb-[32px]'>
+                                <div className='p-[8px] bg-slate-100 mt-[16px]'><span >
+                                    <b>
+                                        Cơ sở lưu trú sẽ cố gắng đáp ứng yêu cầu của bạn dựa trên tình trạng sẵn có.
+                                        Lưu ý rằng bạn có thể phải trả thêm phí cho một số yêu cầu và bạn không thể sửa yêu cầu sau khi đã gửi.
+                                    </b>
+                                </span></div>
+                                <div className=' bg-white'>
+
+                                    <div className=" grid gap-4 grid-cols-3 grid-rows-3 p-[16px]">
+                                        <div className="flex items-center mr-4 ml-[20px]">
+
+                                            <input id="inline-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                            <label htmlFor="inline-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Inline 1</label>
+
+                                        </div>
+                                        <div className="flex items-center mr-4">
+                                            <input id="inline-2-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                            <label htmlFor="inline-2-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Inline 2</label>
+                                        </div>
+                                        <div className="flex items-center mr-4 ">
+                                            <input id="inline-2-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                            <label htmlFor="inline-2-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Inline 2</label>
+                                        </div>
+                                        <div className="flex items-center mr-4 ml-[20px]">
+                                            <input id="inline-2-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                            <label htmlFor="inline-2-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Inline 2</label>
+                                        </div>
+                                        <div className="flex items-center mr-4 ">
+                                            <input id="inline-2-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                            <label htmlFor="inline-2-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Inline 2</label>
+                                        </div>
+                                        <div className="flex items-center mr-4 ">
+                                            <input id="inline-2-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                            <label htmlFor="inline-2-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Inline 2</label>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div className='mt-[76px] mb-[36px]'>
+                            <div ><span className='text-xl'>
+                                <b>
+                                    Chính sách hủy đặt phòng
+                                </b>
+                            </span></div>
+                            <div className=' max-w-[973px] max-h-[154px]  rounded-md mb-[32px]'>
+
+                                <div className=' bg-white p-[8px] mt-[16px] font-bold' >
+
+                                    <p>Đặt phòng này không thể hoàn tiền và không thể đổi lịch.</p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div ><span className='text-xl'>
+                                <b>
+                                Tiện Ích Bổ Sung cho Kỳ Nghỉ Của Bạn
+                                </b>
+                            </span></div>
+                            <div className=' max-w-[973px] max-h-[154px]  rounded-md mb-[32px]'>
+                                <div className='p-[8px] bg-white mt-[16px]'><span >
+                                    <div className="flex items-center mr-4 ml-[20px]">
+
+                                        <input id="inline-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label htmlFor="inline-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bảo hiểm Du lịch Chubb - Hotel Protect</label>
+
+                                    </div>
+                                    <p className='pl-[16px] pt-[8px]'>Bảo vệ kỳ nghỉ của Quý khách khỏi rủi ro bị hủy, mất đặt phòng khách sạn, và hơn thế nữa.</p>
+                                </span></div>
+                                <div className=' bg-white border-t-2 p-[16px]'>
+
+                                    <ul ><li>- Bảo hiểm lên đến tối đa VND 850,000/phòng/đêm cho Quyền lợi Hủy hoặc Gián đoạn Đặt phòng khách sạn.</li>
+                                        <li className='pt-[5px]'>- Bảo hiểm lên đến tối đa VND 850,000/phòng/đêm cho Quyền lợi Đặt phòng khách sạn.</li>
+                                        <li className='pt-[5px]'>- Bảo hiểm lên đến VND 210,000,000 cho Quyền lợi Tai nạn cá nhân</li>
+                                        <li className='pt-[5px]'>- Bảo hiểm lên đến VND 20,000,000 cho Quyền lợi Mất hoặc hư hại hành lý, quần áo và vật dụng cá nhân</li>
+                                    </ul >
+
+                                    <div className='pt-[16px] pl-[420px]'>
+                                        <p className='font-bold text-xl'> VND43.500</p>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='mt-[200px]'>
+                            <div ><span className='text-xl'>
+                                <b>
+                                    Chi tiết giá
+                                </b>
+                            </span></div>
+                            <div className=' max-w-[973px] max-h-[154px]  rounded-md mb-[32px]'>
+                                <div className='p-[8px] bg-white mt-[16px]'>
+                                    <div className='flex'>
+                                        <div className='pt-[8px] '>
+                                            <h1 className='font-bold text-xl'>Thành tiền</h1>
+                                        </div>
+                                        <div className='pt-[8px] pl-[320px]'>
+                                            <p className='font-bold text-xl'> VND43.500</p>
+                                        </div>
+                                    </div>
+                                    <div className=' flex p-[8px] mt-[8px]'>
+                                        <img className='min-w-[30px] max-h-[30px]'  src="https://ik.imagekit.io/tvlk/image/imageResource/2022/09/13/1663036323265-71c4f62650fd2a96cda8cd045e2ab935.webp?tr=h-24,q-75" alt="" />
+                                        <p className='pl-[10px] text-cyan-400  font-bold'>
+Thuế và phí là các khoản được Traveloka chuyển trả cho khách sạn. Mọi thắc mắc về thuế và hóa đơn, vui lòng tham khảo Điều khoản và Điều kiện của Traveloka để được giải đáp</p>
+                                    </div>
+                                    <div className='border-t-2'>
+                                    <div className='flex'>
+                                        <div className='pt-[8px] pt-[16px]'>
+                                            <h1 className=''>(1x) Deluxe City View (1 đêm)</h1>
+                                        </div>
+                                        <div className='pt-[8px] pl-[235px] pt-[16px]'>
+                                            <p className=''> VND43.500</p>
+                                        </div>
+                                    </div>
+                                    <div className='flex pt-[16px]'>
+                                        <div className='pt-[8px] '>
+                                            <h1 className=''>Thuế và phí</h1>
+                                        </div>
+                                        <div className='pt-[8px] pl-[350px] pt-[16px] '>
+                                            <p className=''> VND43.500</p>
+                                        </div>
+                                    </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='mt-[100px]'>
+                            <button className='min-w-[200px] ml-[380px] bg-cyan-500 rounded-xl h-[60px] mt-[30px] text-2xl font-semibold text-white'><p>Tiếp tục</p></button>
+                        </div>
+
                     </div>
-
-                    <p className="mt-8 text-lg font-medium">Shipping Methods</p>
-                    <form className="mt-5 grid gap-6">
-                        <div className="relative">
-                            <input className="peer hidden" id="radio_1" type="radio" name="radio" checked />
-                            <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-                            <label className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_1">
-                                <img className="w-14 object-contain" src="/images/naorrAeygcJzX0SyNI4Y0.png" alt="" />
-                                <div className="ml-5">
-                                    <span className="mt-2 font-semibold">Fedex Delivery</span>
-                                    <p className="text-slate-500 text-sm leading-6">Delivery: 2-4 Days</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div className="relative">
-                            <input className="peer hidden" id="radio_2" type="radio" name="radio" checked />
-                            <span className="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-                            <label className="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" htmlFor="radio_2">
-                                <img className="w-14 object-contain" src="/images/oG8xsl3xsOkwkMsrLGKM4.png" alt="" />
-                                <div className="ml-5">
-                                    <span className="mt-2 font-semibold">Fedex Delivery</span>
-                                    <p className="text-slate-500 text-sm leading-6">Delivery: 2-4 Days</p>
-                                </div>
-                            </label>
-                        </div>
-                    </form>
-                </div>
-                <div className="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
-                    <p className="text-xl font-medium">Payment Details</p>
-                    <p className="text-gray-400">Complete your order by providing your payment details.</p>
-                    <div className="">
-                        <label htmlFor="email" className="mt-4 mb-2 block text-sm font-medium">Email</label>
-                        <div className="relative">
-                            <input type="text" id="email" name="email" className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="your.email@gmail.com" />
-                            <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                                </svg>
+                    <div className='w-full h-full lg:w-[40%]  float-left'>
+                        <div className='w-full bg-white '>
+                            <div className='text-base p-[8px] tracking-wide  flex'>
+                                <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/6aa2fd01a9460e1a71bb0efb713f0212.svg" alt="" />
+                               <div className='pl-[16px]'>
+                               <span className='font-bold'>Cozrum Homes - Sonata Residence</span>
+                               <p>Cozrum Homes - Sonata Residence</p>
+                               </div>
+                                
                             </div>
-                        </div>
-                        <label htmlFor="card-holder" className="mt-4 mb-2 block text-sm font-medium">Card Holder</label>
-                        <div className="relative">
-                            <input type="text" id="card-holder" name="card-holder" className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm uppercase shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Your full name here" />
-                            <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" />
-                                </svg>
+                            <div className='font-mono inline-block  font-black bg-slate-100 p-[16px] flex'>
+                                <span className='w-[48%]'>Ngày nhận phòng <strong>12:00 - 12/02/2003</strong></span>
+                                <span className='w-[45%]'>Ngày trả phòng <strong>12:00 - 12/02/2003</strong></span>
                             </div>
-                        </div>
-                        <label htmlFor="card-no" className="mt-4 mb-2 block text-sm font-medium">Card Details</label>
-                        <div className="flex">
-                            <div className="relative w-7/12 flex-shrink-0">
-                                <input type="text" id="card-no" name="card-no" className="w-full rounded-md border border-gray-200 px-2 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="xxxx-xxxx-xxxx-xxxx" />
-                                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                                    <svg className="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                        <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z" />
-                                        <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm13 2v5H1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm-1 9H2a1 1 0 0 1-1-1v-1h14v1a1 1 0 0 1-1 1z" />
-                                    </svg>
+                            <div className='bg-white p-[16px]'>
+                                <div>
+                                    <p className='text-xl font-bold'>(1x) Deluxe City View</p>
+                                </div>
+                                <div>
+                                    <div className='grid gap-4 grid-cols-2 grid-rows-2 mt-[10px]'>
+                                        <div>Khách phòng</div>
+                                        <div>2 khách</div>
+                                        <div>Khách phòng</div>
+                                        <div>2 khách</div>
+                                    </div>
+                                    <div className='mt-[10px] flex'>
+                                       <div> <img className='min-w-[80px] max-h-[80px] rounded-xl' src="https://ik.imagekit.io/tvlk/apr-asset/dgXfoyh24ryQLRcGq00cIdKHRmotrWLNlvG-TxlcLxGkiDwaUSggleJNPRgIHCX6/hotel/asset/20016842-3078abf5cf90a3ec8b59453f05737775.jpeg?_src=imagekit&tr=h-80,q-40,w-80" 
+                                       alt="" /></div>
+                                       <div className='p-[8px] ml-[80px]'>
+                                            <p >Ko bữa sáng</p>
+                                            <p className='pt-[4px]'>Wifi free</p>
+                                       </div>
+                                    </div>
                                 </div>
                             </div>
-                            <input type="text" name="credit-expiry" className="w-full rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="MM/YY" />
-                            <input type="text" name="credit-cvc" className="w-1/6 flex-shrink-0 rounded-md border border-gray-200 px-2 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="CVC" />
-                        </div>
-                        <label htmlFor="billing-address" className="mt-4 mb-2 block text-sm font-medium">Billing Address</label>
-                        <div className="flex flex-col sm:flex-row">
-                            <div className="relative flex-shrink-0 sm:w-7/12">
-                                <input type="text" id="billing-address" name="billing-address" className="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Street Address" />
-                                <div className="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
-                                    <img className="h-4 w-4 object-contain" src="https://flagpack.xyz/_nuxt/4c829b6c0131de7162790d2f897a90fd.svg" alt="" />
-                                </div>
-                            </div>
-                            <select typeof="text" name="billing-state" className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500">
-                                <option value="State">State</option>
-                            </select>
-                            <input type="text" name="billing-zip" className="flex-shrink-0 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none sm:w-1/6 focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="ZIP" />
                         </div>
 
-
-                        <div className="mt-6 border-t border-b py-2">
-                            <div className="flex items-center justify-between">
-                                <p className="text-sm font-medium text-gray-900">Subtotal</p>
-                                <p className="font-semibold text-gray-900">$399.00</p>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <p className="text-sm font-medium text-gray-900">Shipping</p>
-                                <p className="font-semibold text-gray-900">$8.00</p>
-                            </div>
-                        </div>
-                        <div className="mt-6 flex items-center justify-between">
-                            <p className="text-sm font-medium text-gray-900">Total</p>
-                            <p className="text-2xl font-semibold text-gray-900">$408.00</p>
-                        </div>
                     </div>
-                    <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Place Order</button>
                 </div>
             </div>
         </div>
