@@ -1,49 +1,107 @@
 
 import React, { useState } from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Space, Modal, Drawer, Checkbox } from 'antd';
-
+import { Button, Input, Space, Modal, Drawer, Checkbox, Select, DatePicker, InputNumber, Form, Row, Card, Col, Alert } from 'antd';
 const App: React.FC = () => {
     const onFinish = (values: any) => {
         console.log('Received values of form:', values);
     };
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [isModalExtendOpen, setIsModalExtendOpen] = useState(false);
+    const showModalExtend = () => {
+        setIsModalExtendOpen(true);
+    };
+    const closeModalExtend = () => {
+        setIsModalExtendOpen(false);
+    };
     const showModal = () => {
         setIsModalOpen(true);
     };
-
     const handleOk = () => {
         setIsModalOpen(false);
     };
-
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-
     const [open, setOpen] = useState(false);
-
     const showDrawer = () => {
         setOpen(true);
     };
-
     const onClose = () => {
         setOpen(false);
     };
-
     return (
-        <div className="m-5">
+        <>
             <div className="h-[100px] w-full shadow-md grid grid-cols-1 md:grid-cols-2 items-center rounded-lg border">
                 <div className="ml-5">
                     <div><span className="text-2xl" style={{ fontSize: 20 }}>Chi tiết đặt phòng</span> - #1231231238</div>
                 </div>
                 <div className="flex items-center md:justify-end justify-start ml-5 md:ml-0 md:mr-3">
-                    <button type="button" className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Gia hạn</button>
+                    <button type="button" onClick={showModalExtend} className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Gia hạn</button>
                     <button type="button" className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Trả phòng</button>
                     <button type="button" className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Huỷ phòng</button>
                 </div>
             </div>
+            <Modal title="Gia hạn phòng" open={isModalExtendOpen} onOk={closeModalExtend} onCancel={closeModalExtend} className='w-full' footer={[
+            ]}>
+                <Row gutter={[16, 16]}>
+                    <Col xs={24} sm={24} md={8} lg={8}>
+                        <Card title="Thông tin khách hàng" bordered={false}>
+                            <Form labelCol={{ span: 6 }} layout="horizontal" className='mt-5 mb-5'>
+                                <Form.Item label="Tên khách hàng">
+                                    <Input disabled />
+                                </Form.Item>
+                                <Form.Item label="Số điện thoại">
+                                    <Input disabled />
+                                </Form.Item>
+                                <Form.Item label="Email">
+                                    <Input disabled />
+                                </Form.Item>
+                            </Form>
+                        </Card>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8}>
+                        <Card title="Thông tin phòng đang đặt" bordered={false}>
+                            <Form labelCol={{ span: 6 }} layout="horizontal" className='mt-5 mb-5'>
+                                <Form.Item label="Loại phòng">
+                                    <Select disabled>
+                                        <Select.Option value="demo">Demo</Select.Option>
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item label="Số phòng">
+                                    <InputNumber disabled min={1} defaultValue={5} className='w-full' />
+                                </Form.Item>
+                                <Form.Item label="Ngày">
+                                    <DatePicker.RangePicker disabled className='w-full' placeholder={['Check in', 'Check out']} />
+                                </Form.Item>
+                            </Form>
+                        </Card>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8}>
+                        <Card title="Thông tin gia hạn" bordered={false}>
+                            <Form labelCol={{ span: 6 }} layout="horizontal" className='mt-5 mb-5'>
+                                <Form.Item label="Loại phòng">
+                                    <Select>
+                                        <Select.Option value="demo">Demo</Select.Option>
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item label="Số phòng gia hạn">
+                                    <InputNumber min={1} className='w-full' />
+                                </Form.Item>
+                                <Form.Item label="Ngày">
+                                    <DatePicker.RangePicker className='w-full' placeholder={['Check in', 'Check out']} />
+                                </Form.Item>
+                            </Form>
+                            <Alert message="Còn 1 phòng trống" type="success" />
+                            <Alert message="Hết phòng" type="error" />
+                            <div className='flex justify-end mt-5'>
+                                <Button className='mr-2' key={1}>Thanh toán</Button>
+                                <Button key={2}>Kiểm tra</Button>
+                            </div>
+                        </Card>
+                    </Col>
+                </Row>
+            </Modal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4">
                 <div className="bg-white border border-gray-200 rounded-lg shadow">
                     <a href="#">
@@ -63,7 +121,7 @@ const App: React.FC = () => {
                     </div>
                 </div>
                 <div className="grid md:grid-rows-2 grid-rows-1 gap-4">
-                    <div>
+                    <div className='grid md:grid-cols-2 gap-4'>
                         <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Thông tin đặt phòng</h5>
                             <div className="font-normal text-gray-700">
@@ -78,6 +136,21 @@ const App: React.FC = () => {
                                 </ul>
                             </div>
                         </div>
+                        <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Thông tin gia hạn</h5>
+                            <div className="font-normal text-gray-700">
+                                <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
+                                    <li>Chi nhánh: Đà Nẵng</li>
+                                    <li>Loại phòng: VIP</li>
+                                    <li>Check in: 12:00 10/10/2023</li>
+                                    <li>Check out: 14:00 15/10/2023</li>
+                                    <li>Số đêm: 6</li>
+                                    <li>Thời gian thanh toán: 10:51:52 05/09/2023</li>
+                                    <li>Hình thức thanh toán: Thanh toán qua ví điện tử MoMo</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div>
                         <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
@@ -489,7 +562,7 @@ const App: React.FC = () => {
                     </table>
                 </div>
             </div>
-        </div>
+        </>
     )
 };
 

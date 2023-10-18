@@ -30,7 +30,7 @@ class ServicesController extends Controller
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
-                'message' => 'Lỗi !'
+                'message' => 'Lỗi không lấy ra được dữ liệu dịch vụ !'
             ]);
         }
     }
@@ -48,7 +48,7 @@ class ServicesController extends Controller
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
-                'message' => 'Lỗi !'
+                'message' => 'Lỗi thêm dịch vụ không thành công !'
             ]);
         }
 
@@ -73,7 +73,7 @@ class ServicesController extends Controller
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
-                'message' => 'Lỗi !'
+                'message' => 'Lỗi hiển thị dữ liệu dịch vụ không thành công!'
             ]);
         }
 
@@ -87,7 +87,7 @@ class ServicesController extends Controller
             if (!$service) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Service không tồn tại !',
+                    'message' => 'Dịch vụ không tồn tại !',
                     'data' => null
                 ]);
             }
@@ -103,7 +103,7 @@ class ServicesController extends Controller
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
-                'message' => 'Lỗi !'
+                'message' => 'Lỗi cập nhật dữ liệu dịch vụ không thành công !'
             ]);
         }
     }
@@ -115,7 +115,7 @@ class ServicesController extends Controller
             if (!$service) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Service không tồn tại !',
+                    'message' => 'Dịch vụ không tồn tại !',
                     'data' => null
                 ]);
             } else {
@@ -132,7 +132,7 @@ class ServicesController extends Controller
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
-                'message' => 'Lỗi !'
+                'message' => 'Lỗi xóa không thành công dịch vụ !'
             ]);
         }
     }
