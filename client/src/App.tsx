@@ -5,6 +5,7 @@ import ForgotPassword from "./pages/Auth/forgot_password"
 import Login from "./pages/Auth/login"
 import Profile from "./pages/Auth/profile"
 import Register from "./pages/Auth/register"
+import ResetPassword from "./pages/Auth/reset-passwork"
 import Checkout from "./pages/Checkout"
 import Home from "./pages/Home"
 import Detail from "./pages/Room/Detail"
@@ -16,7 +17,6 @@ import ConfirmCheckout from "./pages/Confirmchechout"
 
 
 function App() {
-
 
   return (
     <>
@@ -39,9 +39,12 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="forGotPassword" element={<ForgotPassword />} />
+          <Route path="reset/:token" element={<ResetPassword />} />
+          {/* <Route path="resetpassword" element={<ResetPassword />} /> */}
         </Route>
 
-         <Route path="demo" element={<Demo/>}/>
+        <Route path="demo" element={<Demo />} />
+
       </Routes>
     </>
   )

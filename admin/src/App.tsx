@@ -41,7 +41,9 @@ import EditServices from "./pages/Admin/Services/Edit";
 import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
 import Demo from "./pages/demo";
-
+import EditUser from "./pages/Admin/Guset/User/Edit";
+import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
+import Test from "./pages/test";
 
 function App() {
   return (
@@ -109,11 +111,11 @@ function App() {
           <Route path="auth">
             <Route path="admin">
               <Route index element={<ListAdmin />} />
-              <Route path="edit/:id" element={<ListAdmin />} />
+              <Route path="edit/:id" element={<EditAdmin />} />
             </Route>
             <Route path="user">
               <Route index element={<ListUser />} />
-              <Route path="edit/:id" element={<ListUser />} />
+              <Route path="edit/:id" element={<EditUser />} />
             </Route>
           </Route>
           {/* <Route path="decentralization"> */}
@@ -122,9 +124,10 @@ function App() {
             <Route path="create" element={<RoleCreate />} />
             <Route path="edit" element={<RoleCreate />} />
           </Route>
+          <Route path="/demo" element={<Demo />}></Route>
+          <Route path="/test" element={<Test />}></Route>
         </Route>
-        <Route path="/403" element={<Page403/>}></Route>
-        <Route path="/demo" element={<Demo/>}></Route>
+        <Route path="/403" element={<Page403 />}></Route>
       </Routes>
     </>
   );

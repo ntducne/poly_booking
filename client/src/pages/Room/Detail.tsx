@@ -10,7 +10,7 @@ import {
     initTE,
 } from "tw-elements";
 import { useNavigate, useParams } from 'react-router-dom'
-import { useGetDetialQuery} from '../../api/Room'
+import { useGetDetialQuery } from '../../api/Room'
 
 
 initTE({ Rating });
@@ -21,9 +21,12 @@ const Detail = () => {
     // const navigate = useNavigate()
     const { id } = useParams()
     console.log(id)
-    const { data } = useGetDetialQuery(id)
-    console.log(data.room.id);
 
+
+
+    const { data } = useGetDetialQuery(id)
+    console.log(data);
+    // console.log(data.data[0].id);
 
     // const item = data?.data
 

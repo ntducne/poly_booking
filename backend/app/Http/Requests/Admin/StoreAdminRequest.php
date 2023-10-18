@@ -25,7 +25,6 @@ class StoreAdminRequest extends Request
     {
         return [
             'name'     => 'Họ và Tên',
-            'username' => 'Tên tài khoản',
             'email'    => 'Email',
             'password' => 'Mật khẩu',
             'phone'    => 'Số điện thoại',

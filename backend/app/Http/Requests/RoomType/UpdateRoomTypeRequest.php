@@ -1,24 +1,22 @@
 <?php
 
-namespace app\Http\Requests\RoomType;
+namespace App\Http\Requests\RoomType;
 
 use App\Http\Requests\Request;
 use App\Models\RoomType;
 use Illuminate\Validation\Rule;
 class UpdateRoomTypeRequest extends Request
 {
-
-    public function rules()
+    public function rules(): array
     {
         return [
-            'room_type_name' => ['bail', 'required', 'string',
-                Rule::unique(RoomType::class, 'room_type_name')->ignore($this->roomtype,$this->column_id),],
+            'room_type_name' => ['bail', 'required', 'string', Rule::unique(RoomType::class)->ignore($this->rooms_types, $this->column_id)],
             'description' => ['bail', 'required', 'string'],
             'price_per_night' => ['bail', 'required', 'numeric'],
             'status' => ['bail', 'required'],
         ];
     }
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'room_type_name' => 'Tên loại phòng',

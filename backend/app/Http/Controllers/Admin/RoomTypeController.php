@@ -1,11 +1,15 @@
 <?php
 
-namespace app\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoomType\StoreRoomTypeRequest;
 use App\Http\Requests\RoomType\UpdateRoomTypeRequest;
+use App\Http\Resources\RoomTypeResource;
 use App\Models\RoomType;
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class RoomTypeController extends Controller
 {
@@ -15,75 +19,118 @@ class RoomTypeController extends Controller
     {
         $this->roomType = new RoomType();
     }
-    public function index()
+
+    public function index(): JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $roomTypes = $this->roomType->paginate(6);
-        $respose = [
-            'message'   => 'Get Data' ,
-            'data'      => $roomTypes
-        ];
-        return response()->json($respose);
+        try {
+            $roomTypes = $this->roomType
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+            return RoomTypeResource::collection($roomTypes);
+        } catch (Exception $exception) {
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Lỗi lấy danh sách loại phòng !'
+            ], 500);
+        }
+
     }
+
     public function store(StoreRoomTypeRequest $request)
     {
-        $object = $request->all();
-//        dd($object);
-        $roomtype = new RoomType($object);
-        $roomtype->save();
-        return response()->json([
-            'status'   => 'success',
-            'message'  => 'Thêm loại phòng thành công !',
-            'data'     => $roomtype
-        ]);
-    }
-    public function show( $id)
-    {
-        $roomType = $this->roomType->find($id);
-        if (!$roomType) {
+        try {
+            $object = $request->all();
+            $roomtype = new RoomType($object);
+            $roomtype->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Thêm loại phòng thành công !',
+                'data' => new RoomTypeResource($roomtype)
+            ]);
+        } catch (Exception $exception) {
+            Log::debug($exception->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Loại phòng không tồn tại !',
-                'data' => null
-            ]);
+                'message' => 'Lỗi thêm loại phòng !'
+            ], 500);
         }
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Chi tiết loại phòng !',
-            'data' => $roomType
-        ]);
+
     }
-    public function update(UpdateRoomTypeRequest $request,  $id)
+
+    public function show($id)
     {
-        $roomType = RoomType::find($id);
-        if (!$roomType) {
+        try {
+            $roomType = $this->roomType->find($id);
+            if (!$roomType) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Loại phòng không tồn tại !',
+                ], 404);
+            }
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Chi tiết loại phòng !',
+                'data' => new RoomTypeResource($roomType)
+            ]);
+        } catch (Exception $exception) {
+            Log::debug($exception->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Loại phòng không tồn tại !',
-                'data' => null
-            ]);
+                'message' => 'Lỗi lấy chi tiết loại phòng !'
+            ], 500);
         }
-        $roomType->update($request->all());
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Cập nhật loại phòng thành công !',
-            'data' => $roomType
-        ]);
+
     }
-    public function destroy( $id)
+
+    public function update(UpdateRoomTypeRequest $request, $id): JsonResponse
     {
-        $roomType = RoomType::find($id);
-        if (!$roomType) {
+        try {
+            $roomType = RoomType::find($id);
+            if (!$roomType) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Loại phòng không tồn tại !',
+                ], 404);
+            }
+            $roomType->update($request->all());
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Cập nhật loại phòng thành công !',
+                'data' => new RoomTypeResource($roomType)
+            ]);
+        } catch (Exception $exception) {
+            Log::debug($exception->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Loại phòng không tồn tại !',
-                'data' => null
-            ]);
+                'message' => 'Lỗi cập nhật loại phòng !'
+            ], 500);
         }
-        $roomType->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Xoá loại phòng thành công !',
-            'data' => $roomType
-        ]);
+
+    }
+
+    public function destroy($id): JsonResponse
+    {
+        try {
+            $roomType = RoomType::find($id);
+            if (!$roomType) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Loại phòng không tồn tại !',
+                ], 404);
+            }
+            $roomType->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xoá loại phòng thành công !',
+            ]);
+        } catch (Exception $exception) {
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Lỗi !'
+            ], 500);
+        }
+
     }
 }

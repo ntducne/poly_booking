@@ -32,13 +32,15 @@ class Admin extends Eloquent implements AuthenticateContract
         'phone'   => '',
         'address' => '',
     ];
-    public function getAllPermission()
+    public function getAllPermission(): array
     {
         $adminPermission = AdminPermission::where('id_admin', $this->id)->get();
         $arr = [];
         foreach ($adminPermission as $item) {
-            $permission = Permission::where('_id', $item->id_permission)->first();
-            $arr[] = $permission->name;
+            $permission = Permission::find($item->id_permission);
+            if($permission !== null) {
+                $arr[] = $permission->name;
+            }
         }
         return $arr;
     }

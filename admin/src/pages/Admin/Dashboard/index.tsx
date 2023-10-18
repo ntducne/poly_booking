@@ -1,5 +1,3 @@
-// import React, { useState } from "react";
-import type { Dayjs } from "dayjs";
 import {
   AiOutlineCheck,
   AiOutlineClose,
@@ -7,23 +5,24 @@ import {
   AiOutlineImport,
 } from "react-icons/ai";
 import { BiBed } from "react-icons/bi";
-import { Calendar, Typography } from "antd";
-import type { CalendarProps } from "antd";
+import { Typography } from "antd";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import Page from "../../../component/page";
+import { ChartOne } from "../../../component/Charts/one";
+import { ChartTwo } from "../../../component/Charts/two";
+import { ChartThree } from "../../../component/Charts/three";
+import { ChartFour } from "../../../component/Charts/four";
+import { ChartFive } from "../../../component/Charts/five";
+
 
 const { Title } = Typography;
-const Dashboard = () => {
-  const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
-    console.log(value.format("YYYY-MM-DD"), mode);
-  };
 
+const Dashboard = () => {
   return (
     <Page title={`Trang chủ`}>
       <div className="grid grid-cols-1 gap-5 2xl:grid-cols-4 2xl:gap-4 md:grid-cols-2 ">
@@ -72,13 +71,23 @@ const Dashboard = () => {
           </div>
         </button>
       </div>
-      <div className="grid grid-col-1 md:grid-cols-2">
+      <div className="grid grid-cols-3 mt-10 gap-6">
         <div>
-          <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+          <ChartOne/>
         </div>
-        <div className="bg-gray-100 md:bg-gray-100">
-          {/* <h1 className="text-2xl font-bold mb-4">Hotel Statistics</h1>
-          <canvas id="chart"></canvas> */}
+        <div>
+          <ChartTwo/>
+        </div>
+        <div>
+          <ChartThree/>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 mt-10 gap-6">
+        <div>
+          <ChartFour/>
+        </div>
+        <div>
+          <ChartFive/>
         </div>
       </div>
       <div className="border rounded-2xl bg-white p-6 mt-8">

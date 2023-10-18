@@ -10,6 +10,10 @@ import {
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
+import { useGetAllBranchesQuery } from "../../../api/branches";
+import { useCreateServicesMutation } from "../../../api/services";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -20,9 +24,37 @@ const formItemLayout = {
 };
 
 const AddServices = () => {
+
+  const [createServices , isLoading] = useCreateServicesMutation();
+  const {  data:dataBranches , isLoading : loadingBranch } = useGetAllBranchesQuery({});
+  const navigate = useNavigate();
+
+  console.log(dataBranches, "dataBranches");
+  if(isLoading || loadingBranch){
+    return <div>Loading...</div>
+  }
+  
+
   const onFinish = (values: any) => {
-    console.log(values.image);
     // Xử lý dữ liệu khi nhấn nút Submit
+    createServices(values).unwrap().then((item) => {
+      if (item.status == 'Success') {
+        toast("Thêm mới thành công", {
+          autoClose: 3000,
+          theme: "light",
+        });
+        setTimeout(() => {
+          navigate("/services")
+        }, 3000)
+      } else {
+        console.log(item)
+        toast(item?.error?.name || "Lỗi rồi bạn", {
+          autoClose: 3000,
+          theme: "light",
+        });
+      }
+      
+    })
   };
 
 
@@ -48,7 +80,7 @@ const AddServices = () => {
         >
           <Form.Item
             label="Tên dịch vụ"
-            name="area"
+            name="service_name"
             rules={[{ required: true, message: "Vui lòng nhập dịch vụ!" }]}
           >
             <Input />
@@ -63,19 +95,21 @@ const AddServices = () => {
           </Form.Item>
 
           <Form.Item name="description" label="Mô tả">
-            <Input.TextArea />
+            <Input.TextArea rows={5}/>
           </Form.Item>
 
           <Form.Item
             name="branch_id"
             label="Chi nhánh"
-            hasFeedback
             rules={[{ required: true, message: "Vui lòng chọn chi nhánh!" }]}
           >
-            <Select placeholder="Vui lòng chọn chi nhánh!">
-              <Option value="1">Cầu Giấy</Option>
-              <Option value="2">Cầu Diễn</Option>
-              <Option value="3">Hà Đông</Option>
+            <Select
+            //  placeholder="Vui lòng chọn chi nhánh!"
+             >
+              {dataBranches?.data?.data?.map((item: any) => {
+                return  <Option key={item?._id} value={item?._id}>{item?.name}</Option>
+              }
+              )}
             </Select>
           </Form.Item>
 

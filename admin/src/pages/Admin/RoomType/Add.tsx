@@ -9,6 +9,9 @@ import {
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
+import { toast } from "react-toastify";
+import { useCreateRoomTypeMutation } from "../../../api/roomTypes";
+import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -19,12 +22,27 @@ const formItemLayout = {
 };
 
 const AddRoomType = () => {
+  const navigate = useNavigate()
+  const [createRoomsType] = useCreateRoomTypeMutation({})
+
+
   const onFinish = (values: any) => {
-    console.log(values.image);
-    // Xử lý dữ liệu khi nhấn nút Submit
+    createRoomsType(values)
+      .unwrap()
+      .then((result) => {
+        if (result.status === "success") {
+          toast.success("Thêm mới loại phòng thành công");
+          navigate("/roomType");
+        } else {
+          toast.error(result.error.message);
+        }
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu có
+        toast.error("Có lỗi xảy ra khi thêm mới loại phòng");
+        console.log(error);
+      });
   };
-
-
 
   return (
     <div>
@@ -79,21 +97,28 @@ const AddRoomType = () => {
               },
             ]}
           >
-            <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value="BinhDan">Còn</Option>
-              <Option value="V.I.P">Hết</Option>
+            <Select placeholder="Vui lòng nhập trạng thái!">
+              <Option value={1}>Còn</Option>
+              <Option value={0}>Hết</Option>
             </Select>
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-            <Button  className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
-                <AiOutlineCheck className="text-[#fff] "/>
+              <Button
+                className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
+                type="default"
+                htmlType="submit"
+              >
+                <AiOutlineCheck className="text-[#fff] " />
                 <Text className=" text-[#fff] ml-1">Thêm</Text>
               </Button>
-              <Button className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" htmlType="reset">
-                 <BiReset className="text-[#fff]"/> 
-                 <Text className="text-[#fff] ml-1">Làm mới</Text>
+              <Button
+                className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
+                htmlType="reset"
+              >
+                <BiReset className="text-[#fff]" />
+                <Text className="text-[#fff] ml-1">Làm mới</Text>
               </Button>
             </Space>
           </Form.Item>

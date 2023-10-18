@@ -25,7 +25,7 @@ Route::prefix('booking')->group(function () {
     // booking detail
     Route::get('detail/{id}', [UserController::class, 'bookingDetail']);
     // cancel booking
-    Route::post('cancel', [UserController::class, 'cancelBooking']);
+    Route::put('cancel', [UserController::class, 'cancelBooking']);
 });
 
 // rate
