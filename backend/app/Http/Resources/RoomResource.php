@@ -13,6 +13,8 @@ class RoomResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
+            'slug'=> $this->slug,
             'area' => $this->area,
             'adults' => $this->adults,
             'children' => $this->children,
@@ -24,7 +26,6 @@ class RoomResource extends JsonResource
             'num_of_bed' => $this->num_of_bed,
             'bed_size' => $this->bed_size,
             'branch' => new BranchResource(Branch::where('_id', $this->branch_id)->first()),
-            'name' => $this->name,
             'images' => $this->getImages(),
             'rate' => $this->getRate(),
             'type' => $this->getType(),
