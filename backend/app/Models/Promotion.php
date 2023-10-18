@@ -16,7 +16,7 @@ class Promotion extends Eloquent
     protected $fillable = [
         'code',
         'start_date',
-        'start_end',
+        'end_date',
         'conditions',
         'branch_id',
     ];
