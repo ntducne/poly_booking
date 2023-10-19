@@ -42,7 +42,7 @@ return [
         'label' => 'Đặt phòng'
     ],
     [
-        'name' => 'types-rooms',
+        'name' => 'types',
         'label' => 'Loại phòng'
     ],
     [
