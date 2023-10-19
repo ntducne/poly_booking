@@ -44,6 +44,9 @@ import Demo from "./pages/demo";
 import EditUser from "./pages/Admin/Guset/User/Edit";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
 import Test from "./pages/test";
+import ListBranches from "./pages/Admin/Branches/List";
+import AddBranche from "./pages/Admin/Branches/Add";
+import EditBranche from "./pages/Admin/Branches/Edit";
 
 function App() {
   return (
@@ -117,6 +120,11 @@ function App() {
               <Route index element={<ListUser />} />
               <Route path="edit/:id" element={<EditUser />} />
             </Route>
+          </Route>
+          <Route path="branches">
+            <Route index element={<ListBranches />} />
+            <Route path="add" element={<AddBranche />} />
+            <Route path="edit/:id" element={<EditBranche />} />
           </Route>
           {/* <Route path="decentralization"> */}
           <Route path="role">
