@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Booking\BookingRequest;
 use App\Http\Requests\Booking\SearchRequest;
 use App\Http\Resources\RoomResource;
+use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Rates;
@@ -34,6 +35,10 @@ class ClientController extends Controller
     public function roomDetail($id)
     {
         $room = Room::find($id);
+        $room_same = Room::where('room_type_id', '=', $room->room_type_id)
+            ->where('branch_id', '=', $room->branch_id)
+            ->where('_id', '!=', $id)
+            ->get();
         if (!$room) {
             return response()->json([
                 'status' => 'error',
@@ -42,7 +47,8 @@ class ClientController extends Controller
         }
         return response()->json([
             'room' => new RoomResource($room),
-            'rate' => $room->getRate()
+            'rate' => $room->getRate(),
+            'room_same' => $room_same
         ]);
     }
     public function check_room($check_in, $check_out, $adults, $children, $branch_id, $room_type_id)
@@ -52,11 +58,12 @@ class ClientController extends Controller
             ->where('checkin', '<=', $check_in)
             ->where('checkout', '>=', $check_out)
             ->where('status', '=', false)
+            ->where('room_type', $room_type_id)
             ->get();
         //Chua id cac room da dat
         $room_id_booked = [];
         foreach ($room_booked as $item) {
-            $room_id_booked[] = $this->book_detail->where('booking_id', '=', $item->_id)->get()->first()->room_id;
+            $room_id_booked[] = $this->book_detail->where('booking_id', '=', $item->_id)->first()->room_id;
         }
         //Danh sach cac room
         $room = Room::where('adults', '>=', $adults)
@@ -88,7 +95,7 @@ class ClientController extends Controller
                 ];
             }
             $response = [
-                'message' => 'Tìm thành công 1',
+                'message' => 'Tìm thành công !',
                 'data' => $room
             ];
         }
@@ -107,11 +114,13 @@ class ClientController extends Controller
         $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id);
         $total_adults = 0;
         $total_children = 0;
+        $total_discount = 0;
+        $total_price_per_night = 0;
         foreach ($room_valid as $key => $value) {
             $total_adults += Room::find($value)->adults;
             $total_children += Room::find($value)->children;
-            $total_discount = Room::find($value)->discount;
-            $total_price_per_night = RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
+            $total_discount += Room::find($value)->discount;
+            $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
         }
         //Bat loi dat so nguoi 
         if ($adults > $total_adults && $children > $total_children) {
@@ -158,10 +167,26 @@ class ClientController extends Controller
                 ]
             ];
         }
+        //Hoa don 
+
+        $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
+        $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
+        $bill = [
+            'booking_id' => $create->_id,
+            'services' => [],
+            'total' => $param['price_per_night'] * $amount_day,
+            // total = so ngay su dung phong * gia 1 dem 
+            'payment_method' => 0, //thanh toan tai quay
+            'payment_date' => null,
+            'branch_id' => $branch_id
+        ];
+        $billing = Billing::create($bill);
+
         return response()->json([
             'message' => 'Đặt thành công !',
             'booking' => $create,
-            'details' => $details
+            'details' => $details,
+            'bill' => $billing
         ]);
     }
 }
