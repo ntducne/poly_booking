@@ -2,12 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\BillingResource;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Room;
+use App\Models\RoomType;
 use App\Models\Services;
-use App\Models\Billing;
 class BookingRepository
 {
     private Booking $booking;
@@ -15,12 +16,16 @@ class BookingRepository
     private Room $room;
     private RoomType $room_type;
 
+
+
     public function __construct()
     {
         $this->booking = new Booking();
         $this->booking_detail = new BookDetail();
         $this->room = new Room();
         $this->room_type = new RoomType();
+        $this->billing = new Billing();
+
     }
 
     public function search($request)
@@ -204,22 +209,12 @@ class BookingRepository
         }
     }
 
-    public function order($id){
-        $this->billing = new Billing();
-        $booking = Booking::where('id', $this->booking_id)->first();
-        $services = Services::where('id', $this->service_id)->first();
-        $detail = BookDetail::where('booking_id', $booking->id)->get();
+    public function orderList(){
+        return BillingResource::collection($this->billing->paginate(10));
+    }
 
-        return response()->json([
-            'status'=> 'success',
-            'data' => [
-                'booking' => [
-                    'data' => $booking,
-                    'detail' => $detail,
-                ],
-                'service' => $services
-            ]
-        ]);
+    public function orderDetail($id){
+        return new BillingResource($this->billing->find($id));
     }
 
 }

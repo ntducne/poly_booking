@@ -24,6 +24,7 @@ class AdminController extends Controller
     {
         try{
             $role = $request->user()->role;
+
             if ($role == 0) {
                 $response = $this->admin->paginate(10);
             }
@@ -87,7 +88,7 @@ class AdminController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chi tiết nhân viên !',
-                'data' => $admin
+                'data' => new StaffResource($admin),
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
