@@ -63,7 +63,8 @@ class AdminController extends Controller
                     'data'    => null
                 ];
             }
-            return response()->json($response);
+//            return response()->json($response);
+            return StaffResource::collection($response);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([

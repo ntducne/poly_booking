@@ -5,7 +5,8 @@ namespace App\Repositories;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Room;
-
+use App\Models\Services;
+use App\Models\Billing;
 class BookingRepository
 {
     public function search($request){
@@ -184,6 +185,24 @@ class BookingRepository
                 'data' => $bookings
             ]);
         }
+    }
+
+    public function order($id){
+        $this->billing = new Billing();
+        $booking = Booking::where('id', $this->booking_id)->first();
+        $services = Services::where('id', $this->service_id)->first();
+        $detail = BookDetail::where('booking_id', $booking->id)->get();
+
+        return response()->json([
+            'status'=> 'success',
+            'data' => [
+                'booking' => [
+                    'data' => $booking,
+                    'detail' => $detail,
+                ],
+                'service' => $services
+            ]
+        ]);
     }
 
 }
