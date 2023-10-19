@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Image, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
@@ -6,18 +6,36 @@ import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
-  age: number;
+  num_of_bed: number;
   address: string;
+  status: number,
+  area: string
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import { useGetRoomsQuery } from "../../../api/room";
+import FormatPrice from "../../../utils/FormatPrice";
 
 const ListRoom = () => {
-  const { data } = useGetRoomsQuery({});
-  console.log(data)
+  const { data, isLoading } = useGetRoomsQuery({});
+  const [dataFetching, setDataFetching] = useState<any>([])
+  console.log(data?.data)
+
+  useEffect(() => {
+    setDataFetching(data?.data.map((item: any) => {
+      return {
+        key: item.id,
+        name: item.name,
+        num_of_bed: item.num_of_bed,
+        discount: item.discount,
+        status: item.status,
+        area: item.area,
+        address: item?.branch?.address
+      }
+    }))
+  }, [isLoading])
   const columns: ColumnsType<DataType> = [
     {
       title: "Tên phòng",
@@ -38,8 +56,8 @@ const ListRoom = () => {
             src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg"
           />
           <div className="ml-3 text-gray-500">
-            <p>#68e365 {record?.name}</p>
-            <p>2 giường ngủ</p>
+            <p>#68e365</p>
+            <p>{record?.num_of_bed} giường ngủ</p>
             {/* <p>{record?.key}</p> */}
           </div>
         </div>
@@ -47,18 +65,29 @@ const ListRoom = () => {
     },
     {
       title: "Giá phòng",
-      dataIndex: "age",
-      key: "age",
+      dataIndex: "discount",
+      key: "discount",
+      sorter: (a, b) => a.name.length - b.name.length,
+      render: (text) => {
+        // Sử dụng hàm định dạng (format) ở đây để định dạng giá phòng theo ý muốn
+        return <span className="font-bold">{FormatPrice({ price: text })}</span>
+      }
+    },
+    {
+      title: "Diện tích",
+      dataIndex: "area",
+      key: "area",
       sorter: (a, b) => a.name.length - b.name.length,
     },
     {
-      title: "Tầng phòng",
-      dataIndex: "age",
-      key: "age",
+      title: "Địa điểm",
+      dataIndex: "address",
+      key: "address",
+      sorter: (a, b) => a.name.length - b.name.length,
     },
     {
       title: "Trạng thái",
-      dataIndex: "address",
+      dataIndex: "status",
       filters: [
         {
           text: "Còn trống",
@@ -69,9 +98,9 @@ const ListRoom = () => {
           value: "Hết",
         },
       ],
-      render: (text) => (
+      render: (_, record) => (
         <div className="font-semibold">
-          {text === "Còn" ? (
+          {record?.status != 0 ? (
             <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
               Còn
             </span>
@@ -92,13 +121,13 @@ const ListRoom = () => {
           <Button
             className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
             type="primary" >
-            <Link to={`/room/edit/${record?.key}`}>
+            <Link to={`/room/edit/${record.key}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
           <Button
             className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
-            onClick={() => remove(record?.key)}
+            onClick={() => remove(record.key)}
             type="primary"
           >
             <MdDeleteForever />
@@ -106,21 +135,6 @@ const ListRoom = () => {
         </Space>
       ),
       // fixed: "right",
-    },
-  ];
-
-  const data1 = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "Còn",
-    },
-    {
-      key: "2",
-      name: "John Brown 123",
-      age: 35,
-      address: "Hết",
     },
   ];
 
@@ -182,13 +196,15 @@ const ListRoom = () => {
           </Link>
         </div>
       </div>
-      <Table
-        scroll={{ x: true }}
-        className="max-w-full mt-3"
-        columns={columns}
-        dataSource={data1}
-        onChange={onChange}
-      />
+      {isLoading ? <>loading...</> :
+        <Table
+          scroll={{ x: true }}
+          className="max-w-full mt-3"
+          columns={columns}
+          dataSource={dataFetching}
+          onChange={onChange}
+        />
+      }
     </Page>
   );
 };

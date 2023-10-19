@@ -2,30 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Booking\BookingRequest;
+use App\Http\Requests\Booking\SearchRequest;
 use App\Http\Resources\RoomResource;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Rates;
 use App\Models\Room;
 use App\Models\RoomType;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    public function __construct()
+    {
+        $this->booking = new Booking();
+        $this->book_detail = new BookDetail();
+    }
 
-
-    public function roomType(){
+    public function roomType()
+    {
         return response()->json(RoomType::all());
     }
 
-    public function rooms(){
+    public function rooms()
+    {
         return RoomResource::collection(Room::paginate(10));
     }
 
     public function roomDetail($id)
     {
         $room = Room::find($id);
-        if(!$room){
+        if (!$room) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Phòng không tồn tại !',
@@ -36,162 +45,123 @@ class ClientController extends Controller
             'rate' => $room->getRate()
         ]);
     }
-    public function search(Request $request)
-    { //duyet cac phong
-        $arrRoomId = []; //chua id cac phong
-        $room = Room::all();
+    public function check_room($check_in, $check_out, $adults, $children, $branch_id, $room_type_id)
+    {
+        //Check qua thoi gian ben Booking
+        $room_booked = $this->booking
+            ->where('checkin', '<=', $check_in)
+            ->where('checkout', '>=', $check_out)
+            ->where('status', '=', false)
+            ->get();
+        //Chua id cac room da dat
+        $room_id_booked = [];
+        foreach ($room_booked as $item) {
+            $room_id_booked[] = $this->book_detail->where('booking_id', '=', $item->_id)->get()->first()->room_id;
+        }
+        //Danh sach cac room
+        $room = Room::where('adults', '>=', $adults)
+            ->where('children', '>=', $children)
+            ->where('branch_id', '=', $branch_id)
+            ->where('room_type_id', '=', $room_type_id)
+            ->get();
+        $room_id_completed = [];
         foreach ($room as $item) {
-            $arrRoomId[] = [$item->_id, ''];
-        }
-        $arrCheckinCheckout = [];
-        //check in check out cung ton tai
-        if ($request->has('checkin') && $request->has('checkout')) {
-            foreach ($arrRoomId as $book => $value) {
-                //check qua book detail room da co ai dat hay chua
-                $bookDetail = BookDetail::where('room_id', '=', $value[0])->get();
-                if ($bookDetail) {
-                    foreach ($bookDetail as $item) {
-                        //data cua booking tra ve cho tung book detail cua phong da dat
-                        $booking = Booking::find($item->booking_id);
-                        //kiem tra check in check out trong khoang thoi gian tu $booking->checkin den $booking->checkout neu co se xoa id room
-                        if ($request->checkin >= $booking->checkin && $request->checkout <= $booking->checkout && $request->checkin != '' && $request->checkout != '') {
-                            unset($arrRoomId[$book]);
-                        } else {
-                            $arrCheckinCheckout[] = [$booking->checkin, $booking->checkout];
-                        }
-                    }
-                    if ($arrCheckinCheckout) {
-                        //kiem tra check in check out trong khoang tu thoi gian tu checkin min den checkout max neu co se xoa room_id
-                        if ($request->checkin > min($arrCheckinCheckout[0]) && $request->checkout < max($arrCheckinCheckout[1]) && $request->checkin != '' && $request->checkout != '') {
-                            unset($arrRoomId[$book]);
-                        } elseif ($request->checkin != '' && $request->checkout != '') {
-                            $min = min($arrCheckinCheckout);
-                            $max = max($arrCheckinCheckout);
-                            $arrRoomId[$book][1] = 'Phòng có thể đặt ';
-                        }
-                        if ($request->checkin != '' || $request->checkout != '') {
-                            foreach ($arrCheckinCheckout as $key => $value) {
-                                if ($request->checkin > $value[0] && $request->checkin < $value[1]) {
-                                    unset($arrRoomId[$book]);
-                                } else {
-                                    $min = min($arrCheckinCheckout);
-                                    $max = max($arrCheckinCheckout);
-                                    $arrRoomId[$book][1] = 'Phòng có thể đặt ';
-                                }
-                            }
-                        }
-                    }
-                }
+            if (!in_array($item->_id, $room_id_booked)) {
+                $room_id_completed[] = $item->_id;
             }
         }
-        //check so luong
-        if ($request->has('soNguoi') && $request->soNguoi != 0) {
-            foreach ($arrRoomId as $key => $value) {
-                $room = Room::where('_id', '=', $value[0])->get();
-                if ($room[0]->num_of_people != $request->soNguoi) {
-                    unset($arrRoomId[$key]);
-                }
-            }
-        }
-        if ($request->has('branch_id') && $request->branch_id != '') {
-            foreach ($arrRoomId as $key => $value) {
-                $room = Room::where('_id', '=', $value[0])->get();
-                if ($room[0]->branch_id != $request->branch_id) {
-                    unset($arrRoomId[$key]);
-                }
-            }
-        }
-        if ($arrRoomId) {
-            $arrFitRoom = [];
-            foreach ($arrRoomId as $item) {
-                $arrFitRoom[] = ['room' => Room::find($item[0]), 'status' => $item[1]];
-            }
+        return $room_id_completed;
+    }
+    public function search(searchRequest $request)
+    {
+        $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, $request->room_type_id);
+        if (!$room_completed) {
             $response = [
-                'status' => 'Tìm thành công',
-                'data' => $arrFitRoom
+                'message' => 'Hết phòng !'
             ];
         } else {
+            $room = [];
+            foreach ($room_completed as $key => $value) {
+                $room[] = [
+                    'room' => Room::find($value),
+                    'room_type' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->get()
+                ];
+            }
             $response = [
-                'status' => 'Không tìm thấy'
+                'message' => 'Tìm thành công 1',
+                'data' => $room
             ];
         }
         return response()->json($response);
     }
-    public function booking(Request $request){
-        $booking = new Booking();
+    public function booking(BookingRequest $request)
+    {
         $soLuong = $request->soLuong;
-        $room_id = $request->room_id; // id phong ma khach dat
+        $room_id = $request->room_id;
         $branch_id = $request->branch_id;
-        $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->get(); //tra ve du lieu phong ma khach muon dat
-        //dat phong
-        $param = $request->except(['soLuong', 'room_id', 'branch_id']);
-        $price_per_night = 100000;
-        $param['price_per_night'] = ($price_per_night == null ? 100000 : $price_per_night);
-        $create = $booking->create($param);
-        if ($create) {
-            $bookDetail = new BookDetail();
-            //neu so luong la 1
-            $bookDetail->create(
-                [
-                    'booking_id' => $create->_id,
-                    'room_id' => $room_id,
-                    'room_name' => $room[0]->room_name,
-                ]
-            );
-            $response = [
-                'status' => 'success',
-                'message' => 'Đặt thành công',
-                'data' => $create,
-            ];
-            if ($soLuong > 1) {
-                //danh sach phong lien quan den phong muon dat
-                $listroom = Room::where('room_type_id', '=', $room[0]->room_type_id)->where('branch_id', '=', $branch_id)->where('_id', '!=', $room_id)->get();
-                $count = 1;
-                $arrRoom = []; // mang nay chua cac phong phu hop sau khi loc
-                foreach ($listroom as $item1) {
-                    //lay tat ca du lieu co cung room_id
-                    $checkRoom = BookDetail::where('room_id', '=', $item1->_id)->get();
-                    // dd($checkRoom);
-                    if (empty($checkRoom)) { //kiem tra mang co rong hay ko
-                        $arrRoom[] = $item1->_id;
-                    } else {
-                        $checkoutMax = 0;
-                        $checkinMin = strtotime($request->checkin);
-                        foreach ($checkRoom as $item) {
-                            //lay ra check in check out cua phong theo book detail join booking
-                            $checkBookingRoom = $booking->where('_id', '=', $item->booking_id)->where('status', '=', false)->get();
-                            if ($checkoutMax < strtotime($checkBookingRoom[0]->checkout)) {
-                                $checkoutMax = strtotime($checkBookingRoom[0]->checkout);
-                            }
-                            if ($checkinMin > strtotime($checkBookingRoom[0]->checkin)) {
-                                $checkinMin = strtotime($checkBookingRoom[0]->checkin);
-                            }
-                        }
-                        // dd([date('Y-m-d', $checkoutMax), date('Y-m-d', $checkinMin)]);
-                        if (strtotime($create->checkout) < $checkinMin || $checkoutMax < strtotime($create->checkin)) { // kiem tra lich dat phong co
-                            $arrRoom[] = $item1->_id;
-                        }
-                    }
-                }
-                foreach ($arrRoom as $key => $value) {
-                    if ($count == $soLuong) {
-                        return $response = [
-                            'status' => 'success',
-                            'message' => 'Đặt thành công',
-                            'data' => $create,
-                        ];
-                    }
-                    $bookDetail->create(
-                        [
-                            'booking_id' => $create->_id,
-                            'room_id' => $value,
-                            'room_name' => Room::find($value)->room_name,
-                        ]
-                    );
-                    $count++;
-                }
-            }
+        (int) $adults = $request->adults;
+        (int) $children = $request->children;
+        $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
+        $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
+        //Kiem tra phong con trong hay khong
+        $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id);
+        $total_adults = 0;
+        $total_children = 0;
+        foreach ($room_valid as $key => $value) {
+            $total_adults += Room::find($value)->adults;
+            $total_children += Room::find($value)->children;
+            $total_discount = Room::find($value)->discount;
+            $total_price_per_night = RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
         }
-        return response()->json($response);
+        //Bat loi dat so nguoi 
+        if ($adults > $total_adults && $children > $total_children) {
+            return response()->json([
+                'message' => 'Phòng không đủ chỗ '
+            ]);
+        }
+        //Bat loi dat so luong phong
+        if (count($room_valid) < $soLuong) {
+            return response()->json([
+                'message' => 'Không đủ phòng trống !'
+            ]);
+        }
+
+        $param['room_type'] = $room->room_type_id;
+        $param['booking_date'] = now()->toDateTimeString();
+        $param['price_per_night'] = $total_price_per_night - $total_discount; // gia 1 dem cua booking
+        $param['amount_people'] = [
+            'total_people' => $total_adults + $total_children,
+            'total_adults' => $total_adults,
+            'total_children' => $total_children
+        ];
+        $param['amount_room'] = $soLuong;
+        //Lay ra id user neu ho da co tai khoan tu truoc
+        $user = User::where('email', '=', $request->representative['email'])->first();
+        $param['user_id'] = !empty($user) ? $user->_id : null;
+
+        //phong co the dat 
+        $room_booking = array_slice($room_valid, 0, $soLuong);
+        $create = $this->booking->create($param);
+        $details = [];
+        foreach ($room_booking as $key => $value) {
+            $details[] = [
+                'booking_detail' => $this->book_detail->create(
+                    [
+                        'booking_id' => $create->_id,
+                        'room_id' => $value,
+                        'room_name' => Room::find($value)->name
+                    ]
+                ),
+                'info_room' => [
+                    'name' => Room::find($value)->name,
+                    'price' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night - Room::find($value)->discount
+                ]
+            ];
+        }
+        return response()->json([
+            'message' => 'Đặt thành công !',
+            'booking' => $create,
+            'details' => $details
+        ]);
     }
 }

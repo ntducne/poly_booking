@@ -1,15 +1,17 @@
 <?php
 
-namespace app\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Request;
 use App\Http\Requests\Room\StoreRoomRequest;
 use App\Http\Requests\Room\UpdateRoomRequest;
 use App\Http\Resources\RoomResource;
 use App\Models\Room;
 use App\Models\RoomImage;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
@@ -23,16 +25,22 @@ class RoomController extends Controller
         $this->room_image = new RoomImage();
     }
 
-    public function index()
+    public function index(Request $request): JsonResponse|AnonymousResourceCollection
     {
         try {
-            return RoomResource::collection(Room::paginate(10));
+            $query = $this->room->newQuery();
+            if ($request->has('name')) {
+                $searchTerm = $request->input('name');
+                $query->where('name', 'LIKE', '%' . $searchTerm . '%');
+            }
+            $rooms = $query->paginate(10)->withQueryString();
+            return RoomResource::collection($rooms);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
-                'message' => 'Lỗi !'
-            ]);
+                'message' => 'Lỗi không lấy được dữ liệu !'
+            ], 500);
         }
 
     }
@@ -40,6 +48,7 @@ class RoomController extends Controller
     {
         try {
             $object = $request->all();
+            $object['slug'] = convertToSlug($request->name);
             $roomNew = $this->room->create($object);
             $room = $this->room->where('name', $request->name)->first();
             $images = $request->file('images');
@@ -69,8 +78,8 @@ class RoomController extends Controller
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
-                'message' => 'Lỗi !'
-            ]);
+                'message' => 'Lỗi thêm phòng !'
+            ], 500);
         }
     }
     public function show( $id)
@@ -82,19 +91,19 @@ class RoomController extends Controller
                     'status' => 'error',
                     'message' => 'Phòng không tồn tại !',
                     'data' => null
-                ]);
+                ], 404);
             }
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chi tiết phòng !',
                 'data' => $room
-            ]);
+            ], 200);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
                 'message' => 'Lỗi !'
-            ]);
+            ], 500);
         }
     }
     public function update(UpdateRoomRequest $request, $id)
@@ -106,7 +115,10 @@ class RoomController extends Controller
                     'status' => 'error',
                     'message' => 'Phòng không tồn tại !',
                     'data' => null
-                ]);
+                ], 404);
+            }
+            if($request->name != $object->name){
+                $object->slug = convertToSlug($request->name);
             }
             $roomImages = $this->room_image->where('rooom_id', $object->id)->get();
             foreach ($roomImages as $item){
@@ -119,20 +131,19 @@ class RoomController extends Controller
                     ]);
                 }
             }
-
             $arr = $request->all();
             $room = $object->update($arr);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Update phòng thành công!',
                 'data' => $room,
-            ]);
+            ], 200);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
                 'message' => 'Lỗi !'
-            ]);
+            ], 500);
         }
     }
     public function destroy($id)
@@ -144,20 +155,20 @@ class RoomController extends Controller
                     'status' => 'error',
                     'message' => 'Phòng không tồn tại !',
                     'data' => null
-                ]);
+                ], 404);
             }
             $room->delete();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Xoá phòng thành công !',
                 'data' => $room
-            ]);
+            ], 200);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
                 'message' => 'Lỗi !'
-            ]);
+            ], 500);
         }
     }
 }

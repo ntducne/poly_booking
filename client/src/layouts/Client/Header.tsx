@@ -15,15 +15,15 @@ export default function Header({ }: Props) {
     })
   })
   return (
-    <div className={`${header ? 'bg-white shadow-lg py-4' : 'bg-transparent py-4'} fixed px-[50px] top-0 z-40 w-full transition-all duration-300`}>
+    <div className={`${header ? 'bg-white shadow-lg py-[3px]' : 'bg-transparent py-[3px]'} fixed px-[50px] top-0 z-40 w-full transition-all duration-300`}>
       <div className="container mx-auto lg:flex-row lg:justify-between lg:gap-y-0 flex justify-between">
         {/* logo */}
         <div className='flex gap-5 items-center '>
 
           <Link to=''>
-            {header ? <img className='w-[100px]' src={"https://res.cloudinary.com/dteefej4w/image/upload/v1696338661/logo_30_zwmslg.png"} />
+            {header ? <img className='w-[90px]' src={"https://res.cloudinary.com/dteefej4w/image/upload/v1696338661/logo_30_zwmslg.png"} />
               :
-              <img className='w-[100px]' src={"https://res.cloudinary.com/dteefej4w/image/upload/v1696338751/logo_31_olx95j.png"} />}
+              <img className='w-[90px]' src={"https://res.cloudinary.com/dteefej4w/image/upload/v1696338751/logo_31_olx95j.png"} />}
           </Link>
 
 

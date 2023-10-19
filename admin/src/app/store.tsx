@@ -17,6 +17,10 @@ import userSlicer from '../Slices/Auth'
 import { usersApi } from '../api/account/users';
 import { staffsApi } from '../api/account/staffs';
 import roomApi from '../api/room';
+import roomTypesApi from '../api/roomTypes';
+import branchApi from '../api/branches';
+import serviceApi from '../api/services';
+import bookingApi from '../api/booking';
 '../api/account/staffs';
 
 const persistConfig = {
@@ -33,7 +37,11 @@ const rootReducer = combineReducers({
     [usersApi.reducerPath]: usersApi.reducer,
     [staffsApi.reducerPath]: staffsApi.reducer,
     user: userSlicer,
-    [roomApi.reducerPath]: roomApi.reducer
+    [roomApi.reducerPath]: roomApi.reducer,
+    [roomTypesApi.reducerPath]: roomTypesApi.reducer,
+    [branchApi.reducerPath]: branchApi.reducer,
+    [serviceApi.reducerPath]: serviceApi.reducer,
+    [bookingApi.reducerPath]: bookingApi.reducer,
 })
 
 
@@ -43,7 +51,11 @@ const middlewares = [
     authApi.middleware,
     usersApi.middleware,
     staffsApi.middleware,
-    roomApi.middleware
+    roomApi.middleware,
+    roomTypesApi.middleware,
+    branchApi.middleware,
+    serviceApi.middleware,
+    bookingApi.middleware
 ]
 
 const store = configureStore({

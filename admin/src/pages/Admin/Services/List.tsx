@@ -11,14 +11,23 @@ import { Link } from "react-router-dom";interface DataType {
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal , { } from "sweetalert";
+import { useDeleteServicesMutation, useGetServicesQuery } from "../../../api/services";
+import FormatPrice from "../../../utils/FormatPrice";
 
 const ListServices = () => {
 
+  const {data : dataServices , isLoading } = useGetServicesQuery({});
+  const [deleteServices] = useDeleteServicesMutation();
+
+  if(isLoading){
+    return <div>Loading...</div>
+  }
+
   const columns: ColumnsType<any> = [
     {
-      title: "ID",
-      dataIndex: "service_id",
-      sorter: (a, b) => a.service_id - b.service_id,
+      title: "STT",
+      dataIndex: "key",
+      sorter: (a, b) => a.key - b.key,
       sortDirections: ["descend"],
       fixed: "left",
     },
@@ -33,12 +42,22 @@ const ListServices = () => {
       dataIndex: "price",
       key: "price",
       sorter: (a, b) => a.price - b.price,
+      render: (text) => {
+        // Sử dụng hàm định dạng (format) ở đây để định dạng giá phòng theo ý muốn
+        return <span className="font-bold">{FormatPrice({ price: text })}</span>
+      }
     },
     {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
     },
+    // {
+    //   title: "Địa điểm",
+    //   dataIndex: "branch_id",
+    //   key: "branch_id",
+    //   sorter: (a, b) => a.branch_id.length - b.branch_id.length,
+    // },
     {
       title: "Action",
       dataIndex: "action",
@@ -48,12 +67,12 @@ const ListServices = () => {
            type="primary" 
            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
            >
-            <Link to={`/services/edit/${record?.key}`}>
+            <Link to={`/services/edit/${record?._id}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
           <Button
-            onClick={() => remove(record?.key)}
+            onClick={() => removeServices(record?._id)}
             type="primary"
             className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
           >
@@ -65,22 +84,14 @@ const ListServices = () => {
     },
   ];
 
-  const data : any = [
-    {
-      key: "1",
-      service_id: 1,
-      service_name: "spa",
-      price: 15000,
-      description: "Gái đến massa nè",
-    },
-    {
-      key: "2",
-      service_id: 2,
-      service_name: "Chơi đá không",
-      price: 18000,
-      description: "Có gái đến massa nè và có ít đá để chơi",
-    },
-  ];
+  const data : any = dataServices?.data?.data.map((item : any, index: number) => ({
+    key: index + 1,
+    _id: item._id,
+    service_name: item.service_name,
+    price: item.price,
+    description: item.description,
+    branch_id: item.branch_id,
+  }))
 
   const onChange: TableProps<DataType>["onChange"] = (
     // pagination,
@@ -91,28 +102,28 @@ const ListServices = () => {
     // console.log("params", pagination, filters, sorter, extra);
   };
 
-  const remove = (id: any) => {
-    console.log(id);
+  const removeServices = (id: any) => {
     try {
       swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
+        title: "Bạn có chắc muốn xóa ?",
+        text: "Bạn có chắc muốn xóa dịch vụ này không ?",
         icon: "warning",
-        buttons: ["Cancel", "Delete"],
+        buttons: ["Quay lại", "Xóa"],
         dangerMode: true,
       })
         .then((willDelete) => {
-          if (willDelete) {
+          if (willDelete) {  
             console.log(id);
             
-            // removeComment(id);
-            swal("You have successfully deleted", {
+            deleteServices(id);
+            swal("Bạn đã xóa thành công !", {
               icon: "success",
+              timer: 3000
             });
           }
         })
         .catch(() => {
-          swal("Error", {
+          swal("Lỗi", {
             icon: "error",
           });
         });

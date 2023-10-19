@@ -18,7 +18,10 @@ interface IForgotPassword {
 
 interface IResetPassword {
     token: string;
-    newPassword: string;
+    data: {
+        newPassword: string;
+        confimPassword: string
+    }
 }
 
 
@@ -63,16 +66,17 @@ const authApi = createApi({
         }),
 
         getToken: builder.query({
-            query: () => ({
-                url: `/auth/user/reset-password/{token}`,
+            query: (token) => ({
+                url: `/auth/user/reset-password/${token}`,
                 method: "GET",
             }),
         }),
 
         resetPassword: builder.mutation({
             query: (data: IResetPassword) => ({
-                url: `/auth/user/reset-password/{token}`,
-                body: data,
+                url: `/auth/user/reset-password/${data.token}`,
+                method: 'PUT',
+                body: data.data,
             }),
             invalidatesTags: ['Auth']
         }),

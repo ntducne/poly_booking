@@ -14,10 +14,11 @@ class Booking extends Eloquent
         'booking_date',
         'checkin',
         'checkout',
-        'pay_date',
+        'room_type',
         'representative',
         'price_per_night',
-        'amount_of_people',
+        'amount_people',
+        'amount_room',
         'status',
         'deleted_at'
     ];
@@ -29,4 +30,9 @@ class Booking extends Eloquent
     public function getDetail(){
         return BookDetail::where('booking_id', $this->_id)->get();
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
 }

@@ -13,11 +13,13 @@ class Room extends Eloquent
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'area',
+        'slug',
         'adults',
         'children',
         'room_type_id',
         'pay_upon_check_in',
         'description',
+        'description_sort',
         'discount',
         'status',
         'policies_and_information',
