@@ -1,20 +1,17 @@
-// import React, { useState } from "react";
 import {
   Form,
   Input,
   Button,
-  Select,
+  // Select,
   Typography,
-  InputNumber,
   Space,
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
-import { useGetAllBranchesQuery } from "../../../api/branches";
-import { useCreateServicesMutation } from "../../../api/services";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-const { Option } = Select;
+import { useCreateBranchesMutation } from "../../../api/branches";
+// const { Option } = Select;
 
 const { Title, Text } = Typography;
 
@@ -23,40 +20,28 @@ const formItemLayout = {
   wrapperCol: { span: 14 },
 };
 
-const AddServices = () => {
+const AddBranche = () => {
+  const navigate = useNavigate()
+  const [createBranches] = useCreateBranchesMutation({})
 
-  const [createServices] = useCreateServicesMutation();
-  const {  data:dataBranches , isLoading : loadingBranch } = useGetAllBranchesQuery({});
-  const navigate = useNavigate();
-
-  console.log(dataBranches, "dataBranches");
-  if(loadingBranch){
-    return <div>Loading...</div>
-  }
-  
 
   const onFinish = (values: any) => {
-    // Xử lý dữ liệu khi nhấn nút Submit
-    createServices(values).unwrap().then((item) => {
-      if (item.status == 'Success') {
-        toast("Thêm mới thành công", {
-          autoClose: 3000,
-          theme: "light",
-        });
-        setTimeout(() => {
-          navigate("/services")
-        }, 3000)
-      } else {
-        console.log(item)
-        toast(item?.error?.name || "Lỗi rồi bạn", {
-          autoClose: 3000,
-          theme: "light",
-        });
-      }
-      
-    })
+    createBranches(values)
+      .unwrap()
+      .then((result) => {
+        if (result.status === "success") {
+          toast.success("Thêm mới chi nhánh thành công");
+          navigate("/branches");
+        } else {
+          toast.error(result.error.message);
+        }
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu có
+        toast.error("Có lỗi xảy ra khi thêm mới chi nhánh");
+        console.log(error);
+      });
   };
-
 
   return (
     <div>
@@ -79,38 +64,33 @@ const AddServices = () => {
           className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
-            label="Tên dịch vụ"
-            name="service_name"
-            rules={[{ required: true, message: "Vui lòng nhập dịch vụ!" }]}
+            label="Tên chi nhánh"
+            name="name"
+            rules={[
+              { required: true, message: "Vui lòng nhập tên chi nhánh!" },
+            ]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Giá dịch vụ"
-            name="price"
-            rules={[{ required: true, message: "Vui lòng nhập giá" }]}
+            label="Địa chỉ"
+            name="address"
+            rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
           >
-            <InputNumber min={1} />
-          </Form.Item>
-
-          <Form.Item name="description" label="Mô tả">
-            <Input.TextArea rows={5}/>
+            <Input />
           </Form.Item>
 
           <Form.Item
-            name="branch_id"
-            label="Chi nhánh"
-            rules={[{ required: true, message: "Vui lòng chọn chi nhánh!" }]}
+            label="Số điện thoại"
+            name="phone"
+            rules={[{ required: true, message: "Vui lòng nhập số điện thoại" },
+            {
+              pattern: /^[0-9]{10}$/,
+              message: "Số điện thoại phải có đúng 10 số",
+            },]}
           >
-            <Select
-            //  placeholder="Vui lòng chọn chi nhánh!"
-             >
-              {dataBranches?.data?.data?.map((item: any) => {
-                return  <Option key={item?._id} value={item?._id}>{item?.name}</Option>
-              }
-              )}
-            </Select>
+            <Input />
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
@@ -138,4 +118,4 @@ const AddServices = () => {
   );
 };
 
-export default AddServices;
+export default AddBranche;
