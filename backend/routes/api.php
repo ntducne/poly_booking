@@ -44,29 +44,3 @@ Route::prefix('/permission')->group(function(){
         create_permision();
     });
 });
-
-Route::get('/hehe', function (){
-    $arrService = [
-        [
-            'id' => [
-                '652d035a3332f614a402a00a', '652d76b73a481f986a08bcd9'
-            ],
-            'time' => now()->toDateTimeString(),
-        ],
-        [
-            'id' => [
-                '652d035a3332f614a402a00a', '652d76b73a481f986a08bcd9'
-            ],
-            'time' => now()->toDateTimeString(),
-        ],
-
-    ];
-    $arr = [];
-    foreach ($arrService as $item){
-        $arr[] = [
-            ''
-        ];
-    }
-
-    return response()->json($arrService);
-});
