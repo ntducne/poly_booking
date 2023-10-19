@@ -14,11 +14,11 @@ class Booking extends Eloquent
         'booking_date',
         'checkin',
         'checkout',
-        'pay_date',
+        'room_type',
         'representative',
         'price_per_night',
-        'adults',
-        'children',
+        'amount_people',
+        'amount_room',
         'status',
         'deleted_at'
     ];
