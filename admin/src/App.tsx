@@ -41,6 +41,9 @@ import EditServices from "./pages/Admin/Services/Edit";
 import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
 import Demo from "./pages/demo";
+import ListBranches from "./pages/Admin/Branches/List";
+import AddBranche from "./pages/Admin/Branches/Add";
+import EditBranche from "./pages/Admin/Branches/Edit";
 
 function App() {
   return (
@@ -114,6 +117,11 @@ function App() {
               <Route index element={<ListUser />} />
               <Route path="edit/:id" element={<ListUser />} />
             </Route>
+          </Route>
+          <Route path="branches">
+            <Route index element={<ListBranches />} />
+            <Route path="add" element={<AddBranche />} />
+            <Route path="edit/:id" element={<EditBranche />} />
           </Route>
           {/* <Route path="decentralization"> */}
           <Route path="role">

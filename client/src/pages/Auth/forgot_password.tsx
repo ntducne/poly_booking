@@ -14,7 +14,7 @@ function ForgotPassword() {
         // Gửi yêu cầu quên mật khẩu bằng cách sử dụng useForgotPasswordMutation
         ForgotPassword({ email })
             .then((response: any) => {
-                if (response.data.status === true) {
+                if (response?.data?.status === true) {
                     // Email tồn tại, hiển thị thông báo thành công
                     message.success('Liên kết đặt lại mật khẩu đã được gửi qua email !');
                 } else {

@@ -42,6 +42,17 @@ const roomTypesApi = createApi({
             },
             invalidatesTags: ['roomType']
         }),
+
+        deleteRoomType: builder.mutation<any, any>({
+            query: (data) => {
+                return {
+                    url: `/admin/types-rooms/${data.id}`,
+                    method: "DELETE",
+                    body: data.data
+                }
+            },
+            invalidatesTags: ['roomType']
+        }),
     })
 })
 

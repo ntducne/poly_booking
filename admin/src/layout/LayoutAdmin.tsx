@@ -159,6 +159,13 @@ const LayoutAdmin = () => {
         />
       ),
     ]),
+    getItem(
+      "Chi nhánh",
+      "16",
+      <Link onClick={() => handleTitleChange("Chi nhánh")} to={`branches`}>
+        <AiTwotoneGift />
+      </Link>
+    ),
   ];
   const [collapsed, setCollapsed] = useState(false);
   const {
