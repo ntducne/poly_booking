@@ -49,4 +49,8 @@ return [
         'name' => 'rooms',
         'label' => 'Phòng'
     ],
+    [
+        'name' => 'billings',
+        'label' => 'Hoá đơn'
+    ],
 ];

@@ -7,6 +7,9 @@ return [
     'admin.branches.update' => 'Cập nhật chi nhánh',
     'admin.branches.destroy' => 'Xóa chi nhánh',
 
+    'admin.billings.index' => 'Danh sách hoá đơn',
+    'admin.billings.show' => 'Chi tiết hoá đơn',
+
     'admin.types.index' => 'Danh sách loại phòng',
     'admin.types.show' => 'Chi tiết loại phòng',
     'admin.types.store' => 'Thêm loại phòng',
