@@ -13,6 +13,7 @@ import RoomBooked from "./pages/RoomBooked"
 import Rooms from "./pages/Rooms"
 import Contact from "./pages/contact"
 import Demo from "./pages/demo"
+import ConfirmCheckout from "./pages/Confirmchechout"
 
 
 function App() {
@@ -20,14 +21,16 @@ function App() {
   return (
     <>
       <Routes>
+      
         <Route path='/' element={<LayoutClient />}>
           <Route index element={<Home />} />
           <Route path='rooms' element={<Rooms />} />
-          <Route path="detial/:id" element={<Detail />} />
+          <Route path="detail/:id" element={<Detail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="confirmcheckout" element={<ConfirmCheckout />} />
           <Route path='user'>
             <Route path='roomBooked' element={<RoomBooked />} />
           </Route>

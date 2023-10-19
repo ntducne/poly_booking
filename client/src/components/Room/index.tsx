@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 
 
 export default function Room(data: any) {
-    console.log(data.data);
-
     const { name, description, area, adults, children, num_of_bed, branch } = data.data
     return (
         <div className='bg-bgr group overflow-hidden'>
@@ -40,15 +38,15 @@ export default function Room(data: any) {
                 </div>
             </div>
             <div className=' font-text_2nd bg-bgr'>
-                <div className=' w-full'>
-                    <Link to='' className='flex justify-between flex-wrap'>
-                        <h3 className='text-h3 font-bold '>{name}</h3>
-                        <h3 className='text-h3 font-bold '>112.000.000 vnđ</h3>
-                    </Link>
-                    <div className='mb-3 text-[20px] flex flex-col md:gap-4 gap-0 md:flex-row justify-between'>
-                        <div className='max-w-[250px]'>
-                            <p className='max-w-[300px]'><span className='font-normal text-desc'>{description.length > 70 ? description?.slice(0, 70) + "..." : description}</span></p>
+                <div className=' w-full flex flex-col items md:flex-row md:justify-between md:gap-3'>
+                    <Link to='' className='flex flex-col'>
+                        <span className='text-h3 font-bold md:max-w-[180px] overflow-hidden md:text-left text-center'>{name}</span>
+                        <div className='md:max-w-[250px]'>
+                            <p><span className='font-normal text-desc'>{description?.length > 70 ? description?.slice(0, 70) + "..." : description}</span></p>
                         </div>
+                    </Link>
+                    <div className='mb-3 text-[20px] flex flex-col'>
+                        <span className='text-h3 font-bold '>112.000.000 vnđ</span>
                         <div className='max-w-[250px]'>
                             <p className='font-bold'>Vị trí: <span className='font-medium'>{branch?.address}</span></p>
                             <p className='font-bold'>Tổng người: <span className='font-medium'>{adults} người lớn + {children} trẻ con</span></p>
@@ -58,7 +56,6 @@ export default function Room(data: any) {
                     </div>
                 </div>
                 <div className='mb-5 md:mb-[30px]'>
-
                     <Link to='/' className='text-normal  font-bold border-b hover:text-[#a27b49] hover:border-b-[#a27b49] transition-all duration-600'>Xem chi tiết</Link>
                 </div>
             </div>

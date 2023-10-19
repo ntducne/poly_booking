@@ -3,7 +3,7 @@ import { cookies } from '../config/cookies';
 
 const branchApi = createApi({
     reducerPath: "branches",
-    tagTypes: ['branches'],
+    tagTypes: ['Branches'],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.polydevhotel.site",
         prepareHeaders: (headers) => {
@@ -14,7 +14,7 @@ const branchApi = createApi({
     endpoints: (builder) => ({
         getAllBranches: builder.query<any, any>({
             query: () => `/admin/branches`,
-            providesTags: ['branches']
+            providesTags: ['Branches']
         }),
 
         createBranches: builder.mutation<any, any>({
@@ -23,7 +23,7 @@ const branchApi = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags: ['branches']
+            invalidatesTags: ['Branches']
         }),
 
         getDetailBranches: builder.query<any, any>({
@@ -31,7 +31,7 @@ const branchApi = createApi({
                 url: `/admin/branches/${_id}`,
                 method: "GET"
             }),
-            providesTags: ['branches']
+            providesTags: ['Branches']
         }),
 
         updateBranches: builder.mutation<any, any>({
@@ -42,18 +42,17 @@ const branchApi = createApi({
                     body: data
                 }
             },
-            invalidatesTags: ['branches']
+            invalidatesTags: ['Branches']
         }),
 
         deleteBranch: builder.mutation<any, any>({
-            query: (data) => {
+            query: (id: string) => {
                 return {
-                    url: `/admin/branches/${data.id}`,
+                    url: `/admin/branches/${id}`,
                     method: "DELETE",
-                    body: data.data
                 }
             },
-            invalidatesTags: ['branches']
+            invalidatesTags: ['Branches']
         }),
     })
 })

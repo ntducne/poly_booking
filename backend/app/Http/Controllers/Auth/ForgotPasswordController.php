@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\ForgotPassword;
 use App\Models\PasswordReset;
 use App\Models\User;
 use App\Notifications\ResetPasswordRequest;
@@ -10,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class ForgotPasswordController extends Controller
@@ -71,15 +73,14 @@ class ForgotPasswordController extends Controller
         }
 
     }
-    public function reset(Request $request): JsonResponse
+    public function reset(ForgotPassword $request): JsonResponse
     {
-        $token = $request->segment(4);
-        $passwordReset = $this->passwordReset->where('token', $token)->first();
+        $passwordReset = $this->passwordReset->where('token', $request->token)->first();
         if (Carbon::parse($passwordReset->updated_at)->addMinutes(10)->isPast()) {
             $passwordReset->delete();
             return response()->json([
                 'status' => false,
-                'message' => 'Token không hợp lệ !',
+                'message' => 'Token hết hạn !',
             ], 422);
         }
         $user = $this->user->where('email', $passwordReset->email)->first();
@@ -89,11 +90,19 @@ class ForgotPasswordController extends Controller
                 'message' => 'Chúng tôi không thể tìm thấy người dùng với địa chỉ email này !',
             ], 422);
         }
-        $user->update(array('password' => Hash::make($request->new_password)));
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json([
+                'status' => false,
+                'error' => 'Mật khẩu cũ không chính xác !',
+            ], 422);
+        }
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
         $passwordReset->delete();
         return response()->json([
             'status' => true,
             'success' => 'Đặt lại mật khẩu thành công !',
-        ], 200);
+        ]);
     }
 }

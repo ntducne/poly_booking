@@ -6,6 +6,8 @@ use App\Enums\RoleEnum;
 use App\Http\Requests\Request;
 use App\Models\Admin;
 use App\Models\Branch;
+use App\Rules\MailRule;
+use App\Rules\PhoneRule;
 use Illuminate\Validation\Rule;
 class StoreAdminRequest extends Request
 {
@@ -14,9 +16,9 @@ class StoreAdminRequest extends Request
         return [
             'image'     => ['bail', 'required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'name'      => ['bail', 'required', 'string'],
-            'email'     => ['bail', 'required', 'email', Rule::unique(Admin::class, 'email')],
+            'email'     => ['bail', 'required', new MailRule() , Rule::unique(Admin::class, 'email')],
             'password'  => ['bail', 'required', 'string', 'min:6'],
-            'phone'     => ['bail', 'required', 'numeric', 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/', Rule::unique(Admin::class, 'phone')],
+            'phone'     => ['bail', 'required', new PhoneRule() , Rule::unique(Admin::class, 'phone')],
             'branch_id' => ['bail', 'required', Rule::exists(Branch::class, $this->column_id)],
             'role'      => ['bail', 'required', 'integer', Rule::in(RoleEnum::asArray())],
         ];

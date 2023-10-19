@@ -17,10 +17,13 @@ type Props = {};
 
 export default function Rooms({ }: Props) {
     const [width, setWidth] = useState(0);
-    const { data, isLoading } = useGetRoomsQuery({});
+    const { data, isLoading, refetch } = useGetRoomsQuery({});
     if (isLoading) {
         return <>loading...</>;
     }
+    useEffect(() => {
+        refetch()
+    }, [])
     useEffect(() => {
         setWidth(window.innerWidth);
     }, [window.innerWidth]);

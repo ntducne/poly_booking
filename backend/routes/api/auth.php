@@ -27,7 +27,7 @@ Route::middleware(CheckReferer::class)->group(function () {
 //        Route::group(['middleware' => 'throttle:1,1'], function () {
             Route::post('reset-password', [ForgotPasswordController::class, 'sendMail']);
             Route::get('reset-password/{token}', [ForgotPasswordController::class, 'checkToken']);
-            Route::put('reset-password/{token}', [ForgotPasswordController::class, 'reset']);
+            Route::put('reset-password', [ForgotPasswordController::class, 'reset']);
 //        });
     });
     Route::get('/login/{provider}', [LoginSocicalController::class, 'redirect']);

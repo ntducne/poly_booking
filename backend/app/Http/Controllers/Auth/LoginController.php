@@ -25,29 +25,30 @@ class LoginController extends Controller
         $input = $request->validated();
         $guard = $request->segment(2);
         $credentials = [
-            'email'     => $input['email'],
-            'password'  => $input['password']
+            'email' => $input['email'],
+            'password' => $input['password']
         ];
         if (!Auth::guard($guard)->attempt($credentials)) {
             return response()->json([
-                'status'    => false,
-                'message'   => 'Thông tin đăng nhập không hợp lệ !'
+                'status' => false,
+                'message' => 'Thông tin đăng nhập không hợp lệ !'
             ], 401);
         }
         $user = Auth::guard($guard)->user();
         if ($user->status == 0) {
+            $this->removeUser($user->id);
             $tokenResult = $user->createToken(ucfirst($guard) . ' Access Token', [$request->segment(2)]);
             $token = $tokenResult->token;
             $token->save();
             $response = [
-                'status'        => true,
-                'user'          => [
+                'status' => true,
+                'user' => [
                     'image' => $user->image,
-                    'name'  => $user->name,
+                    'name' => $user->name,
                 ],
-                'accessToken'   => [
-                    'token'         => $tokenResult->accessToken,
-                    'expires_at'    => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
+                'accessToken' => [
+                    'token' => $tokenResult->accessToken,
+                    'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
                 ],
             ];
             if ($guard == 'admin') {
@@ -56,8 +57,8 @@ class LoginController extends Controller
             return response()->json($response, 200);
         } else {
             return response()->json([
-                'status'    => false,
-                'message'   => 'Tài khoản của bạn đã bị khóa !'
+                'status' => false,
+                'message' => 'Tài khoản của bạn đã bị khóa !'
             ], 401);
         }
     }
@@ -78,6 +79,6 @@ class LoginController extends Controller
         $user_id = $request->user()->_id;
         $request->user()->token()->revoke();
         $this->removeUser($user_id);
-        return response()->json(['status' => true, 'msg' => 'Bạn đã đăng xuất !'], 200);
+        return response()->json(['status' => true, 'msg' => 'Bạn đã đăng xuất !']);
     }
 }

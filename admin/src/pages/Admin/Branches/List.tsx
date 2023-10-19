@@ -31,11 +31,9 @@ const ListBranches = () => {
         address: item.address,
         phone: item.phone,
       }
-      refetch()
+      // refetch()
     }))
-  }, [isLoading])
-
-
+  }, [isLoading, data?.data])
 
   const columns: ColumnsType<DataType> = [
     {
@@ -95,38 +93,42 @@ const ListBranches = () => {
   const remove = (id: any) => {
     try {
       swal({
-        title: "Bạn có chắc muốn xóa ?",
-        text: "Bạn có chắc muốn xóa dịch vụ này không ?",
+        title: "Are you sure you want to delete?",
+        text: "You cannot undo after deleting!",
         icon: "warning",
-        buttons: ["Quay lại", "Xóa"],
+        buttons: ["Cancel", "Delete"],
         dangerMode: true,
       })
         .then((willDelete) => {
           if (willDelete) {
-            console.log(id);
-            deleteBranch(id);
-            swal("Bạn đã xóa thành công !", {
-              icon: "success",
-              timer: 3000
-            });
+            deleteBranch(id).unwrap().then((data) => {
+              console.log(id);
+              console.log(data);
+              if (data.status === "success") {
+                refetch();
+                swal("You have successfully deleted", {
+                  icon: "success",
+                });
+              }
+            })
           }
         })
         .catch(() => {
-          swal("Lỗi", {
+          swal("Error", {
             icon: "error",
           });
         });
     } catch (error) { }
   };
 
-  useEffect(() => {
-    refetch();
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   refetch();
+  //   window.scrollTo(0, 0);
+  // }, []);
 
-  if (isLoading) {
-    return <>loading...</>
-  }
+  // if (isLoading) {
+  //   return <>loading...</>
+  // }
 
   return (
     <Page title={`Chi nhánh`}>

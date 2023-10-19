@@ -36,6 +36,10 @@ const EditRoom = () => {
   const { data: dataRoomTypes, isLoading: isLoadingTypes } = useGetRoomTypeQuery({})
   const { data: dataBranch, isLoading: isLoadingBranch } = useGetAllBranchesQuery({})
   const [updateData, { isLoading: isLoadingUpdate }] = useUpdateRoomMutation()
+
+  if(isLoadingTypes && isLoadingBranch){
+    return <>loading...</>
+  }
   const onFinish = (values: any) => {
     const data = {
       ...values,
