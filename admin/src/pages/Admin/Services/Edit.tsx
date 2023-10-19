@@ -63,8 +63,13 @@ const EditServices = () => {
     })
   };
 
-  if(loadingData && loadingBranch){
+  if(loadingData || loadingBranch){
     return <div>Loading...</div>
+  }
+  console.log("serviceDetail", serviceDetail);
+  
+  if(serviceDetail?.data === null){
+    return <div>Dịch vụ này không tồn tại</div>
   }
 
 
