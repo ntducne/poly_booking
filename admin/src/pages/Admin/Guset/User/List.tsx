@@ -18,6 +18,7 @@ import { useGetAllUsersQuery } from "../../../../api/account/users";
 const ListUser = () => {
 
   const { data: users } = useGetAllUsersQuery([]);
+  
  
 
   const columns: ColumnsType<any> = [
