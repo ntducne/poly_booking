@@ -3,6 +3,7 @@ import { cookies } from '../config/cookies';
 
 const roomTypesApi = createApi({
     reducerPath: "roomType",
+    tagTypes: ["roomsType"],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.polydevhotel.site",
         prepareHeaders: (headers) => {
@@ -12,7 +13,8 @@ const roomTypesApi = createApi({
     }),
     endpoints: (builder) => ({
         getRoomType: builder.query<any, any>({
-            query: () => `/admin/types-rooms`
+            query: () => `/admin/room/types`,
+            providesTags: ["roomsType"]
         })
     })
 })

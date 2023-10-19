@@ -69,7 +69,6 @@ const AddRoom = () => {
         });
       }
     })
-    // Xử lý dữ liệu khi nhấn nút Submit
   };
 
   const normFile = (e: any) => {
@@ -102,6 +101,10 @@ const AddRoom = () => {
   const handleOnChange = ({ fileList }: any) => {
     setFileList(fileList);
   };
+
+  if (isLoading && isLoadingBranch) {
+    return <>loading...</>
+  }
 
   return (
     <div>
@@ -145,9 +148,9 @@ const AddRoom = () => {
             hasFeedback
             rules={[{ required: true, message: "Vui lòng nhập loại phòng!" }]}
           >
-            <Select placeholder="Vui lòng nhập loại phòng!">
-              {data?.data?.data?.map((item: any) => {
-                return <Option key={item._id} value={item._id}>{item.name}</Option>
+            <Select>
+              {data?.data?.map((item: any) => {
+                return <Option key={item.id} value={item.id}>{item.room_type_name}</Option>
               })}
             </Select>
           </Form.Item>
