@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,3 +14,8 @@ Route::prefix('room')->group(function (){
     Route::post('/booking', [ClientController::class, 'booking']);
 });
 
+Route::prefix('bill')->group(function (){
+    Route::get('/', [BillingController::class, 'index']);
+    route::get('/{id}', [BillingController::class,'store']);
+    Route::post('/order-services', [BillingController::class,'order_service_user']);
+});

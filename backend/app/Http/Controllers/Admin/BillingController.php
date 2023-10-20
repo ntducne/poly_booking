@@ -38,27 +38,6 @@ class BillingController extends Controller
         return response()->json($data->bookingInBilling());
     }
 
-    public function store($id): JsonResponse
-    {
-        $booking = Booking::find($id);
-        $room_id = BookDetail::where('booking_id','=',$booking->_id)->first()->room_id;
-        $branch_id = Room::find($room_id)->branch_id;
-        $datediff = abs(strtotime($booking->checkin) - strtotime($booking->checkout));
-        $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
-        $bill = [
-            'booking_id' => $booking->_id,
-            'services' => [],
-            'total' => $booking->price_per_night * $amount_day,
-            // total = so ngay su dung phong * gia 1 dem 
-            'payment_method' => 0, //thanh toan tai quay
-            'payment_date' => null,
-            'branch_id' => $branch_id,
-            'status' => 'pending'
-        ];
-        $data = $this->billing->create($bill);
-        return response()->json($data);
-    }
-
     public function order_service_user(Request $request)
     {
         try {
