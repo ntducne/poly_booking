@@ -24,6 +24,7 @@ class AdminController extends Controller
     {
         try{
             $role = $request->user()->role;
+
             if ($role == 0) {
                 $response = $this->admin->paginate(10);
             }
@@ -63,7 +64,8 @@ class AdminController extends Controller
                     'data'    => null
                 ];
             }
-            return response()->json($response);
+//            return response()->json($response);
+            return StaffResource::collection($response);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
@@ -86,7 +88,7 @@ class AdminController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chi tiết nhân viên !',
-                'data' => $admin
+                'data' => new StaffResource($admin),
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());

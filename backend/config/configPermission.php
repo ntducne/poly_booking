@@ -42,11 +42,15 @@ return [
         'label' => 'Đặt phòng'
     ],
     [
-        'name' => 'types-rooms',
+        'name' => 'types',
         'label' => 'Loại phòng'
     ],
     [
         'name' => 'rooms',
         'label' => 'Phòng'
+    ],
+    [
+        'name' => 'billings',
+        'label' => 'Hoá đơn'
     ],
 ];

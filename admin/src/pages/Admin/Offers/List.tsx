@@ -12,17 +12,22 @@ interface DataType {
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal , { } from "sweetalert";
+import swal from "sweetalert";
 import Page from "../../../component/page";
+import {
+  useDeletePromotionsMutation,
+  useGetPromotionsQuery,
+} from "../../../api/promotions";
 
 const ListOffers = () => {
-
+  const { data: dataPromotions } = useGetPromotionsQuery({});
+  const [deletePromotions] = useDeletePromotionsMutation();
 
   const columns: ColumnsType<any> = [
     {
-      title: "ID",
-      dataIndex: "promotion_id",
-      sorter: (a, b) => a.promotion_id - b.promotion_id,
+      title: "STT",
+      dataIndex: "key",
+      sorter: (a, b) => a.key - b.key,
       sortDirections: ["descend"],
       fixed: "left",
     },
@@ -30,7 +35,6 @@ const ListOffers = () => {
       title: "Mã code",
       dataIndex: "code",
       key: "code",
-
     },
     {
       title: "Ngày bắt đầu",
@@ -47,21 +51,26 @@ const ListOffers = () => {
       dataIndex: "conditions",
       key: "conditions",
     },
+    // {
+    //   title: "Cơ sở",
+    //   dataIndex: "branch_id",
+    //   key: "branch_id",
+    // },
     {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button 
-          type="primary" 
-          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
+          <Button
+            type="primary"
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
           >
-            <Link to={`/offers/edit/${record?.key}`}>
+            <Link to={`/offers/edit/${record?._id}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
           <Button
-            onClick={() => remove(record?.key)}
+            onClick={() => remove(record?._id)}
             type="primary"
             className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
           >
@@ -73,36 +82,21 @@ const ListOffers = () => {
     },
   ];
 
-  const data : any = [
-    {
-      key: "1",
-      promotion_id: 1,
-      code: "DUCGA",
-      start_date: "2021-09-01",
-      end_date: "2021-09-30",
-      conditions: "Ngày lễ",
-    },
-    {
-      key: "2",
-      promotion_id: 2,
-      code: "CONKEC",
-      start_date: "2021-09-01",
-      end_date: "2021-09-30",
-      conditions: "Ngày nhà giáo Việt Nam",
-    },
-  ];
+  const data: any = dataPromotions?.data?.map((item: any, index: any) => ({
+    key: index + 1,
+    ...item,
+  }));
 
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<DataType>["onChange"] = () =>
     // pagination,
     // filters,
     // sorter,
     // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+    {
+      // console.log("params", pagination, filters, sorter, extra);
+    };
 
   const remove = (id: any) => {
-    console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -113,12 +107,13 @@ const ListOffers = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            // removeComment(id);
-            console.log(id);
-            
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
+            deletePromotions(id);
+            // console.log(id);
+            setTimeout(() => {
+              swal("You have successfully deleted", {
+                icon: "success",
+              });
+            }, 3000);
           }
         })
         .catch(() => {
@@ -132,7 +127,7 @@ const ListOffers = () => {
   return (
     <Page title={`Ưu đãi - Khuyến mại`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-      <FormSearch />
+        <FormSearch />
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
             to={`/offers/add`}
@@ -151,7 +146,7 @@ const ListOffers = () => {
         </div>
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}

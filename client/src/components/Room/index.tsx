@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom'
 
 
 export default function Room(data: any) {
-    const { name, description, area, adults, children, num_of_bed, branch } = data.data
+    const { name, description, area, adults, children, num_of_bed, branch, id } = data?.data
     return (
         <div className='bg-bgr group overflow-hidden'>
             <div className='overflow-hidden'>
-                <Link to='/'>
+                <Link to={`/rooms/${id}`}>
                     <img className='group-hover:scale-110 transition-all duration-300 w-full' src={"https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"} alt="" />
                 </Link>
             </div>
             {/* detail */}
-            <div className="bg-bgr shadow-md border md:border-0 max-w-[430px] mx-auto h-[60px]
+            <div className="bg-bgr shadow-md border md:border-0 w-[90%] mx-auto h-[60px]
             -translate-y-1/2 flex justify-center items-center uppercase font-medium tracking-[1px] text-[16px]
             
             ">
@@ -39,12 +39,14 @@ export default function Room(data: any) {
             </div>
             <div className=' font-text_2nd bg-bgr'>
                 <div className=' w-full flex flex-col items md:flex-row md:justify-between md:gap-3'>
-                    <Link to='' className='flex flex-col'>
-                        <span className='text-h3 font-bold md:max-w-[180px] overflow-hidden md:text-left text-center'>{name}</span>
+                    <div className='flex flex-col'>
+                        <Link to={`/rooms/${id}`}>
+                            <span className='text-h3 font-bold md:max-w-[180px] overflow-hidden md:text-left text-center'>{name}</span>
+                        </Link>
                         <div className='md:max-w-[250px]'>
                             <p><span className='font-normal text-desc'>{description?.length > 70 ? description?.slice(0, 70) + "..." : description}</span></p>
                         </div>
-                    </Link>
+                    </div>
                     <div className='mb-3 text-[20px] flex flex-col'>
                         <span className='text-h3 font-bold '>112.000.000 vnđ</span>
                         <div className='max-w-[250px]'>

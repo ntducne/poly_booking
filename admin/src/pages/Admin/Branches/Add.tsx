@@ -1,20 +1,17 @@
-// import React, { useState } from "react";
 import {
   Form,
   Input,
   Button,
-  Select,
+  // Select,
   Typography,
   Space,
-  DatePicker,
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
-import { useCreatePromotionsMutation } from "../../../api/promotions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useGetAllBranchesQuery } from "../../../api/branches";
-const { Option } = Select;
+import { useCreateBranchesMutation } from "../../../api/branches";
+// const { Option } = Select;
 
 const { Title, Text } = Typography;
 
@@ -23,34 +20,25 @@ const formItemLayout = {
   wrapperCol: { span: 14 },
 };
 
-const AddOffers = () => {
-  const navigate = useNavigate();
-  const [createPromotions] = useCreatePromotionsMutation();
-  const { data: dataBranches, isLoading: loadingBranch } =
-    useGetAllBranchesQuery({});
+const AddBranche = () => {
+  const navigate = useNavigate()
+  const [createBranches] = useCreateBranchesMutation({})
 
-  if (loadingBranch) {
-    return <div>Loading...</div>;
-  }
 
   const onFinish = (values: any) => {
-    console.log(values.image);
-    // Xử lý dữ liệu khi nhấn nút Submit
-    createPromotions(values)
+    createBranches(values)
       .unwrap()
       .then((result) => {
         if (result.status === "success") {
-          toast.success("Thêm mới ưu đãi thành công sau 3s");
-          setTimeout(() => {
-            navigate("/offers");
-          }, 3000);
+          toast.success("Thêm mới chi nhánh thành công");
+          navigate("/branches");
         } else {
           toast.error(result.error.message);
         }
       })
       .catch((error) => {
         // Xử lý lỗi nếu có
-        toast.error("Có lỗi xảy ra khi thêm ưu đãi mới");
+        toast.error("Có lỗi xảy ra khi thêm mới chi nhánh");
         console.log(error);
       });
   };
@@ -76,48 +64,33 @@ const AddOffers = () => {
           className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
-            label="Mã Code"
-            name="code"
-            rules={[{ required: true, message: "Vui lòng nhập mã Code!" }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Điều kiện"
-            name="conditions"
-            rules={[{ required: true, message: "Vui lòng nhập điều kiện" }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Ngày bắt đầu" name="start_date">
-            <DatePicker />
-          </Form.Item>
-
-          <Form.Item label="Ngày kết thúc" name="end_date">
-            <DatePicker  />
-          </Form.Item>
-
-          <Form.Item
-            name="branch_id"
-            label="Chi nhánh"
+            label="Tên chi nhánh"
+            name="name"
             rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn chi nhánh!",
-              },
+              { required: true, message: "Vui lòng nhập tên chi nhánh!" },
             ]}
           >
-            <Select placeholder="Vui lòng chọn chi nhánh !">
-              {dataBranches?.data?.data?.map((item: any) => {
-                return (
-                  <Option key={item?._id} value={item?._id}>
-                    {item?.name}
-                  </Option>
-                );
-              })}
-            </Select>
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Địa chỉ"
+            name="address"
+            rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Số điện thoại"
+            name="phone"
+            rules={[{ required: true, message: "Vui lòng nhập số điện thoại" },
+            {
+              pattern: /^[0-9]{10}$/,
+              message: "Số điện thoại phải có đúng 10 số",
+            },]}
+          >
+            <Input />
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
@@ -145,4 +118,4 @@ const AddOffers = () => {
   );
 };
 
-export default AddOffers;
+export default AddBranche;

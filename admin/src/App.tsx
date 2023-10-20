@@ -44,6 +44,11 @@ import Demo from "./pages/demo";
 import EditUser from "./pages/Admin/Guset/User/Edit";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
 import Test from "./pages/test";
+import BillDetail from "./pages/Admin/Bill/Detail";
+import ListBranches from "./pages/Admin/Branches/List";
+import AddBranche from "./pages/Admin/Branches/Add";
+import EditBranche from "./pages/Admin/Branches/Edit";
+import DetailBooking from "./pages/Admin/Booking/Detail";
 
 function App() {
   return (
@@ -59,6 +64,7 @@ function App() {
             <Route index element={<ListBooking />} />
             <Route path="add" element={<AddBooking />} />
             <Route path="edit/:id" element={<EditBooking />} />
+            <Route path="detail/:id" element={<DetailBooking />} />
           </Route>
           <Route path="offers">
             <Route index element={<ListOffers />} />
@@ -102,8 +108,8 @@ function App() {
           </Route>
           <Route path="bill">
             <Route index element={<ListBill />} />
-            <Route path="add" element={<AddBill />} />
-            <Route path="edit/:id" element={<EditBill />} />
+            {/* <Route path="add" element={<AddBill />} /> */}
+            <Route path=":id" element={<BillDetail />} />
           </Route>
           <Route path="feedback">
             <Route index element={<ListFeedBack />} />
@@ -117,6 +123,11 @@ function App() {
               <Route index element={<ListUser />} />
               <Route path="edit/:id" element={<EditUser />} />
             </Route>
+          </Route>
+          <Route path="branches">
+            <Route index element={<ListBranches />} />
+            <Route path="add" element={<AddBranche />} />
+            <Route path="edit/:id" element={<EditBranche />} />
           </Route>
           {/* <Route path="decentralization"> */}
           <Route path="role">

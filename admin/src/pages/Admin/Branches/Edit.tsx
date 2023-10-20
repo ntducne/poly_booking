@@ -3,17 +3,19 @@ import {
   Form,
   Input,
   Button,
-  Select,
+  // Select,
   Typography,
-  InputNumber,
   Space,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useGetDetailRoomTypeQuery, useUpdateRoomTypeMutation } from "../../../api/roomTypes";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-const { Option } = Select;
+import {
+  useGetDetailBranchesQuery,
+  useUpdateBranchesMutation,
+} from "../../../api/branches";
+// const { Option } = Select;
 
 const { Title, Text } = Typography;
 
@@ -22,41 +24,41 @@ const formItemLayout = {
   wrapperCol: { span: 14 },
 };
 
-const EditRoomType = () => {
-  const { id } = useParams()
+const EditBranche = () => {
+  const { id } = useParams();
   console.log(id);
 
-  const navigate = useNavigate()
-  const [form] = Form.useForm()
-  const { data, isLoading, refetch } = useGetDetailRoomTypeQuery(id)
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const { data, isLoading, refetch } = useGetDetailBranchesQuery(id);
   console.log(data);
 
-  const [updateData] = useUpdateRoomTypeMutation()
+  const [updateData] = useUpdateBranchesMutation();
 
   const onFinish = (values: any) => {
     console.log(values);
     // Xử lý dữ liệu khi nhấn nút Submit
     const data = {
       ...values,
-    }
+    };
     const dataUpload = {
       id,
-      ...data
-    }
+      ...data,
+    };
 
     updateData(dataUpload)
       .unwrap()
       .then((result) => {
-        if (result.status === 'success') {
-          toast.success('Cập nhật thông tin loại phòng thành công');
-          navigate('/roomType');
+        if (result.status === "success") {
+          toast.success("Cập nhật thông tin loại phòng thành công");
+          navigate("/branches");
         } else {
           toast.error(result.error.message);
         }
       })
       .catch((error) => {
         // Xử lý lỗi nếu có lỗi xảy ra trong quá trình gọi mutation hoặc xử lý kết quả
-        toast.error('Có lỗi xảy ra khi cập nhật thông tin loại phòng');
+        toast.error("Có lỗi xảy ra khi cập nhật thông tin loại phòng");
         console.error(error);
       });
   };
@@ -67,10 +69,10 @@ const EditRoomType = () => {
   }, [id]);
 
   useEffect(() => {
-    form.setFieldsValue(data?.data)
-  }, [isLoading, data?.data])
+    form.setFieldsValue(data?.data);
+  }, [isLoading, data?.data]);
   if (isLoading) {
-    return <>loading...</>
+    return <>loading...</>;
   }
 
   return (
@@ -95,42 +97,35 @@ const EditRoomType = () => {
           className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
-            label="Tên loại phòng"
-            name="room_type_name"
+            label="Tên chi nhánh"
+            name="name"
             rules={[
-              { required: true, message: "Vui lòng nhập tên loại phòng!" },
+              { required: true, message: "Vui lòng nhập tên chi nhánh!" },
             ]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Giá mỗi đêm"
-            name="price_per_night"
-            rules={[{ required: true, message: "Vui lòng nhập giá mỗi đêm" }]}
+            label="Địa chỉ"
+            name="address"
+            rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
           >
-            <InputNumber min={1} />
-          </Form.Item>
-
-          <Form.Item name="description" label="Mô tả">
-            <Input.TextArea />
+            <Input />
           </Form.Item>
 
           <Form.Item
-            name="status"
-            label="Trạng thái"
-            hasFeedback
+            label="Số điện thoại"
+            name="phone"
             rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại" },
               {
-                required: true,
-                message: "Vui lòng nhập trạng thái loại phòng!",
+                pattern: /^[0-9]{10}$/,
+                message: "Số điện thoại phải có đúng 10 số",
               },
             ]}
           >
-            <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value={1}>Còn</Option>
-              <Option value={0}>Hết</Option>
-            </Select>
+            <Input />
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
@@ -143,7 +138,7 @@ const EditRoomType = () => {
                 <AiOutlineCheck className="text-[#fff] " />
                 <Text className=" text-[#fff] ml-1">Sửa</Text>
               </Button>
-              <Link className="text-white" to={`/roomType`}>
+              <Link className="text-white" to={`/branches`}>
                 <Button
                   className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
                   htmlType="reset"
@@ -160,4 +155,4 @@ const EditRoomType = () => {
   );
 };
 
-export default EditRoomType;
+export default EditBranche;
