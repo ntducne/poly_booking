@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { cookies } from '../config/cookies';
+// import { cookies } from '../config/cookies';
 
 const roomApi = createApi({
     reducerPath: "room",

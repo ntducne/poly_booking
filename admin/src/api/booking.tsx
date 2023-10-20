@@ -16,7 +16,7 @@ const bookingApi = createApi({
   }),
   endpoints: (builder) => ({
     getBooking: builder.query<any, any>({
-      query: () => `booking`,
+      query: () => `billings`,
       providesTags: ["booking"],
     }),
     getDetailBooking: builder.query<any, any>({
@@ -26,22 +26,11 @@ const bookingApi = createApi({
       }),
       providesTags: ["booking"],
     }),
-    deleteBooking: builder.mutation<any, any>({
-      query: (data) => {
-        return {
-          url: `booking/${data.id}`,
-          method: "DELETE",
-          body: data.data,
-        };
-      },
-      invalidatesTags: ["booking"],
-    }),
   }),
 });
 
 export const {
   useGetBookingQuery,
   useGetDetailBookingQuery,
-  useDeleteBookingMutation,
 } = bookingApi;
 export default bookingApi;

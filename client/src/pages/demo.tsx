@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { useCookies } from "react-cookie";
 const Demo = () => {
     const [cookies, setCookie, removeCookie] = useCookies();
-    const [user, setUser] = useState(null);
     function handleClick() { 
-        setCookie("user", JSON.stringify([1, 2, 3, 4, 5]), {
+        setCookie("user", 'ahihi', {
           path: "/",
           maxAge: 3600,
           sameSite: true,

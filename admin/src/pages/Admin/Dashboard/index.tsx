@@ -13,12 +13,11 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import Page from "../../../component/page";
-import { ChartOne } from "../../../component/Charts/one";
-import { ChartTwo } from "../../../component/Charts/two";
-import { ChartThree } from "../../../component/Charts/three";
-import { ChartFour } from "../../../component/Charts/four";
-import { ChartFive } from "../../../component/Charts/five";
-
+import ChartOne from "../../../component/Charts/one";
+import ChartTwo from "../../../component/Charts/two";
+import ChartThree from "../../../component/Charts/three";
+import ChartFour from "../../../component/Charts/four";
+import ChartFive from "../../../component/Charts/five";
 
 const { Title } = Typography;
 
