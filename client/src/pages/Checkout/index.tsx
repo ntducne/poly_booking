@@ -1,7 +1,7 @@
 
 import { useCookies } from 'react-cookie';
 import HeroSlide from '../../components/HeroSlide'
-import { log } from 'console';
+// import { log } from 'console';
 
 
 
@@ -207,10 +207,10 @@ Thuế và phí là các khoản được Traveloka chuyển trả cho khách s�
                                     </div>
                                     <div className='border-t-2'>
                                     <div className='grid grid-cols-2 grid-rols-2'>
-                                        <div className='pt-[8px] pt-[16px]'>
+                                        <div className='pt-[16px]'>
                                             <h1 className=''>(1x) {items?.name}</h1>
                                         </div>
-                                        <div className='pt-[8px] pl-[150px] pt-[16px]'>
+                                        <div className='pl-[150px] pt-[16px]'>
                                             <p className=''> {items?.discount}.VND</p>
                                         </div>
                                     </div>
@@ -218,7 +218,7 @@ Thuế và phí là các khoản được Traveloka chuyển trả cho khách s�
                                         <div className='pt-[8px] '>
                                             <h1 className=''>Thuế và phí</h1>
                                         </div>
-                                        <div className='pt-[8px] pl-[350px] pt-[16px] '>
+                                        <div className='pl-[350px] pt-[16px] '>
                                             <p className=''> 43.500VND</p>
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@ Thuế và phí là các khoản được Traveloka chuyển trả cho khách s�
                                </div>
                                 
                             </div>
-                            <div className='font-mono inline-block  font-black bg-slate-100 p-[16px] flex'>
+                            <div className='font-mono font-black bg-slate-100 p-[16px] flex'>
                                 <span className='w-[48%]'>Ngày nhận phòng <strong>12:00 - 12/02/2003</strong></span>
                                 <span className='w-[45%]'>Ngày trả phòng <strong>12:00 - 12/02/2003</strong></span>
                             </div>

@@ -9,7 +9,7 @@ import {
     Rating,
     initTE,
 } from "tw-elements";
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useGetDetialQuery } from '../../api/Room'
 import { useCookies } from 'react-cookie'
 
@@ -35,7 +35,7 @@ const Detail = () => {
 
     const booking = () =>{
         console.log(data.room);
-        const value = "linh"
+        // const value = "linh"
         
         removeCookie('roomBooking', { path: '/' })
         setCookie('roomBooking', data.room,{ path: '/' })
