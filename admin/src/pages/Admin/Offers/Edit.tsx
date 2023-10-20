@@ -9,7 +9,7 @@ import {
   DatePicker,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   useGetDetailPromotionsQuery,
   useUpdatePromotionsMutation,

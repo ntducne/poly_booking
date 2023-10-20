@@ -23,9 +23,9 @@ const ListRoomType = () => {
   const { data, isLoading, refetch } = useGetRoomTypeQuery({ page: currentPage || 1 }); // Sử dụng trang hiện tại hoặc mặc định là trang 1
   const [deleteRoomType] = useDeleteRoomTypeMutation()
   // Số lượng mục trên mỗi trang
-  const ITEMS_PER_PAGE = 10;
-  const totalItems = data?.data?.length || 0;
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  // const ITEMS_PER_PAGE = 10;
+  // const totalItems = data?.data?.length || 0;
+  // const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
   const [dataFetching, setDataFetching] = useState<any>([])
   console.log(data?.data)
