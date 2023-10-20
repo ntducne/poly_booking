@@ -10,8 +10,17 @@ import './styles.css';
 
 // import required modules
 import { Pagination } from 'swiper/modules';
+import { useParams } from 'react-router-dom';
+import { useGetDetialQuery } from '../../../api/Room';
 
 export default function SlideImages() {
+  const { id } = useParams()
+  console.log(id)
+
+
+
+  const { data } = useGetDetialQuery(id)
+  console.log(data);
   return (
     <>
       <Swiper
@@ -23,15 +32,12 @@ export default function SlideImages() {
         modules={[Pagination]}
         className="mySwiper"
       >
-        <SwiperSlide><img src="https://hotellerv1.b-cdn.net/beach/wp-content/uploads/sites/4/2018/07/kari-shea-99868-unsplash.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://hotellerv1.b-cdn.net/beach/wp-content/uploads/sites/4/2018/07/kari-shea-99868-unsplash.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://hotellerv1.b-cdn.net/beach/wp-content/uploads/sites/4/2018/07/kari-shea-99868-unsplash.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://hotellerv1.b-cdn.net/beach/wp-content/uploads/sites/4/2018/07/kari-shea-99868-unsplash.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://hotellerv1.b-cdn.net/beach/wp-content/uploads/sites/4/2018/07/kari-shea-99868-unsplash.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://hotellerv1.b-cdn.net/beach/wp-content/uploads/sites/4/2018/07/kari-shea-99868-unsplash.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://hotellerv1.b-cdn.net/beach/wp-content/uploads/sites/4/2018/07/kari-shea-99868-unsplash.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://hotellerv1.b-cdn.net/beach/wp-content/uploads/sites/4/2018/07/kari-shea-99868-unsplash.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://hotellerv1.b-cdn.net/beach/wp-content/uploads/sites/4/2018/07/kari-shea-99868-unsplash.jpg" alt="" /></SwiperSlide>
+        <SwiperSlide><img src={data?.room?.images[0]?.image} alt="" /></SwiperSlide>
+        <SwiperSlide><img src={data?.room?.images[1]?.image} alt="" /></SwiperSlide>
+        <SwiperSlide><img src={data?.room?.images[2]?.image} alt="" /></SwiperSlide>
+        <SwiperSlide><img src={data?.room?.images[3]?.image} alt="" /></SwiperSlide>
+        <SwiperSlide><img src={data?.room?.images[4]?.image} alt="" /></SwiperSlide>
+       
       </Swiper>
     </>
   );
