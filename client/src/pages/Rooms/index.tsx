@@ -18,15 +18,16 @@ type Props = {};
 export default function Rooms({ }: Props) {
     const [width, setWidth] = useState(0);
     const { data, isLoading, refetch } = useGetRoomsQuery({});
-    if (isLoading) {
-        return <>loading...</>;
-    }
+
     useEffect(() => {
         refetch()
     }, [])
     useEffect(() => {
         setWidth(window.innerWidth);
     }, [window.innerWidth]);
+    if (isLoading) {
+        return <>loading...</>;
+    }
     return (
         <Page title="Phòng">
             <div className="pb-[100px] bg-bgr">
@@ -57,9 +58,9 @@ export default function Rooms({ }: Props) {
                 </div>
                 {/* <HeroSlide /> */}
                 <BookForm />
-                <div className="pt-primary px-4 ">
-                    <div className="container mx-auto lg:px-0">
-                        <div className="grid grid-cols-1 max-w-sm mx-auto gap-[60px] lg:grid-cols-3 lg:max-w-none lg:mx-0">
+                <div className="pt-primary px-4 md:px-[40px]  ">
+                    <div className="container mx-auto  lg:px-0">
+                        <div className="grid grid-cols-1 max-w-sm gap-[60px] lg:grid-cols-3 lg:max-w-none lg:mx-0">
                             {data?.data.map((room: any) => {
                                 return <Room key={room.id} data={room} />;
                             })}
@@ -69,7 +70,7 @@ export default function Rooms({ }: Props) {
                         <Pagination defaultCurrent={6} total={500} />
                     </div>
                 </div>
-                <div className="mt-primary px-4">
+                <div className="mt-primary">
                     <div className="flex justify-center  font-text_2nd mb-[60px]">
                         <div className="text-center">
                             <h2 className="text-[30px] md:text-h1 max-w-[780px] text-center  font-medium">
