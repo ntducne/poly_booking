@@ -38,7 +38,6 @@ export default function Login({ }: Props) {
                         // Lưu thông tin người dùng vào cookie
                         setCookie('userInfo', valuesUser, { path: '/' });
                         console.log('loginSuccess');
-                        dispatch(getUser(valuesUser))
                         message.success("Đăng nhập thành công");
                         setTimeout(() => {
                             navigate('/')

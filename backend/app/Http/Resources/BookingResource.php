@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use App\Models\BookDetail;
+use App\Models\RoomType;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookingResource extends JsonResource
@@ -17,11 +19,11 @@ class BookingResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => new UserResource($this->user_id),
+            'user' => new UserResource(User::find($this->user_id)),
             'booking_date' => $this->booking_date,
             'checkin' => $this->checkin,
             'checkout' => $this->checkout,
-            'room_type' => new RoomTypeResource($this->room_type),
+            'room_type' => new RoomTypeResource(RoomType::find($this->room_type_id)),
             'representative' => $this->representative,
             'price_per_night' => $this->price_per_night,
             'amount_people' => $this->amount_people,
