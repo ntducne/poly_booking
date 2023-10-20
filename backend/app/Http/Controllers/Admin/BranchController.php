@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Branch\StoreBranchRequest;
 use App\Http\Requests\Branch\UpdateBranchRequest;
+use App\Http\Resources\BranchResource;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use App\Models\Branch;
@@ -21,10 +22,7 @@ class BranchController extends Controller
     {
         try {
             $branches = $this->branch->paginate(6);
-            return response()->json([
-                'message' => 'Get Data',
-                'data'    => $branches,
-            ]);
+            return BranchResource::collection($branches);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
