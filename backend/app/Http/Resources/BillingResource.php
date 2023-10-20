@@ -12,6 +12,7 @@ class BillingResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'=>$this->id,
             'booking'=> new BookingResource(Booking::find($this->booking_id)),
             'services'=>$this->services,
             'total'=>$this->total,
