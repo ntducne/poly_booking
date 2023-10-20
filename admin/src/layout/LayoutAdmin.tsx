@@ -29,14 +29,11 @@ function getItem(
 import { VscFeedback } from "react-icons/vsc";
 import {
   AiFillBank,
-  AiFillPushpin,
   AiOutlineCrown,
   AiOutlineUserSwitch,
   AiTwotoneGift,
   AiTwotonePrinter,
-  AiFillLock,
 } from "react-icons/ai";
-import { BsBuildingFillCheck } from "react-icons/bs";
 import { BiSolidBed } from "react-icons/bi";
 import { cookies } from "../config/cookies";
 import "react-toastify/dist/ReactToastify.css";
@@ -57,12 +54,13 @@ const LayoutAdmin = () => {
       </Link>
     ),
     getItem(
-      "Đánh giá",
-      "2",
-      <Link onClick={() => handleTitleChange("Đánh giá")} to={`feedback`}>
-        <VscFeedback />
+      "Chi nhánh",
+      "16",
+      <Link onClick={() => handleTitleChange("Chi nhánh")} to={`branches`}>
+        <AiTwotoneGift />
       </Link>
     ),
+    
     getItem("Phòng", "sub1", <BiSolidBed />, [
       getItem(
         "Phòng",
@@ -72,56 +70,64 @@ const LayoutAdmin = () => {
       getItem(
         "Loại Phòng",
         "4",
-        <Link onClick={() => handleTitleChange("Loại phòng")} to={`roomType`} />
+        <Link onClick={() => handleTitleChange("Loại phòng")} to={`room/type`} />
       ),
       getItem(
         "Tiện ích Phòng",
         "5",
         <Link
           onClick={() => handleTitleChange("Tiện ích")}
-          to={`roomUtilities`}
+          to={`room/utilities`}
+        />
+      ),
+      getItem(
+        "Đặt Phòng",
+        "6",
+        <Link
+          onClick={() => handleTitleChange("Đặt Phòng")}
+          to={`room/booking`}
         />
       ),
     ]),
     getItem(
-      "Phòng Đặt",
-      "6",
+      "Hoá đơn",
+      "7",
       <Link onClick={() => handleTitleChange("Phòng đặt")} to={`booking`}>
         {" "}
-        <BsBuildingFillCheck />
-      </Link>
-    ),
-    getItem(
-      "Gia hạn Phòng",
-      "7",
-      <Link onClick={() => handleTitleChange("Gia hạn")} to={`roomExtend`}>
-        <AiFillPushpin />
-      </Link>
-    ),
-    getItem(
-      "Hóa đơn",
-      "8",
-      <Link onClick={() => handleTitleChange("Hóa đơn")} to={`bill`}>
         <AiFillBank />
       </Link>
     ),
+    // getItem(
+    //   "Gia hạn Phòng",
+    //   "7",
+    //   <Link onClick={() => handleTitleChange("Gia hạn")} to={`roomExtend`}>
+    //     <AiFillPushpin />
+    //   </Link>
+    // ),
+    // getItem(
+    //   "Hóa đơn",
+    //   "8",
+    //   <Link onClick={() => handleTitleChange("Hóa đơn")} to={`bill`}>
+    //     <AiFillBank />
+    //   </Link>
+    // ),
     getItem(
       "Dịch vụ",
-      "9",
+      "8",
       <Link onClick={() => handleTitleChange("Dịch vụ")} to={`services`}>
         <AiOutlineCrown />
       </Link>
     ),
     getItem(
-      "Ưu đãi-Khuyến Mãi",
-      "10",
+      "Khuyến mãi",
+      "9",
       <Link onClick={() => handleTitleChange("Ưu đãi")} to={`offers`}>
         <AiTwotoneGift />
       </Link>
     ),
     getItem(
       "Chính sách",
-      "11",
+      "10",
       <Link onClick={() => handleTitleChange("Chính sách")} to={`policy`}>
         <AiTwotonePrinter />
       </Link>
@@ -129,41 +135,26 @@ const LayoutAdmin = () => {
     getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
       getItem(
         "Nhân viên",
-        "12",
+        "11",
         <Link
           onClick={() => handleTitleChange("Nhân viên")}
-          to={`auth/admin`}
+          to={`staff`}
         />
       ),
       getItem(
         "Người dùng",
-        "13",
+        "12",
         <Link
           onClick={() => handleTitleChange("Người dùng")}
-          to={`auth/user`}
-        />
-      ),
-    ]),
-    getItem("Phân quyền", "sub3", <AiFillLock />, [
-      getItem(
-        "Vai trò",
-        "14",
-        <Link onClick={() => handleTitleChange("Danh sách")} to={`role`} />
-      ),
-      getItem(
-        "Thêm vai trò",
-        "15",
-        <Link
-          onClick={() => handleTitleChange("Thêm vai trò")}
-          to={`role/create`}
+          to={`user`}
         />
       ),
     ]),
     getItem(
-      "Chi nhánh",
-      "16",
-      <Link onClick={() => handleTitleChange("Chi nhánh")} to={`branches`}>
-        <AiTwotoneGift />
+      "Đánh giá",
+      "2",
+      <Link onClick={() => handleTitleChange("Đánh giá")} to={`feedback`}>
+        <VscFeedback />
       </Link>
     ),
   ];

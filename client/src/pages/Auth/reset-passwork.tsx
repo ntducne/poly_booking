@@ -15,7 +15,7 @@ export default function ResetPassword({ }: Props) {
 
     const { data } = useGetTokenQuery(token);
 
-    const confirmPasswordValidator = (rule: any, value: any) => {
+    const confirmPasswordValidator = (value: any) => {
         const newPassword = form.getFieldValue('new_password');
         if (newPassword !== value) {
             return Promise.reject('Mật khẩu xác nhận không khớp với mật khẩu.');

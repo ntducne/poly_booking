@@ -9,7 +9,7 @@ import {
     Rating,
     initTE,
 } from "tw-elements";
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useGetDetialQuery } from '../../api/Room'
 import IsLogin from '../../components/IsLogin'
 
