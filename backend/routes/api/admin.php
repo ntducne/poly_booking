@@ -48,11 +48,11 @@ Route::prefix('booking')->as('booking.')->group(function(){
 
 //Hóa đơn + order dịch vụ cho khách
 
-// Route::prefix('bill')->group(function (){
-//     Route::get('/', [BillingController::class, 'index']);
-//     route::get('/{id}', [BillingController::class,'store']);
-//     Route::post('/order-services', [BillingController::class,'order_service_user']);
-// });
+Route::prefix('bill')->group(function (){
+    Route::get('/', [BillingController::class, 'index']);
+    route::get('/{id}', [BillingController::class,'store']);
+    Route::post('/order-services', [BillingController::class,'order_service_user']);
+});
 // Route::resource('services', ServicesController::class);
 // Route::prefix('/services')->group(function () {
 
