@@ -1,8 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
 import ListBill from "./pages/Admin/Bill/List";
-import AddBooking from "./pages/Admin/Booking/Add";
-import EditBooking from "./pages/Admin/Booking/Edit";
 import ListBooking from "./pages/Admin/Booking/List";
 import Dashboard from "./pages/Admin/Dashboard";
 import ListFeedBack from "./pages/Admin/Feedback/List";
@@ -55,10 +53,8 @@ function App() {
         <Route path="/" element={<LayoutAdmin />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="booking">
+          <Route path="billing">
             <Route index element={<ListBooking />} />
-            <Route path="add" element={<AddBooking />} />
-            <Route path="edit/:id" element={<EditBooking />} />
             <Route path="detail/:id" element={<DetailBooking />} />
           </Route>
           <Route path="offers">
