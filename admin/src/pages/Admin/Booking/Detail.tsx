@@ -23,7 +23,6 @@ const contentStyle: React.CSSProperties = {
 };
 const DetailBooking = () => {
     const { id } = useParams()
-
     const { data } = useGetDetailBookingQuery(id || "")
     console.log( " data" , data);
     
