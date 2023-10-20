@@ -4,59 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Billing;
+use App\Repositories\BookingRepository;
 use Illuminate\Http\JsonResponse;
 
 class BillingController extends Controller
 {
     private Billing $billing;
 
-    public function __construct()
+    public function __construct(BookingRepository $bookingRepository)
     {
+        $this->bookingRespository = $bookingRepository;
         $this->billing = new Billing();
     }
 
-    public function index(): JsonResponse
+    public function index()
     {
-        $data = $this->billing->all();
-        return response()->json($data);
+        return $this->bookingRespository->orderList();
     }
 
-    public function show($id): JsonResponse
+    public function show($id)
     {
-        $data = $this->billing->find($id);
-        return response()->json($data->bookingInBilling());
+        return $this->bookingRespository->orderDetail($id);
     }
 
-    public function store($id): JsonResponse
-    {
-        $data = $this->billing->create([
-            'booking_id' => $id,
-            'status' => 'pending'
-        ]);
-        return response()->json($data);
-    }
-
-    public function update($id): JsonResponse
-    {
-        $data = $this->billing->find($id);
-        $data->update([
-            'status' => 'paid'
-        ]);
-        return response()->json($data);
-    }
-
-    public function destroy($id): JsonResponse
-    {
-        $data = $this->billing->find($id);
-        $data->delete();
-        return response()->json($data);
-    }
-
-    public function destroyAll(): JsonResponse
-    {
-        $data = $this->billing->truncate();
-        return response()->json($data);
-    }
 
 
 }

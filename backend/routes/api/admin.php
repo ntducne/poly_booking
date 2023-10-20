@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\Admin\BookDetailController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\RatesController;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('branches', BranchController::class)->except(['create','edit']);
 
-Route::resource('types_rooms', RoomTypeController::class)->except(['create','edit']);
+Route::resource('room/types', RoomTypeController::class)->except(['create','edit']);
 
 Route::resource('rooms', RoomController::class)->except(['create','edit']);
 
@@ -36,6 +37,9 @@ Route::resource('promotions', PromotionController::class)->except(['create','edi
 
 Route::resource('services', ServicesController::class)->except(['create','edit']);
 
+Route::resource('billings', BillingController::class)->except(['create','edit','update','store','destroy']);
+
+
 Route::prefix('booking')->as('booking.')->group(function(){
     Route::get('/',[BookingController::class,'index'])->name('index');
     Route::get('/{id}',[BookingController::class,'show'])->name('show');
@@ -43,7 +47,7 @@ Route::prefix('booking')->as('booking.')->group(function(){
 // dịch vụ
 // Route::resource('services', ServicesController::class);
 // Route::prefix('/services')->group(function () {
-    
+
 //     Route::get('', [ServicesController::class, 'index']);
 //     Route::get('/{id}', [ServicesController::class, 'show']);
 //     Route::post('', [ServicesController::class, 'store']);

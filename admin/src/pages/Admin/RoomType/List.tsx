@@ -16,12 +16,12 @@ import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useGetRoomTypeQuery } from "../../../api/roomTypes";
+import { useDeleteRoomTypeMutation, useGetRoomTypeQuery } from "../../../api/roomTypes";
 
 const ListRoomType = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading, refetch } = useGetRoomTypeQuery({ page: currentPage || 1 }); // Sử dụng trang hiện tại hoặc mặc định là trang 1
-
+  const [deleteRoomType] = useDeleteRoomTypeMutation()
   // Số lượng mục trên mỗi trang
   const ITEMS_PER_PAGE = 10;
   const totalItems = data?.data?.length || 0;
@@ -41,7 +41,7 @@ const ListRoomType = () => {
       }
       refetch()
     }))
-  }, [isLoading])
+  }, [isLoading, data?.data])
 
   const columns: ColumnsType<DataType> = [
     {
@@ -143,12 +143,16 @@ const ListRoomType = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            // removeComment(id);
-            console.log(id);
-
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
+            deleteRoomType(id).unwrap().then((data) => {
+              console.log(id);
+              console.log(data);
+              if (data.status === "success") {
+                refetch();
+                swal("You have successfully deleted", {
+                  icon: "success",
+                });
+              }
+            })
           }
         })
         .catch(() => {

@@ -12,13 +12,11 @@ class StorePromotionRequest extends Request
     public function rules()
     {
         return [
-            'code' => ['bail', 'required', 'string',
-                Rule::unique(Promotion::class, 'code')],
-            'start_date' => ['bail', 'required', 'date' ,'date_format:"d/m/Y"'],
-            'end_date'   => ['bail', 'required','date', 'date_format:"d/m/Y"'],
+            'code' => ['bail', 'required', 'string', Rule::unique(Promotion::class, 'code')],
+            'start_date' => ['bail', 'required', 'date'],
+            'end_date'   => ['bail', 'required','date'],
             'conditions' => ['bail', 'required', 'string'],
-            'branch_id'  => ['required',
-                Rule::exists(Branch::class, $this->column_id)]
+            'branch_id'  => ['required', Rule::exists(Branch::class, $this->column_id)]
         ];
     }
 

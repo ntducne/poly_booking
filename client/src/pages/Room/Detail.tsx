@@ -12,7 +12,8 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetDetialQuery } from '../../api/Room'
 import { useCookies } from 'react-cookie'
-import { useState } from 'react'
+
+
 
 
 initTE({ Rating });
@@ -47,6 +48,7 @@ const Detail = () => {
             {/* <SlideRooms /> */}
             <form action="">
 
+       
                 <div className='h-[600px] lg:h-[860px]'>
                     <div className='text-white h-full bg-pink-300 relative flex items-center justify-center'>
                         <div className='z-20 text-white text-center'>

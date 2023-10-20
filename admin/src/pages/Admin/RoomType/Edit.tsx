@@ -141,7 +141,7 @@ const EditRoomType = () => {
                 htmlType="submit"
               >
                 <AiOutlineCheck className="text-[#fff] " />
-                <Text className=" text-[#fff] ml-1">Thêm</Text>
+                <Text className=" text-[#fff] ml-1">Sửa</Text>
               </Button>
               <Link className="text-white" to={`/roomType`}>
                 <Button

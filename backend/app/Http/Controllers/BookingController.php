@@ -8,6 +8,7 @@ use App\Models\BookDetail;
 
 use App\Models\Room;
 use App\Models\RoomType;
+use App\Repositories\BookingRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -23,9 +24,11 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected Booking $booking;
-    public function __construct()
+    public function __construct(BookingRepository $bookingRepository)
     {
         $this->booking = new Booking();
+        $this->bookingRepository = $bookingRepository;
+
     }
     public function index(): JsonResponse
     {
@@ -41,9 +44,9 @@ class BookingController extends Controller
         if (Auth::user()) {
             $booking = new Booking();
             $soLuong = $request->soLuong;
-            $room_id = $request->room_id; // id phong ma khach dat 
-            $room = Room::find($request->room_id); //tra ve du lieu phong ma khach muon dat 
-            //dat phong 
+            $room_id = $request->room_id; // id phong ma khach dat
+            $room = Room::find($request->room_id); //tra ve du lieu phong ma khach muon dat
+            //dat phong
             $param = $request->except(['soLuong', 'room_id']);
             $create = $booking->create($param);
             if ($create) {
@@ -64,11 +67,11 @@ class BookingController extends Controller
                     'data' => $create,
                 ];
                 if ($soLuong > 1) {
-                    //them phong neu khach hang dat 2 phong tro nen 
-                    $listroom = Room::where('room_type_id', '=', $room->room_type_id)->where('_id', '!=', $room_id)->get(); //danh sach phong lien quan den phong muon dat 
+                    //them phong neu khach hang dat 2 phong tro nen
+                    $listroom = Room::where('room_type_id', '=', $room->room_type_id)->where('_id', '!=', $room_id)->get(); //danh sach phong lien quan den phong muon dat
                     $count = 1;
                     foreach ($listroom as $item) {
-                        $checkRoom = BookDetail::find($item->$room_id); //kiem tra phong co ai dat chua 
+                        $checkRoom = BookDetail::find($item->$room_id); //kiem tra phong co ai dat chua
                         if ($count == $soLuong) {
                             return $response = [
                                 'status' => 'success',
@@ -88,7 +91,7 @@ class BookingController extends Controller
                                 ]
                             );
                         } else {
-                            $checkBookingRoom = Booking::find($checkRoom->booking_id); //phong co ben booking va dang hoat dong 
+                            $checkBookingRoom = Booking::find($checkRoom->booking_id); //phong co ben booking va dang hoat dong
                             $checkTime = strtotime($checkBookingRoom->checkout) < strtotime($create->checkin) ? true : false; // thoi gian co hop ly hay khong
                             if ($checkTime) {
                                 $bookDetail->create(
@@ -176,4 +179,15 @@ class BookingController extends Controller
             ]);
         }
     }
+
+//    public function billing(){
+//        $billing = $this->bookingRepository->create()
+//        return response()->json([
+//            'status' => 'success',
+//            'message' => 'Cập nhật thành công !',
+//            'data' => $billing
+//        ]);
+//    }
+
+
 }

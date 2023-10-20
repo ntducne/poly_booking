@@ -1,20 +1,15 @@
 import { useEffect } from "react";
 
-import {
-  Form,
-  Input,
-  Button,
-  Typography,
-  InputNumber,
-  Space,
-} from "antd";
+import { Form, Input, Button, Typography, InputNumber, Space, Radio } from "antd";
 // import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useGetDetailUsersQuery, useUpdateUsersMutation } from "../../../../api/account/users";
+import {
+  useGetDetailUsersQuery,
+  useUpdateUsersMutation,
+} from "../../../../api/account/users";
 import { useForm } from "antd/es/form/Form";
 import { toast } from "react-toastify";
-
 
 const { Title, Text } = Typography;
 
@@ -24,49 +19,50 @@ const formItemLayout = {
 };
 
 const EditUser = () => {
-    const {id} = useParams();
-    const { data , isLoading } = useGetDetailUsersQuery(id);
-    const [ updateUsers ] = useUpdateUsersMutation();
-    const [form] = useForm();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const { data, isLoading } = useGetDetailUsersQuery(id);
+  const [updateUsers] = useUpdateUsersMutation();
+  const [form] = useForm();
+  const navigate = useNavigate();
 
-    // console.log("data" ,data);
+  console.log("data", data);
 
+  useEffect(() => {
+    form.setFieldsValue(data?.data);
+  }, [data?.data]);
 
-    useEffect(()=> {
-        form.setFieldsValue(data?.data);
-    } , [data?.data])
-
-    if(isLoading){
-      return <div>Loading...</div>
-    }
-    
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const onFinish = (values: any) => {
     console.log(values.image);
-    const data = {...values };
+    const data = { ...values };
     const updateData = {
       id: id,
-      data : data
-    }
-    updateUsers(updateData).unwrap().then((item: any) => {
-      if (item.status == 'success') {
-        toast("Sửa thành công", {
-          autoClose: 3000,
-          theme: "light",
-        });
-        navigate("/auth/user")
-      } else {
-        console.log(item)
-        toast(item?.error?.name || "Lỗi rồi bạn", {
-          autoClose: 3000,
-          theme: "light",
-        });
-      }
-    });
-  }
+      data: data,
+    };
+    updateUsers(updateData)
+      .unwrap()
+      .then((item: any) => {
+        if (item.status == "success") {
+          toast("Sửa thành công", {
+            autoClose: 3000,
+            theme: "light",
+          });
+          navigate("/auth/user");
+        } else {
+          console.log(item);
+          toast(item?.error?.name || "Lỗi rồi bạn", {
+            autoClose: 3000,
+            theme: "light",
+          });
+        }
+      });
+  };
 
-    // Xử lý dữ liệu khi nhấn nút Submit
+  
+  // Xử lý dữ liệu khi nhấn nút Submit
 
   return (
     <div>
@@ -82,6 +78,7 @@ const EditUser = () => {
           onFinish={onFinish}
           initialValues={{
             "input-number": 1,
+            "status" : data?.data?.status,
             "checkbox-group": ["A", "B"],
             rate: 3.5,
             "color-picker": null,
@@ -121,12 +118,19 @@ const EditUser = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             name="status"
             label="Trạng thái"
             rules={[{ required: true, message: "Vui lòng chọn trạng thái" }]}
           >
             <Input />
+          </Form.Item> */}
+
+          <Form.Item name="status" label="Trạng thái">
+            <Radio.Group defaultValue={data?.data?.status}>
+              <Radio value="0">Hoạt động</Radio>
+              <Radio value="1">Span</Radio>
+            </Radio.Group>
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>

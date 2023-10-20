@@ -3,6 +3,12 @@ import { Button, Image, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+import FormSearch from "../../../component/formSearch";
+import swal from "sweetalert";
+import Page from "../../../component/page";
+import { useDeleteRoomMutation, useGetRoomsQuery } from "../../../api/room";
+import FormatPrice from "../../../utils/FormatPrice";
 interface DataType {
   key: React.Key;
   name: string;
@@ -11,17 +17,14 @@ interface DataType {
   status: number,
   area: string
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
-import swal from "sweetalert";
-import Page from "../../../component/page";
-import { useGetRoomsQuery } from "../../../api/room";
-import FormatPrice from "../../../utils/FormatPrice";
+
 
 const ListRoom = () => {
-  const { data, isLoading } = useGetRoomsQuery({});
+  const { data, isLoading, refetch } = useGetRoomsQuery({});
+  console.log(data);
+
   const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data?.data)
+  const [deleteRoom] = useDeleteRoomMutation()
 
   useEffect(() => {
     setDataFetching(data?.data.map((item: any) => {
@@ -35,7 +38,7 @@ const ListRoom = () => {
         address: item?.branch?.address
       }
     }))
-  }, [isLoading])
+  }, [isLoading, data?.data])
   const columns: ColumnsType<DataType> = [
     {
       title: "Tên phòng",
@@ -148,7 +151,6 @@ const ListRoom = () => {
   };
 
   const remove = (id: any) => {
-    console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -159,12 +161,15 @@ const ListRoom = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            // removeComment(id);
-            console.log(id);
-
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
+            deleteRoom(id).unwrap().then((data) => {
+              console.log(data);
+              if (data.status === "success") {
+                refetch();
+                swal("You have successfully deleted", {
+                  icon: "success",
+                });
+              }
+            })
           }
         })
         .catch(() => {

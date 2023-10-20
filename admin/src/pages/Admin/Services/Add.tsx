@@ -25,12 +25,12 @@ const formItemLayout = {
 
 const AddServices = () => {
 
-  const [createServices , isLoading] = useCreateServicesMutation();
+  const [createServices] = useCreateServicesMutation();
   const {  data:dataBranches , isLoading : loadingBranch } = useGetAllBranchesQuery({});
   const navigate = useNavigate();
 
   console.log(dataBranches, "dataBranches");
-  if(isLoading || loadingBranch){
+  if(loadingBranch){
     return <div>Loading...</div>
   }
   
