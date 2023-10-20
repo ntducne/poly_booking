@@ -167,26 +167,10 @@ class ClientController extends Controller
                 ]
             ];
         }
-        //Hoa don 
-
-        $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
-        $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
-        $bill = [
-            'booking_id' => $create->_id,
-            'services' => [],
-            'total' => $param['price_per_night'] * $amount_day,
-            // total = so ngay su dung phong * gia 1 dem 
-            'payment_method' => 0, //thanh toan tai quay
-            'payment_date' => null,
-            'branch_id' => $branch_id
-        ];
-        $billing = Billing::create($bill);
-
         return response()->json([
             'message' => 'Đặt thành công !',
             'booking' => $create,
             'details' => $details,
-            'bill' => $billing
         ]);
     }
 }
