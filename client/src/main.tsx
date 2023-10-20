@@ -10,15 +10,13 @@ import "swiper/css/autoplay"
 import { CookiesProvider } from "react-cookie";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
   <CookiesProvider>
-
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </BrowserRouter >
   </CookiesProvider>
-
-  </BrowserRouter >
 )

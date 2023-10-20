@@ -22,7 +22,7 @@ export default function BookForm({ }: Props) {
         console.log(errorInfo)
     };
     return (
-        <div className='container mx-auto relative max-w-[1440px] bg-bgr'>
+        <div className='container mx-auto relative w-[90%] bg-bgr'>
             <div className=" pt-4  px-5 py-10  w-full items-center  lg:shadow-xl lg:absolute lg:left-0 lg:-top-12  lg:right-0 lg:p-0 lg:z-30">
 
                 <Form
