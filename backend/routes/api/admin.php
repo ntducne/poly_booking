@@ -37,7 +37,7 @@ Route::resource('promotions', PromotionController::class)->except(['create','edi
 
 Route::resource('services', ServicesController::class)->except(['create','edit']);
 
-Route::resource('billing', BillingController::class)->except(['create','edit','update','store','destroy']);
+Route::resource('billings', BillingController::class)->except(['create','edit','update','store','destroy']);
 
 
 Route::prefix('booking')->as('booking.')->group(function(){

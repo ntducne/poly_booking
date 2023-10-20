@@ -113,7 +113,7 @@ class ClientController extends Controller
             $total_discount = Room::find($value)->discount;
             $total_price_per_night = RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
         }
-        //Bat loi dat so nguoi 
+        //Bat loi dat so nguoi
         if ($adults > $total_adults && $children > $total_children) {
             return response()->json([
                 'message' => 'Phòng không đủ chỗ '
@@ -139,7 +139,7 @@ class ClientController extends Controller
         $user = User::where('email', '=', $request->representative['email'])->first();
         $param['user_id'] = !empty($user) ? $user->_id : null;
 
-        //phong co the dat 
+        //phong co the dat
         $room_booking = array_slice($room_valid, 0, $soLuong);
         $create = $this->booking->create($param);
         $details = [];

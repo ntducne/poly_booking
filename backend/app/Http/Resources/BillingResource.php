@@ -21,12 +21,12 @@ class BillingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'booking_id'=> new BookingResource($this->booking_id),
+            'booking'=> new BookingResource($this->booking_id),
             'services'=>$this->services,
             'total'=>$this->total,
             'payment_method'=> $this->payment_method,
             'payment_date'=>$this->payment_date,
-            'branch_id'=> new BranchResource($this->branch_id),
+            'branch'=> new BranchResource($this->branch_id),
             'status'=> $this->status
         ];
     }
