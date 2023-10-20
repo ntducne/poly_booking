@@ -21,7 +21,7 @@ const bookingApi = createApi({
     }),
     getDetailBooking: builder.query<any, any>({
       query: (id) => ({
-        url: `booking/${id}`,
+        url: `billings/${id}`,
         method: "GET",
       }),
       providesTags: ["booking"],
