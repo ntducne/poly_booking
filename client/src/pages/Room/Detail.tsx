@@ -1,8 +1,8 @@
-import { AiOutlineCoffee, AiOutlineRight, AiOutlineShake } from 'react-icons/Ai'
-import { BsFillSunFill } from 'react-icons/Bs'
-import { FaHotel } from 'react-icons/Fa'
-import { ImManWoman } from 'react-icons/Im'
-import { MdOutlineKingBed } from 'react-icons/Md'
+import { AiOutlineCoffee, AiOutlineRight, AiOutlineShake } from 'react-icons/ai'
+import { BsFillSunFill } from 'react-icons/bs'
+import { FaHotel } from 'react-icons/fa'
+import { ImManWoman } from 'react-icons/im'
+import { MdOutlineKingBed } from 'react-icons/md'
 import SlideImages from './Slideimage'
 import { motion } from "framer-motion"
 import {
