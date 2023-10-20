@@ -18,6 +18,7 @@ import { useGetAllUsersQuery } from "../../../../api/account/users";
 const ListUser = () => {
 
   const { data: users } = useGetAllUsersQuery([]);
+  
  
 
   const columns: ColumnsType<any> = [
@@ -98,7 +99,7 @@ const ListUser = () => {
           <button type="button" 
           className=" bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-brfont-medium rounded-lg  px-5 py-2.5 ml-1" 
           >
-            <Link className="text-white text-sm text-center" to={`/auth/admin/edit/${record?.key}`}>
+            <Link className="text-white text-sm text-center" to={`/auth/user/edit/${record?.id}`}>
               <AiOutlineEdit />
             </Link>
           </button>

@@ -19,10 +19,25 @@ export const usersApi = createApi({
       }),
       providesTags: ["Users"],
     }),
+    getDetailUsers: builder.query({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Users"],
+    }),
+    updateUsers: builder.mutation({
+      query: (data) => ({
+        url: `/users/${data?.id}`,
+        method: "PUT",
+        body: data.data
+      }),
+      invalidatesTags: ["Users"],
+    }),
 
   }),
 
 });
 
 
-export const { useGetAllUsersQuery } = usersApi;
+export const { useGetAllUsersQuery , useGetDetailUsersQuery , useUpdateUsersMutation } = usersApi;

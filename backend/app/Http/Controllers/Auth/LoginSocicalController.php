@@ -19,6 +19,7 @@ class LoginSocicalController extends Controller
     {
         DB::table('oauth_access_tokens')->where('user_id', $userId)->delete();
     }
+
     public function redirect(Request $request): RedirectResponse
     {
         return Redirect::to(Socialite::driver($request->segment(4))->stateless()->redirect()->getTargetUrl());
@@ -30,11 +31,10 @@ class LoginSocicalController extends Controller
         $socialiteUser = Socialite::driver($request->segment(4))->stateless()->user();
         $column = 'email';
         $email = $socialiteUser->getEmail();
-        if($guard == 'admin'){
+        if ($guard == 'admin') {
             $admin = Admin::where($column, $email)->first();
             return $this->extracted($admin, $guard);
-        }
-        else if($guard == 'user'){
+        } else if ($guard == 'user') {
             $user = User::where($column, $email)->first();
             return $this->extracted($user, $guard);
         }
@@ -46,34 +46,33 @@ class LoginSocicalController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Unauthorized'
-            ]);
+            ], 401);
         }
-        if($user->status == 0){
+        if ($user->status == 0) {
             $this->removeUser($user->id);
             $tokenResult = $user->createToken(ucfirst($guard) . ' Access Token', [$guard]);
             $token = $tokenResult->token;
             $token->save();
             $response = [
-                'status'        => true,
-                'user'          => [
+                'status' => true,
+                'user' => [
                     'image' => $user->image,
-                    'name'  => $user->name,
+                    'name' => $user->name,
                 ],
-                'accessToken'   => [
-                    'token'         => $tokenResult->accessToken,
-                    'expires_at'    => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
+                'accessToken' => [
+                    'token' => $tokenResult->accessToken,
+                    'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
                 ],
             ];
-            if($guard == 'admin'){
+            if ($guard == 'admin') {
                 $response['permission'] = $user->getAllPermission();
             }
-            return response()->json($response);
-        }
-        else {
+            return response()->json($response, 200);
+        } else {
             return response()->json([
                 'status' => false,
                 'message' => 'Tài khoản của bạn đã bị khóa !'
-            ]);
+            ], 401);
         }
     }
 }

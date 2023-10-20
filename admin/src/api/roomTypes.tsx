@@ -3,7 +3,7 @@ import { cookies } from '../config/cookies';
 
 const roomTypesApi = createApi({
     reducerPath: "roomType",
-    tagTypes: ["roomsType"],
+    tagTypes: ['RoomType'],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.polydevhotel.site",
         prepareHeaders: (headers) => {
@@ -13,12 +13,48 @@ const roomTypesApi = createApi({
     }),
     endpoints: (builder) => ({
         getRoomType: builder.query<any, any>({
-            query: () => `/admin/room/types`,
-            providesTags: ["roomsType"]
-        })
+            query: (query) => `admin/room/types?page=${query.page || 1}`,
+            // query: () => `/admin/types-rooms`,
+            providesTags: ['RoomType']
+        }),
+        createRoomType: builder.mutation<any, any>({
+            query: (data) => ({
+                url: `admin/room/types`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['RoomType']
+        }),
+        getDetailRoomType: builder.query<any, any>({
+            query: (id) => ({
+                url: `admin/room/types/${id}`,
+                method: "GET"
+            }),
+            providesTags: ['RoomType']
+        }),
+        updateRoomType: builder.mutation<any, any>({
+            query: (data) => {
+                return {
+                    url: `admin/room/types/${data.id}`,
+                    method: "PUT",
+                    body: data
+                }
+            },
+            invalidatesTags: ['RoomType']
+        }),
+
+        deleteRoomType: builder.mutation<any, any>({
+            query: (id: string) => {
+                return {
+                    url: `admin/room/types/${id}`,
+                    method: "DELETE",
+                }
+            },
+            invalidatesTags: ['RoomType']
+        }),
     })
 })
 
-export const { useGetRoomTypeQuery } = roomTypesApi
+export const { useGetRoomTypeQuery, useCreateRoomTypeMutation, useGetDetailRoomTypeQuery, useUpdateRoomTypeMutation, useDeleteRoomTypeMutation } = roomTypesApi
 export const roomReducer = roomTypesApi.reducer
 export default roomTypesApi

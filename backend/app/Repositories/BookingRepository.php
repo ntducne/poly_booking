@@ -2,13 +2,34 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\BillingResource;
+use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Room;
-
+use App\Models\RoomType;
+use App\Models\Services;
 class BookingRepository
 {
-    public function search($request){
+    private Booking $booking;
+    private BookDetail $booking_detail;
+    private Room $room;
+    private RoomType $room_type;
+
+
+
+    public function __construct()
+    {
+        $this->booking = new Booking();
+        $this->booking_detail = new BookDetail();
+        $this->room = new Room();
+        $this->room_type = new RoomType();
+        $this->billing = new Billing();
+
+    }
+
+    public function search($request)
+    {
         $arrRoomId = []; //chua id cac phong
         $room = Room::all();
         foreach ($room as $item) {
@@ -89,7 +110,8 @@ class BookingRepository
         return response()->json($response);
     }
 
-    public function create($request){
+    public function create($request)
+    {
         $booking = new Booking();
         $soLuong = $request->soLuong;
         $room_id = $request->room_id; // id phong ma khach dat
@@ -167,7 +189,8 @@ class BookingRepository
         return response()->json($response);
     }
 
-    public function cancel($id){
+    public function cancel($id)
+    {
         $bookings = Booking::find($id);
         if (!$bookings) {
             return response()->json([
@@ -184,6 +207,14 @@ class BookingRepository
                 'data' => $bookings
             ]);
         }
+    }
+
+    public function orderList(){
+        return BillingResource::collection($this->billing->paginate(10));
+    }
+
+    public function orderDetail($id){
+        return new BillingResource($this->billing->find($id));
     }
 
 }

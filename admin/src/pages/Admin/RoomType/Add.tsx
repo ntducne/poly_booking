@@ -10,6 +10,8 @@ import {
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { useCreateRoomTypeMutation } from "../../../api/roomTypes";
+import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -20,18 +22,26 @@ const formItemLayout = {
 };
 
 const AddRoomType = () => {
+  const navigate = useNavigate()
+  const [createRoomsType] = useCreateRoomTypeMutation({})
+
+
   const onFinish = (values: any) => {
-    toast;
-    console.log(values.image);
-    try {
-      toast("Thêm mới thành công , đợi sau 3 giây", {
-        autoClose: 3000,
-        theme: "light",
+    createRoomsType(values)
+      .unwrap()
+      .then((result) => {
+        if (result.status === "success") {
+          toast.success("Thêm mới loại phòng thành công");
+          navigate("/roomType");
+        } else {
+          toast.error(result.error.message);
+        }
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu có
+        toast.error("Có lỗi xảy ra khi thêm mới loại phòng");
+        console.log(error);
       });
-    } catch (error) {
-      toast.error("Thêm mới thất bại !");
-    }
-    // Xử lý dữ liệu khi nhấn nút Submit
   };
 
   return (
@@ -87,9 +97,9 @@ const AddRoomType = () => {
               },
             ]}
           >
-            <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value="BinhDan">Còn</Option>
-              <Option value="V.I.P">Hết</Option>
+            <Select placeholder="Vui lòng nhập trạng thái!">
+              <Option value={1}>Còn</Option>
+              <Option value={0}>Hết</Option>
             </Select>
           </Form.Item>
 

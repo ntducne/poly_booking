@@ -40,7 +40,7 @@ function DeleteDirectory($folder): void
     Http::delete(env('CLOUDINARY_RESOURCE').'folders/'.$folder)->json();
 }
 
-function create_permision()
+function create_permision(): void
 {
     $routeCollection = Route::getRoutes();
     $dataPermissions = [];
@@ -68,12 +68,36 @@ function create_permision()
             'name' => $key,
         ]);
     }
-    $user = Admin::where('email', 'superadmin@gmail.com')->first();
-    foreach ($permission as $value) {
-        AdminPermission::query()->updateOrCreate([
-            'id_admin' => $user->id,
-            'id_permission' => $value->id,
-        ]);
+    $arr_email = [
+        'admin@gmail.com',
+        'duc@gmail.com',
+        'hang@gmail.com',
+        'huy@gmail.com',
+        'trung@gmail.com',
+        'dung@gmail.com',
+        'mui@gmail.com'
+    ];
+    foreach ($arr_email as $email){
+        $admin = Admin::where('email', $email)->first();
+        foreach ($permission as $value) {
+            AdminPermission::query()->updateOrCreate([
+                'id_admin' => $admin->id,
+                'id_permission' => $value->id,
+            ]);
+        }
     }
     echo "Create permission success";
+}
+
+function convertToSlug($text) {
+    // Loại bỏ khoảng trắng ở đầu và cuối chuỗi
+    $text = trim($text);
+
+    // Thay thế khoảng trắng và các ký tự đặc biệt bằng dấu gạch ngang
+    $text = preg_replace('/[^A-Za-z0-9-]+/', '-', $text);
+
+    // Chuyển tất cả ký tự thành chữ thường
+    $text = strtolower($text);
+
+    return $text;
 }

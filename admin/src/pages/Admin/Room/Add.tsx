@@ -8,9 +8,6 @@ import {
   message,
   Typography,
   InputNumber,
-  Checkbox,
-  Row,
-  Col,
   Space,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -36,6 +33,10 @@ const AddRoom = () => {
   const { data, isLoading } = useGetRoomTypeQuery({})
   const { data: dataBranch, isLoading: isLoadingBranch } = useGetAllBranchesQuery({})
   const [createUser, { isLoading: isLoadingCreate }] = useCreateRoomMutation()
+
+  if (isLoading && isLoadingBranch) {
+    return <div>Loading...</div>
+  }
 
   const onFinish = (values: any) => {
     const formUpload = new FormData()
