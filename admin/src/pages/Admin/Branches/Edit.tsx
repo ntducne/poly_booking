@@ -11,7 +11,10 @@ import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-import { useGetDetailBranchesQuery, useUpdateBranchesMutation } from "../../../api/branches";
+import {
+  useGetDetailBranchesQuery,
+  useUpdateBranchesMutation,
+} from "../../../api/branches";
 // const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -22,40 +25,40 @@ const formItemLayout = {
 };
 
 const EditBranche = () => {
-  const { id } = useParams()
+  const { id } = useParams();
   console.log(id);
 
-  const navigate = useNavigate()
-  const [form] = Form.useForm()
-  const { data, isLoading, refetch } = useGetDetailBranchesQuery(id)
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const { data, isLoading, refetch } = useGetDetailBranchesQuery(id);
   console.log(data);
 
-  const [updateData] = useUpdateBranchesMutation()
+  const [updateData] = useUpdateBranchesMutation();
 
   const onFinish = (values: any) => {
     console.log(values);
     // Xử lý dữ liệu khi nhấn nút Submit
     const data = {
       ...values,
-    }
+    };
     const dataUpload = {
       id,
-      ...data
-    }
+      ...data,
+    };
 
     updateData(dataUpload)
       .unwrap()
       .then((result) => {
-        if (result.status === 'success') {
-          toast.success('Cập nhật thông tin loại phòng thành công');
-          navigate('/branches');
+        if (result.status === "success") {
+          toast.success("Cập nhật thông tin loại phòng thành công");
+          navigate("/branches");
         } else {
           toast.error(result.error.message);
         }
       })
       .catch((error) => {
         // Xử lý lỗi nếu có lỗi xảy ra trong quá trình gọi mutation hoặc xử lý kết quả
-        toast.error('Có lỗi xảy ra khi cập nhật thông tin loại phòng');
+        toast.error("Có lỗi xảy ra khi cập nhật thông tin loại phòng");
         console.error(error);
       });
   };
@@ -66,10 +69,10 @@ const EditBranche = () => {
   }, [id]);
 
   useEffect(() => {
-    form.setFieldsValue(data?.data)
-  }, [isLoading, data?.data])
+    form.setFieldsValue(data?.data);
+  }, [isLoading, data?.data]);
   if (isLoading) {
-    return <>loading...</>
+    return <>loading...</>;
   }
 
   return (
@@ -114,11 +117,13 @@ const EditBranche = () => {
           <Form.Item
             label="Số điện thoại"
             name="phone"
-            rules={[{ required: true, message: "Vui lòng nhập số điện thoại" },
-            {
-              pattern: /^[0-9]{10}$/,
-              message: "Số điện thoại phải có đúng 10 số",
-            },]}
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại" },
+              {
+                pattern: /^[0-9]{10}$/,
+                message: "Số điện thoại phải có đúng 10 số",
+              },
+            ]}
           >
             <Input />
           </Form.Item>

@@ -47,6 +47,7 @@ import Test from "./pages/test";
 import ListBranches from "./pages/Admin/Branches/List";
 import AddBranche from "./pages/Admin/Branches/Add";
 import EditBranche from "./pages/Admin/Branches/Edit";
+import DetailBooking from "./pages/Admin/Booking/Detail";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
             <Route index element={<ListBooking />} />
             <Route path="add" element={<AddBooking />} />
             <Route path="edit/:id" element={<EditBooking />} />
+            <Route path="detail/:id" element={<DetailBooking />} />
           </Route>
           <Route path="offers">
             <Route index element={<ListOffers />} />
