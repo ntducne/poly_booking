@@ -5,7 +5,7 @@ const bookingApi = createApi({
   reducerPath: "booking",
   tagTypes: ["booking"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.polydevhotel.site/admin/",
+    baseUrl: "http://localhost:8000/admin/",
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",
@@ -26,21 +26,20 @@ const bookingApi = createApi({
       }),
       providesTags: ["booking"],
     }),
-    searchRoom: builder.query<any, any>({
-      query: (param) => ({
-        url: `rooms/search`,
-        method: "GET",
-        params: param,
+    searchRoom: builder.mutation({
+      query: (data: any) => ({
+        url: `booking/search`,
+        method: "POST",
+        body: data
       }),
-      providesTags: ["booking"],
-    })
-
-
+      invalidatesTags: ['booking']
+    }),
   }),
 });
 
 export const {
   useGetBookingQuery,
   useGetDetailBookingQuery,
+  useSearchRoomMutation,
 } = bookingApi;
 export default bookingApi;

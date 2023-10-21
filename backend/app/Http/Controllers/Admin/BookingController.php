@@ -21,14 +21,13 @@ class BookingController extends Controller
         if($search){
             return response()->json([
                 'status' => 'success',
-                'message' => 'Tìm kiếm thành công !',
+                'message' => 'Tìm phòng thành công !',
                 'data' => $search
             ]);
         }
         return response()->json([
             'status' => 'error',
             'message' => 'Không tìm thấy !',
-            'data' => null
         ]);
     }
 

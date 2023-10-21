@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Resources\BillingResource;
+use App\Http\Resources\RoomResource;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
@@ -66,28 +67,37 @@ class BookingRepository
     private function check_room($checkin, $checkout, $branch_id, $adults, $children, $room_type_id): array
     {
         $room_book = $this->booking
-            ->where('check_in', '<=', $checkin)
-            ->where('check_out', '>=', $checkout)
+            ->where('checkin', '<=', $checkin)
+            ->where('checkout', '>=', $checkout)
             ->where('room_type', $room_type_id)
-            ->where('branch', $branch_id)
+//            ->where('branch', $branch_id)
             ->get();
         $room = $this->room
-            ->where('adult', '>=', $adults)
-            ->where('child', '>=', $children)
+            ->where('adults', '>=', $adults)
+            ->where('children', '>=', $children)
             ->where('room_type_id', $room_type_id)
-            ->where('branch', $branch_id)
+//            ->where('branch', $branch_id)
             ->get();
         $room_booked = [];
         foreach ($room_book as $item) {
-            $room_booked[] = $this->booking_detail->find($item->id)->room_id;
+            $book_detail = $this->booking_detail->where('booking_id', $item->_id)->get();
+            foreach ($book_detail as $key => $value) {
+                $room_booked[] = $value->room_id;
+            }
         }
         $room_available = [];
         foreach ($room as $item) {
-            if (!in_array($item->id, $room_booked)) {
-                $room_available[] = $item->id;
+            if (!in_array($item->_id, $room_booked)) {
+                $room_available[] = $item->_id;
             }
         }
-        return $room_available;
+
+        $room=[];
+        foreach ($room_available as $item) {
+            $room[] = new RoomResource($this->room->find($item));
+        }
+
+        return $room;
     }
 
     public function search($request): bool|array
