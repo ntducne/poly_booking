@@ -85,35 +85,6 @@ class RoomRepository
         return true;
     }
 
-    public function search($request)
-    {
-        $check_in = $request->check_in; // ngày đặt phòng
-        $check_out = $request->check_out; // ngày trả phòng
-        $adults = $request->adults; // người lớn
-        $children = $request->children; // trẻ em
-        $number_of_rooms = $request->number_of_rooms; // số lượng phòng
-
-        // lấy các phòng có số người lớn và trẻ em lớn hơn hoặc bằng số người lớn và trẻ em trong request
-        $rooms = $this->room
-            ->where('adults', '>=', $adults)
-            ->where('children', '>=', $children)
-            ->get();
-
-        // lấy các phòng từ bookDetail join với booking có trạng thái false
-        $bookDetails = $this->bookDetail
-            ->join('bookings', 'book_details.booking_id', '=', 'bookings.id')
-            ->where('bookings.status', '=', false)
-            ->get();
-
-        // so sánh room vs bookDetail để lấy ra các phòng còn trống trong khoảng thời gian đặt phòng và trả phòng cùng với số người lớn và trẻ em
-         
-        $roomAvailable = $rooms->diff($bookDetails);
-        
-        
-
-
-
-    }
 }
 
 

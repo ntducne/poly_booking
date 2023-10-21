@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -8,29 +8,15 @@ import {
   Modal,
   Drawer,
   Checkbox,
-  Carousel,
 } from "antd";
 import { useGetDetailBookingQuery } from "../../../api/booking";
 import { useParams } from "react-router-dom";
 
-const contentStyle: React.CSSProperties = {
-  margin: 0,
-  height: "100%",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  background: "#364d79",
-};
 const DetailBooking = () => {
     const { id } = useParams()
-
     const { data } = useGetDetailBookingQuery(id || "")
     console.log( " data" , data);
     
-
-  const onChange = (currentSlide: number) => {
-    console.log(currentSlide);
-  };
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
   };

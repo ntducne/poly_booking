@@ -1,10 +1,18 @@
 
+import { useCookies } from 'react-cookie';
 import HeroSlide from '../../components/HeroSlide'
+// import { log } from 'console';
 
 
 
 
 const Checkout = () => {
+    const [cookies] = useCookies();
+    console.log(cookies.roomBooking);
+    console.log(cookies.userInfo);
+    
+    const items  = cookies.roomBooking
+    const userInfo = cookies.userInfo
     return (
         <div>
             <HeroSlide />
@@ -51,7 +59,7 @@ const Checkout = () => {
                                         <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                             <div className="md:col-span-5">
                                                 <label htmlFor="full_name" className='text-bold'>Full Name</label>
-                                                <input type="text" name="full_name" id="full_name" className="h-10 border mt-1 rounded px-4 min-w-[530px] bg-gray-50" value="" />
+                                                <input type="text" name="full_name" id="full_name" className="h-10 border mt-1 rounded px-4 min-w-[530px] bg-gray-50" value={userInfo?.name} />
                                             </div>
 
                                             <div className="md:col-span-5">
@@ -59,59 +67,12 @@ const Checkout = () => {
                                                 <input type="text" name="email" id="email" className="h-10 border mt-1 rounded px-4 min-w-[530px] bg-gray-50" value="" placeholder="email@domain.com" />
                                             </div>
 
-                                            <div className="md:col-span-3">
-                                                <label htmlFor="address">Address / Street</label>
-                                                <input type="text" name="address" id="address" className="h-10 border mt-1 rounded px-4 min-w-[280px] bg-gray-50" value="" placeholder="" />
-                                            </div>
-
-                                            <div className="md:col-span-2 ml-[100px]">
-                                                <label htmlFor="city">City</label>
-                                                <input type="text" name="city" id="city" className="h-10 border mt-1 rounded px-4 min-w-[180px] bg-gray-50" value="" placeholder="" />
-                                            </div>
-
-                                            <div className="md:col-span-2">
-                                                <label htmlFor="country">Country / region</label>
-                                                <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                                                    <input name="country" id="country" placeholder="Country" className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent" value="" />
-                                                    <button className="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
-                                                        <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                        </svg>
-                                                    </button>
-                                                    <button className="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
-                                                        <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div className="md:col-span-2 ">
-                                                <label htmlFor="state">State / province</label>
-                                                <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                                                    <input name="state" id="state" placeholder="State" className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent" value="" />
-                                                    <button className="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
-                                                        <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                        </svg>
-                                                    </button>
-                                                    <button className="cursor-pointer outline-none focus:outline-none border-l border-gray-200 transition-all text-gray-300 hover:text-blue-600">
-                                                        <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div className="md:col-span-1  ml-[24px]">
-                                                <label htmlFor="zipcode">Zipcode</label>
-                                                <input type="text" name="zipcode" id="zipcode" className="transition-all flex items-center h-10 min-w-[180px] border mt-1 rounded px-4  bg-gray-50" placeholder="" value="" />
-                                            </div>
-
                                             <div className="md:col-span-5">
-                                                <div className="inline-flex items-center">
-                                                    <input type="checkbox" name="billing_same" id="billing_same" className="htmlForm-checkbox" />
-                                                    <label htmlFor="billing_same" className="ml-2">My billing address is different than above.</label>
-                                                </div>
+                                                <label htmlFor="email">Số điện thoại</label>
+                                                <input type="text" name="email" id="email" className="h-10 border mt-1 rounded px-4 min-w-[530px] bg-gray-50" value="" placeholder="email@domain.com" />
                                             </div>
+
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -245,20 +206,20 @@ const Checkout = () => {
 Thuế và phí là các khoản được Traveloka chuyển trả cho khách sạn. Mọi thắc mắc về thuế và hóa đơn, vui lòng tham khảo Điều khoản và Điều kiện của Traveloka để được giải đáp</p>
                                     </div>
                                     <div className='border-t-2'>
-                                    <div className='flex'>
-                                        <div className='pt-[8px] pt-[16px]'>
-                                            <h1 className=''>(1x) Deluxe City View (1 đêm)</h1>
+                                    <div className='grid grid-cols-2 grid-rols-2'>
+                                        <div className='pt-[16px]'>
+                                            <h1 className=''>(1x) {items?.name}</h1>
                                         </div>
-                                        <div className='pt-[8px] pl-[235px] pt-[16px]'>
-                                            <p className=''> VND43.500</p>
+                                        <div className='pl-[150px] pt-[16px]'>
+                                            <p className=''> {items?.discount}.VND</p>
                                         </div>
                                     </div>
                                     <div className='flex pt-[16px]'>
                                         <div className='pt-[8px] '>
                                             <h1 className=''>Thuế và phí</h1>
                                         </div>
-                                        <div className='pt-[8px] pl-[350px] pt-[16px] '>
-                                            <p className=''> VND43.500</p>
+                                        <div className='pl-[350px] pt-[16px] '>
+                                            <p className=''> 43.500VND</p>
                                         </div>
                                     </div>
                                     </div>
@@ -279,25 +240,25 @@ Thuế và phí là các khoản được Traveloka chuyển trả cho khách s�
                             <div className='text-base p-[8px] tracking-wide  flex'>
                                 <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/6aa2fd01a9460e1a71bb0efb713f0212.svg" alt="" />
                                <div className='pl-[16px]'>
-                               <span className='font-bold'>Cozrum Homes - Sonata Residence</span>
-                               <p>Cozrum Homes - Sonata Residence</p>
+                               <span className='font-bold'>Polydev - Polytechnic Hotel</span>
+                               <p>Polydev - Polytechnic Hotel</p>
                                </div>
                                 
                             </div>
-                            <div className='font-mono inline-block  font-black bg-slate-100 p-[16px] flex'>
+                            <div className='font-mono font-black bg-slate-100 p-[16px] flex'>
                                 <span className='w-[48%]'>Ngày nhận phòng <strong>12:00 - 12/02/2003</strong></span>
                                 <span className='w-[45%]'>Ngày trả phòng <strong>12:00 - 12/02/2003</strong></span>
                             </div>
                             <div className='bg-white p-[16px]'>
                                 <div>
-                                    <p className='text-xl font-bold'>(1x) Deluxe City View</p>
+                                    <p className='text-xl font-bold'>(1x){items?.name}</p>
                                 </div>
                                 <div>
                                     <div className='grid gap-4 grid-cols-2 grid-rows-2 mt-[10px]'>
-                                        <div>Khách phòng</div>
-                                        <div>2 khách</div>
-                                        <div>Khách phòng</div>
-                                        <div>2 khách</div>
+                                        <div>Người lớn:</div>
+                                        <div>{items?.adults}</div>
+                                        <div>Trẻ em:</div>
+                                        <div>{items?.children}</div>
                                     </div>
                                     <div className='mt-[10px] flex'>
                                        <div> <img className='min-w-[80px] max-h-[80px] rounded-xl' src="https://ik.imagekit.io/tvlk/apr-asset/dgXfoyh24ryQLRcGq00cIdKHRmotrWLNlvG-TxlcLxGkiDwaUSggleJNPRgIHCX6/hotel/asset/20016842-3078abf5cf90a3ec8b59453f05737775.jpeg?_src=imagekit&tr=h-80,q-40,w-80" 

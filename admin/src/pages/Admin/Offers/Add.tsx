@@ -91,12 +91,32 @@ const AddOffers = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item label="Ngày bắt đầu" name="start_date">
+          <Form.Item
+            label="Ngày bắt đầu"
+            name="start_date"
+            rules={[
+              {
+                type: "object" as const,
+                required: true,
+                message: "Please select time!",
+              },
+            ]}
+          >
             <DatePicker />
           </Form.Item>
 
-          <Form.Item label="Ngày kết thúc" name="end_date">
-            <DatePicker  />
+          <Form.Item
+            label="Ngày kết thúc"
+            name="end_date"
+            rules={[
+              {
+                type: "object" as const,
+                required: true,
+                message: "Please select time!",
+              },
+            ]}
+          >
+            <DatePicker />
           </Form.Item>
 
           <Form.Item

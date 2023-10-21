@@ -80,8 +80,9 @@ class ClientController extends Controller
         }
         return $room_id_completed;
     }
-    public function search(searchRequest $request)
+    public function search(Request $request)
     {
+
         $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, $request->room_type_id);
         if (!$room_completed) {
             $response = [
@@ -193,7 +194,7 @@ class ClientController extends Controller
             'message' => 'Đặt thành công !',
             'booking' => $create,
             'details' => $details,
-            'bill'=>$data
+            'bill' => $data
         ]);
     }
 }

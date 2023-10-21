@@ -15,6 +15,12 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UtilitiesController;
 use Illuminate\Support\Facades\Route;
 
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Page Not Found'
+    ], 404);
+});
+
 Route::resource('branches', BranchController::class)->except(['create','edit']);
 
 Route::resource('room/types', RoomTypeController::class)->except(['create','edit']);

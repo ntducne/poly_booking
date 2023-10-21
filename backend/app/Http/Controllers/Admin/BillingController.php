@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Log;
 class BillingController extends Controller
 {
     private Billing $billing;
+    private HistoryHandleBooking $history;
+    private BookingRepository $bookingRespository;
 
     public function __construct(BookingRepository $bookingRepository)
     {
@@ -26,16 +28,14 @@ class BillingController extends Controller
         $this->history = new HistoryHandleBooking();
     }
 
-    public function index(): JsonResponse
+    public function index()
     {
-        $data = $this->billing->all();
-        return response()->json($data);
+        return $this->bookingRespository->orderList();
     }
 
-    public function show($id): JsonResponse
+    public function show($id)
     {
-        $data = $this->billing->find($id);
-        return response()->json($data->bookingInBilling());
+        return $this->bookingRespository->orderDetail($id);
     }
 
     public function order_service_user(Request $request)

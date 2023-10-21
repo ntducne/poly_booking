@@ -16,25 +16,15 @@ const bookingApi = createApi({
   }),
   endpoints: (builder) => ({
     getBooking: builder.query<any, any>({
-      query: () => `booking`,
+      query: () => `billings`,
       providesTags: ["booking"],
     }),
     getDetailBooking: builder.query<any, any>({
       query: (id) => ({
-        url: `booking/${id}`,
+        url: `billings/${id}`,
         method: "GET",
       }),
       providesTags: ["booking"],
-    }),
-    deleteBooking: builder.mutation<any, any>({
-      query: (data) => {
-        return {
-          url: `booking/${data.id}`,
-          method: "DELETE",
-          body: data.data,
-        };
-      },
-      invalidatesTags: ["booking"],
     }),
   }),
 });
@@ -42,6 +32,5 @@ const bookingApi = createApi({
 export const {
   useGetBookingQuery,
   useGetDetailBookingQuery,
-  useDeleteBookingMutation,
 } = bookingApi;
 export default bookingApi;

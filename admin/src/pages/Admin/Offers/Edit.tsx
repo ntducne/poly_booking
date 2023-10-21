@@ -9,7 +9,7 @@ import {
   DatePicker,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   useGetDetailPromotionsQuery,
   useUpdatePromotionsMutation,
@@ -34,8 +34,8 @@ const EditOffers = () => {
   const { data, isLoading } = useGetDetailPromotionsQuery(id || "");
   const [updatePromotions] = useUpdatePromotionsMutation();
   const navigate = useNavigate();
-  console.log("data" ,data);
-  
+  console.log("data", data);
+
   const { data: dataBranches, isLoading: loadingBranch } =
     useGetAllBranchesQuery({});
   useEffect(() => {
@@ -51,8 +51,8 @@ const EditOffers = () => {
   if (isLoading || loadingBranch) {
     return <div>Loading...</div>;
   }
-  if(data?.data === null){
-    return <div>Không tồn tại ưu đãi này</div>
+  if (data?.data === null) {
+    return <div>Không tồn tại ưu đãi này</div>;
   }
   const onFinish = (values: any) => {
     const data = {
@@ -117,11 +117,31 @@ const EditOffers = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item label="Ngày bắt đầu" name="start_date">
+          <Form.Item
+            label="Ngày bắt đầu"
+            name="start_date"
+            rules={[
+              {
+                type: "object" as const,
+                required: true,
+                message: "Please select time!",
+              },
+            ]}
+          >
             <DatePicker value={data?.data?.start_date} />
           </Form.Item>
 
-          <Form.Item label="Ngày kết thúc" name="end_date">
+          <Form.Item
+            label="Ngày kết thúc"
+            name="end_date"
+            rules={[
+              {
+                type: "object" as const,
+                required: true,
+                message: "Please select time!",
+              },
+            ]}
+          >
             <DatePicker />
           </Form.Item>
 
