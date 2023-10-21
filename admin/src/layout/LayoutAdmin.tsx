@@ -92,25 +92,11 @@ const LayoutAdmin = () => {
     getItem(
       "Hoá đơn",
       "7",
-      <Link onClick={() => handleTitleChange("Phòng đặt")} to={`booking`}>
+      <Link onClick={() => handleTitleChange("Phòng đặt")} to={`billing`}>
         {" "}
         <AiFillBank />
       </Link>
     ),
-    // getItem(
-    //   "Gia hạn Phòng",
-    //   "7",
-    //   <Link onClick={() => handleTitleChange("Gia hạn")} to={`roomExtend`}>
-    //     <AiFillPushpin />
-    //   </Link>
-    // ),
-    // getItem(
-    //   "Hóa đơn",
-    //   "8",
-    //   <Link onClick={() => handleTitleChange("Hóa đơn")} to={`bill`}>
-    //     <AiFillBank />
-    //   </Link>
-    // ),
     getItem(
       "Dịch vụ",
       "8",
@@ -182,7 +168,8 @@ const LayoutAdmin = () => {
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
-          className={(!collapsed ? 'fixed z-10' : '') + ' h-screen'}
+          className={(!collapsed ? 'fixed z-50' : '') + ' h-screen'}
+         
         >
           {/* <div className="demo-logo-vertical" /> */}
           <img
@@ -201,8 +188,12 @@ const LayoutAdmin = () => {
         {!collapsed ? <div className='fixed top-0 right-0 z-[1] w-screen h-full bg-[rgba(0,0,0,0.1)] md:hidden md:opacity-0 md:invisible'></div> : ''}
         <Layout className={!collapsed ? 'md:pl-[200px]' : ''}>
           <Header
-            className="flex items-center p-5"
-            style={{ padding: 0, background: colorBgContainer }}
+            className="flex items-center p-5 shadow-md"
+            style={{ padding: 0, background: colorBgContainer, 
+              position: 'sticky',
+              top: 0,
+              zIndex: 40,
+            }}
           >
             <Button
               className="flex-none w-8"
@@ -214,20 +205,6 @@ const LayoutAdmin = () => {
             </div>
           </Header>
           <Content style={{ margin: "16px" }}>
-            {/* <div
-              style={{
-                padding: 24,
-                minHeight: 50,
-                background: colorBgContainer,
-                marginBottom: "16px",
-              }}
-              className="rounded-lg"
-            >
-              <div className="flex justify-between items-center">
-                <BreadCrumb pageName="Role" path="/role" action="Thêm"/>
-                <Link to='/role/create' className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center">Thêm vai trò +</Link>
-              </div>
-            </div> */}
             <div
               style={{
                 padding: 24,
@@ -236,7 +213,6 @@ const LayoutAdmin = () => {
               }}
               className="rounded-lg"
             >
-              {/* Bill is a cat. */}
               <Outlet />
               <ToastContainer />
             </div>

@@ -26,6 +26,16 @@ const bookingApi = createApi({
       }),
       providesTags: ["booking"],
     }),
+    searchRoom: builder.query<any, any>({
+      query: (param) => ({
+        url: `rooms/search`,
+        method: "GET",
+        params: param,
+      }),
+      providesTags: ["booking"],
+    })
+
+
   }),
 });
 
