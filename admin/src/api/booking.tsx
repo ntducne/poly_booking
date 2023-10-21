@@ -5,7 +5,7 @@ const bookingApi = createApi({
   reducerPath: "booking",
   tagTypes: ["booking"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8000/admin/",
+    baseUrl: "https://api.polydevhotel.site/admin/",
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",

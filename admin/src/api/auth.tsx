@@ -9,7 +9,7 @@ const authApi = createApi({
     reducerPath: 'auth',
     tagTypes: ['Auth'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000',
+        baseUrl: 'https://api.polydevhotel.site',
         prepareHeaders: (headers) => {
             const token = localStorage.getItem("access_token");
             headers.set("authorization", `Bearer ${token}`)
