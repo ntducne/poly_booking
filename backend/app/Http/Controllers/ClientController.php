@@ -52,7 +52,7 @@ class ClientController extends Controller
             'room_same' => $room_same
         ]);
     }
-    public function check_room($check_in, $check_out, $adults, $children, $branch_id, $room_type_id)
+    public function check_room($check_in, $check_out, $adults, $children, $branch_id, $room_type_id, $soLuong = 1)
     {
         //Check qua thoi gian ben Booking
         $room_booked = $this->booking
@@ -63,11 +63,15 @@ class ClientController extends Controller
             ->get();
         $room_id_booked = [];
         foreach ($room_booked as $item) {
-            $room_id_booked[] = $this->book_detail->where('booking_id', '=', $item->_id)->first()->room_id;
+            $book_detail = $this->book_detail->where('booking_id', '=', $item->_id)->get();
+            foreach ($book_detail as $key => $value) {
+                $room_id_booked[] = $value->room_id;
+            }
+            // $room_id_booked[] = $this->book_detail->where('booking_id', '=', $item->_id)->get()->room_id;
         }
         //Danh sach cac room
-        $room = Room::where('adults', '=', $adults)
-            ->where('children', '=', $children)
+        $room = Room::where('adults', '=', ceil($adults / $soLuong))
+            ->where('children', '=', ceil($children / $soLuong))
             ->where('branch_id', '=', $branch_id)
             ->where('room_type_id', '=', $room_type_id)
             ->get();
@@ -113,38 +117,30 @@ class ClientController extends Controller
         $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
         $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
         //Kiem tra phong con trong hay khong
-        $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id);
+        $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id,$soLuong);
         //Bat loi dat so luong phong
-        if (count($room_valid) < $soLuong || count($room_valid) != 1) {
+        if (count($room_valid) < $soLuong) {
             return response()->json([
                 'message' => 'Không đủ phòng trống !'
             ]);
         }
         //phong co the dat
         $room_booking = array_slice($room_valid, 0, $soLuong);
-        $total_adults = 0;
-        $total_children = 0;
+        // $total_adults = 0;
+        // $total_children = 0;
         $total_discount = 0;
         $total_price_per_night = 0;
         foreach ($room_booking as $key => $value) {
-            $total_adults += Room::find($value)->adults;
-            $total_children += Room::find($value)->children;
             $total_discount += Room::find($value)->discount;
             $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
-        }
-        //Bat loi dat so nguoi
-        if ($adults > $total_adults && $children > $total_children) {
-            return response()->json([
-                'message' => 'Phòng không đủ chỗ '
-            ]);
         }
         $param['room_type'] = $room->room_type_id;
         $param['booking_date'] = now()->toDateTimeString();
         $param['price_per_night'] = $total_price_per_night - $total_discount; // gia 1 dem cua booking
         $param['amount_people'] = [
-            'total_people' => $total_adults + $total_children,
-            'total_adults' => $total_adults,
-            'total_children' => $total_children
+            'total_people' => $adults + $children,
+            'adults' => $adults,
+            'children' => $children
         ];
         $param['representative'] = [
             'name' => $request->name,
