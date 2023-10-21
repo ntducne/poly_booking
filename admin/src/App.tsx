@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
-import ListBill from "./pages/Admin/Bill/List";
 import ListBooking from "./pages/Admin/Booking/List";
 import Dashboard from "./pages/Admin/Dashboard";
 import ListFeedBack from "./pages/Admin/Feedback/List";
@@ -36,7 +35,6 @@ import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
 import EditUser from "./pages/Admin/Guset/User/Edit";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
-import BillDetail from "./pages/Admin/Bill/Detail";
 import ListBranches from "./pages/Admin/Branches/List";
 import AddBranche from "./pages/Admin/Branches/Add";
 import EditBranche from "./pages/Admin/Branches/Edit";
@@ -55,7 +53,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="billing">
             <Route index element={<ListBooking />} />
-            <Route path="detail/:id" element={<DetailBooking />} />
+            <Route path=":id" element={<DetailBooking />} />
           </Route>
           <Route path="offers">
             <Route index element={<ListOffers />} />
@@ -97,10 +95,6 @@ function App() {
             <Route index element={<ListServices />} />
             <Route path="add" element={<AddServices />} />
             <Route path="edit/:id" element={<EditServices />} />
-          </Route>
-          <Route path="bill">
-            <Route index element={<ListBill />} />
-            <Route path=":id" element={<BillDetail />} />
           </Route>
           <Route path="feedback">
             <Route index element={<ListFeedBack />} />
