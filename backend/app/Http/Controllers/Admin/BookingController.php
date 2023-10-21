@@ -17,7 +17,19 @@ class BookingController extends Controller
     }
 
     public function search(Request $request){
-        return $this->bookingRepository->search($request);
+        $search = $this->bookingRepository->search($request);
+        if($search){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Tìm kiếm thành công !',
+                'data' => $search
+            ]);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Không tìm thấy !',
+            'data' => null
+        ]);
     }
 
 //    public function renew($id){
