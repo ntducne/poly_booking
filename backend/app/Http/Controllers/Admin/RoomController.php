@@ -48,6 +48,8 @@ class RoomController extends Controller
     {
         try {
             $object = $request->all();
+            $object['adults'] = (int) $object['adults'];
+            $object['children'] = (int) $object['children'];
             $object['slug'] = convertToSlug($request->name);
             $roomNew = $this->room->create($object);
             $room = $this->room->where('name', $request->name)->first();

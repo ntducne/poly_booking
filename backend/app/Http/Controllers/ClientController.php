@@ -20,6 +20,7 @@ class ClientController extends Controller
     {
         $this->booking = new Booking();
         $this->book_detail = new BookDetail();
+        $this->billing = new Billing();
     }
 
     public function roomType()
@@ -51,25 +52,30 @@ class ClientController extends Controller
             'room_same' => $room_same
         ]);
     }
-    public function check_room($check_in, $check_out, $adults, $children, $branch_id, $room_type_id)
+    public function check_room($check_in, $check_out, $adults, $children, $branch_id, $room_type_id, $soLuong = 1)
     {
         //Check qua thoi gian ben Booking
         $room_booked = $this->booking
-            ->where('checkin', ' >=', $check_in)
-            ->where('checkout', '<=', $check_out)
+            ->where('checkin', '<=', $check_in)
+            ->where('checkout', '>=', $check_out)
+            ->where('status', '=', false)
             ->where('room_type', $room_type_id)
             ->get();
-        //Chua id cac room da dat
         $room_id_booked = [];
         foreach ($room_booked as $item) {
-            $room_id_booked[] = $this->book_detail->where('booking_id', $item->id)->first()->room_id;
+            $book_detail = $this->book_detail->where('booking_id', '=', $item->_id)->get();
+            foreach ($book_detail as $key => $value) {
+                $room_id_booked[] = $value->room_id;
+            }
+            // $room_id_booked[] = $this->book_detail->where('booking_id', '=', $item->_id)->get()->room_id;
         }
         //Danh sach cac room
-        $room = Room::where('adults', '>=', $adults)
-            ->where('children', '>=', $children)
-            ->where('branch_id', $branch_id)
-            ->where('room_type_id', $room_type_id)
+        $room = Room::where('adults', '=', ceil($adults / $soLuong))
+            ->where('children', '=', ceil($children / $soLuong))
+            ->where('branch_id', '=', $branch_id)
+            ->where('room_type_id', '=', $room_type_id)
             ->get();
+        //Danh sach cac phong thoa man adult va children 
         $room_id_completed = [];
         foreach ($room as $item) {
             if (!in_array($item->_id, $room_id_booked)) {
@@ -109,45 +115,44 @@ class ClientController extends Controller
         (int) $adults = $request->adults;
         (int) $children = $request->children;
         $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
-        $room = Room::where('_id',$room_id)->where('branch_id', $branch_id)->first();
+        $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
         //Kiem tra phong con trong hay khong
-        $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id);
-        $total_adults = 0;
-        $total_children = 0;
-        $total_discount = 0;
-        $total_price_per_night = 0;
-        foreach ($room_valid as $key => $value) {
-            $total_adults += Room::find($value)->adults;
-            $total_children += Room::find($value)->children;
-            $total_discount += Room::find($value)->discount;
-            $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
-        }
-        //Bat loi dat so nguoi
-        if ($adults > $total_adults && $children > $total_children) {
-            return response()->json([
-                'message' => 'Phòng không đủ chỗ '
-            ]);
-        }
+        $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id,$soLuong);
         //Bat loi dat so luong phong
         if (count($room_valid) < $soLuong) {
             return response()->json([
                 'message' => 'Không đủ phòng trống !'
             ]);
         }
+        //phong co the dat
+        $room_booking = array_slice($room_valid, 0, $soLuong);
+        // $total_adults = 0;
+        // $total_children = 0;
+        $total_discount = 0;
+        $total_price_per_night = 0;
+        foreach ($room_booking as $key => $value) {
+            $total_discount += Room::find($value)->discount;
+            $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
+        }
         $param['room_type'] = $room->room_type_id;
         $param['booking_date'] = now()->toDateTimeString();
         $param['price_per_night'] = $total_price_per_night - $total_discount; // gia 1 dem cua booking
         $param['amount_people'] = [
-            'total_people' => $total_adults + $total_children,
-            'total_adults' => $total_adults,
-            'total_children' => $total_children
+            'total_people' => $adults + $children,
+            'adults' => $adults,
+            'children' => $children
+        ];
+        $param['representative'] = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone
         ];
         $param['amount_room'] = $soLuong;
         //Lay ra id user neu ho da co tai khoan tu truoc
-        $user = User::where('email', '=', $request->representative)->first();
+        if (!empty($request->email)) {
+            $user = User::where('email', '=', $request->email)->first();
+        }
         $param['user_id'] = !empty($user) ? $user->_id : null;
-        //phong co the dat
-        $room_booking = array_slice($room_valid, 0, $soLuong);
         $create = $this->booking->create($param);
         $details = [];
         foreach ($room_booking as $key => $value) {
@@ -165,10 +170,27 @@ class ClientController extends Controller
                 ]
             ];
         }
+        //Hoa don 
+        $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
+        $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
+        $bill = [
+            'booking_id' => $create->_id,
+            'services' => [],
+            'total' => $create->price_per_night * $amount_day,
+            // total = so ngay su dung phong * gia 1 dem 
+            'payment_method' => 0,
+            //thanh toan tai quay
+            'payment_date' => null,
+            'branch_id' => $branch_id,
+            'status' => 'Not yet implemented'
+        ];
+        $data = $this->billing->create($bill);
+
         return response()->json([
             'message' => 'Đặt thành công !',
             'booking' => $create,
             'details' => $details,
+            'bill' => $data
         ]);
     }
 }
