@@ -201,15 +201,16 @@ const ListRoom = () => {
           </Link>
         </div>
       </div>
-      {isLoading ? <>loading...</> :
+      {/* {isLoading ? <>loading...</> : */}
         <Table
           scroll={{ x: true }}
           className="max-w-full mt-3"
           columns={columns}
           dataSource={dataFetching}
           onChange={onChange}
+          loading={isLoading}
         />
-      }
+      {/* } */}
     </Page>
   );
 };

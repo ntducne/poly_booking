@@ -28,7 +28,7 @@ const ListRoomType = () => {
   // const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
   const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data?.data)
+  // console.log(data?.data)
 
   useEffect(() => {
     setDataFetching(data?.data?.map((item: any) => {
@@ -162,9 +162,9 @@ const ListRoomType = () => {
         });
     } catch (error) { }
   };
-  if (isLoading) {
-    return <>loading...</>
-  }
+  // if (isLoading) {
+  //   return <>loading...</>
+  // }
 
   return (
     <Page title={`Loại phòng`}>
@@ -193,6 +193,7 @@ const ListRoomType = () => {
         columns={columns}
         dataSource={dataFetching}
         onChange={onChange}
+        loading={isLoading}
       />
     </Page>
   );
