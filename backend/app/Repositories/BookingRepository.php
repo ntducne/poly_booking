@@ -10,6 +10,9 @@ use App\Models\HistoryHandleBooking;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Models\Services;
+use App\Models\User;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Carbon;
 
 class BookingRepository
 {
@@ -28,7 +31,6 @@ class BookingRepository
         $this->room_type = new RoomType();
         $this->billing = new Billing();
         $this->history_handle = new HistoryHandleBooking();
-
     }
 
     public function cancel($id)
@@ -51,15 +53,17 @@ class BookingRepository
         }
     }
 
-    public function orderList(){
+    public function orderList(): AnonymousResourceCollection
+    {
         return BillingResource::collection($this->billing->paginate(10));
     }
 
-    public function orderDetail($id){
+    public function orderDetail($id): BillingResource
+    {
         return new BillingResource($this->billing->find($id));
     }
 
-    private function check_room($checkin, $checkout, $branch_id, $adults, $children, $room_type_id)
+    private function check_room($checkin, $checkout, $branch_id, $adults, $children, $room_type_id): array
     {
         $room_book = $this->booking
             ->where('check_in', '<=', $checkin)
@@ -84,6 +88,98 @@ class BookingRepository
             }
         }
         return $room_available;
+    }
+
+    public function search($request): bool|array
+    {
+        $room_type = $request->room_type_id;
+        $branch = $request->user()->branch_id ?? $request->branch_id;
+        $check_in = $request->check_in;
+        $check_out = $request->check_out;
+        $adults = $request->adults;
+        $children = $request->children;
+        $amount_room = $request->amount_room;
+        $available_rooms = $this->check_room($check_in, $check_out, $branch, $adults, $children, $room_type);
+        if (count($available_rooms) < $amount_room) {
+            return false;
+        }
+        return $available_rooms;
+    }
+
+    public function book($request): bool
+    {
+        $condition = ($request->user()->role == 1 || $request->user()->role == 2) && $request->user()->branch_id != 'all';
+        if($condition) {
+            $branch = $request->user()->branch_id;
+        }
+        else{
+            $branch = $request->branch_id;
+        }
+        $room_type = $request->room_type_id;
+        $check_in = $request->check_in;
+        $check_out = $request->check_out;
+        $adults = $request->adults;
+        $children = $request->children;
+        $amount_room = $request->amount_room;
+        $payment_method = $request->payment_method;
+        $available_rooms = $this->check_room($check_in, $check_out, $branch, $adults, $children, $room_type);
+        $amount_day = Carbon::parse($check_in)->diffInDays(Carbon::parse($check_out));
+        if (count($available_rooms) < $amount_room) {
+            return false;
+        }
+        $now = date('Y-m-d');
+        $this->booking->create([
+            'user_id' => User::where('email', $request->email)->first() !== null ? User::where('email', $request->email)->first()->id : null,
+            'representative' => [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+            ],
+            'booking_date' => $now,
+            'price_per_night' => RoomType::find($room_type)->price,
+            'check_in' => $check_in,
+            'check_out' => $check_out,
+            'amount_people' => [
+                'adults' => $adults,
+                'children' => $children,
+            ],
+            'amount_room' => $amount_room,
+            'room_type' => $room_type,
+            'branch' => $branch,
+            'status' => 0,
+        ]);
+        $booking_id = $this->booking->where('booking_date', $now)->first()->id;
+        $selected_rooms = array_slice($available_rooms, 0, $amount_room);
+        $details = [];
+        $price_room_type = $this->room_type->find($room_type)->price_per_night;
+        $total = 0;
+        foreach ($selected_rooms as $room_id) {
+            $details[] = [
+                'booking_id' => $booking_id,
+                'room_id' => $room_id,
+                'room_name' => Room::find($room_id)->name,
+            ];
+            $total += $price_room_type - ($price_room_type * ($this->room->find($room_id)->discount / 100));
+        }
+        $this->booking_detail->create($details);
+        $this->billing->create([
+            'booking_id' => $booking_id,
+            'services' => [],
+            'total' => $total * $amount_day,
+            'payment_method' => $payment_method,
+            'payment_date' => null,
+            'branch_id' => $branch,
+            'status' => 0,
+        ]);
+        if($condition){
+            $this->history_handle->create([
+                'booking_id' => $booking_id,
+                'admin_id' => $request->user()->id,
+                'handle' => 'Tạo mới đặt phòng',
+                'time' => $now,
+            ]);
+        }
+        return true;
     }
 
     public function renew_booking($request)
@@ -142,7 +238,7 @@ class BookingRepository
         ]);
     }
 
-    public function addServiceToBilling(){
+    public function addServiceToBilling($request, $billing){
 
     }
 
