@@ -79,7 +79,7 @@ class BookingRepository
             ->get();
         $room_booked = [];
         foreach ($room_book as $item) {
-            $room_booked[] = $this->booking_detail::find($item->id)->room_id;
+            $room_booked[] = $this->booking_detail->find($item->id)->room_id;
         }
         $room_available = [];
         foreach ($room as $item) {
