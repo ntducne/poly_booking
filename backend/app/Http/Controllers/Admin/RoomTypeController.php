@@ -29,9 +29,9 @@ class RoomTypeController extends Controller
                 if($request->page == 'all') {
                     $roomTypes = $roomTypes->all();
                 }
-                else {
-                    $roomTypes = $roomTypes->paginate(10);
-                }
+            }
+            else {
+                $roomTypes = $roomTypes->paginate(10);
             }
             return RoomTypeResource::collection($roomTypes);
         } catch (Exception $exception) {
