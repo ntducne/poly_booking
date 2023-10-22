@@ -41,6 +41,7 @@ import EditBranche from "./pages/Admin/Branches/Edit";
 import RoomBooking from "./pages/Admin/Room/Booking";
 import BillList from "./pages/Admin/Bill/List";
 import BillDetail from "./pages/Admin/Bill/Detail";
+import Demo from "./pages/demo";
 
 function App() {
   return (
@@ -115,6 +116,7 @@ function App() {
           </Route>
         </Route>
         <Route path="/403" element={<Page403 />}></Route>
+        <Route path="/demo" element={<Demo />}></Route>
       </Routes>
     </>
   );

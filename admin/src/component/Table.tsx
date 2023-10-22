@@ -11,7 +11,7 @@ interface TableCustomProps {
     data: Array<any>;
     columns: Array<any>;
     loading: boolean;
-    changePage: (page: number) => void;
+    // changePage: (page: number) => void;
 }
 
 const TableCustom = (props :TableCustomProps) => {
@@ -113,13 +113,13 @@ const TableCustom = (props :TableCustomProps) => {
     });
 
     const newColumn = props.columns.map((item) => {
-        if (typeof item === 'string') {
+        if(props.data.length == 0) return item;
+        if (item.key !== 'action') {
             return {
-                title: item.charAt(0).toUpperCase() + item.slice(1),
-                dataIndex: item,
-                key: item,
-                ...getColumnSearchProps(item),
-                sorter: (a: any, b: any) => a[item].length - b[item].length,
+                ...item,
+                dataIndex: item.key,
+                ...getColumnSearchProps(item.key),
+                sorter: (a: any, b: any) => a[item.key].length - b[item.key].length,
                 sortDirections: ['descend', 'ascend'],
             };
         }
@@ -131,10 +131,13 @@ const TableCustom = (props :TableCustomProps) => {
         key: item.id,
     }));
 
+    const changePage = () => {
+        console.log('change page');
+    }
     return (
         <>
             <Table loading={props.loading} columns={newColumn} dataSource={newData} pagination={false} />
-            {newData.length > 0 && <Paginations page={10}  changePage={props.changePage}/> }
+            {/* {props.data.length > 0 && <Paginations page={10}  changePage={changePage}/> } */}
         </>
     );
 };

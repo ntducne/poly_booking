@@ -27,7 +27,7 @@ class RoomTypeController extends Controller
             $roomTypes = $this->roomType->orderBy('id', 'desc');
             if($request->page){
                 if($request->page == 'all') {
-                    $roomTypes = $roomTypes->all();
+                    $roomTypes = $roomTypes->get();
                 }
             }
             else {
