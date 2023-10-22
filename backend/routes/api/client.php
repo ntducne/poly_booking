@@ -9,6 +9,7 @@ Route::fallback(function () {
         'message' => 'Page Not Found'
     ], 404);
 });
+Route::get('type', [\App\Http\Controllers\Admin\RoomTypeController::class,'index']);
 Route::get('branch', [\App\Http\Controllers\Admin\BranchController::class,'index']);
 Route::prefix('room')->group(function () {
     Route::get('/', [ClientController::class, 'rooms']);

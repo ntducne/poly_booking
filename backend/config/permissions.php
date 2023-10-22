@@ -7,14 +7,17 @@ return [
     'admin.branches.update' => 'Cập nhật chi nhánh',
     'admin.branches.destroy' => 'Xóa chi nhánh',
 
-    'admin.billings.index' => 'Danh sách hoá đơn',
-    'admin.billings.show' => 'Chi tiết hoá đơn',
-
     'admin.types.index' => 'Danh sách loại phòng',
     'admin.types.show' => 'Chi tiết loại phòng',
     'admin.types.store' => 'Thêm loại phòng',
     'admin.types.update' => 'Cập nhật loại phòng',
     'admin.types.destroy' => 'Xóa loại phòng',
+
+    'admin.rooms.index' => 'Danh sách phòng',
+    'admin.rooms.show' => 'Chi tiết phòng',
+    'admin.rooms.store' => 'Thêm phòng',
+    'admin.rooms.update' => 'Cập nhật phòng',
+    'admin.rooms.destroy' => 'Xóa phòng',
 
     'admin.utilities.index' => 'Danh sách tiện ích',
     'admin.utilities.show' => 'Chi tiết tiện ích',
@@ -39,11 +42,11 @@ return [
     'admin.rates.update' => 'Cập nhật đánh giá',
     'admin.rates.destroy' => 'Xóa đánh giá',
 
-    'admin.cancel-policies.index' => 'Danh sách chính sách hủy',
-    'admin.cancel-policies.show' => 'Chi tiết chính sách hủy',
-    'admin.cancel-policies.store' => 'Thêm chính sách hủy',
-    'admin.cancel-policies.update' => 'Cập nhật chính sách hủy',
-    'admin.cancel-policies.destroy' => 'Xóa chính sách hủy',
+    'admin.policies.index' => 'Danh sách chính sách hủy',
+    'admin.policies.show' => 'Chi tiết chính sách hủy',
+    'admin.policies.store' => 'Thêm chính sách hủy',
+    'admin.policies.update' => 'Cập nhật chính sách hủy',
+    'admin.policies.destroy' => 'Xóa chính sách hủy',
 
     'admin.bookings.index' => 'Danh sách đặt phòng',
     'admin.bookings.show' => 'Chi tiết đặt phòng',
@@ -57,4 +60,17 @@ return [
     'admin.promotions.update' => 'Cập nhật ưu đãi',
     'admin.promotions.destroy' => 'Xóa ưu đãi',
 
+    'admin.billings.index' => 'Danh sách hoá đơn',
+    'admin.billings.show' => 'Chi tiết hoá đơn',
+
+    'admin.services.index' => 'Danh sách dịch vụ',
+    'admin.services.show' => 'Chi tiết dịch vụ',
+    'admin.services.store' => 'Thêm dịch vụ',
+    'admin.services.update' => 'Cập nhật dịch vụ',
+    'admin.services.destroy' => 'Xóa dịch vụ',
+
+    'admin.booking.create' => 'Thêm đặt phòng',
+    'admin.booking.search' => 'Tìm phòng',
+    'admin.booking.renew' => 'Gia hạn phòng',
+    'admin.booking.end' => 'Trả phòng',
 ];
