@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
-import ListBooking from "./pages/Admin/Booking/List";
+// import ListBooking from "./pages/Admin/Booking/List";
 import Dashboard from "./pages/Admin/Dashboard";
 import ListFeedBack from "./pages/Admin/Feedback/List";
 import ListAdmin from "./pages/Admin/Guset/Admin/List";
@@ -38,8 +38,10 @@ import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
 import ListBranches from "./pages/Admin/Branches/List";
 import AddBranche from "./pages/Admin/Branches/Add";
 import EditBranche from "./pages/Admin/Branches/Edit";
-import DetailBooking from "./pages/Admin/Booking/Detail";
-import RoomBooking from "./pages/Admin/Room/booking";
+import RoomBooking from "./pages/Admin/Room/Booking";
+import BillList from "./pages/Admin/Bill/List";
+import BillDetail from "./pages/Admin/Bill/Detail";
+import Demo from "./pages/demo";
 
 function App() {
   return (
@@ -52,8 +54,8 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="billing">
-            <Route index element={<ListBooking />} />
-            <Route path=":id" element={<DetailBooking />} />
+            <Route index element={<BillList />} />
+            <Route path=":id" element={<BillDetail />} />
           </Route>
           <Route path="offers">
             <Route index element={<ListOffers />} />
@@ -114,6 +116,7 @@ function App() {
           </Route>
         </Route>
         <Route path="/403" element={<Page403 />}></Route>
+        <Route path="/demo" element={<Demo />}></Route>
       </Routes>
     </>
   );

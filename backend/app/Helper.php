@@ -68,17 +68,8 @@ function create_permision(): void
             'name' => $key,
         ]);
     }
-    $arr_email = [
-        'admin@gmail.com',
-        'duc@gmail.com',
-        'hang@gmail.com',
-        'huy@gmail.com',
-        'trung@gmail.com',
-        'dung@gmail.com',
-        'mui@gmail.com'
-    ];
-    foreach ($arr_email as $email){
-        $admin = Admin::where('email', $email)->first();
+    $admins = Admin::where('role', 0)->get();
+    foreach ($admins as $admin){
         foreach ($permission as $value) {
             AdminPermission::query()->updateOrCreate([
                 'id_admin' => $admin->id,

@@ -10,6 +10,8 @@ import Paginations from './Pagination';
 interface TableCustomProps {
     data: Array<any>;
     columns: Array<any>;
+    loading: boolean;
+    // changePage: (page: number) => void;
 }
 
 const TableCustom = (props :TableCustomProps) => {
@@ -110,41 +112,32 @@ const TableCustom = (props :TableCustomProps) => {
             ),
     });
 
-    const getSorterProps = (dataIndex: any) => ({
-        ...getColumnSearchProps(dataIndex),
-        sorter: (a: any, b: any) => a[dataIndex].length - b[dataIndex].length,
-        sortDirections: ['descend', 'ascend'],
-    });
-
-    const newColumn = props.columns.map((item: any) => {
-        if (item.key == 'action') {
-            return item; // Bỏ qua item có thuộc tính action
-        } else {
+    const newColumn = props.columns.map((item) => {
+        if(props.data.length == 0) return item;
+        if (item.key !== 'action') {
             return {
                 ...item,
-                ...getSorterProps(item.dataIndex),
+                dataIndex: item.key,
+                ...getColumnSearchProps(item.key),
+                sorter: (a: any, b: any) => a[item.key].length - b[item.key].length,
+                sortDirections: ['descend', 'ascend'],
             };
         }
-    });
+        return item;
+    })
 
     const newData = props.data.map((item: any) => ({
         ...item,
         key: item.id,
     }));
-    const changePage = (page: number) => { 
-        console.log(page)
-    }
 
+    const changePage = () => {
+        console.log('change page');
+    }
     return (
         <>
-            <Table
-                columns={newColumn}
-                dataSource={newData}
-                pagination={false}
-                // scroll={{ x: 1500 }}
-                />
-            {newData.length > 0 && <Paginations page={10}  changePage={changePage}/> }
-            
+            <Table loading={props.loading} columns={newColumn} dataSource={newData} pagination={false} />
+            {/* {props.data.length > 0 && <Paginations page={10}  changePage={changePage}/> } */}
         </>
     );
 };

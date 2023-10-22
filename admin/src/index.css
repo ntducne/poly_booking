@@ -5,3 +5,7 @@
 .ant-menu-item {
     padding-left: 22px !important;
 }
+
+.ant-pagination-options {
+    display: none !important;
+}
