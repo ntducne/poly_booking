@@ -19,13 +19,8 @@ import Page from "../../../component/page";
 import { useDeleteRoomTypeMutation, useGetRoomTypeQuery } from "../../../api/roomTypes";
 
 const ListRoomType = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading, refetch } = useGetRoomTypeQuery({ page: currentPage || 1 }); // Sử dụng trang hiện tại hoặc mặc định là trang 1
+  const { data, isLoading, refetch } = useGetRoomTypeQuery({});
   const [deleteRoomType] = useDeleteRoomTypeMutation()
-  // Số lượng mục trên mỗi trang
-  const ITEMS_PER_PAGE = 10;
-  const totalItems = data?.data?.length || 0;
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
   const [dataFetching, setDataFetching] = useState<any>([])
   console.log(data?.data)
@@ -122,12 +117,12 @@ const ListRoomType = () => {
   ];
 
   const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
+    // pagination,
     // filters,
     // sorter,
     // extra
   ) => {
-    setCurrentPage(pagination.current || 1);
+    // setCurrentPage(pagination.current || 1);
     // console.log("params", pagination, filters, sorter, extra);
   };
 

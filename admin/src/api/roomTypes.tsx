@@ -13,8 +13,8 @@ const roomTypesApi = createApi({
     }),
     endpoints: (builder) => ({
         getRoomType: builder.query<any, any>({
-            query: (query) => `admin/room/types?page=${query.page || 1}`,
-            // query: () => `/admin/types-rooms`,
+            // query: (query) => `admin/room/types?page=${query.page || 1}`,
+            query: () => `/admin/room/types`,
             providesTags: ['RoomType']
         }),
         createRoomType: builder.mutation<any, any>({
