@@ -1,11 +1,13 @@
-import { Input, Select, DatePicker, InputNumber, Form, Card, Button, Modal, message } from 'antd';
+import { Input, Select, DatePicker, InputNumber, Form, Card, Button, Modal, message, Image, Row, Col, Table } from 'antd';
 import TableCustom from '../../../component/Table';
 import { SearchOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useSearchRoomMutation } from '../../../api/booking';
 import { useGetRoomTypeQuery } from '../../../api/roomTypes';
 import { RoomInterface } from '../../../Interface/RoomInterface';
 import Page from '../../../component/page';
+import formatMoneyVN from '../../../config/formatMoneyVN';
+import { DetailRoomModal } from '../../../component/Modal/DetailRoomModal';
 
 export default function RoomBooking() {
     const [form] = Form.useForm();
@@ -13,42 +15,98 @@ export default function RoomBooking() {
     const [isLoadingData, setLoading] = useState(false);
     const [isDisabledForm, setDisableForm] = useState(false);
     const [searchRoom] = useSearchRoomMutation()
-    const { data, isLoading } = useGetRoomTypeQuery({ page: 'all' })
-
+    const { data, isLoading, refetch } = useGetRoomTypeQuery({ page: 'all' })
+    const [dataDetailRoom, setDataDetailRoom] = useState(null);
     const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
+
+
+    useEffect(() => {
+        refetch()
+    }, [refetch])
+    
 
     const showModal = () => {
         setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
     };
 
+    const setDetailRoom = (data_room :RoomInterface) => {
+        setDataDetailRoom(null)
+        setDataDetailRoom(data_room as any)
+        setIsModalOpen(true);
+    }
+
+    const newData = dataRoom.map((item: any) => ({
+        ...item,
+        key: item.id,
+    }));
+
     const columns = [
-        { title: 'Tên phòng', key: 'name' },
-        { title: 'Loại phòng', key: 'discount' },
-        { title: 'Giá phòng', key: 'discount' },
+        { 
+            title: 'Ảnh', 
+            key: 'name', 
+            width: '7%', 
+            render: (record: any) =>  (
+                <>
+                    <Image width={50} height={50} className='rounded-md' src={record?.images[0].image}/>
+                </>
+            )
+        },
+        { title: 'Tên phòng', key: 'name', width: '15%', dataIndex: 'name' },
+        // { 
+        //     title: 'Loại phòng', 
+        //     key: 'discount', 
+        //     width: '20%', 
+        //     render: (record: any) =>  (
+        //         <>
+        //             {record?.type?.room_type_name}
+        //         </>
+        //     )
+        // },
+        { 
+            title: 'Giá ( 1 đêm )', 
+            key: 'price', 
+            width: '20%', 
+            render: (record: any) =>  {
+                if(record?.type?.price_per_night > record?.discount) {
+                    return (
+                        <>
+                            {formatMoneyVN(record?.type?.price_per_night - record?.discount)}
+                        </>
+                    )
+                }   
+                return (
+                    <>
+                        {formatMoneyVN(record?.type?.price_per_night)}
+                    </>
+                )
+            }
+        },
         {
             title: 'Chi nhánh',
             key: 'branch',
-            render: (record: any) => (
-                <Button shape="round" onClick={showModal}>
-                    Chọn phòng {record.branch.name}
-                </Button>
-            ),
+            width: '20%',
+            render: (record: any) =>  (
+                <>
+                    {record?.branch?.name}
+                </>
+            )
         },
         {
-            title: 'Thao tác',
+            title: '',
             key: 'action',
             render: (record: any) => (
-                <Button shape="round" onClick={showModal}>
-                    Chọn phòng {record.name}
-                </Button>
+                <>
+                    <Button shape="round" className="mr-3" onClick={()=> {setDetailRoom(record)}}>
+                        Chi tiết phòng
+                    </Button>
+                    <Button shape="round" onClick={showModal}>
+                        Chọn phòng
+                    </Button>
+                </>
             ),
         }
     ];
@@ -81,9 +139,7 @@ export default function RoomBooking() {
     
     return (
         <Page title={`Đặt phòng`}>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                ahihi
-            </Modal>
+            {dataDetailRoom !== null ? <DetailRoomModal room={dataDetailRoom} setIsModalOpen={handleCancel} isOpen={isModalOpen}/> : <></>}
             <Form disabled={isDisabledForm} form={form} labelCol={{ span: 6 }} layout="horizontal" className='mt-5 mb-5' onFinish={onFinish}>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                     <Card title="Thông tin phòng" bordered={false} loading={isLoading}>
@@ -134,7 +190,8 @@ export default function RoomBooking() {
                     </Card>
                 </div>
             </Form>
-            <TableCustom loading={isLoadingData} columns={columns} data={dataRoom}/>
+            <Table loading={isLoadingData} columns={columns} dataSource={newData} pagination={false} />
+            {/* <TableCustom loading={isLoadingData} columns={columns} data={dataRoom}/> */}
         </Page>
     )
 }
