@@ -13,7 +13,7 @@ import Page from "../../../../component/page";
 import { useGetAllStaffsQuery } from "../../../../api/account/staffs";
 
 const ListAdmin = () => {
-  const { data: staffs } = useGetAllStaffsQuery([]);
+  const { data: staffs , isLoading } = useGetAllStaffsQuery([]);
 
   const [valuePermission, setPermission] = useState([]);
   useEffect(() => {
@@ -214,6 +214,7 @@ const ListAdmin = () => {
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
+        loading={isLoading}
         dataSource={data}
         onChange={onChange}
       />

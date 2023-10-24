@@ -20,7 +20,7 @@ import { useDeleteBranchMutation, useGetAllBranchesQuery } from "../../../api/br
 const ListBranches = () => {
   const { data, isLoading, refetch } = useGetAllBranchesQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data?.data);
+  // console.log(data?.data);
   const [deleteBranch] = useDeleteBranchMutation()
 
   useEffect(() => {
@@ -154,6 +154,7 @@ const ListBranches = () => {
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
+        loading={isLoading}
         columns={columns}
         dataSource={dataFetching}
         onChange={onChange}
