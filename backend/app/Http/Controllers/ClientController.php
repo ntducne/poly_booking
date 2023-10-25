@@ -28,7 +28,7 @@ class ClientController extends Controller
         return response()->json(RoomType::all());
     }
 
-    public function rooms()
+    public function rooms(Request $request)
     {
         return RoomResource::collection(Room::paginate(10));
     }
