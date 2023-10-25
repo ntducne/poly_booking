@@ -13,22 +13,26 @@ import { Link } from "react-router-dom";
 import FormSearch from "../../../component/formSearch";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
+import { useGetBilingsQuery } from "../../../api/billings";
 
 const BillList = () => {
-  
+  const { data: dataBilings, isLoading } = useGetBilingsQuery({});
+
+  // console.log("data", dataBilings);
+
   const columns: ColumnsType<any> = [
     {
-      title: "ID",
-      dataIndex: "booking_id",
-      sorter: (a, b) => a.booking_id - b.booking_id,
+      title: "STT",
+      dataIndex: "key",
+      sorter: (a, b) => a.key - b.key,
       sortDirections: ["descend"],
       fixed: "left",
     },
-    {
-      title: "Dịch vụ",
-      dataIndex: "services",
-      key: "services",
-    },
+    // {
+    //   title: "Dịch vụ",
+    //   dataIndex: "services",
+    //   key: "services",
+    // },
     {
       title: "Giá tiền",
       dataIndex: "total",
@@ -36,7 +40,7 @@ const BillList = () => {
       sorter: (a, b) => a.total - b.total,
     },
     {
-      title: "Thời gian",
+      title: "Ngày thanh toán",
       dataIndex: "payment_date",
       key: "payment_date",
     },
@@ -66,7 +70,13 @@ const BillList = () => {
           )}
         </div>
       ),
-      onFilter: (value: any, record) => record.payment_method.indexOf(value) === 0,
+      onFilter: (value: any, record) =>
+        record.payment_method.indexOf(value) === 0,
+    },
+    {
+      title: "Trạng thái thanh toán",
+      dataIndex: "status",
+      key: "status",
     },
     {
       title: "Action",
@@ -74,10 +84,10 @@ const BillList = () => {
       render: (_, record) => (
         <Space size="middle">
           <Button
-           type="primary" 
-           className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
-           >
-            <Link to={`/bill/edit/${record?.key}`}>
+            type="primary"
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
+          >
+            <Link to={`/billing/${record?.id}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
@@ -94,28 +104,37 @@ const BillList = () => {
     },
   ];
 
-  const data = [
-    {
-      key: "1",
-      booking_id: 1,
-      services: "Thuê phòng",
-      total: 1200000,
-      payment_method: "Tiền mặt",
-      payment_date: "2021-09-20",
-      branch_id: 1,
-    },
-    {
-      key: "2",
-      booking_id: 2,
-      services: "Thuê phòng",
-      total: 1600000,
-      payment_method: "Chuyển khoản",
-      payment_date: "2021-09-20",
-      branch_id: 2,
-    },
-  ];
-
-
+  const data = dataBilings?.data?.map((item: any, index: number) => ({
+    key: index + 1,
+    id: item.id,
+    booking: item.booking,
+    services: item.services.length,
+    total: item.total,
+    payment_method: item.payment_method,
+    payment_date: item.payment_date,
+    branch: item.branch,
+    status: item.status,
+  }));
+  // [
+  //   {
+  //     key: "1",
+  //     booking_id: 1,
+  //     services: "Thuê phòng",
+  //     total: 1200000,
+  //     payment_method: "Tiền mặt",
+  //     payment_date: "2021-09-20",
+  //     branch_id: 1,
+  //   },
+  //   {
+  //     key: "2",
+  //     booking_id: 2,
+  //     services: "Thuê phòng",
+  //     total: 1600000,
+  //     payment_method: "Chuyển khoản",
+  //     payment_date: "2021-09-20",
+  //     branch_id: 2,
+  //   },
+  // ];
 
   // const remove = (id: any) => {
   //   try {
@@ -148,12 +167,12 @@ const BillList = () => {
         <div className="mb-3">
           <FormSearch />
         </div>
-        <div className="flex flex-col md:flex-row">
-        </div>
+        <div className="flex flex-col md:flex-row"></div>
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
+        loading={isLoading}
         columns={columns}
         dataSource={data}
       />

@@ -22,9 +22,9 @@ const ListServices = () => {
   const { data: dataServices, isLoading } = useGetServicesQuery({});
   const [deleteServices] = useDeleteServicesMutation();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   const columns: ColumnsType<any> = [
     {
@@ -131,7 +131,9 @@ const ListServices = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -158,6 +160,7 @@ const ListServices = () => {
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
+        loading={isLoading}
         columns={columns}
         dataSource={data}
         onChange={onChange}
