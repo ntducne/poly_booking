@@ -56,11 +56,20 @@ class ClientController extends Controller
     {
         //Check qua thoi gian ben Booking
         $room_booked = $this->booking
-            ->where('checkin', '<=', $check_in)
-            ->where('checkout', '>=', $check_out)
             ->where('status', '=', false)
-            ->where('room_type', $room_type_id)
-            ->get();
+            // ->where('room_type', $room_type_id)
+            ->where(function ($query) use ($check_in,$check_out){
+                $query->where(function ($query) use ($check_in, $check_out) {
+                    $query->where('checkin', '<=', $check_in)
+                        ->where('checkout', '>=', $check_out);
+                })
+                ->orWhere(function ($query) use ($check_in, $check_out) {
+                    $query->where('checkin', '>=', $check_in)->where('checkin', '<', $check_out)->where('checkout', '>=', $check_out);
+                })
+                ->orWhere(function ($query) use ($check_in, $check_out) {
+                    $query->where('checkin', '<=', $check_in)->where('checkout', '>', $check_in)->where('checkout', '<=', $check_out);
+                });
+            })->get();
         $room_id_booked = [];
         foreach ($room_booked as $item) {
             $book_detail = $this->book_detail->where('booking_id', '=', $item->_id)->get();
