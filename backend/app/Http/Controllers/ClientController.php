@@ -28,8 +28,35 @@ class ClientController extends Controller
         return response()->json(RoomType::all());
     }
 
-    public function rooms()
+    public function rooms(Request $request)
     {
+        if(request()->has('checkin') 
+            && request()->has('checkout')
+            && request()->has('adult')
+            && request()->has('child')
+            && request()->has('branch_id')
+            && request()->has('soLuong')
+        ){
+            $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, null, $request->soLuong);
+            if (!$room_completed) {
+                $response = [
+                    'message' => 'Hết phòng !'
+                ];
+            } else {
+                $room = [];
+                foreach ($room_completed as $value) {
+                    $room[] = [
+                        'room' => Room::find($value),
+                        'room_type' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->get()
+                    ];
+                }
+                $response = [
+                    'message' => 'Tìm thành công !',
+                    'data' => RoomResource::collection($room)
+                ];
+            }
+            return response()->json($response);
+        }
         return RoomResource::collection(Room::paginate(10));
     }
 
