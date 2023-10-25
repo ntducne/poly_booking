@@ -2,7 +2,16 @@
 import React, { useState } from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Modal, Drawer, Checkbox, Select, DatePicker, InputNumber, Form, Row, Card, Col, Alert } from 'antd';
+import { useGetDetailBilingsQuery } from '../../../api/billings';
+import { useParams } from 'react-router-dom';
 const BillDetail: React.FC = () => {
+    const { id } = useParams();
+
+    const { data: dataBill , isLoading } = useGetDetailBilingsQuery(id || '') 
+    console.log(dataBill, "data");
+    
+
+
     const onFinish = (values: any) => {
         console.log('Received values of form:', values);
     };
@@ -120,8 +129,8 @@ const BillDetail: React.FC = () => {
                         </a>
                     </div>
                 </div>
-                <div className="grid md:grid-rows-2 grid-rows-1 gap-4">
-                    <div className='grid md:grid-cols-2 gap-4'>
+                <div className="grid md:grid-rows-1 grid-rows-1 gap-4">
+                    <div className='grid md:grid-cols-1 gap-4'>
                         <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Thông tin đặt phòng</h5>
                             <div className="font-normal text-gray-700">
@@ -136,7 +145,7 @@ const BillDetail: React.FC = () => {
                                 </ul>
                             </div>
                         </div>
-                        <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+                        {/* <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Thông tin gia hạn</h5>
                             <div className="font-normal text-gray-700">
                                 <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
@@ -149,7 +158,7 @@ const BillDetail: React.FC = () => {
                                     <li>Hình thức thanh toán: Thanh toán qua ví điện tử MoMo</li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
                         
                     </div>
                     <div>
@@ -157,10 +166,10 @@ const BillDetail: React.FC = () => {
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Thông tin khách hàng</h5>
                             <div className="font-normal text-gray-700">
                                 <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
-                                    <li>Tên khách đặt phòng: Nguyễn Đức</li>
-                                    <li>Email: duc@gmail.com</li>
-                                    <li>Số điện thoại: +84823565831</li>
-                                    <li>CCCD/CMTND: 123412312</li>
+                                    <li>Tên khách đặt phòng: {dataBill?.data?.booking?.representative?.name}</li>
+                                    <li>Email: {dataBill?.data?.booking?.representative?.email}</li>
+                                    <li>Số điện thoại: {dataBill?.data?.booking?.representative?.phone}</li>
+                                    {/* <li>CCCD/CMTND: 123412312</li> */}
                                 </ul>
                             </div>
                             <div className="mt-1 mb-3"></div>

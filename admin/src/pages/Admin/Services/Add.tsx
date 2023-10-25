@@ -106,8 +106,8 @@ const AddServices = () => {
             <Select
             //  placeholder="Vui lòng chọn chi nhánh!"
              >
-              {dataBranches?.data?.data?.map((item: any) => {
-                return  <Option key={item?._id} value={item?._id}>{item?.name}</Option>
+              {dataBranches?.data?.map((item: any) => {
+                return  <Option key={item?.id} value={item?.id}>{item?.name}</Option>
               }
               )}
             </Select>
