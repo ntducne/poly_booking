@@ -13,13 +13,13 @@ const roomTypesApi = createApi({
     }),
     endpoints: (builder) => ({
         getRoomType: builder.query<any, any>({
-            // query: (query) => `admin/room/types?page=${query.page || 1}`,
-            query: () => `/admin/room/types`,
+            // query: (query) => `admin/rooms/types?page=${query.page || 1}`,
+            query: () => `/admin/rooms/types`,
             providesTags: ['RoomType']
         }),
         createRoomType: builder.mutation<any, any>({
             query: (data) => ({
-                url: `admin/room/types`,
+                url: `/admin/rooms/types`,
                 method: "POST",
                 body: data
             }),
@@ -27,7 +27,7 @@ const roomTypesApi = createApi({
         }),
         getDetailRoomType: builder.query<any, any>({
             query: (id) => ({
-                url: `admin/room/types/${id}`,
+                url: `/admin/rooms/types/${id}`,
                 method: "GET"
             }),
             providesTags: ['RoomType']
@@ -35,7 +35,7 @@ const roomTypesApi = createApi({
         updateRoomType: builder.mutation<any, any>({
             query: (data) => {
                 return {
-                    url: `admin/room/types/${data.id}`,
+                    url: `/admin/rooms/types/${data.id}`,
                     method: "PUT",
                     body: data
                 }
@@ -46,7 +46,7 @@ const roomTypesApi = createApi({
         deleteRoomType: builder.mutation<any, any>({
             query: (id: string) => {
                 return {
-                    url: `admin/room/types/${id}`,
+                    url: `/admin/rooms/types/${id}`,
                     method: "DELETE",
                 }
             },

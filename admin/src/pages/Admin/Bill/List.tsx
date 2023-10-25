@@ -14,7 +14,7 @@ import FormSearch from "../../../component/formSearch";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 
-const ListBill = () => {
+const BillList = () => {
   
   const columns: ColumnsType<any> = [
     {
@@ -161,4 +161,4 @@ const ListBill = () => {
   );
 };
 
-export default ListBill;
+export default BillList;

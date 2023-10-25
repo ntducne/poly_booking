@@ -1,23 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
-  name: string;
-  age: number;
-  address: string;
+  conditions: string;
+  penalty: string;
+  room_id: number
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
+import { useGetAllPolicyQuery } from "../../../api/policy";
+import { useGetRoomsQuery } from "../../../api/room";
 
 const ListPolicy = () => {
+  // const { data: dataRooms } = useGetRoomsQuery({})
+
+  const { data, isLoading, refetch } = useGetAllPolicyQuery({});
+  const [dataFetching, setDataFetching] = useState<any>([])
+  // console.log(data?.data?.data);
+  // console.log(dataFetching);
+
+  useEffect(() => {
+    setDataFetching(data?.data?.data?.map((item: any) => {
+      return {
+        key: item.policy_id,
+        conditions: item.conditions,
+        penalty: item.penalty,
+        room_id: item.room_id,
+      }
+      refetch()
+    }))
+  }, [isLoading, data?.data?.data])
+
   const columns: ColumnsType<any> = [
     {
-      title: "Tên phòng",
+      title: "Id",
       dataIndex: "policy_id",
       sorter: (a, b) => a.policy_id - b.policy_id,
       sortDirections: ["descend"],
@@ -52,10 +73,12 @@ const ListPolicy = () => {
       key: "penalty",
     },
     {
-      title: "Phòng",
+      title: "Tên phòng",
       dataIndex: "room_id",
       key: "room_id",
-      render: (room) => <p>{room?.name}</p>,
+      render: (_, record) => (
+        <p>{record?.room_id}</p>
+      ),
     },
     // {
     //   title: "Loại phòng",
@@ -75,8 +98,8 @@ const ListPolicy = () => {
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" 
-          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
+          <Button type="primary"
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
           >
             <Link to={`/policy/edit/${record?.key}`}>
               <AiOutlineEdit />
@@ -95,7 +118,7 @@ const ListPolicy = () => {
     },
   ];
 
-  const data: any = [
+  const data1: any = [
     {
       key: "1",
       policy_id: 1,
@@ -143,7 +166,7 @@ const ListPolicy = () => {
         .then((willDelete) => {
           if (willDelete) {
             console.log(id);
-            
+
             swal("You have successfully deleted", {
               icon: "success",
             });
@@ -154,7 +177,7 @@ const ListPolicy = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -182,7 +205,7 @@ const ListPolicy = () => {
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
-        dataSource={data}
+        dataSource={dataFetching}
         onChange={onChange}
       />
     </Page>

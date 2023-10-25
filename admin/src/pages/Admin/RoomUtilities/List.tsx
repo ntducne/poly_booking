@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Space, Table, } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
@@ -6,15 +6,29 @@ import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
-  age: number;
-  address: string;
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
+import { useGetUtilitieQuery } from "../../../api/utilities";
 
 const ListRoomUtilities = () => {
+  const { data, isLoading, refetch } = useGetUtilitieQuery({});
+  // const [dataFetching, setDataFetching] = useState<any>([])
+  console.log(data);
+
+
+  // useEffect(() => {
+  //   setDataFetching(data?.data?.map((item: any) => {
+  //     return {
+  //       key: item._id,
+  //       name: item.name,
+  //     }
+  //     refetch()
+  //   }))
+  // }, [isLoading, data?.data])
+
   const columns: ColumnsType<any> = [
     {
       title: "ID",
@@ -57,7 +71,7 @@ const ListRoomUtilities = () => {
     },
   ];
 
-  const data : any = [
+  const data1: any = [
     {
       key: "1",
       _id: "1",
@@ -96,7 +110,7 @@ const ListRoomUtilities = () => {
             // removeComment(id);
 
             console.log(id);
-            
+
             swal("You have successfully deleted", {
               icon: "success",
             });
@@ -107,7 +121,7 @@ const ListRoomUtilities = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -135,7 +149,7 @@ const ListRoomUtilities = () => {
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
-        dataSource={data}
+        dataSource={data1}
         onChange={onChange}
       />
     </Page>

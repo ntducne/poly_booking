@@ -1,11 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import LayoutAdmin from "./layout/LayoutAdmin";
-import AddBill from "./pages/Admin/Bill/Add";
-import EditBill from "./pages/Admin/Bill/Edit";
-import ListBill from "./pages/Admin/Bill/List";
-import AddBooking from "./pages/Admin/Booking/Add";
-import EditBooking from "./pages/Admin/Booking/Edit";
-import ListBooking from "./pages/Admin/Booking/List";
+// import ListBooking from "./pages/Admin/Booking/List";
 import Dashboard from "./pages/Admin/Dashboard";
 import ListFeedBack from "./pages/Admin/Feedback/List";
 import ListAdmin from "./pages/Admin/Guset/Admin/List";
@@ -35,18 +30,18 @@ import ListRoomUtilities from "./pages/Admin/RoomUtilities/List";
 import AddServices from "./pages/Admin/Services/Add";
 import ListServices from "./pages/Admin/Services/List";
 import LoginAdmin from "./pages/Auth/login";
-import RoleList from "./pages/Admin/Role/List";
-import RoleCreate from "./pages/Admin/Role/Create";
 import EditServices from "./pages/Admin/Services/Edit";
 import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
-import Demo from "./pages/demo";
 import EditUser from "./pages/Admin/Guset/User/Edit";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
-import Test from "./pages/test";
 import ListBranches from "./pages/Admin/Branches/List";
 import AddBranche from "./pages/Admin/Branches/Add";
 import EditBranche from "./pages/Admin/Branches/Edit";
+// import RoomBooking from "./pages/Admin/Room/Booking";
+import BillList from "./pages/Admin/Bill/List";
+import BillDetail from "./pages/Admin/Bill/Detail";
+import Demo from "./pages/demo";
 
 function App() {
   return (
@@ -58,10 +53,9 @@ function App() {
         <Route path="/" element={<LayoutAdmin />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="booking">
-            <Route index element={<ListBooking />} />
-            <Route path="add" element={<AddBooking />} />
-            <Route path="edit/:id" element={<EditBooking />} />
+          <Route path="billing">
+            <Route index element={<BillList />} />
+            <Route path=":id" element={<BillDetail />} />
           </Route>
           <Route path="offers">
             <Route index element={<ListOffers />} />
@@ -82,63 +76,49 @@ function App() {
             <Route index element={<ListRoom />} />
             <Route path="add" element={<AddRoom />} />
             <Route path="edit/:id" element={<EditRoom />} />
-          </Route>
-          <Route path="roomType">
-            <Route index element={<ListRoomType />} />
-            <Route path="add" element={<AddRoomType />} />
-            <Route path="edit/:id" element={<EditRoomType />} />
-          </Route>
-          <Route path="roomUtilities">
-            <Route index element={<ListRoomUtilities />} />
-            <Route path="add" element={<AddRoomUtilities />} />
-            <Route path="edit/:id" element={<EditRoomUtilities />} />
-          </Route>
-          <Route path="roomExtend">
-            <Route index element={<ListRoomExtend />} />
-            <Route path="add" element={<AddRoomExtend />} />
-            <Route path="edit/:id" element={<EditRoomExtend />} />
+            <Route path="type">
+              <Route index element={<ListRoomType />} />
+              <Route path="add" element={<AddRoomType />} />
+              <Route path="edit/:id" element={<EditRoomType />} />
+            </Route>
+            <Route path="utilities">
+              <Route index element={<ListRoomUtilities />} />
+              <Route path="add" element={<AddRoomUtilities />} />
+              <Route path="edit/:id" element={<EditRoomUtilities />} />
+            </Route>
+            <Route path="renew">
+              <Route index element={<ListRoomExtend />} />
+              <Route path="add" element={<AddRoomExtend />} />
+              <Route path="edit/:id" element={<EditRoomExtend />} />
+            </Route>
+            {/* <Route path="booking" element={<RoomBooking />} /> */}
           </Route>
           <Route path="services">
             <Route index element={<ListServices />} />
             <Route path="add" element={<AddServices />} />
             <Route path="edit/:id" element={<EditServices />} />
           </Route>
-          <Route path="bill">
-            <Route index element={<ListBill />} />
-            <Route path="add" element={<AddBill />} />
-            <Route path="edit/:id" element={<EditBill />} />
-          </Route>
           <Route path="feedback">
             <Route index element={<ListFeedBack />} />
           </Route>
-          <Route path="auth">
-            <Route path="admin">
-              <Route index element={<ListAdmin />} />
-              <Route path="edit/:id" element={<EditAdmin />} />
-            </Route>
-            <Route path="user">
-              <Route index element={<ListUser />} />
-              <Route path="edit/:id" element={<EditUser />} />
-            </Route>
+          <Route path="staff">
+            <Route index element={<ListAdmin />} />
+            <Route path="edit/:id" element={<EditAdmin />} />
+          </Route>
+          <Route path="user">
+            <Route index element={<ListUser />} />
+            <Route path="edit/:id" element={<EditUser />} />
           </Route>
           <Route path="branches">
             <Route index element={<ListBranches />} />
             <Route path="add" element={<AddBranche />} />
             <Route path="edit/:id" element={<EditBranche />} />
           </Route>
-          {/* <Route path="decentralization"> */}
-          <Route path="role">
-            <Route index element={<RoleList />} />
-            <Route path="create" element={<RoleCreate />} />
-            <Route path="edit" element={<RoleCreate />} />
-          </Route>
-          <Route path="/demo" element={<Demo />}></Route>
-          <Route path="/test" element={<Test />}></Route>
         </Route>
         <Route path="/403" element={<Page403 />}></Route>
+        <Route path="/demo" element={<Demo />}></Route>
       </Routes>
     </>
   );
 }
-
 export default App;

@@ -18,15 +18,11 @@ return [
         'label' => 'Nhân viên'
     ],
     [
-        'name' => 'branches',
-        'label' => 'Chi nhánh'
-    ],
-    [
         'name' => 'rates',
         'label' => 'Đánh giá'
     ],
     [
-        'name' => 'cancel-policies',
+        'name' => 'policies',
         'label' => 'Chính sách huỷ/đặt phòng'
     ],
     [
@@ -42,11 +38,15 @@ return [
         'label' => 'Đặt phòng'
     ],
     [
-        'name' => 'types-rooms',
+        'name' => 'types',
         'label' => 'Loại phòng'
     ],
     [
         'name' => 'rooms',
         'label' => 'Phòng'
+    ],
+    [
+        'name' => 'billings',
+        'label' => 'Hoá đơn'
     ],
 ];

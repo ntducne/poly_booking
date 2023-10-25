@@ -17,38 +17,22 @@ import Page from "../../../component/page";
 import { useGetBookingQuery } from "../../../api/booking";
 
 const ListBooking = () => {
-  const {data : dataBooking , isLoading } = useGetBookingQuery({});
-  
+  const { data: dataBooking, isLoading } = useGetBookingQuery({});
+
   console.log(dataBooking, "dataBooking");
-  
-  if(isLoading){
-    return <div>Loading...</div>
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
   const columns: ColumnsType<any> = [
     {
       title: "STT",
       dataIndex: "key",
-      sorter: (a :any, b:any) => a.key - b.key,
+      sorter: (a: any, b: any) => a.key - b.key,
       sortDirections: ["descend"],
       fixed: "left",
     },
-    // {
-    //   title: "Người đặt",
-    //   dataIndex: "user_id",
-    //   render: (user :any) => (
-    //     <div className="flex items-center">
-    //       {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-    //       <Image
-    //         className="rounded-3xl "
-    //         width={150}
-    //         src={user?.image}
-    //       />
-    //       <div className="ml-3 text-gray-500">
-    //         <p>{user?.name}</p>
-    //       </div>
-    //     </div>
-    //   ),
-    // },
+
     // {
     //   title: "Người đặt",
     //   dataIndex: "user_id",
@@ -76,7 +60,17 @@ const ListBooking = () => {
     {
       title: "Người đại diện",
       dataIndex: "representative",
-      key: "representative"
+      render: (user: any) => (
+        <div className="flex items-center">
+          {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
+          <div>
+            <div>Tên : {user?.name}</div>
+            <div>Tên : {user?.name}</div>
+            <div>Số điện thoại : {user?.phone}</div>
+          </div>
+          {/* <div className="ml-3 text-gray-500"></div> */}
+        </div>
+      ),
     },
     {
       title: "Ngày nhận",
@@ -103,10 +97,11 @@ const ListBooking = () => {
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary" 
-          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
+          <Button
+            type="primary"
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
           >
-            <Link to={`/room/edit/${record?.key}`}>
+            <Link to={`/booking/detail/${record?._id}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
@@ -123,30 +118,31 @@ const ListBooking = () => {
     },
   ];
 
-  const data : any = dataBooking?.data?.data?.map((item : any , index : number) => ({
-    key: index + 1,
-    _id: item._id,
-    user_id: item.user_id,
-    checkin: item.checkin,
-    checkout: item.checkout,
-    booking_date: item.booking_date,
-    pay_date: item.pay_date,
-    adults : item.adults,
-    childrens : item?.children,
-    representative : item.representative,
-    price_per_night : item.price_per_night,
-  }))
-  console.log("data" , data);
-  
+  const data: any = dataBooking?.data?.data?.map(
+    (item: any, index: number) => ({
+      key: index + 1,
+      _id: item._id,
+      user_id: item.user_id,
+      checkin: item.checkin,
+      checkout: item.checkout,
+      booking_date: item.booking_date,
+      pay_date: item.pay_date,
+      adults: item.adults,
+      childrens: item?.children,
+      representative: item.representative,
+      price_per_night: item.price_per_night,
+    })
+  );
+  console.log("data", data);
 
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<DataType>["onChange"] = () =>
     // pagination,
     // filters,
     // sorter,
     // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+    {
+      // console.log("params", pagination, filters, sorter, extra);
+    };
 
   // const remove = (id: any) => {
   //   try {
@@ -174,11 +170,10 @@ const ListBooking = () => {
   // };
 
   return (
-    <Page title={`Đặt phòng`} >
+    <Page title={`Đặt phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <FormSearch />
         <div className="flex flex-col md:flex-row md:ml-2">
-          
           <Link
             to={`/booking`}
             className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
@@ -189,7 +184,7 @@ const ListBooking = () => {
         </div>
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}

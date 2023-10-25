@@ -10,6 +10,10 @@ import {
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
+import { useCreatePromotionsMutation } from "../../../api/promotions";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useGetAllBranchesQuery } from "../../../api/branches";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -20,9 +24,35 @@ const formItemLayout = {
 };
 
 const AddOffers = () => {
+  const navigate = useNavigate();
+  const [createPromotions] = useCreatePromotionsMutation();
+  const { data: dataBranches, isLoading: loadingBranch } =
+    useGetAllBranchesQuery({});
+
+  if (loadingBranch) {
+    return <div>Loading...</div>;
+  }
+
   const onFinish = (values: any) => {
     console.log(values.image);
     // Xử lý dữ liệu khi nhấn nút Submit
+    createPromotions(values)
+      .unwrap()
+      .then((result) => {
+        if (result.status === "success") {
+          toast.success("Thêm mới ưu đãi thành công sau 3s");
+          setTimeout(() => {
+            navigate("/offers");
+          }, 3000);
+        } else {
+          toast.error(result.error.message);
+        }
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu có
+        toast.error("Có lỗi xảy ra khi thêm ưu đãi mới");
+        console.log(error);
+      });
   };
 
   return (
@@ -61,11 +91,31 @@ const AddOffers = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item label="Ngày bắt đầu" name="start_date">
+          <Form.Item
+            label="Ngày bắt đầu"
+            name="start_date"
+            rules={[
+              {
+                type: "object" as const,
+                required: true,
+                message: "Please select time!",
+              },
+            ]}
+          >
             <DatePicker />
           </Form.Item>
 
-          <Form.Item label="Ngày kết thúc" name="end_date">
+          <Form.Item
+            label="Ngày kết thúc"
+            name="end_date"
+            rules={[
+              {
+                type: "object" as const,
+                required: true,
+                message: "Please select time!",
+              },
+            ]}
+          >
             <DatePicker />
           </Form.Item>
 
@@ -76,14 +126,17 @@ const AddOffers = () => {
               {
                 required: true,
                 message: "Vui lòng chọn chi nhánh!",
-                type: "array",
               },
             ]}
           >
-            <Select mode="multiple" placeholder="Vui lòng chọn chi nhánh !">
-              <Option value="red">Hà Đông</Option>
-              <Option value="green">Cầu Giấy</Option>
-              <Option value="blue">Trịnh Văn Bô</Option>
+            <Select placeholder="Vui lòng chọn chi nhánh !">
+              {dataBranches?.data?.data?.map((item: any) => {
+                return (
+                  <Option key={item?._id} value={item?._id}>
+                    {item?.name}
+                  </Option>
+                );
+              })}
             </Select>
           </Form.Item>
 

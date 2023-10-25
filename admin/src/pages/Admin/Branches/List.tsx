@@ -20,11 +20,11 @@ import { useDeleteBranchMutation, useGetAllBranchesQuery } from "../../../api/br
 const ListBranches = () => {
   const { data, isLoading, refetch } = useGetAllBranchesQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data?.data?.data);
+  console.log(data?.data);
   const [deleteBranch] = useDeleteBranchMutation()
 
   useEffect(() => {
-    setDataFetching(data?.data?.data?.map((item: any) => {
+    setDataFetching(data?.data?.map((item: any) => {
       return {
         key: item._id,
         name: item.name,
