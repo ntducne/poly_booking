@@ -29,6 +29,8 @@ const AddOffers = () => {
   const { data: dataBranches, isLoading: loadingBranch } =
     useGetAllBranchesQuery({});
 
+  console.log("data", dataBranches);
+
   if (loadingBranch) {
     return <div>Loading...</div>;
   }
@@ -126,18 +128,29 @@ const AddOffers = () => {
               {
                 required: true,
                 message: "Vui lòng chọn chi nhánh!",
+                type: "array",
               },
             ]}
           >
-            <Select placeholder="Vui lòng chọn chi nhánh !">
-              {dataBranches?.data?.data?.map((item: any) => {
+            <Select 
+              mode="multiple"
+              placeholder="Vui lòng chọn chi nhánh !">
+              {dataBranches?.data?.map((item: any) => {
                 return (
-                  <Option key={item?._id} value={item?._id}>
+                  <Option key={item?.id} value={item?.id}>
                     {item?.name}
                   </Option>
                 );
               })}
             </Select>
+            {/* <Select
+              mode="multiple"
+              placeholder="Please select favourite colors"
+            >
+              <Option value="red">Red</Option>
+              <Option value="green">Green</Option>
+              <Option value="blue">Blue</Option>
+            </Select> */}
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>

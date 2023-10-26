@@ -114,16 +114,25 @@ const TableCustom = (props :TableCustomProps) => {
 
     const newColumn = props.columns.map((item) => {
         if(props.data.length == 0) return item;
-        if (item.key !== 'action') {
+        if (item.key !== 'action' && item.dataIndex) {
             return {
                 ...item,
-                dataIndex: item.key,
                 ...getColumnSearchProps(item.key),
                 sorter: (a: any, b: any) => a[item.key].length - b[item.key].length,
                 sortDirections: ['descend', 'ascend'],
             };
         }
+        if(item.key != 'action'){
+            return {
+                ...item,
+                // ...getColumnSearchProps(item.key),
+
+                sorter: (a: any, b: any) => a[item.key].length - b[item.key].length,
+                sortDirections: ['descend', 'ascend'],
+            };
+        }
         return item;
+       
     })
 
     const newData = props.data.map((item: any) => ({
