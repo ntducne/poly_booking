@@ -127,25 +127,34 @@ class ClientController extends Controller
     public function search(Request $request)
     {
         try {
-            $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, null, $request->soLuong);
-            if (!$room_completed) {
-                $response = [
-                    'message' => 'Hết phòng !'
-                ];
-            } else {
-                $room = [];
-                foreach ($room_completed as $key => $value) {
-                    $room[] = [
-                        'room' => Room::find($value),
-                        'room_type' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->get()
+            if (
+                request()->has('checkin')
+                && request()->has('checkout')
+                && request()->has('adult')
+                && request()->has('child')
+                && request()->has('branch_id')
+                && request()->has('soLuong')
+            ) {
+                $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, null, $request->soLuong);
+                if (!$room_completed) {
+                    $response = [
+                        'message' => 'Hết phòng !'
+                    ];
+                } else {
+                    $room = [];
+                    foreach ($room_completed as $key => $value) {
+                        $room[] = [
+                            'room' => Room::find($value),
+                            'room_type' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->get()
+                        ];
+                    }
+                    $response = [
+                        'message' => 'Tìm thành công !',
+                        'data' => $room
                     ];
                 }
-                $response = [
-                    'message' => 'Tìm thành công !',
-                    'data' => $room
-                ];
+                return response()->json($response);
             }
-            return response()->json($response);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
             return response()->json([
