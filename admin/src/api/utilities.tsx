@@ -43,18 +43,18 @@ const utilitiesApi = createApi({
             invalidatesTags: ['Utilities']
         }),
 
-        // deleteUtilitie: builder.mutation<any, any>({
-        //     query: (id: string) => {
-        //         return {
-        //             url: `/admin/utilities/${id}`,
-        //             method: "DELETE",
-        //         }
-        //     },
-        //     invalidatesTags: ['Utilities']
-        // }),
+        deleteUtilitie: builder.mutation<any, any>({
+            query: (id: string) => {
+                return {
+                    url: `/admin/utilities/${id}`,
+                    method: "DELETE",
+                }
+            },
+            invalidatesTags: ['Utilities']
+        }),
     })
 })
 
-export const { useGetUtilitieQuery, useCreateUtilitieMutation, useGetDetailUtilitieQuery, useUpdateUtilitieMutation } = utilitiesApi
+export const { useGetUtilitieQuery, useCreateUtilitieMutation, useGetDetailUtilitieQuery, useUpdateUtilitieMutation, useDeleteUtilitieMutation } = utilitiesApi
 export const roomReducer = utilitiesApi.reducer
 export default utilitiesApi

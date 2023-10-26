@@ -12,13 +12,14 @@ import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useGetUtilitieQuery } from "../../../api/utilities";
+import { useDeleteUtilitieMutation, useGetUtilitieQuery } from "../../../api/utilities";
 
 const ListRoomUtilities = () => {
   const { data, isLoading, refetch } = useGetUtilitieQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
   // console.log(data?.data?.data);
 
+  const [deleteUtilities] = useDeleteUtilitieMutation()
 
   useEffect(() => {
     setDataFetching(data?.data?.data?.map((item: any) => {
@@ -73,20 +74,20 @@ const ListRoomUtilities = () => {
     },
   ];
 
-  const data1: any = [
-    {
-      key: "1",
-      _id: "1",
-      name: "John Brown",
-      room_id: "1",
-    },
-    {
-      key: "2",
-      _id: "2",
-      name: "John Brown 123",
-      room_id: "2",
-    },
-  ];
+  // const data1: any = [
+  //   {
+  //     key: "1",
+  //     _id: "1",
+  //     name: "John Brown",
+  //     room_id: "1",
+  //   },
+  //   {
+  //     key: "2",
+  //     _id: "2",
+  //     name: "John Brown 123",
+  //     room_id: "2",
+  //   },
+  // ];
 
   const onChange: TableProps<DataType>["onChange"] = (
     // pagination,
@@ -109,13 +110,16 @@ const ListRoomUtilities = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            // removeComment(id);
-
-            console.log(id);
-
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
+            deleteUtilities(id).unwrap().then((data: any) => {
+              console.log(id);
+              console.log(data);
+              if (data.status === "success") {
+                refetch();
+                swal("You have successfully deleted", {
+                  icon: "success",
+                });
+              }
+            })
           }
         })
         .catch(() => {

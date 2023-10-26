@@ -11,7 +11,6 @@ import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useUpdatePolicyMutation } from "../../../api/policy";
 import { useEffect } from "react";
 import { useGetRoomsQuery } from "../../../api/room";
 import { useGetDetailUtilitieQuery, useUpdateUtilitieMutation } from "../../../api/utilities";
