@@ -12,7 +12,9 @@ use App\Models\Rates;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller
 {
@@ -123,29 +125,39 @@ class ClientController extends Controller
     }
     public function search(Request $request)
     {
-        $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, null, $request->soLuong);
-        if (!$room_completed) {
-            $response = [
-                'message' => 'Hết phòng !'
-            ];
-        } else {
-            $room = [];
-            foreach ($room_completed as $key => $value) {
-                $room[] = [
-                    'room' => Room::find($value),
-                    'room_type' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->get()
+        try {
+            $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, null, $request->soLuong);
+            if (!$room_completed) {
+                $response = [
+                    'message' => 'Hết phòng !'
+                ];
+            } else {
+                $room = [];
+                foreach ($room_completed as $key => $value) {
+                    $room[] = [
+                        'room' => Room::find($value),
+                        'room_type' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->get()
+                    ];
+                }
+                $response = [
+                    'message' => 'Tìm thành công !',
+                    'data' => $room
                 ];
             }
-            $response = [
-                'message' => 'Tìm thành công !',
-                'data' => $room
-            ];
+            return response()->json($response);
+        }catch (Exception $exception) {
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Lỗi không thực hiện được tìm kiếm !'
+            ]);
         }
-        return response()->json($response);
+        
     }
     public function booking(BookingRequest $request)
     {
-        $soLuong = $request->soLuong;
+        try {
+            $soLuong = $request->soLuong;
         $room_id = $request->room_id;
         $branch_id = $request->branch_id;
         (int) $adults = $request->adults;
@@ -228,5 +240,13 @@ class ClientController extends Controller
             'details' => $details,
             'bill' => $data
         ]);
+        } catch (Exception $exception) {
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Lỗi không thực hiện được đặt phòng !'
+            ]);
+        }
+        
     }
 }
