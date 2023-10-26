@@ -76,7 +76,7 @@ class ClientController extends Controller
         return response()->json([
             'room' => new RoomResource($room),
             'rate' => $room->getRate(),
-            'room_same' => $room_same
+            'room_same' => RoomResource::collection($room_same)
         ]);
     }
     public function check_room($check_in, $check_out, $adults, $children, $branch_id, $room_type_id = null, $soLuong = 1)
