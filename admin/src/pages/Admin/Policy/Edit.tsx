@@ -29,7 +29,7 @@ const EditPolicy = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const { data: dataRooms, isLoading } = useGetRoomsQuery({})
-  const { data, isLoading: isLoadingCreate, refetch } = useGetDetailPolicyQuery(id)
+  const { data, refetch } = useGetDetailPolicyQuery(id)
   console.log(data);
 
   const [updateData] = useUpdatePolicyMutation()
@@ -47,7 +47,7 @@ const EditPolicy = () => {
 
     updateData(dataUpload)
       .unwrap()
-      .then((result) => {
+      .then((result: any) => {
         if (result.status === 'success') {
           toast.success('Cập nhật thông tin loại phòng thành công');
           navigate('/policy');

@@ -29,7 +29,8 @@ const ListRoomUtilities = () => {
         room_id: item.room_id,
       }
       refetch()
-    }))
+    }
+    ))
   }, [isLoading, data?.data?.data])
 
   const columns: ColumnsType<any> = [

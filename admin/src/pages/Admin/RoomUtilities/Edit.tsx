@@ -30,7 +30,7 @@ const EditRoomUtilities = () => {
 
   const navigate = useNavigate()
   const [form] = Form.useForm()
-  const { data: dataRooms } = useGetRoomsQuery({})
+  const { data: dataRooms, isLoading } = useGetRoomsQuery({})
   const { data, refetch } = useGetDetailUtilitieQuery(id)
   console.log(data);
 
@@ -49,7 +49,7 @@ const EditRoomUtilities = () => {
     // Xử lý dữ liệu khi nhấn nút Submit
     updateData(dataUpload)
       .unwrap()
-      .then((result) => {
+      .then((result: any) => {
         if (result.status === 'success') {
           toast.success('Cập nhật thông tin loại phòng thành công');
           navigate('/room/utilities');
@@ -69,12 +69,12 @@ const EditRoomUtilities = () => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  // useEffect(() => {
-  //   form.setFieldsValue(data?.data)
-  // }, [isLoading, data?.data])
-  // if (isLoading) {
-  //   return <>loading...</>
-  // }
+  useEffect(() => {
+    form.setFieldsValue(data?.data)
+  }, [isLoading, data?.data])
+  if (isLoading) {
+    return <>loading...</>
+  }
 
 
 
