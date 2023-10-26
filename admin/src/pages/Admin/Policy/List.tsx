@@ -13,7 +13,7 @@ import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useGetAllPolicyQuery } from "../../../api/policy";
+import { useDeletePolicyMutation, useGetAllPolicyQuery } from "../../../api/policy";
 import { useGetRoomsQuery } from "../../../api/room";
 
 const ListPolicy = () => {
@@ -21,13 +21,14 @@ const ListPolicy = () => {
 
   const { data, isLoading, refetch } = useGetAllPolicyQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
-  // console.log(data?.data?.data);
+  console.log(data?.data?.data);
   // console.log(dataFetching);
+  const [deletePolicy] = useDeletePolicyMutation()
 
   useEffect(() => {
     setDataFetching(data?.data?.data?.map((item: any) => {
       return {
-        key: item.policy_id,
+        key: item._id,
         conditions: item.conditions,
         penalty: item.penalty,
         room_id: item.room_id,
@@ -118,31 +119,31 @@ const ListPolicy = () => {
     },
   ];
 
-  const data1: any = [
-    {
-      key: "1",
-      policy_id: 1,
-      conditions: "Điều kiện 1",
-      penalty: "Phạm lỗi 1",
-      room_id: {
-        image:
-          "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
-        name: "Phòng 1",
-      },
-    },
-    {
-      key: "2",
-      policy_id: 2,
-      conditions: "Điều kiện 2",
-      penalty: "Phạm lỗi 2",
-      room_id: {
-        image:
-          "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
+  // const data1: any = [
+  //   {
+  //     key: "1",
+  //     policy_id: 1,
+  //     conditions: "Điều kiện 1",
+  //     penalty: "Phạm lỗi 1",
+  //     room_id: {
+  //       image:
+  //         "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
+  //       name: "Phòng 1",
+  //     },
+  //   },
+  //   {
+  //     key: "2",
+  //     policy_id: 2,
+  //     conditions: "Điều kiện 2",
+  //     penalty: "Phạm lỗi 2",
+  //     room_id: {
+  //       image:
+  //         "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
 
-        name: "Phòng 2",
-      },
-    },
-  ];
+  //       name: "Phòng 2",
+  //     },
+  //   },
+  // ];
 
   const onChange: TableProps<DataType>["onChange"] = (
     // pagination,
@@ -165,11 +166,16 @@ const ListPolicy = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            console.log(id);
-
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
+            deletePolicy(id).unwrap().then((data) => {
+              console.log(id);
+              console.log(data);
+              if (data.status === "success") {
+                refetch();
+                swal("You have successfully deleted", {
+                  icon: "success",
+                });
+              }
+            })
           }
         })
         .catch(() => {

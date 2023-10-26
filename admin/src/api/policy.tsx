@@ -26,37 +26,37 @@ const policyApi = createApi({
             invalidatesTags: ['Policy']
         }),
 
-        // getDetailBranches: builder.query<any, any>({
-        //     query: (_id) => ({
-        //         url: `/admin/branches/${_id}`,
-        //         method: "GET"
-        //     }),
-        //     providesTags: ['Policy']
-        // }),
+        getDetailPolicy: builder.query<any, any>({
+            query: (id) => ({
+                url: `/admin/policies/${id}`,
+                method: "GET"
+            }),
+            providesTags: ['Policy']
+        }),
 
-        // updateBranches: builder.mutation<any, any>({
-        //     query: (data) => {
-        //         return {
-        //             url: `/admin/branches/${data.id}`,
-        //             method: "PUT",
-        //             body: data
-        //         }
-        //     },
-        //     invalidatesTags: ['Policy']
-        // }),
+        updatePolicy: builder.mutation<any, any>({
+            query: (data) => {
+                return {
+                    url: `/admin/policies/${data.id}`,
+                    method: "PUT",
+                    body: data
+                }
+            },
+            invalidatesTags: ['Policy']
+        }),
 
-        // deleteBranch: builder.mutation<any, any>({
-        //     query: (id: string) => {
-        //         return {
-        //             url: `/admin/branches/${id}`,
-        //             method: "DELETE",
-        //         }
-        //     },
-        //     invalidatesTags: ['Policy']
-        // }),
+        deletePolicy: builder.mutation<any, any>({
+            query: (id: string) => {
+                return {
+                    url: `/admin/policies/${id}`,
+                    method: "DELETE",
+                }
+            },
+            invalidatesTags: ['Policy']
+        }),
     })
 })
 
-export const { useGetAllPolicyQuery, useCreatePolicyMutation } = policyApi
+export const { useGetAllPolicyQuery, useCreatePolicyMutation, useGetDetailPolicyQuery, useUpdatePolicyMutation, useDeletePolicyMutation } = policyApi
 export const roomReducer = policyApi.reducer
 export default policyApi

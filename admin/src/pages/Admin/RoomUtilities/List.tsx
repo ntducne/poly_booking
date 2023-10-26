@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
+  room_id: number
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
@@ -15,19 +16,20 @@ import { useGetUtilitieQuery } from "../../../api/utilities";
 
 const ListRoomUtilities = () => {
   const { data, isLoading, refetch } = useGetUtilitieQuery({});
-  // const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data);
+  const [dataFetching, setDataFetching] = useState<any>([])
+  // console.log(data?.data?.data);
 
 
-  // useEffect(() => {
-  //   setDataFetching(data?.data?.map((item: any) => {
-  //     return {
-  //       key: item._id,
-  //       name: item.name,
-  //     }
-  //     refetch()
-  //   }))
-  // }, [isLoading, data?.data])
+  useEffect(() => {
+    setDataFetching(data?.data?.data?.map((item: any) => {
+      return {
+        key: item._id,
+        name: item.name,
+        room_id: item.room_id,
+      }
+      refetch()
+    }))
+  }, [isLoading, data?.data?.data])
 
   const columns: ColumnsType<any> = [
     {
@@ -54,7 +56,7 @@ const ListRoomUtilities = () => {
             type="primary"
             className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
           >
-            <Link to={`/roomUtilities/edit/${record?.key}`}>
+            <Link to={`/room/utilities/edit/${record?.key}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
@@ -96,7 +98,7 @@ const ListRoomUtilities = () => {
   };
 
   const remove = (id: any) => {
-    console.log(id);
+    // console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -130,7 +132,7 @@ const ListRoomUtilities = () => {
         <FormSearch />
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
-            to={`/roomUtilities/add`}
+            to={`/room/utilities/add`}
             className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
           >
             <AiOutlinePlus />
@@ -149,7 +151,7 @@ const ListRoomUtilities = () => {
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
-        dataSource={data1}
+        dataSource={dataFetching}
         onChange={onChange}
       />
     </Page>
