@@ -6,20 +6,19 @@ import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
-  room_id: number
+  room_id: string
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useDeleteUtilitieMutation, useGetUtilitieQuery } from "../../../api/utilities";
+import { useGetUtilitieQuery } from "../../../api/utilities";
 
 const ListRoomUtilities = () => {
   const { data, isLoading, refetch } = useGetUtilitieQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
-  // console.log(data?.data?.data);
+  console.log(data?.data?.data);
 
-  const [deleteUtilities] = useDeleteUtilitieMutation()
 
   useEffect(() => {
     setDataFetching(data?.data?.data?.map((item: any) => {
@@ -28,9 +27,8 @@ const ListRoomUtilities = () => {
         name: item.name,
         room_id: item.room_id,
       }
-      refetch()
-    }
-    ))
+      // refetch()
+    }))
   }, [isLoading, data?.data?.data])
 
   const columns: ColumnsType<any> = [
@@ -111,16 +109,13 @@ const ListRoomUtilities = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            deleteUtilities(id).unwrap().then((data: any) => {
-              console.log(id);
-              console.log(data);
-              if (data.status === "success") {
-                refetch();
-                swal("You have successfully deleted", {
-                  icon: "success",
-                });
-              }
-            })
+            // removeComment(id);
+
+            console.log(id);
+
+            swal("You have successfully deleted", {
+              icon: "success",
+            });
           }
         })
         .catch(() => {

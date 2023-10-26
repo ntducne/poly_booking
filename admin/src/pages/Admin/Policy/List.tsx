@@ -7,22 +7,22 @@ interface DataType {
   key: React.Key;
   conditions: string;
   penalty: string;
-  room_id: number
+  room_id: string
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useDeletePolicyMutation, useGetAllPolicyQuery } from "../../../api/policy";
+import { useGetAllPolicyQuery } from "../../../api/policy";
 // import { useGetRoomsQuery } from "../../../api/room";
 
 const ListPolicy = () => {
   // const { data: dataRooms } = useGetRoomsQuery({})
+
   const { data, isLoading, refetch } = useGetAllPolicyQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data?.data?.data);
+  // console.log(data?.data?.data);
   // console.log(dataFetching);
-  const [deletePolicy] = useDeletePolicyMutation()
 
   useEffect(() => {
     setDataFetching(data?.data?.data?.map((item: any) => {
@@ -32,8 +32,7 @@ const ListPolicy = () => {
         penalty: item.penalty,
         room_id: item.room_id,
       }
-      // setDataFetching(updatedData);
-      refetch()
+      // refetch()
     }))
   }, [isLoading, data?.data?.data])
 
@@ -115,10 +114,35 @@ const ListPolicy = () => {
           </Button>
         </Space>
       ),
-      fixed: "right",
+      // fixed: "right",
     },
   ];
 
+  const data1: any = [
+    {
+      key: "1",
+      policy_id: 1,
+      conditions: "Điều kiện 1",
+      penalty: "Phạm lỗi 1",
+      room_id: {
+        image:
+          "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
+        name: "Phòng 1",
+      },
+    },
+    {
+      key: "2",
+      policy_id: 2,
+      conditions: "Điều kiện 2",
+      penalty: "Phạm lỗi 2",
+      room_id: {
+        image:
+          "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
+
+        name: "Phòng 2",
+      },
+    },
+  ];
 
   const onChange: TableProps<DataType>["onChange"] = (
     // pagination,
@@ -130,7 +154,7 @@ const ListPolicy = () => {
   };
 
   const remove = (id: any) => {
-    console.log(id);
+    // console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -141,16 +165,11 @@ const ListPolicy = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            deletePolicy(id).unwrap().then((data: any) => {
-              console.log(id);
-              console.log(data);
-              if (data.status === "success") {
-                refetch();
-                swal("You have successfully deleted", {
-                  icon: "success",
-                });
-              }
-            })
+            // console.log(id);
+
+            swal("You have successfully deleted", {
+              icon: "success",
+            });
           }
         })
         .catch(() => {
@@ -182,7 +201,6 @@ const ListPolicy = () => {
           </Link>
         </div>
       </div>
-      {/* {dataFetching.length > 0 ? ( */}
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
@@ -190,10 +208,6 @@ const ListPolicy = () => {
         dataSource={dataFetching}
         onChange={onChange}
       />
-      {/* ) : (
-        // Hiển thị một thông báo hoặc biểu tượng tải trong trường hợp dataFetching là mảng rỗng.
-        <p>Loading...</p>
-      )} */}
     </Page>
   );
 };

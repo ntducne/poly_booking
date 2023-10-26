@@ -3,7 +3,7 @@ import { cookies } from '../config/cookies';
 
 const policyApi = createApi({
     reducerPath: "policy",
-    tagTypes: ['Policys'],
+    tagTypes: ['policys'],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.polydevhotel.site",
         prepareHeaders: (headers) => {
@@ -14,7 +14,7 @@ const policyApi = createApi({
     endpoints: (builder) => ({
         getAllPolicy: builder.query<any, any>({
             query: () => `/admin/policies`,
-            providesTags: ['Policys']
+            providesTags: ['policys']
         }),
 
         createPolicy: builder.mutation<any, any>({
@@ -23,7 +23,7 @@ const policyApi = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags: ['Policys']
+            invalidatesTags: ['policys']
         }),
 
         getDetailPolicy: builder.query<any, any>({
@@ -31,7 +31,7 @@ const policyApi = createApi({
                 url: `/admin/policies/${id}`,
                 method: "GET"
             }),
-            providesTags: ['Policys']
+            providesTags: ['policys']
         }),
 
         updatePolicy: builder.mutation<any, any>({
@@ -42,7 +42,7 @@ const policyApi = createApi({
                     body: data
                 }
             },
-            invalidatesTags: ['Policys']
+            invalidatesTags: ['policys']
         }),
 
         deletePolicy: builder.mutation<any, any>({
@@ -52,7 +52,7 @@ const policyApi = createApi({
                     method: "DELETE",
                 }
             },
-            invalidatesTags: ['Policys']
+            invalidatesTags: ['policys']
         }),
     })
 })
