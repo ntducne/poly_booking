@@ -1,16 +1,19 @@
+import { Link } from 'react-router-dom'
 import FormatPrice from '../../utils/FormatPrice'
 
 export default function Room(data: any) {
     const { name, description, area, adults, children, num_of_bed, branch, id } = data?.data
     return (
         <div className='bg-bgr overflow-hidden max-w-[864px]'>
-            {/* <Link to={`/rooms/${id}`}> */}
-            <img className='group-hover:scale-110 transition-all duration-300 w-full' src={"https://hotellerv1.themegoods.com/cultural/wp-content/uploads/sites/6/2018/09/pic-0203-04.jpg"} alt="" />
-            {/* </Link> */}
+            <Link to={`/rooms/${id}`}>
+                <img className='group-hover:scale-110 transition-all duration-300 w-full' src={"https://hotellerv1.themegoods.com/cultural/wp-content/uploads/sites/6/2018/09/pic-0203-04.jpg"} alt="" />
+            </Link>
 
             <div className='mt-5'>
                 <div>
-                    <h3 className='text-h3 mb-[5px] font-bold overflow-hidden font-text_2nd'>{name}</h3>
+                    <Link to={`/rooms/${id}`}>
+                        <h3 className='text-h3 mb-[5px] font-bold overflow-hidden font-text_2nd'>{name}</h3>
+                    </Link>
                     <span className='text-gray-500'>Great for families</span>
                 </div>
                 <div className='text-[16px] flex flex-col gap-3 text-text mt-[25px] text-gray-500'>
