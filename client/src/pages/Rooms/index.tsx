@@ -15,6 +15,7 @@ import {
 } from "../../assets/images/Rooms/Slides";
 import Page from "../../components/Page";
 import Room from "../../components/Room";
+import { useCookies } from "react-cookie";
 type Props = {};
 
 const { RangePicker } = DatePicker;
@@ -23,7 +24,7 @@ export default function Rooms({ }: Props) {
     const [dataQuery, setDataQuery] = useState({})
     const { data, isLoading, refetch } = useGetRoomsQuery(dataQuery);
     const { data: dataBranches, isLoading: isLoadingBranches } = useGetBranchesQuery({})
-
+    const [, setCookie] = useCookies(['bookingNow']);
     const onFinish = (values: any) => {
         if (values) {
             const formattedData = values?.time.map((item: any) => {
@@ -44,6 +45,13 @@ export default function Rooms({ }: Props) {
         }
 
     };
+    const handleBookingNow = (item: any) => {
+        const dataSetCookie = {
+            ...item,
+            ...dataQuery
+        }
+        setCookie('bookingNow', dataSetCookie, { path: '/' });
+    }
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
@@ -90,7 +98,7 @@ export default function Rooms({ }: Props) {
                         <div className="flex gap-5 md:flex-row flex-col-reverse justify-start lg:max-w-none lg:mx-0 relative">
                             <div className="flex flex-col gap-[60px]">
                                 {data?.data ? data?.data?.map((room: any) => {
-                                    return <Room key={room.id} data={room} />;
+                                    return <Room key={room.id} data={room} handleBooking={handleBookingNow} />;
                                 }) :
                                     <div>
                                         <img src="https://1987giasi.com/files/assets/tam_het_cam.png" alt="" />
