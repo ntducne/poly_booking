@@ -55,7 +55,7 @@ class ClientController extends Controller
                 }
                 $response = [
                     'message' => 'Tìm thành công !',
-                    'data' => RoomResource::collection($room)
+                    'data' => $room
                 ];
             }
             return response()->json($response);
