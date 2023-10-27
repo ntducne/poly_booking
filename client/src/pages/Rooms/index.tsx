@@ -1,7 +1,10 @@
+import { SearchOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Form, Pagination, Select } from "antd";
+import dayjs from 'dayjs';
 import { useEffect, useState } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useGetBranchesQuery } from "../../api/Branch";
 import { useGetRoomsQuery } from "../../api/Room";
 import {
     SlideRooms1,
@@ -12,9 +15,6 @@ import {
 } from "../../assets/images/Rooms/Slides";
 import Page from "../../components/Page";
 import Room from "../../components/Room";
-import { SearchOutlined } from "@ant-design/icons";
-import { useGetBranchesQuery } from "../../api/Branch";
-import dayjs from 'dayjs'
 type Props = {};
 
 const { RangePicker } = DatePicker;
@@ -23,32 +23,30 @@ export default function Rooms({ }: Props) {
     const [dataQuery, setDataQuery] = useState({})
     const { data, isLoading, refetch } = useGetRoomsQuery(dataQuery);
     const { data: dataBranches, isLoading: isLoadingBranches } = useGetBranchesQuery({})
+
     const onFinish = (values: any) => {
-        console.log('Success:', values);
         if (values) {
-            console.log(!!values.time)
-            if (!!values.time) {
-                const formattedData = values?.time.map((item: any) => {
-                    const date = dayjs(item.$d);
-                    const formattedDate = date.format('YYYY-MM-DD');
-                    return formattedDate;
-                });
-                console.log(formattedData);
-                setDataQuery({
-                    ...data,
-                    checkin: formattedData?.[0],
-                    checkout: formattedData?.[1],
-                })
-            } else {
-                setDataQuery(data)
-            }
+            const formattedData = values?.time.map((item: any) => {
+                const date = dayjs(item.$d);
+                const formattedDate = date.format('YYYY-MM-DD');
+                return formattedDate;
+            });
+            setDataQuery({
+                adult: values.adult,
+                child: values.child,
+                branch_id: values.branch_id,
+                soLuong: values.soLuong,
+                checkin: formattedData?.[0],
+                checkout: formattedData?.[1],
+            })
+            console.log('');
+
         }
 
     };
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
-
     useEffect(() => {
         setWidth(window.innerWidth);
     }, [window.innerWidth]);
@@ -87,13 +85,17 @@ export default function Rooms({ }: Props) {
                     </div>
                 </div>
                 <div className="pt-primary px-6 md:px-[120px]">
-                    <div className="container mx-auto w-full lg:px-0">
+                    <div className="container mx-auto w-full flex flex-col justify-start lg:px-0">
                         <div className="mb-[20px] font-bold text-[18px]">4 accommodations found from November 23, 2023 - till November 24, 2023</div>
-                        <div className="flex gap-5 md:flex-row flex-col-reverse justify-center lg:max-w-none lg:mx-0 relative">
+                        <div className="flex gap-5 md:flex-row flex-col-reverse justify-start lg:max-w-none lg:mx-0 relative">
                             <div className="flex flex-col gap-[60px]">
-                                {data?.data.map((room: any) => {
+                                {data?.data ? data?.data?.map((room: any) => {
                                     return <Room key={room.id} data={room} />;
-                                })}
+                                }) :
+                                    <div>
+                                        <img src="https://1987giasi.com/files/assets/tam_het_cam.png" alt="" />
+                                    </div>
+                                }
                             </div>
                             <div className="md:max-w-[400px] w-full top-[10px] mb-[60px] md:mb-0 md:ml-[40px]">
                                 <div className="w-full shadow-lg p-4" style={{ position: "sticky", top: "100px" }}>
@@ -123,8 +125,8 @@ export default function Rooms({ }: Props) {
                                                 placeholder='Chi nhánh'
                                                 className='rounded-none'
                                             >
-                                                {dataBranches && dataBranches.map((item: any) => {
-                                                    return <Select.Option value={item?._id}>{item?.room_type_name}</Select.Option>
+                                                {dataBranches && dataBranches?.data.map((item: any) => {
+                                                    return <Select.Option value={item?.id}>{item?.name}</Select.Option>
                                                 })}
                                             </Select>
                                         </Form.Item>

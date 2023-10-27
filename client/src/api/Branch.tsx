@@ -18,7 +18,7 @@ const branchApi = createApi({
             query: () => {
                 return ({
                     method: 'GET',
-                    url: "/client/room/type"
+                    url: "/client/branch"
                 })
             },
             providesTags: ["Branches"]

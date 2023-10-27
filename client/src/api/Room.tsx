@@ -8,16 +8,17 @@ const roomApi = createApi({
         prepareHeaders: (headers) => {
             const token = localStorage.getItem("access_token");
             headers.set("authorization", `Bearer ${token}`)
-            // modify header theo từng request
             return headers;
         },
     }),
     endpoints: (builder) => ({
         getRooms: builder.query<any, any>({
             query: (data: any) => {
+                const keys = Object.keys(data);
+                const url = keys.length === 0 ? `/client/room` : `/client/room/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&soLuong=${data.soLuong}`
                 return ({
                     method: 'GET',
-                    url: `/client/room`
+                    url: url
                 })
             },
             providesTags: ["Rooms"]

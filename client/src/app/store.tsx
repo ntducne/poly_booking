@@ -18,8 +18,7 @@ import branchApi from '../api/Branch';
 
 const persistConfig = {
     key: 'root',
-    storage,
-    whileList: ['products'],
+    storage
 }
 
 
