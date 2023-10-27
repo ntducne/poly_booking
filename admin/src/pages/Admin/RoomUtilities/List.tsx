@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Space, Table, } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
@@ -6,15 +6,31 @@ import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
-  age: number;
-  address: string;
+  room_id: string
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
+import { useGetUtilitieQuery } from "../../../api/utilities";
 
 const ListRoomUtilities = () => {
+  const { data, isLoading, refetch } = useGetUtilitieQuery({});
+  const [dataFetching, setDataFetching] = useState<any>([])
+  console.log(data?.data?.data);
+
+
+  useEffect(() => {
+    setDataFetching(data?.data?.data?.map((item: any) => {
+      return {
+        key: item._id,
+        name: item.name,
+        room_id: item.room_id,
+      }
+      // refetch()
+    }))
+  }, [isLoading, data?.data?.data])
+
   const columns: ColumnsType<any> = [
     {
       title: "ID",
@@ -40,7 +56,7 @@ const ListRoomUtilities = () => {
             type="primary"
             className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
           >
-            <Link to={`/roomUtilities/edit/${record?.key}`}>
+            <Link to={`/room/utilities/edit/${record?.key}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
@@ -57,20 +73,20 @@ const ListRoomUtilities = () => {
     },
   ];
 
-  const data : any = [
-    {
-      key: "1",
-      _id: "1",
-      name: "John Brown",
-      room_id: "1",
-    },
-    {
-      key: "2",
-      _id: "2",
-      name: "John Brown 123",
-      room_id: "2",
-    },
-  ];
+  // const data1: any = [
+  //   {
+  //     key: "1",
+  //     _id: "1",
+  //     name: "John Brown",
+  //     room_id: "1",
+  //   },
+  //   {
+  //     key: "2",
+  //     _id: "2",
+  //     name: "John Brown 123",
+  //     room_id: "2",
+  //   },
+  // ];
 
   const onChange: TableProps<DataType>["onChange"] = (
     // pagination,
@@ -82,7 +98,7 @@ const ListRoomUtilities = () => {
   };
 
   const remove = (id: any) => {
-    console.log(id);
+    // console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -96,7 +112,7 @@ const ListRoomUtilities = () => {
             // removeComment(id);
 
             console.log(id);
-            
+
             swal("You have successfully deleted", {
               icon: "success",
             });
@@ -107,7 +123,7 @@ const ListRoomUtilities = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -116,7 +132,7 @@ const ListRoomUtilities = () => {
         <FormSearch />
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
-            to={`/roomUtilities/add`}
+            to={`/room/utilities/add`}
             className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
           >
             <AiOutlinePlus />
@@ -135,7 +151,7 @@ const ListRoomUtilities = () => {
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
-        dataSource={data}
+        dataSource={dataFetching}
         onChange={onChange}
       />
     </Page>

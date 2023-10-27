@@ -38,7 +38,7 @@ import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
 import ListBranches from "./pages/Admin/Branches/List";
 import AddBranche from "./pages/Admin/Branches/Add";
 import EditBranche from "./pages/Admin/Branches/Edit";
-import RoomBooking from "./pages/Admin/Room/Booking";
+import RoomBooking from "./pages/Admin/Room/booking";
 import BillList from "./pages/Admin/Bill/List";
 import BillDetail from "./pages/Admin/Bill/Detail";
 import Demo from "./pages/demo";
@@ -91,7 +91,7 @@ function App() {
               <Route path="add" element={<AddRoomExtend />} />
               <Route path="edit/:id" element={<EditRoomExtend />} />
             </Route>
-            <Route path="booking" element={<RoomBooking />} />
+            {/* <Route path="booking" element={<RoomBooking />} /> */}
           </Route>
           <Route path="services">
             <Route index element={<ListServices />} />

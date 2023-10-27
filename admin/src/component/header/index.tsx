@@ -11,42 +11,42 @@ import {
 import { Link } from "react-router-dom";
 import { LayoutContext } from "../../layout/LayoutAdmin";
 import { cookies } from "../../config/cookies";
-import { useNavigate } from 'react-router-dom'
-import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const { Text } = Typography;
 
 const Head = () => {
   const title: any = useContext(LayoutContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const user = JSON.parse(cookies().Get('AuthUser') as any)[1]
+  const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
 
   function logout() {
-    cookies().Delete('AuthUser')
-    toast("Đăng xuất thành công")
-    navigate('/login')
+    cookies().Delete("AuthUser");
+    toast("Đăng xuất thành công");
+    navigate("/login");
   }
 
-  const profile: MenuProps['items'] =  [
+  const profile: MenuProps["items"] = [
     {
       label: (
         <Link rel="noopener noreferrer" to="/profile">
           <UserOutlined /> Thông tin tài khoản
         </Link>
       ),
-      key: '0',
+      key: "0",
     },
     {
       label: (
         <Link rel="noopener noreferrer" to="/changePass">
-         <LockOutlined /> Đổi mật khẩu
+          <LockOutlined /> Đổi mật khẩu
         </Link>
       ),
-      key: '1',
+      key: "1",
     },
     {
-      type: 'divider',
+      type: "divider",
     },
     {
       onClick: logout,
@@ -54,9 +54,8 @@ const Head = () => {
         <a onClick={logout}>
           <LogoutOutlined /> Đăng xuất
         </a>
-      
       ),
-      key: '3',
+      key: "3",
       danger: true,
     },
   ];
@@ -104,7 +103,7 @@ const Head = () => {
   ];
   return (
     <div className="flex justify-between items-center mx-4">
-      <div >
+      <div>
         <p className="md:text-3xl">{title}</p>
       </div>
       <div>
@@ -124,11 +123,11 @@ const Head = () => {
           </Dropdown>
           <Dropdown menu={{ items: profile }} placement="bottomRight">
             <div className="flex items-center justify-center">
-            <Avatar src={<img src={user.image} alt="avatar" />} />
+              <Avatar src={<img src={user.image} alt="avatar" />} />
               <div className=" rounded-t-lg ml-3">
-              <p className="text-sm ">Xin chào</p>
-              <p className="text-sm font-medium ">{user.name}</p>
-            </div>
+                <p className="text-sm ">Xin chào</p>
+                <p className="text-sm font-medium ">{user.name}</p>
+              </div>
             </div>
           </Dropdown>
         </Space>

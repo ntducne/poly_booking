@@ -20,7 +20,7 @@ import {
 } from "../../../api/promotions";
 
 const ListOffers = () => {
-  const { data: dataPromotions } = useGetPromotionsQuery({});
+  const { data: dataPromotions  ,isLoading} = useGetPromotionsQuery({});
   const [deletePromotions] = useDeletePromotionsMutation();
 
   const columns: ColumnsType<any> = [
@@ -149,6 +149,7 @@ const ListOffers = () => {
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
+        loading={isLoading}
         dataSource={data}
         onChange={onChange}
       />

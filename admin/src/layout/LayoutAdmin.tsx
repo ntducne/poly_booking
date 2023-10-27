@@ -92,7 +92,7 @@ const LayoutAdmin = () => {
     getItem(
       "Hoá đơn",
       "7",
-      <Link onClick={() => handleTitleChange("Phòng đặt")} to={`billing`}>
+      <Link onClick={() => handleTitleChange("Hóa đơn")} to={`billing`}>
         {" "}
         <AiFillBank />
       </Link>

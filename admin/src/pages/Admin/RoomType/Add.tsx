@@ -32,7 +32,7 @@ const AddRoomType = () => {
       .then((result) => {
         if (result.status === "success") {
           toast.success("Thêm mới loại phòng thành công");
-          navigate("/roomType");
+          navigate("/room/type");
         } else {
           toast.error(result.error.message);
         }

@@ -26,9 +26,18 @@ const roomApi = createApi({
         getDetial: builder.query<any, any>({
             query: (id) => `/client/room/${id}`,
             providesTags: ["Rooms"]
-        })
+        }),
+        postBooking: builder.mutation({
+            query: (data: any) => ({
+                url: `client/room/booking`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['Rooms']
+        }),
     })
 })
 
-export const { useGetRoomsQuery, useGetDetialQuery } = roomApi
+export const { useGetRoomsQuery, useGetDetialQuery, usePostBookingMutation } = roomApi
+export const roomReducer = roomApi.reducer
 export default roomApi

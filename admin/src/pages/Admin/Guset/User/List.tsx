@@ -17,7 +17,7 @@ import { useGetAllUsersQuery } from "../../../../api/account/users";
 
 const ListUser = () => {
 
-  const { data: users } = useGetAllUsersQuery([]);
+  const { data: users  , isLoading} = useGetAllUsersQuery([]);
   
  
 
@@ -191,6 +191,7 @@ const ListUser = () => {
         scroll={{x : true}}
         className="max-w-full mt-3"
         columns={columns}
+        loading={isLoading}
         dataSource={data}
         onChange={onChange}
       />
