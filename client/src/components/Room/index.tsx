@@ -1,66 +1,39 @@
-import { ArrowsAltOutlined, UsergroupAddOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
-
+import FormatPrice from '../../utils/FormatPrice'
 
 export default function Room(data: any) {
     const { name, description, area, adults, children, num_of_bed, branch, id } = data?.data
     return (
-        <div className='bg-bgr group overflow-hidden'>
-            <div className='overflow-hidden'>
-                <Link to={`/rooms/${id}`}>
-                    <img className='group-hover:scale-110 transition-all duration-300 w-full' src={"https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"} alt="" />
-                </Link>
-            </div>
-            {/* detail */}
-            <div className="bg-bgr shadow-md border md:border-0 w-[90%] mx-auto h-[60px]
-            -translate-y-1/2 flex justify-center items-center uppercase font-medium tracking-[1px] text-[16px]
-            
-            ">
-                <div className='flex justify-between flex-wrap gap-1 w-[80%]'>
-                    <div className='flex items-center gap-x-2'>
-                        <div className='text-primary flex items-center'>
-                            <ArrowsAltOutlined className='text-[15px]' />
-                        </div>
-                        <div className='flex gap-x-1 items-center font-text_2nd'>
-                            <div>Diện tích</div>
-                            <div>{area}</div>
-                        </div>
-                    </div>
-                    <div className='flex items-center gap-x-2 '>
-                        <div className='text-primary flex items-center'>
-                            <UsergroupAddOutlined className='text-[15px]' />
-                        </div>
-                        <div className='flex gap-x-1 items-center font-text_2nd'>
-                            <div>Số người</div>
-                            <div>{adults + children}</div>
-                        </div>
-                    </div>
+        <div className='bg-bgr overflow-hidden max-w-[864px]'>
+            {/* <Link to={`/rooms/${id}`}> */}
+            <img className='group-hover:scale-110 transition-all duration-300 w-full' src={"https://hotellerv1.themegoods.com/cultural/wp-content/uploads/sites/6/2018/09/pic-0203-04.jpg"} alt="" />
+            {/* </Link> */}
+
+            <div className='mt-5'>
+                <div>
+                    <h3 className='text-h3 mb-[5px] font-bold overflow-hidden font-text_2nd'>{name}</h3>
+                    <span className='text-gray-500'>Great for families</span>
+                </div>
+                <div className='text-[16px] flex flex-col gap-3 text-text mt-[25px] text-gray-500'>
+                    <li>Người lớn: {adults || 1}</li>
+                    <li>Trẻ em: {children || 2}</li>
+                    <li>Mô tả: Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet molestiae debitis ipsum natus, fugiat labore alias numquam quisquam quo fuga suscipit quam similique rem tempora, quidem eligendi optio consequatur quia.</li>
+                    <li>Diện tích: {area} m²</li>
+                    <li>Loại giường: Đơn</li>
+                    <li>Số giường: 3</li>
                 </div>
             </div>
-            <div className=' font-text_2nd bg-bgr'>
-                <div className=' w-full flex flex-col items md:flex-row md:justify-between md:gap-3'>
-                    <div className='flex flex-col'>
-                        <Link to={`/rooms/${id}`}>
-                            <span className='text-h3 font-bold md:max-w-[180px] overflow-hidden md:text-left text-center'>{name}</span>
-                        </Link>
-                        <div className='md:max-w-[250px]'>
-                            <p><span className='font-normal text-desc'>{description?.length > 70 ? description?.slice(0, 70) + "..." : description}</span></p>
-                        </div>
-                    </div>
-                    <div className='mb-3 text-[20px] flex flex-col'>
-                        <span className='text-h3 font-bold '>112.000.000 vnđ</span>
-                        <div className='max-w-[250px]'>
-                            <p className='font-bold'>Vị trí: <span className='font-medium'>{branch?.address}</span></p>
-                            <p className='font-bold'>Tổng người: <span className='font-medium'>{adults} người lớn + {children} trẻ con</span></p>
-                            <p className='font-bold'>Số giường: <span className='font-medium'>{num_of_bed}</span></p>
-                            <p className='font-bold'>Diện tích: <span className='font-medium'>30m2</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div className='mb-5 md:mb-[30px]'>
-                    <Link to='/' className='text-normal  font-bold border-b hover:text-[#a27b49] hover:border-b-[#a27b49] transition-all duration-600'>Xem chi tiết</Link>
-                </div>
+            <div className='mt-[20px]'>
+                <h3><span className='font-bold text-[18px] text-gray-500'>Giá một đêm:</span> <span className='text-[20px] text-gray-500 font-bold'><FormatPrice price={1231312312} /></span></h3>
             </div>
+            <div className='border my-[32px]'></div>
+            <button
+                type="button"
+                className="inline-block rounded bg-primary px-6 py-3 
+                    text-xs uppercase leading-normal text-white
+                    transition duration-150 ease-in-out hover:bg-primary-600 font-bold"
+            >
+                Đặt phòng ngay
+            </button>
         </div>
     )
 }

@@ -1,33 +1,30 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const roomApi = createApi({
-    reducerPath: "rooms",
-    tagTypes: ['Rooms'],
+const branchApi = createApi({
+    reducerPath: "branches",
+    tagTypes: ['Branches'],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_URL_API,
         prepareHeaders: (headers) => {
             const token = localStorage.getItem("access_token");
             headers.set("authorization", `Bearer ${token}`)
-            // modify header theo từng request
+            console.log('Header');
+
             return headers;
         },
     }),
     endpoints: (builder) => ({
-        getRooms: builder.query<any, any>({
-            query: (data: any) => {
+        getBranches: builder.query<any, any>({
+            query: () => {
                 return ({
                     method: 'GET',
-                    url: `/client/room`
+                    url: "/client/room/type"
                 })
             },
-            providesTags: ["Rooms"]
-        }),
-        getDetial: builder.query<any, any>({
-            query: (id) => `/client/room/${id}`,
-            providesTags: ["Rooms"]
+            providesTags: ["Branches"]
         })
     })
 })
 
-export const { useGetRoomsQuery, useGetDetialQuery } = roomApi
-export default roomApi
+export const { useGetBranchesQuery } = branchApi
+export default branchApi

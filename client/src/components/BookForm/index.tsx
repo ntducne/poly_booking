@@ -5,7 +5,7 @@ import {
     Form,
     Select
 } from 'antd';
-import './index.css';
+import './style.css';
 
 
 
@@ -49,7 +49,7 @@ export default function BookForm({ }: Props) {
                             <Form.Item name="Start-end2">
                                 <Select
                                     placeholder='Trẻ nhỏ'
-                                    className=''
+                                    className='overWrite'
                                 >
                                     <Select.Option value="1">1</Select.Option>
                                     <Select.Option value="2">2</Select.Option>
@@ -63,7 +63,7 @@ export default function BookForm({ }: Props) {
                             <Form.Item name="Start-end2 ">
                                 <Select
                                     placeholder='Người lớn'
-                                    className='rounded-none'
+                                    className='rounded-none overWrite'
                                 >
                                     <Select.Option value="1">1</Select.Option>
                                     <Select.Option value="2">2</Select.Option>
@@ -77,7 +77,7 @@ export default function BookForm({ }: Props) {
                             <Form.Item name="Start-end2 ">
                                 <Select
                                     placeholder='Chi nhánh'
-                                    className='rounded-none'
+                                    className='rounded-none overWrite'
                                 >
                                     <Select.Option value="1">Chi nhánh 1</Select.Option>
                                     <Select.Option value="2">Chi nhánh 2</Select.Option>

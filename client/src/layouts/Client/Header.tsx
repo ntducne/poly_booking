@@ -6,13 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 
 type Props = {}
 
-
-
 export default function Header({ }: Props) {
   const navigate = useNavigate()
   const [cookies, removeCookie] = useCookies(['userInfo']);
-  console.log(cookies);
-
   const [header, setHeader] = useState(false)
   const handleLogout = () => {
     removeCookie('userInfo', { path: '/' })

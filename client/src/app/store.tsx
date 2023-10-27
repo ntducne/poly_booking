@@ -12,20 +12,21 @@ import {
     persistStore,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import roomApi, { roomReducer } from '../api/Room';
+import roomApi from '../api/Room';
 import authApi, { authReducer } from '../api/Auth';
+import branchApi from '../api/Branch';
 
 const persistConfig = {
     key: 'root',
     storage,
-    whileList: ['auth', 'cartUser'], // luu strorage 
-    backlist: ['products'] // k luu vaoo storage
+    whileList: ['products'],
 }
 
 
 const rootReducer = combineReducers({
-    [roomApi.reducerPath]: roomReducer,
-    [authApi.reducerPath]: authReducer
+    [roomApi.reducerPath]: roomApi.reducer,
+    [authApi.reducerPath]: authReducer,
+    [branchApi.reducerPath]: branchApi.reducer
 })
 
 
@@ -33,7 +34,8 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const middlewares = [
     roomApi.middleware,
-    authApi.middleware
+    authApi.middleware,
+    branchApi.middleware
 ]
 
 const store = configureStore({
