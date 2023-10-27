@@ -16,6 +16,7 @@ class StaffResource extends JsonResource
             'phone' => $this->phone,
             'status' => $this->status,
             'branch_id' => $this->branch_id,
+            'staff_permission' => $this->getAllPermission(),
         ];
     }
 }

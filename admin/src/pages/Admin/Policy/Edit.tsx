@@ -8,7 +8,11 @@ import {
   Space,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useGetDetailPolicyQuery, useUpdatePolicyMutation } from "../../../api/policy";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { useGetRoomsQuery } from "../../../api/room";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -19,10 +23,56 @@ const formItemLayout = {
 };
 
 const EditPolicy = () => {
+  const { id } = useParams();
+  console.log(id);
+
+  const navigate = useNavigate()
+  const [form] = Form.useForm()
+  const { data: dataRooms, isLoading } = useGetRoomsQuery({})
+  const { data, refetch } = useGetDetailPolicyQuery(id)
+  console.log(data);
+
+  const [updateData] = useUpdatePolicyMutation()
+
   const onFinish = (values: any) => {
-    console.log(values.image);
+    console.log(values);
     // Xử lý dữ liệu khi nhấn nút Submit
+    const data = {
+      ...values,
+    }
+    const dataUpload = {
+      id,
+      ...data
+    }
+
+    updateData(dataUpload)
+      .unwrap()
+      .then((result: any) => {
+        if (result.status === 'success') {
+          toast.success('Cập nhật thông tin loại phòng thành công');
+          navigate('/policy');
+        } else {
+          toast.error(result.error.message);
+        }
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu có lỗi xảy ra trong quá trình gọi mutation hoặc xử lý kết quả
+        toast.error('Có lỗi xảy ra khi cập nhật thông tin loại phòng');
+        console.error(error);
+      });
   };
+
+  useEffect(() => {
+    refetch();
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  useEffect(() => {
+    form.setFieldsValue(data?.data)
+  }, [isLoading, data?.data])
+  if (isLoading) {
+    return <>loading...</>
+  }
 
 
   return (
@@ -33,6 +83,7 @@ const EditPolicy = () => {
         </div>
 
         <Form
+          form={form}
           name="validate_other"
           {...formItemLayout}
           onFinish={onFinish}
@@ -62,22 +113,23 @@ const EditPolicy = () => {
           </Form.Item>
 
           <Form.Item
-            name="room_type_id"
-            label="Loại phòng"
+            name="room_id"
+            label="Tên phòng"
             hasFeedback
-            rules={[{ required: true, message: "Vui lòng nhập phòng!" }]}
+            rules={[{ required: true, message: "Vui lòng nhập tên phòng!" }]}
           >
-            <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value="1">Phòng 1</Option>
-              <Option value="2">Phòng 2</Option>
+            <Select>
+              {dataRooms?.data?.map((item: any) => {
+                return <Option key={item.id} value={item.id}>{item.name}</Option>
+              })}
             </Select>
           </Form.Item>
 
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-              <Button  className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
-                <AiOutlineCheck className="text-[#fff] "/>
+              <Button className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
+                <AiOutlineCheck className="text-[#fff] " />
                 <Text className=" text-[#fff] ml-1">Thêm</Text>
               </Button>
               <Link className="text-white" to={`/policy`}>

@@ -49,7 +49,7 @@ const EditRoomType = () => {
       .then((result) => {
         if (result.status === 'success') {
           toast.success('Cập nhật thông tin loại phòng thành công');
-          navigate('/roomType');
+          navigate('/room/type');
         } else {
           toast.error(result.error.message);
         }

@@ -12,7 +12,9 @@ use App\Models\Rates;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller
 {
@@ -30,13 +32,14 @@ class ClientController extends Controller
 
     public function rooms(Request $request)
     {
-        if(request()->has('checkin') 
+        if (
+            request()->has('checkin')
             && request()->has('checkout')
             && request()->has('adult')
             && request()->has('child')
             && request()->has('branch_id')
             && request()->has('soLuong')
-        ){
+        ) {
             $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, null, $request->soLuong);
             if (!$room_completed) {
                 $response = [
@@ -76,7 +79,7 @@ class ClientController extends Controller
         return response()->json([
             'room' => new RoomResource($room),
             'rate' => $room->getRate(),
-            'room_same' => $room_same
+            'room_same' => RoomResource::collection($room_same)
         ]);
     }
     public function check_room($check_in, $check_out, $adults, $children, $branch_id, $room_type_id = null, $soLuong = 1)
@@ -85,17 +88,17 @@ class ClientController extends Controller
         $room_booked = $this->booking
             ->where('status', '=', false)
             // ->where('room_type', $room_type_id)
-            ->where(function ($query) use ($check_in,$check_out){
+            ->where(function ($query) use ($check_in, $check_out) {
                 $query->where(function ($query) use ($check_in, $check_out) {
                     $query->where('checkin', '<=', $check_in)
                         ->where('checkout', '>=', $check_out);
                 })
-                ->orWhere(function ($query) use ($check_in, $check_out) {
-                    $query->where('checkin', '>=', $check_in)->where('checkin', '<', $check_out)->where('checkout', '>=', $check_out);
-                })
-                ->orWhere(function ($query) use ($check_in, $check_out) {
-                    $query->where('checkin', '<=', $check_in)->where('checkout', '>', $check_in)->where('checkout', '<=', $check_out);
-                });
+                    ->orWhere(function ($query) use ($check_in, $check_out) {
+                        $query->where('checkin', '>=', $check_in)->where('checkin', '<', $check_out)->where('checkout', '>=', $check_out);
+                    })
+                    ->orWhere(function ($query) use ($check_in, $check_out) {
+                        $query->where('checkin', '<=', $check_in)->where('checkout', '>', $check_in)->where('checkout', '<=', $check_out);
+                    });
             })->get();
         $room_id_booked = [];
         foreach ($room_booked as $item) {
@@ -123,110 +126,137 @@ class ClientController extends Controller
     }
     public function search(Request $request)
     {
-        $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, null, $request->soLuong);
-        if (!$room_completed) {
-            $response = [
-                'message' => 'Hết phòng !'
-            ];
-        } else {
-            $room = [];
-            foreach ($room_completed as $key => $value) {
-                $room[] = [
-                    'room' => Room::find($value),
-                    'room_type' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->get()
-                ];
+        try {
+            if (
+                request()->has('checkin')
+                && request()->has('checkout')
+                && request()->has('adult')
+                && request()->has('child')
+                && request()->has('branch_id')
+                && request()->has('soLuong')
+            ) {
+                $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, null, $request->soLuong);
+                if (!$room_completed) {
+                    $response = [
+                        'message' => 'Hết phòng !'
+                    ];
+                } else {
+                    $room = [];
+                    foreach ($room_completed as $key => $value) {
+                        $room[] = [
+                            'room' => Room::find($value),
+                            'room_type' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->get()
+                        ];
+                    }
+                    $response = [
+                        'message' => 'Tìm thành công !',
+                        'data' => $room
+                    ];
+                }
+                return response()->json($response);
             }
-            $response = [
-                'message' => 'Tìm thành công !',
-                'data' => $room
-            ];
+        } catch (Exception $exception) {
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Lỗi không thực hiện được tìm kiếm !'
+            ]);
         }
-        return response()->json($response);
+
     }
     public function booking(BookingRequest $request)
     {
-        $soLuong = $request->soLuong;
-        $room_id = $request->room_id;
-        $branch_id = $request->branch_id;
-        (int) $adults = $request->adults;
-        (int) $children = $request->children;
-        $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
-        $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
-        //Kiem tra phong con trong hay khong
-        $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);
-        //Bat loi dat so luong phong
-        if (count($room_valid) < $soLuong) {
+        try {
+            $soLuong = $request->soLuong;
+            $room_id = $request->room_id;
+            $branch_id = $request->branch_id;
+            (int) $adults = $request->adults;
+            (int) $children = $request->children;
+            $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
+            $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
+            //Kiem tra phong con trong hay khong
+            $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);
+            //Bat loi dat so luong phong
+            if (count($room_valid) < $soLuong) {
+                return response()->json([
+                    'message' => 'Không đủ phòng trống !'
+                ]);
+            }
+            //phong co the dat
+            $room_booking = array_slice($room_valid, 0, $soLuong);
+            // $total_adults = 0;
+            // $total_children = 0;
+            $total_discount = 0;
+            $total_price_per_night = 0;
+            foreach ($room_booking as $key => $value) {
+                $total_discount += Room::find($value)->discount;
+                $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
+            }
+            $param['room_type'] = $room->room_type_id;
+            $param['booking_date'] = now()->toDateTimeString();
+            $param['price_per_night'] = $total_price_per_night - $total_discount; // gia 1 dem cua booking
+            $param['amount_people'] = [
+                'total_people' => $adults + $children,
+                'adults' => $adults,
+                'children' => $children
+            ];
+            $param['representative'] = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone
+            ];
+            $param['amount_room'] = $soLuong;
+            //Lay ra id user neu ho da co tai khoan tu truoc
+            if (!empty($request->email)) {
+                $user = User::where('email', '=', $request->email)->first();
+            }
+            $param['user_id'] = !empty($user) ? $user->_id : null;
+            $create = $this->booking->create($param);
+            $details = [];
+            foreach ($room_booking as $key => $value) {
+                $details[] = [
+                    'booking_detail' => $this->book_detail->create(
+                        [
+                            'booking_id' => $create->_id,
+                            'room_id' => $value,
+                            'room_name' => Room::find($value)->name
+                        ]
+                    ),
+                    'info_room' => [
+                        'name' => Room::find($value)->name,
+                        'price' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night - Room::find($value)->discount
+                    ]
+                ];
+            }
+            //Hoa don 
+            $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
+            $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
+            $bill = [
+                'booking_id' => $create->_id,
+                'services' => [],
+                'total' => $create->price_per_night * $amount_day,
+                // total = so ngay su dung phong * gia 1 dem 
+                'payment_method' => 0,
+                //thanh toan tai quay
+                'payment_date' => null,
+                'branch_id' => $branch_id,
+                'status' => 'Not yet implemented'
+            ];
+            $data = $this->billing->create($bill);
+
             return response()->json([
-                'message' => 'Không đủ phòng trống !'
+                'message' => 'Đặt thành công !',
+                'booking' => $create,
+                'details' => $details,
+                'bill' => $data
+            ]);
+        } catch (Exception $exception) {
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Lỗi không thực hiện được đặt phòng !'
             ]);
         }
-        //phong co the dat
-        $room_booking = array_slice($room_valid, 0, $soLuong);
-        // $total_adults = 0;
-        // $total_children = 0;
-        $total_discount = 0;
-        $total_price_per_night = 0;
-        foreach ($room_booking as $key => $value) {
-            $total_discount += Room::find($value)->discount;
-            $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
-        }
-        $param['room_type'] = $room->room_type_id;
-        $param['booking_date'] = now()->toDateTimeString();
-        $param['price_per_night'] = $total_price_per_night - $total_discount; // gia 1 dem cua booking
-        $param['amount_people'] = [
-            'total_people' => $adults + $children,
-            'adults' => $adults,
-            'children' => $children
-        ];
-        $param['representative'] = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone
-        ];
-        $param['amount_room'] = $soLuong;
-        //Lay ra id user neu ho da co tai khoan tu truoc
-        if (!empty($request->email)) {
-            $user = User::where('email', '=', $request->email)->first();
-        }
-        $param['user_id'] = !empty($user) ? $user->_id : null;
-        $create = $this->booking->create($param);
-        $details = [];
-        foreach ($room_booking as $key => $value) {
-            $details[] = [
-                'booking_detail' => $this->book_detail->create(
-                    [
-                        'booking_id' => $create->_id,
-                        'room_id' => $value,
-                        'room_name' => Room::find($value)->name
-                    ]
-                ),
-                'info_room' => [
-                    'name' => Room::find($value)->name,
-                    'price' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night - Room::find($value)->discount
-                ]
-            ];
-        }
-        //Hoa don 
-        $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
-        $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
-        $bill = [
-            'booking_id' => $create->_id,
-            'services' => [],
-            'total' => $create->price_per_night * $amount_day,
-            // total = so ngay su dung phong * gia 1 dem 
-            'payment_method' => 0,
-            //thanh toan tai quay
-            'payment_date' => null,
-            'branch_id' => $branch_id,
-            'status' => 'Not yet implemented'
-        ];
-        $data = $this->billing->create($bill);
 
-        return response()->json([
-            'message' => 'Đặt thành công !',
-            'booking' => $create,
-            'details' => $details,
-            'bill' => $data
-        ]);
     }
 }
