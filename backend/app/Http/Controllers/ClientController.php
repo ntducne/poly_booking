@@ -143,10 +143,7 @@ class ClientController extends Controller
                 } else {
                     $room = [];
                     foreach ($room_completed as $key => $value) {
-                        $room[] = [
-                            'room' => Room::find($value),
-                            'room_type' => RoomType::where('_id', '=', Room::find($value)->room_type_id)->get()
-                        ];
+                        $room[] = new RoomResource(Room::find($value));
                     }
                     $response = [
                         'message' => 'Tìm thành công !',
