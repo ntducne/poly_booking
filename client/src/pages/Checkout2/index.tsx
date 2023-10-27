@@ -5,6 +5,7 @@ import {  Checkbox, Form, Input } from 'antd';
 import { Col, Row } from 'antd';
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
+import { useCookies } from 'react-cookie';
 
 
 const onFinish = (values: any) => {
@@ -61,7 +62,12 @@ const itemsColapper: CollapseProps['items'] = [
 
 
 const Demo = () => {
-
+    const [cookies] = useCookies();
+    console.log(cookies.roomBooking);
+    console.log(cookies.userInfo);
+    
+    const item  = cookies.roomBooking
+    const userInfo = cookies.userInfo
     const [isModalLogin, setIsModalLogin] = useState(false);
     // const [isModalRegister, setIsModalRegister] = useState(false);
 
@@ -172,7 +178,7 @@ const Demo = () => {
                                         <div className='p-5'>
                                             <div className="mb-3">
                                                 <label htmlFor="text" className="font-bold block mb-2 text-sm text-gray-900">Họ và tên</label>
-                                                <input type="text" id="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
+                                                <input type="text" id="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" value={userInfo?.name} />
                                                 <div className='mt-1 text-gray-400'>*Nhập tên như trên CMND/hộ chiếu (không dấu)</div>
                                             </div>
                                             <div className="grid gap-6 mb-6 md:grid-cols-2">
