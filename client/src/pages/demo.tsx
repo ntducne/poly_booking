@@ -145,12 +145,7 @@ const Demo = () => {
                 name="basic"
                 labelCol={{ span: 5 }}
                 wrapperCol={{ span: 16 }}
-                // style={{ maxWidth: 600 }}
-                // initialValues={{ name: userInfo?.name, phone: userInfo?.name, email: userInfo?.name }}
-                initialValues={{ remember: true }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
                 form={form}
             >
 
@@ -202,11 +197,10 @@ const Demo = () => {
                                                 <div className="mb-3">
                                                     <label htmlFor="text" className="font-bold block mb-2 text-sm text-gray-900">Họ và tên</label>
                                                     <Form.Item
-                                                        
                                                         name="name"
                                                         rules={[{ required: true, message: 'Please input your name!' }]}
                                                     >
-                                                        <Input className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
+                                                        <Input  className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
                                                         <div className='mt-1 text-gray-400'>*Nhập tên như trên CMND/hộ chiếu (không dấu)</div>
                                                     </Form.Item>
 
@@ -443,9 +437,9 @@ const Demo = () => {
                                 </button>
                             )}
                             {current < steps.length - 1 && (
-                                <button type='submit' className='class="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-10 py-2.5 text-center mr-2"' >
+                                <Button htmlType='submit' className='class="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-10 py-2.5 text-center mr-2"' >
                                     Tiếp tục
-                                </button>
+                                </Button>
                             )}
                             {current === steps.length - 1 && (
                                 <button onClick={() => message.success('Processing complete!')}>

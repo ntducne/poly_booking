@@ -194,15 +194,15 @@ const ListAdmin = () => {
 
   return (
     <Page title={`Tài khoản quản trị`}>
-      <Modal
-            title="Danh sách quyền"
-            open={isModalOpen}
-            onCancel={handleCancel}
-            footer={[]}
-            style={{ minWidth: "60%" }}
-          >
-            <Collapse ghost items={items} />
-          </Modal>
+        <Modal
+          title="Danh sách quyền"
+          open={isModalOpen}
+          onCancel={handleCancel}
+          footer={[]}
+          style={{ minWidth: "60%" }}
+        >
+          <Collapse ghost items={items} />
+        </Modal>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <div className="mb-3">
           <FormSearch />
