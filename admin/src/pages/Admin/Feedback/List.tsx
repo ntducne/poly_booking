@@ -16,35 +16,60 @@ import { useGetRatesQuery } from "../../../api/rate";
 
 const ListFeedback = () => {
   const { data: dataRates, isLoading } = useGetRatesQuery({});
-  console.log("data" , dataRates);
   
 
   const columns: ColumnsType<any> = [
     {
       title: "ID",
-      dataIndex: "review_id",
-      sorter: (a, b) => a.review_id - b.review_id,
+      dataIndex: "key",
+      sorter: (a, b) => a.key - b.key,
       sortDirections: ["descend"],
       fixed: "left",
     },
     {
       title: "Người đánh giá",
-      dataIndex: "user_id",
+      dataIndex: "user",
       render: (user_id) => (
         <div className="flex items-center">
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-          <Image className="rounded-3xl " width={150} src={user_id?.image} />
+          <Image className="rounded-3xl " width={70} src={user_id?.image} />
           <div className="ml-3 text-gray-500">
-            <p>{user_id?.email}</p>
+            <p>Tên : {user_id?.name}</p>
+            <p>Email : {user_id?.email}</p>
+            <p>SĐT : {user_id?.phone}</p>
           </div>
         </div>
       ),
     },
     {
+      title: "Tên phòng",
+      dataIndex: "room",
+      key: "room",
+      render: (room) => (
+         <div>{room?.name}</div>
+      ),
+    },
+    {
+      title: "Hình ảnh",
+      dataIndex: "images",
+      key: "images",
+      render: (images) => (
+        <Image
+          width={200}
+          src={images}
+        />
+      ),
+    },
+    {
+      title: "Nội dung",
+      dataIndex: "content",
+      key: "content",
+    },
+    {
       title: "Số sao",
       dataIndex: "star",
       key: "star",
-      render: (star) => <Rate allowHalf defaultValue={star} />,
+      render: (star) => <Rate disabled allowHalf defaultValue={star} />,
     },
     {
       title: "Ngày đánh giá",
@@ -69,34 +94,38 @@ const ListFeedback = () => {
     },
   ];
 
-  const data: any = [
-    {
-      key: "1",
-      review_id: 1,
-      user_id: {
-        image:
-          "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
-        email: "huynguyen@gmail.com",
-      },
-      content: "Đẹp quá nè",
-      rate_at: "2021-09-20",
-      images: "",
-      star: 5,
-    },
-    {
-      key: "2",
-      review_id: 2,
-      user_id: {
-        image:
-          "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
-        email: "huynguyen123@gmail.com",
-      },
-      content: "Đẹp quá nè ahihi",
-      rate_at: "2021-09-20",
-      images: "",
-      star: 4,
-    },
-  ];
+  const data: any = dataRates?.data?.map((item: any, index: number) => ({
+    key: index + 1,
+    ...item,
+  }));
+  // [
+  //   {
+  //     key: "1",
+  //     review_id: 1,
+  //     user_id: {
+  //       image:
+  //         "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
+  //       email: "huynguyen@gmail.com",
+  //     },
+  //     content: "Đẹp quá nè",
+  //     rate_at: "2021-09-20",
+  //     images: "",
+  //     star: 5,
+  //   },
+  //   {
+  //     key: "2",
+  //     review_id: 2,
+  //     user_id: {
+  //       image:
+  //         "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
+  //       email: "huynguyen123@gmail.com",
+  //     },
+  //     content: "Đẹp quá nè ahihi",
+  //     rate_at: "2021-09-20",
+  //     images: "",
+  //     star: 4,
+  //   },
+  // ];
 
   const remove = (id: number) => {
     try {
