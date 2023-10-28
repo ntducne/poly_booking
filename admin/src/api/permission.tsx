@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { cookies } from "../config/cookies";
 
-const ratesApi = createApi({
-  reducerPath: "rates",
-  tagTypes: ["rates"],
+const permissonApi = createApi({
+  reducerPath: "permission",
+  tagTypes: ["permission"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.polydevhotel.site/admin/",
+    baseUrl: "https://api.polydevhotel.site/api/",
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",
@@ -15,14 +15,14 @@ const ratesApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getRates: builder.query<any, any>({
-      query: () => `rates`,
-      providesTags: ["rates"],
+    getPermisson: builder.query<any, any>({
+      query: () => `permission`,
+      providesTags: ["permission"],
     }),
   }),
 });
 
 export const {
-  useGetRatesQuery,
-} = ratesApi;
-export default ratesApi;
+  useGetPermissonQuery
+} = permissonApi;
+export default permissonApi;
