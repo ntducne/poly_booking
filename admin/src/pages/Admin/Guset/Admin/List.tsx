@@ -13,7 +13,7 @@ import Page from "../../../../component/page";
 import { useGetAllStaffsQuery } from "../../../../api/account/staffs";
 
 const ListAdmin = () => {
-  const { data: staffs } = useGetAllStaffsQuery([]);
+  const { data: staffs , isLoading } = useGetAllStaffsQuery([]);
 
   const [valuePermission, setPermission] = useState([]);
   useEffect(() => {
@@ -75,7 +75,6 @@ const ListAdmin = () => {
       dataIndex: "userAvatar",
       render: (_, record) => (
         <div className="flex items-center">
-          {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
           <Image className="rounded-3xl " width={80} src={record?.image} />
           <div className="ml-3 text-gray-500">
             <p>{record?.email}</p>
@@ -94,11 +93,11 @@ const ListAdmin = () => {
       filters: [
         {
           text: "Hoạt động",
-          value: 1,
+          value: 0,
         },
         {
           text: "Không hoạt động",
-          value: 0,
+          value: 1,
         },
       ],
       render: (text) => (
@@ -141,15 +140,7 @@ const ListAdmin = () => {
           >
             Xoá
           </button>
-          <Modal
-            title="Danh sách quyền"
-            open={isModalOpen}
-            onCancel={handleCancel}
-            footer={[]}
-            style={{ minWidth: "60%" }}
-          >
-            <Collapse ghost items={items} />
-          </Modal>
+          
         </>
       ),
     },
@@ -203,31 +194,27 @@ const ListAdmin = () => {
 
   return (
     <Page title={`Tài khoản quản trị`}>
+        <Modal
+          title="Danh sách quyền"
+          open={isModalOpen}
+          onCancel={handleCancel}
+          footer={[]}
+          style={{ minWidth: "60%" }}
+        >
+          <Collapse ghost items={items} />
+        </Modal>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <div className="mb-3">
           <FormSearch />
         </div>
         <div className="flex flex-col md:flex-row">
-          {/* <Button
-            className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl mb-2"
-            type="default"
-            icon={<AiOutlinePlus />}
-          >
-            <Link to={`/room/add`}>Thêm phòng</Link>
-          </Button>
-          <Button
-            className="bg-red-400	text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
-            type="default"
-            icon={<MdOutlineDeleteOutline />}
-          >
-            <Link to={`/room/add`}>Thùng rác</Link>
-          </Button> */}
         </div>
       </div>
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
+        loading={isLoading}
         dataSource={data}
         onChange={onChange}
       />

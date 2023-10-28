@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { cookies } from '../config/cookies';
+// import { cookies } from '../config/cookies';
 
 const roomApi = createApi({
     reducerPath: "room",
-    tagTypes: ['room'],
+    tagTypes: ['Rooms'],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.polydevhotel.site",
         prepareHeaders: (headers) => {
@@ -14,7 +15,7 @@ const roomApi = createApi({
     endpoints: (builder) => ({
         getRooms: builder.query<any, any>({
             query: () => `/admin/rooms`,
-            providesTags: ['room']
+            providesTags: ['Rooms']
         }),
         createRoom: builder.mutation<any, any>({
             query: (data) => ({
@@ -22,14 +23,14 @@ const roomApi = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags: ['room']
+            invalidatesTags: ['Rooms']
         }),
         getDetailRoom: builder.query<any, any>({
             query: (id) => ({
                 url: `/admin/rooms/${id}`,
                 method: "GET"
             }),
-            providesTags: ['room']
+            providesTags: ['Rooms']
         }),
         updateRoom: builder.mutation<any, any>({
             query: (data) => {
@@ -39,11 +40,20 @@ const roomApi = createApi({
                     body: data.data
                 }
             },
-            invalidatesTags: ['room']
+            invalidatesTags: ['Rooms']
+        }),
+        deleteRoom: builder.mutation<any, any>({
+            query: (id: string) => {
+                return {
+                    url: `/admin/rooms/${id}`,
+                    method: "DELETE"
+                }
+            },
+            invalidatesTags: ['Rooms']
         }),
     })
 })
 
-export const { useGetRoomsQuery, useCreateRoomMutation, useGetDetailRoomQuery, useUpdateRoomMutation } = roomApi
+export const { useGetRoomsQuery, useCreateRoomMutation, useGetDetailRoomQuery, useUpdateRoomMutation, useDeleteRoomMutation } = roomApi
 export const roomReducer = roomApi.reducer
 export default roomApi

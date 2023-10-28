@@ -9,6 +9,7 @@ use App\Http\Resources\RoomTypeResource;
 use App\Models\RoomType;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class RoomTypeController extends Controller
@@ -20,12 +21,21 @@ class RoomTypeController extends Controller
         $this->roomType = new RoomType();
     }
 
-    public function index(): JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function index(Request $request): JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         try {
-            $roomTypes = $this->roomType
-                ->orderBy('id', 'desc')
-                ->paginate(10);
+            $roomTypes = $this->roomType->orderBy('id', 'desc');
+            if($request->page){
+                if($request->page == 'all') {
+                    $roomTypes = $roomTypes->get();
+                }
+                else {
+                    $roomTypes = $roomTypes->paginate(10);
+                }
+            }
+            else {
+                $roomTypes = $roomTypes->paginate(10);
+            }
             return RoomTypeResource::collection($roomTypes);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());

@@ -19,8 +19,9 @@ interface IForgotPassword {
 interface IResetPassword {
     token: string;
     data: {
-        newPassword: string;
-        confimPassword: string
+        old_password: string;
+        new_password: string;
+        new_password_confirmation: string
     }
 }
 

@@ -1,14 +1,36 @@
-import { BarsOutlined, LockOutlined } from '@ant-design/icons';
+import { BarsOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Dropdown, MenuProps, Space } from 'antd';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Logo from '../../assets/Logo/2587107.png';
+import { useCookies } from 'react-cookie';
+import { Link, useNavigate } from 'react-router-dom';
 
 type Props = {}
 
-
-
 export default function Header({ }: Props) {
+  const navigate = useNavigate()
+  const [cookies, removeCookie] = useCookies(['userInfo']);
   const [header, setHeader] = useState(false)
+  const handleLogout = () => {
+    removeCookie('userInfo', { path: '/' })
+    navigate("/auth/login")
+  }
+  const items: MenuProps['items'] = [
+    {
+      label: <Link to="">1st menu item</Link>,
+      key: '0',
+    },
+    {
+      label: <Link to="">2nd menu item</Link>,
+      key: '1',
+    },
+    {
+      type: 'divider',
+    },
+    {
+      label: <p onClick={() => handleLogout()} >Đăng xuất</p>,
+      key: '3',
+    },
+  ];
   useEffect(() => {
     window.addEventListener("scroll", () => {
       window.scrollY > 50 ? setHeader(true) : setHeader(false)
@@ -52,13 +74,26 @@ export default function Header({ }: Props) {
         <div className={`${header ? "text-dark py-6" : "text-white  py-4"} flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] 
           items-center
           `}>
-          <Link to='auth/login' className='relative transition text-[16px] flex items-center gap-x-2 group'>
-            <LockOutlined className='text-[15px] mb-1' />
-            <span>
-              Đăng nhập
-            </span>
-            <span className="absolute left-0 w-0 bg-white h-0 bottom-[1%] transition-all duration-750 group-hover:w-full group-hover:h-[1px] "></span>
-          </Link>
+          {cookies && cookies?.userInfo?.accessToken ?
+            <div>
+
+              <Dropdown menu={{ items }} trigger={['click']}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    <UserOutlined className='text-[20px] cursor-pointer' />
+                  </Space>
+                </a>
+              </Dropdown>
+            </div>
+            :
+            <Link to='auth/login' className='relative transition text-[16px] flex items-center gap-x-2 group'>
+              <LockOutlined className='text-[15px] mb-1' />
+              <span>
+                Đăng nhập
+              </span>
+              <span className="absolute left-0 w-0 bg-white h-0 bottom-[1%] transition-all duration-750 group-hover:w-full group-hover:h-[1px] "></span>
+            </Link>
+          }
           <Link to='' className='relative transition text-[16px] flex items-center gap-x-2 group lg:hidden'>
             <BarsOutlined className='text-[22px]' />
           </Link>

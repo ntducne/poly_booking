@@ -9,7 +9,16 @@ import {
   DatePicker,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  useGetDetailPromotionsQuery,
+  useUpdatePromotionsMutation,
+} from "../../../api/promotions";
+import { useEffect } from "react";
+import { useGetAllBranchesQuery } from "../../../api/branches";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
+
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -20,9 +29,55 @@ const formItemLayout = {
 };
 
 const EditOffers = () => {
+  const [form] = Form.useForm();
+  const { id } = useParams();
+  const { data, isLoading } = useGetDetailPromotionsQuery(id || "");
+  const [updatePromotions] = useUpdatePromotionsMutation();
+  const navigate = useNavigate();
+  console.log("data", data);
+
+  const { data: dataBranches, isLoading: loadingBranch } =
+    useGetAllBranchesQuery({});
+  useEffect(() => {
+    form.setFieldsValue({
+      code: data?.data?.code,
+      conditions: data?.data?.conditions,
+      start_date: dayjs(data?.data?.start_date),
+      end_date: dayjs(data?.data?.end_date),
+      branch_id: data?.data?.branch_id,
+    });
+  }, [data?.data]);
+
+  if (isLoading || loadingBranch) {
+    return <div>Loading...</div>;
+  }
+  if (data?.data === null) {
+    return <div>Không tồn tại ưu đãi này</div>;
+  }
   const onFinish = (values: any) => {
-    console.log(values.image);
-    // Xử lý dữ liệu khi nhấn nút Submit
+    const data = {
+      id: id,
+      data: values,
+    };
+    updatePromotions(data)
+      .unwrap()
+      .then((item) => {
+        if (item.status == "success") {
+          toast("Update thành công", {
+            autoClose: 3000,
+            theme: "light",
+          });
+          setTimeout(() => {
+            navigate("/offers");
+          }, 3000);
+        } else {
+          console.log(item);
+          toast(item?.error?.name || "Lỗi rồi bạn", {
+            autoClose: 3000,
+            theme: "light",
+          });
+        }
+      });
   };
 
   return (
@@ -33,6 +88,7 @@ const EditOffers = () => {
         </div>
 
         <Form
+          form={form}
           name="validate_other"
           {...formItemLayout}
           onFinish={onFinish}
@@ -61,11 +117,31 @@ const EditOffers = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item label="Ngày bắt đầu" name="start_date">
-            <DatePicker />
+          <Form.Item
+            label="Ngày bắt đầu"
+            name="start_date"
+            rules={[
+              {
+                type: "object" as const,
+                required: true,
+                message: "Please select time!",
+              },
+            ]}
+          >
+            <DatePicker value={data?.data?.start_date} />
           </Form.Item>
 
-          <Form.Item label="Ngày kết thúc" name="end_date">
+          <Form.Item
+            label="Ngày kết thúc"
+            name="end_date"
+            rules={[
+              {
+                type: "object" as const,
+                required: true,
+                message: "Please select time!",
+              },
+            ]}
+          >
             <DatePicker />
           </Form.Item>
 
@@ -76,14 +152,17 @@ const EditOffers = () => {
               {
                 required: true,
                 message: "Vui lòng chọn chi nhánh!",
-                type: "array",
               },
             ]}
           >
-            <Select mode="multiple" placeholder="Vui lòng chọn chi nhánh !">
-              <Option value="red">Hà Đông</Option>
-              <Option value="green">Cầu Giấy</Option>
-              <Option value="blue">Trịnh Văn Bô</Option>
+            <Select placeholder="Vui lòng chọn chi nhánh !">
+              {dataBranches?.data?.data?.map((item: any) => {
+                return (
+                  <Option key={item?._id} value={item?._id}>
+                    {item?.name}
+                  </Option>
+                );
+              })}
             </Select>
           </Form.Item>
 
@@ -95,7 +174,7 @@ const EditOffers = () => {
                 htmlType="submit"
               >
                 <AiOutlineCheck className="text-[#fff] " />
-                <Text className=" text-[#fff] ml-1">Thêm</Text>
+                <Text className=" text-[#fff] ml-1">Cập nhật</Text>
               </Button>
               <Link className="text-white" to={`/offers`}>
                 <Button

@@ -14,6 +14,10 @@ import Rooms from "./pages/Rooms"
 import Contact from "./pages/contact"
 import Demo from "./pages/demo"
 import ConfirmCheckout from "./pages/Confirmchechout"
+import PaymentLayout from "./layouts/Payment"
+import AccommodationBook from "./pages/Payment/accommodation"
+import AccommodationReview from "./pages/Payment/accommodation/review"
+import PaymentView from "./pages/Payment/process"
 
 
 function App() {
@@ -21,11 +25,11 @@ function App() {
   return (
     <>
       <Routes>
-      
+
         <Route path='/' element={<LayoutClient />}>
           <Route index element={<Home />} />
           <Route path='rooms' element={<Rooms />} />
-          <Route path="detail/:id" element={<Detail />} />
+          <Route path="rooms/:id" element={<Detail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
           <Route path="about" element={<AboutPage />} />
@@ -42,9 +46,15 @@ function App() {
           <Route path="reset/:token" element={<ResetPassword />} />
           {/* <Route path="resetpassword" element={<ResetPassword />} /> */}
         </Route>
-
+        <Route path='/accommodation/book' element={<PaymentLayout />}>
+          <Route index element={<AccommodationBook />} />
+          <Route path="review" element={<AccommodationReview />} />
+        </Route>
+        <Route path='/payment' element={<PaymentLayout />}>
+          <Route index element={<PaymentView />} />
+          <Route path="status" element={<Register />} />
+        </Route>
         <Route path="demo" element={<Demo />} />
-
       </Routes>
     </>
   )

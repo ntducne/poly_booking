@@ -23,14 +23,14 @@ export default function Home({ }: Props) {
       const element2 = elementRef2.current;
       if (element) {
         const rect = element.getBoundingClientRect();
-        const isOnScreen = rect.top < window.innerHeight - 300 && rect.bottom >= 300;
+        const isOnScreen = rect.top < window.innerHeight - 250 && rect.bottom >= 470;
 
 
         setBg(isOnScreen);
       }
       if (element2) {
         const rect = element2.getBoundingClientRect();
-        const isOnScreen = rect.top < window.innerHeight - 300 && rect.bottom >= 900;
+        const isOnScreen = rect.top < window.innerHeight - 100 && rect.bottom >= 1200;
         setBg2(isOnScreen);
       }
 

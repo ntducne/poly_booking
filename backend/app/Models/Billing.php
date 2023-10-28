@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
 class Billing extends Eloquent
 {
     use HasFactory;
-
+    protected $table = "billings";
     protected $fillable = [
         'booking_id',
         'services',
@@ -18,11 +19,15 @@ class Billing extends Eloquent
         'branch_id',
         'status'
     ];
-
-    public function getBooking(){
+    protected $attributes = [
+        'status' => null
+    ];
+    public function getBooking()
+    {
         return Booking::where('id', $this->booking_id)->first();
     }
-    public function getService(){
-        return  Services::where('id', $this->service_id)->first();
+    public function getService()
+    {
+        return Services::where('id', $this->service_id)->first();
     }
 }

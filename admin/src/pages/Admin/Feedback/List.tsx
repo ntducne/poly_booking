@@ -10,11 +10,15 @@ import { Link } from "react-router-dom";
 // }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal , { } from "sweetalert";
+import swal from "sweetalert";
 import Page from "../../../component/page";
+import { useGetRatesQuery } from "../../../api/rate";
 
 const ListFeedback = () => {
- 
+  const { data: dataRates, isLoading } = useGetRatesQuery({});
+  console.log("data" , dataRates);
+  
+
   const columns: ColumnsType<any> = [
     {
       title: "ID",
@@ -29,11 +33,7 @@ const ListFeedback = () => {
       render: (user_id) => (
         <div className="flex items-center">
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-          <Image
-            className="rounded-3xl "
-            width={150}
-            src={user_id?.image}
-          />
+          <Image className="rounded-3xl " width={150} src={user_id?.image} />
           <div className="ml-3 text-gray-500">
             <p>{user_id?.email}</p>
           </div>
@@ -44,9 +44,7 @@ const ListFeedback = () => {
       title: "Số sao",
       dataIndex: "star",
       key: "star",
-      render: (star) => (
-        <Rate allowHalf defaultValue={star} />
-      )
+      render: (star) => <Rate allowHalf defaultValue={star} />,
     },
     {
       title: "Ngày đánh giá",
@@ -71,35 +69,36 @@ const ListFeedback = () => {
     },
   ];
 
-  const data : any= [
+  const data: any = [
     {
       key: "1",
       review_id: 1,
       user_id: {
-        image: "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
-        email: "huynguyen@gmail.com"
+        image:
+          "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
+        email: "huynguyen@gmail.com",
       },
       content: "Đẹp quá nè",
       rate_at: "2021-09-20",
       images: "",
-      star: 5
+      star: 5,
     },
     {
       key: "2",
       review_id: 2,
       user_id: {
-        image: "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
-        email: "huynguyen123@gmail.com"
+        image:
+          "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
+        email: "huynguyen123@gmail.com",
       },
       content: "Đẹp quá nè ahihi",
       rate_at: "2021-09-20",
       images: "",
-      star: 4
+      star: 4,
     },
   ];
 
-
-  const remove = (id : number) => {
+  const remove = (id: number) => {
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -142,8 +141,9 @@ const ListFeedback = () => {
         </div>
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
+        loading={isLoading}
         columns={columns}
         dataSource={data}
       />

@@ -3,8 +3,8 @@ import { Button, Form, Input, message } from 'antd';
 import Page from '../../components/Page';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../api/Auth';
-import { useAppDispatch } from '../../app/hooks';
-import { getUser } from '../../slices/User';
+// import { useAppDispatch } from '../../app/hooks';
+// import { getUser } from '../../slices/User';
 import { useCookies } from 'react-cookie';
 import { useState } from 'react';
 
@@ -13,7 +13,7 @@ type Props = {}
 export default function Login({ }: Props) {
     const navigate = useNavigate()
     const [Login] = useLoginMutation()
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
     const [form] = Form.useForm();
     const [is_loading, setIsLoading] = useState(false)
 
@@ -38,7 +38,6 @@ export default function Login({ }: Props) {
                         // Lưu thông tin người dùng vào cookie
                         setCookie('userInfo', valuesUser, { path: '/' });
                         console.log('loginSuccess');
-                        dispatch(getUser(valuesUser))
                         message.success("Đăng nhập thành công");
                         setTimeout(() => {
                             navigate('/')
