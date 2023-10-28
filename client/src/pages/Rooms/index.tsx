@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Pagination, Select } from "antd";
+import { Button, DatePicker, Form, Pagination, Select, message } from "antd";
 import dayjs from 'dayjs';
 import { useEffect, useState } from "react";
 import { Navigation } from "swiper/modules";
@@ -16,11 +16,13 @@ import {
 import Page from "../../components/Page";
 import Room from "../../components/Room";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const { RangePicker } = DatePicker;
 export default function Rooms({ }: Props) {
     const [width, setWidth] = useState(0);
+    const navigate = useNavigate()
     const [dataQuery, setDataQuery] = useState({})
     const { data, isLoading, refetch } = useGetRoomsQuery(dataQuery);
     const { data: dataBranches, isLoading: isLoadingBranches } = useGetBranchesQuery({})
@@ -40,17 +42,21 @@ export default function Rooms({ }: Props) {
                 checkin: formattedData?.[0],
                 checkout: formattedData?.[1],
             })
-            console.log('');
-
         }
 
     };
     const handleBookingNow = (item: any) => {
-        const dataSetCookie = {
-            ...item,
-            ...dataQuery
+        if (Object.keys(dataQuery).length) {
+            const dataSetCookie = {
+                ...dataQuery,
+                ...item
+            }
+            console.log(dataSetCookie);
+            setCookie('bookingNow', dataSetCookie, { path: '/' });
+            navigate("/accommodation/book")
+        } else {
+            navigate("/rooms/" + item?.id)
         }
-        setCookie('bookingNow', dataSetCookie, { path: '/' });
     }
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
@@ -60,7 +66,10 @@ export default function Rooms({ }: Props) {
     }, [window.innerWidth]);
     useEffect(() => {
         refetch()
-    })
+        if (data?.message === 'Tìm thành công !') {
+            message.success("Tìm phòng thành công !!")
+        }
+    }, [isLoading, data])
     if (isLoading) {
         return <>loading...</>;
     }
