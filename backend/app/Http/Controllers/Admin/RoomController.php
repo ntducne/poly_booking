@@ -120,14 +120,16 @@ class RoomController extends Controller
             if($request->name != $object->name){
                 $object->slug = convertToSlug($request->name);
             }
-            $roomImages = $this->room_image->where('rooom_id', $object->id)->get();
-            foreach ($roomImages as $item){
-                $image = $request->file($item->id);
-                if($image){
-                    $this->DeleteImage($item->image);
-                    $uploadedFileUrl = $this->UploadImage($image, 'rooms/'.$object->id.'/');
-                    $item->update([
-                        'image' => $uploadedFileUrl,
+
+//            dd($roomImages);
+            $images = $request->file('images');
+            if($images){
+                $uploadFileUrl = $this->UploadMultiImage($images, 'rooms/'.$object->id.'/');
+                foreach($uploadFileUrl as $key => $image){
+                    $this->room_image->create([
+                        'room_id' => $object->id,
+                        'image' => $image,
+                        'serial' => $key+1,
                     ]);
                 }
             }
@@ -171,4 +173,22 @@ class RoomController extends Controller
             ], 500);
         }
     }
+    public function deleteImageRoom(Request $request) {
+        $image = $this->room_image->where('image', $request->filePath)->where('room_id', $request->room_id)->first();
+        if($image){
+            $image->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xoá ảnh thành công !',
+                'data' => $image
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Ảnh không tồn tại !',
+                'data' => null
+            ], 404);
+        }
+    }
+
 }

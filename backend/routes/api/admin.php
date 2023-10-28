@@ -21,6 +21,8 @@ Route::resource('room/types', RoomTypeController::class)->except(['create','edit
 
 Route::resource('rooms', RoomController::class)->except(['create','edit']);
 
+Route::post('room/deleteImage', [RoomController::class, 'deleteImageRoom']);
+
 Route::resource('utilities', UtilitiesController::class)->except(['create','edit']);
 
 Route::resource('users', UserController::class)->except(['create','edit']);
