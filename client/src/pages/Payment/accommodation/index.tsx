@@ -4,6 +4,7 @@ import { Checkbox, Form, Input } from 'antd';
 import { Col, Row } from 'antd';
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
+import { useCookies } from 'react-cookie';
 const onFinish = (values: any) => {
     console.log('Success:', values);
 };
@@ -34,6 +35,9 @@ const itemsColapper: CollapseProps['items'] = [
     },
 ];
 export default function AccommodationBook() {
+    const [cookies] = useCookies(['bookingNow']);
+    console.log(cookies);
+
     const [isModalLogin, setIsModalLogin] = useState(false);
     // const [isModalRegister, setIsModalRegister] = useState(false);
 

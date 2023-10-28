@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import FormatPrice from '../../utils/FormatPrice'
 
-export default function Room(data: any, handleBooking: (data: any) => void) {
-    const { name, description, area, adults, children, num_of_bed, branch, id } = data?.data
+export default function Room(props: any) {
+    const { name, description, area, adults, children, num_of_bed, branch, id } = props?.data
     return (
         <div className='bg-bgr overflow-hidden max-w-[864px]'>
             <Link to={`/rooms/${id}`}>
@@ -29,17 +29,15 @@ export default function Room(data: any, handleBooking: (data: any) => void) {
                 <h3><span className='font-bold text-[18px] text-gray-500'>Giá một đêm:</span> <span className='text-[20px] text-gray-500 font-bold'><FormatPrice price={1231312312} /></span></h3>
             </div>
             <div className='border my-[32px]'></div>
-            <Link to='/accommodation/book'>
-                <button
-                    type="button"
-                    className="inline-block rounded bg-primary px-6 py-3 
+            <button
+                type="button"
+                className="inline-block rounded bg-primary px-6 py-3 
                     text-xs uppercase leading-normal text-white
                     transition duration-150 ease-in-out hover:bg-primary-600 font-bold"
-                    onClick={() => handleBooking(data?.data)}
-                >
-                    Đặt phòng ngay
-                </button>
-            </Link>
+                onClick={() => props.handleBooking(props.data)}
+            >
+                Đặt phòng ngay
+            </button>
         </div>
     )
 }
