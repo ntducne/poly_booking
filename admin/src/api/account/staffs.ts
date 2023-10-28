@@ -19,16 +19,16 @@ export const staffsApi = createApi({
       }),
       providesTags: ["Staffs"],
     }),
-    // getDetailStaffs: builder.query({
-    //   query: (id) => ({
-    //     url: `/staffs/${id}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["Staffs"],
-    // }),
+    getDetailStaffs: builder.query({
+      query: (id) => ({
+        url: `/staffs/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Staffs"],
+    }),
   }),
 
 });
 
 
-export const { useGetAllStaffsQuery } = staffsApi;
+export const { useGetAllStaffsQuery  , useGetDetailStaffsQuery} = staffsApi;

@@ -35,6 +35,9 @@ const itemsColapper: CollapseProps['items'] = [
     },
 ];
 export default function AccommodationBook() {
+    const [cookies] = useCookies(['bookingNow']);
+    console.log(cookies);
+
     const [isModalLogin, setIsModalLogin] = useState(false);
     // const [isModalRegister, setIsModalRegister] = useState(false);
     const [cookie, setCookie, removeCookie] = useCookies(['paymentPage']);

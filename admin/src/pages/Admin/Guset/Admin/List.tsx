@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Checkbox, Collapse, Image, Modal, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { Link } from "react-router-dom";
@@ -10,50 +10,55 @@ interface DataType {
 }
 import FormSearch from "../../../../component/formSearch";
 import Page from "../../../../component/page";
-import { useGetAllStaffsQuery } from "../../../../api/account/staffs";
+import {
+  useGetAllStaffsQuery,
+  useGetDetailStaffsQuery,
+} from "../../../../api/account/staffs";
+import { useGetPermissonQuery } from "../../../../api/permission";
+import { CheckboxValueType } from "antd/es/checkbox/Group";
 
 const ListAdmin = () => {
-  const { data: staffs , isLoading } = useGetAllStaffsQuery([]);
+  const { data: staffs, isLoading } = useGetAllStaffsQuery({});
 
-  const [valuePermission, setPermission] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://api.polydevhotel.site/api/permission"
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setPermission(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, []);
+  const { data: valuePermission } = useGetPermissonQuery([]);
+
+  const [isStaff, setIsStaff] = useState({});
+  const { data: staff, isLoading: loadingStaff } = useGetDetailStaffsQuery(
+    isStaff || ""
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal = () => {
+  const showModal = (id: any) => {
+    setIsStaff(id);
     setIsModalOpen(true);
   };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const items = valuePermission.map((item: any, index) => ({
+
+  const items = valuePermission?.map((item: any, index: number) => ({
     key: `${index}`,
-    label: item.label,
+    label: item?.label,
     children: (
       <>
+<<<<<<< HEAD
         {item.permissions.map((permission: any, index: number) => {
           console.log(permission);
           
+=======
+        {item?.permissions?.map((permission: any, index: any) => {
+>>>>>>> 69f104d3dd2e86fd185f7cdb77acfec7af27760e
           const key = Object.keys(permission)[0];
           const value = permission[key];
+          const permissionUser = staff?.data?.staff_permission?.map(
+            (item: any) => {}
+          );
+          if (loadingStaff) {
+            return <>...Loading</>;
+          }
           return <Checkbox key={index}>{value}</Checkbox>;
+          // return <CheckboxGroup key={index} options={valuePermission} />
         })}
       </>
     ),
@@ -122,11 +127,11 @@ const ListAdmin = () => {
     {
       title: "Hành động",
       key: "action",
-      render: (_,record) => (
+      render: (_, record) => (
         <>
           <button
             type="button"
-            onClick={showModal}
+            onClick={() => showModal(record?.id)}
             className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
             Quyền
@@ -144,7 +149,6 @@ const ListAdmin = () => {
           >
             Xoá
           </button>
-          
         </>
       ),
     },
@@ -185,8 +189,7 @@ const ListAdmin = () => {
         <div className="mb-3">
           <FormSearch />
         </div>
-        <div className="flex flex-col md:flex-row">
-        </div>
+        <div className="flex flex-col md:flex-row"></div>
       </div>
       <Table
         scroll={{ x: true }}
