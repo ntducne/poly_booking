@@ -123,7 +123,7 @@ class AdminController extends Controller
             return response()->json([
                 'status'   => 'success',
                 'message' => 'Cập nhập nhân viên thành công !',
-                'data'    => $admin
+                'data'    => new StaffResource($admin)
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
