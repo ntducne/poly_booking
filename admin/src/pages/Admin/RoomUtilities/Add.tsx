@@ -9,6 +9,10 @@ import {
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { useCreateUtilitieMutation } from "../../../api/utilities";
+import { useGetRoomsQuery } from "../../../api/room";
+import { toast } from "react-toastify";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -19,9 +23,34 @@ const formItemLayout = {
 };
 
 const AddRoomUtilities = () => {
+  const navigate = useNavigate()
+  // const { data, isLoading } = useGetRoomTypeQuery({})
+  const { data: dataRooms, isLoading } = useGetRoomsQuery({})
+  const [createUtilitie, { isLoading: isLoadingCreate }] = useCreateUtilitieMutation()
+  console.log(dataRooms);
+
+  if (isLoading && isLoadingCreate) {
+    return <div>Loading...</div>
+  }
+
   const onFinish = (values: any) => {
     console.log(values.image);
     // Xử lý dữ liệu khi nhấn nút Submit
+    createUtilitie(values)
+      .unwrap()
+      .then((result: any) => {
+        if (result.status === "success") {
+          toast.success("Thêm mới chính sách thành công");
+          navigate("/room/utilities");
+        } else {
+          toast.error(result.error.message);
+        }
+      })
+      .catch((error: any) => {
+        // Xử lý lỗi nếu có
+        toast.error("Có lỗi xảy ra khi thêm mới loại phòng");
+        console.log(error);
+      });
   };
 
 
@@ -48,7 +77,7 @@ const AddRoomUtilities = () => {
         >
           <Form.Item
             label="Tên tiện ích phòng"
-            name="room_type_name"
+            name="name"
             rules={[
               { required: true, message: "Vui lòng nhập tên tiện ích phòng!" },
             ]}
@@ -58,30 +87,26 @@ const AddRoomUtilities = () => {
 
           <Form.Item
             name="room_id"
-            label="Phòng"
+            label="Tên phòng"
             hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập trạng thái loại phòng!",
-              },
-            ]}
+            rules={[{ required: true, message: "Vui lòng nhập tên phòng!" }]}
           >
-            <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value="1">Phòng 1</Option>
-              <Option value="2">Phòng 2</Option>
+            <Select>
+              {dataRooms?.data?.map((item: any) => {
+                return <Option key={item.id} value={item.id}>{item.name}</Option>
+              })}
             </Select>
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-            <Button  className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
-                <AiOutlineCheck className="text-[#fff] "/>
+              <Button className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
+                <AiOutlineCheck className="text-[#fff] " />
                 <Text className=" text-[#fff] ml-1">Thêm</Text>
               </Button>
               <Button className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" htmlType="reset">
-                 <BiReset className="text-[#fff]"/> 
-                 <Text className="text-[#fff] ml-1">Làm mới</Text>
+                <BiReset className="text-[#fff]" />
+                <Text className="text-[#fff] ml-1">Làm mới</Text>
               </Button>
             </Space>
           </Form.Item>

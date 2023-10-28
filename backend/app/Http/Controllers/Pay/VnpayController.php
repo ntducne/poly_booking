@@ -31,8 +31,10 @@ class VnpayController extends Controller
         $this->vnp_Bill_State   = '';
         $this->vnp_IpAddr     = $_SERVER['REMOTE_ADDR'];
     }
-    public function process($order_code,$amount)
+    public function process(Request $request)
     {
+        $order_code = $request->order_code;
+        $amount = $request->amount;
         $inputData = array(
             "vnp_Version"       => "2.1.0",
             "vnp_TmnCode"       => $this->vnp_TmnCode,

@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { cookies } from '../config/cookies';
 
-const roomTypesApi = createApi({
-    reducerPath: "roomType",
-    tagTypes: ['RoomType'],
+const utilitiesApi = createApi({
+    reducerPath: "utilities",
+    tagTypes: ['Utilities'],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.polydevhotel.site",
         prepareHeaders: (headers) => {
@@ -12,49 +12,49 @@ const roomTypesApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-        getRoomType: builder.query<any, any>({
+        getUtilitie: builder.query<any, any>({
             // query: (query) => `admin/rooms/types?page=${query.page || 1}`,
-            query: () => `/admin/rooms/types`,
-            providesTags: ['RoomType']
+            query: () => `/admin/utilities`,
+            providesTags: ['Utilities']
         }),
-        createRoomType: builder.mutation<any, any>({
+        createUtilitie: builder.mutation<any, any>({
             query: (data) => ({
-                url: `/admin/rooms/types`,
+                url: `/admin/utilities`,
                 method: "POST",
                 body: data
             }),
-            invalidatesTags: ['RoomType']
+            invalidatesTags: ['Utilities']
         }),
-        getDetailRoomType: builder.query<any, any>({
+        getDetailUtilitie: builder.query<any, any>({
             query: (id) => ({
-                url: `/admin/rooms/types/${id}`,
+                url: `/admin/utilities/${id}`,
                 method: "GET"
             }),
-            providesTags: ['RoomType']
+            providesTags: ['Utilities']
         }),
-        updateRoomType: builder.mutation<any, any>({
+        updateUtilitie: builder.mutation<any, any>({
             query: (data) => {
                 return {
-                    url: `/admin/rooms/types/${data.id}`,
+                    url: `/admin/utilities/${data.id}`,
                     method: "PUT",
                     body: data
                 }
             },
-            invalidatesTags: ['RoomType']
+            invalidatesTags: ['Utilities']
         }),
 
-        deleteRoomType: builder.mutation<any, any>({
+        deleteUtilitie: builder.mutation<any, any>({
             query: (id: string) => {
                 return {
-                    url: `/admin/rooms/types/${id}`,
+                    url: `/admin/utilities/${id}`,
                     method: "DELETE",
                 }
             },
-            invalidatesTags: ['RoomType']
+            invalidatesTags: ['Utilities']
         }),
     })
 })
 
-export const { useGetRoomTypeQuery, useCreateRoomTypeMutation, useGetDetailRoomTypeQuery, useUpdateRoomTypeMutation, useDeleteRoomTypeMutation } = roomTypesApi
-export const roomReducer = roomTypesApi.reducer
-export default roomTypesApi
+export const { useGetUtilitieQuery, useCreateUtilitieMutation, useGetDetailUtilitieQuery, useUpdateUtilitieMutation, useDeleteUtilitieMutation } = utilitiesApi
+export const roomReducer = utilitiesApi.reducer
+export default utilitiesApi

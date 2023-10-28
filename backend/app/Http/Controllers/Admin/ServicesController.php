@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ServiceResource;
 use App\Models\Services;
 use App\Http\Requests\Services\StoreRequest;
 use App\Http\Requests\Services\UpdateRequest;
@@ -21,11 +22,11 @@ class ServicesController extends Controller
     {
         try {
             $services = $this->services->paginate(5);
-            $response = [
-                'message' => 'get Mongo',
-                'data' => $services
-            ];
-            return response()->json($response);
+            // $response = [
+            //     'message' => 'get Mongo',
+            //     'data' => $services
+            // ];
+            return ServiceResource::collection($services);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
             return response()->json([
@@ -67,7 +68,7 @@ class ServicesController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chi tiết danh mục !',
-                'data' => $services
+                'data' => new ServiceResource($services)
             ]);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());

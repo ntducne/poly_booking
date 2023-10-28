@@ -39,7 +39,7 @@ const Detail = () => {
         
         removeCookie('roomBooking', { path: '/' })
         setCookie('roomBooking', data.room,{ path: '/' })
-        navigate('/checkout')
+        navigate('/demo')
     }
 
 
