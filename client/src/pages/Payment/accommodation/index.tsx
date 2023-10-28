@@ -1,9 +1,10 @@
 import { Button, Card, Modal } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Checkbox, Form, Input } from 'antd';
 import { Col, Row } from 'antd';
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
+import { useCookies } from 'react-cookie';
 const onFinish = (values: any) => {
     console.log('Success:', values);
 };
@@ -36,7 +37,10 @@ const itemsColapper: CollapseProps['items'] = [
 export default function AccommodationBook() {
     const [isModalLogin, setIsModalLogin] = useState(false);
     // const [isModalRegister, setIsModalRegister] = useState(false);
-
+    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage']);
+    useEffect(() => {
+        setCookie('paymentPage', 0, { path: '/' })
+    })
     const showModal = () => {
         setIsModalLogin(true);
     };

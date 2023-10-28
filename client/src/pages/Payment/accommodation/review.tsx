@@ -1,6 +1,8 @@
 import { Card } from 'antd';
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
+import { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 const itemsColapper: CollapseProps['items'] = [
     {
         key: '1',
@@ -57,6 +59,10 @@ const itemsPolicy: CollapseProps['items'] = [
     },
 ];
 export default function AccommodationReview() {
+    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage']);
+    useEffect(() => {
+        setCookie('paymentPage', 1, { path: '/' })
+    })
     return (
         <>
             <div className="container mx-auto" style={{
