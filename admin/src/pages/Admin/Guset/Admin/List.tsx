@@ -42,13 +42,7 @@ const ListAdmin = () => {
     label: item?.label,
     children: (
       <>
-<<<<<<< HEAD
-        {item.permissions.map((permission: any, index: number) => {
-          console.log(permission);
-          
-=======
         {item?.permissions?.map((permission: any, index: any) => {
->>>>>>> 69f104d3dd2e86fd185f7cdb77acfec7af27760e
           const key = Object.keys(permission)[0];
           const value = permission[key];
           const permissionUser = staff?.data?.staff_permission?.map(
