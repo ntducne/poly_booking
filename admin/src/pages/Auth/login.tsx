@@ -33,6 +33,8 @@ export default function LoginAdmin() {
             }
         } catch (error) {
             console.log(error);
+            setIsLoading(false)
+
         }
     };
     const onFinishFailed = (errorInfo: any) => {
