@@ -68,6 +68,6 @@ Route::prefix('/permission')->group(function(){
 
 Route::prefix('vnpay')->group(function(){
     Route::get('process/{order_code}/{amount}', [VnpayController::class, 'process'])->name('vnpay.process');
-    Route::post('callback', [VnpayController::class, 'callback'])->name('vnpay.callback');
+    Route::get('callback', [VnpayController::class, 'callback'])->name('vnpay.callback');
 
 });

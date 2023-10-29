@@ -17,7 +17,10 @@ export default function PaymentStatus() {
         setCookie('paymentPage', 4, { path: '/' })
 
         if(location.search) {
-            fetch(`https://api.polydevhotel.site/api/vnpay/callback/${location.search}`)
+            fetch(`https://api.polydevhotel.site/api/vnpay/callback${location.search}`,{
+                method: 'GET',
+            
+            })
             .then(response => {
                 if (response.ok) {
                     return response.json();
