@@ -36,8 +36,9 @@ const PaymentLayout = ({ } :Props) => {
         if (cookie.paymentPage) {
             setCurrent(cookie.paymentPage)
         }
-    
     })
+
+    
 
     const next = () => {
         setCurrent(current + 1);

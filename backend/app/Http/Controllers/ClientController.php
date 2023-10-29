@@ -233,7 +233,7 @@ class ClientController extends Controller
                 'services' => [],
                 'total' => $create->price_per_night * $amount_day,
                 // total = so ngay su dung phong * gia 1 dem 
-                'payment_method' => 0,
+                'payment_method' => $request->payment_method,
                 //thanh toan tai quay
                 'payment_date' => null,
                 'branch_id' => $branch_id,

@@ -8,7 +8,7 @@ export default function PaymentStatus() {
     const [, setCookie] = useCookies(['paymentPage']);
     useEffect(() => {
         setCookie('paymentPage', 4, { path: '/' })
-    })
+    },[])
 
     return (
         <div className="container mx-auto mt-14" style={{

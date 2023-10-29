@@ -1,4 +1,4 @@
-import { Button, Card, Modal } from 'antd';
+import { Button, Card, Modal, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { Checkbox, Form, Input } from 'antd';
 import { Col, Row } from 'antd';
@@ -19,78 +19,135 @@ type FieldType = {
     remember?: string;
 };
 
-const itemsColapper: CollapseProps['items'] = [
-    {
-        key: '1',
-        label:
-            <div className='flex justify-between items-center'>
-                <p className='text-xl font-bold'>Thành tiền</p>
-                <p className='text-xl font-bold'>1.000.000 VNĐ</p>
-            </div>
-        , children:
-            <div className='flex justify-between items-center'>
-                <p className='text-sm'>(5x) Superior Double Room</p>
-                <p className='text-sm'>200.000 VNĐ</p>
-            </div>
-    },
-];
+
 export default function AccommodationBook() {
     const [isModalLogin, setIsModalLogin] = useState(false);
     // const [isModalRegister, setIsModalRegister] = useState(false);
-    const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch','userInfo']);
-    const [userEmail, setUserEmail] = useState('')
+    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook']);
+    const [userName, setUserName] = useState('')
     const [userPhone, setUserPhone] = useState('')
+    const [userEmail, setUserEmail] = useState('')
+    const [userBook, setUserBook] = useState({})
+
+    const itemsColapper: CollapseProps['items'] = [
+        {
+            key: '1',
+            label:
+                <div className='flex justify-between items-center'>
+                    <p className='text-xl font-bold'>Thành tiền</p>
+                    <p className='text-xl font-bold'>{cookie.bookingNow.price} VNĐ</p>
+                </div>
+            , children:
+                <div className='flex justify-between items-center'>
+                    <p className='text-sm'>({cookie.roomSearch.soLuong}x) {cookie.bookingNow.room_name}</p>
+                    <p className='text-sm'>{cookie.bookingNow.price} VNĐ</p>
+                </div>
+        },
+    ];
+
+    const handleNameChange = (e :any) => {
+        setUserName(e.target.value);
+        cookie.userBook = { ...cookie.userBook, name: e.target.value }
+        setUserBook(cookie.userBook)
+    }
+
+    const handlePhoneChange = (e :any) => {
+        setUserPhone(e.target.value);
+        cookie.userBook = { ...cookie.userBook, phone: e.target.value }
+        setUserBook(cookie.userBook)
+    }
+
+    const handleEmailChange = (e :any) => {
+        setUserEmail(e.target.value);
+        cookie.userBook = { ...cookie.userBook, email: e.target.value }
+        setUserBook(cookie.userBook)
+    }
+
 
     useEffect(() => {
         setCookie('paymentPage', 0, { path: '/' })
-        console.log(cookie.roomSearch);
-        console.log(cookie.bookingNow);
-        console.log(cookie.userInfo);
-        
+        // console.log(cookie.roomSearch);
+        if(cookie.userInfo){
+            fetch('https://api.polydevhotel.site/user/profile',{
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${cookie.userInfo.accessToken.token}`,
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(res => res.json())
+            .then(data => {
+                setUserName(data.message.name)
+                setUserEmail(data.message.email)
+                setUserPhone(data.message.phone)
+                setUserBook({name: data.message.name, email: data.message.email, phone: data.message.phone})
+                setCookie('userBook', {name: data.message.name, email: data.message.email, phone: data.message.phone}, { path: '/' })
+            })
+        }
+        else {
+            setUserName('')
+            setUserEmail('')
+            setUserPhone('')
+            setUserBook({})
+            removeCookie('userBook', { path: '/' })
+        }
     },[])
+
     const showModal = () => {
         setIsModalLogin(true);
     };
+
     const handleOk = () => {
         setIsModalLogin(false);
     };
+
     const handleCancel = () => {
         setIsModalLogin(false);
     };
+
+    
+
+
     return (
         <>
-            <Modal title="Đăng nhập" open={isModalLogin} onOk={handleOk} onCancel={handleCancel} footer={[
-                <Button className='max-w-[200px]'>
-                    Đăng nhập
-                </Button>
-            ]}>
-                <Form
-                    name="basic"
-                    labelCol={{ span: 5 }}
-                    wrapperCol={{ span: 16 }}
-                    // style={{ maxWidth: 600 }}
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    autoComplete="off"
-                >
-                    <Form.Item<FieldType>
-                        label="Username"
-                        name="username"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
+            {!cookie.userInfo && (
 
-                    <Form.Item<FieldType>
-                        label="Password"
-                        name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
+
+                <Modal title="Đăng nhập" open={isModalLogin} onOk={handleOk} onCancel={handleCancel} footer={[
+                    <Button className='max-w-[200px]'>
+                        Đăng nhập
+                    </Button>
+                ]}>
+                    <Form
+                        name="basic"
+                        labelCol={{ span: 5 }}
+                        wrapperCol={{ span: 16 }}
+                        // style={{ maxWidth: 600 }}
+                        initialValues={{ remember: true }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="off"
                     >
-                        <Input.Password />
-                    </Form.Item>
-                </Form>
-            </Modal>
+                        <Form.Item<FieldType>
+                            label="Username"
+                            name="username"
+                            rules={[{ required: true, message: 'Please input your username!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item<FieldType>
+                            label="Password"
+                            name="password"
+                            rules={[{ required: true, message: 'Please input your password!' }]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+                    </Form>
+                </Modal>
+            )}
+
+
             <div className="container mx-auto" style={{
                 maxWidth: 1000,
             }}>
@@ -105,6 +162,7 @@ export default function AccommodationBook() {
 
                 }}>
                     <div>
+                    {!cookie.userInfo && (
                         <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row">
                             <img className="object-cover w-full rounded-t-lg h-60 md:h-auto md:w-20 md:rounded-none md:rounded-l-lg ml-5" src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/3/334a43706b543daaa27995a60d895f2a.png" alt="" />
                             <div className="flex flex-col justify-between p-4 leading-normal">
@@ -115,25 +173,26 @@ export default function AccommodationBook() {
                                 </Button>
                             </div>
                         </div>
+                    )}
 
-                        <div className='mt-6 '>
+                        <div className={`${!cookie.userInfo && 'mt-6'}`}>
                             <h1 className="text-xl font-bold mb-3">Chi tiết liên hệ (cho Vé điện tử/Phiếu xác nhận)</h1>
                             <div className='bg-white rounded-md border border-gray-200 shadow-sm'>
                                 <div className='p-5'>
                                     <div className="mb-3">
                                         <label htmlFor="text" className="font-bold block mb-2 text-sm text-gray-900">Họ và tên</label>
-                                        <input type="text" value={cookie.userInfo.name} id="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
+                                        <input type="text" value={userName}  onChange={handleNameChange} id="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
                                         <div className='mt-1 text-gray-400'>*Nhập tên như trên CMND/hộ chiếu (không dấu)</div>
                                     </div>
                                     <div className="grid gap-6 mb-6 md:grid-cols-2">
                                         <div>
                                             <label htmlFor="phone" className="font-bold block mb-2 text-sm text-gray-900">Số điện thoại</label>
-                                            <input type="phone" id="phone" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
+                                            <input type="phone" value={userPhone} onChange={handlePhoneChange}  id="phone" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
                                             <div className='mt-1 text-gray-400'>VD: +84 901234567 trong đó (+84) là mã quốc gia còn 901234567 là số di động</div>
                                         </div>
                                         <div>
                                             <label htmlFor="email" className="font-bold block mb-2 text-sm text-gray-900">Email</label>
-                                            <input type="email" id="email" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
+                                            <input type="email" value={userEmail} onChange={handleEmailChange}  id="email" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
                                             <div className='mt-1 text-gray-400'>VD: email@example.com</div>
                                         </div>
                                     </div>
@@ -297,8 +356,7 @@ export default function AccommodationBook() {
                             </div>
                         }
                         >
-                            <div className="grid" style={{
-                                // grid-template-columns: 3fr 1fr; grid-gap: 1rem;
+                            {/* <div className="grid" style={{
                                 display: 'grid',
                                 gridTemplateColumns: '2fr 3fr',
                             }}>
@@ -307,20 +365,24 @@ export default function AccommodationBook() {
                             </div>
 
                             <div className="grid" style={{
-                                // grid-template-columns: 3fr 1fr; grid-gap: 1rem;
                                 display: 'grid',
                                 gridTemplateColumns: '2fr 3fr',
                             }}>
                                 <p>Kiểu giường</p>
                                 <p className='font-bold'>2 giường đôi</p>
-                            </div>
+                            </div> */}
                         </Card>
                     </div>
+                    <div className='flex items-center justify-end'>
+
+                {/* <button className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center"  onClick={() => process()}>
+                                Đặt phòng
+                            </button> */}
+                            </div>
                 </div>
 
 
-
-
+                            
             </div>
         </>
     )

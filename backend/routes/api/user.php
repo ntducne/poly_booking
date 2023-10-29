@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Pay\VnpayController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,4 @@ Route::prefix('booking')->group(function () {
 
 // rate
 Route::post('rate', [UserController::class, 'rate']);
+Route::post('process-vnpay', [VnpayController::class, 'process'])->name('vnpay.process');
