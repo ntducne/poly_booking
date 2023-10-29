@@ -25,50 +25,50 @@ export default function Rooms({ }: Props) {
     const navigate = useNavigate()
     const [dataQuery, setDataQuery] = useState({})
     const { data, isLoading, refetch } = useGetRoomsQuery(dataQuery);
-    const { data: dataBranches, isLoading: isLoadingBranches } = useGetBranchesQuery({})
+    const { data: dataBranches } = useGetBranchesQuery({})
     const [, setCookie] = useCookies(['bookingNow', 'roomSearch']);
-    const onFinish = (values: any) => {
-        if (values) {
-            const formattedData = values?.time.map((item: any) => {
-                const date = dayjs(item.$d);
-                const formattedDate = date.format('YYYY-MM-DD');
-                return formattedDate;
-            });
-            setDataQuery({
-                adult: values.adult,
-                child: values.child,
-                branch_id: values.branch_id,
-                soLuong: values.soLuong,
-                checkin: formattedData?.[0],
-                checkout: formattedData?.[1],
-            })
-            setCookie('roomSearch', {
-                adults: values.adult,
-                children: values.child,
-                branch_id: values.branch_id,
-                soLuong: values.soLuong,
-                checkin: formattedData?.[0],
-                checkout: formattedData?.[1],
-            }, { path: '/' });
+    const onFinish = (values :any) => {
+        if (!values) {
+            return;
+        }
+
+        const { time, adult, child, branch_id, soLuong } = values;
+        const formattedDates = time?.map((item :any) => dayjs(item.$d).format('YYYY-MM-DD'));
+
+        const dataQuery = {
+            adult,
+            child,
+            branch_id,
+            soLuong,
+            checkin: formattedDates?.[0],
+            checkout: formattedDates?.[1],
+        };
+
+        setDataQuery(dataQuery);
+        setCookie('roomSearch', dataQuery, { path: '/' });
+    };
+
+    const handleBookingNow = (item :any) => {
+        if (Object.keys(dataQuery).length) {
+            const { id, name, images, type, discount, branch, bed_size } = item;
+            const price = (type.price_per_night - discount);
+
+            const bookingData = {
+                room_id: id,
+                room_name: name,
+                image: images[0]?.image,
+                price,
+                branch: branch?.name,
+                bed_size,
+            };
+
+            setCookie('bookingNow', bookingData, { path: '/' });
+            navigate("/accommodation/book");
+        } else {
+            navigate("/rooms/" + item?.id);
         }
     };
-    const handleBookingNow = (item: any) => {
-        if (Object.keys(dataQuery).length) {
-            console.log(item);
-            
-            setCookie('bookingNow', {
-                room_id: item?.id,
-                room_name: item?.name,
-                image: item?.images[0]?.image,
-                branch: item?.branch?.name,
-                bed_size: item?.bed_size,
-            } , { path: '/' });
-            navigate("/accommodation/book")
-        } 
-        else {
-            navigate("/rooms/" + item?.id)
-        }
-    }
+
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
@@ -141,7 +141,7 @@ export default function Rooms({ }: Props) {
                                         >
                                             <RangePicker
                                                 size={window.innerWidth < 768 ? "large" : "middle"}
-                                                className="w-full" placeholder={["Thời gian bắt đầu", "Thời gian kết thúc"]}
+                                                className="w-full" placeholder={["Nhận phòng", "Trả phòng"]}
                                             />
                                         </Form.Item>
                                         <Form.Item

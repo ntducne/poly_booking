@@ -3,10 +3,16 @@ import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
 export default function PaymentView() {
-    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage']);
+    const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook', 'paymentMethod']);
+
     useEffect(() => {
         setCookie('paymentPage', 2, { path: '/' })
-    })
+    },[])
+
+    const selectPaymentMethod = (e :any) => { 
+        setCookie('paymentMethod', e.target.value, { path: '/' })
+    }
+
     return (
         <div className="container mx-auto" style={{
             maxWidth: 1000,
@@ -21,9 +27,6 @@ export default function PaymentView() {
 
             }}>
                 <div>
-
-                    
-
                     <Card title={
                         <div className='pb-2'>
                             <p className='font-semibold text-xl mt-2'>Kiểm tra thông tin đặt phòng </p>
@@ -31,28 +34,16 @@ export default function PaymentView() {
                     }>
                         <div className="rounded-lg bg-white">
                             <div className="flex flex-col rounded-lg bg-white sm:flex-row">
-                                <img className="h-24 w-28 rounded-md border object-cover object-center" src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="" />
+                                <img className="h-24 w-28 rounded-md border object-cover object-center" src={cookie.bookingNow.image} alt="" />
                                 <div className="flex w-full flex-col px-4 py-4">
-                                    <span className="font-semibold">Nike Air Max Pro 8888 - Super Light</span>
-                                    <span className="float-right text-gray-400">42EU - 8.5US</span>
-                                    <p className="text-lg font-bold">$138.99</p>
-                                </div>
-                            </div>
-                            <div className="flex flex-col rounded-lg bg-white sm:flex-row">
-                                <img className="h-24 w-28 rounded-md border object-cover object-center" src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="" />
-                                <div className="flex w-full flex-col px-4 py-4">
-                                <span className="font-semibold">Nike Air Max Pro 8888 - Super Light</span>
-                                <span className="float-right text-gray-400">42EU - 8.5US</span>
-                                <p className="mt-auto text-lg font-bold">$238.99</p>
+                                    <span className="font-semibold">{cookie.bookingNow.room_name}</span>
+                                    <span className="float-right text-gray-400">({cookie.roomSearch.soLuong}x)</span>
+                                    <p className="text-lg font-bold">{cookie.bookingNow.price} VNĐ</p>
                                 </div>
                             </div>
                         </div>
                     </Card>
-
-                    
                 </div>
-
-
                 <div >
                     <Card title={
                         <div className='pb-2'>
@@ -61,7 +52,7 @@ export default function PaymentView() {
                     }>
                         <ul className="w-full">
                             <li className='mb-2'>
-                                <input type="radio" id="method_one" name="payment_method" value="method_one" className="hidden peer" required/>
+                                <input type="radio" id="method_one" onClick={selectPaymentMethod} name="payment_method" value="vnpay" className="hidden peer" required/>
                                 <label htmlFor="method_one" className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer  peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">                           
                                     <div className="flex items-center space-x-4">
                                         <div style={{
@@ -75,7 +66,7 @@ export default function PaymentView() {
                                 </label>
                             </li>
                             <li className='mb-2'>
-                                <input type="radio" id="method_two" name="payment_method" value="method_two" className="hidden peer"/>
+                                <input type="radio" id="method_two" onClick={selectPaymentMethod} name="payment_method" value="momo" className="hidden peer"/>
                                 <label htmlFor="method_two" className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer  peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">
                                     <div className="flex items-center space-x-4">
                                         <div style={{
@@ -89,7 +80,7 @@ export default function PaymentView() {
                                 </label>
                             </li>
                             <li className='mb-2'>
-                                <input type="radio" id="method_three" name="payment_method" value="method_three" className="hidden peer"/>
+                                <input type="radio" id="method_three" onClick={selectPaymentMethod} name="payment_method" value="paypal" className="hidden peer"/>
                                 <label htmlFor="method_three" className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer  peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100">
                                     <div className="flex items-center space-x-4">
                                         <div style={{

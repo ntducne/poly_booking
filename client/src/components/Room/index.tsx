@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import FormatPrice from '../../utils/FormatPrice'
 
 export default function Room(props: any) {
-    const { name, description, area, adults, children, num_of_bed, branch, id } = props?.data
+    const { name, area, adults, children, id } = props?.data
     return (
         <div className='bg-bgr overflow-hidden max-w-[864px]'>
             <Link to={`/rooms/${id}`}>

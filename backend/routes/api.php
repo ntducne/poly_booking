@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Pay\VnpayController;
 use Illuminate\Support\Facades\Route;
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
 Route::get('error-message', function (){ return response()->json('Denied',403); });
@@ -63,4 +64,10 @@ Route::prefix('/permission')->group(function(){
     Route::get('/reload', function (){
         create_permision();
     });
+});
+
+Route::prefix('vnpay')->group(function(){
+    Route::get('process/{order_code}/{amount}', [VnpayController::class, 'process'])->name('vnpay.process');
+    Route::get('callback', [VnpayController::class, 'callback'])->name('vnpay.callback');
+
 });

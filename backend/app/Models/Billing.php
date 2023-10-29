@@ -17,7 +17,8 @@ class Billing extends Eloquent
         'payment_method',
         'payment_date',
         'branch_id',
-        'status'
+        'status',
+        'billingCode'
     ];
     protected $attributes = [
         'status' => null

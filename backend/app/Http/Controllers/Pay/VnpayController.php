@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pay;
 
 use App\Http\Controllers\Controller;
+use App\Models\Billing;
 use Illuminate\Http\Request;
 
 class VnpayController extends Controller
@@ -31,10 +32,8 @@ class VnpayController extends Controller
         $this->vnp_Bill_State   = '';
         $this->vnp_IpAddr     = $_SERVER['REMOTE_ADDR'];
     }
-    public function process(Request $request)
+    public function process($order_code, $amount)
     {
-        $order_code = $request->order_code;
-        $amount = $request->amount;
         $inputData = array(
             "vnp_Version"       => "2.1.0",
             "vnp_TmnCode"       => $this->vnp_TmnCode,
@@ -73,12 +72,20 @@ class VnpayController extends Controller
         $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         return redirect($vnp_Url);
     }
-    public function status(Request $request)
+    public function callback(Request $request)
     {
+        $data = [
+            'vnp_Amount'            => $request->vnp_Amount,
+            'vnp_BankCode'          => $request->vnp_BankCode,
+            'vnp_CardType'          => $request->vnp_CardType,
+            'vnp_OrderInfo'         => $request->vnp_OrderInfo,
+            'vnp_PayDate'           => $request->vnp_PayDate,
+            'vnp_TransactionStatus' => $request->vnp_TransactionStatus,
+        ];
         $vnp_SecureHash = $request->vnp_SecureHash;
         $inputData = array();
         foreach ($_GET as $key => $value) {
-            if (str_starts_with($key, "vnp_")) {
+            if (substr($key, 0, 4) == "vnp_") {
                 $inputData[$key] = $value;
             }
         }
@@ -97,22 +104,16 @@ class VnpayController extends Controller
         $secureHash = hash_hmac('sha512', $hashData, $this->vnp_HashSecret);
         if ($secureHash == $vnp_SecureHash) {
             if ($_GET['vnp_ResponseCode'] == '00') {
-//                $object = $this->order->where('order_code', (integer)$request->vnp_TxnRef)->first();
-//                $object['status_payment'] = 1;
-//                $object->save();
+                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status' => 1]);
             }
             else {
-//                $object = $this->order->where('order_code', (integer)$request->vnp_TxnRef)->first();
-//                $object['status_payment'] = 2;
-//                $object['tracking'] = 5;
-//                $object->save();
+                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status' => 2]);
             }
         } else {
-//            $object = $this->order->where('order_code', (integer)$request->vnp_TxnRef)->first();
-//            $object['status_payment'] = 3;
-//            $object['tracking'] = 5;
-//            $object->save();
+            Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status' => 3]);
         }
-        return redirect()->route('client.order.status',(integer)$request->vnp_TxnRef);
+        return response()->json([
+            'status' => Billing::where('billingCode', (integer)$request->vnp_TxnRef)->first()->status
+        ]);
     }
 }

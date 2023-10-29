@@ -1,4 +1,4 @@
-import { message, Steps } from 'antd';
+import { Steps } from 'antd';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
@@ -36,8 +36,9 @@ const PaymentLayout = ({ } :Props) => {
         if (cookie.paymentPage) {
             setCurrent(cookie.paymentPage)
         }
-    
     })
+
+    
 
     const next = () => {
         setCurrent(current + 1);
