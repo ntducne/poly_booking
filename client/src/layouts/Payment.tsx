@@ -43,6 +43,7 @@ const PaymentLayout = ({ } :Props) => {
         setCurrent(current + 1);
         current == 0 && navigate('/accommodation/book/review')
         current == 1 && navigate('/payment')
+        current == 2 && navigate('/payment/process')
         removeCookie('paymentPage', { path: '/' })
         setCookie('paymentPage', current + 1, { path: '/' })      
     };
@@ -55,6 +56,7 @@ const PaymentLayout = ({ } :Props) => {
         current == 2 && navigate('/accommodation/book/review')
         current == 3 && navigate('/payment')
     };
+
     const items = steps.map((item) => ({ key: item.title, title: item.title }));
     return (
         <div className='bg-white'>
@@ -78,24 +80,25 @@ const PaymentLayout = ({ } :Props) => {
                     
                 }}>
                     <div className=' flex items-center justify-end'>
-                        {current > 0 && (
-                            <button className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" style={{ margin: '0 8px' }} onClick={() => prev()}>
+                        {(current > 0 && current < 3)&& (
+                            <button className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center"  onClick={() => prev()}>
                                 Quay lại
                             </button>
                         )}
-                        {current < steps.length - 1 && (
-                            <button className='class="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-10 py-2.5 text-center mr-2"' onClick={() => next()}>
+                        {(current < steps.length - 1 && current < 3) && (
+                            // (current == 0 || current == 1) && (o
+                            <button className=' ml-2 text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-10 py-2.5 text-center"' onClick={() => next()}>
                                 {current == 0 && 'Tiếp tục'}
                                 {current == 1 && 'Xác nhận'}
-                                {current == 2 && 'Thanh toán'}
+                                {current == 2 && 'Tiến hành thanh toán'}
                             </button>
+                            // )
                         )}
-                        {current === steps.length - 1 && (
-                            <button onClick={() => message.success('Processing complete!')}>
-                                Done
+                        {/* {current === steps.length - 1 && (
+                            <button className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => message.success('Processing complete!')}>
+                                Về trang chủ
                             </button>
-                        )}
-
+                        )} */}
                     </div>
                     <div></div>
                 </div>

@@ -17,7 +17,10 @@ import ConfirmCheckout from "./pages/Confirmchechout"
 import PaymentLayout from "./layouts/Payment"
 import AccommodationBook from "./pages/Payment/accommodation"
 import AccommodationReview from "./pages/Payment/accommodation/review"
-import PaymentView from "./pages/Payment/process"
+import PaymentView from "./pages/Payment"
+import PaymentProcess from "./pages/Payment/process"
+import PaymentStatus from "./pages/Payment/process/status"
+
 
 
 function App() {
@@ -52,7 +55,8 @@ function App() {
         </Route>
         <Route path='/payment' element={<PaymentLayout />}>
           <Route index element={<PaymentView />} />
-          <Route path="status" element={<Register />} />
+          <Route path="process" element={<PaymentProcess />} />
+          <Route path="status" element={<PaymentStatus />} />
         </Route>
         <Route path="demo" element={<Demo />} />
       </Routes>

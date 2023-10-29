@@ -26,7 +26,7 @@ export default function Rooms({ }: Props) {
     const [dataQuery, setDataQuery] = useState({})
     const { data, isLoading, refetch } = useGetRoomsQuery(dataQuery);
     const { data: dataBranches, isLoading: isLoadingBranches } = useGetBranchesQuery({})
-    const [, setCookie] = useCookies(['bookingNow']);
+    const [, setCookie] = useCookies(['bookingNow', 'roomSearch']);
     const onFinish = (values: any) => {
         if (values) {
             const formattedData = values?.time.map((item: any) => {
@@ -42,19 +42,30 @@ export default function Rooms({ }: Props) {
                 checkin: formattedData?.[0],
                 checkout: formattedData?.[1],
             })
+            setCookie('roomSearch', {
+                adults: values.adult,
+                children: values.child,
+                branch_id: values.branch_id,
+                soLuong: values.soLuong,
+                checkin: formattedData?.[0],
+                checkout: formattedData?.[1],
+            }, { path: '/' });
         }
-
     };
     const handleBookingNow = (item: any) => {
         if (Object.keys(dataQuery).length) {
-            const dataSetCookie = {
-                ...dataQuery,
-                ...item
-            }
-            console.log(dataSetCookie);
-            setCookie('bookingNow', dataSetCookie, { path: '/' });
+            console.log(item);
+            
+            setCookie('bookingNow', {
+                room_id: item?.id,
+                room_name: item?.name,
+                image: item?.images[0]?.image,
+                branch: item?.branch?.name,
+                bed_size: item?.bed_size,
+            } , { path: '/' });
             navigate("/accommodation/book")
-        } else {
+        } 
+        else {
             navigate("/rooms/" + item?.id)
         }
     }

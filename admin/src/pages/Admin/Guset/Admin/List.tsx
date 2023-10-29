@@ -57,6 +57,8 @@ const ListAdmin = () => {
       </>
     ),
   }));
+  console.log(items);
+  
   const columns: ColumnsType<any> = [
     {
       title: "STT",
@@ -166,32 +168,6 @@ const ListAdmin = () => {
     {
       // console.log("params", pagination, filters, sorter, extra);
     };
-
-  // const remove = (id: any) => {
-  //   try {
-  //     swal({
-  //       title: "Are you sure you want to delete?",
-  //       text: "You cannot undo after deleting!",
-  //       icon: "warning",
-  //       buttons: ["Cancel", "Delete"],
-  //       dangerMode: true,
-  //     })
-  //       .then((willDelete) => {
-  //         if (willDelete) {
-  //           // removeComment(id);
-  //           swal("You have successfully deleted", {
-  //             icon: "success",
-  //           });
-  //         }
-  //       })
-  //       .catch(() => {
-  //         swal("Error", {
-  //           icon: "error",
-  //         });
-  //       });
-  //   } catch (error) {}
-  // };
-
   return (
     <Page title={`Tài khoản quản trị`}>
         <Modal

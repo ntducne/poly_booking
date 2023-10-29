@@ -1,5 +1,5 @@
 import { Button, Card, Modal } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Checkbox, Form, Input } from 'antd';
 import { Col, Row } from 'antd';
 import type { CollapseProps } from 'antd';
@@ -35,12 +35,19 @@ const itemsColapper: CollapseProps['items'] = [
     },
 ];
 export default function AccommodationBook() {
-    const [cookies] = useCookies(['bookingNow']);
-    console.log(cookies);
-
     const [isModalLogin, setIsModalLogin] = useState(false);
     // const [isModalRegister, setIsModalRegister] = useState(false);
+    const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch','userInfo']);
+    const [userEmail, setUserEmail] = useState('')
+    const [userPhone, setUserPhone] = useState('')
 
+    useEffect(() => {
+        setCookie('paymentPage', 0, { path: '/' })
+        console.log(cookie.roomSearch);
+        console.log(cookie.bookingNow);
+        console.log(cookie.userInfo);
+        
+    },[])
     const showModal = () => {
         setIsModalLogin(true);
     };
@@ -115,7 +122,7 @@ export default function AccommodationBook() {
                                 <div className='p-5'>
                                     <div className="mb-3">
                                         <label htmlFor="text" className="font-bold block mb-2 text-sm text-gray-900">Họ và tên</label>
-                                        <input type="text" id="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
+                                        <input type="text" value={cookie.userInfo.name} id="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5" />
                                         <div className='mt-1 text-gray-400'>*Nhập tên như trên CMND/hộ chiếu (không dấu)</div>
                                     </div>
                                     <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -262,8 +269,8 @@ export default function AccommodationBook() {
                             <div className='flex'>
                                 <img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/6aa2fd01a9460e1a71bb0efb713f0212.svg" alt="" />
                                 <div className="flex flex-col justify-between p-4 leading-normal">
-                                    <h5 className=" text-md font-bold tracking-tight text-gray-900">Polydev Quang Ninh</h5>
-                                    <p className="font-normal text-gray-700 flex">Polydev Quang Ninh</p>
+                                    <h5 className=" text-md font-bold tracking-tight text-gray-900">{cookie.bookingNow.branch}</h5>
+                                    <p className="font-normal text-gray-700 flex">{cookie.bookingNow.branch}</p>
                                 </div>
                             </div>
                         }
@@ -273,19 +280,19 @@ export default function AccommodationBook() {
                         >
                             <div className="grid" style={{ display: 'grid', gridTemplateColumns: '3fr 3fr' }}>
                                 <p>Ngày nhận phòng</p>
-                                <p className='font-bold'>10/10/2023 - Từ 12:00</p>
+                                <p className='font-bold'>{cookie.roomSearch.checkin} - Từ 12:00</p>
                             </div>
                             <div className="grid" style={{ display: 'grid', gridTemplateColumns: '3fr 3fr' }}>
                                 <p>Ngày trả phòng</p>
-                                <p className='font-bold'>15/10/2023 - Trước 14:00</p>
+                                <p className='font-bold'>{cookie.roomSearch.checkout} - Trước 14:00</p>
                             </div>
                         </Card>
                         <Card className='mt-2' title={
                             <div className='flex items-center'>
-                                <img className='w-14 h-14 rounded-md' src="https://ik.imagekit.io/tvlk/apr-asset/dgXfoyh24ryQLRcGq00cIdKHRmotrWLNlvG-TxlcLxGkiDwaUSggleJNPRgIHCX6/hotel/asset/20023314-5ed86dd02e4234d1bb6025804fef7200.jpeg?_src=imagekit&tr=h-80,q-40,w-80" alt="" />
+                                <img className='w-14 h-14 rounded-md' src={cookie.bookingNow.image} alt="" />
                                 <div className="flex flex-col justify-between p-4 leading-normal">
-                                    <h5 className=" text-md font-bold tracking-tight text-gray-900">Superior Double Room</h5>
-                                    <p className="font-normal text-gray-700 flex">(4x) Superior Double Room</p>
+                                    <h5 className=" text-md font-bold tracking-tight text-gray-900">{cookie.bookingNow.room_name}</h5>
+                                    <p className="font-normal text-gray-700 flex">({cookie.roomSearch.soLuong}x) {cookie.bookingNow.room_name}</p>
                                 </div>
                             </div>
                         }
