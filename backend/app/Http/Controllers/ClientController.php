@@ -229,6 +229,7 @@ class ClientController extends Controller
             $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
             $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
             $bill = [
+                'billingCode' => $request->billingCode,
                 'booking_id' => $create->_id,
                 'services' => [],
                 'total' => $create->price_per_night * $amount_day,

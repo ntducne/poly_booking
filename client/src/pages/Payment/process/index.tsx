@@ -6,10 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 export default function PaymentProcess() {
-    // const [cookie, setCookie, removeCookie] = useCookies(['paymentPage']);
-    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook']);
-
-    const Navigate = useNavigate();
+    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook', 'paymentMethod']);
     useEffect(() => {
         setCookie('paymentPage', 3, { path: '/' })
         const process = () => {
@@ -26,6 +23,7 @@ export default function PaymentProcess() {
                 'email': cookie.userBook.email,
                 'phone': cookie.userBook.phone,
                 'name': cookie.userBook.name,
+                'billingCode': Math.floor(Math.random() * 10),
             }),
             headers: {
                 'Authorization': `Bearer ${cookie.userInfo.accessToken.token}`,
@@ -40,23 +38,14 @@ export default function PaymentProcess() {
                 }
             })
             .then(data => {
-                console.log(data);
-
-                fetch('https://api.polydevhotel.site/user/process-vnpay', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        'order_code': data.booking_id,
-                        'amount': data.amount,
-                    }),
-                    headers: {
-                        'Authorization': `Bearer ${cookie.userInfo.accessToken.token}`,
-                        'Content-Type': 'application/json'
-                    },
-                })
-
-                message.success('Đặt phòng thành công');
-                // Navigate('/payment/status')
-                // Thực hiện điều hướng sau khi thành công (ví dụ: chuyển đến trang cảm ơn)
+                removeCookie('bookingNow', { path: '/' });
+                removeCookie('roomSearch', { path: '/' });
+                removeCookie('userBook', { path: '/' });
+                removeCookie('paymentPage', { path: '/' });
+                if(cookie.paymentMethod === 'vnpay'){
+                    removeCookie('paymentMethod', { path: '/' });
+                    window.location.href = `https://api.polydevhotel.site/api/process-vnpay/${data.bill.billingCode}/${data.bill.total}`;
+                }
             })
             .catch(error => {
                 console.error(error);

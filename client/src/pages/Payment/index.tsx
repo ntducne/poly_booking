@@ -13,7 +13,6 @@ export default function PaymentView() {
         setCookie('paymentMethod', e.target.value, { path: '/' })
     }
 
-
     return (
         <div className="container mx-auto" style={{
             maxWidth: 1000,
