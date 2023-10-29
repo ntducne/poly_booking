@@ -77,7 +77,7 @@ class LoginController extends Controller
 
     public function logout(Request $request): JsonResponse
     {
-        $user_id = $request->user()->id;
+        $user_id = $request->user()->_id;
         $request->user()->token()->revoke();
         $this->removeUser($user_id);
         return response()->json(['status' => true, 'msg' => 'Bạn đã đăng xuất !']);
