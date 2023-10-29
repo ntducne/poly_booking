@@ -12,11 +12,16 @@ const roomTypesApi = createApi({
         },
     }),
     endpoints: (builder) => ({
+        getAllRoomType: builder.query<any, any>({
+            query: () => `admin/rooms/types?page=all`,
+            providesTags: ['RoomType']
+        }),
         getRoomType: builder.query<any, any>({
             // query: (query) => `admin/rooms/types?page=${query.page || 1}`,
             query: () => `/admin/rooms/types`,
             providesTags: ['RoomType']
         }),
+
         createRoomType: builder.mutation<any, any>({
             query: (data) => ({
                 url: `/admin/rooms/types`,
@@ -55,6 +60,6 @@ const roomTypesApi = createApi({
     })
 })
 
-export const { useGetRoomTypeQuery, useCreateRoomTypeMutation, useGetDetailRoomTypeQuery, useUpdateRoomTypeMutation, useDeleteRoomTypeMutation } = roomTypesApi
+export const { useGetAllRoomTypeQuery, useGetRoomTypeQuery, useCreateRoomTypeMutation, useGetDetailRoomTypeQuery, useUpdateRoomTypeMutation, useDeleteRoomTypeMutation } = roomTypesApi
 export const roomReducer = roomTypesApi.reducer
 export default roomTypesApi

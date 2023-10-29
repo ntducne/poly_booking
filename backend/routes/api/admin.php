@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\RoomTypeController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UtilitiesController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function () {
@@ -65,3 +66,4 @@ Route::prefix('booking')->as('booking.')->group(function () {
     Route::post('/renew', [BookingController::class, 'renew'])->name('renew');
     Route::post('/end', [BookingController::class, 'end'])->name('end');
 });
+

@@ -45,6 +45,7 @@ class LoginController extends Controller
                 'user' => [
                     'image' => $user->image,
                     'name' => $user->name,
+                    'role' => $user->role,
                 ],
                 'accessToken' => [
                     'token' => $tokenResult->accessToken,
