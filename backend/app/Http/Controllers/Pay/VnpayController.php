@@ -74,14 +74,6 @@ class VnpayController extends Controller
     }
     public function callback(Request $request)
     {
-        $data = [
-            'vnp_Amount'            => $request->vnp_Amount,
-            'vnp_BankCode'          => $request->vnp_BankCode,
-            'vnp_CardType'          => $request->vnp_CardType,
-            'vnp_OrderInfo'         => $request->vnp_OrderInfo,
-            'vnp_PayDate'           => $request->vnp_PayDate,
-            'vnp_TransactionStatus' => $request->vnp_TransactionStatus,
-        ];
         $vnp_SecureHash = $request->vnp_SecureHash;
         $inputData = array();
         foreach ($_GET as $key => $value) {

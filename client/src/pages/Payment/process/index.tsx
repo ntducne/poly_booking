@@ -5,35 +5,27 @@ import { useCookies } from 'react-cookie';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 export default function PaymentProcess() {
-    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook', 'paymentMethod']);
+    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userBook', 'paymentMethod']);
     useEffect(() => {
         setCookie('paymentPage', 3, { path: '/' })
         const process = () => {
-
             const data  = {
                 "room_id": cookie.bookingNow.room_id,
-                    
                 'checkin': cookie.roomSearch.checkin,
                 'checkout': cookie.roomSearch.checkout,
                 "soLuong": cookie.roomSearch.soLuong,
                 "branch_id": cookie.roomSearch.branch_id,
                 "adults": cookie.roomSearch.adult,
                 "children": cookie.roomSearch.child,
-    
                 'email': cookie.userBook.email,
                 'phone': cookie.userBook.phone,
                 'name': cookie.userBook.name,
                 'billingCode': Math.floor(Math.random() * 1000000),
             }
-
-            console.log(data);
-            
-
             fetch('https://api.polydevhotel.site/client/room/booking', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
-                    'Authorization': `Bearer ${cookie.userInfo.accessToken.token}`,
                     'Content-Type': 'application/json'
                 },
             })
