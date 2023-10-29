@@ -9,26 +9,41 @@ export default function PaymentProcess() {
     const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook', 'paymentMethod']);
     useEffect(() => {
         setCookie('paymentPage', 3, { path: '/' })
+        // console.log(cookie.bookingNow);
+        // console.log(cookie.roomSearch);
+        // console.log(cookie.userBook);
+        // console.log(cookie.userInfo);
+        // console.log(cookie.paymentMethod);
+
+        
         const process = () => {
-            fetch('https://api.polydevhotel.site/client/room/booking', {
-            method: 'POST',
-            body: JSON.stringify({
+
+            const data  = {
+                "room_id": cookie.bookingNow.room_id,
+                    
                 'checkin': cookie.roomSearch.checkin,
                 'checkout': cookie.roomSearch.checkout,
-                "room_id": cookie.bookingNow.room_id,
                 "soLuong": cookie.roomSearch.soLuong,
                 "branch_id": cookie.roomSearch.branch_id,
-                "adults": cookie.roomSearch.adults,
-                "children": cookie.roomSearch.children,
+                "adults": cookie.roomSearch.adult,
+                "children": cookie.roomSearch.child,
+    
                 'email': cookie.userBook.email,
                 'phone': cookie.userBook.phone,
                 'name': cookie.userBook.name,
-                'billingCode': Math.floor(Math.random() * 10),
-            }),
-            headers: {
-                'Authorization': `Bearer ${cookie.userInfo.accessToken.token}`,
-                'Content-Type': 'application/json'
-            },
+                'billingCode': Math.floor(Math.random() * 1000000),
+            }
+
+            console.log(data);
+            
+
+            fetch('https://api.polydevhotel.site/client/room/booking', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Authorization': `Bearer ${cookie.userInfo.accessToken.token}`,
+                    'Content-Type': 'application/json'
+                },
             })
             .then(response => {
                 if (response.ok) {
@@ -44,7 +59,7 @@ export default function PaymentProcess() {
                 removeCookie('paymentPage', { path: '/' });
                 if(cookie.paymentMethod === 'vnpay'){
                     removeCookie('paymentMethod', { path: '/' });
-                    window.location.href = `https://api.polydevhotel.site/api/process-vnpay/${data.bill.billingCode}/${data.bill.total}`;
+                    window.location.href = `https://api.polydevhotel.site/api/vnpay/process/${data.bill.billingCode}/${data.bill.total}`;
                 }
             })
             .catch(error => {

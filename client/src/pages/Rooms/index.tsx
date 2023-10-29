@@ -48,10 +48,10 @@ export default function Rooms({ }: Props) {
         setCookie('roomSearch', dataQuery, { path: '/' });
     };
 
-    const handleBookingNow = (item) => {
+    const handleBookingNow = (item :any) => {
         if (Object.keys(dataQuery).length) {
             const { id, name, images, type, discount, branch, bed_size } = item;
-            const price = (type.price_per_night - discount) * Math.floor((cookie.roomSearch.checkout - cookie.roomSearch.checkin) / (1000 * 60 * 60 * 24));
+            const price = (type.price_per_night - discount);
 
             const bookingData = {
                 room_id: id,
