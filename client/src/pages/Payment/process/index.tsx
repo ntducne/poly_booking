@@ -2,20 +2,12 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spin, message } from 'antd';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 export default function PaymentProcess() {
     const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook', 'paymentMethod']);
     useEffect(() => {
         setCookie('paymentPage', 3, { path: '/' })
-        // console.log(cookie.bookingNow);
-        // console.log(cookie.roomSearch);
-        // console.log(cookie.userBook);
-        // console.log(cookie.userInfo);
-        // console.log(cookie.paymentMethod);
-
-        
         const process = () => {
 
             const data  = {

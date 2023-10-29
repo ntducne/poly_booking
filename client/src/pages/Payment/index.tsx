@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
 export default function PaymentView() {
-    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook', 'paymentMethod']);
+    const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook', 'paymentMethod']);
 
     useEffect(() => {
         setCookie('paymentPage', 2, { path: '/' })

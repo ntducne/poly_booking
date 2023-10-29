@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface IFormat {
     price: number;
     discount?: number

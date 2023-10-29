@@ -1,33 +1,29 @@
-import { Button, Card, Modal, message } from 'antd';
+import { Button, Card, Modal } from 'antd';
 import { useEffect, useState } from 'react';
 import { Checkbox, Form, Input } from 'antd';
 import { Col, Row } from 'antd';
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
 import { useCookies } from 'react-cookie';
+
 const onFinish = (values: any) => {
     console.log('Success:', values);
 };
 
-const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-};
-
 type FieldType = {
-    username?: string;
+    email?: string;
     password?: string;
     remember?: string;
 };
 
-
 export default function AccommodationBook() {
     const [isModalLogin, setIsModalLogin] = useState(false);
     // const [isModalRegister, setIsModalRegister] = useState(false);
-    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook']);
+    const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook']);
     const [userName, setUserName] = useState('')
     const [userPhone, setUserPhone] = useState('')
     const [userEmail, setUserEmail] = useState('')
-    const [userBook, setUserBook] = useState({})
+    const [,setUserBook] = useState({})
 
     const itemsColapper: CollapseProps['items'] = [
         {
@@ -47,26 +43,25 @@ export default function AccommodationBook() {
 
     const handleNameChange = (e :any) => {
         setUserName(e.target.value);
-        cookie.userBook = { ...cookie.userBook, name: e.target.value }
+        setCookie('userBook', { ...cookie.userBook, name: e.target.value }, { path: '/' })
         setUserBook(cookie.userBook)
     }
 
     const handlePhoneChange = (e :any) => {
         setUserPhone(e.target.value);
-        cookie.userBook = { ...cookie.userBook, phone: e.target.value }
+        setCookie('userBook', { ...cookie.userBook, phone: e.target.value }, { path: '/' })
         setUserBook(cookie.userBook)
     }
 
     const handleEmailChange = (e :any) => {
         setUserEmail(e.target.value);
-        cookie.userBook = { ...cookie.userBook, email: e.target.value }
+        setCookie('userBook', { ...cookie.userBook, email: e.target.value }, { path: '/' })
         setUserBook(cookie.userBook)
     }
 
 
     useEffect(() => {
         setCookie('paymentPage', 0, { path: '/' })
-        // console.log(cookie.roomSearch);
         if(cookie.userInfo){
             fetch('https://api.polydevhotel.site/user/profile',{
                 method: 'GET',
@@ -89,11 +84,11 @@ export default function AccommodationBook() {
             setUserEmail('')
             setUserPhone('')
             setUserBook({})
-            removeCookie('userBook', { path: '/' })
+            setCookie('userBook', {}, { path: '/' })
         }
     },[])
 
-    const showModal = () => {
+    const showModalLogin = () => {
         setIsModalLogin(true);
     };
 
@@ -105,62 +100,34 @@ export default function AccommodationBook() {
         setIsModalLogin(false);
     };
 
-    
-
-
     return (
         <>
             {!cookie.userInfo && (
-
-
-                <Modal title="Đăng nhập" open={isModalLogin} onOk={handleOk} onCancel={handleCancel} footer={[
-                    <Button className='max-w-[200px]'>
-                        Đăng nhập
-                    </Button>
-                ]}>
-                    <Form
-                        name="basic"
-                        labelCol={{ span: 5 }}
-                        wrapperCol={{ span: 16 }}
-                        // style={{ maxWidth: 600 }}
-                        initialValues={{ remember: true }}
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                        autoComplete="off"
-                    >
-                        <Form.Item<FieldType>
-                            label="Username"
-                            name="username"
-                            rules={[{ required: true, message: 'Please input your username!' }]}
+                <Modal title="Đăng nhập" open={isModalLogin} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                    <Form name="basic" labelCol={{ span: 5 }} wrapperCol={{ span: 16 }} initialValues={{ remember: true }} onFinish={onFinish} autoComplete="off">
+                        <Form.Item<FieldType> label="Email" name="email"
+                            rules={[
+                                { required: true, message: 'Vui lòng nhập địa chỉ Email!' },
+                                { type: 'email', message: 'Địa chỉ email không hợp lệ!' }
+                            ]}
                         >
-                            <Input />
+                            <Input type='email' />
                         </Form.Item>
-
-                        <Form.Item<FieldType>
-                            label="Password"
-                            name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}
-                        >
+                        <Form.Item<FieldType> label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}>
                             <Input.Password />
+                        </Form.Item>
+                        <Form.Item className='flex justify-around'>
+                            <Button htmlType='submit' className='max-w-[200px]'>Đăng nhập</Button>
                         </Form.Item>
                     </Form>
                 </Modal>
             )}
-
-
-            <div className="container mx-auto" style={{
-                maxWidth: 1000,
-            }}>
+            <div className="container mx-auto" style={{ maxWidth: 1000 }}>
                 <div className="mt-12 mb-8">
                     <h1 className="text-2xl font-bold mb-3">Đặt phòng khách sạn</h1>
                     <h5 className="text-md font-bold text-gray-500">Hãy chắc chắn rằng tất cả thông tin trên trang này là chính xác trước khi tiến hành thanh toán.</h5>
                 </div>
-                <div className="grid pb-4" style={{
-                    display: 'grid',
-                    gridTemplateColumns: '2fr 1fr',
-                    gridGap: '1rem',
-
-                }}>
+                <div className="grid pb-4" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gridGap: '1rem' }}>
                     <div>
                     {!cookie.userInfo && (
                         <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row">
@@ -168,7 +135,7 @@ export default function AccommodationBook() {
                             <div className="flex flex-col justify-between p-4 leading-normal">
                                 <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900">Đăng nhập hoặc Đăng ký và tận hưởng ưu đãi dành riêng cho thành viên</h5>
                                 <p className="mb-3 font-normal text-gray-700 flex"><img className='mr-2' src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/5/513ab8104dcf3ae7a42419cba432351d.svg" alt="" /> Đặt chỗ nhanh và dễ dàng hơn với Passenger Quick Pick</p>
-                                <Button className='max-w-[200px]' onClick={showModal}>
+                                <Button className='max-w-[200px]' onClick={showModalLogin}>
                                     Đăng nhập hoặc đăng ký
                                 </Button>
                             </div>
@@ -373,16 +340,7 @@ export default function AccommodationBook() {
                             </div> */}
                         </Card>
                     </div>
-                    <div className='flex items-center justify-end'>
-
-                {/* <button className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center"  onClick={() => process()}>
-                                Đặt phòng
-                            </button> */}
-                            </div>
                 </div>
-
-
-                            
             </div>
         </>
     )

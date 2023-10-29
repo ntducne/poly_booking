@@ -2,7 +2,7 @@ import { SmileOutlined } from '@ant-design/icons';
 import { Result, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 
@@ -12,19 +12,21 @@ export default function PaymentStatus() {
     const [status, setStatus] = useState(10);
     const [, setCookie] = useCookies(['paymentPage']);
     const location = useLocation();
+    const Navigate = useNavigate();
   
     useEffect(() => {
         setCookie('paymentPage', 4, { path: '/' })
 
         if(location.search) {
+            Navigate('/payment/status')
             fetch(`https://api.polydevhotel.site/api/vnpay/callback${location.search}`,{
                 method: 'GET',
-            
             })
             .then(response => {
                 if (response.ok) {
                     return response.json();
-                } else {
+                } 
+                else {
                     message.error('Có lỗi xảy ra.');
                 }
             })

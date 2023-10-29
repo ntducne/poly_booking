@@ -25,9 +25,9 @@ export default function Rooms({ }: Props) {
     const navigate = useNavigate()
     const [dataQuery, setDataQuery] = useState({})
     const { data, isLoading, refetch } = useGetRoomsQuery(dataQuery);
-    const { data: dataBranches, isLoading: isLoadingBranches } = useGetBranchesQuery({})
-    const [cookie, setCookie] = useCookies(['bookingNow', 'roomSearch']);
-    const onFinish = (values) => {
+    const { data: dataBranches } = useGetBranchesQuery({})
+    const [, setCookie] = useCookies(['bookingNow', 'roomSearch']);
+    const onFinish = (values :any) => {
         if (!values) {
             return;
         }
@@ -141,7 +141,7 @@ export default function Rooms({ }: Props) {
                                         >
                                             <RangePicker
                                                 size={window.innerWidth < 768 ? "large" : "middle"}
-                                                className="w-full" placeholder={["Thời gian bắt đầu", "Thời gian kết thúc"]}
+                                                className="w-full" placeholder={["Nhận phòng", "Trả phòng"]}
                                             />
                                         </Form.Item>
                                         <Form.Item

@@ -27,7 +27,7 @@ const itemsPolicy: CollapseProps['items'] = [
     },
 ];
 export default function AccommodationReview() {
-    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook']);
+    const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook']);
 
     useEffect(() => {
         setCookie('paymentPage', 1, { path: '/' })
