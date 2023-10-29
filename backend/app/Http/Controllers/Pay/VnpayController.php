@@ -104,13 +104,13 @@ class VnpayController extends Controller
         $secureHash = hash_hmac('sha512', $hashData, $this->vnp_HashSecret);
         if ($secureHash == $vnp_SecureHash) {
             if ($_GET['vnp_ResponseCode'] == '00') {
-                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status_payment' => 1]);
+                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status' => 1]);
             }
             else {
-                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status_payment' => 2]);
+                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status' => 2]);
             }
         } else {
-            Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status_payment' => 3]);
+            Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status' => 3]);
         }
         return response()->json([
             'status' => Billing::where('billingCode', (integer)$request->vnp_TxnRef)->first()->status
