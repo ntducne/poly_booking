@@ -11,8 +11,6 @@ const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://api.polydevhotel.site',
         prepareHeaders: (headers) => {
-            const token = localStorage.getItem("access_token");
-            headers.set("authorization", `Bearer ${token}`)
             return headers;
         },
     }),

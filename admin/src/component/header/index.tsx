@@ -23,6 +23,13 @@ const Head = () => {
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
 
   function logout() {
+    fetch("http://localhost:3000/api/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.accessToken.token}`,
+      },
+    });
     cookies().Delete("AuthUser");
     toast("Đăng xuất thành công");
     navigate("/login");
