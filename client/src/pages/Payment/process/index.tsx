@@ -41,6 +41,19 @@ export default function PaymentProcess() {
             })
             .then(data => {
                 console.log(data);
+
+                fetch('https://api.polydevhotel.site/user/process-vnpay', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'order_code': data.booking_id,
+                        'amount': data.amount,
+                    }),
+                    headers: {
+                        'Authorization': `Bearer ${cookie.userInfo.accessToken.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                })
+
                 message.success('Đặt phòng thành công');
                 // Navigate('/payment/status')
                 // Thực hiện điều hướng sau khi thành công (ví dụ: chuyển đến trang cảm ơn)

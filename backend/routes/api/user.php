@@ -31,4 +31,3 @@ Route::prefix('booking')->group(function () {
 
 // rate
 Route::post('rate', [UserController::class, 'rate']);
-Route::post('process-vnpay', [VnpayController::class, 'process'])->name('vnpay.process');
