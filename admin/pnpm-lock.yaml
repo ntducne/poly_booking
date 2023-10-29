@@ -76,6 +76,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.2.12
     version: 18.2.12
+  '@types/react-highlight-words':
+    specifier: ^0.16.6
+    version: 0.16.6
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.7.5
     version: 6.7.5(@typescript-eslint/parser@6.7.5)(eslint@8.51.0)(typescript@5.2.2)
@@ -777,6 +780,12 @@ packages:
     resolution: {integrity: sha512-QWZuiA/7J/hPIGocXreCRbx7wyoeet9ooxfbSA+zbIWqyQEE7GMtRn4A37BdYyksnN+/NDnWgfxZH9UVGDw1hg==}
     dependencies:
       '@types/react': 18.2.27
+
+  /@types/react-highlight-words@0.16.6:
+    resolution: {integrity: sha512-iGgne7Sf/vWfuOOWKURqj2LQwC8zBTZvNaw/uh9ZjwQfG40zfZKdkaE6387eWaDYjGdXQYPjUAhxjlaQhg4VYg==}
+    dependencies:
+      '@types/react': 18.2.27
+    dev: true
 
   /@types/react@18.2.27:
     resolution: {integrity: sha512-Wfv7B7FZiR2r3MIqbAlXoY1+tXm4bOqfz4oRr+nyXdBqapDBZ0l/IGcSlAfvxIHEEJjkPU0MYAc/BlFPOcrgLw==}

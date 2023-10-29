@@ -23,27 +23,6 @@ const Head = () => {
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
 
   function logout() {
-<<<<<<< HEAD
-    fetch("https://api.polydevhotel.site/auth/admin/logout", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        
-        // if (res.status === true) {
-        //   cookies().Delete("AuthUser");
-        //   toast("Đăng xuất thành công");
-        //   navigate("/login");
-        // }
-      });
-    // cookies().Delete("AuthUser");
-    // toast("Đăng xuất thành công");
-    // navigate("/login");
-=======
     fetch("http://localhost:3000/api/auth/logout", {
       method: "POST",
       headers: {
@@ -54,7 +33,6 @@ const Head = () => {
     cookies().Delete("AuthUser");
     toast("Đăng xuất thành công");
     navigate("/login");
->>>>>>> f89a41a3de09710349eb476112347519bd547458
   }
 
   const profile: MenuProps["items"] = [
