@@ -42,10 +42,16 @@ export default function LoginAdmin() {
             }            
             
         } catch (error) {
+<<<<<<< HEAD
+            console.log(error);
+            setIsLoading(false)
+
+=======
             setIsLoading(false)
             message.error('Có lỗi xảy ra !')
 
             // console.log(error);
+>>>>>>> f89a41a3de09710349eb476112347519bd547458
         }
     };
     const onFinishFailed = (errorInfo: any) => {

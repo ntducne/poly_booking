@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Pay\VnpayController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -31,3 +32,4 @@ Route::prefix('booking')->group(function () {
 
 // rate
 Route::post('rate', [UserController::class, 'rate']);
+Route::get('/logout', [LoginController::class, 'logout']);

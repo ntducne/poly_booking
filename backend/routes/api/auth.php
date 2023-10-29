@@ -34,7 +34,6 @@ Route::middleware(CheckReferer::class)->group(function () {
     Route::get('/callback/{provider}', [LoginSocicalController::class, 'callback']);
 
 
-    Route::get('/logout', [LoginController::class, 'logout']);
 
 });
 
