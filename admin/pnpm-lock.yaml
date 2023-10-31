@@ -780,6 +780,15 @@ packages:
 
   /@types/react-highlight-words@0.16.6:
     resolution: {integrity: sha512-iGgne7Sf/vWfuOOWKURqj2LQwC8zBTZvNaw/uh9ZjwQfG40zfZKdkaE6387eWaDYjGdXQYPjUAhxjlaQhg4VYg==}
+<<<<<<< HEAD
+=======
+    dependencies:
+      '@types/react': 18.2.27
+    dev: true
+
+  /@types/react@18.2.27:
+    resolution: {integrity: sha512-Wfv7B7FZiR2r3MIqbAlXoY1+tXm4bOqfz4oRr+nyXdBqapDBZ0l/IGcSlAfvxIHEEJjkPU0MYAc/BlFPOcrgLw==}
+>>>>>>> c25c3fe2e62099c9e86f46aec8f644c6c213f637
     dependencies:
       '@types/react': 18.2.33
     dev: true
