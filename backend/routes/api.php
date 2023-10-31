@@ -77,7 +77,10 @@ Route::get('/notification', function(\Illuminate\Http\Request $request){
     event(new \App\Events\Message([
         'message' => 'Hello world',
         'user' => 'John Doe',
-        'time' => now()->format('d-m-Y H:i:s'),
+        'time' => now()->format('d/m/Y H:i:s'),
         'avatar' => 'https://res.cloudinary.com/dteefej4w/image/upload/v1681474078/users/585e4bf3cb11b227491c339a_gtyczj.png'
     ]));
+    // event(new \App\Events\Message('duc', 'hi ha hi'));
+    // $user = \App\Models\User::where('email','nguyenduc10603@gmail.com')->first();
+    // $user->notify(new \App\Notifications\SendMail());
 });
