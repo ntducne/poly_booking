@@ -74,5 +74,10 @@ Route::prefix('vnpay')->group(function(){
 
 Route::get('/notification', function(\Illuminate\Http\Request $request){
 //    event(new NewBillEvent($request->msg));
-    event(new \App\Events\Message('admin', 'Hello World'));
+    event(new \App\Events\Message([
+        'message' => 'Hello world',
+        'user' => 'John Doe',
+        'time' => now()->format('d-m-Y H:i:s'),
+        'avatar' => 'https://res.cloudinary.com/dteefej4w/image/upload/v1681474078/users/585e4bf3cb11b227491c339a_gtyczj.png'
+    ]));
 });
