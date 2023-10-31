@@ -14,7 +14,7 @@ class Message implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $broadcastQueue = 'high';
+    // public $broadcastQueue = 'high';
     public function __construct(
         // public string $username,
         // public string $message,
