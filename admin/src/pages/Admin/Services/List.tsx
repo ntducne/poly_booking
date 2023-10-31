@@ -20,6 +20,9 @@ import FormatPrice from "../../../utils/FormatPrice";
 
 const ListServices = () => {
   const { data: dataServices, isLoading } = useGetServicesQuery({});
+
+  console.log("dataServices" , dataServices);
+  
   const [deleteServices] = useDeleteServicesMutation();
 
   // if (isLoading) {
@@ -88,14 +91,14 @@ const ListServices = () => {
     },
   ];
 
-  const data: any = dataServices?.data?.data.map(
+  const data: any = dataServices?.data?.map(
     (item: any, index: number) => ({
       key: index + 1,
-      _id: item._id,
-      service_name: item.service_name,
-      price: item.price,
-      description: item.description,
-      branch_id: item.branch_id,
+      _id: item?._id,
+      service_name: item?.service_name,
+      price: item?.price,
+      description: item?.description,
+      branch_id: item?.branch_id,
     })
   );
 
