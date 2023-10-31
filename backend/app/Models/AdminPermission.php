@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 
 class AdminPermission extends Eloquent

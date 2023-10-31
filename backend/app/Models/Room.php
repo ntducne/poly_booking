@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Http\Resources\RoomImageResource;
 use App\Http\Resources\RoomTypeResource;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use MongoDB\Laravel\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\SoftDeletes;
 
 class Room extends Eloquent
 {

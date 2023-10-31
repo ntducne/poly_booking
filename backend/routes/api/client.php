@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 

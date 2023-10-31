@@ -7,10 +7,10 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
-use Jenssegers\Mongodb\Relations\HasMany;
+use MongoDB\Laravel\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
+use MongoDB\Laravel\Relations\HasMany;
 
 class User extends Eloquent implements AuthenticatableContract
 {

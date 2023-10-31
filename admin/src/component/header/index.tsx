@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { MenuProps, Typography } from "antd";
 import { Avatar, Badge, Space } from "antd";
 import { Dropdown } from "antd";
@@ -13,6 +13,7 @@ import { LayoutContext } from "../../layout/LayoutAdmin";
 import { cookies } from "../../config/cookies";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Notification, PusherServer } from "../../socket/notification";
 
 const { Text } = Typography;
 
@@ -21,6 +22,19 @@ const Head = () => {
   const navigate = useNavigate();
   const token = JSON.parse(cookies().Get("AuthUser") as any)[2].token;
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
+
+  useEffect(() => {
+    // Notification();
+    const channel = PusherServer.subscribe('chat');
+    channel.bind('message', (data :any) => {
+      console.log(data);
+    });
+    return () => {
+      PusherServer.unsubscribe('chat');
+      PusherServer.disconnect();
+    };
+  }, [])
+
 
   function logout() {
     fetch("https://api.polydevhotel.site/admin/logout", {

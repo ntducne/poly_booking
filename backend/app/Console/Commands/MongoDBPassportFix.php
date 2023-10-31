@@ -26,7 +26,7 @@ class MongoDBPassportFix extends Command
      *
      * @var string
      */
-    protected $mongo_model = 'Jenssegers\Mongodb\Eloquent\Model';
+    protected $mongo_model = 'MongoDB\Laravel\Eloquent\Model';
 
     /**
      * Laravel Eloquent Model to Replace with
