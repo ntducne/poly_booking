@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use MongoDB\Laravel\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\SoftDeletes;
+
 class CancellationPolicy extends Eloquent
 {
     use HasFactory , SoftDeletes;

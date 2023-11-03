@@ -1,5 +1,6 @@
 <?php
 
+//use App\Events\NewBillEvent;
 use App\Http\Controllers\Pay\VnpayController;
 use Illuminate\Support\Facades\Route;
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
@@ -69,5 +70,17 @@ Route::prefix('/permission')->group(function(){
 Route::prefix('vnpay')->group(function(){
     Route::get('process/{order_code}/{amount}', [VnpayController::class, 'process'])->name('vnpay.process');
     Route::get('callback', [VnpayController::class, 'callback'])->name('vnpay.callback');
+});
 
+Route::get('/notification', function(\Illuminate\Http\Request $request){
+//    event(new NewBillEvent($request->msg));
+    event(new \App\Events\Message([
+        'message' => 'Hello world',
+        'user' => 'John Doe',
+        'time' => now()->format('d/m/Y H:i:s'),
+        'avatar' => 'https://res.cloudinary.com/dteefej4w/image/upload/v1681474078/users/585e4bf3cb11b227491c339a_gtyczj.png'
+    ]));
+    // event(new \App\Events\Message('duc', 'hi ha hi'));
+    // $user = \App\Models\User::where('email','nguyenduc10603@gmail.com')->first();
+    // $user->notify(new \App\Notifications\SendMail());
 });

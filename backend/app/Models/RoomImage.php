@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Jenssegers\Mongodb\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\SoftDeletes;
 
-class RoomImage extends Model
+class RoomImage extends Eloquent
 {
     use HasFactory;
     public $timestamps = false;

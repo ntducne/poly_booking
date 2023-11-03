@@ -64,129 +64,137 @@ class BookingRepository
         return new BillingResource($this->billing->find($id));
     }
 
-    private function check_room($checkin, $checkout, $branch_id, $adults, $children, $room_type_id): array
+    private function check_room($check_in, $check_out, $branch_id, $adults, $children, $room_type_id, $amount_room): array
     {
-        $room_book = $this->booking
-            ->where('checkin', '<=', $checkin)
-            ->where('checkout', '>=', $checkout)
-            ->where('room_type', $room_type_id)
-//            ->where('branch', $branch_id)
-            ->get();
-        $room = $this->room
-            ->where('adults', '>=', $adults)
-            ->where('children', '>=', $children)
-            ->where('room_type_id', $room_type_id)
-//            ->where('branch', $branch_id)
-            ->get();
-        $room_booked = [];
-        foreach ($room_book as $item) {
-            $book_detail = $this->booking_detail->where('booking_id', $item->_id)->get();
+        $room_booked = $this->booking
+            ->where('status', '=', false)
+            // ->where('room_type', $room_type_id)
+            ->where(function ($query) use ($check_in, $check_out) {
+                $query->where(function ($query) use ($check_in, $check_out) {
+                    $query->where('checkin', '<=', $check_in)
+                        ->where('checkout', '>=', $check_out);
+                })
+                    ->orWhere(function ($query) use ($check_in, $check_out) {
+                        $query->where('checkin', '>=', $check_in)->where('checkin', '<', $check_out)->where('checkout', '>=', $check_out);
+                    })
+                    ->orWhere(function ($query) use ($check_in, $check_out) {
+                        $query->where('checkin', '<=', $check_in)->where('checkout', '>', $check_in)->where('checkout', '<=', $check_out);
+                    });
+            })->get();
+        $room_id_booked = [];
+        foreach ($room_booked as $item) {
+            $book_detail = $this->booking_detail->where('booking_id', '=', $item->_id)->get();
             foreach ($book_detail as $key => $value) {
-                $room_booked[] = $value->room_id;
+                $room_id_booked[] = $value->room_id;
             }
         }
-        $room_available = [];
+        $room = Room::where('adults', '=', ceil($adults / $amount_room))
+            ->where('children', '=', ceil($children / $amount_room))
+            ->where('branch_id', '=', $branch_id)
+            ->where('room_type_id', '=', $room_type_id)
+            ->get();
+        $room_id_completed = [];
         foreach ($room as $item) {
-            if (!in_array($item->_id, $room_booked)) {
-                $room_available[] = $item->_id;
+            if (!in_array($item->_id, $room_id_booked)) {
+                $room_id_completed[] = $item->_id;
             }
         }
-
-        $room=[];
-        foreach ($room_available as $item) {
-            $room[] = new RoomResource($this->room->find($item));
-        }
-
-        return $room;
+        return $room_id_completed;
     }
 
     public function search($request): bool|array
     {
         $room_type = $request->room_type_id;
-        $branch = $request->user()->branch_id ?? $request->branch_id;
+        $branch = $request->branch_id;
         $check_in = $request->check_in;
         $check_out = $request->check_out;
         $adults = $request->adults;
         $children = $request->children;
         $amount_room = $request->amount_room;
-        $available_rooms = $this->check_room($check_in, $check_out, $branch, $adults, $children, $room_type);
+        $available_rooms = $this->check_room($check_in, $check_out, $branch, $adults, $children, $room_type, $amount_room);
+        $room = [];
         if (count($available_rooms) < $amount_room) {
             return false;
         }
-        return $available_rooms;
+        foreach ($available_rooms as $key => $value) {
+            $info_room = Room::find($value);
+            $room[] = new RoomResource($info_room);
+        }
+        return $room;
     }
 
     public function book($request): bool
     {
         $condition = ($request->user()->role == 1 || $request->user()->role == 2) && $request->user()->branch_id != 'all';
-        if($condition) {
+        if ($condition) {
             $branch = $request->user()->branch_id;
-        }
-        else{
+        } else {
             $branch = $request->branch_id;
         }
-        $room_type = $request->room_type_id;
-        $check_in = $request->check_in;
-        $check_out = $request->check_out;
-        $adults = $request->adults;
-        $children = $request->children;
         $amount_room = $request->amount_room;
-        $payment_method = $request->payment_method;
-        $available_rooms = $this->check_room($check_in, $check_out, $branch, $adults, $children, $room_type);
-        $amount_day = Carbon::parse($check_in)->diffInDays(Carbon::parse($check_out));
-        if (count($available_rooms) < $amount_room) {
+        $branch_id = $request->branch_id;
+        (int) $adults = $request->adults;
+        (int) $children = $request->children;
+        $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
+        $room_valid = $this->check_room($request->checkin, $request->checkout, $branch_id, $request->adults, $request->children, $request->room_type_id, $amount_room);
+        if (count($room_valid) < $amount_room) {
             return false;
         }
-        $now = date('Y-m-d');
-        $this->booking->create([
-            'user_id' => User::where('email', $request->email)->first() !== null ? User::where('email', $request->email)->first()->id : null,
-            'representative' => [
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-            ],
-            'booking_date' => $now,
-            'price_per_night' => RoomType::find($room_type)->price,
-            'check_in' => $check_in,
-            'check_out' => $check_out,
-            'amount_people' => [
-                'adults' => $adults,
-                'children' => $children,
-            ],
-            'amount_room' => $amount_room,
-            'room_type' => $room_type,
-            'branch' => $branch,
-            'status' => 0,
-        ]);
-        $booking_id = $this->booking->where('booking_date', $now)->first()->id;
-        $selected_rooms = array_slice($available_rooms, 0, $amount_room);
-        $details = [];
-        $price_room_type = $this->room_type->find($room_type)->price_per_night;
-        $total = 0;
-        foreach ($selected_rooms as $room_id) {
-            $details[] = [
-                'booking_id' => $booking_id,
-                'room_id' => $room_id,
-                'room_name' => Room::find($room_id)->name,
-            ];
-            $total += $price_room_type - ($price_room_type * ($this->room->find($room_id)->discount / 100));
+        $room_booking = array_slice($room_valid, 0, $amount_room);
+        $total_discount = 0;
+        $total_price_per_night = 0;
+        foreach ($room_booking as $key => $value) {
+            $total_discount += Room::find($value)->discount;
+            $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
         }
-        $this->booking_detail->create($details);
-        $this->billing->create([
-            'booking_id' => $booking_id,
+        $param['room_type'] = $request->room_type_id;
+        $param['booking_date'] = now()->toDateTimeString();
+        $param['price_per_night'] = $total_price_per_night - $total_discount; // gia 1 dem cua booking
+        $param['amount_people'] = [
+            'total_people' => $adults + $children,
+            'adults' => $adults,
+            'children' => $children
+        ];
+        $param['representative'] = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone
+        ];
+        $param['amount_room'] = $amount_room;
+        if (!empty($request->email)) {
+            $user = User::where('email', '=', $request->email)->first();
+        }
+        $param['user_id'] = !empty($user) ? $user->_id : null;
+        $create = $this->booking->create($param);
+        $details = [];
+        foreach ($room_booking as $key => $value) {
+            $this->booking_detail->create(
+                [
+                    'booking_id' => $create->_id,
+                    'room_id' => $value,
+                    'room_name' => Room::find($value)->name
+                ]
+            );
+        }
+        $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
+        $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
+        $bill = [
+            'billingCode' =>  random_int(1,10000),
+            'booking_id' => $create->_id,
             'services' => [],
-            'total' => $total * $amount_day,
-            'payment_method' => $payment_method,
+            'total' => $create->price_per_night * $amount_day,
+            'payment_method' => $request->payment_method,
             'payment_date' => null,
-            'branch_id' => $branch,
-            'status' => 0,
-        ]);
-        if($condition){
+            'branch_id' => $branch_id,
+            'status' => 'Not yet implemented'
+        ];
+        $data = $this->billing->create($bill);
+        if ($condition) {
             $this->history_handle->create([
-                'booking_id' => $booking_id,
+                'booking_id' => $create->_id,
                 'admin_id' => $request->user()->id,
                 'handle' => 'Tạo mới đặt phòng',
-                'time' => $now,
+                'time' => date("Y-m-d"),
             ]);
         }
         return true;
@@ -248,7 +256,8 @@ class BookingRepository
         ]);
     }
 
-    public function addServiceToBilling($request, $billing){
+    public function addServiceToBilling($request, $billing)
+    {
 
     }
 

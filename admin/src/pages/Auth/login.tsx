@@ -15,7 +15,6 @@ export default function LoginAdmin() {
   const [Login] = useLoginMutation();
   const navigate = useNavigate();
   const [is_loading, setIsLoading] = useState(false);
-
   const onFinish = async (values: any) => {
     try {
       setIsLoading(true);

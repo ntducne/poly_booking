@@ -13,7 +13,17 @@ class BookingController extends Controller
         $this->bookingRepository = $bookingRepository;
     }
     public function store(Request $request){
-        return $this->bookingRepository->book($request);
+        $booking = $this->bookingRepository->book($request);
+        if($booking){
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Đặt phòng thành công !',
+            ]);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Đặt không thành công !',
+        ]);
     }
 
     public function search(Request $request){

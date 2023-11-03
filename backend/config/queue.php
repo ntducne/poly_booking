@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION'),
+    'default' => env('QUEUE_CONNECTION', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -71,16 +71,22 @@ return [
             'after_commit' => false,
         ],
 
+    ],
 
-        'mongodb' => [
-            'driver' => 'mongodb',
-            'table' => 'jobs',
-            'queue' => 'default',
-            'dsn' => env('DB_MONGO_DSN'),
-            'database' => env('DB_MONGO_DATABASE'),
-            'options' => [],
-        ],
+    /*
+    |--------------------------------------------------------------------------
+    | Job Batching
+    |--------------------------------------------------------------------------
+    |
+    | The following options configure the database and table that store job
+    | batching information. These options can be updated to any database
+    | connection and table which has been defined by your application.
+    |
+    */
 
+    'batching' => [
+        'database' => env('DB_CONNECTION', 'mysql'),
+        'table' => 'job_batches',
     ],
 
     /*
@@ -96,7 +102,7 @@ return [
 
     'failed' => [
         'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
-        'database' => env('DB_CONNECTION'),
+        'database' => env('DB_CONNECTION', 'mysql'),
         'table' => 'failed_jobs',
     ],
 

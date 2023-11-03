@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticateContract;
 use Illuminate\Notifications\Notifiable;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
+use MongoDB\Laravel\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\SoftDeletes;
 
 class Admin extends Eloquent implements AuthenticateContract
 {
