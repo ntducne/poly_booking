@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller
 {
+    private Booking $booking;
+    private BookDetail $book_detail;
+    private Billing $billing;
     public function __construct()
     {
         $this->booking = new Booking();
@@ -236,7 +239,7 @@ class ClientController extends Controller
             $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
             $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
             $bill = [
-                'billingCode' => $request->billingCode,
+                'billingCode' => random_int(1, 10000),
                 'booking_id' => $create->_id,
                 'services' => [],
                 'total' => $create->price_per_night * $amount_day,
