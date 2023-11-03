@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { MenuProps, Typography } from "antd";
 import { Avatar, Badge, Space } from "antd";
 import { Dropdown } from "antd";
@@ -23,16 +23,18 @@ const Head = () => {
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
 
   function logout() {
-    fetch("http://localhost:3000/api/auth/logout", {
+    fetch("https://api.polydevhotel.site/admin/logout", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.accessToken.token}`,
+        Authorization: `Bearer ${token}`,
       },
-    });
-    cookies().Delete("AuthUser");
-    toast("Đăng xuất thành công");
-    navigate("/login");
+    })
+      .then((res) => res.json())
+      .then(() => {
+        cookies().Delete("AuthUser");
+        toast("Đăng xuất thành công");
+        navigate("/login");
+      });
   }
 
   const profile: MenuProps["items"] = [

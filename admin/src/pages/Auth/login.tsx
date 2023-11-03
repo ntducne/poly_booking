@@ -21,16 +21,14 @@ export default function LoginAdmin() {
       setIsLoading(true);
       const data: any = await Login(values);
       const response = data.data;
-      console.log(data);
-
-      if (data.error.data.message) {
+      if (data.error) {
         message.error(data.error.data.message);
         setIsLoading(false);
       }
 
       if (response) {
         if (response.status === false) {
-          message.error(response?.message);
+          message.error(response.message);
           setIsLoading(false);
         }
         if (response.status === true) {
@@ -44,10 +42,8 @@ export default function LoginAdmin() {
         }
       }
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
-      message.error("Có lỗi xảy ra !");
-
-      // console.log(error);
     }
   };
   const onFinishFailed = (errorInfo: any) => {

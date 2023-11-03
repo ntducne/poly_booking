@@ -42,23 +42,22 @@ const ListAdmin = () => {
     label: item?.label,
     children: (
       <>
-        {item?.permissions?.map((permission: any, index: any) => {
+         {item?.permissions?.map((permission: any, index: any) => {
           const key = Object.keys(permission)[0];
           const value = permission[key];
-          const permissionUser = staff?.data?.staff_permission?.map(
-            (item: any) => {}
-          );
-          if (loadingStaff) {
-            return <>...Loading</>;
-          }
+          // const permissionUser = staff?.data?.staff_permission?.map(
+          //   (item: any) => {}
+          // );
+          // if (loadingStaff) {
+          //   return <>...Loading</>;
+          // }
           return <Checkbox key={index}>{value}</Checkbox>;
           // return <CheckboxGroup key={index} options={valuePermission} />
         })}
       </>
     ),
   }));
-  console.log(items);
-  
+  // console.log(items);
   const columns: ColumnsType<any> = [
     {
       title: "STT",
@@ -170,15 +169,15 @@ const ListAdmin = () => {
     };
   return (
     <Page title={`Tài khoản quản trị`}>
-        <Modal
-          title="Danh sách quyền"
-          open={isModalOpen}
-          onCancel={handleCancel}
-          footer={[]}
-          style={{ minWidth: "60%" }}
-        >
-          <Collapse ghost items={items} />
-        </Modal>
+      <Modal
+        title="Danh sách quyền"
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={[]}
+        style={{ minWidth: "60%" }}
+      >
+        <Collapse ghost items={items} />
+      </Modal>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <div className="mb-3">
           <FormSearch />

@@ -25,6 +25,7 @@ import promotionsApi from '../api/promotions';
 import billingApi from '../api/billings';
 import ratesApi from '../api/rate';
 import permissonApi from '../api/permission';
+import policyApi from '../api/policy';
 '../api/account/staffs';
 
 const persistConfig = {
@@ -50,6 +51,7 @@ const rootReducer = combineReducers({
     [billingApi.reducerPath]: billingApi.reducer,
     [ratesApi.reducerPath]: ratesApi.reducer,
     [permissonApi.reducerPath]: permissonApi.reducer,
+    [policyApi.reducerPath]: policyApi.reducer,
 })
 
 
@@ -68,6 +70,7 @@ const middlewares = [
     billingApi.middleware,
     ratesApi.middleware,
     permissonApi.middleware,
+    policyApi.middleware,
 ]
 
 const store = configureStore({
