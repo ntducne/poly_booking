@@ -88,13 +88,11 @@ class BookingRepository
                 $room_id_booked[] = $value->room_id;
             }
         }
-        //Danh sach cac room
         $room = Room::where('adults', '=', ceil($adults / $amount_room))
             ->where('children', '=', ceil($children / $amount_room))
             ->where('branch_id', '=', $branch_id)
             ->where('room_type_id', '=', $room_type_id)
             ->get();
-        //Danh sach cac phong thoa man adult va children 
         $room_id_completed = [];
         foreach ($room as $item) {
             if (!in_array($item->_id, $room_id_booked)) {
@@ -138,13 +136,10 @@ class BookingRepository
         (int) $adults = $request->adults;
         (int) $children = $request->children;
         $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
-        //Kiem tra phong con trong hay khong
         $room_valid = $this->check_room($request->checkin, $request->checkout, $branch_id, $request->adults, $request->children, $request->room_type_id, $amount_room);
-        //Bat loi dat so luong phong
         if (count($room_valid) < $amount_room) {
             return false;
         }
-        //phong co the dat
         $room_booking = array_slice($room_valid, 0, $amount_room);
         $total_discount = 0;
         $total_price_per_night = 0;
@@ -166,7 +161,6 @@ class BookingRepository
             'phone' => $request->phone
         ];
         $param['amount_room'] = $amount_room;
-        //Lay ra id user neu ho da co tai khoan tu truoc
         if (!empty($request->email)) {
             $user = User::where('email', '=', $request->email)->first();
         }
@@ -182,7 +176,6 @@ class BookingRepository
                 ]
             );
         }
-        //Hoa don 
         $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
         $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
         $bill = [
@@ -190,9 +183,7 @@ class BookingRepository
             'booking_id' => $create->_id,
             'services' => [],
             'total' => $create->price_per_night * $amount_day,
-            // total = so ngay su dung phong * gia 1 dem 
             'payment_method' => $request->payment_method,
-            //thanh toan tai quay
             'payment_date' => null,
             'branch_id' => $branch_id,
             'status' => 'Not yet implemented'
