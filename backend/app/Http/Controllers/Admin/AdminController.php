@@ -39,8 +39,6 @@ class AdminController extends Controller
                'message' => 'Lỗi !'
             ]);
         }
-
-
     }
     public function store(StoreAdminRequest $request)
     {

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Booking\BookingRequest;
 use App\Http\Requests\Booking\SearchRequest;
+use App\Http\Resources\BranchResource;
 use App\Http\Resources\RoomResource;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
+use App\Models\Branch;
 use App\Models\Rates;
 use App\Models\Room;
 use App\Models\RoomType;
@@ -28,9 +30,14 @@ class ClientController extends Controller
         $this->billing = new Billing();
     }
 
+    public function branch()
+    {
+        return BranchResource::collection(Branch::all());
+    }
+
     public function roomType()
     {
-        return response()->json(RoomType::all());
+        return RoomResource::collection(RoomType::all());
     }
 
     public function rooms(Request $request)
@@ -68,17 +75,17 @@ class ClientController extends Controller
 
     public function roomDetail($id)
     {
-        $room = Room::find($id);
-        $room_same = Room::where('room_type_id', '=', $room->room_type_id)
-            ->where('branch_id', '=', $room->branch_id)
-            ->where('_id', '!=', $id)
-            ->get();
+        $room = Room::where('slug', '=', $id)->first();
         if (!$room) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Phòng không tồn tại !',
             ]);
         }
+        $room_same = Room::where('room_type_id', '=', $room->room_type_id)
+            ->where('branch_id', '=', $room->branch_id)
+            ->where('_id', '!=', $id)
+            ->get();
         return response()->json([
             'room' => new RoomResource($room),
             'rate' => $room->getRate(),
@@ -118,7 +125,7 @@ class ClientController extends Controller
             $room->where('room_type_id', '=', $room_type_id);
         }
         $room = $room->get();
-        //Danh sach cac phong thoa man adult va children 
+        //Danh sach cac phong thoa man adult va children
         $room_id_completed = [];
         foreach ($room as $item) {
             if (!in_array($item->_id, $room_id_booked)) {
@@ -228,7 +235,7 @@ class ClientController extends Controller
                     ]
                 ];
             }
-            //Hoa don 
+            //Hoa don
             $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
             $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
             $bill = [
@@ -236,7 +243,7 @@ class ClientController extends Controller
                 'booking_id' => $create->_id,
                 'services' => [],
                 'total' => $create->price_per_night * $amount_day,
-                // total = so ngay su dung phong * gia 1 dem 
+                // total = so ngay su dung phong * gia 1 dem
                 'payment_method' => $request->payment_method,
                 //thanh toan tai quay
                 'payment_date' => null,
