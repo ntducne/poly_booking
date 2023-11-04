@@ -3,7 +3,7 @@ import TableCustom from '../../../component/Table';
 import { SearchOutlined } from '@ant-design/icons';
 import { useState,useEffect } from 'react';
 import { useSearchRoomMutation } from '../../../api/booking';
-import { useGetRoomTypeQuery } from '../../../api/roomTypes';
+import { useGetAllRoomTypeQuery } from '../../../api/roomTypes';
 import { RoomInterface } from '../../../Interface/RoomInterface';
 import Page from '../../../component/page';
 import formatMoneyVN from '../../../config/formatMoneyVN';
@@ -15,14 +15,14 @@ export default function RoomBooking() {
     const [isLoadingData, setLoading] = useState(false);
     const [isDisabledForm, setDisableForm] = useState(false);
     const [searchRoom] = useSearchRoomMutation()
-    const { data, isLoading, refetch } = useGetRoomTypeQuery({ page: 'all' })
+    const {data, isLoading} = useGetAllRoomTypeQuery({ })
     const [dataDetailRoom, setDataDetailRoom] = useState(null);
     const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
 
-    useEffect(() => {
-        refetch()
-    }, [refetch])
+    // useEffect(() => {
+    //     refetch()
+    // }, [refetch])
     
 
     const showModal = () => {
@@ -118,8 +118,8 @@ export default function RoomBooking() {
         const value = {
             room_type_id: values.room_type,
             amount_room: values.amount_room,
-            check_in: values.days[0].format('d/MM/YYYY'),
-            check_out: values.days[1].format('d/MM/YYYY'),
+            check_in: values.days[0].format('YYYY-MM-DD'),
+            check_out: values.days[1].format('YYYY-MM-DD'),
             adults: values.adults,
             children: values.childrens,
         }
@@ -140,7 +140,7 @@ export default function RoomBooking() {
     return (
         <Page title={`Đặt phòng`}>
             {dataDetailRoom !== null ? <DetailRoomModal room={dataDetailRoom} setIsModalOpen={handleCancel} isOpen={isModalOpen}/> : <></>}
-            <Form disabled={isDisabledForm} form={form} labelCol={{ span: 6 }} layout="horizontal" className='mt-5 mb-5' onFinish={onFinish}>
+            <Form disabled={isDisabledForm} form={form} labelCol={{ span: 6 }} layout="horizontal" className={`${isLoading && 'mt-5 mb-5'}`} onFinish={onFinish}>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                     <Card title="Thông tin phòng" bordered={false} loading={isLoading}>
                         <Form.Item label="Loại phòng" name="room_type" rules={[{ required: true, message: 'Vui lòng chọn loại phòng' }]}>
@@ -190,7 +190,7 @@ export default function RoomBooking() {
                     </Card>
                 </div>
             </Form>
-            <Table loading={isLoadingData} columns={columns} dataSource={newData} pagination={false} />
+            <Table className={`${isLoading && 'hidden'}`} loading={isLoadingData} columns={columns} dataSource={newData} pagination={false} />
             {/* <TableCustom loading={isLoadingData} columns={columns} data={dataRoom}/> */}
         </Page>
     )

@@ -91,7 +91,7 @@ function App() {
               <Route path="add" element={<AddRoomExtend />} />
               <Route path="edit/:id" element={<EditRoomExtend />} />
             </Route>
-            {/* <Route path="booking" element={<RoomBooking />} /> */}
+            <Route path="booking" element={<RoomBooking />} />
           </Route>
           <Route path="services">
             <Route index element={<ListServices />} />

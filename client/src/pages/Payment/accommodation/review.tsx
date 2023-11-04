@@ -1,39 +1,9 @@
 import { Card } from 'antd';
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
-const itemsColapper: CollapseProps['items'] = [
-    {
-        key: '1',
-        label:
-            <div className='flex justify-between items-center'>
-                <p className='text-xl font-bold'>Thành tiền</p>
-                <p className='text-xl font-bold'>1.000.000 VNĐ</p>
-            </div>
-        , children:
-        <>
-            <div className='flex justify-between items-center mb-4 font-semibold'>
-                <p className='text-sm' style={{ fontSize: 16}}>(1x) Polydev Hotel Hà Nội, Superior Double Room</p>
-                <p className='text-sm' style={{fontSize: 16 }}>200.000 VNĐ</p>
-            </div>
-            <div className='flex justify-between items-center mb-4 font-semibold'>
-                <p className='text-sm' style={{ fontSize: 16}}>(1x) Polydev Hotel Hà Nội, Superior Double Room</p>
-                <p className='text-sm' style={{fontSize: 16 }}>200.000 VNĐ</p>
-            </div>
-            <div className='flex justify-between items-center mb-4 font-semibold'>
-                <p className='text-sm' style={{ fontSize: 16}}>(1x) Polydev Hotel Hà Nội, Superior Double Room</p>
-                <p className='text-sm' style={{fontSize: 16 }}>200.000 VNĐ</p>
-            </div>
-            <div className='flex justify-between items-center mb-4 font-semibold'>
-                <p className='text-sm' style={{ fontSize: 16}}>(1x) Polydev Hotel Hà Nội, Superior Double Room</p>
-                <p className='text-sm' style={{fontSize: 16 }}>200.000 VNĐ</p>
-            </div>
-            <div className='flex justify-between items-center mb-4 font-semibold'>
-                <p className='text-sm' style={{ fontSize: 16}}>(1x) Polydev Hotel Hà Nội, Superior Double Room</p>
-                <p className='text-sm' style={{fontSize: 16 }}>200.000 VNĐ</p>
-            </div>
-        </>
-    },
-];
+import { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
+
 const itemsPolicy: CollapseProps['items'] = [
     {
         key: '1',
@@ -57,6 +27,30 @@ const itemsPolicy: CollapseProps['items'] = [
     },
 ];
 export default function AccommodationReview() {
+    const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook']);
+
+    useEffect(() => {
+        setCookie('paymentPage', 1, { path: '/' })
+    },[])
+
+    const itemsColapper: CollapseProps['items'] = [
+        {
+            key: '1',
+            label:
+                <div className='flex justify-between items-center'>
+                    <p className='text-xl font-bold'>Thành tiền</p>
+                    <p className='text-xl font-bold'>{cookie.bookingNow.price} VNĐ</p>
+                </div>
+            , children:
+            <>
+                <div className='flex justify-between items-center mb-4 font-semibold'>
+                    <p className='text-sm'>({cookie.roomSearch.soLuong}x) {cookie.bookingNow.room_name}</p>
+                    <p className='text-sm'>{cookie.bookingNow.price} VNĐ</p>
+                </div>
+            </>
+        },
+    ];
+
     return (
         <>
             <div className="container mx-auto" style={{
@@ -79,31 +73,31 @@ export default function AccommodationReview() {
                                 <div className="flex flex-col justify-between p-4 leading-normal w-full">
                                     <p className="mb-3 font-bold text-xl text-gray-700 flex ">
                                         <img className='mr-2' src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/6aa2fd01a9460e1a71bb0efb713f0212.svg" alt="" />
-                                        Polydev Hotel Hà Nội
+                                        {cookie.bookingNow.branch}
                                     </p>
                                     <hr className='mb-3'/>
                                     <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
                                         <div className="">
                                             <p className='mb-2 font-bold text-sm text-gray-500'>Ngày nhận phòng:</p>
-                                            <p className='mb-2 font-bold text-sm'>10/10/2023</p>
+                                            <p className='mb-2 font-bold text-sm'>{cookie.roomSearch.checkin}</p>
                                             <p>Từ 14:00</p>
                                         </div>
                                         <div className="">
                                             <p className='mb-2 font-bold text-sm text-gray-500'>Ngày trả phòng:</p>
-                                            <p className='mb-2 font-bold text-sm'>15/10/2023</p>
+                                            <p className='mb-2 font-bold text-sm'>{cookie.roomSearch.checkout}</p>
                                             <p>Trước 12:00</p>
                                         </div>
-                                        <div className="">
+                                        {/* <div className="">
                                             <p className='mb-2 font-bold text-sm text-gray-500'>Số đêm nghỉ:</p>
                                             <p>5</p>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
                             <hr className='ml-5 mr-5 mx-auto' />
-                            <p className='font-bold text-xl ml-5 mb-3 mt-3'>Quadruple Family View Room</p>
+                            <p className='font-bold text-xl ml-5 mb-3 mt-3'>{cookie.bookingNow.room_name}</p>
                             <div className='grid grid-cols-2 gap-4 pl-5'>
-                                <div className=''>
+                                {/* <div className=''>
                                     <div className="grid grid-cols-2 mb-2" >
                                         <p>Khách/phòng</p>
                                         <p className='font-bold'>4 khách</p>
@@ -112,10 +106,10 @@ export default function AccommodationReview() {
                                         <p>Khách/phòng</p>
                                         <p className='font-bold'>4 khách</p>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className='mb-5'>
                                     <div className="flex" >
-                                        <img className='rounded-md' src="https://ik.imagekit.io/tvlk/generic-asset/dgXfoyh24ryQLRcGq00cIdKHRmotrWLNlvG-TxlcLxGkiDwaUSggleJNPRgIHCX6/hotel/asset/67757118-3000x1808-FIT_AND_TRIM-0edc3b7daf6f262e64d21aa10af9867f.jpeg?_src=imagekit&tr=h-92,q-40,w-92" alt="" />
+                                        <img className='rounded-md w-20' src={cookie.bookingNow.image} alt="" />
                                         <div className='ml-3'>
                                             <div className='flex mb-2'>
                                                 <img className='mr-2' src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/8/812d6f19a9d1ceb30728acbce11f709a.svg" alt="" />
@@ -161,14 +155,14 @@ export default function AccommodationReview() {
                         </div>
                     </div>
                     <div>
-                        <Card title={<p className='font-bold text-xl'>Chi tiết người liên lạc</p>}>
-                            <p className='font-medium text-xl'>NGUYEN VAN A</p>
-                            <p className='font-medium text-xl'>+8498765432</p>
-                            <p className='font-medium text-xl'>duc@gmail.com</p>
+                        <Card className='mb-4' title={<p className='font-bold text-xl'>Chi tiết người liên lạc</p>}>
+                            <p className='font-medium text-xl'>{cookie.userBook.name}</p>
+                            <p className='font-medium text-xl'>{cookie.userBook.phone}</p>
+                            <p className='font-medium text-xl'>{cookie.userBook.email}</p>
                         </Card>
                         <Card title={<p className='font-bold text-xl'>Chi tiết khách ở</p>}>
                             <p className='font-bold text-gray-500 text-md'>Room 1 Guest Name</p>
-                            <p className='font-medium text-xl'>NGUYEN VAN A</p>
+                            <p className='font-medium text-xl'>{cookie.userBook.name}</p>
                             <div className='mt-2 mb-5'></div>
                             <p className='font-bold text-gray-500 text-md'>Yêu cầu đặc biệt</p>
                             <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">

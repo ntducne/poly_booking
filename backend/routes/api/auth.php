@@ -32,4 +32,9 @@ Route::middleware(CheckReferer::class)->group(function () {
     });
     Route::get('/login/{provider}', [LoginSocicalController::class, 'redirect']);
     Route::get('/callback/{provider}', [LoginSocicalController::class, 'callback']);
+
+
+
 });
+
+

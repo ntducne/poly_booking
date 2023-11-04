@@ -1,33 +1,51 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const roomApi = createApi({
-    reducerPath: "room",
+    reducerPath: "rooms",
+    tagTypes: ['Rooms'],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_URL_API,
         prepareHeaders: (headers) => {
             const token = localStorage.getItem("access_token");
             headers.set("authorization", `Bearer ${token}`)
-            // modify header theo từng request
             return headers;
         },
     }),
-    endpoints: (builder) =>({
+    endpoints: (builder) => ({
         getRooms: builder.query<any, any>({
-            query: () => `/client/room`
+            query: (data: any) => {
+                const keys = Object.keys(data);
+                const url = keys.length === 0 ? `/client/room` : `/client/room/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&soLuong=${data.soLuong}`
+                return ({
+                    method: 'GET',
+                    url: url
+                })
+            },
+            providesTags: ["Rooms"]
         }),
         getDetial: builder.query<any, any>({
-            query: (id) => `/client/room/${id}`
+            query: (id) => `/client/room/${id}`,
+            providesTags: ["Rooms"]
         }),
         postBooking: builder.mutation({
             query: (data: any) => ({
                 url: `client/room/booking`,
                 method: "POST",
                 body: data
+<<<<<<< HEAD
             })
+=======
+            }),
+            invalidatesTags: ['Rooms']
+>>>>>>> f4a7130b816ebc33f40e7d4a36175bc0b45608e0
         }),
     })
 })
 
+<<<<<<< HEAD
 export const {useGetRoomsQuery, useGetDetialQuery,usePostBookingMutation} = roomApi
+=======
+export const { useGetRoomsQuery, useGetDetialQuery, usePostBookingMutation } = roomApi
+>>>>>>> f4a7130b816ebc33f40e7d4a36175bc0b45608e0
 export const roomReducer = roomApi.reducer
 export default roomApi

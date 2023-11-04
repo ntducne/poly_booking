@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { cookies } from "../config/cookies";
 
 const ratesApi = createApi({
-  reducerPath: "rate",
-  tagTypes: ["rate"],
+  reducerPath: "rates",
+  tagTypes: ["rates"],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.polydevhotel.site/admin/",
     prepareHeaders: (headers) => {
@@ -16,8 +16,8 @@ const ratesApi = createApi({
   }),
   endpoints: (builder) => ({
     getRates: builder.query<any, any>({
-      query: () => `rate`,
-      providesTags: ["rate"],
+      query: () => `rates`,
+      providesTags: ["rates"],
     }),
   }),
 });

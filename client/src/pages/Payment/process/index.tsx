@@ -1,74 +1,66 @@
-import { Card, Tabs } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin, message } from 'antd';
+import { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 
-const itemTab: any = [
-    {
-        label: 'Momo',
-        key: 1,
-        children: 'Thanh toán bằng Momo',
-    },
-    {
-        label: 'Zalo Pay',
-        key: 2,
-        children: 'Thanh toán bằng ZaloPay',
-    },
-    {
-        label: 'VNPay',
-        key: 3,
-        children: 'Thanh toán bằng VNPay',
-    },
-    {
-        label: 'PayPal',
-        key: 4,
-        children: 'Thanh toán bằng PayPal',
-    },
-    {
-        label: 'VietQR',
-        key: 5,
-        children: 'Thanh toán bằng VietQR',
-    }
-]
-
-
-export default function PaymentView() {
-    const onChange = (key: string) => {
-        console.log(key);
-      };
-    return (
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+export default function PaymentProcess() {
+    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userBook', 'paymentMethod']);
+    useEffect(() => {
+        setCookie('paymentPage', 3, { path: '/' })
+        const process = () => {
+            const data  = {
+                "room_id": cookie.bookingNow.room_id,
+                'checkin': cookie.roomSearch.checkin,
+                'checkout': cookie.roomSearch.checkout,
+                "soLuong": cookie.roomSearch.soLuong,
+                "branch_id": cookie.roomSearch.branch_id,
+                "adults": cookie.roomSearch.adult,
+                "children": cookie.roomSearch.child,
+                'email': cookie.userBook.email,
+                'phone': cookie.userBook.phone,
+                'name': cookie.userBook.name,
+                'billingCode': Math.floor(Math.random() * 1000000),
+            }
+            fetch('https://api.polydevhotel.site/client/room/booking', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Có lỗi xảy ra trong quá trình đặt phòng.');
+                }
+            })
+            .then(data => {
+                removeCookie('bookingNow', { path: '/' });
+                removeCookie('roomSearch', { path: '/' });
+                removeCookie('userBook', { path: '/' });
+                removeCookie('paymentPage', { path: '/' });
+                if(cookie.paymentMethod === 'vnpay'){
+                    removeCookie('paymentMethod', { path: '/' });
+                    window.location.href = `https://api.polydevhotel.site/api/vnpay/process/${data.bill.billingCode}/${data.bill.total}`;
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                message.error('Có lỗi xảy ra trong quá trình đặt phòng. Vui lòng thử lại sau.');
+            });
+    
+        }
+        process();
+    },[])
+    return ( 
         <div className="container mx-auto" style={{
             maxWidth: 1000,
         }}>
-            <div className="mt-12 mb-8">
-                <h1 className="text-2xl font-bold mb-3">Thanh toán</h1>
-            </div>
-            <div className="grid pb-4" style={{
-                display: 'grid',
-                gridTemplateColumns: '2fr 1fr',
-                gridGap: '1rem',
 
-            }}>
-                <div>
-                    <Tabs
-                        style={{ width: 500 }}
-                        size='large'
-                        tabPosition="left"
-                        items={itemTab}
-                        onChange={onChange}
-                    />
-                    
-                    
-                </div>
-                <div>
-                    <Card title={
-                        <div className='pb-2'>
-                            <p className='font-semibold text-xl mt-2'>Mã đặt chỗ</p>
-                            <span className='pb-2'>1203871283</span>
-                        </div>
-                    }>
-                        <p className='font-medium text-xl'>NGUYEN VAN A</p>
-                        <p className='font-medium text-xl'>+8498765432</p>
-                        <p className='font-medium text-xl'>duc@gmail.com</p>
-                    </Card>
-                </div>
+            <div className="mt-12 mb-8">
+                <h1 className="text-2xl font-bold mb-3"><Spin indicator={antIcon} /> Chờ chút, chúng tôi đang xử lý đơn đặt của bạn !</h1>
             </div>
         </div>
     )

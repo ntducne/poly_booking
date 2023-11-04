@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use MongoDB\Laravel\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\SoftDeletes;
 
 class Billing extends Eloquent
 {
@@ -17,7 +17,8 @@ class Billing extends Eloquent
         'payment_method',
         'payment_date',
         'branch_id',
-        'status'
+        'status',
+        'billingCode'
     ];
     protected $attributes = [
         'status' => null

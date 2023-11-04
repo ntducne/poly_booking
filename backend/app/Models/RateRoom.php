@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Jenssegers\Mongodb\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\SoftDeletes;
 
-
-class RateRoom extends Model
+class RateRoom extends Eloquent
 {
     use HasFactory;
     protected $fillable = [
