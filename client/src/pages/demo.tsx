@@ -7,6 +7,7 @@ import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
 import { useCookies } from 'react-cookie';
 import { log } from 'console';
+import { usePostBookingMutation } from '../api/Room';
 
 
 
@@ -43,6 +44,7 @@ const steps = [
 
 
 const Demo = () => {
+    const [Booking] = usePostBookingMutation()
     const [form] = Form.useForm()
     const [cookies] = useCookies();
     console.log(cookies.roomBooking);
@@ -54,6 +56,7 @@ const Demo = () => {
     // const [isModalRegister, setIsModalRegister] = useState(false);
     const onFinish = (values: any) => {
         console.log('Success:', values);
+        Booking(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {

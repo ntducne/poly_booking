@@ -23,12 +23,11 @@ const roomApi = createApi({
                 url: `client/room/booking`,
                 method: "POST",
                 body: data
-            }),
-            invalidatesTags: ['Booking']
+            })
         }),
     })
 })
 
-export const {useGetRoomsQuery, useGetDetialQuery,usePostBookingQuery} = roomApi
+export const {useGetRoomsQuery, useGetDetialQuery,usePostBookingMutation} = roomApi
 export const roomReducer = roomApi.reducer
 export default roomApi
