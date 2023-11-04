@@ -16,34 +16,35 @@ export default function LoginAdmin() {
   const navigate = useNavigate();
   const [is_loading, setIsLoading] = useState(false);
   const onFinish = async (values: any) => {
-      try {
-          setIsLoading(true)
-          const data: any = await Login(values);
-          const response = data.data
-          if(data.error){
-              message.error(data.error.data.message)
-              setIsLoading(false)
-          }
-
-          if(response){
-              if (response.status === false) {
-                  message.error(response.message)
-                  setIsLoading(false)
-              }
-              if (response.status === true) {
-                  message.success('Đăng nhập thành công')
-                  cookies().Set('AuthUser', JSON.stringify(Object.values(response)), convertFromNowToSeconds(response.accessToken.expires_at))
-                  navigate('/')
-              }
-          }            
-          
-      } catch (error) {
-          console.log(error);
-          setIsLoading(false)
-
+    try {
+      setIsLoading(true);
+      const data: any = await Login(values);
+      const response = data.data;
+      if (data.error) {
+        message.error(data.error.data.message);
+        setIsLoading(false);
       }
-      
-  }
+
+      if (response) {
+        if (response.status === false) {
+          message.error(response.message);
+          setIsLoading(false);
+        }
+        if (response.status === true) {
+          message.success("Đăng nhập thành công");
+          cookies().Set(
+            "AuthUser",
+            JSON.stringify(Object.values(response)),
+            convertFromNowToSeconds(response.accessToken.expires_at)
+          );
+          navigate("/");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
