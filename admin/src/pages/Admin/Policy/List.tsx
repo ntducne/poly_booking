@@ -25,12 +25,14 @@ const ListPolicy = () => {
   // console.log(dataFetching);
 
   useEffect(() => {
-    setDataFetching(data?.data?.data?.map((item: any) => {
+    setDataFetching(data?.data?.data?.map((item: any, index: number) => {
       return {
-        key: item._id,
-        conditions: item.conditions,
-        penalty: item.penalty,
-        room_id: item.room_id,
+        stt: index + 1,
+        key: item?._id,
+        id: item?._id,
+        conditions: item?.conditions,
+        penalty: item?.penalty,
+        room_id: item?.room_id,
       }
       // refetch()
     }))
@@ -39,8 +41,8 @@ const ListPolicy = () => {
   const columns: ColumnsType<any> = [
     {
       title: "Id",
-      dataIndex: "policy_id",
-      sorter: (a, b) => a.policy_id - b.policy_id,
+      dataIndex: "stt",
+      sorter: (a, b) => a?.stt - b?.stt,
       sortDirections: ["descend"],
       fixed: "left",
     },
@@ -118,31 +120,31 @@ const ListPolicy = () => {
     },
   ];
 
-  const data1: any = [
-    {
-      key: "1",
-      policy_id: 1,
-      conditions: "Điều kiện 1",
-      penalty: "Phạm lỗi 1",
-      room_id: {
-        image:
-          "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
-        name: "Phòng 1",
-      },
-    },
-    {
-      key: "2",
-      policy_id: 2,
-      conditions: "Điều kiện 2",
-      penalty: "Phạm lỗi 2",
-      room_id: {
-        image:
-          "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
+  // const data1: any = [
+  //   {
+  //     key: "1",
+  //     policy_id: 1,
+  //     conditions: "Điều kiện 1",
+  //     penalty: "Phạm lỗi 1",
+  //     room_id: {
+  //       image:
+  //         "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
+  //       name: "Phòng 1",
+  //     },
+  //   },
+  //   {
+  //     key: "2",
+  //     policy_id: 2,
+  //     conditions: "Điều kiện 2",
+  //     penalty: "Phạm lỗi 2",
+  //     room_id: {
+  //       image:
+  //         "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
 
-        name: "Phòng 2",
-      },
-    },
-  ];
+  //       name: "Phòng 2",
+  //     },
+  //   },
+  // ];
 
   const onChange: TableProps<DataType>["onChange"] = (
     // pagination,
@@ -204,6 +206,7 @@ const ListPolicy = () => {
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
+        loading={isLoading}
         columns={columns}
         dataSource={dataFetching}
         onChange={onChange}
