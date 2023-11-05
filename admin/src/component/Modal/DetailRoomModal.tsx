@@ -17,10 +17,16 @@ export const DetailRoomModal = (props :DetailRoomModalProps) => {
     return (
         <>
             <Modal title="Chi tiết phòng" open={props.isOpen as any} onOk={props.setIsModalOpen as any} onCancel={props.setIsModalOpen as any}>
+                <div className="grid grid-cols-3 gap-5">
+                    <div className="border"> Thông tin ở : checkin, checkout, adult, children, branch</div>
+                    <div className="border">Thông tin phòng: loại phòng, giá 1 đêm</div>
+                    <div className="border">Thông tin khách đặt</div>    
+                </div>
+                
                 <Row>
-                    <Col span={12}>
+                    {/* <Col span={12}>
                         <Image width={300} src={props.room?.images[0]?.image}/>
-                    </Col>
+                    </Col> */}
                     {/* <Col span={12}>
                         <Row>
                             <Col span={12}>

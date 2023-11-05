@@ -122,11 +122,33 @@ export default function RoomBooking() {
             check_out: values.days[1].format('YYYY-MM-DD'),
             adults: values.adults,
             children: values.childrens,
+            branch_id: '6522c8b825f69ae25502e07a'
         }
         searchRoom(value).unwrap().then(res => {
             if(res.status == 'success'){
                 message.success(res.message)
-                setDataRoom(res.data)
+
+                let data = res.data.map((item: any) => {
+                    return {
+                        'name' : item.name,
+                        'slug': item.slug,
+                        'area' : item.area,
+                        'adult' : item.adults,
+                        'child' : item.children,
+                        'pay_upon_check_in' : item.pay_upon_check_in,
+                        'description' : item.description,
+                        'discount' : item.discount,
+                        'status' : item.status,
+                        'policies_and_information' : item.policies_and_information,
+                        'num_of_bed' : item.num_of_bed,
+                        'bed_size' : item.bed_size,
+                        'branch' : item.branch,
+                        'images' : item.images,
+                        'rate' : item.rate,
+                        'type' : item.type,
+                    }
+                })
+                setDataRoom(data)
             }
             else if(res.status == 'error'){
                 message.error(res.message)
@@ -190,7 +212,7 @@ export default function RoomBooking() {
                     </Card>
                 </div>
             </Form>
-            <Table className={`${isLoading && 'hidden'}`} loading={isLoadingData} columns={columns} dataSource={newData} pagination={false} />
+            <Table className={`${isLoading && 'hidden'} mt-5`} loading={isLoadingData} columns={columns} dataSource={newData} pagination={false} />
             {/* <TableCustom loading={isLoadingData} columns={columns} data={dataRoom}/> */}
         </Page>
     )
