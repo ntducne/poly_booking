@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { useCookies } from 'react-cookie';
 
 interface ILogin {
     email: string,
@@ -32,8 +33,9 @@ const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_URL_API,
         prepareHeaders: (headers) => {
+            const [cookie] = useCookies([ 'userInfo']);
             // localStorage.getItem("access_token");
-            const token = Object.fromEntries(new URLSearchParams(document.cookie));
+            const token = cookie.userInfo.accessToken.token;
             headers.set("authorization", `Bearer ${token}`)
             return headers;
         },
@@ -73,6 +75,12 @@ const authApi = createApi({
             }),
         }),
 
+        getUser: builder.query({
+            query: () => ({
+                url: `/user/profile`,
+                method: "GET",
+            }),
+        }),
         resetPassword: builder.mutation({
             query: (data: IResetPassword) => ({
                 url: `/auth/user/reset-password/${data.token}`,
@@ -85,6 +93,6 @@ const authApi = createApi({
 })
 
 
-export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery, useResetPasswordMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery, useResetPasswordMutation, useGetUserQuery } = authApi;
 export const authReducer = authApi.reducer
 export default authApi

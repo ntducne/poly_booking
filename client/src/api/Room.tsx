@@ -7,7 +7,7 @@ const roomApi = createApi({
         baseUrl: import.meta.env.VITE_URL_API,
         prepareHeaders: (headers) => {
             const token = localStorage.getItem("access_token");
-            headers.set("authorization", `Bearer ${token}`)
+            headers.set("authorization", `Bearer ${token}`)                                                         
             return headers;
         },
     }),
@@ -24,7 +24,7 @@ const roomApi = createApi({
             providesTags: ["Rooms"]
         }),
         getDetial: builder.query<any, any>({
-            query: (id) => `/client/room/${id}`,
+            query: (slug) => `/client/room/${slug}`,
             providesTags: ["Rooms"]
         }),
         postBooking: builder.mutation({
@@ -32,20 +32,12 @@ const roomApi = createApi({
                 url: `client/room/booking`,
                 method: "POST",
                 body: data
-<<<<<<< HEAD
-            })
-=======
             }),
             invalidatesTags: ['Rooms']
->>>>>>> f4a7130b816ebc33f40e7d4a36175bc0b45608e0
         }),
     })
 })
 
-<<<<<<< HEAD
-export const {useGetRoomsQuery, useGetDetialQuery,usePostBookingMutation} = roomApi
-=======
 export const { useGetRoomsQuery, useGetDetialQuery, usePostBookingMutation } = roomApi
->>>>>>> f4a7130b816ebc33f40e7d4a36175bc0b45608e0
 export const roomReducer = roomApi.reducer
 export default roomApi

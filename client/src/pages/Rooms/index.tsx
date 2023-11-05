@@ -65,7 +65,7 @@ export default function Rooms({ }: Props) {
             setCookie('bookingNow', bookingData, { path: '/' });
             navigate("/accommodation/book");
         } else {
-            navigate("/rooms/" + item?.id);
+            navigate("/rooms/" + item?.slug);
         }
     };
 

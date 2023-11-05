@@ -22,16 +22,15 @@ initTE({ Rating });
 
 const Detail = () => {
     const navigate = useNavigate()
-    const { id } = useParams()
-    console.log(id)
+    const { slug } = useParams()
+    console.log(slug)
 
 
 
-    const { data } = useGetDetialQuery(id)
+    const { data } = useGetDetialQuery(slug)
     console.log(data);
     const [, setCookie, removeCookie] = useCookies(['roomBooking']);
-    // const [room , setRoom] = useState()
-    // setRoom(data)
+   
 
     const booking = () =>{
         console.log(data.room);
@@ -241,7 +240,7 @@ const Detail = () => {
             <section className="bg-white  py-8 lg:py-16 antialiased max-w-[70%] m-auto">
                 <div className="w-70% mx-auto px-4">
                     <div className="flex   mb-6">
-                        <h2 className="lg:text-2xl font-bold text-gray-900 text-3xl ">Discussion (20)</h2>
+                        <h2 className="lg:text-2xl font-bold text-gray-900 text-3xl ">Đánh giá </h2>
                     </div>
                     <form className="mb-6">
                         <ul className="my-1 flex list-none gap-1 p-0 mb-5" data-te-rating-init>
