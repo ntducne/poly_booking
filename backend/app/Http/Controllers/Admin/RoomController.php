@@ -98,7 +98,7 @@ class RoomController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chi tiết phòng !',
-                'data' => $room
+                'data' => new RoomResource($room)
             ], 200);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());

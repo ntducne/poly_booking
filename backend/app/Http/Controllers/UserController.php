@@ -199,14 +199,13 @@ class UserController extends Controller
                 'message' => 'Room not found'
             ], 404);
         }
-        $input = $request->validated();
+        $input = $request->all();
         $images = $request->file('images');
         if ($images) {
             $uploadedFileUrl = $this->UploadMultiImage($images, 'rate_room/' . $id_room . '/');
             $input['images'] = json_encode($uploadedFileUrl);
         }
-        $rate = $this->rate_room->create($request->validated());
-        $this->rate_room->create($input);
+        $rate = $this->rate_room->create($input);
         return response()->json([
             'message' => 'Rate room successfully',
             'data' => $rate
