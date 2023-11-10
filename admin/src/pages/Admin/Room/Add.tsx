@@ -54,7 +54,6 @@ const AddRoom = () => {
     for (const [key, value] of Object.entries(data)) {
       formUpload.append(`${key}`, `${value}`)
     }
-    // console.log(formUpload.getAll("images"))
     createUser(formUpload).unwrap().then((item) => {
       if (item.status == 'success') {
         toast("Thêm mới thành công", {
@@ -276,7 +275,7 @@ const AddRoom = () => {
             // mode="multiple"
             // placeholder="Vui lòng chọn chi nhánh !"
             >
-              {dataBranch?.data?.data.map((item: any) => {
+              {dataBranch?.data?.map((item: any) => {
                 return <Option key={item._id} value={item._id}>{item.name}</Option>
               })}
             </Select>

@@ -32,12 +32,12 @@ const EditRoom = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [form] = Form.useForm()
-  const { data, isLoading, refetch } = useGetDetailRoomQuery(id)
+  const { data, isLoading } = useGetDetailRoomQuery(id)
   const { data: dataRoomTypes, isLoading: isLoadingTypes } = useGetRoomTypeQuery({})
   const { data: dataBranch, isLoading: isLoadingBranch } = useGetAllBranchesQuery({})
   const [updateData, { isLoading: isLoadingUpdate }] = useUpdateRoomMutation()
 
-  if(isLoadingTypes && isLoadingBranch){
+  if (isLoadingTypes && isLoadingBranch) {
     return <>loading...</>
   }
   const onFinish = (values: any) => {
@@ -73,9 +73,11 @@ const EditRoom = () => {
   };
 
   const normFile = (e: any) => {
+    console.log(data)
     if (Array.isArray(e)) {
       return e;
     }
+    console.log(e.fileList)
     return e && e.fileList;
   };
 
@@ -103,13 +105,8 @@ const EditRoom = () => {
     setFileList(fileList);
   };
   useEffect(() => {
-    refetch();
-    window.scrollTo(0, 0);
-  }, [id]);
-
-  useEffect(() => {
     form.setFieldsValue(data?.data)
-  }, [isLoading, data?.data])
+  }, [isLoading])
   if (isLoading) {
     return <>loading...</>
   }
@@ -157,8 +154,8 @@ const EditRoom = () => {
             rules={[{ required: true, message: "Vui lòng nhập loại phòng!" }]}
           >
             <Select placeholder="Vui lòng nhập loại phòng!">
-              {dataRoomTypes?.data?.data?.map((item: any) => {
-                return <Option key={item._id} value={item._id}>{item.name}</Option>
+              {dataRoomTypes?.data?.map((item: any) => {
+                return <Option key={item.id} value={item.id}>{item.room_type_name}</Option>
               })}
             </Select>
           </Form.Item>
@@ -225,49 +222,6 @@ const EditRoom = () => {
             </Upload>
           </Form.Item>
 
-          {/* <Form.Item name="bed_size" label="Số giường">
-            <Checkbox.Group>
-              <Row className="flex items-center sm:flex-col">
-                <Col >
-                  <Checkbox value="A" style={{ lineHeight: "32px" }}>
-                    2 lớn , 1 nhỏ
-                  </Checkbox>
-                </Col>
-                <Col >
-                  <Checkbox value="C" style={{ lineHeight: "32px" }}>
-                    1 lớn , 2 nhỏ
-                  </Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>
-          </Form.Item> */}
-
-          {/* <Form.Item
-            name="policies_and_information"
-            label="Chính sách"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn chính sách phòng!",
-                type: "array",
-              },
-            ]}
-          >
-            <Select
-              mode="multiple"
-              placeholder="Vui lòng chọn chính sách phòng!"
-            >
-              <Option value="red">Chính sách 1</Option>
-              <Option value="green">Chính sách 2</Option>
-              <Option value="blue">Chính sách 3</Option>
-            </Select>
-          </Form.Item> */}
-
-          {/* <Form.Item name="rate" label="Đánh giá">
-            <Rate />
-          </Form.Item> */}
-
-
           <Form.Item
             name="branch_id"
             label="Chi nhánh"
@@ -279,11 +233,9 @@ const EditRoom = () => {
             ]}
           >
             <Select
-            // mode="multiple"
-            // placeholder="Vui lòng chọn chi nhánh !"
             >
-              {dataBranch?.data?.data.map((item: any) => {
-                return <Option key={item._id} value={item._id}>{item.name}</Option>
+              {dataBranch?.data?.map((item: any) => {
+                return <Option key={item.id} value={item.id}>{item.name}</Option>
               })}
             </Select>
           </Form.Item>
