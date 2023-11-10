@@ -86,7 +86,10 @@ class AdminController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chi tiết nhân viên !',
-                'data' => new StaffResource($admin),
+                'data' => [
+                    'information' => new StaffResource($admin),
+                    'permissions' => $admin->getAllPermission()
+                ],
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
