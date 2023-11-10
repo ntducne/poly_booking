@@ -187,7 +187,7 @@ const AddRoom = () => {
 
           <Form.Item
             label="Giá tiền"
-            name="discount"
+            name="price"
             rules={[{ required: true, message: "Vui lòng nhập giá tiền" }]}
           >
             <InputNumber min={1} />
@@ -276,7 +276,8 @@ const AddRoom = () => {
             // placeholder="Vui lòng chọn chi nhánh !"
             >
               {dataBranch?.data?.map((item: any) => {
-                return <Option key={item._id} value={item._id}>{item.name}</Option>
+                console.log(item)
+                return <Option key={item.id} value={item.id}>{item.name}</Option>
               })}
             </Select>
           </Form.Item>

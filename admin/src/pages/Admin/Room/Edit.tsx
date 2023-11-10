@@ -15,7 +15,7 @@ import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useGetAllBranchesQuery } from "../../../api/branches";
+import branchApi, { useGetAllBranchesQuery } from "../../../api/branches";
 import { useGetDetailRoomQuery, useUpdateRoomMutation } from "../../../api/room";
 import { useGetRoomTypeQuery } from "../../../api/roomTypes";
 const { Option } = Select;
@@ -32,20 +32,27 @@ const EditRoom = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [form] = Form.useForm()
-  const { data, isLoading } = useGetDetailRoomQuery(id)
+  const { data, isLoading, refetch } = useGetDetailRoomQuery(id)
   const { data: dataRoomTypes, isLoading: isLoadingTypes } = useGetRoomTypeQuery({})
   const { data: dataBranch, isLoading: isLoadingBranch } = useGetAllBranchesQuery({})
   const [updateData, { isLoading: isLoadingUpdate }] = useUpdateRoomMutation()
+  console.log(dataBranch);
 
   if (isLoadingTypes && isLoadingBranch) {
     return <>loading...</>
   }
   const onFinish = (values: any) => {
+    console.log(values)
     const data = {
       ...values,
+      room_type_id: values?.room_type_id?.id,
+      branch_id: values?.branch_id?.id,
       pay_upon_check_in: 1,
-      status: 1
+      status: 1,
+      price: values.discount
     }
+    console.log(data);
+
     delete data.images
 
 
@@ -73,11 +80,9 @@ const EditRoom = () => {
   };
 
   const normFile = (e: any) => {
-    console.log(data)
     if (Array.isArray(e)) {
       return e;
     }
-    console.log(e.fileList)
     return e && e.fileList;
   };
 
@@ -105,8 +110,26 @@ const EditRoom = () => {
     setFileList(fileList);
   };
   useEffect(() => {
-    form.setFieldsValue(data?.data)
-  }, [isLoading])
+    refetch();
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  useEffect(() => {
+    console.log(data?.data)
+    const defaultValue = {
+      ...data?.data,
+      room_type_id: {
+        value: data?.data.type.room_type_name,
+        id: data?.data.type.id
+      },
+      branch_id: {
+        value: data?.data?.branch?.name,
+        id: data?.data?.branch?.id
+      }
+    }
+
+    form.setFieldsValue(defaultValue)
+  }, [isLoading, data?.data])
   if (isLoading) {
     return <>loading...</>
   }
@@ -155,6 +178,8 @@ const EditRoom = () => {
           >
             <Select placeholder="Vui lòng nhập loại phòng!">
               {dataRoomTypes?.data?.map((item: any) => {
+                console.log(dataRoomTypes);
+
                 return <Option key={item.id} value={item.id}>{item.room_type_name}</Option>
               })}
             </Select>
@@ -233,8 +258,10 @@ const EditRoom = () => {
             ]}
           >
             <Select
+            // mode="multiple"
+            // placeholder="Vui lòng chọn chi nhánh !"
             >
-              {dataBranch?.data?.map((item: any) => {
+              {dataBranch?.data.map((item: any) => {
                 return <Option key={item.id} value={item.id}>{item.name}</Option>
               })}
             </Select>
