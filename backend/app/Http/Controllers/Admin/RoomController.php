@@ -108,7 +108,7 @@ class RoomController extends Controller
             ], 500);
         }
     }
-    public function update(Request $request, $id)
+    public function update(UpdateRoomRequest $request, $id)
     {
         try {
             $object = $this->room->find($id);

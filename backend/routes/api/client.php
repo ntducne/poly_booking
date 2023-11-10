@@ -18,6 +18,6 @@ Route::prefix('room')->group(function () {
 });
 
 
-Route::get('test/{id}', [\App\Repositories\UserRepository::class, 'bookingHistory']);
+//Route::get('test/{id}', [\App\Repositories\UserRepository::class, 'bookingHistory']);
 
 
