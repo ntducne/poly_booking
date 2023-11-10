@@ -38,6 +38,6 @@ const roomApi = createApi({
     })
 })
 
-export const { useGetRoomsQuery, useGetDetialQuery, usePostBookingMutation } = roomApi
+export const {useGetRoomsQuery, useGetDetialQuery,usePostBookingMutation} = roomApi
 export const roomReducer = roomApi.reducer
 export default roomApi
