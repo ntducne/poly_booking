@@ -15,7 +15,7 @@ import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useGetAllBranchesQuery } from "../../../api/branches";
+import branchApi, { useGetAllBranchesQuery } from "../../../api/branches";
 import { useGetDetailRoomQuery, useUpdateRoomMutation } from "../../../api/room";
 import { useGetRoomTypeQuery } from "../../../api/roomTypes";
 const { Option } = Select;
@@ -36,16 +36,23 @@ const EditRoom = () => {
   const { data: dataRoomTypes, isLoading: isLoadingTypes } = useGetRoomTypeQuery({})
   const { data: dataBranch, isLoading: isLoadingBranch } = useGetAllBranchesQuery({})
   const [updateData, { isLoading: isLoadingUpdate }] = useUpdateRoomMutation()
+  console.log(dataBranch);
 
-  if(isLoadingTypes && isLoadingBranch){
+  if (isLoadingTypes && isLoadingBranch) {
     return <>loading...</>
   }
   const onFinish = (values: any) => {
+    console.log(values)
     const data = {
       ...values,
+      room_type_id: values?.room_type_id?.id,
+      branch_id: values?.branch_id?.id,
       pay_upon_check_in: 1,
-      status: 1
+      status: 1,
+      price: values.discount
     }
+    console.log(data);
+
     delete data.images
 
 
@@ -108,7 +115,20 @@ const EditRoom = () => {
   }, [id]);
 
   useEffect(() => {
-    form.setFieldsValue(data?.data)
+    console.log(data?.data)
+    const defaultValue = {
+      ...data?.data,
+      room_type_id: {
+        value: data?.data.type.room_type_name,
+        id: data?.data.type.id
+      },
+      branch_id: {
+        value: data?.data?.branch?.name,
+        id: data?.data?.branch?.id
+      }
+    }
+
+    form.setFieldsValue(defaultValue)
   }, [isLoading, data?.data])
   if (isLoading) {
     return <>loading...</>
@@ -157,8 +177,10 @@ const EditRoom = () => {
             rules={[{ required: true, message: "Vui lòng nhập loại phòng!" }]}
           >
             <Select placeholder="Vui lòng nhập loại phòng!">
-              {dataRoomTypes?.data?.data?.map((item: any) => {
-                return <Option key={item._id} value={item._id}>{item.name}</Option>
+              {dataRoomTypes?.data?.map((item: any) => {
+                console.log(dataRoomTypes);
+
+                return <Option key={item.id} value={item.id}>{item.room_type_name}</Option>
               })}
             </Select>
           </Form.Item>
@@ -225,49 +247,6 @@ const EditRoom = () => {
             </Upload>
           </Form.Item>
 
-          {/* <Form.Item name="bed_size" label="Số giường">
-            <Checkbox.Group>
-              <Row className="flex items-center sm:flex-col">
-                <Col >
-                  <Checkbox value="A" style={{ lineHeight: "32px" }}>
-                    2 lớn , 1 nhỏ
-                  </Checkbox>
-                </Col>
-                <Col >
-                  <Checkbox value="C" style={{ lineHeight: "32px" }}>
-                    1 lớn , 2 nhỏ
-                  </Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>
-          </Form.Item> */}
-
-          {/* <Form.Item
-            name="policies_and_information"
-            label="Chính sách"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn chính sách phòng!",
-                type: "array",
-              },
-            ]}
-          >
-            <Select
-              mode="multiple"
-              placeholder="Vui lòng chọn chính sách phòng!"
-            >
-              <Option value="red">Chính sách 1</Option>
-              <Option value="green">Chính sách 2</Option>
-              <Option value="blue">Chính sách 3</Option>
-            </Select>
-          </Form.Item> */}
-
-          {/* <Form.Item name="rate" label="Đánh giá">
-            <Rate />
-          </Form.Item> */}
-
-
           <Form.Item
             name="branch_id"
             label="Chi nhánh"
@@ -282,8 +261,8 @@ const EditRoom = () => {
             // mode="multiple"
             // placeholder="Vui lòng chọn chi nhánh !"
             >
-              {dataBranch?.data?.data.map((item: any) => {
-                return <Option key={item._id} value={item._id}>{item.name}</Option>
+              {dataBranch?.data.map((item: any) => {
+                return <Option key={item.id} value={item.id}>{item.name}</Option>
               })}
             </Select>
           </Form.Item>
