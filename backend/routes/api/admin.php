@@ -27,11 +27,13 @@ Route::middleware(\App\Http\Middleware\CheckPermission::class)->group(function (
 
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);
 
-    Route::post('room/deleteImage', [RoomController::class, 'deleteImageRoom']);
+    Route::post('rooms/deleteImage', [RoomController::class, 'deleteImageRoom'])->name('rooms.image.delete');
 
     Route::resource('utilities', UtilitiesController::class)->except(['create','edit']);
 
     Route::resource('rooms', RoomController::class)->except(['create', 'edit']);
+
+    Route::post('rooms/updateImage/{id}', [\App\Http\Controllers\Admin\RoomController::class, 'updateImage'])->name('rooms.image.update');
 
     Route::resource('utilities', UtilitiesController::class)->except(['create', 'edit']);
 
