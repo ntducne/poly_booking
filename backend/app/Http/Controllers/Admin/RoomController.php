@@ -108,7 +108,7 @@ class RoomController extends Controller
             ], 500);
         }
     }
-    public function update(UpdateRoomRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
             $object = $this->room->find($id);
@@ -123,10 +123,37 @@ class RoomController extends Controller
                 $object->slug = convertToSlug($request->name);
             }
 
-//            dd($roomImages);
+            $arr = $request->all();
+            $room = $object->update($arr);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Update phòng thành công!',
+            ], 200);
+        } catch(Exception $exception){
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Lỗi !'
+            ], 500);
+        }
+    }
+
+    public function updateImage(Request $request, $id){
+        try {
+            $object = $this->room->find($id);
+            if(!$object){
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Phòng không tồn tại !',
+                    'data' => null
+                ], 404);
+            }
             $images = $request->file('images');
+//            dd($images);
+            $arrayImg = [];
             if($images){
                 $uploadFileUrl = $this->UploadMultiImage($images, 'rooms/'.$object->id.'/');
+                $arrayImg[] = $uploadFileUrl;
                 foreach($uploadFileUrl as $key => $image){
                     $this->room_image->create([
                         'room_id' => $object->id,
@@ -135,12 +162,10 @@ class RoomController extends Controller
                     ]);
                 }
             }
-            $arr = $request->all();
-            $room = $object->update($arr);
             return response()->json([
                 'status' => 'success',
-                'message' => 'Update phòng thành công!',
-                'data' => $room,
+                'message' => 'Update anh thành công!',
+                'data' => $arrayImg,
             ], 200);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());
