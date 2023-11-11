@@ -3,19 +3,20 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 
+
 export default function HeaderAuth() {
     const [header] = useState(true)
     return (
-        <div className={`fixed px-[50px] top-0 z-40 w-full transition-all duration-300`} style={{ backgroundColor: header ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 0)' }}>
-            <div className="container mx-auto lg:flex-row lg:justify-between lg:gap-y-0 flex justify-between">
+        <div className={`fixed  px-[50px] top-0 z-40 w- full transition-all duration-300`} style={{ backgroundColor: header ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 0)' }}>
+            <div className="container  mx-auto lg:flex-row lg:justify-between lg:gap-y-0 flex justify-between ">
                 <div className='flex gap-5 items-center '>
                     <Link to=''>
-                        {header ? <img className='w-[90px]' src={"https://res.cloudinary.com/dteefej4w/image/upload/v1696338661/logo_30_zwmslg.png"} />
+                        {header ? <img className=' w-[90px] ' src={"https://res.cloudinary.com/dteefej4w/image/upload/v1696338661/logo_30_zwmslg.png"} />
                             :
-                            <img className='w-[90px]' src={"https://res.cloudinary.com/dteefej4w/image/upload/v1696338751/logo_31_olx95j.png"} />}
+                            <img className=' w-[90px] ' src={"https://res.cloudinary.com/dteefej4w/image/upload/v1696338751/logo_31_olx95j.png"} />}
                     </Link>
                     <div className={`${header ? "text-dark py-6" : "text-white  py-4"} lg:flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] items-center hidden`}>
-                        {/* Add your content here */}
+
                     </div>
                 </div>
                 <div className={`${header ? "text-dark py-6" : "text-white  py-4"} flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] items-center`}>
@@ -32,3 +33,4 @@ export default function HeaderAuth() {
 
     )
 }
+
