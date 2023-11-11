@@ -56,8 +56,8 @@ export default function Login({ }: Props) {
 
     return (
         <Page title='Đăng nhập'>
-            <div className="flex items-center justify-center h-[120vh] lg:h-screen md:h-screen bg-bgr">
-                <section className="h-screen" >
+            <div className="flex items-center justify-center h-[120vh] lg:h-[105vh] md:h-screen bg-bgr">
+                <section className="h-screen mt-2">
                     <div className="flex items-center justify-center h-full">
                         <div className="w-[300px] h-[600px] lg:h-[600px] lg:w-[1050px] md:h-[450px] md:w-[725px] bg-white rounded-md shadow-2xl">
                             <div
