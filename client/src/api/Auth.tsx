@@ -33,11 +33,19 @@ const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_URL_API,
         prepareHeaders: (headers) => {
-            const [cookie] = useCookies([ 'userInfo']);
-            // localStorage.getItem("access_token");
-            const token = cookie.userInfo.accessToken.token;
+            // const [cookie] = useCookies(['userInfo']);
+            // if (cookie.userInfo) {
+
+            //     // localStorage.getItem("access_token");
+            //     const token = cookie.userInfo.accessToken.token;
+            //     headers.set("authorization", `Bearer ${token}`)
+            //     return headers;
+            // }
+            const token = localStorage.getItem("access_token");
             headers.set("authorization", `Bearer ${token}`)
             return headers;
+
+
         },
     }),
     endpoints: (builder) => ({
@@ -49,7 +57,14 @@ const authApi = createApi({
             }),
             invalidatesTags: ['Auth']
         }),
-
+        updateUser: builder.mutation({
+            query: (data: ILogin) => ({
+                url: `/user/update/profile`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['Auth']
+        }),
         register: builder.mutation({
             query: (data: IRegister) => ({
                 url: `/auth/user/register`,
