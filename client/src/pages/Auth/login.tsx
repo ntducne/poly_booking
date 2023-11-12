@@ -56,17 +56,17 @@ export default function Login({ }: Props) {
 
     return (
         <Page title='Đăng nhập'>
-            <div className="flex items-center justify-center h-[120vh] lg:h-screen md:h-screen bg-bgr">
-                <section className="h-screen" >
-                    <div className="flex items-center justify-center h-full">
-                        <div className="w-[300px] h-[600px] lg:h-[600px] lg:w-[1050px] md:h-[450px] md:w-[725px] bg-white rounded-md shadow-2xl">
+            <div className="flex items-center justify-center h-[120vh] lg:h-[105vh] md:h-screen bg-bgr">
+                <section className=" h-screen mt-2">
+                    <div className="  items-center justify-center h-full">
+                        <div className=" w-[300px] h-[600px] lg:h-[600px] lg:w-[1050px] md:h-[450px] md:w-[725px] bg-white rounded-md shadow-2xl">
                             <div
                                 className="md:flex md:flex-wrap md:items-center lg:flex lg:flex-wrap lg:items-center lg:gap-5 md:gap-2">
                                 <div
                                     className="shrink-1 mb-12 grow-0 basis-auto lg:w-6/12 xl:w-6/12 md:w-6/12">
                                     <img
                                         src="https://cdn.alongwalk.info/vn/wp-content/uploads/2022/03/12183725/image-7-khach-san-5-sao-vung-tau-view-bien-cuc-dep-164705984460476.jpg"
-                                        className="h-[150px] w-[300px] lg:w-full lg:h-[600px] md:h-[450px] md:w-full border rounded-md"
+                                        className=" h-[150px] w-[300px] lg:w-full lg:h-[600px] md:h-[450px] md:w-full border rounded-md"
                                         alt="Sample image" />
                                 </div>
 
