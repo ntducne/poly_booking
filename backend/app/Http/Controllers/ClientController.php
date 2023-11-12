@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Booking\BookingRequest;
-use App\Http\Requests\Booking\SearchRequest;
 use App\Http\Resources\BranchResource;
 use App\Http\Resources\RoomResource;
 use App\Models\Billing;
@@ -17,6 +16,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -94,10 +94,28 @@ class ClientController extends Controller
     }
     public function check_room($check_in, $check_out, $adults, $children, $branch_id, $room_type_id = null, $soLuong = 1)
     {
+        $config = config('status');
         //Check qua thoi gian ben Booking
         $room_booked = $this->booking
-            ->where('status', '=', false)
-            // ->where('room_type', $room_type_id)
+            // ->where('status', '=', config('status')[0]->id)
+            ->where(function ($query) use ($config) {
+                $query->where(function ($query) use ($config) {
+                    $query->where('status', '=', $config[0]['id']);
+                })
+                    ->orWhere(function ($query) use ($config) {
+                        $query->where('status', '=', $config[1]['id']);
+                    })
+                    ->orWhere(function ($query) use ($config) {
+                        $query->where('status', '=', $config[3]['id']);
+                    })
+                    ->orWhere(function ($query) use ($config) {
+                        $query->where('status', '=', $config[5]['id']);
+                    })
+                    ->orWhere(function ($query) use ($config) {
+                        $query->where('status', '=', $config[8]['id']);
+                    });
+            })
+            ->where('room_type', $room_type_id)
             ->where(function ($query) use ($check_in, $check_out) {
                 $query->where(function ($query) use ($check_in, $check_out) {
                     $query->where('checkin', '<=', $check_in)
@@ -110,6 +128,7 @@ class ClientController extends Controller
                         $query->where('checkin', '<=', $check_in)->where('checkout', '>', $check_in)->where('checkout', '<=', $check_out);
                     });
             })->get();
+        // dd($room_booked);
         $room_id_booked = [];
         foreach ($room_booked as $item) {
             $book_detail = $this->book_detail->where('booking_id', '=', $item->_id)->get();
@@ -213,11 +232,8 @@ class ClientController extends Controller
                 'phone' => $request->phone
             ];
             $param['amount_room'] = $soLuong;
+            $param['status'] = config('status')[0]['id'];
             //Lay ra id user neu ho da co tai khoan tu truoc
-            if (!empty($request->email)) {
-                $user = User::where('email', '=', $request->email)->first();
-            }
-            $param['user_id'] = !empty($user) ? $user->_id : null;
             $create = $this->booking->create($param);
             $details = [];
             foreach ($room_booking as $key => $value) {
@@ -238,9 +254,13 @@ class ClientController extends Controller
             //Hoa don
             $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
             $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
+            if (!empty($request->email)) {
+                $user = User::where('email', '=', $request->email)->first();
+            }
             $bill = [
                 'billingCode' => random_int(1, 10000),
                 'booking_id' => $create->_id,
+                'user_id' => !empty($user) ? $user->_id : null,
                 'services' => [],
                 'total' => $create->price_per_night * $amount_day,
                 // total = so ngay su dung phong * gia 1 dem
@@ -248,7 +268,7 @@ class ClientController extends Controller
                 //thanh toan tai quay
                 'payment_date' => null,
                 'branch_id' => $branch_id,
-                'status' => 'Not yet implemented'
+                'status' => config('status')[0]['id'],
             ];
             $data = $this->billing->create($bill);
 
@@ -256,7 +276,8 @@ class ClientController extends Controller
                 'message' => 'Đặt thành công !',
                 'booking' => $create,
                 'details' => $details,
-                'bill' => $data
+                'bill' => $data,
+                'status' => config('status')[0]['status'],
             ]);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
