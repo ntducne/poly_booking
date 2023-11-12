@@ -238,11 +238,13 @@ class ClientController extends Controller
             //Hoa don
             $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
             $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
+            $billing_code = random_int(1, 10000);
+            $total = $create->price_per_night * $amount_day;
             $bill = [
-                'billingCode' => random_int(1, 10000),
+                'billingCode' => $billing_code,
                 'booking_id' => $create->_id,
                 'services' => [],
-                'total' => $create->price_per_night * $amount_day,
+                'total' => $total,
                 // total = so ngay su dung phong * gia 1 dem
                 'payment_method' => $request->payment_method,
                 //thanh toan tai quay
@@ -251,12 +253,12 @@ class ClientController extends Controller
                 'status' => 'Not yet implemented'
             ];
             $data = $this->billing->create($bill);
-
             return response()->json([
                 'message' => 'Đặt thành công !',
-                'booking' => $create,
-                'details' => $details,
-                'bill' => $data
+                'bill' => [
+                    'billingCode' => $billing_code,
+                    'total' =>  $total,
+                ]
             ]);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
@@ -265,6 +267,5 @@ class ClientController extends Controller
                 'message' => 'Lỗi không thực hiện được đặt phòng !'
             ]);
         }
-
     }
 }

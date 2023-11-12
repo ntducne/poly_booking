@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UtilitiesController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\CheckPermission;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function () {
@@ -22,7 +23,7 @@ Route::fallback(function () {
 });
 
 
-Route::middleware(\App\Http\Middleware\CheckPermission::class)->group(function () {
+Route::middleware(CheckPermission::class)->group(function () {
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
 
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);

@@ -215,7 +215,7 @@ class BookingRepository
         $amount_room = $request->amount_room;
 
         // Kiểm tra sự có sẵn của phòng
-        $available_rooms = $this->check_room($check_in, $check_out, $branch_id, $adults, $children, $room_type_id);
+        $available_rooms = $this->check_room($check_in, $check_out, $branch_id, $adults, $children, $room_type_id, $amount_room);
 
         // Kiểm tra xem có đủ số phòng cần đặt không
         if (count($available_rooms) < $amount_room) {

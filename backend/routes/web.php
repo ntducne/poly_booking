@@ -8,6 +8,6 @@ Route::get('unauthorized', function (){ return response()->json([
     'message' => 'Unauthorized !'
 ], 401); });
 
-Route::get('', function () {
-    return 'ahihi';
-});
+//Route::get('', function () {
+//    return 'ahihi';
+//});
