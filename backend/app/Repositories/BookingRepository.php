@@ -66,9 +66,27 @@ class BookingRepository
 
     private function check_room($check_in, $check_out, $branch_id, $adults, $children, $room_type_id, $amount_room): array
     {
+        $config = config('status');
+        //Check qua thoi gian ben Booking
         $room_booked = $this->booking
-            ->where('status', '=', false)
-            // ->where('room_type', $room_type_id)
+            // ->where('status', '=', config('status')[0]->id)
+            ->where(function ($query) use ($config) {
+                $query->where(function ($query) use ($config) {
+                    $query->where('status', '=', $config[0]['id']);
+                })
+                    ->orWhere(function ($query) use ($config) {
+                        $query->where('status', '=', $config[1]['id']);
+                    })
+                    ->orWhere(function ($query) use ($config) {
+                        $query->where('status', '=', $config[3]['id']);
+                    })
+                    ->orWhere(function ($query) use ($config) {
+                        $query->where('status', '=', $config[5]['id']);
+                    })
+                    ->orWhere(function ($query) use ($config) {
+                        $query->where('status', '=', $config[8]['id']);
+                    });
+            })
             ->where(function ($query) use ($check_in, $check_out) {
                 $query->where(function ($query) use ($check_in, $check_out) {
                     $query->where('checkin', '<=', $check_in)
@@ -161,10 +179,7 @@ class BookingRepository
             'phone' => $request->phone
         ];
         $param['amount_room'] = $amount_room;
-        if (!empty($request->email)) {
-            $user = User::where('email', '=', $request->email)->first();
-        }
-        $param['user_id'] = !empty($user) ? $user->_id : null;
+        $param['status'] = config('status')[0]['id'];
         $create = $this->booking->create($param);
         $details = [];
         foreach ($room_booking as $key => $value) {
@@ -178,15 +193,19 @@ class BookingRepository
         }
         $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
         $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
+        if (!empty($request->email)) {
+            $user = User::where('email', '=', $request->email)->first();
+        }
         $bill = [
-            'billingCode' =>  random_int(1,10000),
+            'billingCode' => random_int(1, 10000),
             'booking_id' => $create->_id,
+            'user_id' => !empty($user) ? $user->_id : null,
             'services' => [],
             'total' => $create->price_per_night * $amount_day,
             'payment_method' => $request->payment_method,
             'payment_date' => null,
             'branch_id' => $branch_id,
-            'status' => 'Not yet implemented'
+            'status' => config('status')[0]['id']
         ];
         $data = $this->billing->create($bill);
         if ($condition) {
