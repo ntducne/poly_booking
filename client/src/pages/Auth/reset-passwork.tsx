@@ -54,9 +54,9 @@ export default function ResetPassword({ }: Props) {
 
     return (
         <Page title='Nhập lại mật khẩu'>
-            <div className="flex items-center justify-center h-[120vh] lg:h-screen md:h-screen bg-bgr">
-                <section className="h-screen" >
-                    <div className="flex items-center justify-center h-full">
+            <div className="flex items-center justify-center h-[120vh] lg:h-full md:h-screen bg-bgr">
+                <section className="h-screen pt-12" >
+                    <div className="flex items-center justify-center">
                         <div className="w-[300px] h-[600px] lg:h-[550px] lg:w-[1050px] md:h-[450px] md:w-[725px] bg-white rounded-md shadow-2xl">
                             <div
                                 className="md:flex md:flex-wrap md:items-center lg:flex lg:flex-wrap lg:items-center lg:gap-5 md:gap-2">

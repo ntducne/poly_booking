@@ -70,7 +70,7 @@ export default function Register({ }: Props) {
 
     return (
         <Page title='Đăng ký'>
-            <div className="flex items-center justify-center h-[125vh] bg-bgr">
+            <div className="flex items-center justify-center h-[115vh] bg-bgr">
                 <section className="h-screen" >
                     <div className="flex items-center justify-center h-full">
                         <div className="h-[730px] w-[290px] lg:h-[700px] lg:w-[950px] md:h-[650px] md:w-[700px] bg-white rounded-md shadow-2xl hover:shadow-2xl">
