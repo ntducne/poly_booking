@@ -9,12 +9,12 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'checkin' => ['required', 'date_format:Y-m-d', 'after:today|before:checkout'],
-            'checkout' => ['required', 'date_format:Y-m-d', 'after:today'],
+            'checkin' => ['required', 'date_format:Y-m-d', 'after:today'],
+            'checkout' => ['required', 'date_format:Y-m-d', 'after:today','after:checkin'],
             'adult' => ['required', 'numeric', 'min:0'],
             'child' => ['required', 'numeric', 'min:0'],
-            'room_type_id' => ['required', 'exists:App\Models\RoomType,_id'],
             'branch_id' => ['required', 'exists:App\Models\Branch,_id'],
+            'soLuong'=>['required', 'numeric', 'min:0']
         ];
     }
     public function attributes()
@@ -24,8 +24,8 @@ class SearchRequest extends FormRequest
             'checkout' => 'Thời gian trả phòng',
             'adult' => 'Số người lớn ',
             'child' => 'Số trẻ em',
-            'room_type_id' => 'Kiểu phòng',
-            'branch_id' => 'Chi nhánh phòng muốn đặt'
+            'branch_id' => 'Chi nhánh phòng muốn đặt',
+            'soLuong'=> 'Số Lượng phòng'
         ];
     }
 }

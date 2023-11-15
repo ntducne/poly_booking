@@ -326,7 +326,7 @@ const Profile = () => {
                                                                             validator: validatePhoneNumber,
                                                                         },
                                                                     ]}>
-                                                                    <Input className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
+                                                                    <Input className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />     
                                                                 </Form.Item>
                                                             </div>
                                                         </div>

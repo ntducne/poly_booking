@@ -18,6 +18,7 @@ import AccommodationReview from "./pages/Payment/accommodation/review"
 import PaymentView from "./pages/Payment"
 import PaymentProcess from "./pages/Payment/process"
 import PaymentStatus from "./pages/Payment/process/status"
+import LayoutAuth from "./layouts/Auth"
 
 
 
@@ -26,8 +27,7 @@ function App() {
   return (
     <>
       <Routes>
-
-        <Route path='/' element={<LayoutClient />}>
+        <Route path='/' element={<LayoutClient />} >
           <Route index element={<Home />} />
           <Route path='rooms' element={<Rooms />} />
           <Route path="rooms/:slug" element={<Detail />} />
@@ -38,13 +38,12 @@ function App() {
             <Route path='roomBooked' element={<RoomBooked />} />
           </Route>
         </Route>
-        <Route path='/auth'>
+        <Route path='/auth' element={<LayoutAuth />} >
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="forGotPassword" element={<ForgotPassword />} />
           <Route path="reset/:token" element={<ResetPassword />} />
-          {/* <Route path="resetpassword" element={<ResetPassword />} /> */}
-        </Route>
+        </Route >
         <Route path='/accommodation/book' element={<PaymentLayout />}>
           <Route index element={<AccommodationBook />} />
           <Route path="review" element={<AccommodationReview />} />

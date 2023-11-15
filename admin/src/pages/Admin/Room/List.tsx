@@ -15,14 +15,13 @@ interface DataType {
   num_of_bed: number;
   address: string;
   status: number,
-  area: string
+  area: string;
+  images: any
 }
 
 
 const ListRoom = () => {
   const { data, isLoading, refetch } = useGetRoomsQuery({});
-  console.log(data);
-
   const [dataFetching, setDataFetching] = useState<any>([])
   const [deleteRoom] = useDeleteRoomMutation()
 
@@ -35,7 +34,8 @@ const ListRoom = () => {
         discount: item.discount,
         status: item.status,
         area: item.area,
-        address: item?.branch?.address
+        address: item?.branch?.address,
+        images: item?.images?.map((item: any) => item.image)
       }
     }))
   }, [isLoading, data?.data])
@@ -50,21 +50,22 @@ const ListRoom = () => {
     {
       title: "Loại phòng",
       dataIndex: "imageType",
-      render: (_, record) => (
-        <div className="flex items-center">
-          {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-          <Image
-            className="rounded-3xl "
-            width={150}
-            src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg"
-          />
-          <div className="ml-3 text-gray-500">
-            <p>#68e365</p>
-            <p>{record?.num_of_bed} giường ngủ</p>
-            {/* <p>{record?.key}</p> */}
+      render: (_, record) => {
+        return (
+          <div className="flex items-center">
+            {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
+            <Image
+              className="rounded-3xl max-w-[150px] object-cover"
+              src={record?.images?.[0]}
+            />
+            <div className="ml-3 text-gray-500">
+              <p>#68e365</p>
+              <p>{record?.num_of_bed} giường ngủ</p>
+              {/* <p>{record?.key}</p> */}
+            </div>
           </div>
-        </div>
-      ),
+        )
+      },
     },
     {
       title: "Giá phòng",
@@ -201,15 +202,14 @@ const ListRoom = () => {
           </Link>
         </div>
       </div>
-      {isLoading ? <>loading...</> :
-        <Table
-          scroll={{ x: true }}
-          className="max-w-full mt-3"
-          columns={columns}
-          dataSource={dataFetching}
-          onChange={onChange}
-        />
-      }
+      <Table
+        scroll={{ x: true }}
+        className="max-w-full mt-3"
+        columns={columns}
+        dataSource={dataFetching}
+        onChange={onChange}
+        loading={isLoading}
+      />
     </Page>
   );
 };

@@ -54,7 +54,6 @@ const AddRoom = () => {
     for (const [key, value] of Object.entries(data)) {
       formUpload.append(`${key}`, `${value}`)
     }
-    // console.log(formUpload.getAll("images"))
     createUser(formUpload).unwrap().then((item) => {
       if (item.status == 'success') {
         toast("Thêm mới thành công", {
@@ -188,7 +187,7 @@ const AddRoom = () => {
 
           <Form.Item
             label="Giá tiền"
-            name="discount"
+            name="price"
             rules={[{ required: true, message: "Vui lòng nhập giá tiền" }]}
           >
             <InputNumber min={1} />
@@ -276,8 +275,9 @@ const AddRoom = () => {
             // mode="multiple"
             // placeholder="Vui lòng chọn chi nhánh !"
             >
-              {dataBranch?.data?.data.map((item: any) => {
-                return <Option key={item._id} value={item._id}>{item.name}</Option>
+              {dataBranch?.data?.map((item: any) => {
+                console.log(item)
+                return <Option key={item.id} value={item.id}>{item.name}</Option>
               })}
             </Select>
           </Form.Item>

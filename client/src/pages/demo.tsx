@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import { Button, Card, message, Modal, Steps } from 'antd';
 // import { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
@@ -111,3 +112,10 @@
 //         <>aHIHI</>
 //     )
 // }
+=======
+export default function Demo() {
+    return (
+        <>aHIHI</>
+    )
+}
+>>>>>>> 4149fc4b9dfce7676b2a63efe070766b61b86149
