@@ -21,8 +21,9 @@ class UserController extends Controller
 {
     private RateRoom $rate_room;
     private Room $room;
-     private UserRepository $userRepository;
-
+    private UserRepository $userRepository;
+    private Booking $booking; // Add this line
+    private BookDetail $book_detail; //
     public function __construct( UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
@@ -200,7 +201,7 @@ class UserController extends Controller
         $images = $request->file('images');
         if ($images) {
             $uploadedFileUrl = $this->UploadMultiImage($images, 'rate_room/' . $id_room . '/');
-            $input['images'] = json_encode($uploadedFileUrl);
+            $input['images'] = $uploadedFileUrl;
         }
         $rate = $this->rate_room->create($input);
         return response()->json([
