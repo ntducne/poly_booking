@@ -19,7 +19,7 @@ type FieldType = {
 export default function AccommodationBook() {
     const [isModalLogin, setIsModalLogin] = useState(false);
     // const [isModalRegister, setIsModalRegister] = useState(false);
-    const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook']);
+    const [cookie, setCookie, removeCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook']);
     const [userName, setUserName] = useState('')
     const [userPhone, setUserPhone] = useState('')
     const [userEmail, setUserEmail] = useState('')
@@ -61,7 +61,7 @@ export default function AccommodationBook() {
 
 
     useEffect(() => {
-        setCookie('paymentPage', 0, { path: '/' })
+        removeCookie('paymentPage', { path: '/' });
         if(cookie.userInfo){
             fetch('https://api.polydevhotel.site/user/profile',{
                 method: 'GET',
