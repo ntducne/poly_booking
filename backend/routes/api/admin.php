@@ -42,7 +42,7 @@ Route::middleware(CheckPermission::class)->group(function () {
 
     Route::resource('staffs', AdminController::class)->except(['create', 'edit']);
 
-    Route::post('staffs/assignPermission', [AdminController::class, 'assignPermission'])->name('staffs.assignPermission');
+    Route::post('staffs/assignPermission/{id}', [AdminController::class, 'assignPermission'])->name('staffs.assignPermission');
 
     Route::resource('rates', RatesController::class)->except(['create', 'edit']);
 

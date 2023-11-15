@@ -254,14 +254,11 @@ class ClientController extends Controller
             //Hoa don
             $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
             $amount_day = floor($datediff / (60 * 60 * 24)); // so ngay khach hang dat
-<<<<<<< HEAD
             $billing_code = random_int(1, 10000);
             $total = $create->price_per_night * $amount_day;
-=======
             if (!empty($request->email)) {
                 $user = User::where('email', '=', $request->email)->first();
             }
->>>>>>> ea8de810ba0203a8401a5149e3c0ae0eb402aa9f
             $bill = [
                 'billingCode' => $billing_code,
                 'booking_id' => $create->_id,
@@ -278,17 +275,10 @@ class ClientController extends Controller
             $data = $this->billing->create($bill);
             return response()->json([
                 'message' => 'Đặt thành công !',
-<<<<<<< HEAD
                 'bill' => [
                     'billingCode' => $billing_code,
                     'total' =>  $total,
                 ]
-=======
-                'booking' => $create,
-                'details' => $details,
-                'bill' => $data,
-                'status' => config('status')[0]['status'],
->>>>>>> ea8de810ba0203a8401a5149e3c0ae0eb402aa9f
             ]);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
