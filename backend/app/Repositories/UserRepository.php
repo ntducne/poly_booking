@@ -2,11 +2,16 @@
 
 namespace app\Repositories;
 
+use App\Http\Requests\Request;
+use App\Http\Resources\BillingResource;
+use App\Models\Billing;
+use App\Models\Booking;
 use App\Models\User;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use PHPUnit\Runner\ReflectionException;
 
 class UserRepository
 {
@@ -250,19 +255,17 @@ class UserRepository
             return false;
         }
     }
-
-    public function bookingHistory($id){
+    public function bookingHistory($request){
         try {
-            $user = $this->find($id);
-            if(!$user){
-                return false;
-            }
-            return $user
-                    ->bookingHistory()
-                    ->paginate(10);
+
+                $booking = Booking::where('user_id' , $request->user()->_id)->first();
+                $billing = Billing::where('booking_id' , $booking->id)->first();
+                return new BillingResource($billing);
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return false;
         }
+
     }
 }
+

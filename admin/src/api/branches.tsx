@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { cookies } from '../config/cookies';
 
 const branchApi = createApi({
-    reducerPath: "branches",
+    reducerPath: "Branch",
     tagTypes: ['Branches'],
     baseQuery: fetchBaseQuery({
         baseUrl: "https://api.polydevhotel.site",
