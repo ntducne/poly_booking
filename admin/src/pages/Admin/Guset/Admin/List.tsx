@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Checkbox, Collapse, Image, Modal, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Checkbox, Collapse, Form, Image, Modal, Skeleton, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { Link } from "react-router-dom";
 interface DataType {
@@ -22,10 +22,16 @@ const ListAdmin = () => {
 
   const { data: valuePermission } = useGetPermissonQuery([]);
 
-  const [isStaff, setIsStaff] = useState({});
+  const [isStaff, setIsStaff] = useState("");
+  const [dataStaff, setDataStaff] = useState({});
   const { data: staff, isLoading: loadingStaff } = useGetDetailStaffsQuery(
     isStaff || ""
   );
+  useEffect(() => {
+    if (isStaff) {
+      setDataStaff(staff);
+    }
+  }, [isStaff]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,16 +48,38 @@ const ListAdmin = () => {
     label: item?.label,
     children: (
       <>
-         {item?.permissions?.map((permission: any, index: any) => {
+        {item?.permissions?.map((permission: any, index: any) => {
           const key = Object.keys(permission)[0];
           const value = permission[key];
-          // const permissionUser = staff?.data?.staff_permission?.map(
-          //   (item: any) => {}
-          // );
-          // if (loadingStaff) {
-          //   return <>...Loading</>;
-          // }
-          return <Checkbox key={index}>{value}</Checkbox>;
+          // console.log("key", key);
+          // console.log("permissionUser", staff?.data?.permissions);
+          if (loadingStaff) {
+            return <>...........</>;
+          }
+          console.log("data", dataStaff);
+
+          if (dataStaff?.data?.permissions) {
+            const check = dataStaff?.data?.permissions.find(
+              (item: any) => item === key
+            );
+            if (check) {
+              return (
+                <Checkbox  key={index} defaultChecked>
+                  {value}
+                </Checkbox>
+              );
+            } else {
+              return <Checkbox key={index}>{value}</Checkbox>;
+            }
+          }
+
+          // // const permissionUser = staff?.data?.staff_permission?.map(
+          // //   (item: any) => {}
+          // // );
+          // // if (loadingStaff) {
+          // //   return <>...Loading</>;
+          // // }
+          // return <Checkbox key={index}>{value}</Checkbox>;
           // return <CheckboxGroup key={index} options={valuePermission} />
         })}
       </>
@@ -70,7 +98,7 @@ const ListAdmin = () => {
       title: "Tên",
       dataIndex: "name",
       key: "name",
-      sorter: (a, b) => a.address.localeCompare(b.name),
+      sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
       title: "Email",
@@ -130,7 +158,7 @@ const ListAdmin = () => {
             Quyền
           </button>
           <Link
-            to={`/auth/admin/edit/${record?.id}`}
+            to={`/staff/edit/${record?.id}`}
             className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-brfont-medium rounded-lg text-sm px-5 py-2.5 text-center ml-1"
           >
             Sửa
@@ -167,6 +195,17 @@ const ListAdmin = () => {
     {
       // console.log("params", pagination, filters, sorter, extra);
     };
+
+  const [checkedValues, setCheckedValues] = useState({});
+
+  const handleCheckboxChange = (key: string, checked: boolean) => {
+    setCheckedValues((prevState) => ({ ...prevState, [key]: checked }));
+  };
+
+  const handleSubmit = () => {
+    // Call API to update the permissions in the database
+    // The API call will depend on your backend
+  };
   return (
     <Page title={`Tài khoản quản trị`}>
       <Modal
@@ -176,7 +215,19 @@ const ListAdmin = () => {
         footer={[]}
         style={{ minWidth: "60%" }}
       >
-        <Collapse ghost items={items} />
+        <Form onFinish={handleSubmit}>
+          <Collapse
+            destroyInactivePanel={true}
+            accordion={true}
+            ghost
+            items={items}
+          />
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Cập nhật
+            </Button>
+          </Form.Item>
+        </Form>
       </Modal>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <div className="mb-3">
