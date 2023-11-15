@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Collapse, Form, Image, Modal, Skeleton, Table } from "antd";
+import {
+  Button,
+  Checkbox,
+  Collapse,
+  Form,
+  Image,
+  Modal,
+  Skeleton,
+  Table,
+} from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { Link } from "react-router-dom";
 interface DataType {
@@ -64,7 +73,7 @@ const ListAdmin = () => {
             );
             if (check) {
               return (
-                <Checkbox  key={index} defaultChecked>
+                <Checkbox key={index} defaultChecked>
                   {value}
                 </Checkbox>
               );
