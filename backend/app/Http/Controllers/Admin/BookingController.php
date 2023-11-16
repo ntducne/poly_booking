@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
+    private BookingRepository $bookingRepository;
+
     public function __construct(BookingRepository $bookingRepository)
     {
         $this->bookingRepository = $bookingRepository;
@@ -45,6 +47,65 @@ class BookingController extends Controller
             'message' => 'Không tìm thấy !',
         ]);
     }
+
+    public function cancel(Request $request)
+    {
+        $cancel = $this->bookingRepository->cancelBooking($request);
+        if ($cancel) {
+            return $cancel;
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Hủy đặt phòng thất bại !',
+        ]);
+    }
+
+    public function checkin(Request $request)
+    {
+        $checkin = $this->bookingRepository->processCheckIn($request);
+        if ($checkin) {
+            return $checkin;
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Nhận phòng thất bại !',
+        ]);
+    }
+
+    public function checkout(Request $request)
+    {
+        $end = $this->bookingRepository->processCheckOut($request);
+        if ($end) {
+            return $end;
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Trả phòng thất bại !',
+        ]);
+    }
+
+    public function addPeople(Request $request){
+        $add = $this->bookingRepository->addPeople($request);
+        if ($add) {
+            return $add;
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Thêm người thất bại !',
+        ]);
+    }
+
+    public function addService(Request $request){
+        $add = $this->bookingRepository->addService($request);
+        if ($add) {
+            return $add;
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Thêm người thất bại !',
+        ]);
+    }
+
 
     //    public function renew($id){
 //        return $this->bookingRepository->cancel($id);

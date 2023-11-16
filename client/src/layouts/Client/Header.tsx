@@ -16,12 +16,16 @@ export default function Header({ }: Props) {
   }
   const items: MenuProps['items'] = [
     {
-      label: <Link to="">1st menu item</Link>,
+      label: <Link to="">Thông tin cá nhân</Link>,
       key: '0',
     },
     {
-      label: <Link to="">2nd menu item</Link>,
+      label: <Link to="">Phòng đã đặt</Link>,
       key: '1',
+    },
+    {
+      label: <Link to="/user/roomBooked">Lịch sử đặt phòng</Link>,
+      key: '2',
     },
     {
       type: 'divider',

@@ -9,22 +9,20 @@ export default function PaymentProcess() {
     useEffect(() => {
         setCookie('paymentPage', 3, { path: '/' })
         const process = () => {
-            const data  = {
-                "room_id": cookie.bookingNow.room_id,
-                'checkin': cookie.roomSearch.checkin,
-                'checkout': cookie.roomSearch.checkout,
-                "soLuong": cookie.roomSearch.soLuong,
-                "branch_id": cookie.roomSearch.branch_id,
-                "adults": cookie.roomSearch.adult,
-                "children": cookie.roomSearch.child,
-                'email': cookie.userBook.email,
-                'phone': cookie.userBook.phone,
-                'name': cookie.userBook.name,
-                'billingCode': Math.floor(Math.random() * 1000000),
-            }
             fetch('https://api.polydevhotel.site/client/room/booking', {
                 method: 'POST',
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+                    "room_id": cookie.bookingNow.room_id,
+                    'checkin': cookie.roomSearch.checkin,
+                    'checkout': cookie.roomSearch.checkout,
+                    "soLuong": cookie.roomSearch.soLuong,
+                    "branch_id": cookie.roomSearch.branch_id,
+                    "adults": cookie.roomSearch.adult,
+                    "children": cookie.roomSearch.child,
+                    'email': cookie.userBook.email,
+                    'phone': cookie.userBook.phone,
+                    'name': cookie.userBook.name,
+                }),
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -58,9 +56,9 @@ export default function PaymentProcess() {
         <div className="container mx-auto" style={{
             maxWidth: 1000,
         }}>
-
             <div className="mt-12 mb-8">
-                <h1 className="text-2xl font-bold mb-3"><Spin indicator={antIcon} /> Chờ chút, chúng tôi đang xử lý đơn đặt của bạn !</h1>
+                <h1 className="text-2xl font-bold mb-3">
+                    <Spin indicator={antIcon} /> Chờ chút, chúng tôi đang xử lý đơn đặt của bạn !</h1>
             </div>
         </div>
     )

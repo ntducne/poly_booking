@@ -12,6 +12,7 @@ class Billing extends Eloquent
     protected $table = "billings";
     protected $fillable = [
         'booking_id',
+        'user_id',
         'services',
         'total',
         'payment_method',

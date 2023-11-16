@@ -14,7 +14,6 @@ export default {
 
         },
         margin: {
-
         }
       },
       fontFamily: {
@@ -38,7 +37,7 @@ export default {
       },
       margin: {
         primary: "100px"
-      },
+      },  
       padding: {
         primary: "100px"
       },

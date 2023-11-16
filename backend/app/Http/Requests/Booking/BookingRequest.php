@@ -9,8 +9,8 @@ class BookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'checkin' => ['required', 'date_format:Y-m-d', 'after:today|before:checkout'],
-            'checkout' => ['required', 'date_format:Y-m-d', 'after:today'],
+            'checkin' => ['required', 'date_format:Y-m-d', 'after:today'],
+            'checkout' => ['required', 'date_format:Y-m-d', 'after:today', 'after:checkin'],
             'adults' => ['required', 'numeric', 'min:0'],
             'children' => ['required', 'numeric', 'min:0'],
             'soLuong' => ['required', 'numeric', 'min:0'],
