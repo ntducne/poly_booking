@@ -11,7 +11,7 @@ import Detail from "./pages/Room/Detail"
 import RoomBooked from "./pages/RoomBooked"
 import Rooms from "./pages/Rooms"
 import Contact from "./pages/contact"
-import Demo from "./pages/demo"
+
 import PaymentLayout from "./layouts/Payment"
 import AccommodationBook from "./pages/Payment/accommodation"
 import AccommodationReview from "./pages/Payment/accommodation/review"
@@ -30,7 +30,7 @@ function App() {
         <Route path='/' element={<LayoutClient />} >
           <Route index element={<Home />} />
           <Route path='rooms' element={<Rooms />} />
-          <Route path="rooms/:id" element={<Detail />} />
+          <Route path="rooms/:slug" element={<Detail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
           <Route path="about" element={<AboutPage />} />
@@ -53,7 +53,7 @@ function App() {
           <Route path="process" element={<PaymentProcess />} />
           <Route path="status" element={<PaymentStatus />} />
         </Route>
-        <Route path="demo" element={<Demo />} />
+        
       </Routes>
     </>
   )
