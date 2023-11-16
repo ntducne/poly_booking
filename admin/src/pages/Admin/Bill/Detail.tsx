@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   LoadingOutlined,
   MinusCircleOutlined,
@@ -21,6 +21,7 @@ import {
   Alert,
 } from "antd";
 import {
+  useAddServiceBookingMutation,
   useCancelBookingMutation,
   useCheckinBookingMutation,
   useCheckoutBookingMutation,
@@ -30,6 +31,8 @@ import { useParams } from "react-router-dom";
 import { useGetServicesQuery } from "../../../api/services";
 import { useForm } from "antd/es/form/Form";
 import swal from "sweetalert";
+import _ from "lodash";
+
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const {
@@ -37,19 +40,27 @@ const BillDetail: React.FC = () => {
     isLoading,
     refetch,
   } = useGetDetailBilingsQuery(id || "");
+  const prevServicesRef = useRef();
+
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
     {}
   );
   const [form] = Form.useForm();
 
   useEffect(() => {
-    refetch();
-  }, [dataBill?.data, isLoading]);
+    if (!_.isEqual(prevServicesRef.current, dataBill?.data?.services)) {
+      refetch();
+    }
+    console.log("prevServicesRef", prevServicesRef.current);
+
+    prevServicesRef.current = dataBill?.data?.services;
+  }, [dataBill?.data?.status, dataBill?.data?.services, isLoading]);
+  console.log("dataBill", dataBill?.data);
 
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
   };
-  // Su ly ServiceInBill
+  // Xu ly ServiceInBill
   const [formChanged, setFormChanged] = useState(false);
   const onValuesChange = (changedValues: any, allValues: any) => {
     setFormChanged(true);
@@ -58,6 +69,26 @@ const BillDetail: React.FC = () => {
   const showDrawer = () => {
     setOpen(true);
   };
+  const [addServiceBooking] = useAddServiceBookingMutation();
+
+  const addServiceInBill = async (values: any) => {
+    const dataBillNew = {
+      billing_id: dataBill?.data?.id,
+      ...values,
+    };
+    addServiceBooking(dataBillNew)
+      .unwrap()
+      .then((res) => {
+        if (res.status === "success") {
+          setFormChanged(false);
+          setOpen(false);
+          swal(res.message, {
+            icon: "success",
+          });
+        }
+      });
+  };
+
   const onClose = () => {
     if (formChanged === true) {
       Modal.confirm({
@@ -74,19 +105,16 @@ const BillDetail: React.FC = () => {
         },
         onCancel() {
           // Xử lý cancel
+          form.resetFields();
+          setFormChanged(false);
           console.log("Cancel");
           setOpen(false);
         },
       });
     }
-    form.resetFields();
-
     setOpen(false);
   };
 
-  const addServiceInBill = (values: any) => {
-    console.log("Received values of form:", values);
-  };
   // ...
 
   // Xử lý nhận phòng
@@ -214,7 +242,6 @@ const BillDetail: React.FC = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  console.log("sdasd", dataBill?.data?.services);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -576,14 +603,12 @@ const BillDetail: React.FC = () => {
               onFinish={addServiceInBill}
               onValuesChange={onValuesChange}
               initialValues={{
-                service: [
-                  dataServices?.data.map((service: any) => {
-                    service?.id;
-                  }),
-                ],
+                services: dataBill?.data?.services.map((service: any) => {
+                  return service?.service_id;
+                }),
               }}
             >
-              <Form.Item name="service">
+              <Form.Item name="services">
                 <Checkbox.Group>
                   <Space
                     direction="vertical"
@@ -608,7 +633,7 @@ const BillDetail: React.FC = () => {
                 <Button htmlType="reset" className="mr-3" onClick={onClose}>
                   Đóng
                 </Button>
-                <Button htmlType="submit" key="submit" onClick={onClose}>
+                <Button htmlType="submit" key="submit">
                   Cập nhật
                 </Button>
               </Form.Item>
