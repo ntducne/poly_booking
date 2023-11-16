@@ -20,16 +20,17 @@ import {
   Col,
   Alert,
 } from "antd";
-import { useGetDetailBilingsQuery } from "../../../api/billings";
+import {
+  useCheckinBookingMutation,
+  useGetDetailBilingsQuery,
+} from "../../../api/billings";
 import { useParams } from "react-router-dom";
 import { useGetServicesQuery } from "../../../api/services";
 import { useForm } from "antd/es/form/Form";
+import swal from "sweetalert";
 const BillDetail: React.FC = () => {
   const { id } = useParams();
-
   const { data: dataBill, isLoading } = useGetDetailBilingsQuery(id || "");
-  console.log(dataBill, "data");
-
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
     {}
   );
@@ -38,48 +39,84 @@ const BillDetail: React.FC = () => {
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
   };
-
-  const addServiceInBill = (values: any) => {
-    console.log("Received values of form:", values);
-  };
   // Su ly ServiceInBill
   const [formChanged, setFormChanged] = useState(false);
   const onValuesChange = (changedValues: any, allValues: any) => {
     setFormChanged(true);
   };
-  console.log("formChanged", formChanged);
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
-    if(formChanged === true){
-        Modal.confirm({
-            title: "Bạn có muốn lưu thay đổi không?",
-            icon: <LoadingOutlined />,
-            content: "Thay đổi sẽ không được lưu nếu bạn không lưu lại",
-            okText: "Lưu",
-            okType : 'default',
-            cancelText: "Không lưu",
-            onOk() {
-            // Xử lý update
-            console.log("OK");
-            setOpen(false);
-            },
-            onCancel() {
-            // Xử lý cancel
-            console.log("Cancel");
-            setOpen(false);
-            },
-        });
+    if (formChanged === true) {
+      Modal.confirm({
+        title: "Bạn có muốn lưu thay đổi không?",
+        icon: <LoadingOutlined />,
+        content: "Thay đổi sẽ không được lưu nếu bạn không lưu lại",
+        okText: "Lưu",
+        okType: "default",
+        cancelText: "Không lưu",
+        onOk() {
+          // Xử lý update
+          console.log("OK");
+          setOpen(false);
+        },
+        onCancel() {
+          // Xử lý cancel
+          console.log("Cancel");
+          setOpen(false);
+        },
+      });
     }
     form.resetFields();
-    console.log("onClose");
 
     setOpen(false);
   };
+
+  const addServiceInBill = (values: any) => {
+    console.log("Received values of form:", values);
+  };
   // ...
 
+  // Xử lý nhận phòng
+  const [checkinBooking] = useCheckinBookingMutation();
+
+  const onCheckinBooking = (data: any) => {
+    console.log("data",data);
+    
+    try {
+      swal({
+        title: "Thông báo ?",
+        text: "Bạn muốn nhận phòng!",
+        icon: "success",
+        buttons: ["Quay trở lại", "Nhận phòng"],
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            const dataBill = {
+              billing_id: data,
+            };
+            checkinBooking(dataBill)
+              .unwrap()
+              .then((res) => {
+                if (res.status === "success") {
+                  swal("Đã nhận phòng", {
+                    icon: "success",
+                  });
+                }
+              });
+          }
+        })
+        .catch(() => {
+          swal("Lỗi", {
+            icon: "error",
+          });
+        });
+    } catch (error) {}
+  };
+  //
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalExtendOpen, setIsModalExtendOpen] = useState(false);
   const showModalExtend = () => {
@@ -116,6 +153,7 @@ const BillDetail: React.FC = () => {
           <button
             type="button"
             // onClick={showModalExtend}
+            onClick={() => onCheckinBooking(dataBill?.data?.booking?.id)}
             className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
           >
             Nhận phòng

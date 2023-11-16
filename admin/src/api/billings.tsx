@@ -26,11 +26,17 @@ const billingApi = createApi({
       }),
       providesTags: ["billings"],
     }),
+    checkinBooking: builder.mutation<any, any>({
+      query: (data : any) => ({
+        url: `booking/handle/checkin`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["billings"],
+    }),
+
   }),
 });
 
-export const {
-  useGetBilingsQuery,
-  useGetDetailBilingsQuery,
-} = billingApi;
+export const { useGetBilingsQuery, useGetDetailBilingsQuery, useCheckinBookingMutation  } = billingApi;
 export default billingApi;
