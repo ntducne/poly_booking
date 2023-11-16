@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   LoadingOutlined,
   MinusCircleOutlined,
@@ -21,7 +21,9 @@ import {
   Alert,
 } from "antd";
 import {
+  useCancelBookingMutation,
   useCheckinBookingMutation,
+  useCheckoutBookingMutation,
   useGetDetailBilingsQuery,
 } from "../../../api/billings";
 import { useParams } from "react-router-dom";
@@ -30,11 +32,19 @@ import { useForm } from "antd/es/form/Form";
 import swal from "sweetalert";
 const BillDetail: React.FC = () => {
   const { id } = useParams();
-  const { data: dataBill, isLoading } = useGetDetailBilingsQuery(id || "");
+  const {
+    data: dataBill,
+    isLoading,
+    refetch,
+  } = useGetDetailBilingsQuery(id || "");
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
     {}
   );
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    refetch();
+  }, [dataBill?.data, isLoading]);
 
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
@@ -81,10 +91,7 @@ const BillDetail: React.FC = () => {
 
   // Xử lý nhận phòng
   const [checkinBooking] = useCheckinBookingMutation();
-
   const onCheckinBooking = (data: any) => {
-    console.log("data",data);
-    
     try {
       swal({
         title: "Thông báo ?",
@@ -102,7 +109,7 @@ const BillDetail: React.FC = () => {
               .unwrap()
               .then((res) => {
                 if (res.status === "success") {
-                  swal("Đã nhận phòng", {
+                  swal(res.message, {
                     icon: "success",
                   });
                 }
@@ -117,6 +124,79 @@ const BillDetail: React.FC = () => {
     } catch (error) {}
   };
   //
+
+  // Xử lý trả phòng
+  const [checkoutBooking] = useCheckoutBookingMutation();
+  const onCheckoutBooking = (data: any) => {
+    try {
+      swal({
+        title: "Thông báo ?",
+        text: "Bạn muốn nhận phòng!",
+        icon: "success",
+        buttons: ["Quay trở lại", "Trả phòng"],
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            const dataBill = {
+              billing_id: data,
+            };
+            checkoutBooking(dataBill)
+              .unwrap()
+              .then((res) => {
+                if (res.status === "success") {
+                  swal(res.message, {
+                    icon: "success",
+                  });
+                }
+              });
+          }
+        })
+        .catch(() => {
+          swal("Lỗi", {
+            icon: "error",
+          });
+        });
+    } catch (error) {}
+  };
+  //
+
+  // Xử lý hủy đặt phòng
+  const [cancelBooking] = useCancelBookingMutation();
+  const onCancelBooking = (data: any) => {
+    try {
+      swal({
+        title: "Thông báo ?",
+        text: "Bạn muốn hủy đặt phòng với hóa đơn này!",
+        icon: "warning",
+        buttons: ["Quay trở lại", "Hủy phòng"],
+        dangerMode: true,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            const dataBill = {
+              billing_id: data,
+            };
+            cancelBooking(dataBill)
+              .unwrap()
+              .then((res) => {
+                if (res.status === "success") {
+                  swal(res.message, {
+                    icon: "success",
+                  });
+                }
+              });
+          }
+        })
+        .catch(() => {
+          swal("Lỗi", {
+            icon: "error",
+          });
+        });
+    } catch (error) {}
+  };
+  //
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalExtendOpen, setIsModalExtendOpen] = useState(false);
   const showModalExtend = () => {
@@ -134,6 +214,7 @@ const BillDetail: React.FC = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  console.log("sdasd", dataBill?.data?.services);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -167,12 +248,14 @@ const BillDetail: React.FC = () => {
           </button>
           <button
             type="button"
+            onClick={() => onCheckoutBooking(dataBill?.data?.booking?.id)}
             className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
           >
             Trả phòng
           </button>
           <button
             type="button"
+            onClick={() => onCancelBooking(dataBill?.data?.booking?.id)}
             className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
           >
             Huỷ phòng
@@ -448,32 +531,34 @@ const BillDetail: React.FC = () => {
             </div>
             <div className="mt-5 font-normal text-gray-700 max-h-[510px] overflow-auto">
               <ol className="relative border-l border-gray-200 ml-3">
-                {dataBill?.data?.services.length === 0 ? (
+                {dataBill?.data?.services.length == 0 ? (
                   <div className="">Không có dịch vụ nào</div>
                 ) : (
-                  dataBill?.data?.services.map((services: any) => {
-                    <li className="mb-10 ml-6">
-                      <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
-                        <svg
-                          className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                        </svg>
-                      </span>
-                      <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                        13:00:02 11/10/2023
-                      </time>
-                      <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                        <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
-                          <li>Dịch vụ: Nguyễn Đức</li>
-                          <li>Giá : 100,000 VNĐ</li>
-                        </ul>
-                      </div>
-                    </li>;
+                  dataBill?.data?.services.map((service: any) => {
+                    return (
+                      <li className="mb-10 ml-6">
+                        <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
+                          <svg
+                            className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                          </svg>
+                        </span>
+                        <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                          13:00:02 11/10/2023
+                        </time>
+                        <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                          <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
+                            <li>Dịch vụ: {service?.service_name}</li>
+                            <li>Giá : {service?.price}</li>
+                          </ul>
+                        </div>
+                      </li>
+                    );
                   })
                 )}
               </ol>

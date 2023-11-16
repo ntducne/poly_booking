@@ -27,16 +27,55 @@ const billingApi = createApi({
       providesTags: ["billings"],
     }),
     checkinBooking: builder.mutation<any, any>({
-      query: (data : any) => ({
+      query: (data: any) => ({
         url: `booking/handle/checkin`,
         method: "POST",
         body: data,
       }),
       invalidatesTags: ["billings"],
     }),
-
+    checkoutBooking: builder.mutation<any, any>({
+      query: (data: any) => ({
+        url: `booking/handle/checkout`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["billings"],
+    }),
+    cancelBooking: builder.mutation<any, any>({
+      query: (data: any) => ({
+        url: `booking/handle/cancel`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["billings"],
+    }),
+    addPeopleBooking: builder.mutation<any, any>({
+      query: (data: any) => ({
+        url: `booking/handle/addPeople`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["billings"],
+    }),
+    addServiceBooking: builder.mutation<any, any>({
+      query: (data: any) => ({
+        url: `booking/handle/addService`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["billings"],
+    }),
   }),
 });
 
-export const { useGetBilingsQuery, useGetDetailBilingsQuery, useCheckinBookingMutation  } = billingApi;
+export const {
+  useGetBilingsQuery,
+  useGetDetailBilingsQuery,
+  useCheckinBookingMutation,
+  useCheckoutBookingMutation,
+  useAddPeopleBookingMutation,
+  useAddServiceBookingMutation,
+  useCancelBookingMutation,
+} = billingApi;
 export default billingApi;
