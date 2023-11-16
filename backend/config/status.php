@@ -3,7 +3,7 @@
 return [
     [
         "id" => 0,
-        'status' => 'Đã đặt '
+        'status' => 'Đã đặt'
     ],
     [
         'id' => 1,

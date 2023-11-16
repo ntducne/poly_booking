@@ -70,6 +70,13 @@ Route::middleware(CheckPermission::class)->group(function () {
         Route::post('/search', [BookingController::class, 'search'])->name('search');
         Route::post('/renew', [BookingController::class, 'renew'])->name('renew');
         Route::post('/end', [BookingController::class, 'end'])->name('end');
+        Route::prefix('handle')->as('handle.')->group(function (){
+            Route::post('/cancel', [BookingController::class, 'cancel'])->name('cancel');
+            Route::post('/checkin', [BookingController::class, 'checkin'])->name('checkin');
+            Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout');
+            Route::post('/addPeople', [BookingController::class, 'addPeople'])->name('addService');
+            Route::post('/addService', [BookingController::class, 'addService'])->name('addService');
+        });
     });
 
 });

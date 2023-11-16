@@ -3,6 +3,8 @@
 //use App\Events\NewBillEvent;
 use App\Http\Controllers\Pay\VnpayController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
 Route::get('error-message', function (){ return response()->json('Denied',403); });
 
@@ -83,4 +85,10 @@ Route::get('/notification', function(\Illuminate\Http\Request $request){
     // event(new \App\Events\Message('duc', 'hi ha hi'));
     // $user = \App\Models\User::where('email','nguyenduc10603@gmail.com')->first();
     // $user->notify(new \App\Notifications\SendMail());
+});
+
+
+Route::post('/test_upload', function(\Illuminate\Http\Request $request){
+   $file = Storage::disk('s3')->put('filename.txt', 'Halooo');
+   dd($file);
 });
