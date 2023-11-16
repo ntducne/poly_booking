@@ -275,9 +275,107 @@ class BookingRepository
         ]);
     }
 
-    public function addServiceToBilling($request, $billing)
+    public function addService($request)
     {
+        $services = $request->services;
+        $arrService = [];
+        foreach ($services as $key => $value) {
+            $service = Services::find($value);
+            $arrService[] = [
+                'service_id' => $service->_id,
+                'service_name' => $service->name,
+                'price' => $service->price,
+            ];
+        }
+        $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
+        $newArr = array_merge($billing->services, $arrService);
+         $this->billing->where('_id', '=', $request->billing_id)->update([
+            'services' => $newArr
+        ]);
+         $values = [
+             'booking_id' => $request->billing_id,
+             'admin_id' => $request->user()->id,
+             'handle' => 'Thêm dịch vụ',
+             'time' => Carbon::now()->format('Y-m-d'),
+         ];
+        $this->history_handle->create($values);
+        return [
+            'status' => 'success',
+            'message' => 'Thêm dịch vụ thành công !',
+            'data' => $values
+        ];
+    }
 
+    public function addPeople($request){
+        $this->booking->where('_id', '=', $request->billing_id)->update([
+            'people' => $request->peoples
+        ]);
+        $values = [
+            'booking_id' => $request->billing_id,
+            'admin_id' => $request->user()->id,
+            'handle' => 'Bổ sung khách hàng',
+            'time'=> Carbon::now()->format('Y-m-d'),
+        ];
+        $this->history_handle->create($values);
+        return [
+            'status' => 'success',
+            'message' => 'Thêm người thành công !',
+            'data' => $values
+        ];
+    }
+
+    public function processCheckIn($request){
+         $this->booking->where('_id', '=', $request->billing_id)->update([
+            'status' => 1
+        ]);
+         $values = [
+            'booking_id' => $request->billing_id,
+            'admin_id' => $request->user()->id,
+            'handle' => 'Nhận phòng',
+            'time'=> Carbon::now()->format('Y-m-d'),
+         ];
+        $this->history_handle->create($values);
+        return [
+            'status' => 'success',
+            'message' => 'Nhận phòng thành công !',
+            'data' => $values
+        ];
+    }
+
+    public function processCheckOut($request){
+        $this->booking->where('_id', '=', $request->billing_id)->update([
+            'status' => 4
+        ]);
+        $values =[
+            'booking_id' => $request->billing_id,
+            'admin_id' => $request->user()->id,
+            'handle' => 'Khách trả phòng',
+            'time'=> Carbon::now()->format('Y-m-d'),
+        ];
+        $this->history_handle->create($values);
+        return [
+            'status' => 'success',
+            'message' => 'Trả phòng thành công !',
+            'data' => $values
+        ];
+    }
+
+    public function cancelBooking($request){
+        $this->booking->where('_id', '=', $request->billing_id)->update([
+            'status' => 2
+        ]);
+        $values = [
+            'booking_id' => $request->billing_id,
+            'admin_id' => $request->user()->id,
+            'handle' => 'Hủy đặt phòng',
+            'time'=> Carbon::now()->format('Y-m-d'),
+        ];
+        $this->history_handle->create($values);
+        return [
+            'status' => 'success',
+            'message' => 'Huỷ phòng thành công !',
+            'data' => $values
+        ];
     }
 
 }

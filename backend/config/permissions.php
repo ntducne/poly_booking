@@ -53,6 +53,12 @@ return [
     'admin.bookings.store' => 'Thêm đặt phòng',
     'admin.bookings.update' => 'Cập nhật đặt phòng',
     'admin.bookings.destroy' => 'Xóa đặt phòng',
+    'admin.bookings.cancel' => 'Hủy đặt phòng',
+    'admin.bookings.checkin' => 'Nhận phòng',
+    'admin.bookings.checkout' => 'Trả phòng',
+    'admin.bookings.addPeople' => 'Thêm người',
+    'admin.bookings.addService' => 'Thêm dịch vụ',
+
 
     'admin.promotions.index' => 'Danh sách ưu đãi',
     'admin.promotions.show' => 'Chi tiết ưu đãi',
