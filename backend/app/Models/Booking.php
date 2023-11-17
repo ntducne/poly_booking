@@ -20,7 +20,8 @@ class Booking extends Eloquent
         'amount_room',
         'status',
         'people',
-        'deleted_at'
+        'deleted_at',
+        'time',
     ];
     protected $attributes = [
         'status'=> false,
