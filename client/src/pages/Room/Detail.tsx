@@ -51,23 +51,18 @@ const Detail = () => {
     const rating =(event:any)=>{
         event.preventDefault()
         let myInput = event.target.elements.rates.value; 
+        console.log(data?.room?.id);
+        
         const values = [myInput.value,
             data?.room?.id,
-            data?.message?.image,
-            data?.message?.id,
+            dataUser?.message?.image,
+            dataUser?.message?.id,
         ]   
-        if(myInput){
-            postRate(values);
-        }
-       
-        
-        
+        postRate(values);
     }
 
     const booking = () =>{
         console.log(data.room);
-        // const value = "linh"
-        
         removeCookie('roomBooking', { path: '/' })
         setCookie('roomBooking', data.room,{ path: '/' })
         navigate('/demo')
