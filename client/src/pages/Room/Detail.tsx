@@ -10,8 +10,9 @@ import {
     initTE,
 } from "tw-elements";
 import { useNavigate, useParams } from 'react-router-dom'
-import { useGetDetialQuery } from '../../api/Room'
+import { useGetDetialQuery, usePostRatesMutation } from '../../api/Room'
 import { useCookies } from 'react-cookie'
+import { useEffect, useState } from 'react'
 
 
 
@@ -25,17 +26,43 @@ const Detail = () => {
     const { slug } = useParams()
     console.log(slug)
 
+    const [cookie] = useCookies(['userInfo']);
+    const token = cookie.userInfo.accessToken.token;
+   
+    console.log(token);
 
+    const [dataUser, setData] = useState({} as any)
+    useEffect(() => {
+        fetch('https://api.polydevhotel.site/user/profile', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        },)
+            .then((res: { json: () => any }) => res.json())
+            .then((data: any) => setData(data))
+    }, [])
 
     const { data } = useGetDetialQuery(slug)
     console.log(data);
     const [, setCookie, removeCookie] = useCookies(['roomBooking']);
    
+    const [postRate] = usePostRatesMutation()
+
+    const rating =(event:any)=>{
+        event.preventDefault()
+        let myInput = event.target.elements.rates.value; 
+        console.log(data?.room?.id);
+        
+        const values = [myInput.value,
+            data?.room?.id,
+            dataUser?.message?.image,
+            dataUser?.message?.id,
+        ]   
+        postRate(values);
+    }
 
     const booking = () =>{
         console.log(data.room);
-        // const value = "linh"
-        
         removeCookie('roomBooking', { path: '/' })
         setCookie('roomBooking', data.room,{ path: '/' })
         navigate('/demo')
@@ -150,7 +177,7 @@ const Detail = () => {
                     }}
                     className='max-w-full bg-primary text-white m-auto flex flex-col lg:flex-row pt-[80px] pb-[80px]'>
                     <div className='w-full h-full lg:w-[50%] m-auto  flex flex-col lg:flex-row '>
-                        <div className='w-full h-full lg:w-[30%] flex text-xl ml-[480px]'>
+                        <div className='w-full h-full lg:w-[30%] flex text-xl ml-[30%]'>
                             <div><AiOutlineShake className="w-[40px] h-[45px]" /></div>
                             <span className='mt-[5px] ml-[20px] text-2xl font-semibold'>Amenities			</span>
                         </div>
@@ -242,7 +269,7 @@ const Detail = () => {
                     <div className="flex   mb-6">
                         <h2 className="lg:text-2xl font-bold text-gray-900 text-3xl ">Đánh giá </h2>
                     </div>
-                    <form className="mb-6">
+                    <form className="mb-6" onSubmit={rating}>
                         <ul className="my-1 flex list-none gap-1 p-0 mb-5" data-te-rating-init>
                             <li>
                                 <span
@@ -337,11 +364,11 @@ const Detail = () => {
                         </ul>
                         <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
                             <label htmlFor="comment" className="sr-only">Your comment</label>
-                            <textarea id="comment"
+                            <textarea id="rates"
                                 className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none"
                                 placeholder="Write a comment..." required></textarea>
                         </div>
-                        <button type="submit"
+                        <button type='submit'
                             className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-cyan-500 rounded-xl focus:ring-4 focus:ring-primary-200  hover:bg-primary-800">
                             Post comment
                         </button>
@@ -365,7 +392,7 @@ const Detail = () => {
                                     <li>
                                         <a href="#"
                                             className="block py-2 px-4 hover:bg-gray-100 ">Edit</a>
-                                    </li>
+                                    </li>   
                                     <li>
                                         <a href="#"
                                             className="block py-2 px-4 hover:bg-gray-100 ">Remove</a>
@@ -481,145 +508,7 @@ const Detail = () => {
                             </button>
                         </div>
                     </article>
-                    <article className="p-6 mb-3 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                        <footer className="flex justify-between items-center mb-2">
-                            <div className="flex items-center">
-                                <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
-                                    className="mr-2 w-6 h-6 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                                    alt="Bonnie Green" />Bonnie Green</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400"><time
-                                    title="March 12th, 2022">Mar. 12, 2022</time></p>
-                            </div>
-                            <button id="dropdownComment3Button" data-dropdown-toggle="dropdownComment3"
-                                className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                                type="button">
-                                <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                                    <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                                </svg>
-                                <span className="sr-only">Comment settings</span>
-                            </button>
-
-                            <div id="dropdownComment3"
-                                className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                <ul className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownMenuIconHorizontalButton">
-                                    <li>
-                                        <a href="#"
-                                            className="block py-2 px-4 hover:bg-gray-100 ">Edit</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            className="block py-2 px-4 hover:bg-gray-100 ">Remove</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            className="block py-2 px-4 hover:bg-gray-100 ">Report</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </footer>
-                        <div className=' mb-2'>
-
-                            <div className="flex items-center space-x-1 ">
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                            </div>
-
-                        </div>
-                        <p className="text-gray-500 dark:text-gray-400">The article covers the essentials, challenges, myths and stages the UX designer should consider while creating the design strategy.</p>
-                        <div className="flex items-center mt-4 space-x-4">
-                            <button type="button"
-                                className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium">
-                                <svg className="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
-                                </svg>
-                                Reply
-                            </button>
-                        </div>
-                    </article>
-                    <article className="p-6 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                        <footer className="flex justify-between items-center mb-2">
-                            <div className="flex items-center">
-                                <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
-                                    className="mr-2 w-6 h-6 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
-                                    alt="Helene Engels" />Helene Engels</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400"><time
-                                    title="June 23rd, 2022">Jun. 23, 2022</time></p>
-                            </div>
-                            <button id="dropdownComment4Button" data-dropdown-toggle="dropdownComment4"
-                                className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                                type="button">
-                                <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                                    <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                                </svg>
-                            </button>
-
-                            <div id="dropdownComment4"
-                                className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                <ul className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownMenuIconHorizontalButton">
-                                    <li>
-                                        <a href="#"
-                                            className="block py-2 px-4 hover:bg-gray-100 ">Edit</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            className="block py-2 px-4 hover:bg-gray-100 ">Remove</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            className="block py-2 px-4 hover:bg-gray-100 ">Report</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </footer>
-                        <div className=' mb-2'>
-
-                            <div className="flex items-center space-x-1 ">
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                                <svg className="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                </svg>
-                            </div>
-
-                        </div>
-                        <p className="text-gray-500 dark:text-gray-400">Thanks for sharing this. I do came from the Backend development and explored some of the tools to design my Side Projects.</p>
-                        <div className="flex items-center mt-4 space-x-4">
-                            <button type="button"
-                                className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium">
-                                <svg className="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
-                                </svg>
-                                Reply
-                            </button>
-                        </div>
-                    </article>
+                 
                 </div>
             </section>
             <div>
