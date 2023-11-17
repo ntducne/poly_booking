@@ -24,7 +24,7 @@ class Booking extends Eloquent
         'time',
     ];
     protected $attributes = [
-        'status'=> false,
+        'status' => false,
         'deleted_at' => null,
         'people' => null
     ];
