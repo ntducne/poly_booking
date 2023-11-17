@@ -11,7 +11,7 @@ use App\Models\Booking;
 use App\Models\BookDetail;
 use App\Models\Room;
 
-class BookingController extends Controller
+class  BookingController extends Controller
 {
     public function __construct()
     {
@@ -39,7 +39,7 @@ class BookingController extends Controller
             $total_discount += Room::find($value)->discount;
             $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
         }
-        //Bat loi dat so nguoi 
+        //Bat loi dat so nguoi
         if ($adults > $total_adults && $children > $total_children) {
             return response()->json([
                 'message' => 'Phòng không đủ chỗ '
@@ -65,7 +65,7 @@ class BookingController extends Controller
         $user = User::where('email', '=', $request->representative['email'])->first();
         $param['user_id'] = !empty($user) ? $user->_id : null;
 
-        //phong co the dat 
+        //phong co the dat
         $room_booking = array_slice($room_valid, 0, $soLuong);
         $create = $this->booking->create($param);
         $details = [];
@@ -84,7 +84,7 @@ class BookingController extends Controller
                 ]
             ];
         }
-        //Hoa don 
+        //Hoa don
 
         $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
         $amount_day = floor($datediff / (60 * 60 * 24));
@@ -93,7 +93,7 @@ class BookingController extends Controller
             'booking_id' => $create->_id,
             'services' => [],
             'total' => $param['price_per_night'] * $amount_day,
-            // total = so ngay su dung phong * gia 1 dem 
+            // total = so ngay su dung phong * gia 1 dem
             'payment_method' => 0,
             //thanh toan tai quay
             'payment_date' => null,
