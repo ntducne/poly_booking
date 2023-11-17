@@ -122,7 +122,6 @@ class RoomController extends Controller
             if($request->name != $object->name){
                 $object->slug = convertToSlug($request->name);
             }
-
             $arr = $request->all();
             $room = $object->update($arr);
             return response()->json([

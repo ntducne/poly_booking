@@ -9,7 +9,7 @@ use Laravel\Passport\HasApiTokens;
 class AdminPermission extends Eloquent
 {
     use HasApiTokens;
-    protected $table = 'admin_has_permission';
+    protected $table = 'admin_has_permissions';
     protected $fillable = [
         'id_admin',
         'id_permission',
