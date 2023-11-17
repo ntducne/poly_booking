@@ -15,7 +15,7 @@ class StoreRoomRequest extends Request
         return [
             'area' => ['required', 'numeric', 'min:0'],
             'adults' => ['required', 'numeric', 'min:0'],
-            'price' => ['required', 'numeric', 'min:0'],
+            // 'price' => ['required', 'numeric', 'min:0'],
             'children' => ['required', 'numeric', 'min:0'],
             'room_type_id' => ['required', 'string', Rule::exists(RoomType::class, $this->column_id)],
             'pay_upon_check_in' => ['required'],
