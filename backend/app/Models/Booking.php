@@ -19,11 +19,13 @@ class Booking extends Eloquent
         'amount_people',
         'amount_room',
         'status',
+        'people',
         'deleted_at'
     ];
     protected $attributes = [
-        'status'=>false,
-        'deleted_at' => null
+        'status'=> false,
+        'deleted_at' => null,
+        'people' => null
     ];
 
     public function getDetail(){

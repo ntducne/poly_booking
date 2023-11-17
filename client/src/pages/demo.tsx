@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // import { Button, Card, message, Modal, Steps } from 'antd';
 // import { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
@@ -113,9 +114,23 @@
 //     )
 // }
 =======
+=======
+import { Card } from "antd";
+
+>>>>>>> 8f66611c6845fd63e4374e71b450be88791c5d71
 export default function Demo() {
     return (
-        <>aHIHI</>
+        <div className="flex container mx-auto">
+            <Card title="Card title" className="w-full max-w-xl">
+                Card content
+            </Card>
+            <Card title="Card title" className="w-full">
+                Card content
+            </Card>
+        </div>
     )
 }
+<<<<<<< HEAD
 >>>>>>> 4149fc4b9dfce7676b2a63efe070766b61b86149
+=======
+>>>>>>> 8f66611c6845fd63e4374e71b450be88791c5d71

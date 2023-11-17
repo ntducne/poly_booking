@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Booking;
 use App\Models\Branch;
+use App\Models\HistoryHandleBooking;
 use App\Models\Services;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +20,8 @@ class BillingResource extends JsonResource
             'payment_method'=> $this->payment_method,
             'payment_date'=>$this->payment_date,
             'branch'=> new BranchResource(Branch::find($this->branch_id)),
-            'status'=> $this->status
+            'status'=> $this->status,
+            'history'=> HistoryHandleBooking::where('booking_id', $this->booking_id)->get(),
         ];
     }
 }

@@ -28,6 +28,7 @@ class BookingResource extends JsonResource
             'price_per_night' => $this->price_per_night,
             'amount_people' => $this->amount_people,
             'amount_room' => $this->amount_room,
+            'people' => $this->people,
             'status' => $this->status,
             'detail' => BookDetail::where('booking_id', $this->id)->get(),
         ];
