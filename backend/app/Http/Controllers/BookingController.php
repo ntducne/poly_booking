@@ -180,6 +180,9 @@ class BookingController extends Controller
         }
     }
 
+    public function giaHan(Request $request){
+       return $this->bookingRepository->giaHan($request);
+    }
 //    public function billing(){
 //        $billing = $this->bookingRepository->create()
 //        return response()->json([

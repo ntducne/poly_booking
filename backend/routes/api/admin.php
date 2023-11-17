@@ -52,6 +52,8 @@ Route::middleware(CheckPermission::class)->group(function () {
 
     Route::resource('services', ServicesController::class)->except(['create', 'edit']);
 
+
+
     Route::prefix('billings')->as('billings.')->group(function () {
         Route::get('/', [BillingController::class, 'index'])->name('index');
         Route::get('/{id}', [BillingController::class, 'show'])->name('show');
@@ -76,6 +78,8 @@ Route::middleware(CheckPermission::class)->group(function () {
             Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout');
             Route::post('/addPeople', [BookingController::class, 'addPeople'])->name('addService');
             Route::post('/addService', [BookingController::class, 'addService'])->name('addService');
+            Route::post('/giaHan', [BookingController::class, 'giaHan'])->name('giaHan');
+
         });
     });
 
