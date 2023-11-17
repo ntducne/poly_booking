@@ -35,13 +35,18 @@ const roomApi = createApi({
             }),
             invalidatesTags: ['Rooms']
         }),
+        postRates: builder.mutation({
+            query: (data: any) => ({
+                url: `/user/rate`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['Rooms']
+        }),
     })
 })
 
-<<<<<<< HEAD
-export const { useGetRoomsQuery, useGetDetialQuery, usePostBookingMutation } = roomApi
-=======
-export const {useGetRoomsQuery, useGetDetialQuery,usePostBookingMutation} = roomApi
->>>>>>> 4149fc4b9dfce7676b2a63efe070766b61b86149
+export const { useGetRoomsQuery, useGetDetialQuery, usePostBookingMutation, usePostRatesMutation } = roomApi
+
 export const roomReducer = roomApi.reducer
 export default roomApi

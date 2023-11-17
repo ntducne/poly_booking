@@ -11,8 +11,7 @@ import { UploadOutlined } from "@ant-design/icons";
 const Profile = () => {
     const [cookie] = useCookies(['userInfo']);
     const token = cookie.userInfo.accessToken.token;
-    //     const {data} = useGetUserQuery("")  
-    //    console.log(data);;any
+   
     console.log(token);
     const [form] = Form.useForm();
 
