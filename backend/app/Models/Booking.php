@@ -10,7 +10,6 @@ class Booking extends Eloquent
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'user_id',
         'booking_date',
         'checkin',
         'checkout',
@@ -20,11 +19,14 @@ class Booking extends Eloquent
         'amount_people',
         'amount_room',
         'status',
-        'deleted_at'
+        'people',
+        'deleted_at',
+        'time',
     ];
     protected $attributes = [
-        'status'=>false,
-        'deleted_at' => null
+        'status'=> false,
+        'deleted_at' => null,
+        'people' => null
     ];
 
     public function getDetail(){

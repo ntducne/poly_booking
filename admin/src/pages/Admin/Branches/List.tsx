@@ -15,25 +15,30 @@ import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useDeleteBranchMutation, useGetAllBranchesQuery } from "../../../api/branches";
+import {
+  useDeleteBranchMutation,
+  useGetAllBranchesQuery,
+} from "../../../api/branches";
 
 const ListBranches = () => {
   const { data, isLoading, refetch } = useGetAllBranchesQuery({});
-  const [dataFetching, setDataFetching] = useState<any>([])
+  const [dataFetching, setDataFetching] = useState<any>([]);
   // console.log(data?.data);
-  const [deleteBranch] = useDeleteBranchMutation()
+  const [deleteBranch] = useDeleteBranchMutation();
 
   useEffect(() => {
-    setDataFetching(data?.data?.map((item: any) => {
-      return {
-        key: item._id,
-        name: item.name,
-        address: item.address,
-        phone: item.phone,
-      }
-      // refetch()
-    }))
-  }, [isLoading, data?.data])
+    setDataFetching(
+      data?.data?.map((item: any) => {
+        return {
+          key: item._id,
+          name: item.name,
+          address: item.address,
+          phone: item.phone,
+        };
+        // refetch()
+      })
+    );
+  }, [isLoading, data?.data]);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -81,14 +86,14 @@ const ListBranches = () => {
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<DataType>["onChange"] = () =>
     // pagination,
     // filters,
     // sorter,
     // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+    {
+      // console.log("params", pagination, filters, sorter, extra);
+    };
 
   const remove = (id: any) => {
     try {
@@ -101,16 +106,18 @@ const ListBranches = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            deleteBranch(id).unwrap().then((data) => {
-              console.log(id);
-              console.log(data);
-              if (data.status === "success") {
-                refetch();
-                swal("You have successfully deleted", {
-                  icon: "success",
-                });
-              }
-            })
+            deleteBranch(id)
+              .unwrap()
+              .then((data) => {
+                console.log(id);
+                console.log(data);
+                if (data.status === "success") {
+                  refetch();
+                  swal("You have successfully deleted", {
+                    icon: "success",
+                  });
+                }
+              });
           }
         })
         .catch(() => {
@@ -118,7 +125,7 @@ const ListBranches = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
 
   // useEffect(() => {

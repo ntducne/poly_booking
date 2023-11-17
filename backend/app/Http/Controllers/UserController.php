@@ -21,11 +21,12 @@ class UserController extends Controller
 {
     private RateRoom $rate_room;
     private Room $room;
-    // private UserRepository $userRepository;
-
-    public function __construct()
+    private UserRepository $userRepository;
+    private Booking $booking; // Add this line
+    private BookDetail $book_detail; //
+    public function __construct( UserRepository $userRepository)
     {
-        // $this->userRepository = $userRepository;
+        $this->userRepository = $userRepository;
         $this->rate_room = new RateRoom();
         $this->room = new Room();
         $this->booking = new Booking();
@@ -65,11 +66,8 @@ class UserController extends Controller
     }
     public function bookingHistory(Request $request)
     {
-        $history = $this->userRepository->bookingHistory($request->user()->id);
-        return response()->json([
-            'message' => 'Get booking history successfully',
-            'data' => $history
-        ], 200);
+        $history = $this->userRepository->bookingHistory($request);
+        return $history;
     }
     public function booking(Request $request)
     {
@@ -92,7 +90,7 @@ class UserController extends Controller
             $total_discount += Room::find($value)->discount;
             $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
         }
-        //Bat loi dat so nguoi 
+        //Bat loi dat so nguoi
         if ($adults > $total_adults && $children > $total_children) {
             return response()->json([
                 'message' => 'Phòng không đủ chỗ '
@@ -118,7 +116,7 @@ class UserController extends Controller
         $user = User::where('email', '=', $request->representative['email'])->first();
         $param['user_id'] = !empty($user) ? $user->_id : null;
 
-        //phong co the dat 
+        //phong co the dat
         $room_booking = array_slice($room_valid, 0, $soLuong);
         $create = $this->booking->create($param);
         $details = [];
@@ -137,7 +135,7 @@ class UserController extends Controller
                 ]
             ];
         }
-        //Hoa don 
+        //Hoa don
         $datediff = abs(strtotime($request->checkin) - strtotime($request->checkout));
         $amount_day = floor($datediff / (60 * 60 * 24));
         // so luong ngay
@@ -145,7 +143,7 @@ class UserController extends Controller
             'booking_id' => $create->_id,
             'services' => [],
             'total' => $param['price_per_night'] * $amount_day,
-            // total = so ngay su dung phong * gia 1 dem 
+            // total = so ngay su dung phong * gia 1 dem
             'payment_method' => 0,
             //thanh toan tai quay
             'payment_date' => null,
@@ -203,7 +201,7 @@ class UserController extends Controller
         $images = $request->file('images');
         if ($images) {
             $uploadedFileUrl = $this->UploadMultiImage($images, 'rate_room/' . $id_room . '/');
-            $input['images'] = json_encode($uploadedFileUrl);
+            $input['images'] = $uploadedFileUrl;
         }
         $rate = $this->rate_room->create($input);
         return response()->json([

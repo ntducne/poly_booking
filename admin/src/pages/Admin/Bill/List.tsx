@@ -28,11 +28,6 @@ const BillList = () => {
       sortDirections: ["descend"],
       fixed: "left",
     },
-    // {
-    //   title: "Dịch vụ",
-    //   dataIndex: "services",
-    //   key: "services",
-    // },
     {
       title: "Giá tiền",
       dataIndex: "total",
@@ -115,51 +110,6 @@ const BillList = () => {
     branch: item.branch,
     status: item.status,
   }));
-  // [
-  //   {
-  //     key: "1",
-  //     booking_id: 1,
-  //     services: "Thuê phòng",
-  //     total: 1200000,
-  //     payment_method: "Tiền mặt",
-  //     payment_date: "2021-09-20",
-  //     branch_id: 1,
-  //   },
-  //   {
-  //     key: "2",
-  //     booking_id: 2,
-  //     services: "Thuê phòng",
-  //     total: 1600000,
-  //     payment_method: "Chuyển khoản",
-  //     payment_date: "2021-09-20",
-  //     branch_id: 2,
-  //   },
-  // ];
-
-  // const remove = (id: any) => {
-  //   try {
-  //     swal({
-  //       title: "Are you sure you want to delete?",
-  //       text: "You cannot undo after deleting!",
-  //       icon: "warning",
-  //       buttons: ["Cancel", "Delete"],
-  //       dangerMode: true,
-  //     })
-  //       .then((willDelete) => {
-  //         if (willDelete) {
-  //           // removeComment(id);
-  //           swal("You have successfully deleted", {
-  //             icon: "success",
-  //           });
-  //         }
-  //       })
-  //       .catch(() => {
-  //         swal("Error", {
-  //           icon: "error",
-  //         });
-  //       });
-  //   } catch (error) {}
-  // };
 
   return (
     <Page title={`Hóa đơn`}>

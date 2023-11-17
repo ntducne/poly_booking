@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { useCookies } from 'react-cookie';
 
 interface ILogin {
     email: string,
@@ -32,10 +33,19 @@ const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_URL_API,
         prepareHeaders: (headers) => {
-            // localStorage.getItem("access_token");
-            const token = Object.fromEntries(new URLSearchParams(document.cookie));
+            // const [cookie] = useCookies(['userInfo']);
+            // if (cookie.userInfo) {
+
+            //     // localStorage.getItem("access_token");
+            //     const token = cookie.userInfo.accessToken.token;
+            //     headers.set("authorization", `Bearer ${token}`)
+            //     return headers;
+            // }
+            const token = localStorage.getItem("access_token");
             headers.set("authorization", `Bearer ${token}`)
             return headers;
+
+
         },
     }),
     endpoints: (builder) => ({
@@ -47,7 +57,14 @@ const authApi = createApi({
             }),
             invalidatesTags: ['Auth']
         }),
-
+        updateUser: builder.mutation({
+            query: (data: ILogin) => ({
+                url: `/user/update/profile`,
+                method: "POST",
+                body: data
+            }),
+            invalidatesTags: ['Auth']
+        }),
         register: builder.mutation({
             query: (data: IRegister) => ({
                 url: `/auth/user/register`,
@@ -73,6 +90,12 @@ const authApi = createApi({
             }),
         }),
 
+        getUser: builder.query({
+            query: () => ({
+                url: `/user/profile`,
+                method: "GET",
+            }),
+        }),
         resetPassword: builder.mutation({
             query: (data: IResetPassword) => ({
                 url: `/auth/user/reset-password/${data.token}`,
@@ -85,6 +108,6 @@ const authApi = createApi({
 })
 
 
-export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery, useResetPasswordMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery, useResetPasswordMutation, useGetUserQuery } = authApi;
 export const authReducer = authApi.reducer
 export default authApi

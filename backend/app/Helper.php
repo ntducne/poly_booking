@@ -84,6 +84,33 @@ function convertToSlug($text) {
     // Loại bỏ khoảng trắng ở đầu và cuối chuỗi
     $text = trim($text);
 
+    // Tạo một mảng các ký tự đặc biệt trong tiếng Việt cần thay thế
+    $vietnameseSpecialChars = array(
+        'à', 'á', 'ạ', 'ả', 'ã', 'ă', 'ằ', 'ắ', 'ẵ', 'ặ', 'ẳ', 'â', 'ầ', 'ấ', 'ậ', 'ẩ',
+        'đ', 'è', 'é', 'ẹ', 'ẻ', 'ẽ', 'ê', 'ề', 'ế', 'ệ', 'ể', 'ễ',
+        'ì', 'í', 'ị', 'ỉ', 'ĩ',
+        'ò', 'ó', 'ọ', 'ỏ', 'õ', 'ô', 'ồ', 'ố', 'ộ', 'ổ', 'ỗ', 'ơ', 'ờ', 'ớ', 'ợ', 'ở',
+        'ù', 'ú', 'ụ', 'ủ', 'ũ', 'ư', 'ừ', 'ứ', 'ự', 'ử', 'ữ',
+        'ỳ', 'ý', 'ỵ', 'ỷ', 'ỹ',
+        'ñ', 'ç',
+        ' ', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', '-', '{', '}', '[', ']', '|', '\\', ':', ';', '"', '\'', '<', '>', ',', '.', '?', '/',
+    );
+
+    // Tạo một mảng ký tự tương ứng để thay thế
+    $replacementChars = array(
+        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',
+        'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e',
+        'i', 'i', 'i', 'i', 'i',
+        'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o',
+        'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u',
+        'y', 'y', 'y', 'y', 'y',
+        'n', 'c',
+        '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-',
+    );
+
+    // Thay thế ký tự đặc biệt trong chuỗi
+    $text = str_replace($vietnameseSpecialChars, $replacementChars, $text);
+
     // Thay thế khoảng trắng và các ký tự đặc biệt bằng dấu gạch ngang
     $text = preg_replace('/[^A-Za-z0-9-]+/', '-', $text);
 
@@ -92,3 +119,4 @@ function convertToSlug($text) {
 
     return $text;
 }
+
