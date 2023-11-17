@@ -14,31 +14,32 @@ interface DataType {
   name: string;
   num_of_bed: number;
   address: string;
-  status: number,
+  status: number;
   area: string;
-  images: any
+  images: any;
 }
-
 
 const ListRoom = () => {
   const { data, isLoading, refetch } = useGetRoomsQuery({});
-  const [dataFetching, setDataFetching] = useState<any>([])
-  const [deleteRoom] = useDeleteRoomMutation()
+  const [dataFetching, setDataFetching] = useState<any>([]);
+  const [deleteRoom] = useDeleteRoomMutation();
 
   useEffect(() => {
-    setDataFetching(data?.data.map((item: any) => {
-      return {
-        key: item.id,
-        name: item.name,
-        num_of_bed: item.num_of_bed,
-        discount: item.discount,
-        status: item.status,
-        area: item.area,
-        address: item?.branch?.address,
-        images: item?.images?.map((item: any) => item.image)
-      }
-    }))
-  }, [isLoading, data?.data])
+    setDataFetching(
+      data?.data.map((item: any) => {
+        return {
+          key: item.id,
+          name: item.name,
+          num_of_bed: item.num_of_bed,
+          discount: item.discount,
+          status: item.status,
+          area: item.area,
+          address: item?.branch?.address,
+          images: item?.images?.map((item: any) => item.image),
+        };
+      })
+    );
+  }, [isLoading, data?.data]);
   const columns: ColumnsType<DataType> = [
     {
       title: "Tên phòng",
@@ -64,7 +65,7 @@ const ListRoom = () => {
               {/* <p>{record?.key}</p> */}
             </div>
           </div>
-        )
+        );
       },
     },
     {
@@ -74,8 +75,10 @@ const ListRoom = () => {
       sorter: (a, b) => a.name.length - b.name.length,
       render: (text) => {
         // Sử dụng hàm định dạng (format) ở đây để định dạng giá phòng theo ý muốn
-        return <span className="font-bold">{FormatPrice({ price: text })}</span>
-      }
+        return (
+          <span className="font-bold">{FormatPrice({ price: text })}</span>
+        );
+      },
     },
     {
       title: "Diện tích",
@@ -124,7 +127,8 @@ const ListRoom = () => {
         <Space size="middle">
           <Button
             className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
-            type="primary" >
+            type="primary"
+          >
             <Link to={`/room/edit/${record.key}`}>
               <AiOutlineEdit />
             </Link>
@@ -142,14 +146,14 @@ const ListRoom = () => {
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<DataType>["onChange"] = () =>
     // pagination,
     // filters,
     // sorter,
     // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+    {
+      // console.log("params", pagination, filters, sorter, extra);
+    };
 
   const remove = (id: any) => {
     try {
@@ -162,15 +166,17 @@ const ListRoom = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            deleteRoom(id).unwrap().then((data) => {
-              console.log(data);
-              if (data.status === "success") {
-                refetch();
-                swal("You have successfully deleted", {
-                  icon: "success",
-                });
-              }
-            })
+            deleteRoom(id)
+              .unwrap()
+              .then((data) => {
+                console.log(data);
+                if (data.status === "success") {
+                  refetch();
+                  swal("You have successfully deleted", {
+                    icon: "success",
+                  });
+                }
+              });
           }
         })
         .catch(() => {
@@ -178,8 +184,11 @@ const ListRoom = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <Page title={`Phòng`}>

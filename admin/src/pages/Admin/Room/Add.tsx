@@ -16,7 +16,7 @@ import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useGetRoomTypeQuery } from "../../../api/roomTypes";
 import { useGetAllBranchesQuery } from "../../../api/branches";
 import { useCreateRoomMutation } from "../../../api/room";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
@@ -29,46 +29,47 @@ const formItemLayout = {
 const { TextArea } = Input;
 
 const AddRoom = () => {
-  const navigate = useNavigate()
-  const { data, isLoading } = useGetRoomTypeQuery({})
-  const { data: dataBranch, isLoading: isLoadingBranch } = useGetAllBranchesQuery({})
-  const [createUser, { isLoading: isLoadingCreate }] = useCreateRoomMutation()
-
-  if (isLoading && isLoadingBranch) {
-    return <div>Loading...</div>
-  }
+  const navigate = useNavigate();
+  const { data, isLoading } = useGetRoomTypeQuery({});
+  const { data: dataBranch, isLoading: isLoadingBranch } =
+    useGetAllBranchesQuery({});
+  const [createUser, { isLoading: isLoadingCreate }] = useCreateRoomMutation();
 
   const onFinish = (values: any) => {
-    const formUpload = new FormData()
-    const uploadedFiles = values.images.map((fileInfo: any) => fileInfo.originFileObj);
+    const formUpload = new FormData();
+    const uploadedFiles = values.images.map(
+      (fileInfo: any) => fileInfo.originFileObj
+    );
     for (let i = 0; i < uploadedFiles.length; i++) {
-      formUpload.append("images[]", uploadedFiles[i])
+      formUpload.append("images[]", uploadedFiles[i]);
     }
 
     const data = {
       ...values,
       pay_upon_check_in: 1,
-    }
-    delete data.images
+    };
+    delete data.images;
 
     for (const [key, value] of Object.entries(data)) {
-      formUpload.append(`${key}`, `${value}`)
+      formUpload.append(`${key}`, `${value}`);
     }
-    createUser(formUpload).unwrap().then((item) => {
-      if (item.status == 'success') {
-        toast("Thêm mới thành công", {
-          autoClose: 3000,
-          theme: "light",
-        });
-        navigate("/room")
-      } else {
-        console.log(item)
-        toast(item?.error?.name || "Lỗi rồi bạn", {
-          autoClose: 3000,
-          theme: "light",
-        });
-      }
-    })
+    createUser(formUpload)
+      .unwrap()
+      .then((item) => {
+        if (item.status == "success") {
+          toast("Thêm mới thành công", {
+            autoClose: 3000,
+            theme: "light",
+          });
+          navigate("/room");
+        } else {
+          console.log(item);
+          toast(item?.error?.name || "Lỗi rồi bạn", {
+            autoClose: 3000,
+            theme: "light",
+          });
+        }
+      });
   };
 
   const normFile = (e: any) => {
@@ -103,7 +104,7 @@ const AddRoom = () => {
   };
 
   if (isLoading && isLoadingBranch) {
-    return <>loading...</>
+    return <>loading...</>;
   }
 
   return (
@@ -150,16 +151,21 @@ const AddRoom = () => {
           >
             <Select>
               {data?.data?.map((item: any) => {
-                return <Option key={item.id} value={item.id}>{item.room_type_name}</Option>
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.room_type_name}
+                  </Option>
+                );
               })}
             </Select>
           </Form.Item>
 
-
           <Form.Item
             label="Người lớn"
             name="adults"
-            rules={[{ required: true, message: "Vui lòng nhập tối đa số người lớn" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập tối đa số người lớn" },
+            ]}
           >
             <InputNumber min={1} />
           </Form.Item>
@@ -171,7 +177,6 @@ const AddRoom = () => {
           >
             <InputNumber min={1} />
           </Form.Item>
-
 
           <Form.Item
             label="Số giường"
@@ -260,7 +265,6 @@ const AddRoom = () => {
             <Rate />
           </Form.Item> */}
 
-
           <Form.Item
             name="branch_id"
             label="Chi nhánh"
@@ -276,12 +280,15 @@ const AddRoom = () => {
             // placeholder="Vui lòng chọn chi nhánh !"
             >
               {dataBranch?.data?.map((item: any) => {
-                console.log(item)
-                return <Option key={item.id} value={item.id}>{item.name}</Option>
+                console.log(item);
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                );
               })}
             </Select>
           </Form.Item>
-
 
           <Form.Item
             label="Mô tả"
@@ -293,15 +300,22 @@ const AddRoom = () => {
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-              <Button className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
-                {isLoadingCreate ?
+              <Button
+                className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
+                type="default"
+                htmlType="submit"
+              >
+                {isLoadingCreate ? (
                   <AiOutlineLoading3Quarters className="animate-spin" />
-                  :
+                ) : (
                   <AiOutlineCheck className="text-[#fff] " />
-                }
+                )}
                 <Text className=" text-[#fff] ml-1">Thêm</Text>
               </Button>
-              <Button className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" htmlType="reset">
+              <Button
+                className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
+                htmlType="reset"
+              >
                 <BiReset className="text-[#fff]" />
                 <Text className="text-[#fff] ml-1">Làm mới</Text>
               </Button>
