@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 import FormatPrice from "../../utils/FormatPrice";
 
 export default function Room(props: any) {
-  const { name, area, adults, children, description, id, num_of_bed } =
+  const { name, area, adults, children, description, id, num_of_bed, slug } =
     props?.data;
   console.log(props?.data);
 
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
       <div className="lg:hidden block">
-        <Link to={`/rooms/${id}`}>
+        <Link to={`/rooms/${slug}`}>
           <img
             className="group-hover:scale-110 transition-all duration-300 w-full"
             src={
@@ -21,7 +21,7 @@ export default function Room(props: any) {
 
         <div className="mt-5 px-5">
           <div>
-            <Link to={`/rooms/${id}`}>
+            <Link to={`/rooms/${slug}`}>
               <h3 className="text-h3 mb-[5px] font-bold overflow-hidden font-text_2nd">
                 {name}
               </h3>
@@ -66,7 +66,7 @@ export default function Room(props: any) {
       </div>
 
       <div className="gap-3 w-full lg:flex hidden">
-        <Link to={`/rooms/${id}`} className="min-w-[200px]">
+        <Link to={`/rooms/${slug}`} className="min-w-[200px]">
           <img
             className="group-hover:scale-110 transition-all duration-300 object-cover"
             src={
