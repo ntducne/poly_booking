@@ -51,8 +51,6 @@ const BillDetail: React.FC = () => {
     if (!_.isEqual(prevServicesRef.current, dataBill?.data?.services)) {
       refetch();
     }
-    console.log("prevServicesRef", prevServicesRef.current);
-
     prevServicesRef.current = dataBill?.data?.services;
   }, [dataBill?.data?.status, dataBill?.data?.services, isLoading]);
   console.log("dataBill", dataBill?.data);
@@ -246,6 +244,8 @@ const BillDetail: React.FC = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+  console.log("status", dataBill?.data?.status);
+
   return (
     <>
       <div className="h-[100px] w-full shadow-md grid grid-cols-1 md:grid-cols-2 items-center rounded-lg border">
@@ -258,35 +258,43 @@ const BillDetail: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center md:justify-end justify-start ml-5 md:ml-0 md:mr-3">
-          <button
-            type="button"
-            // onClick={showModalExtend}
-            onClick={() => onCheckinBooking(dataBill?.data?.booking?.id)}
-            className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-          >
-            Nhận phòng
-          </button>
-          <button
-            type="button"
-            onClick={showModalExtend}
-            className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-          >
-            Gia hạn
-          </button>
-          <button
-            type="button"
-            onClick={() => onCheckoutBooking(dataBill?.data?.booking?.id)}
-            className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-          >
-            Trả phòng
-          </button>
-          <button
-            type="button"
-            onClick={() => onCancelBooking(dataBill?.data?.booking?.id)}
-            className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-          >
-            Huỷ phòng
-          </button>
+          {dataBill?.data?.status === 1 && (
+            <button
+              type="button"
+              // onClick={showModalExtend}
+              onClick={() => onCheckinBooking(dataBill?.data?.booking?.id)}
+              className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            >
+              Nhận phòng
+            </button>
+          )}
+          {dataBill?.data?.status === 3 && (
+            <>
+              <button
+                type="button"
+                onClick={showModalExtend}
+                className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              >
+                Gia hạn
+              </button>
+              <button
+                type="button"
+                onClick={() => onCheckoutBooking(dataBill?.data?.booking?.id)}
+                className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              >
+                Trả phòng
+              </button>
+            </>
+          )}
+          {dataBill?.data?.status === 1 && (
+            <button
+              type="button"
+              onClick={() => onCancelBooking(dataBill?.data?.booking?.id)}
+              className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            >
+              Huỷ phòng
+            </button>
+          )}
         </div>
       </div>
       <Modal
