@@ -28,9 +28,6 @@ const Detail = () => {
 
     const [cookie] = useCookies(['userInfo']);
     const token = cookie.userInfo.accessToken.token;
-   
-    console.log(token);
-
     const [dataUser, setData] = useState({} as any)
     useEffect(() => {
         fetch('https://api.polydevhotel.site/user/profile', {
