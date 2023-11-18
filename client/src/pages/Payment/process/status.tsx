@@ -19,7 +19,7 @@ export default function PaymentStatus() {
 
         if(location.search) {
             Navigate('/payment/status')
-            fetch(`https://api.polydevhotel.site/api/vnpay/callback${location.search}`,{
+            fetch(`${import.meta.env.VITE_URL_API}/api/vnpay/callback${location.search}`,{
                 method: 'GET',
             })
             .then(response => {

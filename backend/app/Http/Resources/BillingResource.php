@@ -13,15 +13,15 @@ class BillingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->id,
-            'booking'=> new BookingResource(Booking::find($this->booking_id)),
-            'services'=>$this->services,
-            'total'=>$this->total,
-            'payment_method'=> $this->payment_method,
-            'payment_date'=>$this->payment_date,
-            'branch'=> new BranchResource(Branch::find($this->branch_id)),
-            'status'=> $this->status,
-            'history'=> HistoryHandleBooking::where('booking_id', $this->booking_id)->get(),
+            'id' => $this->id,
+            'booking' => new BookingResource(Booking::find($this->booking_id)),
+            'services' => $this->services,
+            'total' => $this->total,
+            'payment_method' => $this->payment_method,
+            'payment_date' => $this->payment_date,
+            'branch' => new BranchResource(Branch::find($this->branch_id)),
+            'status' => $this->status,
+            'history' => HistoryHandleBooking::where('booking_id', $this->booking_id)->get(),
         ];
     }
 }

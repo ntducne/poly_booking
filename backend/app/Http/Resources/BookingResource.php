@@ -29,7 +29,7 @@ class BookingResource extends JsonResource
             'amount_people' => $this->amount_people,
             'amount_room' => $this->amount_room,
             'people' => $this->people,
-            'status' => $this->status,
+//            'status' => $this->status,
             'detail' => BookDetail::where('booking_id', $this->id)->get(),
         ];
     }
