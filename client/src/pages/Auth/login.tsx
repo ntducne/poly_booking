@@ -22,7 +22,7 @@ export default function Login({ }: Props) {
 
     const onFinish = (values: any) => {
         console.log('Dữ liệu biểu mẫu:', values);
-        // Thực hiện logic đăng nhập ở đây
+        // Thực hiện logic đăng nhập
         if (values) {
             setIsLoading(true)
             Login(values)
@@ -50,6 +50,9 @@ export default function Login({ }: Props) {
                 }).catch((error: any) => {
                     console.log(error);
                     message.error(error?.values?.message || "some thing error");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
                 })
         }
     };

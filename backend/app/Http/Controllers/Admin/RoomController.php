@@ -68,7 +68,7 @@ class RoomController extends Controller
                     'message' => 'Thêm phòng thành công ! ',
                     'data'    => $roomNew
                 ];
-            }else{
+            } else{
                 $response = [
                     'status' => 'error',
                     'message' => 'Thêm phòng không thành công ! ',
@@ -84,7 +84,7 @@ class RoomController extends Controller
             ], 500);
         }
     }
-    public function show( $id)
+    public function show($id)
     {
         try {
             $room = $this->room->find($id);
