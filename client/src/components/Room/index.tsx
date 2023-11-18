@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import FormatPrice from "../../utils/FormatPrice";
 
 export default function Room(props: any) {
-  const { name, area, adults, children, description, id, num_of_bed, slug } =
+  const { name, area, adults, children, description, id, num_of_bed, slug, branch } =
     props?.data;
   console.log(props?.data);
 
@@ -104,6 +104,9 @@ export default function Room(props: any) {
           </div>
           <div className="h-full w-[1px] bg-gray-200"></div>
           <div className="min-w-[200px] flex flex-col justify-end p-3">
+            <p className="text-[16px] text-gray-500 font-bold flex-col flex items-end justify-end mb-3">
+              <p className="text-[12px] text-black mt-1">{branch.name}</p>
+            </p>
             <p className="text-[16px] text-gray-500 font-bold flex-col flex items-end justify-end">
               <FormatPrice price={1231312312} />
               <p className="text-[12px] text-black mt-1">Chỉ còn 2 phòng</p>
