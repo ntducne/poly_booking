@@ -51,8 +51,6 @@ const BillDetail: React.FC = () => {
     if (!_.isEqual(prevServicesRef.current, dataBill?.data?.services)) {
       refetch();
     }
-    console.log("prevServicesRef", prevServicesRef.current);
-
     prevServicesRef.current = dataBill?.data?.services;
   }, [dataBill?.data?.status, dataBill?.data?.services, isLoading]);
   console.log("dataBill", dataBill?.data);
