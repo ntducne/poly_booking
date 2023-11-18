@@ -40,6 +40,8 @@ const BillDetail: React.FC = () => {
     isLoading,
     refetch,
   } = useGetDetailBilingsQuery(id || "");
+  console.log("dataBill", dataBill);
+
   const prevServicesRef = useRef();
 
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
@@ -53,7 +55,7 @@ const BillDetail: React.FC = () => {
     }
     prevServicesRef.current = dataBill?.data?.services;
   }, [dataBill?.data?.status, dataBill?.data?.services, isLoading]);
-  console.log("dataBill", dataBill?.data);
+  console.log("dataBill", dataBill);
 
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
@@ -82,6 +84,10 @@ const BillDetail: React.FC = () => {
           setOpen(false);
           swal(res.message, {
             icon: "success",
+          });
+        } else {
+          swal(res.message, {
+            icon: "error",
           });
         }
       });
@@ -138,6 +144,10 @@ const BillDetail: React.FC = () => {
                   swal(res.message, {
                     icon: "success",
                   });
+                } else {
+                  swal(res.message, {
+                    icon: "error",
+                  });
                 }
               });
           }
@@ -173,6 +183,10 @@ const BillDetail: React.FC = () => {
                 if (res.status === "success") {
                   swal(res.message, {
                     icon: "success",
+                  });
+                } else {
+                  swal(res.message, {
+                    icon: "error",
                   });
                 }
               });
@@ -244,7 +258,6 @@ const BillDetail: React.FC = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  console.log("status", dataBill?.data?.status);
 
   return (
     <>
@@ -262,7 +275,7 @@ const BillDetail: React.FC = () => {
             <button
               type="button"
               // onClick={showModalExtend}
-              onClick={() => onCheckinBooking(dataBill?.data?.booking?.id)}
+              onClick={() => onCheckinBooking(dataBill?.data?.id)}
               className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             >
               Nhận phòng
@@ -279,7 +292,7 @@ const BillDetail: React.FC = () => {
               </button>
               <button
                 type="button"
-                onClick={() => onCheckoutBooking(dataBill?.data?.booking?.id)}
+                onClick={() => onCheckoutBooking(dataBill?.data?.id)}
                 className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
               >
                 Trả phòng
@@ -289,7 +302,7 @@ const BillDetail: React.FC = () => {
           {dataBill?.data?.status === 1 && (
             <button
               type="button"
-              onClick={() => onCancelBooking(dataBill?.data?.booking?.id)}
+              onClick={() => onCancelBooking(dataBill?.data?.id)}
               className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             >
               Huỷ phòng
@@ -401,14 +414,23 @@ const BillDetail: React.FC = () => {
           <div className="p-5">
             <a href="#">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                Noteworthy technology acquisitions 2021
+                {dataBill?.data?.booking?.detail[0]?.room_name}
               </h5>
             </a>
             <p className="mb-3 font-normal text-gray-700 ">
-              Here are the biggest enterprise technology acquisitions of 2021 so
-              far, in reverse chronological order.
+              <div>Thông tin số người</div>
+              <div>
+                Tổng số người :{" "}
+                {dataBill?.data?.booking?.amount_people?.total_people}
+              </div>
+              <div>
+                Số người lớn : {dataBill?.data?.booking?.amount_people?.adults}
+              </div>
+              <div>
+                Số trẻ con : {dataBill?.data?.booking?.amount_people?.children}
+              </div>
             </p>
-            <a
+            {/* <a
               href="#"
               className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
@@ -428,24 +450,26 @@ const BillDetail: React.FC = () => {
                   d="M1 5h12m0 0L9 1m4 4L9 9"
                 />
               </svg>
-            </a>
+            </a> */}
           </div>
         </div>
         <div className="grid md:grid-rows-1 grid-rows-1 gap-4">
           <div className="grid md:grid-cols-1 gap-4">
             <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+              <h5 className=" mb-2 text-2xl font-bold tracking-tight text-gray-900">
                 Thông tin đặt phòng
               </h5>
               <div className="font-normal text-gray-700">
                 <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
-                  <li>Chi nhánh: Đà Nẵng</li>
-                  <li>Loại phòng: VIP</li>
-                  <li>Check in: 12:00 10/10/2023</li>
-                  <li>Check out: 14:00 15/10/2023</li>
-                  <li>Số đêm: 6</li>
-                  <li>Thời gian thanh toán: 10:51:52 05/09/2023</li>
-                  <li>Hình thức thanh toán: Thanh toán qua ví điện tử MoMo</li>
+                  <li>Chi nhánh: {dataBill?.data?.branch?.address}</li>
+                  <li>Loại phòng: {dataBill?.data?.booking?.room_type}</li>
+                  <li>Check in: {dataBill?.data?.booking?.checkin}</li>
+                  <li>Check out: {dataBill?.data?.booking?.checkout}</li>
+                  <li>Giá: {dataBill?.data?.total} VNĐ</li>
+                  <li>Thời gian thanh toán: {dataBill?.data?.payment_date}</li>
+                  <li>
+                    Hình thức thanh toán: {dataBill?.data?.payment_method}
+                  </li>
                 </ul>
               </div>
             </div>
@@ -489,6 +513,7 @@ const BillDetail: React.FC = () => {
                     footer={[]}
                   >
                     <Form
+                      form={form}
                       className="mt-5"
                       name="dynamic_form_nest_item"
                       onFinish={onFinish}
@@ -562,7 +587,14 @@ const BillDetail: React.FC = () => {
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                 Dịch vụ
               </h5>
-              <Button onClick={showDrawer}>Thêm dịch vụ</Button>
+              {dataBill?.data?.status === 3 && (
+                <Button
+                  className="h-full text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                  onClick={showDrawer}
+                >
+                  Thêm dịch vụ
+                </Button>
+              )}
             </div>
             <div className="mt-5 font-normal text-gray-700 max-h-[510px] overflow-auto">
               <ol className="relative border-l border-gray-200 ml-3">
@@ -670,28 +702,42 @@ const BillDetail: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b ">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  Deluxe Room Horizon View - Room Only - Bf1
-                </th>
-                <td className="px-6 py-4">4</td>
-                <td className="px-6 py-4">1,000,000 VNĐ</td>
-                <td className="px-6 py-4">4,000,000 VNĐ</td>
-              </tr>
-              <tr className="bg-white border-b ">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  Dịch vụ
-                </th>
-                <td className="px-6 py-4">4</td>
-                <td className="px-6 py-4">500,000 VNĐ</td>
-                <td className="px-6 py-4">2,000,000 VNĐ</td>
-              </tr>
+              {dataBill?.data?.booking?.detail?.map((room: any) => {
+                return (
+                  <tr className="bg-white border-b ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      <div>{room?.room_name}</div>
+                    </th>
+                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">
+                      {dataBill?.data?.booking?.price_per_night} VNĐ
+                    </td>
+                    <td className="px-6 py-4">
+                      {parseInt(dataBill?.data?.booking?.detail?.length) *
+                        parseInt(dataBill?.data?.booking?.price_per_night)}{" "}
+                      VNĐ
+                    </td>
+                  </tr>
+                );
+              })}
+              {dataBill?.data?.services?.map((service: any) => {
+                return (
+                  <tr className="bg-white border-b ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      {service?.service_name}
+                    </th>
+                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">{service?.price} VNĐ</td>
+                    <td className="px-6 py-4"> {service?.price} VNĐ</td>
+                  </tr>
+                );
+              })}
             </tbody>
             <tfoot>
               <tr className="bg-white border-b ">
