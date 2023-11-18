@@ -48,10 +48,14 @@ export default function Login({ }: Props) {
                         message.error("Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại.");
                     }
                 }).catch((error: any) => {
+
                     console.log(error);
-                    message.error(error?.values?.message || "some thing error");
+                    // console.log(error?.data?.message);
+                    message.error(error?.data?.message || "some thing error");
                     setTimeout(() => {
-                        window.location.reload();
+                        setIsLoading(false)
+                        // window.location.reload();
+                        form.resetFields();
                     }, 1000);
                 })
         }
