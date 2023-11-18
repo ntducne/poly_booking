@@ -280,7 +280,7 @@ export default function Rooms({}: Props) {
             </div>
           </div>
           <div className="flex justify-end mt-[50px] md:mt-[90px]">
-            <Pagination defaultCurrent={6} total={500} />
+            <Pagination defaultCurrent={6} total={10} />
           </div>
         </div>
         <div className="mt-primary">
