@@ -21,7 +21,7 @@ function ForgotPassword() {
                     // Email không tồn tại, hiển thị thông báo lỗi
                     message.error('Email không tồn tại. Vui lòng kiểm tra lại.');
                 }
-                console.log('aa:', response.data);
+                console.log('aa:', response);
             })
             .catch((error: any) => {
                 console.error('Lỗi khi gửi yêu cầu', error);

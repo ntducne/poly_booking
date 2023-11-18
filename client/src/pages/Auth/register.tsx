@@ -3,6 +3,7 @@ import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
 import { useRegisterMutation } from '../../api/Auth';
 import { useNavigate } from 'react-router-dom';
+import { log } from 'console';
 
 type Props = {}
 
@@ -26,10 +27,8 @@ export default function Register({ }: Props) {
                         if (errorData.email) {
                             // Email đã được sử dụng
                             message.error(errorData.email);
-                            // Nếu bạn muốn ngăn người dùng đăng ký, bạn có thể thực hiện điều này tại đây
-                            // Ví dụ: chặn hoặc hiển thị thông báo và ngăn người dùng đăng nhập
+
                         } else {
-                            // Xử lý các lỗi khác ở đây
                         }
                     } else {
                         console.log(response);
@@ -41,7 +40,9 @@ export default function Register({ }: Props) {
                 })
                 .catch((error) => {
                     console.log(error);
-                    message.error(error?.values?.message || "some thing error");
+
+                    // console.log(error?.data?.error?.email);
+                    message.error(error?.data?.error?.email || "some thing error");
                 })
         }
     };
