@@ -19,6 +19,7 @@ import {
   Card,
   Col,
   Alert,
+  message,
 } from "antd";
 import {
   useAddServiceBookingMutation,
@@ -33,6 +34,9 @@ import { useForm } from "antd/es/form/Form";
 import swal from "sweetalert";
 import _ from "lodash";
 import formatMoneyVN from "../../../config/formatMoneyVN";
+import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
+import da from "date-fns/locale/da";
+import dayjs from "dayjs";
 
 const BillDetail: React.FC = () => {
   const { id } = useParams();
@@ -44,10 +48,13 @@ const BillDetail: React.FC = () => {
   console.log("dataBill", dataBill);
 
   const prevServicesRef = useRef();
+  const { data: dataRoomType, isLoading: roomTypeLoading } = useGetAllRoomTypeQuery({});
 
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
     {}
   );
+
+  const [ dataRoomSearch, setRoomSearch ] = useState([]);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -158,7 +165,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -198,7 +205,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -234,7 +241,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -255,6 +262,46 @@ const BillDetail: React.FC = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const checkRoom = (values :any) => {
+    setRoomSearch([]);
+
+    if (!values) {
+      return;
+    }
+
+    const { checkin_checkout, amount_room_renew, room_type_id, adults, childs} = values;
+    const formattedDates = checkin_checkout?.map((item: any) =>
+      dayjs(item.$d).format("YYYY-MM-DD")
+    );
+
+    const dataQuery = {
+      checkin: formattedDates?.[0],
+      checkout: formattedDates?.[1],
+      adult: adults,
+      child: childs,
+      branch_id: dataBill?.data?.branch?.id,
+      room_type_id: room_type_id,
+      soLuong: amount_room_renew,
+    };
+
+    const queryString = Object.keys(dataQuery)
+    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(dataQuery[key]))
+    .join('&');
+    const apiUrl = `http://localhost:8000/client/room/search?${queryString}`;
+
+    fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        message.success(data.message);
+        setRoomSearch(data.data);
+      });
+    
+  }
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -319,27 +366,31 @@ const BillDetail: React.FC = () => {
         className="w-full"
         footer={[]}
       >
-        <Row gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={8} lg={8}>
+        
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4">
             <Card title="Thông tin khách hàng" bordered={false}>
               <Form
                 labelCol={{ span: 6 }}
                 layout="horizontal"
                 className="mt-5 mb-5"
               >
-                <Form.Item label="Tên khách hàng">
-                  <Input disabled />
+                <Form.Item label="Tên khách hàng"
+                >
+                  <Input disabled defaultValue={dataBill?.data?.booking?.representative?.name} />
                 </Form.Item>
                 <Form.Item label="Số điện thoại">
-                  <Input disabled />
+                  <Input disabled
+                    defaultValue={dataBill?.data?.booking?.representative?.phone}
+                  />
                 </Form.Item>
                 <Form.Item label="Email">
-                  <Input disabled />
+                  <Input disabled
+                    defaultValue={dataBill?.data?.booking?.representative?.email}
+                  />
                 </Form.Item>
               </Form>
             </Card>
-          </Col>
-          <Col xs={24} sm={24} md={8} lg={8}>
+
             <Card title="Thông tin phòng đang đặt" bordered={false}>
               <Form
                 labelCol={{ span: 6 }}
@@ -347,61 +398,172 @@ const BillDetail: React.FC = () => {
                 className="mt-5 mb-5"
               >
                 <Form.Item label="Loại phòng">
-                  <Select disabled>
-                    <Select.Option value="demo">Demo</Select.Option>
+                  <Select defaultValue={dataBill?.data?.booking?.roomType.id} disabled>
+                    {dataRoomType?.data?.map((item: any) => {
+                      return (
+                        <Select.Option value={item.id} key={item.id}>
+                          {item.room_type_name}
+                        </Select.Option>
+                      );
+                    })}
                   </Select>
                 </Form.Item>
                 <Form.Item label="Số phòng">
-                  <InputNumber
+                  <Input
+                    defaultValue={dataBill?.data?.booking.amount_room}
                     disabled
-                    min={1}
-                    defaultValue={5}
                     className="w-full"
                   />
                 </Form.Item>
                 <Form.Item label="Ngày">
-                  <DatePicker.RangePicker
+                  <div className="grid grid-cols-2 gap-3">
+                  <Input
+                    defaultValue={dataBill?.data?.booking.checkin}
                     disabled
                     className="w-full"
-                    placeholder={["Check in", "Check out"]}
                   />
+                  <Input
+                    defaultValue={dataBill?.data?.booking.checkout}
+                    disabled
+                    className="w-full"
+                  />
+                  </div>
                 </Form.Item>
               </Form>
             </Card>
-          </Col>
-          <Col xs={24} sm={24} md={8} lg={8}>
-            <Card title="Thông tin gia hạn" bordered={false}>
-              <Form
+            <Form
+              form={form}
                 labelCol={{ span: 6 }}
                 layout="horizontal"
                 className="mt-5 mb-5"
+                onFinish={checkRoom}
+                
               >
-                <Form.Item label="Loại phòng">
-                  <Select>
-                    <Select.Option value="demo">Demo</Select.Option>
+            <Card title="Thông tin gia hạn" bordered={false}>
+              
+                <Form.Item label="Loại phòng" name="room_type_id" initialValue={dataBill?.data?.booking?.roomType.id}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập loại phòng",
+                    },
+                  ]}
+                >
+                  <Select
+                    defaultValue={dataBill?.data?.booking?.roomType.id}
+                  >
+                    {dataRoomType?.data?.map((item: any) => {
+                      return (
+                        <Select.Option value={item.id} key={item.id}>
+                          {item.room_type_name}
+                        </Select.Option>
+                      );
+                    })}
                   </Select>
+                </Form.Item >
+                <Form.Item label="Số phòng gia hạn" name='amount_room_renew' initialValue={dataBill?.data?.booking.amount_room}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập số phòng",
+                    },
+                  ]}
+                >
+                  <InputNumber defaultValue={dataBill?.data?.booking.amount_room} min={1} className="w-full" />
                 </Form.Item>
-                <Form.Item label="Số phòng gia hạn">
-                  <InputNumber min={1} className="w-full" />
+                <Form.Item label="Người lớn" name='adults' initialValue={dataBill?.data?.booking.amount_people.adults}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập số người lớn",
+                    },
+                  ]}
+                >
+                  <InputNumber defaultValue={dataBill?.data?.booking.amount_people.adults} min={1} className="w-full" />
                 </Form.Item>
-                <Form.Item label="Ngày">
+                <Form.Item label="Trẻ em" name='childs' initialValue={dataBill?.data?.booking.amount_people.children}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập số trẻ em",
+                    },
+                  ]}
+                >
+                  <InputNumber defaultValue={dataBill?.data?.booking.amount_people.children} min={0} className="w-full" />
+                </Form.Item>
+                <Form.Item label="Ngày" name="checkin_checkout"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập ngày",
+                    },
+                  ]}
+                >
                   <DatePicker.RangePicker
                     className="w-full"
                     placeholder={["Check in", "Check out"]}
                   />
                 </Form.Item>
-              </Form>
-              <Alert message="Còn 1 phòng trống" type="success" />
-              <Alert message="Hết phòng" type="error" />
+              {/* <Alert message="Còn 1 phòng trống" type="success" /> */}
+              {/* <Alert message="Hết phòng" type="error" /> */}
               <div className="flex justify-end mt-5">
-                <Button className="mr-2" key={1}>
-                  Thanh toán
-                </Button>
-                <Button key={2}>Kiểm tra</Button>
+                {/* <Button className="mr-2" key={1}>Thanh toán</Button> */}
+                <Button htmlType="submit">Kiểm tra</Button>
               </div>
             </Card>
-          </Col>
-        </Row>
+            </Form>
+
+          </div>
+          {dataRoomSearch.length > 0 && (
+            <div className="relative overflow-x-auto w-full">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Room Image
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Room Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Category
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Price
+                      </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {dataRoomSearch.map((room: any) => {
+                        return (
+                          <tr className="bg-white border-b ">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                              <img width={50} src={room.images[0].image} alt={`Image Room ${room.id}`}/>
+                            </th>
+                            <td className="px-6 py-4">
+                              {room.name}
+                            </td>
+                            <td className="px-6 py-4">
+                              {room.type.room_type_name}
+                            </td>
+                            <td className="px-6 py-4">
+                              {formatMoneyVN(room.type.price_per_night - room.discount)} {room.discount > 0 && (<><br/><del>{formatMoneyVN(room.type.price_per_night)}</del></>)}
+                            </td>
+                            <td>
+                            <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Chọn phòng</button>
+                            </td>
+                          </tr>
+                        )
+                    })}
+                      
+                      
+                  </tbody>
+              </table>
+          </div>
+          )}
+          
       </Modal>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-4">
         <div className="grid md:grid-rows-1 grid-rows-1 gap-4">
@@ -422,7 +584,7 @@ const BillDetail: React.FC = () => {
                     Hình thức thanh toán: {dataBill?.data?.payment_method}
                   </li>
                   <li>
-                    Trạng thái: <span  className="font-bold">{dataBill?.data?.status_name}</span>
+                    Trạng thái: <span className="font-bold">{dataBill?.data?.status_name}</span>
                   </li>
                 </ul>
               </div>
@@ -554,42 +716,42 @@ const BillDetail: React.FC = () => {
               <ol className="relative border-l border-gray-200 ml-3">
                 {
                   dataBill?.data?.services !== null && (
-<>
-                    {dataBill?.data?.services.length == 0 ? (
-                      <div className="">Không có dịch vụ nào</div>
-                    ) : (
-                      dataBill?.data?.services.map((service: any) => {
-                        return (
-                          <li className="mb-10 ml-6">
-                            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
-                              <svg
-                                className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                              >
-                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                              </svg>
-                            </span>
-                            <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                            {service?.time ? service?.time : "Không có thời gian"}
-                            </time>
-                            <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                              <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
-                                <li>Dịch vụ: {service?.service_name}</li>
-                                <li>Giá : {formatMoneyVN(service?.price)}</li>
-                              </ul>
-                            </div>
-                          </li>
-                        );
-                      })
-                    )}
-</>
+                    <>
+                      {dataBill?.data?.services.length == 0 ? (
+                        <div className="">Không có dịch vụ nào</div>
+                      ) : (
+                        dataBill?.data?.services.map((service: any) => {
+                          return (
+                            <li className="mb-10 ml-6">
+                              <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
+                                <svg
+                                  className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                </svg>
+                              </span>
+                              <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                                {service?.time ? service?.time : "Không có thời gian"}
+                              </time>
+                              <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                                <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
+                                  <li>Dịch vụ: {service?.service_name}</li>
+                                  <li>Giá : {formatMoneyVN(service?.price)}</li>
+                                </ul>
+                              </div>
+                            </li>
+                          );
+                        })
+                      )}
+                    </>
 
                   )
                 }
-                
+
 
               </ol>
             </div>
@@ -734,26 +896,26 @@ const BillDetail: React.FC = () => {
             </thead>
             <tbody>
 
-            {dataBill?.data?.history.map((history: any, key: number) => {
-              return (
-                <tr className="bg-white border-b ">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                    <div className="flex items-center space-x-4">
-                      <img
-                        className="w-10 h-10 rounded-full"
-                        src={history.admin.image}
-                        alt={`ADMIN_IMAGE_${key}`}
-                      />
-                      <div className="font-medium">
-                        <div>{history.admin.name}</div>
+              {dataBill?.data?.history.map((history: any, key: number) => {
+                return (
+                  <tr className="bg-white border-b ">
+                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                      <div className="flex items-center space-x-4">
+                        <img
+                          className="w-10 h-10 rounded-full"
+                          src={history.admin.image}
+                          alt={`ADMIN_IMAGE_${key}`}
+                        />
+                        <div className="font-medium">
+                          <div>{history.admin.name}</div>
+                        </div>
                       </div>
-                    </div>
-                  </th>
-                  <td className="px-6 py-4">{history.time}</td>
-                  <td className="px-6 py-4">{history.handle}</td>
-                </tr>
-              )
-            })}
+                    </th>
+                    <td className="px-6 py-4">{history.time}</td>
+                    <td className="px-6 py-4">{history.handle}</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>

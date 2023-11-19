@@ -169,7 +169,7 @@ class ClientController extends Controller
                 && request()->has('branch_id')
                 && request()->has('soLuong')
             ) {
-                $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, null, $request->soLuong);
+                $room_completed = $this->check_room($request->checkin, $request->checkout, $request->adult, $request->child, $request->branch_id, $request->room_type_id, $request->soLuong);
                 if (!$room_completed) {
                     $response = [
                         'message' => 'Hết phòng !'
