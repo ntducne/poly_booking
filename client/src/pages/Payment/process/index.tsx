@@ -43,6 +43,7 @@ export default function PaymentProcess() {
                 removeCookie('paymentPage', { path: '/' });
                 if(cookie.paymentMethod === 'vnpay'){
                     removeCookie('paymentMethod', { path: '/' });
+
                     window.location.href = `${import.meta.env.VITE_URL_API}/api/vnpay/process/${data.bill.billingCode}/${data.bill.total}`;
                 }
             })

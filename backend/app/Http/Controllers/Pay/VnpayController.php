@@ -98,7 +98,7 @@ class VnpayController extends Controller
         if ($secureHash == $vnp_SecureHash) {
             if ($_GET['vnp_ResponseCode'] == '00') {
                 Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update([
-                    'status' => 5,
+                    'status' => 1,
                     'payment_method' => 'VNPAY',
                     'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);

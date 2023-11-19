@@ -154,29 +154,38 @@ class BookingRepository
     public function book($request)
     {
         $soLuong = $request->soLuong;
+        $room_id = $request->room_id;
         $branch_id = $request->branch_id;
         (int) $adults = $request->adults;
         (int) $children = $request->children;
-        $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
+        $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adults', 'children']);
+        $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
         //Kiem tra phong con trong hay khong
-        $room_valid = $this->check_room($request->checkin, $request->checkout, $branch_id, $adults, $children, $request->room_type_id, $request->amount_room);
+        $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);
         //Bat loi dat so luong phong
-        if (count($room_valid) < $request->amount_room) {
+        if (!in_array($room_id,$room_valid)) {
+            return response()->json([
+                'message' => 'Phòng đã có người đặt !'
+            ]);
+        }
+        $room_booking = [$room_id];
+        if (count($room_valid) < $soLuong) {
             return response()->json([
                 'message' => 'Không đủ phòng trống !'
             ]);
         }
         //phong co the dat
-        $room_booking = array_slice($room_valid, 0, $request->amount_room);
-        // $total_adults = 0;
-        // $total_children = 0;
+        foreach ($room_valid as $key => $value) {
+            $room_booking[]= $value;
+        }
+        $room_booking = array_slice(array_unique($room_booking), 0, $soLuong);
         $total_discount = 0;
         $total_price_per_night = 0;
         foreach ($room_booking as $key => $value) {
             $total_discount += Room::find($value)->discount;
             $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
         }
-        $param['room_type'] = $request->room_type_id;
+        $param['room_type'] = $room->room_type_id;
         $param['booking_date'] = now()->toDateTimeString();
         $param['price_per_night'] = $total_price_per_night - $total_discount; // gia 1 dem cua booking
         $param['amount_people'] = [
@@ -196,7 +205,7 @@ class BookingRepository
         $details = [];
         foreach ($room_booking as $key => $value) {
             $details[] = [
-                'booking_detail' => $this->booking_detail->create(
+                'booking_detail' => $this->book_detail->create(
                     [
                         'booking_id' => $create->_id,
                         'room_id' => $value,
@@ -226,18 +235,18 @@ class BookingRepository
             // total = so ngay su dung phong * gia 1 dem
             'payment_method' => $request->payment_method,
             //thanh toan tai quay
-            'payment_date' => null,
+            'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
             'branch_id' => $branch_id,
             'status' => config('status')[0]['id'],
         ];
         $data = $this->billing->create($bill);
-        return response()->json([
+        return [
             'message' => 'Đặt thành công !',
             'bill' => [
                 'billingCode' => $billing_code,
                 'total' => $total,
             ]
-        ]);
+        ];
     }
 
     public function renew_booking($request)
@@ -319,6 +328,8 @@ class BookingRepository
                         'service_id' => $service->_id,
                         'service_name' => $service->service_name,
                         'price' => $service->price,
+                        'time' => Carbon::now()->format('Y-m-d H:i:s'),
+
                     ];
                     $total += $service->price;
                 }
@@ -338,6 +349,7 @@ class BookingRepository
                     'service_id' => $service->_id,
                     'service_name' => $service->service_name,
                     'price' => $service->price,
+                    'time' => Carbon::now()->format('Y-m-d H:i:s'),
                 ];
                 $total += $service->price;
             }
@@ -360,7 +372,6 @@ class BookingRepository
             'data' => $values
         ];
     }
-
 
     public function addPeople($request)
     {
@@ -386,7 +397,7 @@ class BookingRepository
             'booking_id' => $request->billing_id,
             'admin_id' => $request->user()->id,
             'handle' => 'Bổ sung khách hàng',
-            'time' => Carbon::now()->format('Y-m-d'),
+            'time' => Carbon::now()->format('Y-m-d H:i:s'),
         ];
         $this->history_handle->create($values);
         return [
@@ -426,7 +437,7 @@ class BookingRepository
             'booking_id' => $request->billing_id,
             'admin_id' => $request->user()->id,
             'handle' => 'Nhận phòng',
-            'time' => Carbon::now()->format('Y-m-d'),
+            'time' => Carbon::now()->format('Y-m-d H:i:s'),
         ];
         $this->history_handle->create($values);
         return [
@@ -460,7 +471,7 @@ class BookingRepository
             'booking_id' => $request->billing_id,
             'admin_id' => $request->user()->id,
             'handle' => 'Khách trả phòng',
-            'time' => Carbon::now()->format('Y-m-d'),
+            'time' => Carbon::now()->format('Y-m-d H:i:s'),
         ];
         $this->history_handle->create($values);
         return [
@@ -488,7 +499,7 @@ class BookingRepository
                 'booking_id' => $request->billing_id,
                 'admin_id' => $request->user()->id,
                 'handle' => 'Hủy đặt phòng',
-                'time' => Carbon::now()->format('Y-m-d'),
+                'time' => Carbon::now()->format('Y-m-d H:i:s'),
             ];
             $this->history_handle->create($values);
             return [

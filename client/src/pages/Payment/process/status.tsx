@@ -9,7 +9,7 @@ import { Spin } from 'antd';
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 export default function PaymentStatus() {
-    const [status, setStatus] = useState(10);
+    const [status, setStatus] = useState(null);
     const [, setCookie] = useCookies(['paymentPage']);
     const location = useLocation();
     const Navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function PaymentStatus() {
         <div className="container mx-auto mt-14" style={{
             maxWidth: 1000,
         }}>
-             {status == 10 && (
+            {!status && (
                 <Result
                     icon={<SmileOutlined />}
                     title={<>
@@ -64,7 +64,7 @@ export default function PaymentStatus() {
                     />
                 </div>
             )}
-            {status == 2 && (
+            {status == 6 && (
                 <div className="container px-4 mx-auto" data-path="0.0">
                     <Result
                         status="error"
@@ -76,7 +76,7 @@ export default function PaymentStatus() {
                     />
                 </div>
             )}
-            {status == 3 && (
+            {status == 7 && (
                 <div className="container px-4 mx-auto" data-path="0.0">
                     <Result
                         status="error"
