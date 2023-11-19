@@ -92,9 +92,13 @@ class BookingRepository
             })
             ->where(function ($query) use ($check_in, $check_out) {
                 $query->where(function ($query) use ($check_in, $check_out) {
-                    $query->where('checkin', '<=', $check_in)
-                        ->where('checkout', '>=', $check_out);
+                    $query->where('checkin', '>=', $check_in)
+                        ->where('checkout', '<=', $check_out);
                 })
+                    ->orWhere(function ($query) use ($check_in, $check_out) {
+                        $query->where('checkin', '<=', $check_in)
+                            ->where('checkout', '>=', $check_out);
+                    })
                     ->orWhere(function ($query) use ($check_in, $check_out) {
                         $query->where('checkin', '>=', $check_in)->where('checkin', '<', $check_out)->where('checkout', '>=', $check_out);
                     })
@@ -114,6 +118,9 @@ class BookingRepository
             ->where('branch_id', '=', $branch_id)
             ->where('room_type_id', '=', $room_type_id)
             ->get();
+        if (!$room) {
+            return [];
+        }
         $room_id_completed = [];
         foreach ($room as $item) {
             if (!in_array($item->_id, $room_id_booked)) {
@@ -147,22 +154,20 @@ class BookingRepository
     public function book($request)
     {
         $soLuong = $request->soLuong;
-        $room_id = $request->room_id;
         $branch_id = $request->branch_id;
-        (int)$adults = $request->adults;
-        (int)$children = $request->children;
+        (int) $adults = $request->adults;
+        (int) $children = $request->children;
         $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
-        $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
         //Kiem tra phong con trong hay khong
-        $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);
+        $room_valid = $this->check_room($request->checkin, $request->checkout, $branch_id, $adults, $children, $request->room_type_id, $request->amount_room);
         //Bat loi dat so luong phong
-        if (count($room_valid) < $soLuong) {
+        if (count($room_valid) < $request->amount_room) {
             return response()->json([
                 'message' => 'Không đủ phòng trống !'
             ]);
         }
         //phong co the dat
-        $room_booking = array_slice($room_valid, 0, $soLuong);
+        $room_booking = array_slice($room_valid, 0, $request->amount_room);
         // $total_adults = 0;
         // $total_children = 0;
         $total_discount = 0;
@@ -171,7 +176,7 @@ class BookingRepository
             $total_discount += Room::find($value)->discount;
             $total_price_per_night += RoomType::where('_id', '=', Room::find($value)->room_type_id)->first()->price_per_night;
         }
-        $param['room_type'] = $room->room_type_id;
+        $param['room_type'] = $request->room_type_id;
         $param['booking_date'] = now()->toDateTimeString();
         $param['price_per_night'] = $total_price_per_night - $total_discount; // gia 1 dem cua booking
         $param['amount_people'] = [
@@ -191,7 +196,7 @@ class BookingRepository
         $details = [];
         foreach ($room_booking as $key => $value) {
             $details[] = [
-                'booking_detail' => $this->book_detail->create(
+                'booking_detail' => $this->booking_detail->create(
                     [
                         'booking_id' => $create->_id,
                         'room_id' => $value,
@@ -489,8 +494,8 @@ class BookingRepository
             $soLuong = $request->soLuong;
             $room_id = $request->room_id;
             $branch_id = $request->branch_id;
-            (int)$adults = $request->adults;
-            (int)$children = $request->children;
+            (int) $adults = $request->adults;
+            (int) $children = $request->children;
             $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
             //Kiem tra phong con trong hay khong
             $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);

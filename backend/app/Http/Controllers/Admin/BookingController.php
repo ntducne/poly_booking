@@ -21,10 +21,9 @@ class BookingController extends Controller
     {
         $booking = $this->bookingRepository->book($request);
         if ($booking) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Đặt phòng thành công !',
-            ]);
+            return response()->json(
+                $booking->original
+            );
         }
         return response()->json([
             'status' => 'error',
@@ -84,7 +83,8 @@ class BookingController extends Controller
         ]);
     }
 
-    public function addPeople(Request $request){
+    public function addPeople(Request $request)
+    {
         $add = $this->bookingRepository->addPeople($request);
         if ($add) {
             return $add;
@@ -95,7 +95,8 @@ class BookingController extends Controller
         ]);
     }
 
-    public function addService(Request $request){
+    public function addService(Request $request)
+    {
         $add = $this->bookingRepository->addService($request);
         if ($add) {
             return $add;
