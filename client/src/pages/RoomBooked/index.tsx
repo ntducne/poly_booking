@@ -1,15 +1,10 @@
-import { Divider, Pagination } from "antd";
-import { ImageStyle1 } from "../../assets/images/Home/ImsViews";
-import HeroSlide from "../../components/HeroSlide";
+import { Pagination } from "antd";
 import { Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import HeroSlide from "../../components/HeroSlide";
 
 type Props = {};
 
 export default function RoomBooked({}: Props) {
-  const [cookie, setCookie] = useCookies(["userInfo"]);
-  console.log(cookie);
-
   return (
     <div>
       <HeroSlide />

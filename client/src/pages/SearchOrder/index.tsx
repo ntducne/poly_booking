@@ -1,8 +1,6 @@
-import type { TabsProps } from "antd";
-import { Tabs } from "antd";
+import { Link } from "react-router-dom";
 import HeroSlide from "../../components/HeroSlide";
 import SearchDetailOrder from "../../sections/SearchOrder/SearchDetailOrder";
-import { Link } from "react-router-dom";
 
 type Props = {};
 

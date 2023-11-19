@@ -1,16 +1,9 @@
-import React, { useState } from "react";
-import {
-  Button,
-  Checkbox,
-  Divider,
-  Form,
-  Input,
-  Pagination,
-  message,
-} from "antd";
+import { Divider, Form, Input, message } from "antd";
+import { useState } from "react";
 import { useSearchOrdersMutation } from "../../api/Order";
-import { StatusOrders } from "../../utils/status";
 import FormatPrice from "../../utils/FormatPrice";
+import { StatusOrders } from "../../utils/status";
+import { LoadingOutlined, SearchOutlined } from "@ant-design/icons";
 type Props = {};
 
 export default function SearchDetailOrder({}: Props) {
@@ -59,6 +52,7 @@ export default function SearchDetailOrder({}: Props) {
         <Form.Item className="flex justify-end">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
             Tra cứu
+            {isLoading ? <LoadingOutlined /> : <SearchOutlined />}
           </button>
         </Form.Item>
       </Form>
