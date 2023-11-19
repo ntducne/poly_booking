@@ -91,6 +91,7 @@ const BillDetail: React.FC = () => {
             icon: "success",
           });
           setIsModalOpen(false);
+          formPeople.resetFields();
         } else {
           swal(res.message, {
             icon: "error",
@@ -103,6 +104,19 @@ const BillDetail: React.FC = () => {
         });
       });
   };
+
+  const columnsPeople = [
+    {
+      title: "Họ và tên",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "CCCD",
+      dataIndex: "cmtnd",
+      key: "cmtnd",
+    },
+  ];
 
   //
 
@@ -405,7 +419,7 @@ const BillDetail: React.FC = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div><Skeleton /></div>;
   }
 
   return (
@@ -789,6 +803,11 @@ const BillDetail: React.FC = () => {
                     onCancel={handleCancel}
                     footer={[]}
                   >
+                    <Table
+                      columns={columnsPeople}
+                      dataSource={dataBill?.data?.booking?.people}
+                      pagination={false}
+                    />{" "}
                     <Form
                       form={formPeople}
                       className="mt-5"
@@ -942,7 +961,7 @@ const BillDetail: React.FC = () => {
                     style={{ display: "flex" }}
                   >
                     {loadingServer ? (
-                      <div>...Loading</div>
+                      <div><LoadingOutlined /></div>
                     ) : (
                       dataServices?.data?.map((service: any) => {
                         return (
