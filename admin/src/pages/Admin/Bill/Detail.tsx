@@ -538,12 +538,15 @@ const BillDetail: React.FC = () => {
 
                     {dataRoomSearch.map((room: any) => {
                         return (
-                          <tr className="bg-white border-b ">
+                          <tr className={` border-b ${dataBill?.data?.booking.detail[0].room_id == room.id ? 'bg-gray-100' : 'bg-white'}`}>
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                               <img width={50} src={room.images[0].image} alt={`Image Room ${room.id}`}/>
                             </th>
                             <td className="px-6 py-4">
-                              {room.name}
+                              <p className="mb-2">{room.name}</p>
+                              {dataBill?.data?.booking.detail[0].room_id == room.id && (
+                              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Phòng hiện tại</span>
+                              )}
                             </td>
                             <td className="px-6 py-4">
                               {room.type.room_type_name}
