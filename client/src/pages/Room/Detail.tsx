@@ -25,43 +25,49 @@ const Detail = () => {
     const navigate = useNavigate()
     const { slug } = useParams()
     console.log(slug)
-
-    const [cookie] = useCookies(['userInfo']);
-    const token = cookie.userInfo.accessToken.token;
     const [dataUser, setData] = useState({} as any)
-    useEffect(() => {
-        fetch('https://api.polydevhotel.site/user/profile', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        },)
-            .then((res: { json: () => any }) => res.json())
-            .then((data: any) => setData(data))
-    }, [])
+    // if (useCookies(['userInfo'])) {
+    //     const [cookie] = useCookies(['userInfo']);
+    //     const token = cookie.userInfo.accessToken.token;
+       
+    //     if (token) {
+    //         useEffect(() => {
+    //             fetch('https://api.polydevhotel.site/user/profile', {
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`,
+    //                 }
+    //             },)
+    //                 .then((res: { json: () => any }) => res.json())
+    //                 .then((data: any) => setData(data))
+    //         }, [])
+    //     }
+
+    // }
+
 
     const { data } = useGetDetialQuery(slug)
     console.log(data);
     const [, setCookie, removeCookie] = useCookies(['roomBooking']);
-   
+
     const [postRate] = usePostRatesMutation()
 
-    const rating =(event:any)=>{
+    const rating = (event: any) => {
         event.preventDefault()
-        let myInput = event.target.elements.rates.value; 
+        let myInput = event.target.elements.rates.value;
         console.log(data?.room?.id);
-        
+
         const values = [myInput.value,
-            data?.room?.id,
-            dataUser?.message?.image,
-            dataUser?.message?.id,
-        ]   
+        data?.room?.id,
+        dataUser?.message?.image,
+        dataUser?.message?.id,
+        ]
         postRate(values);
     }
 
-    const booking = () =>{
+    const booking = () => {
         console.log(data.room);
         removeCookie('roomBooking', { path: '/' })
-        setCookie('roomBooking', data.room,{ path: '/' })
+        setCookie('roomBooking', data.room, { path: '/' })
         navigate('/demo')
     }
 
@@ -71,7 +77,7 @@ const Detail = () => {
             {/* <SlideRooms /> */}
             <form action="">
 
-       
+
                 <div className='h-[600px] lg:h-[860px]'>
                     <div className='text-white h-full bg-pink-300 relative flex items-center justify-center'>
                         <div className='z-20 text-white text-center'>
@@ -140,7 +146,7 @@ const Detail = () => {
                                     <span>{data?.room?.discount}</span>
                                     <span>VNĐ</span>
                                 </div>
-                                <button onClick={()=> booking()} className='w-full bg-cyan-500 rounded-xl h-[60px] mt-[30px] text-2xl font-semibold text-white'> <span>Book now</span></button>
+                                <button onClick={() => booking()} className='w-full bg-cyan-500 rounded-xl h-[60px] mt-[30px] text-2xl font-semibold text-white'> <span>Book now</span></button>
                             </div>
                             <div className='w-full  ml-[50px] mt-[30px] '>
                                 <div>
@@ -389,7 +395,7 @@ const Detail = () => {
                                     <li>
                                         <a href="#"
                                             className="block py-2 px-4 hover:bg-gray-100 ">Edit</a>
-                                    </li>   
+                                    </li>
                                     <li>
                                         <a href="#"
                                             className="block py-2 px-4 hover:bg-gray-100 ">Remove</a>
@@ -505,7 +511,7 @@ const Detail = () => {
                             </button>
                         </div>
                     </article>
-                 
+
                 </div>
             </section>
             <div>
