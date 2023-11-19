@@ -6,7 +6,7 @@ const roomApi = createApi({
   reducerPath: "Room",
   tagTypes: ["rooms"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.polydevhotel.site",
+    baseUrl: import.meta.env.VITE_URL_API + '/',
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",
@@ -17,12 +17,12 @@ const roomApi = createApi({
   }),
   endpoints: (builder) => ({
     getRooms: builder.query<any, any>({
-      query: () => `/admin/rooms`,
+      query: () => `rooms`,
       providesTags: ["rooms"],
     }),
     createRoom: builder.mutation<any, any>({
       query: (data) => ({
-        url: `/admin/rooms`,
+        url: `rooms`,
         method: "POST",
         body: data,
       }),
@@ -30,7 +30,7 @@ const roomApi = createApi({
     }),
     getDetailRoom: builder.query<any, any>({
       query: (id) => ({
-        url: `/admin/rooms/${id}`,
+        url: `rooms/${id}`,
         method: "GET",
       }),
       providesTags: ["rooms"],
@@ -38,7 +38,7 @@ const roomApi = createApi({
     updateRoom: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `/admin/rooms/${data.id}`,
+          url: `rooms/${data.id}`,
           method: "PUT",
           body: data.data,
         };
@@ -48,7 +48,7 @@ const roomApi = createApi({
     deleteRoom: builder.mutation<any, any>({
       query: (id: string) => {
         return {
-          url: `/admin/rooms/${id}`,
+          url: `rooms/${id}`,
           method: "DELETE",
         };
       },
@@ -57,7 +57,7 @@ const roomApi = createApi({
     deleteImgRoom: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `/admin/rooms/deleteImage`,
+          url: `rooms/deleteImage`,
           method: "POST",
           body: data,
         };
@@ -71,7 +71,7 @@ const roomApi = createApi({
           formUpload.append("images[]", data.images[i]);
         }
         return {
-          url: `/admin/rooms/updateImage/${data.id}`,
+          url: `rooms/updateImage/${data.id}`,
           method: "POST",
           body: formUpload,
         };

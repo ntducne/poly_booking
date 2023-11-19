@@ -381,48 +381,8 @@ const BillDetail: React.FC = () => {
           </Col>
         </Row>
       </Modal>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4">
-        <div className="bg-white border border-gray-200 rounded-lg shadow">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg"
-              alt=""
-            />
-          </a>
-          <div className="p-5">
-            <a href="#">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                Noteworthy technology acquisitions 2021
-              </h5>
-            </a>
-            <p className="mb-3 font-normal text-gray-700 ">
-              Here are the biggest enterprise technology acquisitions of 2021 so
-              far, in reverse chronological order.
-            </p>
-            <a
-              href="#"
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Read more
-              <svg
-                className="w-3.5 h-3.5 ml-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-4">
+        
         <div className="grid md:grid-rows-1 grid-rows-1 gap-4">
           <div className="grid md:grid-cols-1 gap-4">
             <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
@@ -558,36 +518,45 @@ const BillDetail: React.FC = () => {
             </div>
             <div className="mt-5 font-normal text-gray-700 max-h-[510px] overflow-auto">
               <ol className="relative border-l border-gray-200 ml-3">
-                {dataBill?.data?.services.length == 0 ? (
-                  <div className="">Không có dịch vụ nào</div>
-                ) : (
-                  dataBill?.data?.services.map((service: any) => {
-                    return (
-                      <li className="mb-10 ml-6">
-                        <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
-                          <svg
-                            className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                          </svg>
-                        </span>
-                        <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                          13:00:02 11/10/2023
-                        </time>
-                        <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                          <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
-                            <li>Dịch vụ: {service?.service_name}</li>
-                            <li>Giá : {service?.price}</li>
-                          </ul>
-                        </div>
-                      </li>
-                    );
-                  })
-                )}
+                {
+                  dataBill?.data?.services !== null && (
+<>
+                    {dataBill?.data?.services.length == 0 ? (
+                      <div className="">Không có dịch vụ nào</div>
+                    ) : (
+                      dataBill?.data?.services.map((service: any) => {
+                        return (
+                          <li className="mb-10 ml-6">
+                            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white">
+                              <svg
+                                className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                              </svg>
+                            </span>
+                            <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                              13:00:02 11/10/2023
+                            </time>
+                            <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                              <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
+                                <li>Dịch vụ: {service?.service_name}</li>
+                                <li>Giá : {service?.price}</li>
+                              </ul>
+                            </div>
+                          </li>
+                        );
+                      })
+                    )}
+</>
+
+                  )
+                }
+                
+
               </ol>
             </div>
           </div>
@@ -603,7 +572,7 @@ const BillDetail: React.FC = () => {
               onFinish={addServiceInBill}
               onValuesChange={onValuesChange}
               initialValues={{
-                services: dataBill?.data?.services.map((service: any) => {
+                services: dataBill?.data?.services && dataBill?.data?.services.map((service: any) => {
                   return service?.service_id;
                 }),
               }}

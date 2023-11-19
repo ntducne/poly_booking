@@ -5,7 +5,8 @@ const serviceApi = createApi({
     reducerPath: "service",
     tagTypes: ['service'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://api.polydevhotel.site/admin/",
+        // baseUrl: "https://api.polydevhotel.site/admin/",
+        baseUrl: import.meta.env.VITE_URL_API + '/',
         prepareHeaders: (headers) => {
             headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('AuthUser') as any)[2].token}`)
             return headers;

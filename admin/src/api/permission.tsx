@@ -5,7 +5,7 @@ const permissonApi = createApi({
   reducerPath: "permission",
   tagTypes: ["permission"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.polydevhotel.site/api/",
+    baseUrl: import.meta.env.VITE_BASE_URL_API + "/api/",
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",
