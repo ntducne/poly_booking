@@ -21,6 +21,7 @@ import {
   Alert,
   message,
   Table,
+  TableProps,
 } from "antd";
 import {
   useAddPeopleBookingMutation,
@@ -329,13 +330,8 @@ const BillDetail: React.FC = () => {
       soLuong: amount_room_renew,
     };
 
-    const queryString = Object.keys(dataQuery)
-      .map(
-        (key) =>
-          encodeURIComponent(key) + "=" + encodeURIComponent(dataQuery[key])
-      )
-      .join("&");
-    const apiUrl = `http://localhost:8000/client/room/search?${queryString}`;
+    const queryString = Object.keys(dataQuery).map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(dataQuery[key])).join('&');
+    const apiUrl = `${import.meta.env.VITE_BASE_URL_API}/client/room/search?${queryString}`;
 
     fetch(apiUrl, {
       method: "GET",
@@ -345,8 +341,13 @@ const BillDetail: React.FC = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        message.success(data.message);
-        setRoomSearch(data.data);
+        if(data.message == 'Hết phòng !'){
+          message.error(data.message);
+        }
+        else {
+          message.success(data.message);
+          setRoomSearch(data.data);
+        }
       });
   };
 
@@ -383,7 +384,7 @@ const BillDetail: React.FC = () => {
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<any>["onChange"] = (
     pagination,
     filters,
     sorter,
@@ -705,12 +706,12 @@ const BillDetail: React.FC = () => {
                         )}
                       </td>
                       <td>
-                        <button
-                          type="button"
-                          className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                        >
-                          Chọn phòng
-                        </button>
+                        {(dataBill?.data?.booking.detail[0].room_id == room.id) && (
+                          <button type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Gia hạn</button>
+                        )}
+                          {(dataBill?.data?.booking.detail[0].room_id != room.id) && (
+                          <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Chọn phòng mới</button>
+                        )}
                       </td>
                     </tr>
                   );
