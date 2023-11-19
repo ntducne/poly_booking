@@ -21,7 +21,7 @@ import {
   Alert,
   message,
   Table,
-  Skeleton,
+  TableProps,
 } from "antd";
 import {
   useAddPeopleBookingMutation,
@@ -344,13 +344,8 @@ const BillDetail: React.FC = () => {
       soLuong: amount_room_renew,
     };
 
-    const queryString = Object.keys(dataQuery)
-      .map(
-        (key) =>
-          encodeURIComponent(key) + "=" + encodeURIComponent(dataQuery[key])
-      )
-      .join("&");
-    const apiUrl = `http://localhost:8000/client/room/search?${queryString}`;
+    const queryString = Object.keys(dataQuery).map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(dataQuery[key])).join('&');
+    const apiUrl = `${import.meta.env.VITE_BASE_URL_API}/client/room/search?${queryString}`;
 
     fetch(apiUrl, {
       method: "GET",
@@ -360,8 +355,13 @@ const BillDetail: React.FC = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        message.success(data.message);
-        setRoomSearch(data.data);
+        if(data.message == 'Hết phòng !'){
+          message.error(data.message);
+        }
+        else {
+          message.success(data.message);
+          setRoomSearch(data.data);
+        }
       });
   };
 
@@ -398,7 +398,7 @@ const BillDetail: React.FC = () => {
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
+  const onChange: TableProps<any>["onChange"] = (
     pagination,
     filters,
     sorter,
@@ -552,6 +552,8 @@ const BillDetail: React.FC = () => {
               </Form.Item>
             </Form>
           </Card>
+          <Card title="Thông tin gia hạn" bordered={false}>
+
           <Form
             form={form}
             labelCol={{ span: 6 }}
@@ -559,7 +561,6 @@ const BillDetail: React.FC = () => {
             className="mt-5 mb-5"
             onFinish={checkRoom}
           >
-            <Card title="Thông tin gia hạn" bordered={false}>
               <Form.Item
                 label="Loại phòng"
                 name="room_type_id"
@@ -653,8 +654,9 @@ const BillDetail: React.FC = () => {
                 {/* <Button className="mr-2" key={1}>Thanh toán</Button> */}
                 <Button htmlType="submit">Kiểm tra</Button>
               </div>
-            </Card>
           </Form>
+          </Card>
+
         </div>
         {dataRoomSearch.length > 0 && (
           <div className="relative overflow-x-auto w-full">
@@ -720,12 +722,12 @@ const BillDetail: React.FC = () => {
                         )}
                       </td>
                       <td>
-                        <button
-                          type="button"
-                          className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                        >
-                          Chọn phòng
-                        </button>
+                        {(dataBill?.data?.booking.detail[0].room_id == room.id) && (
+                          <button type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Gia hạn</button>
+                        )}
+                          {(dataBill?.data?.booking.detail[0].room_id != room.id) && (
+                          <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Chọn phòng mới</button>
+                        )}
                       </td>
                     </tr>
                   );
