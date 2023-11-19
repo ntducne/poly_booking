@@ -32,6 +32,7 @@ import { useGetServicesQuery } from "../../../api/services";
 import { useForm } from "antd/es/form/Form";
 import swal from "sweetalert";
 import _ from "lodash";
+import formatMoneyVN from "../../../config/formatMoneyVN";
 
 const BillDetail: React.FC = () => {
   const { id } = useParams();
@@ -402,48 +403,7 @@ const BillDetail: React.FC = () => {
           </Col>
         </Row>
       </Modal>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4">
-        <div className="bg-white border border-gray-200 rounded-lg shadow">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg"
-              alt=""
-            />
-          </a>
-          <div className="p-5">
-            <a href="#">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                Noteworthy technology acquisitions 2021
-              </h5>
-            </a>
-            <p className="mb-3 font-normal text-gray-700 ">
-              Here are the biggest enterprise technology acquisitions of 2021 so
-              far, in reverse chronological order.
-            </p>
-            <a
-              href="#"
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Read more
-              <svg
-                className="w-3.5 h-3.5 ml-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-4">
         <div className="grid md:grid-rows-1 grid-rows-1 gap-4">
           <div className="grid md:grid-cols-1 gap-4">
             <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
@@ -452,14 +412,17 @@ const BillDetail: React.FC = () => {
               </h5>
               <div className="font-normal text-gray-700">
                 <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
-                  <li>Chi nhánh: {dataBill?.data?.branch?.address}</li>
-                  <li>Loại phòng: {dataBill?.data?.booking?.room_type}</li>
+                  <li>Chi nhánh: {dataBill?.data?.branch?.name}</li>
+                  <li>Loại phòng: {dataBill?.data?.booking?.roomType.name}</li>
                   <li>Check in: {dataBill?.data?.booking?.checkin}</li>
                   <li>Check out: {dataBill?.data?.booking?.checkout}</li>
-                  <li>Giá: {dataBill?.data?.total} VNĐ</li>
+                  <li>Giá: {formatMoneyVN(dataBill?.data?.total)}</li>
                   <li>Thời gian thanh toán: {dataBill?.data?.payment_date}</li>
                   <li>
                     Hình thức thanh toán: {dataBill?.data?.payment_method}
+                  </li>
+                  <li>
+                    Trạng thái: <span  className="font-bold">{dataBill?.data?.status_name}</span>
                   </li>
                 </ul>
               </div>
@@ -610,12 +573,12 @@ const BillDetail: React.FC = () => {
                               </svg>
                             </span>
                             <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                              13:00:02 11/10/2023
+                            {service?.time ? service?.time : "Không có thời gian"}
                             </time>
                             <div className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
                               <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
                                 <li>Dịch vụ: {service?.service_name}</li>
-                                <li>Giá : {service?.price}</li>
+                                <li>Giá : {formatMoneyVN(service?.price)}</li>
                               </ul>
                             </div>
                           </li>
@@ -713,11 +676,11 @@ const BillDetail: React.FC = () => {
                     </th>
                     <td className="px-6 py-4">1</td>
                     <td className="px-6 py-4">
-                      {dataBill?.data?.booking?.price_per_night} VNĐ
+                      {dataBill?.data?.booking?.provisional} VNĐ
                     </td>
                     <td className="px-6 py-4">
                       {parseInt(dataBill?.data?.booking?.detail?.length) *
-                        parseInt(dataBill?.data?.booking?.price_per_night)}{" "}
+                        parseInt(dataBill?.data?.booking?.provisional)}{" "}
                       VNĐ
                     </td>
                   </tr>
@@ -733,8 +696,8 @@ const BillDetail: React.FC = () => {
                       {service?.service_name}
                     </th>
                     <td className="px-6 py-4">1</td>
-                    <td className="px-6 py-4">{service?.price} VNĐ</td>
-                    <td className="px-6 py-4"> {service?.price} VNĐ</td>
+                    <td className="px-6 py-4">{formatMoneyVN(service.price)}</td>
+                    <td className="px-6 py-4"> {formatMoneyVN(service.price)}</td>
                   </tr>
                 );
               })}
@@ -744,7 +707,7 @@ const BillDetail: React.FC = () => {
                 <th></th>
                 <td className="px-6 py-4"></td>
                 <td className="px-6 py-4 font-bold">Tổng thanh toán</td>
-                <td className="px-6 py-4">6,000,000 VNĐ</td>
+                <td className="px-6 py-4">{formatMoneyVN(dataBill?.data.total)}</td>
               </tr>
             </tfoot>
           </table>
@@ -770,28 +733,27 @@ const BillDetail: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b ">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                >
-                  <div className="flex items-center space-x-4">
-                    <img
-                      className="w-10 h-10 rounded-full"
-                      src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg"
-                      alt=""
-                    />
-                    <div className="font-medium">
-                      <div>Jese Leos</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Joined in August 2014
+
+            {dataBill?.data?.history.map((history: any, key: number) => {
+              return (
+                <tr className="bg-white border-b ">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                    <div className="flex items-center space-x-4">
+                      <img
+                        className="w-10 h-10 rounded-full"
+                        src={history.admin.image}
+                        alt={`ADMIN_IMAGE_${key}`}
+                      />
+                      <div className="font-medium">
+                        <div>{history.admin.name}</div>
                       </div>
                     </div>
-                  </div>
-                </th>
-                <td className="px-6 py-4">12:00:00 12/10/2023</td>
-                <td className="px-6 py-4">Thực hiện gia hạn phòng</td>
-              </tr>
+                  </th>
+                  <td className="px-6 py-4">{history.time}</td>
+                  <td className="px-6 py-4">{history.handle}</td>
+                </tr>
+              )
+            })}
             </tbody>
           </table>
         </div>
