@@ -66,6 +66,14 @@ const billingApi = createApi({
       }),
       invalidatesTags: ["billings"],
     }),
+    extendBooking: builder.mutation<any, any>({
+      query: (data: any) => ({
+        url: `booking/handle/giaHan`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["billings"],
+    }),
   }),
 });
 
@@ -77,5 +85,6 @@ export const {
   useAddPeopleBookingMutation,
   useAddServiceBookingMutation,
   useCancelBookingMutation,
+  useExtendBookingMutation
 } = billingApi;
 export default billingApi;
