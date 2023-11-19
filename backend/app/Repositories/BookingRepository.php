@@ -391,7 +391,7 @@ class BookingRepository
                 'data' => null
             ]);
         }
-        $this->booking->where('_id', '=', $request->billing_id)->update([
+        $this->booking->where('_id', '=', $billing->booking_id)->update([
             'people' => $request->peoples
         ]);
         $values = [

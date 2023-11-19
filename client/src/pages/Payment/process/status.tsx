@@ -63,7 +63,7 @@ export default function PaymentStatus() {
                         title="Đặt phòng thành công !"
                         subTitle={`Cảm ơn quý khách đã đặt phòng tại khách sạn của chúng tôi. Chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất. Mã hoá đơn của quý khách là ${billing_id}.`}
                         extra={[<>
-                            <Link to="/" type='button' key="buy">Về trang chủ</Link>, Quý khách có thể kiểm tra hoá đơn <Link to={`search-order`} type='button' key="buy">Tại đây</Link>
+                            <Link to="/" type='button' key="buy">Về trang chủ</Link>, Quý khách có thể kiểm tra hoá đơn <Link to={`/search-order`} type='button' key="buy">Tại đây</Link>
                         </>]}
                     />
                 </div>
