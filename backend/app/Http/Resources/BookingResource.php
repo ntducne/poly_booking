@@ -20,6 +20,7 @@ class BookingResource extends JsonResource
     public function getRoomType(){
         $data = RoomType::find($this->room_type);
         return [
+            'id' => $data->id,
             'name' => $data->room_type_name,
             'price_per_night' => $data->price_per_night,
         ];

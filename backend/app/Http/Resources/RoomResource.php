@@ -3,12 +3,30 @@
 namespace App\Http\Resources;
 
 use App\Models\Branch;
+use App\Models\RateRoom;
 use App\Models\RoomImage;
 use App\Models\RoomType;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoomResource extends JsonResource
 {
+    public function getRate()
+    {
+        $arr = [];
+        $rates = RateRoom::where('room_id', $this->id)->get();
+        foreach ($rates as $rate) {
+            $arr[] = [
+                'user' => [
+                    'name' => User::where('_id', $rate->user_id)->first()->name,
+                    'image' => User::where('_id', $rate->user_id)->first()->image,
+                ],
+                'content' => $rate->comment,
+                'star' => $rate->rate
+            ];
+        }
+        return $arr;
+    }
     public function toArray($request)
     {
         return [

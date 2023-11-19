@@ -9,6 +9,7 @@ use MongoDB\Laravel\Eloquent\SoftDeletes;
 class RateRoom extends Eloquent
 {
     use HasFactory;
+    protected $table ='rate_rooms';
     protected $fillable = [
         'room_id',
         'user_id',

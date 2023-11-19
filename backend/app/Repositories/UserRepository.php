@@ -257,10 +257,9 @@ class UserRepository
     }
     public function bookingHistory($request){
         try {
-
-                $booking = Booking::where('user_id' , $request->user()->_id)->first();
-                $billing = Billing::where('booking_id' , $booking->id)->first();
-                return new BillingResource($billing);
+            $booking = Booking::where('user_id' , $request->user()->_id)->first();
+            $billing = Billing::where('booking_id' , $booking->id)->first();
+            return new BillingResource($billing);
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return false;

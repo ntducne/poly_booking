@@ -34,22 +34,7 @@ class Room extends Eloquent
         'status' => 0
     ];
 
-    public function getRate()
-    {
-        $arr = [];
-        $rates = Rates::where('room_id', $this->id)->get();
-        foreach ($rates as $rate) {
-            $arr[] = [
-                'user' => [
-                    'name' => User::where('_id', $rate->user_id)->first()->name,
-                    'image' => User::where('_id', $rate->user_id)->first()->image,
-                ],
-                'content' => $rate->content,
-                'star' => $rate->star
-            ];
-        }
-        return $arr;
-    }
+   
 
     public function getType()
     {
