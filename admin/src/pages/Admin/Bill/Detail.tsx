@@ -20,6 +20,7 @@ import {
   Col,
   Alert,
   message,
+  Table,
 } from "antd";
 import {
   useAddPeopleBookingMutation,
@@ -79,7 +80,7 @@ const BillDetail: React.FC = () => {
       peoples: values.users,
     };
     console.log("dataAddPeople", dataAddPeople);
-    
+
     addPeopleBooking(dataAddPeople)
       .unwrap()
       .then((res) => {
@@ -349,6 +350,59 @@ const BillDetail: React.FC = () => {
       });
   };
 
+  // Table của lịch sử xem phòng
+  const columns = [
+    {
+      title: "Nhân viên",
+      dataIndex: "admin",
+      key: "admin",
+      render: (item: any) => {
+        return (
+          <div className="flex items-center space-x-4">
+            <img
+              className="w-10 h-10 rounded-full"
+              src={item?.image}
+              alt={`ADMIN_IMAGE_${item?.image}`}
+            />
+            <div className="font-medium">
+              <div>{item?.name}</div>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      title: "Thời gian thay đổi",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "Thay đổi",
+      dataIndex: "handle",
+      key: "handle",
+    },
+  ];
+
+  const onChange: TableProps<DataType>["onChange"] = (
+    pagination,
+    filters,
+    sorter,
+    extra
+  ) => {
+    console.log("params", pagination, filters, sorter, extra);
+  };
+
+  const dataHistory = dataBill?.data?.history?.map(
+    (history: any, index: number) => {
+      return {
+        key: index + 1,
+        admin: history.admin,
+        time: history.time,
+        handle: history.handle,
+      };
+    }
+  );
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -514,7 +568,7 @@ const BillDetail: React.FC = () => {
               </Form.Item>
               <Form.Item
                 label="Số phòng gia hạn"
-                name="soLuong"
+                name="amount_room_renew"
                 initialValue={dataBill?.data?.booking.amount_room}
                 rules={[
                   {
@@ -991,46 +1045,12 @@ const BillDetail: React.FC = () => {
           Lịch sử thay đổi
         </h5>
         <div className="relative overflow-x-auto rounded-xl ">
-          <table className="w-full text-sm text-left text-gray-500">
-            <thead className="text-xs text-gray-700 uppercase">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  Nhân viên
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Thời gian thay đổi
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Thay đổi
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {dataBill?.data?.history.map((history: any, key: number) => {
-                return (
-                  <tr className="bg-white border-b ">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
-                    >
-                      <div className="flex items-center space-x-4">
-                        <img
-                          className="w-10 h-10 rounded-full"
-                          src={history.admin.image}
-                          alt={`ADMIN_IMAGE_${key}`}
-                        />
-                        <div className="font-medium">
-                          <div>{history.admin.name}</div>
-                        </div>
-                      </div>
-                    </th>
-                    <td className="px-6 py-4">{history.time}</td>
-                    <td className="px-6 py-4">{history.handle}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <Table
+            columns={columns}
+            dataSource={dataHistory}
+            onChange={onChange}
+            pagination={{ pageSize: 5 }}
+          />
         </div>
       </div>
     </>
