@@ -13,6 +13,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useGetDetialQuery, usePostRatesMutation } from '../../api/Room'
 import { useCookies } from 'react-cookie'
 import { useEffect, useState } from 'react'
+import { Button, Form, Rate } from 'antd'
+import TextArea from 'antd/es/input/TextArea'
 
 
 
@@ -25,24 +27,7 @@ const Detail = () => {
     const navigate = useNavigate()
     const { slug } = useParams()
     console.log(slug)
-    const [dataUser, setData] = useState({} as any)
-    // if (useCookies(['userInfo'])) {
-    //     const [cookie] = useCookies(['userInfo']);
-    //     const token = cookie.userInfo.accessToken.token;
-       
-    //     if (token) {
-    //         useEffect(() => {
-    //             fetch('https://api.polydevhotel.site/user/profile', {
-    //                 headers: {
-    //                     Authorization: `Bearer ${token}`,
-    //                 }
-    //             },)
-    //                 .then((res: { json: () => any }) => res.json())
-    //                 .then((data: any) => setData(data))
-    //         }, [])
-    //     }
 
-    // }
 
 
     const { data } = useGetDetialQuery(slug)
@@ -51,27 +36,32 @@ const Detail = () => {
 
     const [postRate] = usePostRatesMutation()
 
-    const rating = (event: any) => {
-        event.preventDefault()
-        let myInput = event.target.elements.rates.value;
-        console.log(data?.room?.id);
-
-        const values = [myInput.value,
-        data?.room?.id,
-        dataUser?.message?.image,
-        dataUser?.message?.id,
-        ]
-        postRate(values);
-    }
-
     const booking = () => {
         console.log(data.room);
         removeCookie('roomBooking', { path: '/' })
         setCookie('roomBooking', data.room, { path: '/' })
         navigate('/demo')
     }
+    const onFinish = (values: any) => {
+        alert("cmt " + values)
+        console.log(values);
+        console.log(data?.room?.id,);
+        console.log(data?.room?.images[0]?.image);
 
 
+        const valuesRate = {
+            values,
+            room_id: data?.room?.id,
+            images: data?.room?.images[0]?.image
+        }
+        console.log(values);
+
+        postRate(valuesRate);
+
+
+    };
+
+    const [form] = Form.useForm();
     return (
         <div className='pb-[100px] '>
             {/* <SlideRooms /> */}
@@ -272,110 +262,31 @@ const Detail = () => {
                     <div className="flex   mb-6">
                         <h2 className="lg:text-2xl font-bold text-gray-900 text-3xl ">Đánh giá </h2>
                     </div>
-                    <form className="mb-6" onSubmit={rating}>
-                        <ul className="my-1 flex list-none gap-1 p-0 mb-5" data-te-rating-init>
-                            <li>
-                                <span
-                                    className="text-primary [&>svg]:h-5 [&>svg]:w-5"
-                                    title="Bad"
-                                    data-te-rating-icon-ref>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                </span>
-                            </li>
-                            <li>
-                                <span
-                                    className="text-primary [&>svg]:h-5 [&>svg]:w-5"
-                                    title="Poor"
-                                    data-te-rating-icon-ref>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                </span>
-                            </li>
-                            <li>
-                                <span
-                                    className="text-primary [&>svg]:h-5 [&>svg]:w-5"
-                                    title="OK"
-                                    data-te-rating-icon-ref>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                </span>
-                            </li>
-                            <li>
-                                <span
-                                    className="text-primary [&>svg]:h-5 [&>svg]:w-5"
-                                    title="Good"
-                                    data-te-rating-icon-ref>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                </span>
-                            </li>
-                            <li>
-                                <span
-                                    className="text-primary [&>svg]:h-5 [&>svg]:w-5"
-                                    title="Excellent"
-                                    data-te-rating-icon-ref>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor">
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                    </svg>
-                                </span>
-                            </li>
-                        </ul>
-                        <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
-                            <label htmlFor="comment" className="sr-only">Your comment</label>
-                            <textarea id="rates"
-                                className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none"
-                                placeholder="Write a comment..." required></textarea>
-                        </div>
-                        <button type='submit'
+                    <Form className="mb-6" form={form} onFinish={onFinish}>
+                        <Form.Item
+                            name="rate"
+                        >
+                            <Rate className="my-1 flex list-none gap-1 p-0 mb-5" onChange={(value) => {
+                                console.log(value);
+
+                            }} />
+                        </Form.Item>
+
+
+                        <Form.Item
+                            name="comment"
+                            rules={[{ required: true, message: "Vui lòng nhập đánh giá" }]}
+                        >
+                            <TextArea rows={4} placeholder="Write a comment..." />
+                        </Form.Item>
+
+                        <Button
+                            htmlType="submit"
+
                             className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-cyan-500 rounded-xl focus:ring-4 focus:ring-primary-200  hover:bg-primary-800">
                             Post comment
-                        </button>
-                    </form>
+                        </Button>
+                    </Form>
                     <article className="p-6 text-base bg-white rounded-lg ">
                         <footer className="flex justify-between items-center mb-2">
                             <div className="flex items-center">

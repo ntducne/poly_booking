@@ -28,7 +28,7 @@ const Profile = () => {
     // console.log(data.message);
     const [form] = Form.useForm();
 
-    const {data} = useGetProfileQuery("")  
+    const {data} = useGetProfileQuery({})  
        console.log(data);
        
     const normFile = (e: any) => {
@@ -213,7 +213,7 @@ const Profile = () => {
 
 
                                     <div
-                                        className="g-6 flex h-[22px] flex-wrap items-center gap-12">
+                                        className="g-6 flex h-[22px] flex-wrap items-center gap-12 ">
                                         <div
                                             className="card rounded-3">
 
