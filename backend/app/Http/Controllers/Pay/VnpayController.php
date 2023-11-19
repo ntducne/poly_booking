@@ -98,21 +98,21 @@ class VnpayController extends Controller
         if ($secureHash == $vnp_SecureHash) {
             if ($_GET['vnp_ResponseCode'] == '00') {
                 Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update([
-                    'status' => 1,
+                    'status' => 5,
                     'payment_method' => 'VNPAY',
                     'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
             }
             else {
                 Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update([
-                    'status' => 2,
+                    'status' => 6,
                     'payment_method' => 'VNPAY',
                     'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
             }
         } else {
             Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update([
-                'status' => 3,
+                'status' => 7,
                 'payment_method' => 'VNPAY',
                 'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
