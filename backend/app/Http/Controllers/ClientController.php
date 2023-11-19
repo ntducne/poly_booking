@@ -25,6 +25,7 @@ class ClientController extends Controller
     private Booking $booking;
     private BookDetail $book_detail;
     private Billing $billing;
+    private BookingRepository $bookingRepository;
     public function __construct(BookingRepository $bookingRepository)
     {
         $this->bookingRepository = $bookingRepository;
@@ -197,15 +198,15 @@ class ClientController extends Controller
     }
     public function booking(BookingRequest $request)
     {
-        try {
+        // try {
             return $this->bookingRepository->book($request);
-        } catch (Exception $exception) {
-            Log::debug($exception->getMessage());
-            return response()->json([
-                'status' => false,
-                'message' => 'Lỗi không thực hiện được đặt phòng !'
-            ]);
-        }
+        // } catch (Exception $exception) {
+        //     Log::debug($exception->getMessage());
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Lỗi không thực hiện được đặt phòng !'
+        //     ]);
+        // }
     }
 
     public function checkBooking(Request $request){

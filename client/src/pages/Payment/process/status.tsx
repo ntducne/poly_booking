@@ -11,6 +11,7 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 export default function PaymentStatus() {
     const [status, setStatus] = useState(null);
     const [, setCookie] = useCookies(['paymentPage']);
+    const [billing_id, setBilling_id] = useState(null);
     const location = useLocation();
     const Navigate = useNavigate();
   
@@ -32,6 +33,9 @@ export default function PaymentStatus() {
             })
             .then(data => {
                 setStatus(data.status);
+                if(data.status == 1){
+                    setBilling_id(data.billing_id);
+                }
             })
             .catch(() => {
                 message.error('Có lỗi xảy ra ! Vui lòng thử lại sau.');
@@ -57,10 +61,10 @@ export default function PaymentStatus() {
                     <Result
                         status="success"
                         title="Đặt phòng thành công !"
-                        subTitle="Cảm ơn quý khách đã đặt phòng tại khách sạn của chúng tôi. Chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất."
-                        extra={[
-                            <Link to="/" type='button' key="buy">Về trang chủ</Link>,
-                        ]}
+                        subTitle={`Cảm ơn quý khách đã đặt phòng tại khách sạn của chúng tôi. Chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất. Mã hoá đơn của quý khách là ${billing_id}.`}
+                        extra={[<>
+                            <Link to="/" type='button' key="buy">Về trang chủ</Link>, Quý khách có thể kiểm tra hoá đơn <Link to={`search-order`} type='button' key="buy">Tại đây</Link>
+                        </>]}
                     />
                 </div>
             )}
@@ -88,7 +92,6 @@ export default function PaymentStatus() {
                     />
                 </div>
             )}
-           
         </div>
     )
 }

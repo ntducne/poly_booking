@@ -160,7 +160,9 @@ class BookingRepository
         $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adults', 'children']);
         $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
         //Kiem tra phong con trong hay khong
-        $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);
+        $room_valid = $this-> check_room($request->checkin, $request->checkout, $branch_id, $request->adults, $request->children, $room->room_type_id, $soLuong);
+
+        // $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);
         //Bat loi dat so luong phong
         if (!in_array($room_id,$room_valid)) {
             return response()->json([
@@ -204,7 +206,7 @@ class BookingRepository
         $details = [];
         foreach ($room_booking as $key => $value) {
             $details[] = [
-                'booking_detail' => $this->book_detail->create(
+                'booking_detail' => $this->booking_detail->create(
                     [
                         'booking_id' => $create->_id,
                         'room_id' => $value,
@@ -539,11 +541,17 @@ class BookingRepository
                 $this->billing->where('_id', '=', $request->billing_id)->update([
                     'total' => $total_price,
                 ]);
+                $this->booking->where('_id', '=', $billing->booking_id)->update([
+                    'checkout' => $request->newCheckOut,
+                ]);
+                return response()->json([
+                    'message' => 'Gia hạn thành công !'
+                ]);
             } else {
                 $this->billing->where('_id', '=', $request->billing_id)->update([
                     'status' => 4,
                 ]);
-                $this->book($request);
+                return $this->book($request);
             }
         }
 

@@ -284,10 +284,8 @@ const BillDetail: React.FC = () => {
       soLuong: amount_room_renew,
     };
 
-    const queryString = Object.keys(dataQuery)
-    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(dataQuery[key]))
-    .join('&');
-    const apiUrl = `http://localhost:8000/client/room/search?${queryString}`;
+    const queryString = Object.keys(dataQuery).map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(dataQuery[key])).join('&');
+    const apiUrl = `${import.meta.env.VITE_BASE_URL_API}/client/room/search?${queryString}`;
 
     fetch(apiUrl, {
       method: 'GET',
