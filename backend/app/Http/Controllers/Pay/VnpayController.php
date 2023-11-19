@@ -118,7 +118,8 @@ class VnpayController extends Controller
             ]);
         }
         return response()->json([
-            'status' => Billing::where('billingCode', (integer)$request->vnp_TxnRef)->first()->status
+            'status' => Billing::where('billingCode', (integer)$request->vnp_TxnRef)->first()->status,
+            'billing_id' => Billing::where('billingCode', (integer)$request->vnp_TxnRef)->first()->_id,
         ]);
     }
 }
