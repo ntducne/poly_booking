@@ -26,8 +26,6 @@ class BookingRepository
     private RoomType $room_type;
     private Billing $billing;
     private HistoryHandleBooking $history_handle;
-    private $book_detail;
-
     public function __construct()
     {
         $this->booking = new Booking();
@@ -518,46 +516,38 @@ class BookingRepository
 
     public function giaHan($request)
     {
-        try {
-            $soLuong = $request->soLuong;
-            $room_id = $request->room_id;
-            $branch_id = $request->branch_id;
-            $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
-            //Kiem tra phong con trong hay khong
-            $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);
-            //Bat loi dat so luong phong
-            if (count($room_valid) < $soLuong) {
-                return response()->json([
-                    'message' => 'Không đủ phòng trống !'
+        $soLuong = $request->soLuong;
+        $room_id = $request->room_id;
+        $branch_id = $request->branch_id;
+        $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
+   
+
+        $room_valid = $this-> check_room($request->checkin, $request->checkout, $branch_id, $request->adults, $request->children, $room->room_type_id, $soLuong);
+        if (count($room_valid) < $soLuong) {
+            return response()->json([
+                'message' => 'Không đủ phòng trống !'
+            ]);
+        } else {
+            $room_type = RoomType::where('_id', '=', $room->room_type_id)->first();
+            $billing_id = $request->billing_id;
+            $billing = $this->billing->find($billing_id);
+            $booking = $this->booking->where('_id', '=', $billing->booking_id)->first();
+            $bookDetail = $this->booking_detail->where('booking_id', $booking->id)->first();
+            if ($room_id == $bookDetail->room_id) {
+                $soNgay = Carbon::parse($booking->checkout)->diffInDays($request->newCheckOut) + 1;
+                $total_price = $billing->total + (($room_type->price_per_night - $room->discount) * $soNgay);
+                $this->billing->where('_id', '=', $request->billing_id)->update([
+                    'total' => $total_price,
                 ]);
             } else {
-                $room_type = RoomType::where('_id', '=', $room->room_type_id)->first();
-                $billing_id = $request->billing_id;
-                $billing = $this->billing->find($billing_id);
-                $booking = $this->booking->where('_id', '=', $billing->booking_id)->first();
-                $bookDetail = $this->book_detail->where('booking_id', '=', $billing->booking_id)->first();
-                if ($room_id == $bookDetail->room_id) {
-                    $soNgay = Carbon::parse($booking->checkout)->diffInDays($request->newCheckOut) + 1;
-                    $total_price = $billing->total + (($room_type->price_per_night - $room->discount) * $soNgay);
-                    $this->billing->where('_id', '=', $request->billing_id)->update([
-                        'total' => $billing->total + $total_price,
-                    ]);
-                } else {
-                    $this->billing->where('_id', '=', $request->billing_id)->update([
-                        'status' => 4,
-                    ]);
-                    $this->book($request);
-                }
-
+                $this->billing->where('_id', '=', $request->billing_id)->update([
+                    'status' => 4,
+                ]);
+                $this->book($request);
             }
-
-        } catch (Exception $exception) {
-            Log::debug($exception->getMessage());
-            return response()->json([
-                'status' => false,
-                'message' => 'Lỗi không thực hiện được gia hạn phòng !'
-            ]);
         }
+
+       
     }
 
     public function checkBooking($request){
