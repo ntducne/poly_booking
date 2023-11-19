@@ -1,62 +1,65 @@
-
-import { Action, ThunkAction, combineReducers, configureStore } from '@reduxjs/toolkit';
+import {
+  Action,
+  ThunkAction,
+  combineReducers,
+  configureStore,
+} from "@reduxjs/toolkit";
 
 import {
-    FLUSH,
-    PAUSE,
-    PERSIST,
-    PURGE,
-    REGISTER,
-    REHYDRATE,
-    persistReducer,
-    persistStore,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import roomApi from '../api/Room';
-import authApi, { authReducer } from '../api/Auth';
-import branchApi from '../api/Branch';
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+  persistReducer,
+  persistStore,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import roomApi from "../api/Room";
+import authApi, { authReducer } from "../api/Auth";
+import branchApi from "../api/Branch";
+import orderApi from "../api/Order";
 
 const persistConfig = {
-    key: 'root',
-    storage
-}
-
+  key: "root",
+  storage,
+};
 
 const rootReducer = combineReducers({
-    [roomApi.reducerPath]: roomApi.reducer,
-    [authApi.reducerPath]: authReducer,
-    [branchApi.reducerPath]: branchApi.reducer
-})
+  [roomApi.reducerPath]: roomApi.reducer,
+  [authApi.reducerPath]: authReducer,
+  [branchApi.reducerPath]: branchApi.reducer,
+  [orderApi.reducerPath]: orderApi.reducer,
+});
 
-
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middlewares = [
-    roomApi.middleware,
-    authApi.middleware,
-    branchApi.middleware
-]
+  roomApi.middleware,
+  authApi.middleware,
+  branchApi.middleware,
+  orderApi.middleware,
+];
 
 const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware: any) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-            },
-        }).concat(...middlewares)
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware: any) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(...middlewares),
+});
 
-})
-
-
-export type AppDispatch = typeof store.dispatch
-export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
-    ReturnType,
-    RootState,
-    unknown,
-    Action<string>
->
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;
 
-export default store
-export const persistor = persistStore(store)
+export default store;
+export const persistor = persistStore(store);
