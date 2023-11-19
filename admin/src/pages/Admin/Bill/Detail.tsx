@@ -538,6 +538,8 @@ const BillDetail: React.FC = () => {
               </Form.Item>
             </Form>
           </Card>
+          <Card title="Thông tin gia hạn" bordered={false}>
+
           <Form
             form={form}
             labelCol={{ span: 6 }}
@@ -545,7 +547,6 @@ const BillDetail: React.FC = () => {
             className="mt-5 mb-5"
             onFinish={checkRoom}
           >
-            <Card title="Thông tin gia hạn" bordered={false}>
               <Form.Item
                 label="Loại phòng"
                 name="room_type_id"
@@ -639,8 +640,9 @@ const BillDetail: React.FC = () => {
                 {/* <Button className="mr-2" key={1}>Thanh toán</Button> */}
                 <Button htmlType="submit">Kiểm tra</Button>
               </div>
-            </Card>
           </Form>
+          </Card>
+
         </div>
         {dataRoomSearch.length > 0 && (
           <div className="relative overflow-x-auto w-full">
