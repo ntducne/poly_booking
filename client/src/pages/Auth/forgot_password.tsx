@@ -5,20 +5,19 @@ import { useForgotPasswordMutation } from '../../api/Auth';
 
 function ForgotPassword() {
     const [form] = Form.useForm();
-    const [ForgotPassword] = useForgotPasswordMutation(); // Lấy mutate function từ useForgotPasswordMutation
+    const [ForgotPassword] = useForgotPasswordMutation();
 
     const onFinish = (values: any) => {
         console.log(values);
         const email = values.email;
 
-        // Gửi yêu cầu quên mật khẩu bằng cách sử dụng useForgotPasswordMutation
         ForgotPassword({ email })
             .then((response: any) => {
                 if (response?.data?.status === true) {
-                    // Email tồn tại, hiển thị thông báo thành công
+                    // Email tồn tại
                     message.success('Liên kết đặt lại mật khẩu đã được gửi qua email !');
                 } else {
-                    // Email không tồn tại, hiển thị thông báo lỗi
+                    // Email không tồn tại
                     message.error('Email không tồn tại. Vui lòng kiểm tra lại.');
                 }
                 console.log('aa:', response);
