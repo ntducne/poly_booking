@@ -16,10 +16,9 @@ Route::prefix('room')->group(function () {
 //    Route::get('/search', [ClientController::class, 'search']);
     Route::get('/{slug}', [ClientController::class, 'roomDetail']);
     Route::post('/booking', [ClientController::class, 'booking']);
+    Route::post('/booking-check', [ClientController::class, 'checkBooking']);
 });
 Route::get('test-search',[DemoController::class,'search']);
-
-
 //Route::get('test/{id}', [\App\Repositories\UserRepository::class, 'bookingHistory']);
 
 

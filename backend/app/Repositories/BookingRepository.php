@@ -26,6 +26,7 @@ class BookingRepository
     private RoomType $room_type;
     private Billing $billing;
     private HistoryHandleBooking $history_handle;
+    private $book_detail;
 
     public function __construct()
     {
@@ -559,6 +560,23 @@ class BookingRepository
                 'message' => 'Lỗi không thực hiện được gia hạn phòng !'
             ]);
         }
+    }
+
+    public function checkBooking($request){
+        $billing_id = $request->billing_id;
+        $billing = $this->billing->where('_id', '=', $billing_id)->first();
+        if (!$billing) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Không tìm thấy hóa đơn !',
+                'data' => null
+            ]);
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Tìm thấy hóa đơn !',
+            'data' => new BillingResource($billing)
+        ]);
     }
 
 
