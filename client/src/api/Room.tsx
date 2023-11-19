@@ -40,7 +40,7 @@ const roomApi = createApi({
     }),
     postRates: builder.mutation({
       query: (data: any) => ({
-        url: `user/rate`,
+        url: `/user/rate`,
         method: "POST",
         body: data,
       }),

@@ -15,6 +15,7 @@ import storage from 'redux-persist/lib/storage';
 import roomApi from '../api/Room';
 import authApi, { authReducer } from '../api/Auth';
 import branchApi from '../api/Branch';
+import userApi from '../api/User';
 
 const persistConfig = {
     key: 'root',
@@ -23,6 +24,7 @@ const persistConfig = {
 
 
 const rootReducer = combineReducers({
+    [userApi.reducerPath]: userApi.reducer,
     [roomApi.reducerPath]: roomApi.reducer,
     [authApi.reducerPath]: authReducer,
     [branchApi.reducerPath]: branchApi.reducer
@@ -32,6 +34,7 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const middlewares = [
+    userApi.middleware,
     roomApi.middleware,
     authApi.middleware,
     branchApi.middleware

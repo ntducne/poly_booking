@@ -45,14 +45,7 @@ const authApi = createApi({
             }),
             invalidatesTags: ['Auth']
         }),
-        updateUser: builder.mutation({
-            query: (data: ILogin) => ({
-                url: `/user/update/profile`,
-                method: "POST",
-                body: data
-            }),
-            invalidatesTags: ['Auth']
-        }),
+      
         register: builder.mutation({
             query: (data: IRegister) => ({
                 url: `/auth/user/register`,
@@ -78,12 +71,6 @@ const authApi = createApi({
             }),
         }),
 
-        getUser: builder.query({
-            query: () => ({
-                url: `/user/profile`,
-                method: "GET",
-            }),
-        }),
         resetPassword: builder.mutation({
             query: (data: IResetPassword) => ({
                 url: `/auth/user/reset-password/${data.token}`,
@@ -96,6 +83,6 @@ const authApi = createApi({
 })
 
 
-export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery, useResetPasswordMutation, useGetUserQuery } = authApi;
+export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery, useResetPasswordMutation } = authApi;
 export const authReducer = authApi.reducer
 export default authApi
