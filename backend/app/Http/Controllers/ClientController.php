@@ -116,12 +116,15 @@ class ClientController extends Controller
                         $query->where('status', '=', $config[8]['id']);
                     });
             })
-            ->where('room_type', $room_type_id)
             ->where(function ($query) use ($check_in, $check_out) {
                 $query->where(function ($query) use ($check_in, $check_out) {
-                    $query->where('checkin', '<=', $check_in)
-                        ->where('checkout', '>=', $check_out);
+                    $query->where('checkin', '>=', $check_in)
+                        ->where('checkout', '<=', $check_out);
                 })
+                    ->orWhere(function ($query) use ($check_in, $check_out) {
+                        $query->where('checkin', '<=', $check_in)
+                            ->where('checkout', '>=', $check_out);
+                    })
                     ->orWhere(function ($query) use ($check_in, $check_out) {
                         $query->where('checkin', '>=', $check_in)->where('checkin', '<', $check_out)->where('checkout', '>=', $check_out);
                     })
@@ -129,7 +132,6 @@ class ClientController extends Controller
                         $query->where('checkin', '<=', $check_in)->where('checkout', '>', $check_in)->where('checkout', '<=', $check_out);
                     });
             })->get();
-        // dd($room_booked);
         $room_id_booked = [];
         foreach ($room_booked as $item) {
             $book_detail = $this->book_detail->where('booking_id', '=', $item->_id)->get();
@@ -199,20 +201,27 @@ class ClientController extends Controller
             $branch_id = $request->branch_id;
             (int) $adults = $request->adults;
             (int) $children = $request->children;
-            $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adult', 'child']);
+            $param = $request->except(['soLuong', 'room_id', 'branch_id', 'adults', 'children']);
             $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
             //Kiem tra phong con trong hay khong
             $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);
             //Bat loi dat so luong phong
+            if (!in_array($room_id,$room_valid)) {
+                return response()->json([
+                    'message' => 'Phòng đã có người đặt !'
+                ]);
+            }
+            $room_booking = [$room_id];
             if (count($room_valid) < $soLuong) {
                 return response()->json([
                     'message' => 'Không đủ phòng trống !'
                 ]);
             }
             //phong co the dat
-            $room_booking = array_slice($room_valid, 0, $soLuong);
-            // $total_adults = 0;
-            // $total_children = 0;
+            foreach ($room_valid as $key => $value) {
+                $room_booking[]= $value;
+            }
+            $room_booking = array_slice(array_merge($room_booking), 0, $soLuong);
             $total_discount = 0;
             $total_price_per_night = 0;
             foreach ($room_booking as $key => $value) {
@@ -278,7 +287,7 @@ class ClientController extends Controller
                 'message' => 'Đặt thành công !',
                 'bill' => [
                     'billingCode' => $billing_code,
-                    'total' =>  $total,
+                    'total' => $total,
                 ]
             ]);
         } catch (Exception $exception) {

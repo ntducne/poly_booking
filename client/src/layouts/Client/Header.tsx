@@ -16,7 +16,7 @@ export default function Header({ }: Props) {
   }
   const items: MenuProps['items'] = [
     {
-      label: <Link to="">Thông tin cá nhân</Link>,
+      label: <Link to="/profile">Thông tin cá nhân</Link>,
       key: '0',
     },
     {
