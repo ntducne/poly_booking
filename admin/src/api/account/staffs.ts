@@ -5,7 +5,7 @@ export const staffsApi = createApi({
   reducerPath: "staffs",
   tagTypes: ["Staffs"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.polydevhotel.site/admin",
+    baseUrl: import.meta.env.VITE_URL_API,
     prepareHeaders: (headers) => {
       headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('AuthUser') as any)[2].token}`)
       return headers

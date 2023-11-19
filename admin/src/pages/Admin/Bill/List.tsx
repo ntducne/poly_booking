@@ -167,7 +167,7 @@ const BillList = () => {
     key: index + 1,
     id: item.id,
     booking: item.booking,
-    services: item.services.length,
+    services: item.services ? item.services : [],
     total: item.total,
     payment_method: item.payment_method,
     payment_date: item.payment_date,

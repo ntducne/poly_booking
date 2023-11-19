@@ -5,7 +5,8 @@ const roomTypesApi = createApi({
     reducerPath: "roomType",
     tagTypes: ['RoomType'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://api.polydevhotel.site",
+    baseUrl: import.meta.env.VITE_URL_API + '/',
+    // baseUrl: "https://api.polydevhotel.site",
         prepareHeaders: (headers) => {
             headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('AuthUser') as any)[2].token}`)
             return headers;
@@ -13,18 +14,18 @@ const roomTypesApi = createApi({
     }),
     endpoints: (builder) => ({
         getAllRoomType: builder.query<any, any>({
-            query: () => `admin/rooms/types?page=all`,
+            query: () => `rooms/types?page=all`,
             providesTags: ['RoomType']
         }),
         getRoomType: builder.query<any, any>({
             // query: (query) => `admin/rooms/types?page=${query.page || 1}`,
-            query: () => `/admin/rooms/types`,
+            query: () => `rooms/types`,
             providesTags: ['RoomType']
         }),
 
         createRoomType: builder.mutation<any, any>({
             query: (data) => ({
-                url: `/admin/rooms/types`,
+                url: `rooms/types`,
                 method: "POST",
                 body: data
             }),
@@ -32,7 +33,7 @@ const roomTypesApi = createApi({
         }),
         getDetailRoomType: builder.query<any, any>({
             query: (id) => ({
-                url: `/admin/rooms/types/${id}`,
+                url: `rooms/types/${id}`,
                 method: "GET"
             }),
             providesTags: ['RoomType']
@@ -40,7 +41,7 @@ const roomTypesApi = createApi({
         updateRoomType: builder.mutation<any, any>({
             query: (data) => {
                 return {
-                    url: `/admin/rooms/types/${data.id}`,
+                    url: `rooms/types/${data.id}`,
                     method: "PUT",
                     body: data
                 }
@@ -51,7 +52,7 @@ const roomTypesApi = createApi({
         deleteRoomType: builder.mutation<any, any>({
             query: (id: string) => {
                 return {
-                    url: `/admin/rooms/types/${id}`,
+                    url: `rooms/types/${id}`,
                     method: "DELETE",
                 }
             },

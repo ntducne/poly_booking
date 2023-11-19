@@ -303,41 +303,57 @@ class BookingRepository
 
         // Fetch billing record
         $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
+//        return $billing;
+        $total = 0;
+        if($billing->service !== null){
+            foreach ($services as $key => $value) {
+                $service = Services::find($value);
 
-        foreach ($services as $key => $value) {
-            $service = Services::find($value);
+                // Check if the service already exists in billing
+                $existingService = array_filter($billing->services, function ($item) use ($service) {
+                    return $item['service_id'] == $service->_id;
+                });
 
-            // Check if the service already exists in billing
-            $existingService = array_filter($billing->services, function ($item) use ($service) {
-                return $item['service_id'] == $service->_id;
-            });
-
-            if (empty($existingService)) {
+                if (empty($existingService)) {
+                    $arrService[] = [
+                        'service_id' => $service->_id,
+                        'service_name' => $service->service_name,
+                        'price' => $service->price,
+                    ];
+                    $total += $service->price;
+                }
+            }
+            // Merge unique services
+            $newArr = array_merge($billing->services, $arrService);
+            // Update billing with the new services
+            $this->billing->where('_id', '=', $request->billing_id)->update([
+                'services' => $newArr,
+                'total' => $billing->total + $total,
+            ]);
+        }
+        else {
+            foreach ($services as $key => $value) {
+                $service = Services::find($value);
                 $arrService[] = [
                     'service_id' => $service->_id,
-                    'service_name' => $service->name,
+                    'service_name' => $service->service_name,
                     'price' => $service->price,
                 ];
+                $total += $service->price;
             }
+            $this->billing->where('_id', '=', $request->billing_id)->update([
+                'services' => $arrService,
+                'total' => $billing->total + $total,
+            ]);
         }
-
-        // Merge unique services
-        $newArr = array_merge($billing->services, $arrService);
-
-        // Update billing with the new services
-        $this->billing->where('_id', '=', $request->billing_id)->update([
-            'services' => $newArr
-        ]);
-
         // Create history record
         $values = [
             'booking_id' => $request->billing_id,
             'admin_id' => $request->user()->id,
             'handle' => 'Thêm dịch vụ',
-            'time' => Carbon::now()->format('Y-m-d'),
+            'time' => Carbon::now()->format('Y-m-d H:i:s'),
         ];
         $this->history_handle->create($values);
-
         return [
             'status' => 'success',
             'message' => 'Thêm dịch vụ thành công !',
@@ -403,8 +419,8 @@ class BookingRepository
                 'data' => null
             ]);
         }
-        $this->billing->where('_id', '=', $request->billing_id)->update([
-            'status' => 1
+        $this->billing->where('_id', $request->billing_id)->update([
+            'status' => 3
         ]);
         $values = [
             'booking_id' => $request->billing_id,
@@ -430,7 +446,7 @@ class BookingRepository
                 'data' => null
             ]);
         }
-        if ($billing->status == 3) {
+        if ($billing->status != 3) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Không thể trả phòng !',

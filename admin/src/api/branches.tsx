@@ -5,7 +5,7 @@ const branchApi = createApi({
     reducerPath: "Branch",
     tagTypes: ['Branches'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://api.polydevhotel.site",
+        baseUrl: import.meta.env.VITE_URL_API,
         prepareHeaders: (headers) => {
             headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('AuthUser') as any)[2].token}`)
             return headers;
@@ -13,13 +13,13 @@ const branchApi = createApi({
     }),
     endpoints: (builder) => ({
         getAllBranches: builder.query<any, any>({
-            query: () => `/admin/branches`,
+            query: () => `/branches`,
             providesTags: ['Branches']
         }),
 
         createBranches: builder.mutation<any, any>({
             query: (data) => ({
-                url: `/admin/branches`,
+                url: `/branches`,
                 method: "POST",
                 body: data
             }),
@@ -28,7 +28,7 @@ const branchApi = createApi({
 
         getDetailBranches: builder.query<any, any>({
             query: (_id) => ({
-                url: `/admin/branches/${_id}`,
+                url: `/branches/${_id}`,
                 method: "GET"
             }),
             providesTags: ['Branches']
@@ -37,7 +37,7 @@ const branchApi = createApi({
         updateBranches: builder.mutation<any, any>({
             query: (data) => {
                 return {
-                    url: `/admin/branches/${data.id}`,
+                    url: `/branches/${data.id}`,
                     method: "PUT",
                     body: data
                 }
@@ -48,7 +48,7 @@ const branchApi = createApi({
         deleteBranch: builder.mutation<any, any>({
             query: (id: string) => {
                 return {
-                    url: `/admin/branches/${id}`,
+                    url: `/branches/${id}`,
                     method: "DELETE",
                 }
             },
