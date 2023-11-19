@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\AdminBooking\SearchRequest;
 use App\Http\Requests\Booking\AdminBooking\StoreRequest;
 use App\Repositories\BookingRepository;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
@@ -107,6 +109,19 @@ class BookingController extends Controller
         ]);
     }
 
+    public function giaHan(Request $request) {
+        // try {
+
+            return $this->bookingRepository->giaHan($request);
+            
+        // } catch (Exception $exception) {
+        //     Log::debug($exception->getMessage());
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Lỗi không thực hiện được gia hạn phòng !'
+        //     ]);
+        // }
+    }
 
     //    public function renew($id){
 //        return $this->bookingRepository->cancel($id);
