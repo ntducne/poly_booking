@@ -12,7 +12,6 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetDetialQuery, usePostRatesMutation } from '../../api/Room'
 import { useCookies } from 'react-cookie'
-import { useEffect, useState } from 'react'
 import { Button, Form, Rate } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
@@ -49,15 +48,14 @@ const Detail = () => {
         console.log(data?.room?.images[0]?.image);
 
 
-        const valuesRate = {
-            values,
+        const formData = {
+            ...values,
             room_id: data?.room?.id,
-            images: data?.room?.images[0]?.image
+            images:[ data?.room?.images[0]?.image]
         }
         console.log(values);
 
-        postRate(valuesRate);
-
+        postRate(formData);
 
     };
 
@@ -435,3 +433,7 @@ const Detail = () => {
 }
 
 export default Detail
+
+function unwrap() {
+    throw new Error('Function not implemented.')
+}
