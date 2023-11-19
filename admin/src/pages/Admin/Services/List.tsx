@@ -25,10 +25,6 @@ const ListServices = () => {
   
   const [deleteServices] = useDeleteServicesMutation();
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
   const columns: ColumnsType<any> = [
     {
       title: "STT",

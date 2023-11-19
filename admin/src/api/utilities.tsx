@@ -5,7 +5,8 @@ const utilitiesApi = createApi({
     reducerPath: "utilities",
     tagTypes: ['Utilities'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://api.polydevhotel.site",
+        // baseUrl: "https://api.polydevhotel.site",
+        baseUrl: import.meta.env.VITE_URL_API + '/',
         prepareHeaders: (headers) => {
             headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('AuthUser') as any)[2].token}`)
             return headers;
@@ -14,12 +15,12 @@ const utilitiesApi = createApi({
     endpoints: (builder) => ({
         getUtilitie: builder.query<any, any>({
             // query: (query) => `admin/rooms/types?page=${query.page || 1}`,
-            query: () => `/admin/utilities`,
+            query: () => `utilities`,
             providesTags: ['Utilities']
         }),
         createUtilitie: builder.mutation<any, any>({
             query: (data) => ({
-                url: `/admin/utilities`,
+                url: `utilities`,
                 method: "POST",
                 body: data
             }),
@@ -27,7 +28,7 @@ const utilitiesApi = createApi({
         }),
         getDetailUtilitie: builder.query<any, any>({
             query: (id) => ({
-                url: `/admin/utilities/${id}`,
+                url: `utilities/${id}`,
                 method: "GET"
             }),
             providesTags: ['Utilities']
@@ -35,7 +36,7 @@ const utilitiesApi = createApi({
         updateUtilitie: builder.mutation<any, any>({
             query: (data) => {
                 return {
-                    url: `/admin/utilities/${data.id}`,
+                    url: `utilities/${data.id}`,
                     method: "PUT",
                     body: data
                 }
@@ -46,7 +47,7 @@ const utilitiesApi = createApi({
         deleteUtilitie: builder.mutation<any, any>({
             query: (id: string) => {
                 return {
-                    url: `/admin/utilities/${id}`,
+                    url: `utilities/${id}`,
                     method: "DELETE",
                 }
             },

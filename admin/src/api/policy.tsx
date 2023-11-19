@@ -5,7 +5,7 @@ const policyApi = createApi({
     reducerPath: "policy",
     tagTypes: ['policys'],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://api.polydevhotel.site",
+        baseUrl: import.meta.env.VITE_URL_API + '/',
         prepareHeaders: (headers) => {
             headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('AuthUser') as any)[2].token}`)
             return headers;
@@ -13,13 +13,13 @@ const policyApi = createApi({
     }),
     endpoints: (builder) => ({
         getAllPolicy: builder.query<any, any>({
-            query: () => `/admin/policies`,
+            query: () => `policies`,
             providesTags: ['policys']
         }),
 
         createPolicy: builder.mutation<any, any>({
             query: (data) => ({
-                url: `/admin/policies`,
+                url: `policies`,
                 method: "POST",
                 body: data
             }),
@@ -28,7 +28,7 @@ const policyApi = createApi({
 
         getDetailPolicy: builder.query<any, any>({
             query: (id) => ({
-                url: `/admin/policies/${id}`,
+                url: `policies/${id}`,
                 method: "GET"
             }),
             providesTags: ['policys']
@@ -37,7 +37,7 @@ const policyApi = createApi({
         updatePolicy: builder.mutation<any, any>({
             query: (data) => {
                 return {
-                    url: `/admin/policies/${data.id}`,
+                    url: `policies/${data.id}`,
                     method: "PUT",
                     body: data
                 }
@@ -48,7 +48,7 @@ const policyApi = createApi({
         deletePolicy: builder.mutation<any, any>({
             query: (id: string) => {
                 return {
-                    url: `/admin/policies/${id}`,
+                    url: `policies/${id}`,
                     method: "DELETE",
                 }
             },

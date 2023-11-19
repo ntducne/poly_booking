@@ -1,27 +1,27 @@
 import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
 import { useForgotPasswordMutation } from '../../api/Auth';
+import { Link } from 'react-router-dom';
 // import './ForgotPassword.css';
 
 function ForgotPassword() {
     const [form] = Form.useForm();
-    const [ForgotPassword] = useForgotPasswordMutation(); // Lấy mutate function từ useForgotPasswordMutation
+    const [ForgotPassword] = useForgotPasswordMutation();
 
     const onFinish = (values: any) => {
         console.log(values);
         const email = values.email;
 
-        // Gửi yêu cầu quên mật khẩu bằng cách sử dụng useForgotPasswordMutation
         ForgotPassword({ email })
             .then((response: any) => {
                 if (response?.data?.status === true) {
-                    // Email tồn tại, hiển thị thông báo thành công
+                    // Email tồn tại
                     message.success('Liên kết đặt lại mật khẩu đã được gửi qua email !');
                 } else {
-                    // Email không tồn tại, hiển thị thông báo lỗi
+                    // Email không tồn tại
                     message.error('Email không tồn tại. Vui lòng kiểm tra lại.');
                 }
-                console.log('aa:', response.data);
+                console.log('aa:', response);
             })
             .catch((error: any) => {
                 console.error('Lỗi khi gửi yêu cầu', error);
@@ -47,7 +47,7 @@ function ForgotPassword() {
                                 <div className="w-5/6 mx-6 md:mb-12 lg:w-5/12 xl:w-5/12 md:w-5/12">
                                     <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
                                         <div className="relative mb-6" data-te-input-wrapper-init>
-                                            <Form.Item name="email" label={<span className="text-gray-500 text-small">Email address</span>}
+                                            <Form.Item name="email" label={<span className="text-gray-500 text-small">Email</span>}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -71,11 +71,11 @@ function ForgotPassword() {
 
 
                                             <p className="mb-0 mt-2 pt-1 text-sm font-semibold flex gap-2">
-                                                You remember your password?
-                                                <a
-                                                    href="login"
+                                                Bạn nhớ mật khẩu của bạn?
+                                                <Link
+                                                    to="/auth/login"
                                                     className="text-danger text-blue-500 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                                                >Login</a>
+                                                >Login</Link>
                                             </p>
                                         </div>
                                     </Form>

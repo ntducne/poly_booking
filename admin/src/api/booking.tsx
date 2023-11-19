@@ -5,7 +5,7 @@ const bookingApi = createApi({
   reducerPath: "booking",
   tagTypes: ["booking"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.polydevhotel.site/admin/",
+    baseUrl: import.meta.env.VITE_URL_API + '/',
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",

@@ -9,7 +9,7 @@ const authApi = createApi({
     reducerPath: 'auth',
     tagTypes: ['Auth'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://api.polydevhotel.site',
+        baseUrl: import.meta.env.VITE_URL_API_AUTH,
         prepareHeaders: (headers) => {
             return headers;
         },
@@ -17,7 +17,7 @@ const authApi = createApi({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (data: ILogin) => ({
-                url: `/auth/admin/login`,
+                url: `/login`,
                 method: "POST",
                 body: data
             }),

@@ -5,7 +5,7 @@ const ratesApi = createApi({
   reducerPath: "rates",
   tagTypes: ["rates"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.polydevhotel.site/admin/",
+    baseUrl: import.meta.env.VITE_URL_API + '/',
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",

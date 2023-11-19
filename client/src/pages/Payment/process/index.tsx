@@ -9,20 +9,22 @@ export default function PaymentProcess() {
     useEffect(() => {
         setCookie('paymentPage', 3, { path: '/' })
         const process = () => {
-            fetch('https://api.polydevhotel.site/client/room/booking', {
+            let val = {
+                "room_id": cookie.bookingNow.room_id,
+                'checkin': cookie.roomSearch.checkin,
+                'checkout': cookie.roomSearch.checkout,
+                "soLuong": cookie.roomSearch.soLuong,
+                "branch_id": cookie.roomSearch.branch_id,
+                "adults": cookie.roomSearch.adult,
+                "children": cookie.roomSearch.child,
+                'email': cookie.userBook.email,
+                'phone': cookie.userBook.phone,
+                'name': cookie.userBook.name,
+            }
+            console.log(val);
+            fetch(`${import.meta.env.VITE_URL_API}/client/room/booking`, {
                 method: 'POST',
-                body: JSON.stringify({
-                    "room_id": cookie.bookingNow.room_id,
-                    'checkin': cookie.roomSearch.checkin,
-                    'checkout': cookie.roomSearch.checkout,
-                    "soLuong": cookie.roomSearch.soLuong,
-                    "branch_id": cookie.roomSearch.branch_id,
-                    "adults": cookie.roomSearch.adult,
-                    "children": cookie.roomSearch.child,
-                    'email': cookie.userBook.email,
-                    'phone': cookie.userBook.phone,
-                    'name': cookie.userBook.name,
-                }),
+                body: JSON.stringify(val),
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -31,7 +33,7 @@ export default function PaymentProcess() {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    throw new Error('Có lỗi xảy ra trong quá trình đặt phòng.');
+                    throw new Error('Có lỗi xảy ra trong quá trình đặt phòng. Status: ' + response.status);
                 }
             })
             .then(data => {
@@ -41,7 +43,8 @@ export default function PaymentProcess() {
                 removeCookie('paymentPage', { path: '/' });
                 if(cookie.paymentMethod === 'vnpay'){
                     removeCookie('paymentMethod', { path: '/' });
-                    window.location.href = `https://api.polydevhotel.site/api/vnpay/process/${data.bill.billingCode}/${data.bill.total}`;
+
+                    window.location.href = `${import.meta.env.VITE_URL_API}/api/vnpay/process/${data.bill.billingCode}/${data.bill.total}`;
                 }
             })
             .catch(error => {
@@ -57,8 +60,7 @@ export default function PaymentProcess() {
             maxWidth: 1000,
         }}>
             <div className="mt-12 mb-8">
-                <h1 className="text-2xl font-bold mb-3">
-                    <Spin indicator={antIcon} /> Chờ chút, chúng tôi đang xử lý đơn đặt của bạn !</h1>
+                <h1 className="text-2xl font-bold mb-3"><Spin indicator={antIcon} /> Chờ chút, chúng tôi đang xử lý đơn đặt của bạn !</h1>
             </div>
         </div>
     )

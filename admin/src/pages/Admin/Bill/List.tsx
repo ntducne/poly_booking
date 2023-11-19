@@ -18,8 +18,6 @@ import { useGetBilingsQuery } from "../../../api/billings";
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
 
-  // console.log("data", dataBilings);
-
   const columns: ColumnsType<any> = [
     {
       title: "STT",
@@ -68,10 +66,76 @@ const BillList = () => {
       onFilter: (value: any, record) =>
         record.payment_method.indexOf(value) === 0,
     },
+
     {
       title: "Trạng thái thanh toán",
       dataIndex: "status",
       key: "status",
+      render: (status: any) => {
+        let statusText;
+        let statusClass;
+
+        switch (status) {
+          case 0:
+            statusText = "Đã đặt";
+            statusClass = "text-green-500";
+            break;
+          case 1:
+            statusText = "Chờ nhận phòng";
+            statusClass = "text-blue-500";
+            break;
+          case 2:
+            statusText = "Hủy Đặt phòng";
+            statusClass = "text-red-500";
+            break;
+          case 3:
+            statusText = "Đã nhận phòng";
+            statusClass = "text-yellow-500";
+            break;
+          case 4:
+            statusText = "Đã trả phòng";
+            statusClass = "text-purple-500";
+            break;
+          case 5:
+            statusText = "Đã thanh toán";
+            statusClass = "text-indigo-500";
+            break;
+          case 6:
+            statusText = "Hủy Thanh Toán";
+            statusClass = "text-pink-500";
+            break;
+          case 7:
+            statusText = "Thanh toán lỗi";
+            statusClass = "text-orange-500";
+            break;
+          case 8:
+            statusText = "Hoạt động";
+            statusClass = "text-teal-500";
+            break;
+          case 9:
+            statusText = "Tạm đóng";
+            statusClass = "text-gray-500";
+            break;
+          case 10:
+            statusText = "Cấm";
+            statusClass = "text-black";
+            break;
+          default:
+            statusText = "Không tồn tại trạng thái nào";
+            statusClass = "text-red-500";
+        }
+        return (
+          <div className={`font-semibold text-base ${statusClass}`}>
+            {statusText}
+          </div>
+        );
+      },
+    },
+    {
+      title: "Chi nhánh",
+      dataIndex: "branch",
+      key: "branch",
+      render: (text) => <div>{text?.name}</div>,
     },
     {
       title: "Action",
@@ -103,7 +167,7 @@ const BillList = () => {
     key: index + 1,
     id: item.id,
     booking: item.booking,
-    services: item.services.length,
+    services: item.services ? item.services : [],
     total: item.total,
     payment_method: item.payment_method,
     payment_date: item.payment_date,

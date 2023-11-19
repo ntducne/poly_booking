@@ -1,13 +1,13 @@
 
-import { Form, Input, message } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import Page from '../../components/Page';
 import { useRegisterMutation } from '../../api/Auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type Props = {}
 
 export default function Register({ }: Props) {
-    const [Register] = useRegisterMutation()
+    const [Register, { isLoading }] = useRegisterMutation()
     const navigate = useNavigate()
 
     const [form] = Form.useForm();
@@ -26,10 +26,8 @@ export default function Register({ }: Props) {
                         if (errorData.email) {
                             // Email đã được sử dụng
                             message.error(errorData.email);
-                            // Nếu bạn muốn ngăn người dùng đăng ký, bạn có thể thực hiện điều này tại đây
-                            // Ví dụ: chặn hoặc hiển thị thông báo và ngăn người dùng đăng nhập
+
                         } else {
-                            // Xử lý các lỗi khác ở đây
                         }
                     } else {
                         console.log(response);
@@ -41,7 +39,9 @@ export default function Register({ }: Props) {
                 })
                 .catch((error) => {
                     console.log(error);
-                    message.error(error?.values?.message || "some thing error");
+
+                    // console.log(error?.data?.error?.email);
+                    message.error(error?.data?.error?.email || "some thing error");
                 })
         }
     };
@@ -72,7 +72,7 @@ export default function Register({ }: Props) {
         <Page title='Đăng ký'>
             <div className="flex items-center justify-center h-[115vh] bg-bgr">
                 <section className="h-screen" >
-                    <div className="flex items-center justify-center h-full">
+                    <div className="flex items-center justify-center">
                         <div className="h-[730px] w-[290px] lg:h-[700px] lg:w-[950px] md:h-[650px] md:w-[700px] bg-white rounded-md shadow-2xl hover:shadow-2xl">
                             <div
                                 className="g-6 flex h-[22px] flex-wrap items-center gap-12">
@@ -88,7 +88,7 @@ export default function Register({ }: Props) {
                                             <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
                                                 <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                     <div className="relative" data-te-input-wrapper-init>
-                                                        <Form.Item name="name" label={<span className="text-gray-500 text-small">Name</span>}
+                                                        <Form.Item name="name" label={<span className="text-gray-500 text-small">Tên</span>}
                                                             rules={[
                                                                 {
                                                                     required: true,
@@ -117,7 +117,7 @@ export default function Register({ }: Props) {
                                                 </div>
                                                 <div className="lg:flex lg:gap-8 md:flex md:gap-8">
                                                     <div className="relative" data-te-input-wrapper-init>
-                                                        <Form.Item name="password" label={<span className="text-gray-500 text-small">Password</span>}
+                                                        <Form.Item name="password" label={<span className="text-gray-500 text-small">Mật khẩu</span>}
                                                             rules={[
                                                                 {
                                                                     required: true,
@@ -132,7 +132,22 @@ export default function Register({ }: Props) {
                                                         </Form.Item>
 
                                                     </div>
-                                                    <div className="col-md-6 mb-4">
+
+                                                    <div className="relative" data-te-input-wrapper-init>
+                                                        <Form.Item name="password_confirmation" label={<span className="text-gray-500 text-small">Nhập lại mật khẩu</span>}
+                                                            rules={[
+                                                                {
+                                                                    required: true,
+                                                                    message: 'Vui lòng xác nhận mật khẩu!',
+                                                                },
+                                                                {
+                                                                    validator: confirmPasswordValidator,
+                                                                },
+                                                            ]}>
+                                                            <Input.Password className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
+                                                        </Form.Item>
+                                                    </div>
+                                                    {/* <div className="col-md-6 mb-4">
                                                         <h6 className="mb-2 pb-1 text-gray-500 text-small">Gender: </h6>
                                                         <div className="flex gap-8">
                                                             <div className="flex items-center">
@@ -148,25 +163,12 @@ export default function Register({ }: Props) {
                                                                 <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Other</label>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 <div className="lg:flex lg:gap-8 md:flex md:gap-8">
+
                                                     <div className="relative" data-te-input-wrapper-init>
-                                                        <Form.Item name="password_confirmation" label={<span className="text-gray-500 text-small">Confirm Password</span>}
-                                                            rules={[
-                                                                {
-                                                                    required: true,
-                                                                    message: 'Vui lòng xác nhận mật khẩu!',
-                                                                },
-                                                                {
-                                                                    validator: confirmPasswordValidator,
-                                                                },
-                                                            ]}>
-                                                            <Input.Password className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
-                                                        </Form.Item>
-                                                    </div>
-                                                    <div className="relative" data-te-input-wrapper-init>
-                                                        <Form.Item name="phone" label={<span className="text-gray-500 text-small">Phone Number</span>}
+                                                        <Form.Item name="phone" label={<span className="text-gray-500 text-small">Số điện thoại</span>}
                                                             rules={[
                                                                 {
                                                                     required: true,
@@ -179,23 +181,31 @@ export default function Register({ }: Props) {
                                                             <Input className="bg-transparent border rounded w-[250px] h-[35px] lg:w-[350px]" />
                                                         </Form.Item>
                                                     </div>
+                                                    <div className="text-center lg:text-left mt-[34px]">
+                                                        <div className="text-small lg:text-left flex justify-center">
+                                                            <Button
+                                                                htmlType="submit"
+                                                                loading={isLoading}
+                                                                className="bg-primary hover:border hover:border-black-500 text-white !hover:text-white !hover:bg-black-500 active:bg-black w-[200px] h-[35px] justify-center flex items-center border rounded-[5px] transition-transform transform hover:scale-95"
+                                                            >
+                                                                <div className='text-white hover:text-red block '>
+                                                                    {isLoading ? 'Đang đăng ký' : 'Đăng ký'}
+
+                                                                </div>
+                                                            </Button>
+
+                                                        </div>
+
+                                                        <p className="mb-0 lg:mt-[10px] md:mt-[10px] text-sm font-semibold flex gap-2">
+                                                            Bạn đã có tài khoản?
+                                                            <Link
+                                                                to="/auth/login"
+                                                                className="text-danger text-blue-500 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+                                                            >Đăng nhập</Link>
+                                                        </p>
+                                                    </div>
                                                 </div>
 
-                                                <div className="text-center lg:text-left">
-                                                    <button
-                                                        className='bg-primary w-[100px] lg:h-full md:h-full active:bg-black justify-center flex items-center border rounded-[5px] transition-transform transform hover:scale-95'
-                                                    >
-                                                        <p className='text-secondary p-2'>Đăng ký</p>
-                                                    </button>
-
-                                                    <p className="mb-0 lg:mt-[10px] md:mt-[10px] text-sm font-semibold flex gap-2">
-                                                        Do have an account?
-                                                        <a
-                                                            href="login"
-                                                            className="text-danger text-blue-500 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                                                        >Login</a>
-                                                    </p>
-                                                </div>
                                             </Form>
                                         </div>
 

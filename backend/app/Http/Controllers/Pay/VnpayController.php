@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pay;
 use App\Http\Controllers\Controller;
 use App\Models\Billing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class VnpayController extends Controller
 {
@@ -96,13 +97,25 @@ class VnpayController extends Controller
         $secureHash = hash_hmac('sha512', $hashData, $this->vnp_HashSecret);
         if ($secureHash == $vnp_SecureHash) {
             if ($_GET['vnp_ResponseCode'] == '00') {
-                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status' => 1]);
+                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update([
+                    'status' => 1,
+                    'payment_method' => 'VNPAY',
+                    'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
             }
             else {
-                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status' => 2]);
+                Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update([
+                    'status' => 6,
+                    'payment_method' => 'VNPAY',
+                    'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
             }
         } else {
-            Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update(['status' => 3]);
+            Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update([
+                'status' => 7,
+                'payment_method' => 'VNPAY',
+                'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
         }
         return response()->json([
             'status' => Billing::where('billingCode', (integer)$request->vnp_TxnRef)->first()->status
