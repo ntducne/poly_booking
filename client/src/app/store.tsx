@@ -4,7 +4,6 @@ import {
   combineReducers,
   configureStore,
 } from "@reduxjs/toolkit";
-
 import {
   FLUSH,
   PAUSE,
@@ -15,11 +14,12 @@ import {
   persistReducer,
   persistStore,
 } from "redux-persist";
+import orderApi from "../api/Order";
 import storage from "redux-persist/lib/storage";
 import roomApi from "../api/Room";
 import authApi, { authReducer } from "../api/Auth";
 import branchApi from "../api/Branch";
-import orderApi from "../api/Order";
+import userApi from "../api/User";
 
 const persistConfig = {
   key: "root",
@@ -31,11 +31,13 @@ const rootReducer = combineReducers({
   [authApi.reducerPath]: authReducer,
   [branchApi.reducerPath]: branchApi.reducer,
   [orderApi.reducerPath]: orderApi.reducer,
+  [userApi.reducerPath]: userApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middlewares = [
+  userApi.middleware,
   roomApi.middleware,
   authApi.middleware,
   branchApi.middleware,
