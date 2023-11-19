@@ -1,6 +1,6 @@
 import { Button, Form, Input, message } from 'antd';
 import Page from '../../components/Page';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../api/Auth';
 import { useCookies } from 'react-cookie';
 
@@ -140,7 +140,7 @@ export default function Login({ }: Props) {
                                                 </label>
                                             </div>
 
-                                            <a href="forGotPassword">Quên mật khẩu?</a>
+                                            <Link to="/auth/forGotPassword">Quên mật khẩu?</Link>
                                         </div>
 
                                         <div className="text-small lg:text-left">
@@ -159,10 +159,10 @@ export default function Login({ }: Props) {
 
                                             <p className="mb-0 mt-2 pt-1 text-sm font-semibold flex gap-2">
                                                 Bạn chưa có tài khoản?
-                                                <a
-                                                    href="register"
+                                                <Link
+                                                    to="/auth/register"
                                                     className="text-danger text-blue-500 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                                                >Đăng ký</a>
+                                                >Đăng ký</Link>
                                             </p>
                                         </div>
                                     </Form>

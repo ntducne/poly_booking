@@ -2,7 +2,7 @@
 import { Button, Form, Input, message } from 'antd';
 import Page from '../../components/Page';
 import { useRegisterMutation } from '../../api/Auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type Props = {}
 
@@ -198,10 +198,10 @@ export default function Register({ }: Props) {
 
                                                         <p className="mb-0 lg:mt-[10px] md:mt-[10px] text-sm font-semibold flex gap-2">
                                                             Bạn đã có tài khoản?
-                                                            <a
-                                                                href="login"
+                                                            <Link
+                                                                to="/auth/login"
                                                                 className="text-danger text-blue-500 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                                                            >Đăng ký</a>
+                                                            >Đăng nhập</Link>
                                                         </p>
                                                     </div>
                                                 </div>

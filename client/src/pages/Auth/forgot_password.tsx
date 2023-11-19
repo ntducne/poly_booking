@@ -1,6 +1,7 @@
 import { Form, Input, message } from 'antd';
 import Page from '../../components/Page';
 import { useForgotPasswordMutation } from '../../api/Auth';
+import { Link } from 'react-router-dom';
 // import './ForgotPassword.css';
 
 function ForgotPassword() {
@@ -46,7 +47,7 @@ function ForgotPassword() {
                                 <div className="w-5/6 mx-6 md:mb-12 lg:w-5/12 xl:w-5/12 md:w-5/12">
                                     <Form name="validateOnly" layout="vertical" autoComplete="off" form={form} onFinish={onFinish}>
                                         <div className="relative mb-6" data-te-input-wrapper-init>
-                                            <Form.Item name="email" label={<span className="text-gray-500 text-small">Email address</span>}
+                                            <Form.Item name="email" label={<span className="text-gray-500 text-small">Email</span>}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -70,11 +71,11 @@ function ForgotPassword() {
 
 
                                             <p className="mb-0 mt-2 pt-1 text-sm font-semibold flex gap-2">
-                                                You remember your password?
-                                                <a
-                                                    href="login"
+                                                Bạn nhớ mật khẩu của bạn?
+                                                <Link
+                                                    to="/auth/login"
                                                     className="text-danger text-blue-500 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
-                                                >Login</a>
+                                                >Login</Link>
                                             </p>
                                         </div>
                                     </Form>
