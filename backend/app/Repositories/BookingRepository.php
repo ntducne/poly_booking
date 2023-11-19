@@ -516,14 +516,12 @@ class BookingRepository
         ]);
     }
 
-    public function giaHan(Request $request)
+    public function giaHan($request)
     {
         try {
             $soLuong = $request->soLuong;
             $room_id = $request->room_id;
             $branch_id = $request->branch_id;
-            (int) $adults = $request->adults;
-            (int) $children = $request->children;
             $room = Room::where('_id', '=', $room_id)->where('branch_id', '=', $branch_id)->first();
             //Kiem tra phong con trong hay khong
             $room_valid = $this->check_room($request->checkin, $request->checkout, $request->adults, $request->children, $branch_id, $room->room_type_id, $soLuong);
@@ -542,7 +540,7 @@ class BookingRepository
                     $soNgay = Carbon::parse($booking->checkout)->diffInDays($request->newCheckOut) + 1;
                     $total_price = $billing->total + (($room_type->price_per_night - $room->discount) * $soNgay);
                     $this->billing->where('_id', '=', $request->billing_id)->update([
-                        'total' => $total_price,
+                        'total' => $billing->total + $total_price,
                     ]);
                 } else {
                     $this->billing->where('_id', '=', $request->billing_id)->update([
