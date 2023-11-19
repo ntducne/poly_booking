@@ -49,15 +49,14 @@ const Detail = () => {
         console.log(data?.room?.images[0]?.image);
 
 
-        const valuesRate = {
-            values,
+        const formData = {
+            ...values,
             room_id: data?.room?.id,
-            images: data?.room?.images[0]?.image
+            images:[ data?.room?.images[0]?.image]
         }
         console.log(values);
 
-        postRate(valuesRate);
-
+        postRate(formData);
 
     };
 
@@ -435,3 +434,7 @@ const Detail = () => {
 }
 
 export default Detail
+
+function unwrap() {
+    throw new Error('Function not implemented.')
+}
