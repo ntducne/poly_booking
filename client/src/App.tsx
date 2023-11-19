@@ -1,17 +1,17 @@
-import { Route, Routes } from "react-router-dom"
-import LayoutClient from "./layouts/Client"
-import AboutPage from "./pages/AboutPage/about"
-import ForgotPassword from "./pages/Auth/forgot_password"
-import Login from "./pages/Auth/login"
-import Profile from "./pages/Auth/profile"
-import Register from "./pages/Auth/register"
-import ResetPassword from "./pages/Auth/reset-passwork"
-import Home from "./pages/Home"
-import Detail from "./pages/Room/Detail"
-import RoomBooked from "./pages/RoomBooked"
-import Rooms from "./pages/Rooms"
-import Contact from "./pages/contact"
-import Demo from "./pages/demo"
+import { Route, Routes } from "react-router-dom";
+import LayoutClient from "./layouts/Client";
+import AboutPage from "./pages/AboutPage/about";
+import ForgotPassword from "./pages/Auth/forgot_password";
+import Login from "./pages/Auth/login";
+import Profile from "./pages/Auth/profile";
+import Register from "./pages/Auth/register";
+import ResetPassword from "./pages/Auth/reset-passwork";
+import Home from "./pages/Home";
+import Detail from "./pages/Room/Detail";
+import RoomBooked from "./pages/RoomBooked";
+import Rooms from "./pages/Rooms";
+import Contact from "./pages/contact";
+import Demo from "./pages/demo";
 
 import PaymentLayout from "./layouts/Payment";
 import AccommodationBook from "./pages/Payment/accommodation";
@@ -53,11 +53,7 @@ function App() {
           <Route path="process" element={<PaymentProcess />} />
           <Route path="status" element={<PaymentStatus />} />
         </Route>
-<<<<<<< HEAD
-=======
         <Route path="demo" element={<Demo />} />
-        
->>>>>>> 752598dd87db25cc40da3ded809b11ffcfc6b9df
       </Routes>
     </>
   );
