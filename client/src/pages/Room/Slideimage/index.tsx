@@ -15,12 +15,7 @@ import { useGetDetialQuery } from '../../../api/Room';
 
 export default function SlideImages() {
   const { id } = useParams()
-  console.log(id)
-
-
-
   const { data } = useGetDetialQuery(id)
-  console.log(data);
   return (
     <>
       <Swiper

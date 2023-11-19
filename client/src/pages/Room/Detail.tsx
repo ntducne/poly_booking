@@ -14,6 +14,7 @@ import { useGetDetialQuery, usePostRatesMutation } from '../../api/Room'
 import { useCookies } from 'react-cookie'
 import { Button, Form, Rate } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
+import { useProcessReviewMutation } from '../../api/User'
 
 
 
@@ -25,37 +26,43 @@ initTE({ Rating });
 const Detail = () => {
     const navigate = useNavigate()
     const { slug } = useParams()
-    console.log(slug)
-
-
-
     const { data } = useGetDetialQuery(slug)
-    console.log(data);
     const [, setCookie, removeCookie] = useCookies(['roomBooking']);
 
-    const [postRate] = usePostRatesMutation()
+    const [postRate] = useProcessReviewMutation()
+    const [postRate1] = usePostRatesMutation()
+
 
     const booking = () => {
-        console.log(data.room);
+
         removeCookie('roomBooking', { path: '/' })
         setCookie('roomBooking', data.room, { path: '/' })
         navigate('/demo')
     }
     const onFinish = (values: any) => {
-        alert("cmt " + values)
-        console.log(values);
-        console.log(data?.room?.id,);
-        console.log(data?.room?.images[0]?.image);
-
-
         const formData = {
             ...values,
             room_id: data?.room?.id,
-            images:[ data?.room?.images[0]?.image]
-        }
-        console.log(values);
+        };
+        console.log(formData);
 
-        postRate(formData);
+
+        // const [cookie] = useCookies(['userInfo']);
+        // const token = cookie.userInfo.accessToken.token;
+
+        // console.log(token);
+
+
+        // fetch('https://api.polydevhotel.site/user/rate', {
+        //     headers: {
+        //         Authorization: `Bearer ${token}`
+        //     },
+        //     method: 'POST',
+        //     body: JSON.stringify(formData)
+        // },)
+
+        postRate1(formData)
+
 
     };
 
