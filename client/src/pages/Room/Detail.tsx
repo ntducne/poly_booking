@@ -12,7 +12,6 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetDetialQuery, usePostRatesMutation } from '../../api/Room'
 import { useCookies } from 'react-cookie'
-import { useEffect, useState } from 'react'
 import { Button, Form, Rate } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 
