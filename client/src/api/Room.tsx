@@ -9,6 +9,8 @@ const roomApi = createApi({
     prepareHeaders: (headers) => {
       const [cookies] = useCookies(['userInfo']);
       const token = cookies.userInfo?.accessToken?.token;
+      console.log(token);
+      
       if (token) {
           headers.set("authorization", `Bearer ${token}`);
       }

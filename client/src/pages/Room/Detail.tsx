@@ -43,7 +43,7 @@ const Detail = () => {
         console.log(formData);
 
 
-        // const [cookie] = useCookies(['userInfo']);
+        const [cookies] = useCookies(['userInfo']);
         // const token = cookie.userInfo.accessToken.token;
 
         // console.log(token);
@@ -57,7 +57,26 @@ const Detail = () => {
         //     body: JSON.stringify(formData)
         // },)
 
-        postRate1(formData)
+        const token = cookies.userInfo?.accessToken?.token;
+        console.log(token);
+        
+        fetch('http://localhost:8000/user/rate', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {
+            'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+        // postRate1(formData)
 
 
   };
