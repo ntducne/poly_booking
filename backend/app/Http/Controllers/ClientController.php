@@ -221,7 +221,7 @@ class ClientController extends Controller
             foreach ($room_valid as $key => $value) {
                 $room_booking[]= $value;
             }
-            $room_booking = array_slice(array_merge($room_booking), 0, $soLuong);
+            $room_booking = array_slice(array_unique($room_booking), 0, $soLuong);
             $total_discount = 0;
             $total_price_per_night = 0;
             foreach ($room_booking as $key => $value) {
