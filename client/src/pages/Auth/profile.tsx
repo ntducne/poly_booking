@@ -1,38 +1,36 @@
 import { useCookies } from 'react-cookie'
 import { Form, Input, message, Upload, Button } from 'antd';
-import { useGetUserQuery } from '../../api/Auth'
 import HeroSlide from '../../components/HeroSlide'
 import { useEffect, useState } from 'react';
 import Page from '../../components/Page';
 import { UploadOutlined } from "@ant-design/icons";
+import { useGetProfileQuery } from '../../api/User';
 
 
 
 const Profile = () => {
-    const [cookie] = useCookies(['userInfo']);
-    const token = cookie.userInfo.accessToken.token;
+    // const [cookie] = useCookies(['userInfo']);
+    // const token = cookie.userInfo.accessToken.token;
    
-    console.log(token);
+    // console.log(token);
+    
+    // const [data, setData] = useState({} as any)
+    // useEffect(() => {
+    //     fetch('https://api.polydevhotel.site/user/profile', {
+    //         headers: {
+    //             Authorization: `Bearer ${token}`,
+    //         }
+    //     },)
+    //         .then((res: { json: () => any }) => res.json())
+    //         .then((data: any) => setData(data))
+    // }, [])
+
+    // console.log(data.message);
     const [form] = Form.useForm();
 
-    const [data, setData] = useState({} as any)
-    useEffect(() => {
-        fetch('https://api.polydevhotel.site/user/profile', {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        },)
-            .then((res: { json: () => any }) => res.json())
-            .then((data: any) => setData(data))
-    }, [])
-
-
-
-    console.log(data.message);
-
-
-    // const {data} = useGetUserQuery("")  
-    //    console.log(data);
+    const {data} = useGetProfileQuery({})  
+       console.log(data);
+       
     const normFile = (e: any) => {
         if (Array.isArray(e)) {
             return e;
@@ -105,7 +103,7 @@ const Profile = () => {
                                     src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
                                     alt="" />
                             </div>
-                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{data?.message?.name}</h1>
+                            <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">data?.message?.name</h1>
                             <h3 className="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
                             <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
                                 consectetur adipisicing elit.
@@ -119,7 +117,7 @@ const Profile = () => {
                                 </li>
                                 <li className="flex items-center py-3">
                                     <span>Member since</span>
-                                    <span className="ml-auto">{data?.message?.created_at}</span>
+                                    <span className="ml-auto">data?.message?.created_at</span>
                                 </li>
                             </ul>
                         </div>
@@ -140,7 +138,7 @@ const Profile = () => {
 
                             <div className="text-center my-2">
                                 <img className="h-full w-full rounded-full mx-auto"
-                                    src={data?.message?.image}
+                                    src="data?.message?.image"
                                     alt="" />
 
                             </div>
@@ -167,11 +165,11 @@ const Profile = () => {
                                 <div className="grid md:grid-cols-2 text-sm">
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">First Name</div>
-                                        <div className="px-4 py-2"> {data?.message?.name}</div>
+                                        <div className="px-4 py-2"> data?.message?.name</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Last Name</div>
-                                        <div className="px-4 py-2"> {data?.message?.name}</div>
+                                        <div className="px-4 py-2"> data?.message?.name</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Gender</div>
@@ -179,20 +177,20 @@ const Profile = () => {
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Contact No.</div>
-                                        <div className="px-4 py-2"> {data?.message?.phone}</div>
+                                        <div className="px-4 py-2"> data?.message?.phone</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Current Address</div>
-                                        <div className="px-4 py-2"> {data?.message?.address}</div>
+                                        <div className="px-4 py-2"> data?.message?.address</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Permanant Address</div>
-                                        <div className="px-4 py-2"> {data?.message?.adress}</div>
+                                        <div className="px-4 py-2"> data?.message?.adress</div>
                                     </div>
                                     <div className="grid grid-cols-2">
                                         <div className="px-4 py-2 font-semibold">Email.</div>
                                         <div className="px-4 py-2">
-                                            <a className="text-blue-800" href="mailto:jane@example.com"> {data?.message?.email}</a>
+                                            <a className="text-blue-800" href="mailto:jane@example.com"> data?.message?.email</a>
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2">
@@ -215,7 +213,7 @@ const Profile = () => {
 
 
                                     <div
-                                        className="g-6 flex h-[22px] flex-wrap items-center gap-12">
+                                        className="g-6 flex h-[22px] flex-wrap items-center gap-12 ">
                                         <div
                                             className="card rounded-3">
 
