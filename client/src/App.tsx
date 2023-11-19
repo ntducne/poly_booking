@@ -19,6 +19,7 @@ import PaymentView from "./pages/Payment"
 import PaymentProcess from "./pages/Payment/process"
 import PaymentStatus from "./pages/Payment/process/status"
 import LayoutAuth from "./layouts/Auth"
+import Demo from "./pages/demo"
 
 
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="process" element={<PaymentProcess />} />
           <Route path="status" element={<PaymentStatus />} />
         </Route>
+        <Route path="demo" element={<Demo />} />
         
       </Routes>
     </>
