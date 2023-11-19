@@ -2,8 +2,16 @@ import { Link } from "react-router-dom";
 import FormatPrice from "../../utils/FormatPrice";
 
 export default function Room(props: any) {
-  const { name, area, adults, children, description, id, num_of_bed, slug, branch } =
-    props?.data;
+  const {
+    name,
+    area,
+    adults,
+    children,
+    description,
+    num_of_bed,
+    slug,
+    branch,
+  } = props?.data;
   console.log(props?.data);
 
   return (
@@ -31,12 +39,7 @@ export default function Room(props: any) {
           <div className="text-[16px] flex flex-col gap-3 text-text mt-[25px] text-gray-500">
             <li>Người lớn: {adults || 1}</li>
             <li>Trẻ em: {children || 2}</li>
-            <li>
-              Mô tả: Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Eveniet molestiae debitis ipsum natus, fugiat labore alias numquam
-              quisquam quo fuga suscipit quam similique rem tempora, quidem
-              eligendi optio consequatur quia.
-            </li>
+            <li>Mô tả: {description}</li>
             <li>Diện tích: {area} m²</li>
             <li>Loại giường: Đơn</li>
             <li>Số giường: 3</li>
