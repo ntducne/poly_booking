@@ -26,7 +26,7 @@ export default function Footer({}: Props) {
               </h2>
               <ul className="text-gray-500  font-medium">
                 <li className="mb-4">
-                  <Link to="" className="hover:underline ">
+                  <Link to="/search-order" className="hover:underline ">
                     Tra cứu đơn hàng
                   </Link>
                 </li>
