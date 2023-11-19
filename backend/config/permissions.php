@@ -58,6 +58,7 @@ return [
     'admin.bookings.checkout' => 'Trả phòng',
     'admin.bookings.addPeople' => 'Thêm người',
     'admin.bookings.addService' => 'Thêm dịch vụ',
+    'admin.bookings.giaHan' => 'Gia hạn phòng',
 
 
     'admin.promotions.index' => 'Danh sách ưu đãi',
