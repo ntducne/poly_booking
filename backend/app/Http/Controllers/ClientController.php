@@ -208,5 +208,17 @@ class ClientController extends Controller
         }
     }
 
+    public function checkBooking(Request $request){
+        try {
+            return $this->bookingRepository->checkBooking($request);
+        } catch (Exception $exception) {
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Lỗi lấy dữ liệu đặt phòng !'
+            ]);
+        }
+    }
+
 
 }
