@@ -1,88 +1,91 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { useCookies } from 'react-cookie';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface ILogin {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 
 interface IRegister {
-    email: string,
-    password: string,
-    confirmPassword: string,
-    name: string
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
 }
 
 interface IForgotPassword {
-    email: string;
+  email: string;
 }
 
 interface IResetPassword {
-    token: string;
-    data: {
-        old_password: string;
-        new_password: string;
-        new_password_confirmation: string
-    }
+  token: string;
+  data: {
+    old_password: string;
+    new_password: string;
+    new_password_confirmation: string;
+  };
 }
 
-
 const authApi = createApi({
-    reducerPath: 'auth',
-    tagTypes: ['Auth'],
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_URL_API,
-        prepareHeaders: (headers) => {
-            return headers;
-        },
+  reducerPath: "auth",
+  tagTypes: ["Auth"],
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_URL_API,
+    prepareHeaders: (headers) => {
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: (data: ILogin) => ({
+        url: `/auth/user/login`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Auth"],
     }),
-    endpoints: (builder) => ({
-        login: builder.mutation({
-            query: (data: ILogin) => ({
-                url: `/auth/user/login`,
-                method: "POST",
-                body: data
-            }),
-            invalidatesTags: ['Auth']
-        }),
-      
-        register: builder.mutation({
-            query: (data: IRegister) => ({
-                url: `/auth/user/register`,
-                method: "POST",
-                body: data
-            }),
-            invalidatesTags: ['Auth']
-        }),
 
-        forgotPassword: builder.mutation({
-            query: (data: IForgotPassword) => ({
-                url: `/auth/user/reset-password`,
-                method: "POST",
-                body: data
-            }),
-            invalidatesTags: ['Auth']
-        }),
+    register: builder.mutation({
+      query: (data: IRegister) => ({
+        url: `/auth/user/register`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
 
-        getToken: builder.query({
-            query: (token) => ({
-                url: `/auth/user/reset-password/${token}`,
-                method: "GET",
-            }),
-        }),
+    forgotPassword: builder.mutation({
+      query: (data: IForgotPassword) => ({
+        url: `/auth/user/reset-password`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
 
-        resetPassword: builder.mutation({
-            query: (data: IResetPassword) => ({
-                url: `/auth/user/reset-password/${data.token}`,
-                method: 'PUT',
-                body: data.data,
-            }),
-            invalidatesTags: ['Auth']
-        }),
-    })
-})
+    getToken: builder.query({
+      query: (token) => ({
+        url: `/auth/user/reset-password/${token}`,
+        method: "GET",
+      }),
+    }),
 
+    resetPassword: builder.mutation({
+      query: (data: IResetPassword) => ({
+        url: `/auth/user/reset-password/${data.token}`,
+        method: "PUT",
+        body: data.data,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
+  }),
+});
 
-export const { useLoginMutation, useRegisterMutation, useForgotPasswordMutation, useGetTokenQuery, useResetPasswordMutation } = authApi;
-export const authReducer = authApi.reducer
-export default authApi
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useForgotPasswordMutation,
+  useGetTokenQuery,
+  useResetPasswordMutation,
+} = authApi;
+export const authReducer = authApi.reducer;
+export default authApi;
