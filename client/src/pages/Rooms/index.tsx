@@ -48,6 +48,9 @@ export default function Rooms({}: Props) {
     };
 
     setDataQuery(dataQuery);
+    if (!isLoading && !data?.data.length) {
+      message.error("Không có phòng nào phù hợp");
+    }
     setCookie("roomSearch", dataQuery, { path: "/" });
   };
 
@@ -119,7 +122,7 @@ export default function Rooms({}: Props) {
             </div>
             <div className="flex lg:flex-row lg:justify-center flex-col-reverse justify-start lg:max-w-none lg:px-2 relative">
               <div className="flex flex-col gap-[30px]">
-                {!data?.data && isLoading ? (
+                {isLoading ? (
                   Array.from({ length: 5 }).map((_, index) => (
                     <PcLoading key={index} />
                   ))
