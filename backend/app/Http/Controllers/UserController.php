@@ -189,20 +189,22 @@ class UserController extends Controller
             ]
         ], 200);
     }
-    public function rate(Request $request, $id_room)
+    public function rate(Request $request)
     {
-        $room = $this->room->find($id_room);
+        $room = $this->room->find($request->room_id);
         if (!$room) {
             return response()->json([
                 'message' => 'Room not found'
             ], 404);
         }
         $input = $request->all();
+        
         $images = $request->file('images');
         if ($images) {
-            $uploadedFileUrl = $this->UploadMultiImage($images, 'rate_room/' . $id_room . '/');
+            $uploadedFileUrl = $this->UploadMultiImage($images, 'rate_room/' . $room->id . '/');
             $input['images'] = $uploadedFileUrl;
         }
+        $input['user_id'] = $request->user()->id;
         $rate = $this->rate_room->create($input);
         return response()->json([
             'message' => 'Rate room successfully',
