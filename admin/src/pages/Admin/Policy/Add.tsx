@@ -9,7 +9,6 @@ import {
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
-import { useGetRoomTypeQuery } from "../../../api/roomTypes";
 import { useCreatePolicyMutation } from "../../../api/policy";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
