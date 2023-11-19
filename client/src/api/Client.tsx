@@ -53,6 +53,11 @@ const clientApi = createApi({
 });
 
 export const {
+    useGetBranchQuery,
+    useGetRoomsQuery,
+    useGetDetailRoomQuery,
+    useGetRoomTypeQuery,
+    useHandleBookingMutation,
 } = clientApi;
 
 export const userReducer = clientApi.reducer;
