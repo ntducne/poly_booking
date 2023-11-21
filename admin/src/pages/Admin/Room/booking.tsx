@@ -6,16 +6,12 @@ import {
   Form,
   Card,
   Button,
-  Modal,
   message,
   Image,
-  Row,
-  Col,
   Table,
 } from "antd";
-import TableCustom from "../../../component/Table";
 import { SearchOutlined } from "@ant-design/icons";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchRoomMutation } from "../../../api/booking";
 import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
 import { RoomInterface } from "../../../Interface/RoomInterface";

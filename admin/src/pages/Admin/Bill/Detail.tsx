@@ -15,10 +15,7 @@ import {
   DatePicker,
   InputNumber,
   Form,
-  Row,
   Card,
-  Col,
-  Alert,
   message,
   Table,
   TableProps,
@@ -34,12 +31,11 @@ import {
 } from "../../../api/billings";
 import { useParams } from "react-router-dom";
 import { useGetServicesQuery } from "../../../api/services";
-import { useForm } from "antd/es/form/Form";
 import swal from "sweetalert";
+// import _ from "lodash";
 import _ from "lodash";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
-import da from "date-fns/locale/da";
 import dayjs from "dayjs";
 
 const BillDetail: React.FC = () => {
@@ -52,7 +48,7 @@ const BillDetail: React.FC = () => {
   console.log("dataBill", dataBill);
 
   const prevServicesRef = useRef();
-  const { data: dataRoomType, isLoading: roomTypeLoading } =
+  const { data: dataRoomType } =
     useGetAllRoomTypeQuery({});
 
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
@@ -123,7 +119,7 @@ const BillDetail: React.FC = () => {
 
   // Xu ly ServiceInBill
   const [formChanged, setFormChanged] = useState(false);
-  const onValuesChange = (changedValues: any, allValues: any) => {
+  const onValuesChange = () => {
     setFormChanged(true);
   };
   const [open, setOpen] = useState(false);
@@ -335,7 +331,7 @@ const BillDetail: React.FC = () => {
       dayjs(item.$d).format("YYYY-MM-DD")
     );
 
-    const dataQuery = {
+    const dataQuery : Record<string, string> = {
       checkin: formattedDates?.[0],
       checkout: formattedDates?.[1],
       adult: adults,
@@ -344,7 +340,7 @@ const BillDetail: React.FC = () => {
       room_type_id: room_type_id,
       soLuong: amount_room_renew,
     };
-
+    
     const queryString = Object.keys(dataQuery).map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(dataQuery[key])).join('&');
     const apiUrl = `${import.meta.env.VITE_BASE_URL_API}/client/room/search?${queryString}`;
 

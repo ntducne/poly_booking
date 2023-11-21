@@ -6,7 +6,6 @@ import {
   Form,
   Image,
   Modal,
-  Skeleton,
   Table,
 } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
@@ -24,7 +23,6 @@ import {
   useGetDetailStaffsQuery,
 } from "../../../../api/account/staffs";
 import { useGetPermissonQuery } from "../../../../api/permission";
-import { CheckboxValueType } from "antd/es/checkbox/Group";
 
 const ListAdmin = () => {
   const { data: staffs, isLoading } = useGetAllStaffsQuery({});
@@ -32,7 +30,7 @@ const ListAdmin = () => {
   const { data: valuePermission } = useGetPermissonQuery([]);
 
   const [isStaff, setIsStaff] = useState("");
-  const [dataStaff, setDataStaff] = useState({});
+  const [dataStaff, setDataStaff] = useState<any>({});
   const { data: staff, isLoading: loadingStaff } = useGetDetailStaffsQuery(
     isStaff || ""
   );
@@ -205,11 +203,11 @@ const ListAdmin = () => {
       // console.log("params", pagination, filters, sorter, extra);
     };
 
-  const [checkedValues, setCheckedValues] = useState({});
+  // const [checkedValues, setCheckedValues] = useState<any>({});
 
-  const handleCheckboxChange = (key: string, checked: boolean) => {
-    setCheckedValues((prevState) => ({ ...prevState, [key]: checked }));
-  };
+  // const handleCheckboxChange = (key: string, checked: boolean) => {
+  //   setCheckedValues((prevState) => ({ ...prevState, [key]: checked }));
+  // };
 
   const handleSubmit = () => {
     // Call API to update the permissions in the database

@@ -13,7 +13,7 @@ import { LayoutContext } from "../../layout/LayoutAdmin";
 import { cookies } from "../../config/cookies";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Notification, PusherServer } from "../../socket/notification";
+import { PusherServer } from "../../socket/notification";
 
 const { Text } = Typography;
 

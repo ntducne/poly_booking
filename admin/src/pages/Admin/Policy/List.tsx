@@ -19,7 +19,7 @@ import { useGetAllPolicyQuery } from "../../../api/policy";
 const ListPolicy = () => {
   // const { data: dataRooms } = useGetRoomsQuery({})
 
-  const { data, isLoading, refetch } = useGetAllPolicyQuery({});
+  const { data, isLoading } = useGetAllPolicyQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
   // console.log(data?.data?.data);
   // console.log(dataFetching);
@@ -120,43 +120,11 @@ const ListPolicy = () => {
     },
   ];
 
-  // const data1: any = [
-  //   {
-  //     key: "1",
-  //     policy_id: 1,
-  //     conditions: "Điều kiện 1",
-  //     penalty: "Phạm lỗi 1",
-  //     room_id: {
-  //       image:
-  //         "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
-  //       name: "Phòng 1",
-  //     },
-  //   },
-  //   {
-  //     key: "2",
-  //     policy_id: 2,
-  //     conditions: "Điều kiện 2",
-  //     penalty: "Phạm lỗi 2",
-  //     room_id: {
-  //       image:
-  //         "https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg",
 
-  //       name: "Phòng 2",
-  //     },
-  //   },
-  // ];
-
-  const onChange: TableProps<DataType>["onChange"] = (
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+  const onChange: TableProps<DataType>["onChange"] = () => {  };
 
   const remove = (id: any) => {
-    // console.log(id);
+    console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -167,7 +135,6 @@ const ListPolicy = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            // console.log(id);
 
             swal("You have successfully deleted", {
               icon: "success",

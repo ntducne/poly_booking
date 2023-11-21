@@ -1,8 +1,7 @@
-import React from 'react'
 
-type Props = {}
+// type Props = {}
 
-const PermissonModal = (props: Props) => {
+const PermissonModal = () => {
   return (
     <div>PermissonModal</div>
   )
