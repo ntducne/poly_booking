@@ -14,6 +14,7 @@ import FormSearch from "../../../component/formSearch";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
+import formatMoneyVN from "../../../config/formatMoneyVN";
 
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
@@ -30,6 +31,7 @@ const BillList = () => {
       title: "Giá tiền",
       dataIndex: "total",
       key: "total",
+      render: (text: any) => <div>{formatMoneyVN(text)} VNĐ</div>,
       sorter: (a, b) => a.total - b.total,
     },
     {

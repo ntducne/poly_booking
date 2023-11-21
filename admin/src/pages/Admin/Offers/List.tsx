@@ -51,11 +51,6 @@ const ListOffers = () => {
       dataIndex: "conditions",
       key: "conditions",
     },
-    // {
-    //   title: "Cơ sở",
-    //   dataIndex: "branch_id",
-    //   key: "branch_id",
-    // },
     {
       title: "Action",
       dataIndex: "action",
