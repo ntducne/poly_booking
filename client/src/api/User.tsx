@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 
 const userApi = createApi({
     reducerPath: "Users",
-    tagTypes: ["Users"],
+    tagTypes: ["User"],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_URL_API + '/user/',
         prepareHeaders: (headers) => {
@@ -17,11 +17,10 @@ const userApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-
-
+        
         getProfile: builder.query<any, any>({
             query: () => `profile`,
-            providesTags: ["Users"],
+            providesTags: ["User"],
         }),
 
         updateAvatar: builder.mutation({
@@ -30,7 +29,7 @@ const userApi = createApi({
                 method: "PUT",
                 body: data,
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["User"],
         }),
         
         updateProfile: builder.mutation({
@@ -39,7 +38,7 @@ const userApi = createApi({
                 method: "PUT",
                 body: data,
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["User"],
         }),
 
         updatePassword: builder.mutation({
@@ -48,17 +47,17 @@ const userApi = createApi({
                 method: "PUT",
                 body: data,
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["User"],
         }),
 
         getHistoryBooking: builder.query<any, any>({
             query: () => `booking/history`,
-            providesTags: ["Users"],
+            providesTags: ["User"],
         }),
 
         getDetailHistoryBooking: builder.query<any, any>({
             query: (id) => `booking/history/${id}`,
-            providesTags: ["Users"],
+            providesTags: ["User"],
         }),
 
         cancelBooking: builder.mutation({
@@ -66,7 +65,7 @@ const userApi = createApi({
                 url: `booking/cancel/${id}`,
                 method: "PUT",
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["User"],
         }),
 
         processReview: builder.mutation({
@@ -75,12 +74,12 @@ const userApi = createApi({
                 method: "POST",
                 body: data,
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["User"],
         }),
 
         processLogout: builder.query<any, any>({
             query: () => `logout`,
-            providesTags: ["Users"],
+            providesTags: ["User"],
         }),
     }),
 });

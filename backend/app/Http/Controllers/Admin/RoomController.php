@@ -51,6 +51,17 @@ class RoomController extends Controller
             $object['adults'] = (int) $object['adults'];
             $object['children'] = (int) $object['children'];
             $object['slug'] = convertToSlug($request->name);
+            $amount_room = [];
+
+            for($i = 1; $i <= $object['amount']; $i++){
+                if($i < 10){
+                    $i = '0'.$i;
+                }
+                $amount_room[] = $object['floor'] + $i;
+            }
+
+            $object['amount_room'] = $amount_room;
+
             $roomNew = $this->room->create($object);
             $room = $this->room->where('name', $request->name)->first();
             $images = $request->file('images');
