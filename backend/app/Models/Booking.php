@@ -16,6 +16,7 @@ class Booking extends Eloquent
         'room_type',
         'representative',
         'price_per_night',
+        'provisional',
         'amount_people',
         'amount_room',
         'status',

@@ -1,16 +1,12 @@
 <?php
 
-//use App\Events\NewBillEvent;
 use App\Http\Controllers\Pay\VnpayController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
 Route::get('error-message', function (){ return response()->json('Denied',403); });
-
 Route::get('/routes', function () {
     $routeCollection = Route::getRoutes();
-
     echo "<table style='width:100%'>";
     echo "<tr>";
     echo "<td width='10%'><h4>HTTP Method</h4></td>";
@@ -68,27 +64,8 @@ Route::prefix('/permission')->group(function(){
         create_permision();
     });
 });
-
 Route::prefix('vnpay')->group(function(){
     Route::get('process/{order_code}/{amount}', [VnpayController::class, 'process'])->name('vnpay.process');
     Route::get('callback', [VnpayController::class, 'callback'])->name('vnpay.callback');
 });
-
-Route::get('/notification', function(\Illuminate\Http\Request $request){
-//    event(new NewBillEvent($request->msg));
-    event(new \App\Events\Message([
-        'message' => 'Hello world',
-        'user' => 'John Doe',
-        'time' => now()->format('d/m/Y H:i:s'),
-        'avatar' => 'https://res.cloudinary.com/dteefej4w/image/upload/v1681474078/users/585e4bf3cb11b227491c339a_gtyczj.png'
-    ]));
-    // event(new \App\Events\Message('duc', 'hi ha hi'));
-    // $user = \App\Models\User::where('email','nguyenduc10603@gmail.com')->first();
-    // $user->notify(new \App\Notifications\SendMail());
-});
-
-
-Route::post('/test_upload', function(\Illuminate\Http\Request $request){
-   $file = Storage::disk('s3')->put('filename.txt', 'Halooo');
-   dd($file);
-});
+Route::post('/searchRoom', [\App\Http\Controllers\DemoController::class, 'demoSearch']);

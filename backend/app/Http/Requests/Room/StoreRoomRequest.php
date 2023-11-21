@@ -27,6 +27,8 @@ class StoreRoomRequest extends Request
             'name' => ['required', 'string', Rule::unique(Room::class, 'name')],
             'images' => 'required|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'amount' => ['required', 'numeric', 'min:0'],
+            'floor' => ['required', 'numeric', 'min:0'],
         ];
     }
 

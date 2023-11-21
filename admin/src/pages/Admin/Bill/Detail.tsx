@@ -22,6 +22,7 @@ import {
   message,
   Table,
   TableProps,
+  Skeleton,
 } from "antd";
 import {
   useAddPeopleBookingMutation,

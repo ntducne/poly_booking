@@ -6,10 +6,18 @@ use App\Http\Resources\RoomResource;
 use App\Models\Booking;
 use App\Models\Room;
 use App\Models\RoomType;
+use App\Repositories\RoomRepository;
 use Illuminate\Http\Request;
 
 class DemoController extends Controller
 {
+    private RoomRepository $roomRepository;
+
+    public function __construct(RoomRepository $roomRepository)
+    {
+        $this->roomRepository = $roomRepository;
+    }
+
     public function search(Request $request)
     {
         $adults = $request->adults;
@@ -19,7 +27,7 @@ class DemoController extends Controller
         $checkin = $request->checkin;
         $checkout = $request->checkout;
 
-        //Dieu kien 1 
+        //Dieu kien 1
         $room = Room::where('adults', '=', ceil($adults / $amount_room))
             ->where('children', '=', ceil($children / $amount_room))->get();
         if (count($room) == 0) {
@@ -31,7 +39,7 @@ class DemoController extends Controller
 
             );
         }
-        //Dieu kien 2 
+        //Dieu kien 2
 
         $room_type = [];
         foreach ($room as $key => $value) {
@@ -80,5 +88,10 @@ class DemoController extends Controller
             ]
 
         );
+    }
+
+    public function demoSearch(Request $request){
+        return $this->roomRepository->processSearchRoom($request);
+        // return $this->roomRepository->processBooking($request);
     }
 }
