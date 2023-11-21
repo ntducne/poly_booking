@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\BranchResource;
+use App\Http\Resources\RoomTypeResource;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
@@ -134,16 +136,31 @@ class RoomRepository
                     $newArray[] = $value;
                 }
             }
+
+            $price = 0;
+            $price_per_night = $this->room_type->find($room->room_type_id)->price_per_night;
+            if($room->discount > 0) {
+                if($room->discount < 95) {
+                    $price = $price_per_night * ($room->discount / 100);
+                } else {
+                    $price = ($price_per_night - $room->discount);
+                }
+            } else {
+                $price = $price_per_night;
+            }
             $room_completed[] = [
                 'id' => $room->id,
                 'name' => $room->name,
                 'amount' => $room->amount,
                 'discount' => $room->discount,
+                'price' => $price,
                 'adults' => $room->adults,
                 'children' => $room->children,
                 'description' => $room->description,
-                'room_type_id' => $room->room_type_id,
-                'branch_id' => $room->branch_id,
+                'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
+                // 'room_type_id' => $room->room_type_id,
+                'branch' => new BranchResource($this->branch->find($room->branch_id)),
+                // 'branch_id' => $room->branch_id,
                 'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
                 'room_empty' => count($newArray)
             ];
