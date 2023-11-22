@@ -7,6 +7,7 @@ import {
   Typography,
   Space,
   DatePicker,
+  Skeleton,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -49,10 +50,14 @@ const EditOffers = () => {
   }, [data?.data]);
 
   if (isLoading || loadingBranch) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
   }
   if (data?.data === null) {
-    return <div>Không tồn tại ưu đãi này</div>;
+    return <div className="text-center font-semibold text-lg">Không tồn tại ưu đãi này</div>;
   }
   const onFinish = (values: any) => {
     const data = {
