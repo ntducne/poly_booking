@@ -310,12 +310,9 @@ class BookingRepository
     {
         $services = $request->services;
         $arrService = [];
-
-        // Fetch billing record
         $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
-//        return $billing;
         $total = 0;
-        if(count($billing->service) > 0){
+        if(count($billing->services) > 0){
             foreach ($services as $key => $value) {
                 $service = Services::find($value);
 

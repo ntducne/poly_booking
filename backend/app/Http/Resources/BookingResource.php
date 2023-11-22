@@ -43,7 +43,7 @@ class BookingResource extends JsonResource
                 'room_name' => $item->room_name,
                 'room_number' => $item->room_number,
                 'price' => $this->provisional / 4,
-                'status'=> $item->status == 0 ? 'Đang đặt' : "Đã trả",
+                'status'=> $item->status,
             ];
         }
         return $room;
