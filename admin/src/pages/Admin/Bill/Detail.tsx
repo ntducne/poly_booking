@@ -406,14 +406,6 @@ const BillDetail: React.FC = () => {
     },
   ];
 
-  const onChange: TableProps<any>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
 
   const dataHistory = dataBill?.data?.history?.map(
     (history: any, index: number) => {
@@ -1125,7 +1117,6 @@ const BillDetail: React.FC = () => {
           <Table
             columns={columns}
             dataSource={dataHistory}
-            onChange={onChange}
             pagination={{ pageSize: 5 }}
           />
         </div>
