@@ -1,19 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { useCookies } from 'react-cookie';
-
+import { cookies } from "../config/cookie";
 
 const userApi = createApi({
-    reducerPath: "Users",
+    reducerPath: "user",
     tagTypes: ["User"],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_URL_API + '/user/',
         prepareHeaders: (headers) => {
-            const [cookies] = useCookies(['userInfo']);
-            const token = cookies.userInfo?.accessToken?.token;
-            if (token) {
-                headers.set("authorization", `Bearer ${token}`);
-            }
-            return headers;
+            headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('userInfo') as any)[2].token}`)
+            return headers
         },
     }),
     endpoints: (builder) => ({

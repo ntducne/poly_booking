@@ -2,7 +2,8 @@ import { Button, Form, Input, message } from 'antd';
 import Page from '../../components/Page';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../api/Auth';
-import { useCookies } from 'react-cookie';
+import { cookies } from '../../config/cookie';
+import { convertFromNowToSeconds } from '../../config/convertDate';
 
 type Props = {}
 
@@ -11,26 +12,17 @@ export default function Login({ }: Props) {
     const [Login, { isLoading }] = useLoginMutation()
     const [form] = Form.useForm();
 
-    // Sử dụng hook useCookies
-    const [, setCookie] = useCookies(['userInfo']);
-
     const onFinish = (values: any) => {
-        console.log('Dữ liệu biểu mẫu:', values);
-        // Thực hiện logic đăng nhập
         if (values) {
             Login(values)
                 .unwrap()
                 .then((values: any) => {
-                    const valuesUser = {
-                        accessToken: values.accessToken,
-                        ...values.user
-                    }
-                    console.log('Thông tin người dùng:', values);
-
                     if (values.accessToken && values.user) {
-                        // Lưu thông tin người dùng vào cookie
-                        setCookie('userInfo', valuesUser, { path: '/' });
-                        console.log('loginSuccess');
+                        cookies().Set(
+                            "userInfo",
+                            JSON.stringify(Object.values(values)),
+                            convertFromNowToSeconds(values.accessToken.expires_at)
+                        );
                         message.success("Đăng nhập thành công");
                         setTimeout(() => {
                             navigate('/')
@@ -40,12 +32,9 @@ export default function Login({ }: Props) {
                         message.error("Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại.");
                     }
                 }).catch((error: any) => {
-
                     console.log(error);
-                    // console.log(error?.data?.message);
                     message.error(error?.data?.message || "some thing error");
                     setTimeout(() => {
-                        // window.location.reload();
                         form.resetFields();
                     }, 1000);
                 })

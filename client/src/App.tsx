@@ -30,8 +30,7 @@ function App() {
         <Route path="/" element={<LayoutClient />}>
           <Route index element={<Home />} />
           <Route path="rooms" element={<Rooms />} />
-          {/* <Route path="rooms/:slug" element={<Detail />} /> */}
-          <Route path="rooms/:slug" element={<RoomDetail />} />
+          <Route path="rooms/:slug" element={<Detail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
           <Route path="about" element={<AboutPage />} />
