@@ -3,7 +3,6 @@ import LayoutClient from "./layouts/Client";
 import AboutPage from "./pages/AboutPage/about";
 import ForgotPassword from "./pages/Auth/forgot_password";
 import Login from "./pages/Auth/login";
-import Profile from "./pages/Auth/profile";
 import Register from "./pages/Auth/register";
 import ResetPassword from "./pages/Auth/reset-passwork";
 import Home from "./pages/Home";
@@ -13,15 +12,15 @@ import Rooms from "./pages/Rooms";
 import Contact from "./pages/contact";
 import Demo from "./pages/demo";
 
+import LayoutAuth from "./layouts/Auth";
 import PaymentLayout from "./layouts/Payment";
+import Edit from "./pages/InforUser/Edit";
+import PaymentView from "./pages/Payment";
 import AccommodationBook from "./pages/Payment/accommodation";
 import AccommodationReview from "./pages/Payment/accommodation/review";
-import PaymentView from "./pages/Payment";
 import PaymentProcess from "./pages/Payment/process";
 import PaymentStatus from "./pages/Payment/process/status";
-import LayoutAuth from "./layouts/Auth";
 import SearchOrder from "./pages/SearchOrder";
-import Edit from "./pages/InforUser/Edit";
 
 function App() {
   return (
