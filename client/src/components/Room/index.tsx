@@ -11,6 +11,9 @@ export default function Room(props: any) {
     num_of_bed,
     slug,
     branch,
+    room_empty,
+    price,
+    discount,
   } = props?.data;
   console.log(props?.data);
 
@@ -40,7 +43,6 @@ export default function Room(props: any) {
             <li>Người lớn: {adults || 1}</li>
             <li>Trẻ em: {children || 2}</li>
             <li>Mô tả: {description}</li>
-            <li>Diện tích: {area} m²</li>
             <li>Loại giường: Đơn</li>
             <li>Số giường: 3</li>
           </div>
@@ -97,9 +99,6 @@ export default function Room(props: any) {
                   {adults} người lớn
                 </p>
                 <p className="text-center px-4 bg-gray-200 rounded-2xl">
-                  Diện tích: {area} m²
-                </p>
-                <p className="text-center px-4 bg-gray-200 rounded-2xl">
                   Số giường: {num_of_bed}
                 </p>
               </div>
@@ -111,8 +110,20 @@ export default function Room(props: any) {
               <p className="text-[12px] text-black mt-1">{branch.name}</p>
             </p>
             <p className="text-[16px] text-gray-500 font-bold flex-col flex items-end justify-end">
-              <FormatPrice price={1231312312} />
-              <p className="text-[12px] text-black mt-1">Chỉ còn 2 phòng</p>
+              <p className="text-[14px] text-gray-400 ">
+                <del>
+                  {discount > 95 ? (
+                    <FormatPrice price={discount} />
+                  ) : (
+                    discount + "%"
+                  )}
+                </del>
+              </p>
+
+              <FormatPrice price={price} />
+              <p className="text-[12px] text-black mt-1">
+                Còn {room_empty} phòng
+              </p>
             </p>
             <div className="text-right mt-4">
               <button

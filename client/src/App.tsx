@@ -21,6 +21,7 @@ import PaymentProcess from "./pages/Payment/process";
 import PaymentStatus from "./pages/Payment/process/status";
 import LayoutAuth from "./layouts/Auth";
 import SearchOrder from "./pages/SearchOrder";
+import Edit from "./pages/InforUser/Edit";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="search-order" element={<SearchOrder />} />
           <Route path="user">
             <Route path="room-booked" element={<RoomBooked />} />
+            <Route path="infor-user" element={<Edit />} />
           </Route>
         </Route>
         <Route path="/auth" element={<LayoutAuth />}>
