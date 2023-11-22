@@ -315,7 +315,7 @@ class BookingRepository
         $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
 //        return $billing;
         $total = 0;
-        if($billing->service !== null){
+        if(count($billing->service) > 0){
             foreach ($services as $key => $value) {
                 $service = Services::find($value);
 
