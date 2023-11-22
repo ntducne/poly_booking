@@ -734,9 +734,10 @@ const BillDetail: React.FC = () => {
           </div>
         )}
       </Modal>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-4">
-        <div className="grid md:grid-rows-1 grid-rows-1 gap-4">
-          <div className="grid md:grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4">
+        {/* <div className="grid md:grid-rows-1 grid-rows-1 gap-4"> */}
+
+          <div >
             <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
               <h5 className=" mb-2 text-2xl font-bold tracking-tight text-gray-900">
                 Thông tin đặt phòng
@@ -747,7 +748,7 @@ const BillDetail: React.FC = () => {
                   <li>Loại phòng: {dataBill?.data?.booking?.roomType.name}</li>
                   <li>Check in: {dataBill?.data?.booking?.checkin}</li>
                   <li>Check out: {dataBill?.data?.booking?.checkout}</li>
-                  <li>Giá: {formatMoneyVN(dataBill?.data?.total)}</li>
+                  <li>Giá: {formatMoneyVN(dataBill?.data?.booking.provisional)} <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Paid</span></li>
                   <li>Thời gian thanh toán: {dataBill?.data?.payment_date}</li>
                   <li>
                     Hình thức thanh toán: {dataBill?.data?.payment_method}
@@ -762,6 +763,8 @@ const BillDetail: React.FC = () => {
               </div>
             </div>
           </div>
+
+
           <div>
             <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
@@ -874,7 +877,9 @@ const BillDetail: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+
+
+        {/* </div> */}
         <div>
           <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow ">
             <div className="flex justify-between items-center">
@@ -998,6 +1003,7 @@ const BillDetail: React.FC = () => {
                 <th scope="col" className="px-6 py-3">
                   Giá
                 </th>
+                <th>Trạng thái</th>
                 <th scope="col" className="px-6 py-3">
                   Tạm tính
                 </th>
@@ -1011,16 +1017,15 @@ const BillDetail: React.FC = () => {
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                     >
-                      <div>{room?.room_name}</div>
+                      <div>{room?.room_name} ({room?.room_number}) </div>
                     </th>
                     <td className="px-6 py-4">1</td>
                     <td className="px-6 py-4">
-                      {dataBill?.data?.booking?.provisional} VNĐ
+                      {formatMoneyVN(room?.price)}
                     </td>
+                    <td><span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Paid</span></td>
                     <td className="px-6 py-4">
-                      {parseInt(dataBill?.data?.booking?.detail?.length) *
-                        parseInt(dataBill?.data?.booking?.provisional)}{" "}
-                      VNĐ
+                    {/* {formatMoneyVN(room?.price)} */}
                     </td>
                   </tr>
                 );
@@ -1038,8 +1043,10 @@ const BillDetail: React.FC = () => {
                     <td className="px-6 py-4">
                       {formatMoneyVN(service.price)}
                     </td>
+                    <td>
+                      <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">Unpaid</span>
+                    </td>
                     <td className="px-6 py-4">
-                      {" "}
                       {formatMoneyVN(service.price)}
                     </td>
                   </tr>
@@ -1048,11 +1055,12 @@ const BillDetail: React.FC = () => {
             </tbody>
             <tfoot>
               <tr className="bg-white border-b ">
-                <th></th>
+                <th className="px-6 py-4"></th>
                 <td className="px-6 py-4"></td>
-                <td className="px-6 py-4 font-bold">Tổng thanh toán</td>
+                <td className="px-6 py-4"></td>
+                <td className="font-bold">Tổng thanh toán</td>
                 <td className="px-6 py-4">
-                  {formatMoneyVN(dataBill?.data.total)}
+                  {formatMoneyVN(dataBill?.data.total- dataBill?.data?.booking.provisional)}
                 </td>
               </tr>
             </tfoot>
