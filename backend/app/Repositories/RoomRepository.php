@@ -48,21 +48,28 @@ class RoomRepository
         $checkout = $request->checkout;
         $branch_id = $request->branch_id;
         $amount_room = $request->amount_room;
-
-        $room_type = $this->room_type
-                            ->where('branch_id', $branch_id)
-                            ->get();
-
+        $room_type_id = $request->room_type_id;
         $getRoom = [];
-        foreach ($room_type as $value) {
-            $room = $this->room->where('room_type_id', $value->id)->get();
+        if($room_type_id){
+            $room = $this->room->where('room_type_id', $room_type_id)->get();
             foreach ($room as $item) {
                 if ($item->adults >= $adult && $item->children >= $children) {
                     $getRoom[] = $item;
                 }
             }
-        }
 
+        }
+        else {
+            $room_type = $this->room_type->where('branch_id', $branch_id)->get();
+            foreach ($room_type as $value) {
+                $room = $this->room->where('room_type_id', $value->id)->get();
+                foreach ($room as $item) {
+                    if ($item->adults >= $adult && $item->children >= $children) {
+                        $getRoom[] = $item;
+                    }
+                }
+            } 
+        }
         $billing = $this->billing
                         ->whereNotIn('status', [2, 4, 6, 7])
                         ->where('branch_id', $branch_id)
@@ -98,20 +105,22 @@ class RoomRepository
             } else {
                 $price = $price_per_night;
             }
-            $room_completed[] = [
-                'id' => $room->id,
-                'name' => $room->name,
-                'amount' => $room->amount,
-                'discount' => $room->discount,
-                'price' => $price,
-                'adults' => $room->adults,
-                'children' => $room->children,
-                'description' => $room->description,
-                'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
-                'branch' => new BranchResource($this->branch->find($room->branch_id)),
-                'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
-                'room_empty' => count($newArray)
-            ];
+            if(count($newArray) > 0){
+                $room_completed[] = [
+                    'id' => $room->id,
+                    'name' => $room->name,
+                    'amount' => $room->amount,
+                    'discount' => $room->discount,
+                    'price' => $price,
+                    'adults' => $room->adults,
+                    'children' => $room->children,
+                    'description' => $room->description,
+                    'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
+                    'branch' => new BranchResource($this->branch->find($room->branch_id)),
+                    'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
+                    'room_empty' => count($newArray)
+                ];
+            }
         }
         $room_completed_2 = array_filter($room_completed, function ($room) use ($amount_room) {
             return $room['amount'] >= $amount_room;
