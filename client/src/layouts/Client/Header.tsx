@@ -9,6 +9,7 @@ type Props = {};
 export default function Header({}: Props) {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies(["userInfo"]);
+
   const [header, setHeader] = useState(false);
   const handleLogout = () => {
     removeCookie("userInfo", { path: "/" });
@@ -103,7 +104,7 @@ export default function Header({}: Props) {
           items-center
           `}
         >
-          {cookies && cookies?.userInfo?.accessToken ? (
+          {cookies && cookies?.userInfo ? (
             <div>
               <Dropdown menu={{ items }} trigger={["click"]}>
                 <a onClick={(e) => e.preventDefault()}>

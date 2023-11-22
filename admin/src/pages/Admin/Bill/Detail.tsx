@@ -15,13 +15,11 @@ import {
   DatePicker,
   InputNumber,
   Form,
-  Row,
   Card,
-  Col,
-  Alert,
   message,
   Table,
   TableProps,
+  Skeleton,
 } from "antd";
 import {
   useAddPeopleBookingMutation,
@@ -33,12 +31,11 @@ import {
 } from "../../../api/billings";
 import { useParams } from "react-router-dom";
 import { useGetServicesQuery } from "../../../api/services";
-import { useForm } from "antd/es/form/Form";
 import swal from "sweetalert";
+// import _ from "lodash";
 import _ from "lodash";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
-import da from "date-fns/locale/da";
 import dayjs from "dayjs";
 
 const BillDetail: React.FC = () => {
@@ -48,10 +45,9 @@ const BillDetail: React.FC = () => {
     isLoading,
     refetch,
   } = useGetDetailBilingsQuery(id || "");
-  console.log("dataBill", dataBill);
 
   const prevServicesRef = useRef();
-  const { data: dataRoomType, isLoading: roomTypeLoading } =
+  const { data: dataRoomType } =
     useGetAllRoomTypeQuery({});
 
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
@@ -67,7 +63,6 @@ const BillDetail: React.FC = () => {
     }
     prevServicesRef.current = dataBill?.data?.services;
   }, [dataBill?.data?.status, dataBill?.data?.services, isLoading]);
-  console.log("dataBill", dataBill);
 
   // Xử lý addPeople
 
@@ -122,7 +117,7 @@ const BillDetail: React.FC = () => {
 
   // Xu ly ServiceInBill
   const [formChanged, setFormChanged] = useState(false);
-  const onValuesChange = (changedValues: any, allValues: any) => {
+  const onValuesChange = () => {
     setFormChanged(true);
   };
   const [open, setOpen] = useState(false);
@@ -304,6 +299,7 @@ const BillDetail: React.FC = () => {
     setIsModalExtendOpen(true);
   };
   const closeModalExtend = () => {
+    setRoomSearch([]);
     setIsModalExtendOpen(false);
   };
   const showModal = () => {
@@ -334,7 +330,7 @@ const BillDetail: React.FC = () => {
       dayjs(item.$d).format("YYYY-MM-DD")
     );
 
-    const dataQuery = {
+    const dataQuery : Record<string, string> = {
       checkin: formattedDates?.[0],
       checkout: formattedDates?.[1],
       adult: adults,
@@ -343,9 +339,9 @@ const BillDetail: React.FC = () => {
       room_type_id: room_type_id,
       soLuong: amount_room_renew,
     };
-
+    
     const queryString = Object.keys(dataQuery).map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(dataQuery[key])).join('&');
-    const apiUrl = `${import.meta.env.VITE_BASE_URL_API}/client/room/search?${queryString}`;
+    const apiUrl = `${import.meta.env.VITE_BASE_URL_API}/client/v2/search?${queryString}`;
 
     fetch(apiUrl, {
       method: "GET",
@@ -356,6 +352,9 @@ const BillDetail: React.FC = () => {
       .then((res) => res.json())
       .then((data) => {
         if(data.message == 'Hết phòng !'){
+          message.error(data.message);
+        }
+        else if(data.status == false) {
           message.error(data.message);
         }
         else {
@@ -648,10 +647,7 @@ const BillDetail: React.FC = () => {
                   placeholder={["Check in", "Check out"]}
                 />
               </Form.Item>
-              {/* <Alert message="Còn 1 phòng trống" type="success" /> */}
-              {/* <Alert message="Hết phòng" type="error" /> */}
               <div className="flex justify-end mt-5">
-                {/* <Button className="mr-2" key={1}>Thanh toán</Button> */}
                 <Button htmlType="submit">Kiểm tra</Button>
               </div>
           </Form>
@@ -675,6 +671,9 @@ const BillDetail: React.FC = () => {
                   <th scope="col" className="px-6 py-3">
                     Price
                   </th>
+                  <th scope="col" className="px-6 py-3">
+                    Amount room empty
+                  </th>
                   <th></th>
                 </tr>
               </thead>
@@ -694,7 +693,7 @@ const BillDetail: React.FC = () => {
                       >
                         <img
                           width={50}
-                          src={room.images[0].image}
+                          src={room.image}
                           alt={`Image Room ${room.id}`}
                         />
                       </th>
@@ -707,19 +706,29 @@ const BillDetail: React.FC = () => {
                           </span>
                         )}
                       </td>
-                      <td className="px-6 py-4">{room.type.room_type_name}</td>
+                      <td className="px-6 py-4">{room.room_type.room_type_name}</td>
                       <td className="px-6 py-4">
                         {formatMoneyVN(
-                          room.type.price_per_night - room.discount
+                          room.price
                         )}{" "}
-                        {room.discount > 0 && (
+                        {(room.discount > 0 && room.discount < 95) ? (
                           <>
                             <br />
                             <del>
-                              {formatMoneyVN(room.type.price_per_night)}
+                              {room.discount} %
+                            </del>
+                          </>
+                        ) : (
+                          <>
+                            <br />
+                            <del>
+                              {formatMoneyVN(room.room_type.price_per_night)}
                             </del>
                           </>
                         )}
+                      </td>
+                      <td className="px-6 py-4">
+                      {room.room_empty}
                       </td>
                       <td>
                         {(dataBill?.data?.booking.detail[0].room_id == room.id) && (
@@ -737,9 +746,10 @@ const BillDetail: React.FC = () => {
           </div>
         )}
       </Modal>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-4">
-        <div className="grid md:grid-rows-1 grid-rows-1 gap-4">
-          <div className="grid md:grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4">
+        {/* <div className="grid md:grid-rows-1 grid-rows-1 gap-4"> */}
+
+          <div >
             <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
               <h5 className=" mb-2 text-2xl font-bold tracking-tight text-gray-900">
                 Thông tin đặt phòng
@@ -750,7 +760,7 @@ const BillDetail: React.FC = () => {
                   <li>Loại phòng: {dataBill?.data?.booking?.roomType.name}</li>
                   <li>Check in: {dataBill?.data?.booking?.checkin}</li>
                   <li>Check out: {dataBill?.data?.booking?.checkout}</li>
-                  <li>Giá: {formatMoneyVN(dataBill?.data?.total)}</li>
+                  <li>Giá: {formatMoneyVN(dataBill?.data?.booking.provisional)} <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Paid</span></li>
                   <li>Thời gian thanh toán: {dataBill?.data?.payment_date}</li>
                   <li>
                     Hình thức thanh toán: {dataBill?.data?.payment_method}
@@ -765,6 +775,8 @@ const BillDetail: React.FC = () => {
               </div>
             </div>
           </div>
+
+
           <div>
             <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
@@ -877,7 +889,9 @@ const BillDetail: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+
+
+        {/* </div> */}
         <div>
           <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow ">
             <div className="flex justify-between items-center">
@@ -889,7 +903,7 @@ const BillDetail: React.FC = () => {
                   className="h-full text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                   onClick={showDrawer}
                 >
-                  Thêm dịch vụ
+                  Thêm dịch vụ  
                 </Button>
               )}
             </div>
@@ -1001,6 +1015,7 @@ const BillDetail: React.FC = () => {
                 <th scope="col" className="px-6 py-3">
                   Giá
                 </th>
+                <th>Trạng thái</th>
                 <th scope="col" className="px-6 py-3">
                   Tạm tính
                 </th>
@@ -1014,16 +1029,25 @@ const BillDetail: React.FC = () => {
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                     >
-                      <div>{room?.room_name}</div>
+                      <div>{room?.room_name} ({room?.room_number}) </div>
                     </th>
                     <td className="px-6 py-4">1</td>
                     <td className="px-6 py-4">
-                      {dataBill?.data?.booking?.provisional} VNĐ
+                      {formatMoneyVN(room?.price)}
+                    </td>
+                    <td>
+                      {
+                        room?.status == 0 ? (
+                          <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Đang ở</span>
+                        )
+                        :
+                        (
+                          <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">Đã trả</span>
+                        )
+                      }
                     </td>
                     <td className="px-6 py-4">
-                      {parseInt(dataBill?.data?.booking?.detail?.length) *
-                        parseInt(dataBill?.data?.booking?.provisional)}{" "}
-                      VNĐ
+                    {/* {formatMoneyVN(room?.price)} */}
                     </td>
                   </tr>
                 );
@@ -1041,8 +1065,10 @@ const BillDetail: React.FC = () => {
                     <td className="px-6 py-4">
                       {formatMoneyVN(service.price)}
                     </td>
+                    <td>
+                      <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">Chưa thanh toán</span>
+                    </td>
                     <td className="px-6 py-4">
-                      {" "}
                       {formatMoneyVN(service.price)}
                     </td>
                   </tr>
@@ -1051,11 +1077,12 @@ const BillDetail: React.FC = () => {
             </tbody>
             <tfoot>
               <tr className="bg-white border-b ">
-                <th></th>
+                <th className="px-6 py-4"></th>
                 <td className="px-6 py-4"></td>
-                <td className="px-6 py-4 font-bold">Tổng thanh toán</td>
+                <td className="px-6 py-4"></td>
+                <td className="font-bold">Tổng thanh toán</td>
                 <td className="px-6 py-4">
-                  {formatMoneyVN(dataBill?.data.total)}
+                  {formatMoneyVN(dataBill?.data.total- dataBill?.data?.booking.provisional)}
                 </td>
               </tr>
             </tfoot>

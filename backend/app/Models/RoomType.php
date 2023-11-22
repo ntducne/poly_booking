@@ -14,6 +14,7 @@ class RoomType extends Eloquent
         'description',
         'price_per_night',
         'status',
+        'branch_id'
     ];
     protected $attributes = [
         'deleted_at' => null,

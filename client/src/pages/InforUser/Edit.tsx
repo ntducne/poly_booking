@@ -36,6 +36,8 @@ export default function Edit() {
   ];
 
   const { data } = useGetProfileQuery({});
+  console.log("data", data);
+  const { address, email, name, phone, image } = data.message;
 
   return (
     <div>
@@ -47,10 +49,10 @@ export default function Edit() {
             <div className="w-full md:w-3/12 md:mx-2">
               <div className="bg-white shadow-md rounded-xl p-3 border-t-8 border-b-8 border-gray-400">
                 <div className="image overflow-hidden">
-                  <img className="h-auto w-36 mx-auto" alt="" />
+                  <img className="h-auto w-36 mx-auto" alt="" src={image} />
                 </div>
                 <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">
-                  name
+                  {name}
                 </h1>
                 <ul className=" text-gray-600 py-2 px-3 mt-3">
                   <li className="flex items-center py-3">
@@ -93,21 +95,21 @@ export default function Edit() {
                   <div className="grid md:grid-cols-2 mb-5">
                     <div className="grid grid-cols-2">
                       <div className="px-4 py-2 font-semibold">Họ tên</div>
-                      <div className="px-4 py-2">name</div>
+                      <div className="px-4 py-2">{name}</div>
                     </div>
                     <div className="grid grid-cols-2">
                       <div className="px-4 py-2 font-semibold">Email</div>
-                      <div className="px-4 py-2">Email</div>
+                      <div className="px-4 py-2">{email}</div>
                     </div>
                     <div className="grid grid-cols-2">
                       <div className="px-4 py-2 font-semibold">
                         Số điện thoại
                       </div>
-                      <div className="px-4 py-2">Phone</div>
+                      <div className="px-4 py-2">{phone}</div>
                     </div>
                     <div className="grid grid-cols-2">
                       <div className="px-4 py-2 font-semibold">Địa chỉ</div>
-                      <div className="px-4 py-2">address</div>
+                      <div className="px-4 py-2">{address}</div>
                     </div>
                   </div>
                   <Tabs defaultActiveKey="1" items={items} size={"large"} />

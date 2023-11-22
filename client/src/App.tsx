@@ -32,12 +32,11 @@ function App() {
           <Route path="rooms" element={<Rooms />} />
           <Route path="rooms/:slug" element={<Detail />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="profile" element={<Profile />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="search-order" element={<SearchOrder />} />
           <Route path="user">
             <Route path="room-booked" element={<RoomBooked />} />
-            <Route path="infor-user" element={<Edit />} />
+            <Route path="profile" element={<Edit />} />
           </Route>
         </Route>
         <Route path="/auth" element={<LayoutAuth />}>

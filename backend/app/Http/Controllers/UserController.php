@@ -67,7 +67,7 @@ class UserController extends Controller
     public function bookingHistory(Request $request)
     {
         $history = $this->userRepository->bookingHistory($request);
-        return $history;
+        return 1;
     }
     public function booking(Request $request)
     {

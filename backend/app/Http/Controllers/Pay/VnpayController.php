@@ -121,5 +121,6 @@ class VnpayController extends Controller
             'status' => Billing::where('billingCode', (integer)$request->vnp_TxnRef)->first()->status,
             'billing_id' => Billing::where('billingCode', (integer)$request->vnp_TxnRef)->first()->_id,
         ]);
+        // return redirect()->route('admin.billing.index');
     }
 }

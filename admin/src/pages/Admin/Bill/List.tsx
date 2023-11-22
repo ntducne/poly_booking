@@ -14,6 +14,7 @@ import FormSearch from "../../../component/formSearch";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
+import formatMoneyVN from "../../../config/formatMoneyVN";
 
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
@@ -30,6 +31,7 @@ const BillList = () => {
       title: "Giá tiền",
       dataIndex: "total",
       key: "total",
+      render: (text: any) => <div>{formatMoneyVN(text)} VNĐ</div>,
       sorter: (a, b) => a.total - b.total,
     },
     {
@@ -40,31 +42,8 @@ const BillList = () => {
     {
       title: "Phương thức",
       dataIndex: "payment_method",
-      filters: [
-        {
-          text: "Tiền mặt",
-          value: "Tiền mặt",
-        },
-        {
-          text: "Chuyển khoản",
-          value: "Chuyển khoản",
-        },
-      ],
-      render: (text) => (
-        <div className="font-semibold">
-          {text === "Tiền mặt" ? (
-            <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
-              Tiền mặt
-            </span>
-          ) : (
-            <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
-              Chuyển khoản
-            </span>
-          )}
-        </div>
-      ),
-      onFilter: (value: any, record) =>
-        record.payment_method.indexOf(value) === 0,
+      key: "payment_method",
+      
     },
 
     {

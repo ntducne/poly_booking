@@ -310,12 +310,9 @@ class BookingRepository
     {
         $services = $request->services;
         $arrService = [];
-
-        // Fetch billing record
         $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
-//        return $billing;
         $total = 0;
-        if($billing->service !== null){
+        if(count($billing->services) > 0){
             foreach ($services as $key => $value) {
                 $service = Services::find($value);
 
@@ -391,9 +388,20 @@ class BookingRepository
                 'data' => null
             ]);
         }
-        $this->booking->where('_id', '=', $billing->booking_id)->update([
-            'people' => $request->peoples
-        ]);
+
+        $booking = $this->booking->where('_id', '=', $billing->booking_id)->first();
+        $booking_old_people = $booking->people;
+        if($booking_old_people !== null){
+            $newPeople = array_merge($booking_old_people, $request->peoples);
+            $this->booking->where('_id', '=', $billing->booking_id)->update([
+                'people' => $newPeople
+            ]);
+        }
+        else {
+            $this->booking->where('_id', '=', $billing->booking_id)->update([
+                'people' => $request->peoples
+            ]);
+        }
         $values = [
             'booking_id' => $request->billing_id,
             'admin_id' => $request->user()->id,

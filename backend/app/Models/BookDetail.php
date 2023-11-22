@@ -15,6 +15,8 @@ class BookDetail extends Eloquent
         'booking_id',
         'room_id',
         'room_name',
+        'room_number',
+        'status',
         'deleted_at'
     ];
     protected $attributes = [
