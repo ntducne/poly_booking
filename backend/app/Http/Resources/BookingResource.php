@@ -41,6 +41,9 @@ class BookingResource extends JsonResource
             $room[] = [
                 'room_id' => $item->room_id,
                 'room_name' => $item->room_name,
+                'room_number' => $item->room_number,
+                'price' => $this->provisional / 4,
+                'status'=> $item->status == 0 ? 'Đang đặt' : "Đã trả",
             ];
         }
         return $room;
@@ -56,7 +59,7 @@ class BookingResource extends JsonResource
             'checkout' => $this->checkout,
             'roomType' => $this->getRoomType(),
             'representative' => $this->representative,
-            'provisional' => $this->CalculatePrice(),
+            'provisional' => $this->provisional,
             'amount_people' => $this->amount_people,
             'amount_room' => $this->amount_room,
             'people' => $this->people,
