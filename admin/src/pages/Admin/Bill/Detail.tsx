@@ -48,8 +48,7 @@ const BillDetail: React.FC = () => {
   console.log("dataBill", dataBill);
 
   const prevServicesRef = useRef();
-  const { data: dataRoomType } =
-    useGetAllRoomTypeQuery({});
+  const { data: dataRoomType } = useGetAllRoomTypeQuery({});
 
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
     {}
@@ -77,7 +76,6 @@ const BillDetail: React.FC = () => {
       billing_id: dataBill?.data?.id,
       peoples: values.users,
     };
-    console.log("dataAddPeople", dataAddPeople);
 
     addPeopleBooking(dataAddPeople)
       .unwrap()
@@ -133,6 +131,8 @@ const BillDetail: React.FC = () => {
       billing_id: dataBill?.data?.id,
       ...values,
     };
+    console.log("dataBillNew", dataBillNew);
+    
     addServiceBooking(dataBillNew)
       .unwrap()
       .then((res) => {
@@ -160,8 +160,13 @@ const BillDetail: React.FC = () => {
         okType: "default",
         cancelText: "Không lưu",
         onOk() {
-          // Xử lý update
-          console.log("OK");
+          const formValuesService = form.getFieldsValue();
+          const formValuesPeople = formPeople.getFieldsValue();
+          if (Object.keys(formValuesService).length > 0) {
+            addServiceInBill(formValuesService);
+          } else {
+            addPeopleBooking(formValuesPeople);
+          }
           setOpen(false);
         },
         onCancel() {
@@ -331,7 +336,7 @@ const BillDetail: React.FC = () => {
       dayjs(item.$d).format("YYYY-MM-DD")
     );
 
-    const dataQuery : Record<string, string> = {
+    const dataQuery: Record<string, string> = {
       checkin: formattedDates?.[0],
       checkout: formattedDates?.[1],
       adult: adults,
@@ -340,9 +345,16 @@ const BillDetail: React.FC = () => {
       room_type_id: room_type_id,
       soLuong: amount_room_renew,
     };
-    
-    const queryString = Object.keys(dataQuery).map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(dataQuery[key])).join('&');
-    const apiUrl = `${import.meta.env.VITE_BASE_URL_API}/client/room/search?${queryString}`;
+
+    const queryString = Object.keys(dataQuery)
+      .map(
+        (key) =>
+          encodeURIComponent(key) + "=" + encodeURIComponent(dataQuery[key])
+      )
+      .join("&");
+    const apiUrl = `${
+      import.meta.env.VITE_BASE_URL_API
+    }/client/room/search?${queryString}`;
 
     fetch(apiUrl, {
       method: "GET",
@@ -352,10 +364,9 @@ const BillDetail: React.FC = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data.message == 'Hết phòng !'){
+        if (data.message == "Hết phòng !") {
           message.error(data.message);
-        }
-        else {
+        } else {
           message.success(data.message);
           setRoomSearch(data.data);
         }
@@ -416,7 +427,11 @@ const BillDetail: React.FC = () => {
   );
 
   if (isLoading) {
-    return <div><Skeleton /></div>;
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
   }
 
   return (
@@ -550,14 +565,13 @@ const BillDetail: React.FC = () => {
             </Form>
           </Card>
           <Card title="Thông tin gia hạn" bordered={false}>
-
-          <Form
-            form={form}
-            labelCol={{ span: 6 }}
-            layout="horizontal"
-            className="mt-5 mb-5"
-            onFinish={checkRoom}
-          >
+            <Form
+              form={form}
+              labelCol={{ span: 6 }}
+              layout="horizontal"
+              className="mt-5 mb-5"
+              onFinish={checkRoom}
+            >
               <Form.Item
                 label="Loại phòng"
                 name="room_type_id"
@@ -651,9 +665,8 @@ const BillDetail: React.FC = () => {
                 {/* <Button className="mr-2" key={1}>Thanh toán</Button> */}
                 <Button htmlType="submit">Kiểm tra</Button>
               </div>
-          </Form>
+            </Form>
           </Card>
-
         </div>
         {dataRoomSearch.length > 0 && (
           <div className="relative overflow-x-auto w-full">
@@ -719,11 +732,23 @@ const BillDetail: React.FC = () => {
                         )}
                       </td>
                       <td>
-                        {(dataBill?.data?.booking.detail[0].room_id == room.id) && (
-                          <button type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Gia hạn</button>
+                        {dataBill?.data?.booking.detail[0].room_id ==
+                          room.id && (
+                          <button
+                            type="button"
+                            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                          >
+                            Gia hạn
+                          </button>
                         )}
-                          {(dataBill?.data?.booking.detail[0].room_id != room.id) && (
-                          <button type="button" className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Chọn phòng mới</button>
+                        {dataBill?.data?.booking.detail[0].room_id !=
+                          room.id && (
+                          <button
+                            type="button"
+                            className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                          >
+                            Chọn phòng mới
+                          </button>
                         )}
                       </td>
                     </tr>
@@ -737,147 +762,146 @@ const BillDetail: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4">
         {/* <div className="grid md:grid-rows-1 grid-rows-1 gap-4"> */}
 
-          <div >
-            <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
-              <h5 className=" mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                Thông tin đặt phòng
-              </h5>
-              <div className="font-normal text-gray-700">
-                <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
-                  <li>Chi nhánh: {dataBill?.data?.branch?.name}</li>
-                  <li>Loại phòng: {dataBill?.data?.booking?.roomType.name}</li>
-                  <li>Check in: {dataBill?.data?.booking?.checkin}</li>
-                  <li>Check out: {dataBill?.data?.booking?.checkout}</li>
-                  <li>Giá: {formatMoneyVN(dataBill?.data?.booking.provisional)} <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Paid</span></li>
-                  <li>Thời gian thanh toán: {dataBill?.data?.payment_date}</li>
-                  <li>
-                    Hình thức thanh toán: {dataBill?.data?.payment_method}
-                  </li>
-                  <li>
-                    Trạng thái:{" "}
-                    <span className="font-bold">
-                      {dataBill?.data?.status_name}
-                    </span>
-                  </li>
-                </ul>
-              </div>
+        <div>
+          <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+            <h5 className=" mb-2 text-2xl font-bold tracking-tight text-gray-900">
+              Thông tin đặt phòng
+            </h5>
+            <div className="font-normal text-gray-700">
+              <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
+                <li>Chi nhánh: {dataBill?.data?.branch?.name}</li>
+                <li>Loại phòng: {dataBill?.data?.booking?.roomType.name}</li>
+                <li>Check in: {dataBill?.data?.booking?.checkin}</li>
+                <li>Check out: {dataBill?.data?.booking?.checkout}</li>
+                <li>
+                  Giá: {formatMoneyVN(dataBill?.data?.booking.provisional)}{" "}
+                  <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                    Paid
+                  </span>
+                </li>
+                <li>Thời gian thanh toán: {dataBill?.data?.payment_date}</li>
+                <li>Hình thức thanh toán: {dataBill?.data?.payment_method}</li>
+                <li>
+                  Trạng thái:{" "}
+                  <span className="font-bold">
+                    {dataBill?.data?.status_name}
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
+        </div>
 
-
-          <div>
-            <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                Thông tin khách hàng
-              </h5>
-              <div className="font-normal text-gray-700">
-                <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
-                  <li>
-                    Tên khách đặt phòng:{" "}
-                    {dataBill?.data?.booking?.representative?.name}
-                  </li>
-                  <li>
-                    Email: {dataBill?.data?.booking?.representative?.email}
-                  </li>
-                  <li>
-                    Số điện thoại:{" "}
-                    {dataBill?.data?.booking?.representative?.phone}
-                  </li>
-                  {/* <li>CCCD/CMTND: 123412312</li> */}
-                </ul>
-              </div>
-              <div className="mt-1 mb-3"></div>
-              <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900">
-                Thông tin khách khác
-              </h5>
-              <div className="font-normal text-gray-700">
-                <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
-                  {/* <li>Số khách: 10</li> */}
-                  <li>
-                    <Button onClick={showModal}>Chi tiết</Button>
-                  </li>
-                  <Modal
-                    title="Chi tiết các khách hàng"
-                    open={isModalOpen}
-                    onOk={handleOk}
-                    onCancel={handleCancel}
-                    footer={[]}
+        <div>
+          <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+              Thông tin khách hàng
+            </h5>
+            <div className="font-normal text-gray-700">
+              <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
+                <li>
+                  Tên khách đặt phòng:{" "}
+                  {dataBill?.data?.booking?.representative?.name}
+                </li>
+                <li>Email: {dataBill?.data?.booking?.representative?.email}</li>
+                <li>
+                  Số điện thoại:{" "}
+                  {dataBill?.data?.booking?.representative?.phone}
+                </li>
+                {/* <li>CCCD/CMTND: 123412312</li> */}
+              </ul>
+            </div>
+            <div className="mt-1 mb-3"></div>
+            <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900">
+              Thông tin khách khác
+            </h5>
+            <div className="font-normal text-gray-700">
+              <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
+                {/* <li>Số khách: 10</li> */}
+                <li>
+                  <Button onClick={showModal}>Chi tiết</Button>
+                </li>
+                <Modal
+                  title="Chi tiết các khách hàng"
+                  open={isModalOpen}
+                  onOk={handleOk}
+                  onCancel={handleCancel}
+                  footer={[]}
+                >
+                  <Table
+                    columns={columnsPeople}
+                    dataSource={dataBill?.data?.booking?.people}
+                    pagination={false}
+                  />{" "}
+                  <Form
+                    form={formPeople}
+                    className="mt-5"
+                    name="dynamic_form_nest_item"
+                    onFinish={onAddPeople}
+                    style={{ maxWidth: 600 }}
+                    autoComplete="off"
+                    onValuesChange={onValuesChange}
                   >
-                    <Table
-                      columns={columnsPeople}
-                      dataSource={dataBill?.data?.booking?.people}
-                      pagination={false}
-                    />{" "}
-                    <Form
-                      form={formPeople}
-                      className="mt-5"
-                      name="dynamic_form_nest_item"
-                      onFinish={onAddPeople}
-                      style={{ maxWidth: 600 }}
-                      autoComplete="off"
-                      onValuesChange={onValuesChange}
-                    >
-                      <Form.List name="users">
-                        {(fields, { add, remove }) => (
-                          <>
-                            {fields.map(({ key, name, ...restField }) => (
-                              <Space
-                                key={key}
-                                style={{ display: "flex", marginBottom: 8 }}
-                                align="baseline"
+                    <Form.List name="users">
+                      {(fields, { add, remove }) => (
+                        <>
+                          {fields.map(({ key, name, ...restField }) => (
+                            <Space
+                              key={key}
+                              style={{ display: "flex", marginBottom: 8 }}
+                              align="baseline"
+                            >
+                              <Form.Item
+                                {...restField}
+                                name={[name, "name"]}
+                                rules={[
+                                  {
+                                    required: true,
+                                    message: "Vui lòng nhập tên",
+                                  },
+                                ]}
                               >
-                                <Form.Item
-                                  {...restField}
-                                  name={[name, "name"]}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Vui lòng nhập tên",
-                                    },
-                                  ]}
-                                >
-                                  <Input placeholder="Họ tên" />
-                                </Form.Item>
-                                <Form.Item
-                                  {...restField}
-                                  name={[name, "cmtnd"]}
-                                  rules={[
-                                    {
-                                      required: true,
-                                      message: "Vui lòng nhập CCCD/CMTND",
-                                    },
-                                  ]}
-                                >
-                                  <Input placeholder="CCCD/CMTND" />
-                                </Form.Item>
-                                <MinusCircleOutlined
-                                  onClick={() => remove(name)}
-                                />
-                              </Space>
-                            ))}
-                            <Form.Item>
-                              <Button
-                                type="dashed"
-                                onClick={() => add()}
-                                block
-                                icon={<PlusOutlined />}
+                                <Input placeholder="Họ tên" />
+                              </Form.Item>
+                              <Form.Item
+                                {...restField}
+                                name={[name, "cmtnd"]}
+                                rules={[
+                                  {
+                                    required: true,
+                                    message: "Vui lòng nhập CCCD/CMTND",
+                                  },
+                                ]}
                               >
-                                Thêm khách hàng
-                              </Button>
-                            </Form.Item>
-                          </>
-                        )}
-                      </Form.List>
-                      <Form.Item className="flex justify-end">
-                        <Button htmlType="submit">Lưu</Button>
-                      </Form.Item>
-                    </Form>
-                  </Modal>
-                </ul>
-              </div>
+                                <Input placeholder="CCCD/CMTND" />
+                              </Form.Item>
+                              <MinusCircleOutlined
+                                onClick={() => remove(name)}
+                              />
+                            </Space>
+                          ))}
+                          <Form.Item>
+                            <Button
+                              type="dashed"
+                              onClick={() => add()}
+                              block
+                              icon={<PlusOutlined />}
+                            >
+                              Thêm khách hàng
+                            </Button>
+                          </Form.Item>
+                        </>
+                      )}
+                    </Form.List>
+                    <Form.Item className="flex justify-end">
+                      <Button htmlType="submit">Lưu</Button>
+                    </Form.Item>
+                  </Form>
+                </Modal>
+              </ul>
             </div>
           </div>
-
+        </div>
 
         {/* </div> */}
         <div>
@@ -891,7 +915,7 @@ const BillDetail: React.FC = () => {
                   className="h-full text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                   onClick={showDrawer}
                 >
-                  Thêm dịch vụ  
+                  Thêm dịch vụ
                 </Button>
               )}
             </div>
@@ -963,7 +987,9 @@ const BillDetail: React.FC = () => {
                     style={{ display: "flex" }}
                   >
                     {loadingServer ? (
-                      <div><LoadingOutlined /></div>
+                      <div>
+                        <LoadingOutlined />
+                      </div>
                     ) : (
                       dataServices?.data?.map((service: any) => {
                         return (
@@ -1017,15 +1043,19 @@ const BillDetail: React.FC = () => {
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
                     >
-                      <div>{room?.room_name} ({room?.room_number}) </div>
+                      <div>
+                        {room?.room_name} ({room?.room_number}){" "}
+                      </div>
                     </th>
                     <td className="px-6 py-4">1</td>
-                    <td className="px-6 py-4">
-                      {formatMoneyVN(room?.price)}
+                    <td className="px-6 py-4">{formatMoneyVN(room?.price)}</td>
+                    <td>
+                      <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                        Paid
+                      </span>
                     </td>
-                    <td><span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Paid</span></td>
                     <td className="px-6 py-4">
-                    {/* {formatMoneyVN(room?.price)} */}
+                      {/* {formatMoneyVN(room?.price)} */}
                     </td>
                   </tr>
                 );
@@ -1044,7 +1074,9 @@ const BillDetail: React.FC = () => {
                       {formatMoneyVN(service.price)}
                     </td>
                     <td>
-                      <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">Unpaid</span>
+                      <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">
+                        Unpaid
+                      </span>
                     </td>
                     <td className="px-6 py-4">
                       {formatMoneyVN(service.price)}
@@ -1060,7 +1092,9 @@ const BillDetail: React.FC = () => {
                 <td className="px-6 py-4"></td>
                 <td className="font-bold">Tổng thanh toán</td>
                 <td className="px-6 py-4">
-                  {formatMoneyVN(dataBill?.data.total- dataBill?.data?.booking.provisional)}
+                  {formatMoneyVN(
+                    dataBill?.data.total - dataBill?.data?.booking.provisional
+                  )}
                 </td>
               </tr>
             </tfoot>
