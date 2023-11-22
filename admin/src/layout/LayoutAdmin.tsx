@@ -104,13 +104,13 @@ const LayoutAdmin = () => {
         <AiOutlineCrown />
       </Link>
     ),
-    getItem(
-      "Khuyến mãi",
-      "9",
-      <Link onClick={() => handleTitleChange("Ưu đãi")} to={`offers`}>
-        <AiTwotoneGift />
-      </Link>
-    ),
+    // getItem(
+    //   "Khuyến mãi",
+    //   "9",
+    //   <Link onClick={() => handleTitleChange("Ưu đãi")} to={`offers`}>
+    //     <AiTwotoneGift />
+    //   </Link>
+    // ),
     getItem(
       "Chính sách",
       "10",

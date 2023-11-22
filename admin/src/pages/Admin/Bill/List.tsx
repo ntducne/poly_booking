@@ -19,6 +19,8 @@ import formatMoneyVN from "../../../config/formatMoneyVN";
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
 
+  console.log("dataBilings", dataBilings);
+
   const columns: ColumnsType<any> = [
     {
       title: "STT",
@@ -28,6 +30,23 @@ const BillList = () => {
       fixed: "left",
     },
     {
+      title: "Thông tin người đặt",
+      dataIndex: "representative",
+      key: "representative",
+      render: (text: any) => {
+        return (
+          <div className="flex flex-col">
+            <div>Email : {text?.email}</div>
+            <div>
+              <div>Tên : {text?.name}</div>
+              <div>Số điện thoại : {text?.phone}</div>
+            </div>
+          </div>
+        );
+      },
+      sorter: (a, b) => a.representative.name.localeCompare(b.representative.name),
+    },
+    {
       title: "Giá tiền",
       dataIndex: "total",
       key: "total",
@@ -35,15 +54,9 @@ const BillList = () => {
       sorter: (a, b) => a.total - b.total,
     },
     {
-      title: "Ngày thanh toán",
-      dataIndex: "payment_date",
-      key: "payment_date",
-    },
-    {
       title: "Phương thức",
       dataIndex: "payment_method",
       key: "payment_method",
-      
     },
 
     {
@@ -146,6 +159,7 @@ const BillList = () => {
     key: index + 1,
     id: item.id,
     booking: item.booking,
+    representative: item.booking.representative,
     services: item.services ? item.services : [],
     total: item.total,
     payment_method: item.payment_method,
