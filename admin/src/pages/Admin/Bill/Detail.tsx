@@ -45,7 +45,6 @@ const BillDetail: React.FC = () => {
     isLoading,
     refetch,
   } = useGetDetailBilingsQuery(id || "");
-  console.log("dataBill", dataBill);
 
   const prevServicesRef = useRef();
   const { data: dataRoomType } =
@@ -64,7 +63,6 @@ const BillDetail: React.FC = () => {
     }
     prevServicesRef.current = dataBill?.data?.services;
   }, [dataBill?.data?.status, dataBill?.data?.services, isLoading]);
-  console.log("dataBill", dataBill);
 
   // Xử lý addPeople
 
@@ -301,6 +299,7 @@ const BillDetail: React.FC = () => {
     setIsModalExtendOpen(true);
   };
   const closeModalExtend = () => {
+    setRoomSearch([]);
     setIsModalExtendOpen(false);
   };
   const showModal = () => {
@@ -342,7 +341,7 @@ const BillDetail: React.FC = () => {
     };
     
     const queryString = Object.keys(dataQuery).map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(dataQuery[key])).join('&');
-    const apiUrl = `${import.meta.env.VITE_BASE_URL_API}/client/room/search?${queryString}`;
+    const apiUrl = `${import.meta.env.VITE_BASE_URL_API}/client/v2/search?${queryString}`;
 
     fetch(apiUrl, {
       method: "GET",
@@ -353,6 +352,9 @@ const BillDetail: React.FC = () => {
       .then((res) => res.json())
       .then((data) => {
         if(data.message == 'Hết phòng !'){
+          message.error(data.message);
+        }
+        else if(data.status == false) {
           message.error(data.message);
         }
         else {
@@ -645,10 +647,7 @@ const BillDetail: React.FC = () => {
                   placeholder={["Check in", "Check out"]}
                 />
               </Form.Item>
-              {/* <Alert message="Còn 1 phòng trống" type="success" /> */}
-              {/* <Alert message="Hết phòng" type="error" /> */}
               <div className="flex justify-end mt-5">
-                {/* <Button className="mr-2" key={1}>Thanh toán</Button> */}
                 <Button htmlType="submit">Kiểm tra</Button>
               </div>
           </Form>
@@ -672,6 +671,9 @@ const BillDetail: React.FC = () => {
                   <th scope="col" className="px-6 py-3">
                     Price
                   </th>
+                  <th scope="col" className="px-6 py-3">
+                    Amount room empty
+                  </th>
                   <th></th>
                 </tr>
               </thead>
@@ -691,7 +693,7 @@ const BillDetail: React.FC = () => {
                       >
                         <img
                           width={50}
-                          src={room.images[0].image}
+                          src={room.image}
                           alt={`Image Room ${room.id}`}
                         />
                       </th>
@@ -704,19 +706,29 @@ const BillDetail: React.FC = () => {
                           </span>
                         )}
                       </td>
-                      <td className="px-6 py-4">{room.type.room_type_name}</td>
+                      <td className="px-6 py-4">{room.room_type.room_type_name}</td>
                       <td className="px-6 py-4">
                         {formatMoneyVN(
-                          room.type.price_per_night - room.discount
+                          room.price
                         )}{" "}
-                        {room.discount > 0 && (
+                        {(room.discount > 0 && room.discount < 95) ? (
                           <>
                             <br />
                             <del>
-                              {formatMoneyVN(room.type.price_per_night)}
+                              {room.discount} %
+                            </del>
+                          </>
+                        ) : (
+                          <>
+                            <br />
+                            <del>
+                              {formatMoneyVN(room.room_type.price_per_night)}
                             </del>
                           </>
                         )}
+                      </td>
+                      <td className="px-6 py-4">
+                      {room.room_empty}
                       </td>
                       <td>
                         {(dataBill?.data?.booking.detail[0].room_id == room.id) && (
@@ -1023,7 +1035,17 @@ const BillDetail: React.FC = () => {
                     <td className="px-6 py-4">
                       {formatMoneyVN(room?.price)}
                     </td>
-                    <td><span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Paid</span></td>
+                    <td>
+                      {
+                        room?.status == 0 ? (
+                          <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Đang ở</span>
+                        )
+                        :
+                        (
+                          <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">Đã trả</span>
+                        )
+                      }
+                    </td>
                     <td className="px-6 py-4">
                     {/* {formatMoneyVN(room?.price)} */}
                     </td>
@@ -1044,7 +1066,7 @@ const BillDetail: React.FC = () => {
                       {formatMoneyVN(service.price)}
                     </td>
                     <td>
-                      <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">Unpaid</span>
+                      <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">Chưa thanh toán</span>
                     </td>
                     <td className="px-6 py-4">
                       {formatMoneyVN(service.price)}

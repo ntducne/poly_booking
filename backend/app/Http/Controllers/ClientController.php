@@ -229,6 +229,13 @@ class ClientController extends Controller
 
     public function processSearch(Request $request){
         $data = $this->roomRepository->processSearchRoom($request);
+        if(count($data) == 0){
+            return response()->json([
+                'status' => false,
+                'message' => 'Không tìm thấy phòng !',
+                'data' => []
+            ]);
+        }
         return response()->json([
             'status' => true,
             'message' => 'Lấy dữ liệu thành công !',
