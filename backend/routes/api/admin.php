@@ -79,7 +79,6 @@ Route::middleware(CheckPermission::class)->group(function () {
             Route::post('/addPeople', [BookingController::class, 'addPeople'])->name('addService');
             Route::post('/addService', [BookingController::class, 'addService'])->name('addService');
             Route::post('/giaHan', [BookingController::class, 'giaHan'])->name('giaHan');
-
         });
     });
 

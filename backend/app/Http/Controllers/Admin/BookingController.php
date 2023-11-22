@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Booking\AdminBooking\SearchRequest;
 use App\Http\Requests\Booking\AdminBooking\StoreRequest;
 use App\Repositories\BookingRepository;
+use App\Repositories\RoomRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -14,28 +15,24 @@ use Illuminate\Support\Facades\Validator;
 class BookingController extends Controller
 {
     private BookingRepository $bookingRepository;
+    private RoomRepository $roomRepository;
 
-    public function __construct(BookingRepository $bookingRepository)
+    public function __construct(
+        BookingRepository $bookingRepository,
+        RoomRepository $roomRepository
+    )
     {
         $this->bookingRepository = $bookingRepository;
+        $this->roomRepository = $roomRepository;
     }
     public function store(StoreRequest $request)
     {
-        $booking = $this->bookingRepository->book($request);
-        if ($booking) {
-            return response()->json(
-                $booking->original
-            );
-        }
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Hết phòng !',
-        ]);
+        return $this->roomRepository->processBooking($request);
     }
 
     public function search(SearchRequest $request)
     {
-        $search = $this->bookingRepository->search($request);
+        $search = $this->roomRepository->processSearchRoom($request);
         if ($search) {
             return response()->json([
                 'status' => 'success',
@@ -110,24 +107,14 @@ class BookingController extends Controller
     }
 
     public function giaHan(Request $request) {
-        // try {
-
-            return $this->bookingRepository->giaHan($request);
-            
-        // } catch (Exception $exception) {
-        //     Log::debug($exception->getMessage());
-        //     return response()->json([
-        //         'status' => false,
-        //         'message' => 'Lỗi không thực hiện được gia hạn phòng !'
-        //     ]);
-        // }
+        try {
+            return $this->roomRepository->processRenew($request);
+        } catch (Exception $exception) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Lỗi không thực hiện được gia hạn phòng !'
+            ]);
+        }
     }
 
-    //    public function renew($id){
-//        return $this->bookingRepository->cancel($id);
-//    }
-//
-//    public function end(){
-//        return $this->bookingRepository->end();
-//    }
 }

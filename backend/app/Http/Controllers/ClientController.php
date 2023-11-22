@@ -240,4 +240,8 @@ class ClientController extends Controller
         return $this->roomRepository->processBooking($request);
     }
 
+    public function processRenew(Request $request) {
+        return $this->roomRepository->processRenew($request);
+    }
+
 }

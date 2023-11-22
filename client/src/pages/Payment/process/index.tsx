@@ -21,7 +21,6 @@ export default function PaymentProcess() {
                 'phone': cookie.userBook.phone,
                 'name': cookie.userBook.name,
             }
-            console.log(val);
             fetch(`${import.meta.env.VITE_URL_API}/client/room/booking`, {
                 method: 'POST',
                 body: JSON.stringify(val),
@@ -40,10 +39,9 @@ export default function PaymentProcess() {
                 removeCookie('bookingNow', { path: '/' });
                 removeCookie('roomSearch', { path: '/' });
                 removeCookie('userBook', { path: '/' });
-                removeCookie('paymentPage', { path: '/' });
+                setCookie('paymentPage', 0, { path: '/' });
                 if(cookie.paymentMethod === 'vnpay'){
                     removeCookie('paymentMethod', { path: '/' });
-
                     window.location.href = `${import.meta.env.VITE_URL_API}/api/vnpay/process/${data.bill.billingCode}/${data.bill.total}`;
                 }
             })
@@ -51,7 +49,6 @@ export default function PaymentProcess() {
                 console.error(error);
                 message.error('Có lỗi xảy ra trong quá trình đặt phòng. Vui lòng thử lại sau.');
             });
-    
         }
         process();
     },[])
