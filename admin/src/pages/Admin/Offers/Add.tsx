@@ -29,7 +29,6 @@ const AddOffers = () => {
   const [createPromotions] = useCreatePromotionsMutation();
   const { data: dataBranches, isLoading: loadingBranch } =
     useGetAllBranchesQuery({});
-
   if (loadingBranch) {
     return (
       <div>
