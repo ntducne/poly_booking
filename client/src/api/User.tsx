@@ -24,7 +24,7 @@ const userApi = createApi({
       query: (data) => ({
         url: `update/avatar`,
         method: "PUT",
-        body: data,
+        body: data, // image
       }),
       invalidatesTags: ["Users"],
     }),
@@ -74,9 +74,12 @@ const userApi = createApi({
       invalidatesTags: ["Users"],
     }),
 
-    processLogout: builder.query<any, any>({
-      query: () => `logout`,
-      providesTags: ["Users"],
+    processLogout: builder.mutation<any, any>({
+      query: () => ({
+        url: `logout`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Users"],
     }),
   }),
 });
@@ -90,7 +93,7 @@ export const {
   useGetDetailHistoryBookingQuery,
   useCancelBookingMutation,
   useProcessReviewMutation,
-  useProcessLogoutQuery,
+  useProcessLogoutMutation,
 } = userApi;
 
 export const userReducer = userApi.reducer;

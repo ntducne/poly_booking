@@ -3,16 +3,22 @@ import { Dropdown, MenuProps, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
+import { useProcessLogoutMutation } from "../../api/User";
+import { cookies as cookies2 } from "../../config/cookie";
 
 type Props = {};
 
 export default function Header({}: Props) {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies(["userInfo"]);
-
   const [header, setHeader] = useState(false);
-  const handleLogout = () => {
-    removeCookie("userInfo", { path: "/" });
+  console.log(cookies);
+  const [logoutApi] = useProcessLogoutMutation();
+
+  const handleLogout = async () => {
+    await logoutApi({});
+    console.log("remove cookie");
+    cookies2().Delete("userInfo");
     navigate("/auth/login");
   };
   const items: MenuProps["items"] = [

@@ -1,7 +1,7 @@
-import { Tabs } from "antd";
 import type { TabsProps } from "antd";
-import HeroSlide from "../../components/HeroSlide";
+import { Tabs } from "antd";
 import { useGetProfileQuery } from "../../api/User";
+import HeroSlide from "../../components/HeroSlide";
 
 const onChange = (key: string) => {
   console.log(key);
