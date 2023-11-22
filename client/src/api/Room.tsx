@@ -18,7 +18,7 @@ const roomApi = createApi({
         const url =
           keys.length === 0
             ? `/client/room`
-            : `/client/room/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&soLuong=${data.soLuong}`;
+            : `/client/v2/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&amount_room=${data.soLuong}`;
         return {
           method: "GET",
           url: url,

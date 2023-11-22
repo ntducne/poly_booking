@@ -3,6 +3,8 @@ import { Dropdown, MenuProps, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
+import { useProcessLogoutMutation } from "../../api/User";
+import { cookies as cookies2 } from "../../config/cookie";
 
 type Props = {};
 
@@ -10,13 +12,18 @@ export default function Header({}: Props) {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies(["userInfo"]);
   const [header, setHeader] = useState(false);
-  const handleLogout = () => {
-    removeCookie("userInfo", { path: "/" });
+  console.log(cookies);
+  const [logoutApi] = useProcessLogoutMutation();
+
+  const handleLogout = async () => {
+    await logoutApi({});
+    console.log("remove cookie");
+    cookies2().Delete("userInfo");
     navigate("/auth/login");
   };
   const items: MenuProps["items"] = [
     {
-      label: <Link to="/profile">Thông tin cá nhân</Link>,
+      label: <Link to="/user/infor-user">Thông tin cá nhân</Link>,
       key: "0",
     },
     {
@@ -103,7 +110,7 @@ export default function Header({}: Props) {
           items-center
           `}
         >
-          {cookies && cookies?.userInfo?.accessToken ? (
+          {cookies && cookies?.userInfo ? (
             <div>
               <Dropdown menu={{ items }} trigger={["click"]}>
                 <a onClick={(e) => e.preventDefault()}>
