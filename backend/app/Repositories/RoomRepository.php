@@ -8,6 +8,7 @@ use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Branch;
+use App\Models\HistoryHandleBooking;
 use App\Models\Room;
 use App\Models\RoomImage;
 use App\Models\RoomType;
@@ -24,6 +25,7 @@ class RoomRepository
     private BookDetail $bookDetail;
     private Billing $billing;
     private User $user;
+    private HistoryHandleBooking $history_handle;
 
     public function __construct()
     {
@@ -31,75 +33,11 @@ class RoomRepository
         $this->room = new Room();
         $this->room_type = new RoomType();
         $this->room_image = new RoomImage();
-
         $this->booking = new Booking();
         $this->bookDetail = new BookDetail();
-
         $this->billing = new Billing();
-
         $this->user = new User();
-    }
-
-    public function list()
-    {
-        return $this->room->paginate(6);
-    }
-
-    public function show($id)
-    {
-        return $this->room->find($id);
-    }
-
-    public function create($request)
-    {
-        $object = $request->all();
-        $roomNew = $this->room->create($object);
-        $room = $this->room->where('name', $request->name)->first();
-        $images = $request->file('image_room');
-        if ($images) {
-            $uploadFileUrl = UploadMultiImage($images, 'rooms/' . $room->id . '/');
-            foreach ($uploadFileUrl as $key => $image) {
-                $this->room_image->create([
-                    'room_id' => $room->id,
-                    'image' => $image,
-                    'serial' => $key + 1,
-                ]);
-            }
-            return $roomNew;
-        } else {
-            return false;
-        }
-    }
-
-    public function update($request, $id)
-    {
-        $object = $this->room->find($id);
-        if (!$object) {
-            return false;
-        }
-        $roomImages = $this->room_image->where('room_id', $object->id)->get();
-        foreach ($roomImages as $item) {
-            $image = $request->file($item->id);
-            if ($image) {
-                DeleteImage($item->image);
-                $uploadedFileUrl = UploadImage($image, 'rooms/' . $object->id . '/');
-                $item->update([
-                    'image' => $uploadedFileUrl,
-                ]);
-            }
-        }
-        $arr = $request->all();
-        return $object->update($arr);
-    }
-
-    public function delete($id)
-    {
-        $room = $this->room->find($id);
-        if (!$room) {
-            return false;
-        }
-        $room->delete();
-        return true;
+        $this->history_handle = new HistoryHandleBooking();
     }
 
     public function processSearchRoom($request)
@@ -110,7 +48,11 @@ class RoomRepository
         $checkout = $request->checkout;
         $branch_id = $request->branch_id;
         $amount_room = $request->amount_room;
-        $room_type = $this->room_type->where('branch_id', $branch_id)->get();
+
+        $room_type = $this->room_type
+                            ->where('branch_id', $branch_id)
+                            ->get();
+
         $getRoom = [];
         foreach ($room_type as $value) {
             $room = $this->room->where('room_type_id', $value->id)->get();
@@ -120,23 +62,31 @@ class RoomRepository
                 }
             }
         }
-        $billing = $this->billing->whereNotIn('status', [2, 4, 6, 7])->where('branch_id', $branch_id)->get();
+
+        $billing = $this->billing
+                        ->whereNotIn('status', [2, 4, 6, 7])
+                        ->where('branch_id', $branch_id)
+                        ->get();
         $booking = $this->booking
                         // ->whereIn('room_type', $room_type->pluck('id'))
                         ->whereIn('_id', $billing->pluck('booking_id'))
                         ->where('checkin', '>=', $checkin)
                         ->where('checkout', '<=', $checkout)
                         ->get();
+
         $room_completed = [];
         foreach ($getRoom as $room) {
-            $room_number = $this->bookDetail->where('room_id', $room->id)->whereIn('booking_id', $booking->pluck('_id'))->pluck('room_number');
+            $room_number = $this->bookDetail
+                                ->where('status', 0)
+                                ->where('room_id', $room->id)
+                                ->whereIn('booking_id', $booking->pluck('_id'))
+                                ->pluck('room_number');
             $newArray = [];
             foreach ($room->room_number as $value) {
                 if (!in_array($value, $room_number->toArray())) {
                     $newArray[] = $value;
                 }
             }
-
             $price = 0;
             $price_per_night = $this->room_type->find($room->room_type_id)->price_per_night;
             if($room->discount > 0) {
@@ -158,9 +108,7 @@ class RoomRepository
                 'children' => $room->children,
                 'description' => $room->description,
                 'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
-                // 'room_type_id' => $room->room_type_id,
                 'branch' => new BranchResource($this->branch->find($room->branch_id)),
-                // 'branch_id' => $room->branch_id,
                 'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
                 'room_empty' => count($newArray)
             ];
@@ -216,6 +164,7 @@ class RoomRepository
                 'room_id' => $room->id,
                 'room_name' => $room->name,
                 'room_number' => $value,
+                'status' => 0,
             ]);
         }
         $user = $this->user->where('email', $request->email)->orWhere('phone', $request->phone)->first();
@@ -255,4 +204,85 @@ class RoomRepository
         }
     }
 
+    public function processRenew($request){
+        $room_id = $request->room_id;
+        $billing = $this->billing->find($request->billing_id);
+        $booking = $this->booking->find($billing->booking_id);
+        $bookDetail = $this->bookDetail->where('booking_id', $booking->id)->first();
+        if($room_id == $bookDetail->room_id){
+            $room = $this->room->find($room_id);
+            $newCheckout = $request->newCheckout;
+            $number_of_nights = Carbon::parse($booking->checkout)->diffInDays(Carbon::parse($newCheckout));
+            $price_per_night = $this->room_type->find($room->room_type_id)->price_per_night;
+            $room_discount = $room->discount;
+            $provisional = $this->calculateProvisional($price_per_night, $room_discount, $number_of_nights, $request->amount_room);
+            $count_room_detail = count($this->bookDetail->where('booking_id', $booking->id)->get());
+            if($request->amount_room < $count_room_detail){
+                $roomNumberRenew = $request->roomNumberRenew;
+                $this->bookDetail
+                    ->where('booking_id', $booking->id)
+                    ->where('status', 0)
+                    ->whereNotIn('_id', $roomNumberRenew)
+                    ->update([
+                        'status' => 1,
+                    ]);
+            }
+            if($request->amount_room > $count_room_detail){
+                $searchRoom = $this->processSearchRoom($request);
+                if (count($searchRoom) > 0) {
+                    $foundItem = collect($searchRoom)->firstWhere('_id', $request->room_id);
+                    if ($foundItem) {
+                        $room = $this->room->find($foundItem['id']);
+                    }
+                } else {
+                    $room = $this->room->find($request->room_id);
+                }
+                $roomNumbers = $room->room_number;
+                $newRoomNumber = [];
+
+                foreach ($roomNumbers as $value) {
+                    $check = $this->bookDetail->where('room_number', $value)->first();
+                    if(!$check){
+                        $newRoomNumber[] = $value;
+                    }
+                }
+                $roomNumbers = $newRoomNumber;
+                $result = array_slice($roomNumbers, 0, $request->amount_room - (integer)$count_room_detail);
+                foreach ($result as $value) {
+                    $this->bookDetail->create([
+                        'booking_id' => $booking->_id,
+                        'room_id' => $room->id,
+                        'room_name' => $room->name,
+                        'room_number' => $value,
+                        'status' => 0,
+                    ]);
+                }
+            }
+            $this->booking->where('_id', $booking->_id)->update([
+                'checkout' => $newCheckout,
+                'provisional' => $booking->provisional + $provisional,
+                'amount_room' => $request->amount_room,
+            ]);
+            $newTotal = $billing->total + $provisional;
+            $this->billing->where('_id', $billing->_id)->update([
+                'total' => $newTotal ,
+            ]);
+            $values = [
+                'booking_id' => $booking->_id,
+                'admin_id' => $request->user()->id,
+                'handle' => 'Gia hạn phòng',
+                'time' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+            $this->history_handle->create($values);
+            return response()->json([
+                'message' => 'Gia hạn phòng thành công !',
+            ]);
+        }
+        else {
+            $this->billing->where('_id', $billing->_id)->update([
+                'status' => 4 ,
+            ]);
+            return $this->processBooking($request);
+        }
+    }
 }
