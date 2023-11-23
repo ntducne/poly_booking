@@ -147,7 +147,7 @@ class UserController extends Controller
         $this->userRepository->updateProfile($request, $request->user()->id);
         return response()->json([
             'message' => 'Update profile successfully',
-            'data' => $request->user()
+            'data' => User::find($request->user()->id)
         ], 200);
     }
     public function changePassword(ChangePasswordRequest $request)
