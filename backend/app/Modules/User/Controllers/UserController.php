@@ -3,18 +3,18 @@
 namespace App\Modules\User\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Client\ChangePasswordRequest;
-use App\Http\Requests\Client\UpdateAvatarRequest;
-use App\Http\Requests\Client\UpdateProfileRequest;
-use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Billing;
 use App\Models\RateRoom;
 use App\Models\Room;
 use App\Models\User;
 use App\Modules\Orders\Resources\BillingResource;
+use App\Modules\User\Requests\ChangePasswordRequest;
+use App\Modules\User\Requests\UpdateAvatarRequest;
+use App\Modules\User\Requests\UpdateProfileRequest;
+use App\Modules\User\Requests\UserUpdateRequest;
 use App\Modules\User\Resources\UserResource;
 use App\Repositories\RoomRepository;
-use app\Repositories\UserRepository;
+use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -147,7 +147,7 @@ class UserController extends Controller
         $this->userRepository->updateProfile($request, $request->user()->id);
         return response()->json([
             'message' => 'Update profile successfully',
-            'data' => $request->user()
+            'data' => User::find($request->user()->id)
         ], 200);
     }
     public function changePassword(ChangePasswordRequest $request)

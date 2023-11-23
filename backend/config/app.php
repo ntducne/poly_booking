@@ -173,6 +173,7 @@ return [
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         MongodbServiceProvider::class,
+        // App\Modules\ModuleServiceProvider::class
     ])->toArray(),
 
     /*

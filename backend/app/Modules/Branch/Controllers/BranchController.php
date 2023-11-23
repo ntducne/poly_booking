@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Branch\Controllers;
+namespace App\Modules\Branch\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Modules\Branch\Requests\StoreBranchRequest;
