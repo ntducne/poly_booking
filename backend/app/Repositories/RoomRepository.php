@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Http\Resources\BranchResource;
-use App\Http\Resources\RoomTypeResource;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
@@ -13,6 +11,8 @@ use App\Models\Room;
 use App\Models\RoomImage;
 use App\Models\RoomType;
 use App\Models\User;
+use App\Modules\Branch\Resources\BranchResource;
+use App\Modules\RoomType\Resources\RoomTypeResource;
 use Illuminate\Support\Carbon;
 
 class RoomRepository
@@ -68,7 +68,7 @@ class RoomRepository
                         $getRoom[] = $item;
                     }
                 }
-            } 
+            }
         }
         $billing = $this->billing
                         ->whereNotIn('status', [2, 4, 6, 7])
@@ -131,6 +131,9 @@ class RoomRepository
     public function processBooking($request)
     {
         $searchRoom = $this->processSearchRoom($request);
+        if(count($searchRoom) == 0){
+            return false;
+        }
         if (count($searchRoom) > 0) {
             $foundItem = collect($searchRoom)->firstWhere('id', $request->room_id);
             if ($foundItem) {
