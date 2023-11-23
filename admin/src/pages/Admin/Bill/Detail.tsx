@@ -27,6 +27,7 @@ import {
   useCancelBookingMutation,
   useCheckinBookingMutation,
   useCheckoutBookingMutation,
+  useExtendBookingMutation,
   useGetDetailBilingsQuery,
 } from "../../../api/billings";
 import { useParams } from "react-router-dom";
@@ -45,17 +46,16 @@ const BillDetail: React.FC = () => {
     isLoading,
     refetch,
   } = useGetDetailBilingsQuery(id || "");
+  console.log("dataBill", dataBill);
 
   const prevServicesRef = useRef();
   const { data: dataRoomType } = useGetAllRoomTypeQuery({});
-
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
     {}
   );
 
   const [dataRoomSearch, setRoomSearch] = useState([]);
   const [dataRoomBook, setRoomBook] = useState([]);
-
 
   const [form] = Form.useForm();
   const [formRoomExtend] = Form.useForm();
@@ -326,27 +326,18 @@ const BillDetail: React.FC = () => {
     if (!values) {
       return;
     }
-    const {
-      checkin_checkout,
-      amount_room_renew,
-      room_type_id,
-      adults,
-      childs,
-    } = values;
-    const formattedDates = checkin_checkout?.map((item: any) =>
-      dayjs(item.$d).format("YYYY-MM-DD")
-    );
-
+    const { new_checkout, amount_room_renew, room_type_id, adults, childs } =
+      values;
+    const new_checkoutDate = dayjs(new_checkout.$d).format("YYYY-MM-DD");
     const dataQuery: Record<string, string> = {
-      checkin: formattedDates?.[0],
-      checkout: formattedDates?.[1],
+      checkin: dataBill?.data?.booking?.checkout,
+      checkout: new_checkoutDate,
       adult: adults,
       child: childs,
       branch_id: dataBill?.data?.branch?.id,
       room_type_id: room_type_id,
-      soLuong: amount_room_renew,
+      amount_room: amount_room_renew,
     };
-
     const queryString = Object.keys(dataQuery)
       .map(
         (key) =>
@@ -356,7 +347,6 @@ const BillDetail: React.FC = () => {
     const apiUrl = `${
       import.meta.env.VITE_BASE_URL_API
     }/client/v2/search?${queryString}`;
-
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -376,8 +366,65 @@ const BillDetail: React.FC = () => {
       });
   };
 
+  // xu lý gia hạn phòng
+  const [extendBooking] = useExtendBookingMutation();
+  const onExtendBooking = () => {
+    const { adults, childs, amount_room_renew, new_checkout } =
+      formRoomExtend.getFieldsValue();
+    const new_checkoutDate = dayjs(new_checkout.$d).format("YYYY-MM-DD");
+    // TH1: Nếu số phòng gia hạn bằng số phòng hiện tại
+    if (amount_room_renew === dataBill?.data?.booking?.amount_room) {
+      const dataExtendRoom = {
+        billing_id: dataBill?.data?.id,
+        amount_room: amount_room_renew,
+        room_id: dataBill?.data?.booking?.detail[0].room_id,
+        newCheckout: new_checkoutDate,
+      };
+      console.log("dataExtendRoom", dataExtendRoom);
+      extendBooking(dataExtendRoom)
+        .unwrap()
+        .then((res) => {
+          if (res.message) {
+            swal(res.message, {
+              icon: "success",
+            });
+            closeModalExtend();
+          }
+        });
+    }
+    // console.log("1");
 
+    // TH2: Nếu số phòng gia hạn nhỏ số phòng hiện tại
+    // TH3: Nếu số phòng gia hạn lớn số phòng hiện tại
+    if (amount_room_renew >= dataBill?.data?.booking?.amount_room) {
+      const dataExtendRoom = {
+        adults: adults,
+        childs: childs,
+        checkin: dataBill?.data?.booking?.checkout,
+        checkout: new_checkoutDate,
+        name: dataBill?.data?.representative?.name,
+        email: dataBill?.data?.representative?.email,
+        phone: dataBill?.data?.representative?.phone,
+        billing_id: dataBill?.data?.id,
+        amount_room: amount_room_renew,
+        room_id: dataBill?.data?.booking?.detail[0].room_id,
+        newCheckout: new_checkoutDate,
+      };
+      console.log("dataExtendRoom", dataExtendRoom);
+      extendBooking(dataExtendRoom)
+        .unwrap()
+        .then((res) => {
+          if (res.message) {
+            swal(res.message, {
+              icon: "success",
+            });
+            closeModalExtend();
+          }
+        });
+    }
 
+    // TH4: Gia hạn khác phòng hiện tại
+  };
 
   // Table của lịch sử xem phòng
   const columns = [
@@ -412,7 +459,6 @@ const BillDetail: React.FC = () => {
     },
   ];
 
-
   const dataHistory = dataBill?.data?.history?.map(
     (history: any, index: number) => {
       return {
@@ -424,16 +470,13 @@ const BillDetail: React.FC = () => {
     }
   );
 
-
-  
-  const changeRoomBook = (value :any) => {
-    if(value < dataBill?.data?.booking.amount_room && value !== null){
+  const changeRoomBook = (value: any) => {
+    if (value < dataBill?.data?.booking.amount_room && value !== null) {
       setRoomBook(dataBill.data.booking.detail);
-    }
-    else {
+    } else {
       setRoomBook([]);
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -614,7 +657,6 @@ const BillDetail: React.FC = () => {
               >
                 <InputNumber
                   onChange={changeRoomBook}
-
                   defaultValue={dataBill?.data?.booking.amount_room}
                   min={1}
                   className="w-full"
@@ -623,7 +665,7 @@ const BillDetail: React.FC = () => {
               <Form.Item
                 label="Người lớn"
                 name="adults"
-                initialValue={dataBill?.data?.booking.amount_people.adults}
+                initialValue={dataBill?.data?.booking?.amount_people.adult}
                 rules={[
                   {
                     required: true,
@@ -656,7 +698,7 @@ const BillDetail: React.FC = () => {
               </Form.Item>
               <Form.Item
                 label="Ngày"
-                name="checkin_checkout"
+                name="new_checkout"
                 rules={[
                   {
                     required: true,
@@ -664,10 +706,7 @@ const BillDetail: React.FC = () => {
                   },
                 ]}
               >
-                <DatePicker.RangePicker
-                  className="w-full"
-                  placeholder={["Check in", "Check out"]}
-                />
+                <DatePicker className="w-full" placeholder={"Checkout new"} />
               </Form.Item>
               <div className="flex justify-end mt-5">
                 <Button htmlType="submit">Kiểm tra</Button>
@@ -675,6 +714,7 @@ const BillDetail: React.FC = () => {
             </Form>
           </Card>
         </div>
+        
         {dataRoomBook.length > 0 && (
           <div className="relative overflow-x-auto w-full mb-4">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
@@ -753,6 +793,13 @@ const BillDetail: React.FC = () => {
                     </tr>
                   );
                 })}
+                <button
+                  type="button"
+                  onClick={() => onExtendBooking()}
+                  className="fixed text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                >
+                  Gia hạn
+                </button>
               </tbody>
             </table>
           </div>
@@ -834,6 +881,7 @@ const BillDetail: React.FC = () => {
                           room.id && (
                           <button
                             type="button"
+                            onClick={() => onExtendBooking()}
                             className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                           >
                             Gia hạn
