@@ -3,7 +3,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\CheckPermission;
-use App\Http\Modules\Branch\Controllers\BranchController;
+use App\Modules\Branch\Controllers\BranchController;
 use App\Modules\Orders\Controllers\BillingController;
 use App\Modules\Orders\Controllers\BookingController;
 use App\Modules\Policy\Controllers\CancellationPolicyController;
