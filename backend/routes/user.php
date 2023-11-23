@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Pay\VnpayController;
-use App\Http\Controllers\UserController;
+use App\Modules\User\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // profile
