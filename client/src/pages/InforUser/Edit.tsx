@@ -37,8 +37,10 @@ export default function Edit() {
 
   const { data } = useGetProfileQuery({});
   console.log("data", data);
-  const { address, email, name, phone, image } = data.message;
-
+  const { address, email, name, phone, image } = data?.message;
+  if (!data && !data?.message) {
+    return <>loading..</>;
+  }
   return (
     <div>
       <HeroSlide />
@@ -59,7 +61,7 @@ export default function Edit() {
                     <span>Trạng thái tài khoản</span>
                     <span className="ml-auto">
                       <span className="bg-green-500 py-1 px-2 rounded-md text-white text-sm">
-                        hoajt dong
+                        Hoạt động
                       </span>
                     </span>
                   </li>

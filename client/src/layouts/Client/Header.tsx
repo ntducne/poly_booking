@@ -10,9 +10,8 @@ type Props = {};
 
 export default function Header({}: Props) {
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies(["userInfo"]);
+  const [cookies] = useCookies(["userInfo"]);
   const [header, setHeader] = useState(false);
-  console.log(cookies);
   const [logoutApi] = useProcessLogoutMutation();
 
   const handleLogout = async () => {
