@@ -57,11 +57,11 @@ function App() {
             <Route index element={<BillList />} />
             <Route path=":id" element={<BillDetail />} />
           </Route>
-          <Route path="offers">
+          {/* <Route path="offers">
             <Route index element={<ListOffers />} />
             <Route path="add" element={<AddOffers />} />
             <Route path="edit/:id" element={<EditOffers />} />
-          </Route>
+          </Route> */}
           <Route path="policy">
             <Route index element={<ListPolicy />} />
             <Route path="add" element={<AddPolicy />} />

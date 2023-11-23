@@ -21,7 +21,7 @@ export default function PaymentProcess() {
                 'phone': cookie.userBook.phone,
                 'name': cookie.userBook.name,
             }
-            fetch(`${import.meta.env.VITE_URL_API}/client/room/booking`, {
+            fetch(`${import.meta.env.VITE_URL_API}/client/booking`, {
                 method: 'POST',
                 body: JSON.stringify(val),
                 headers: {
@@ -42,7 +42,7 @@ export default function PaymentProcess() {
                 setCookie('paymentPage', 0, { path: '/' });
                 if(cookie.paymentMethod === 'vnpay'){
                     removeCookie('paymentMethod', { path: '/' });
-                    window.location.href = `${import.meta.env.VITE_URL_API}/api/vnpay/process/${data.bill.billingCode}/${data.bill.total}`;
+                    window.location.href = `${import.meta.env.VITE_URL_API}/pay/vnpay/process/${data.bill.billingCode}/${data.bill.total}`;
                 }
             })
             .catch(error => {
