@@ -23,3 +23,7 @@ Route::get('/routes', function () {
     }
     echo "</table>";
 });
+Route::get('/event', function () {
+    event(new App\Events\Message('Someone'));
+    echo "Event has been sent!";
+});
