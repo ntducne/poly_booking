@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Http\Resources\RoomImageResource;
-use App\Http\Resources\RoomTypeResource;
+use App\Modules\RoomType\Resources\RoomTypeResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model as Eloquent;
 use MongoDB\Laravel\Eloquent\SoftDeletes;

@@ -54,6 +54,9 @@ const BillDetail: React.FC = () => {
   );
 
   const [dataRoomSearch, setRoomSearch] = useState([]);
+  const [dataRoomBook, setRoomBook] = useState([]);
+
+
   const [form] = Form.useForm();
   const [formRoomExtend] = Form.useForm();
 
@@ -373,6 +376,9 @@ const BillDetail: React.FC = () => {
       });
   };
 
+
+
+
   // Table của lịch sử xem phòng
   const columns = [
     {
@@ -417,6 +423,17 @@ const BillDetail: React.FC = () => {
       };
     }
   );
+
+
+  
+  const changeRoomBook = (value :any) => {
+    if(value < dataBill?.data?.booking.amount_room && value !== null){
+      setRoomBook(dataBill.data.booking.detail);
+    }
+    else {
+      setRoomBook([]);
+    }
+  }
 
   if (isLoading) {
     return (
@@ -596,6 +613,8 @@ const BillDetail: React.FC = () => {
                 ]}
               >
                 <InputNumber
+                  onChange={changeRoomBook}
+
                   defaultValue={dataBill?.data?.booking.amount_room}
                   min={1}
                   className="w-full"
@@ -656,6 +675,88 @@ const BillDetail: React.FC = () => {
             </Form>
           </Card>
         </div>
+        {dataRoomBook.length > 0 && (
+          <div className="relative overflow-x-auto w-full mb-4">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Room Image
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Room Name
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Category
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Price
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Amount room empty
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {dataRoomBook.map((room: any) => {
+                  return (
+                    <tr
+                      className={` border-b ${
+                        dataBill?.data?.booking.detail[0].room_id == room.id
+                          ? "bg-gray-100"
+                          : "bg-white"
+                      }`}
+                    >
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                      >
+                        <img
+                          width={50}
+                          src={room.image}
+                          alt={`Image Room ${room.id}`}
+                        />
+                      </th>
+                      <td className="px-6 py-4">
+                        <p className="mb-2">{room.name}</p>
+                        {dataBill?.data?.booking.detail[0].room_id ==
+                          room.id && (
+                          <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            Phòng hiện tại
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        {/* {room.room_type.room_type_name} */}
+                      </td>
+                      <td className="px-6 py-4">
+                        {formatMoneyVN(room.price)}{" "}
+                        {room.discount > 0 && room.discount < 95 ? (
+                          <>
+                            <br />
+                            <del>{room.discount} %</del>
+                          </>
+                        ) : (
+                          <>
+                            <br />
+                            <del>
+                              {/* {formatMoneyVN(room.room_type.price_per_night)} */}
+                            </del>
+                          </>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">{room.room_empty}</td>
+                      <td>
+                        <input type="checkbox" />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
         {dataRoomSearch.length > 0 && (
           <div className="relative overflow-x-auto w-full">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
