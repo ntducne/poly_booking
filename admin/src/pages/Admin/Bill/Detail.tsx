@@ -18,7 +18,7 @@ import {
   Card,
   message,
   Table,
-  TableProps,
+  // TableProps,
   Skeleton,
 } from "antd";
 import {
