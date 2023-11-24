@@ -3,23 +3,35 @@ import { Button, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
-// import { Col, Row } from "antd";
-// interface DataType {
-//   key: React.Key;
-//   name: string;
-//   age: number;
-//   address: string;
-// }
+import { GiConfirmed } from "react-icons/gi";
 import FormSearch from "../../../component/formSearch";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
 import formatMoneyVN from "../../../config/formatMoneyVN";
+import swal from "sweetalert";
 
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
 
-  console.log("dataBilings", dataBilings);
+  const onComfirm = (id: any) => {
+    swal({
+      title: "Bạn có chắc chắn xác nhận không?",
+      icon: "success",
+      buttons: ["Hủy", "Xác nhận"],
+      dangerMode: true,
+    }).then((willDelete: any) => {
+      if (willDelete) {
+        swal("Xác nhận thành công!", {
+          icon: "success",
+        });
+      } else {
+        swal("Xác nhận thất bại!", {
+          icon: "error",
+        });
+      }
+    });
+  };
 
   const columns: ColumnsType<any> = [
     {
@@ -44,7 +56,8 @@ const BillList = () => {
           </div>
         );
       },
-      sorter: (a, b) => a.representative.name.localeCompare(b.representative.name),
+      sorter: (a, b) =>
+        a.representative.name.localeCompare(b.representative.name),
     },
     {
       title: "Giá tiền",
@@ -136,19 +149,21 @@ const BillList = () => {
         <Space size="middle">
           <Button
             type="primary"
-            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
+            className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
           >
             <Link to={`/billing/${record?.id}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
-          {/* <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            style={{ backgroundColor: "#e23428" }}
-          >
-            <MdDeleteForever />
-          </Button> */}
+          {record?.status === 0 && (
+            <Button
+              onClick={() => onComfirm(record?.id)}
+              type="primary"
+              className="text-gray-900 bg-gradient-to-r from-green-200 via-green-300 to-green-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            >
+              <GiConfirmed />
+            </Button>
+          )}
         </Space>
       ),
       // fixed: "right",
