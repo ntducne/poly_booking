@@ -45,7 +45,6 @@ export default function Rooms({}: Props) {
   const [adults, setAdults] = useState<number>(0);
   const [countRoom, setCountRoom] = useState<number>(0);
   const [, setCookie] = useCookies(["bookingNow", "roomSearch"]);
-  console.log(data);
 
   const onFinish = (values: any) => {
     if (!values) {
@@ -65,7 +64,6 @@ export default function Rooms({}: Props) {
       checkin: formattedDates?.[0],
       checkout: formattedDates?.[1],
     };
-    console.log(dataQuery);
 
     setDataQuery(dataQuery);
     if (!isLoading && !data?.data?.length) {
@@ -75,14 +73,17 @@ export default function Rooms({}: Props) {
   };
 
   const handleBookingNow = (item: any) => {
+    console.log(Object.keys(dataQuery).length);
     if (Object.keys(dataQuery).length) {
-      const { id, name, images, type, discount, branch, bed_size } = item;
-      const price = type.price_per_night - discount;
+      console.log(item);
+
+      const { id, name, images, price, branch, bed_size } = item;
+      // const price = type.price_per_night - discount;
 
       const bookingData = {
         room_id: id,
         room_name: name,
-        image: images[0]?.image,
+        image: images?.[0]?.image,
         price,
         branch: branch?.name,
         bed_size,
