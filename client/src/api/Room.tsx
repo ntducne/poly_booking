@@ -26,7 +26,7 @@ const roomApi = createApi({
       },
       providesTags: ["Rooms"],
     }),
-    getDetial: builder.query<any, any>({
+    getDetail: builder.query<any, any>({
       query: (slug) => `/client/room/${slug}`,
       providesTags: ["Rooms"],
     }),
@@ -51,7 +51,7 @@ const roomApi = createApi({
 
 export const {
   useGetRoomsQuery,
-  useGetDetialQuery,
+  useGetDetailQuery,
   usePostBookingMutation,
   usePostRatesMutation,
 } = roomApi;

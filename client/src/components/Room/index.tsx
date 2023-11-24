@@ -15,8 +15,6 @@ export default function Room(props: any) {
     price,
     discount,
   } = props?.data;
-  console.log(props?.data);
-
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
       <div className="lg:hidden block">
@@ -64,7 +62,7 @@ export default function Room(props: any) {
           className="inline-block rounded bg-primary px-6 py-3 
                     text-xs uppercase leading-normal text-white
                     transition duration-150 ease-in-out hover:bg-primary-600 font-bold"
-          onClick={() => props.handleBooking(props.data)}
+          onClick={() => props?.handleBooking(props.data)}
         >
           Đặt phòng ngay
         </button>
@@ -131,7 +129,7 @@ export default function Room(props: any) {
                 className="inline-block rounded bg-primary  
                     text-xs uppercase leading-normal text-white py-2 px-3 
                     transition duration-150 ease-in-out hover:bg-primary-600 font-bold max-w-[150px]"
-                onClick={() => props.handleBooking(props.data)}
+                onClick={() => props?.handleBooking(props.data)}
               >
                 Đặt phòng ngay
               </button>
