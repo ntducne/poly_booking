@@ -17,7 +17,7 @@ import { useGetUtilitieQuery } from "../../../api/utilities";
 const ListRoomUtilities = () => {
   const { data, isLoading } = useGetUtilitieQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data?.data?.data);
+  console.log(data, "data");
 
 
   useEffect(() => {
