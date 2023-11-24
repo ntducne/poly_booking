@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Modules\User\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +31,4 @@ Route::prefix('booking')->group(function () {
 
 // rate
 Route::post('rate', [UserController::class, 'rate']);
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::get('/logout', [AuthController::class, 'logout']);
