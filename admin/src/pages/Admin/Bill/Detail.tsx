@@ -27,6 +27,7 @@ import {
   useCancelBookingMutation,
   useCheckinBookingMutation,
   useCheckoutBookingMutation,
+  useExtendBookingMutation,
   useGetDetailBilingsQuery,
 } from "../../../api/billings";
 import { useParams } from "react-router-dom";
@@ -45,17 +46,16 @@ const BillDetail: React.FC = () => {
     isLoading,
     refetch,
   } = useGetDetailBilingsQuery(id || "");
+  console.log("dataBill", dataBill);
 
   const prevServicesRef = useRef();
   const { data: dataRoomType } = useGetAllRoomTypeQuery({});
-
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
     {}
   );
 
   const [dataRoomSearch, setRoomSearch] = useState([]);
   const [dataRoomBook, setRoomBook] = useState([]);
-
 
   const [form] = Form.useForm();
   const [formRoomExtend] = Form.useForm();
@@ -326,27 +326,18 @@ const BillDetail: React.FC = () => {
     if (!values) {
       return;
     }
-    const {
-      checkin_checkout,
-      amount_room_renew,
-      room_type_id,
-      adults,
-      childs,
-    } = values;
-    const formattedDates = checkin_checkout?.map((item: any) =>
-      dayjs(item.$d).format("YYYY-MM-DD")
-    );
-
+    const { new_checkout, amount_room_renew, room_type_id, adults, childs } =
+      values;
+    const new_checkoutDate = dayjs(new_checkout.$d).format("YYYY-MM-DD");
     const dataQuery: Record<string, string> = {
-      checkin: formattedDates?.[0],
-      checkout: formattedDates?.[1],
+      checkin: dataBill?.data?.booking?.checkout,
+      checkout: new_checkoutDate,
       adult: adults,
       child: childs,
       branch_id: dataBill?.data?.branch?.id,
       room_type_id: room_type_id,
-      soLuong: amount_room_renew,
+      amount_room: amount_room_renew,
     };
-
     const queryString = Object.keys(dataQuery)
       .map(
         (key) =>
@@ -356,7 +347,6 @@ const BillDetail: React.FC = () => {
     const apiUrl = `${
       import.meta.env.VITE_BASE_URL_API
     }/client/v2/search?${queryString}`;
-
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -376,8 +366,93 @@ const BillDetail: React.FC = () => {
       });
   };
 
+  // xu lý gia hạn phòng
+  const [formRoomIdExtend] = Form.useForm();
+  const [extendBooking] = useExtendBookingMutation();
 
+  const onCheckRoomExtend = (values: any) => {
+    console.log("values", values);
+  };
+  console.log("dataRoomBook", dataRoomBook);
+  
+  const onExtendBooking = () => {
+    const { adults, childs, amount_room_renew, new_checkout } =
+      formRoomExtend.getFieldsValue();
+    const new_checkoutDate = dayjs(new_checkout.$d).format("YYYY-MM-DD");
+    // TH1: Nếu số phòng gia hạn bằng số phòng hiện tại
+    if (amount_room_renew === dataBill?.data?.booking?.amount_room) {
+      const dataExtendRoom = {
+        billing_id: dataBill?.data?.id,
+        amount_room: amount_room_renew,
+        room_id: dataBill?.data?.booking?.detail[0].room_id,
+        newCheckout: new_checkoutDate,
+      };
+      extendBooking(dataExtendRoom)
+        .unwrap()
+        .then((res) => {
+          if (res.message) {
+            swal(res.message, {
+              icon: "success",
+            });
+            formRoomExtend.resetFields();
+            closeModalExtend();
+          }
+        });
+    }
+    console.log("1");
 
+    // TH2: Nếu số phòng gia hạn nhỏ số phòng hiện tại
+    if (amount_room_renew < dataBill?.data?.booking?.amount_room) {
+      const dataExtendRoom = {
+        billing_id: dataBill?.data?.id,
+        amount_room: amount_room_renew,
+        room_id: dataBill?.data?.booking?.detail[0].room_id,
+        newCheckout: new_checkoutDate,
+        roomNumberRenew: formRoomIdExtend.getFieldsValue().room_id,
+      };
+      console.log("dataExtendRoom", dataExtendRoom);
+      extendBooking(dataExtendRoom)
+        .unwrap()
+        .then((res) => {
+          if (res.message) {
+            swal(res.message, {
+              icon: "success",
+            });   
+            formRoomExtend.resetFilds();
+            closeModalExtend();
+          }
+        });
+    }
+    // TH3: Nếu số phòng gia hạn lớn số phòng hiện tại
+    if (amount_room_renew >= dataBill?.data?.booking?.amount_room) {
+      const dataExtendRoom = {
+        adults: adults,
+        childs: childs,
+        checkin: dataBill?.data?.booking?.checkout,
+        checkout: new_checkoutDate,
+        name: dataBill?.data?.representative?.name,
+        email: dataBill?.data?.representative?.email,
+        phone: dataBill?.data?.representative?.phone,
+        billing_id: dataBill?.data?.id,
+        amount_room: amount_room_renew,
+        room_id: dataBill?.data?.booking?.detail[0].room_id,
+        newCheckout: new_checkoutDate,
+      };
+      extendBooking(dataExtendRoom)
+        .unwrap()
+        .then((res) => {
+          if (res.message) {
+            swal(res.message, {
+              icon: "success",
+            });
+            formRoomExtend.resetFields();
+            closeModalExtend();
+          }
+        });
+    }
+
+    // TH4: Gia hạn khác phòng hiện tại
+  };
 
   // Table của lịch sử xem phòng
   const columns = [
@@ -411,7 +486,8 @@ const BillDetail: React.FC = () => {
       key: "handle",
     },
   ];
-
+  
+  
 
   const dataHistory = dataBill?.data?.history?.map(
     (history: any, index: number) => {
@@ -424,16 +500,14 @@ const BillDetail: React.FC = () => {
     }
   );
 
-
-  
-  const changeRoomBook = (value :any) => {
-    if(value < dataBill?.data?.booking.amount_room && value !== null){
-      setRoomBook(dataBill.data.booking.detail);
-    }
-    else {
+  const changeRoomBook = (value: any) => {
+    if (value < dataBill?.data?.booking.amount_room && value !== null) {
+      const dataRoomStatus = dataBill?.data?.booking?.detail.filter((item :any)=> item.status === 0      )
+      setRoomBook(dataRoomStatus);
+    } else {
       setRoomBook([]);
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -614,7 +688,6 @@ const BillDetail: React.FC = () => {
               >
                 <InputNumber
                   onChange={changeRoomBook}
-
                   defaultValue={dataBill?.data?.booking.amount_room}
                   min={1}
                   className="w-full"
@@ -623,7 +696,7 @@ const BillDetail: React.FC = () => {
               <Form.Item
                 label="Người lớn"
                 name="adults"
-                initialValue={dataBill?.data?.booking.amount_people.adults}
+                initialValue={dataBill?.data?.booking?.amount_people.adult}
                 rules={[
                   {
                     required: true,
@@ -656,7 +729,7 @@ const BillDetail: React.FC = () => {
               </Form.Item>
               <Form.Item
                 label="Ngày"
-                name="checkin_checkout"
+                name="new_checkout"
                 rules={[
                   {
                     required: true,
@@ -664,10 +737,7 @@ const BillDetail: React.FC = () => {
                   },
                 ]}
               >
-                <DatePicker.RangePicker
-                  className="w-full"
-                  placeholder={["Check in", "Check out"]}
-                />
+                <DatePicker className="w-full" placeholder={"Checkout new"} />
               </Form.Item>
               <div className="flex justify-end mt-5">
                 <Button htmlType="submit">Kiểm tra</Button>
@@ -676,184 +746,143 @@ const BillDetail: React.FC = () => {
           </Card>
         </div>
         {dataRoomBook.length > 0 && (
-          <div className="relative overflow-x-auto w-full mb-4">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Room Image
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Room Name
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Category
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Price
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Amount room empty
-                  </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {dataRoomBook.map((room: any) => {
-                  return (
-                    <tr
-                      className={` border-b ${
-                        dataBill?.data?.booking.detail[0].room_id == room.id
-                          ? "bg-gray-100"
-                          : "bg-white"
-                      }`}
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+          <div className="relative flex  overflow-x-auto w-full mb-4">
+            <Form
+              form={formRoomIdExtend}
+              name="validate_other"
+              onFinish={onCheckRoomExtend}
+              style={{ maxWidth: 600 }}
+              className=" w-full flex flex-col text-sm text-left rtl:text-right text-gray-500"
+            >
+              <Form.Item name="room_id">
+                <Checkbox.Group className="flex flex-col">
+                  {dataRoomBook.map((room: any) => {
+                    return (
+                      <Checkbox
+                        className="flex "
+                        value={room.id}
+                        style={{ lineHeight: "32px" }}
                       >
-                        <img
-                          width={50}
-                          src={room.image}
-                          alt={`Image Room ${room.id}`}
-                        />
-                      </th>
-                      <td className="px-6 py-4">
-                        <p className="mb-2">{room.name}</p>
-                        {dataBill?.data?.booking.detail[0].room_id ==
-                          room.id && (
-                          <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            Phòng hiện tại
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {/* {room.room_type.room_type_name} */}
-                      </td>
-                      <td className="px-6 py-4">
-                        {formatMoneyVN(room.price)}{" "}
-                        {room.discount > 0 && room.discount < 95 ? (
-                          <>
-                            <br />
-                            <del>{room.discount} %</del>
-                          </>
-                        ) : (
-                          <>
-                            <br />
-                            <del>
-                              {/* {formatMoneyVN(room.room_type.price_per_night)} */}
-                            </del>
-                          </>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">{room.room_empty}</td>
-                      <td>
-                        <input type="checkbox" />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                        {room?.room_name} ({room?.room_number})
+                      </Checkbox>
+                    );
+                  })}
+                </Checkbox.Group>
+              </Form.Item>
+              <button
+                type="button"
+                onClick={() => onExtendBooking()}
+                className="absolute bottom-0 right-0 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                Gia hạn
+              </button>
+            </Form>
           </div>
         )}
-        {dataRoomSearch.length > 0 && (
-          <div className="relative overflow-x-auto w-full">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Room Image
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Room Name
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Category
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Price
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Amount room empty
-                  </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {dataRoomSearch.map((room: any) => {
-                  return (
-                    <tr
-                      className={` border-b ${
-                        dataBill?.data?.booking.detail[0].room_id == room.id
-                          ? "bg-gray-100"
-                          : "bg-white"
-                      }`}
-                    >
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                      >
-                        <img
-                          width={50}
-                          src={room.image}
-                          alt={`Image Room ${room.id}`}
-                        />
+        {dataBill?.data?.booking?.amount_room >= dataRoomBook && (
+          <div>
+            {dataRoomSearch.length > 0 && (
+              <div className="relative overflow-x-auto w-full">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Room Image
                       </th>
-                      <td className="px-6 py-4">
-                        <p className="mb-2">{room.name}</p>
-                        {dataBill?.data?.booking.detail[0].room_id ==
-                          room.id && (
-                          <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                            Phòng hiện tại
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {room.room_type.room_type_name}
-                      </td>
-                      <td className="px-6 py-4">
-                        {formatMoneyVN(room.price)}{" "}
-                        {room.discount > 0 && room.discount < 95 ? (
-                          <>
-                            <br />
-                            <del>{room.discount} %</del>
-                          </>
-                        ) : (
-                          <>
-                            <br />
-                            <del>
-                              {formatMoneyVN(room.room_type.price_per_night)}
-                            </del>
-                          </>
-                        )}
-                      </td>
-                      <td className="px-6 py-4">{room.room_empty}</td>
-                      <td>
-                        {dataBill?.data?.booking.detail[0].room_id ==
-                          room.id && (
-                          <button
-                            type="button"
-                            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                          >
-                            Gia hạn
-                          </button>
-                        )}
-                        {dataBill?.data?.booking.detail[0].room_id !=
-                          room.id && (
-                          <button
-                            type="button"
-                            className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                          >
-                            Chọn phòng mới
-                          </button>
-                        )}
-                      </td>
+                      <th scope="col" className="px-6 py-3">
+                        Room Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Category
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Price
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Amount room empty
+                      </th>
+                      <th></th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    {dataRoomSearch.map((room: any) => {
+                      return (
+                        <tr
+                          className={` border-b ${
+                            dataBill?.data?.booking.detail[0].room_id == room.id
+                              ? "bg-gray-100"
+                              : "bg-white"
+                          }`}
+                        >
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                          >
+                            <img
+                              width={50}
+                              src={room.image}
+                              alt={`Image Room ${room.id}`}
+                            />
+                          </th>
+                          <td className="px-6 py-4">
+                            <p className="mb-2">{room.name}</p>
+                            {dataBill?.data?.booking.detail[0].room_id ==
+                              room.id && (
+                              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                Phòng hiện tại
+                              </span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4">
+                            {room.room_type.room_type_name}
+                          </td>
+                          <td className="px-6 py-4">
+                            {formatMoneyVN(room.price)}{" "}
+                            {room.discount > 0 && room.discount < 95 ? (
+                              <>
+                                <br />
+                                <del>{room.discount} %</del>
+                              </>
+                            ) : (
+                              <>
+                                <br />
+                                <del>
+                                  {formatMoneyVN(
+                                    room.room_type.price_per_night
+                                  )}
+                                </del>
+                              </>
+                            )}
+                          </td>
+                          <td className="px-6 py-4">{room.room_empty}</td>
+                          <td>
+                            {dataBill?.data?.booking.detail[0].room_id ==
+                              room.id && (
+                              <button
+                                type="button"
+                                onClick={() => onExtendBooking()}
+                                className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                              >
+                                Gia hạn
+                              </button>
+                            )}
+                            {dataBill?.data?.booking.detail[0].room_id !=
+                              room.id && (
+                              <button
+                                type="button"
+                                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                              >
+                                Chọn phòng mới
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
       </Modal>

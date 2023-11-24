@@ -24,20 +24,18 @@ const Head = () => {
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
 
   useEffect(() => {
-    // Notification();
-    const channel = PusherServer.subscribe('chat');
-    channel.bind('message', (data :any) => {
+    const channel = PusherServer.subscribe("chat");
+    channel.bind("message", (data: any) => {
       console.log(data);
     });
     return () => {
-      PusherServer.unsubscribe('chat');
+      PusherServer.unsubscribe("chat");
       PusherServer.disconnect();
     };
-  }, [])
+  }, []);
 
-
-  function logout() {
-    fetch("https://api.polydevhotel.site/admin/logout", {
+  const logout = async () => {
+    await fetch("https://api.polydevhotel.site/admin/logout", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -47,7 +45,9 @@ const Head = () => {
       .then(() => {
         cookies().Delete("AuthUser");
         toast("Đăng xuất thành công");
-        navigate("/login");
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
       });
   }
 
@@ -74,7 +74,7 @@ const Head = () => {
     {
       onClick: logout,
       label: (
-        <a onClick={logout}>
+        <a>
           <LogoutOutlined /> Đăng xuất
         </a>
       ),
