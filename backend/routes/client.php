@@ -24,5 +24,6 @@ Route::prefix('booking')->group(function () {
 
 Route::prefix('v2')->group(function () {
     Route::get('/search', [ClientController::class, 'processSearch']);
+    Route::post('/search', [ClientController::class, 'processSearch']);
     Route::post('/booking', [ClientController::class, 'processBooking']);
 });
