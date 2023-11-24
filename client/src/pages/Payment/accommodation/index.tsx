@@ -5,6 +5,10 @@ import { Col, Row } from "antd";
 import type { CollapseProps } from "antd";
 import { Collapse } from "antd";
 import { useCookies } from "react-cookie";
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "../../../api/User";
 
 const onFinish = (values: any) => {
   console.log("Success:", values);
@@ -30,7 +34,7 @@ export default function AccommodationBook() {
   const [userPhone, setUserPhone] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [, setUserBook] = useState({});
-
+  const { data, isLoading } = useGetProfileQuery({});
   const itemsColapper: CollapseProps["items"] = [
     {
       key: "1",
@@ -83,40 +87,33 @@ export default function AccommodationBook() {
 
   useEffect(() => {
     removeCookie("paymentPage", { path: "/" });
+
     if (cookie.userInfo) {
-      fetch("https://api.polydevhotel.site/user/profile", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${cookie.userInfo.accessToken.token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setUserName(data.message.name);
-          setUserEmail(data.message.email);
-          setUserPhone(data.message.phone);
-          setUserBook({
+      if (data && data.message) {
+        setUserName(data.message.name);
+        setUserEmail(data.message.email);
+        setUserPhone(data.message.phone);
+        setUserBook({
+          name: data.message.name,
+          email: data.message.email,
+          phone: data.message.phone,
+        });
+        setCookie(
+          "userBook",
+          {
             name: data.message.name,
             email: data.message.email,
             phone: data.message.phone,
-          });
-          setCookie(
-            "userBook",
-            {
-              name: data.message.name,
-              email: data.message.email,
-              phone: data.message.phone,
-            },
-            { path: "/" }
-          );
-        });
-    } else {
-      setUserName("");
-      setUserEmail("");
-      setUserPhone("");
-      setUserBook({});
-      setCookie("userBook", {}, { path: "/" });
+          },
+          { path: "/" }
+        );
+      } else {
+        setUserName("");
+        setUserEmail("");
+        setUserPhone("");
+        setUserBook({});
+        setCookie("userBook", {}, { path: "/" });
+      }
     }
   }, []);
 

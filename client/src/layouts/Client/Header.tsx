@@ -10,20 +10,18 @@ type Props = {};
 
 export default function Header({}: Props) {
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies(["userInfo"]);
+  const [cookies] = useCookies(["userInfo"]);
   const [header, setHeader] = useState(false);
-  console.log(cookies);
   const [logoutApi] = useProcessLogoutMutation();
 
   const handleLogout = async () => {
     await logoutApi({});
-    console.log("remove cookie");
     cookies2().Delete("userInfo");
     navigate("/auth/login");
   };
   const items: MenuProps["items"] = [
     {
-      label: <Link to="/user/infor-user">Thông tin cá nhân</Link>,
+      label: <Link to="/user/profile">Thông tin cá nhân</Link>,
       key: "0",
     },
     {
