@@ -15,6 +15,7 @@ use App\Modules\Branch\Resources\BranchResource;
 use App\Modules\RoomType\Resources\RoomTypeResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class RoomRepository
 {
@@ -43,7 +44,7 @@ class RoomRepository
         $this->today = Carbon::parse(Carbon::now()->format('Y-m-d H:i:s'));
     }
 
-    public function processSearchRoom($request): array
+    public function processSearchRoom($request)
     {
         $adult = $request->adult;
         $children = $request->children;
@@ -235,27 +236,16 @@ class RoomRepository
             $newCheckout = Carbon::parse($request->newCheckout)->addHours(12)->format('Y-m-d H:i:s');
             $number_of_nights = Carbon::parse($newCheckIn)->diffInDays(Carbon::parse($newCheckout));
             $provisional = $this->calculateProvisional($price_per_night, $room_discount, $number_of_nights, $newAmountRoom);
-            // Trường hợp 1: Số lượng phòng gia hạn không thay đổi
+//            // Trường hợp 1: Số lượng phòng gia hạn không thay đổi
             if ($count_room_detail == $newAmountRoom) {
-                $booking->update([
-                    'checkout' => $newCheckout,
-                    'provisional' => $booking->provisional + $provisional,
-                ]);
-                $newTotal = $billing->total + $provisional;
-                $billing->update([
-                    'total' => $newTotal,
-                ]);
-                $this->history_handle->create([
-                    'booking_id' => $booking->_id,
-                    'admin_id' => $request->user()->id,
-                    'handle' => 'Gia hạn phòng ( Số lượng phòng không thay đổi )',
-                    'time' => Carbon::now()->format('Y-m-d H:i:s'),
-                ]);
-                return response()->json([
-                    'message' => 'Gia hạn phòng thành công !',
-                ]);
+                $this->bookDetail
+                    ->where('booking_id', $booking->id)
+                    ->where('status', 0)
+                    ->update([
+                        'is_checkout' => $newCheckout,
+                    ]);
             }
-            // Trường hợp 2: Số lượng phòng gia hạn nhỏ hơn số lượng phòng ban đầu
+            // Trường hợp 1: Số lượng phòng gia hạn nhỏ hơn số lượng phòng ban đầu
             if ($count_room_detail > $newAmountRoom) {
                 $roomNumberRenew = $request->roomNumberRenew;
                 if ($this->today->eq($newCheckout))  // ngày hiện tại bằng ngày checkout mới
@@ -285,7 +275,7 @@ class RoomRepository
                         ]);
                 }
             }
-            // Trường hợp 3: Số lượng phòng gia hạn lớn hơn số lượng phòng ban đầu
+            // Trường hợp 2: Số lượng phòng gia hạn lớn hơn số lượng phòng ban đầu
             if ($count_room_detail < $newAmountRoom) {
                 $searchRoom = $this->processSearchRoom($request);
                 if (count($searchRoom) > 0) {
@@ -315,11 +305,26 @@ class RoomRepository
                         'status' => 0,
                     ]);
                 }
+
+                $this->bookDetail
+                    ->where('booking_id', $booking->id)
+                    ->where('status', 0)
+                    ->update([
+                        'is_checkout' => $newCheckout,
+                    ]);
             }
+            $booking->update([
+                'checkout' => $newCheckout,
+                'provisional' => $booking->provisional + $provisional,
+            ]);
+            $newTotal = $billing->total + $provisional;
+            $billing->update([
+                'total' => $newTotal,
+            ]);
             $this->history_handle->create([
                 'booking_id' => $booking->_id,
                 'admin_id' => $request->user()->id,
-                'handle' => 'Gia hạn phòng ( Số lượng phòng không thay đổi )',
+                'handle' => 'Gia hạn phòng',
                 'time' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
             return response()->json([
