@@ -31,4 +31,4 @@ Route::prefix('booking')->group(function () {
 
 // rate
 Route::post('rate', [UserController::class, 'rate']);
-Route::get('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout']);

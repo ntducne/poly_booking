@@ -3,7 +3,6 @@
 namespace App\Modules\Client\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Booking\BookingRequest;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
@@ -11,6 +10,9 @@ use App\Models\Branch;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Modules\Branch\Resources\BranchResource;
+use App\Modules\Client\Requests\BookingRequest;
+use App\Modules\Client\Requests\RenewRequest;
+use App\Modules\Client\Requests\SearchRequest;
 use App\Modules\Room\Resources\RoomResource;
 use App\Repositories\BookingRepository;
 use App\Repositories\RoomRepository;
@@ -86,7 +88,7 @@ class ClientController extends Controller
         }
     }
 
-    public function processSearch(Request $request){
+    public function processSearch(SearchRequest $request){
         $data = $this->roomRepository->processSearchRoom($request);
         if(count($data) == 0){
             return response()->json([
@@ -102,11 +104,11 @@ class ClientController extends Controller
         ]);
     }
 
-    public function processBooking(Request $request){
+    public function processBooking(BookingRequest $request){
         return $this->roomRepository->processBooking($request);
     }
 
-    public function processRenew(Request $request) {
+    public function processRenew(RenewRequest $request) {
         return $this->roomRepository->processRenew($request);
     }
 

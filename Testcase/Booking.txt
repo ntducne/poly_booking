@@ -1,0 +1,9 @@
+- Testcase đặt phòng (adult, children, check in, check out, amount_room, name, email, phone) ( đảm bảo thông tin tìm kiếm có ):
+    + Không nhập name, email, phone
+    + Nhập name
+    + Nhập email
+    + Nhập phone
+    + Nhập name, email
+    + Nhập name, phone
+    + Nhập email, phone
+    + Nhập name, email, phone
