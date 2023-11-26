@@ -3,8 +3,11 @@
 namespace App\Modules\Client\Requests;
 
 use App\Http\Requests\Request;
+use App\Models\Branch;
+use App\Models\Room;
 use App\Rules\MailRule;
 use App\Rules\PhoneRule;
+use Illuminate\Validation\Rule;
 
 class BookingRequest extends Request {
     public function rule() {
@@ -20,11 +23,10 @@ class BookingRequest extends Request {
                 'after_or_equal:checkin',
             ],
             'adult' => 'required|numeric',
-            'children' => 'required|numeric',
+            'child' => 'required|numeric',
             'branch_id' => [
                 'required',
-                'numeric',
-                'exists:branches,_id',
+                Rule::exists(Branch::class, $this->column_id),
             ],
             'amount_room' => [
                 'required',
@@ -69,9 +71,8 @@ class BookingRequest extends Request {
             ],
 
             'room_id' => [
-                'nullable',
-                'numeric',
-                'exists:rooms,_id',
+                'required',
+                Rule::exists(Room::class, $this->column_id),
             ],
 
 

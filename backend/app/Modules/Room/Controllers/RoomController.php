@@ -3,10 +3,11 @@
 namespace App\Modules\Room\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Room\StoreRoomRequest;
-use App\Http\Requests\Room\UpdateRoomRequest;
 use App\Models\Room;
 use App\Models\RoomImage;
+use App\Models\RoomType;
+use App\Modules\Room\Requests\StoreRoomRequest;
+use App\Modules\Room\Requests\UpdateRoomRequest;
 use App\Modules\Room\Resources\RoomResource;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -53,6 +54,7 @@ class RoomController extends Controller
             $object['slug'] = convertToSlug($request->name);
             $amount_room = [];
 
+
             for($i = 1; $i <= $object['amount']; $i++){
                 if($i < 10){
                     $i = '0'.$i;
@@ -61,7 +63,7 @@ class RoomController extends Controller
             }
 
             $object['amount_room'] = $amount_room;
-
+            $object['branch_id'] = RoomType::find($object['room_type_id'])->branch_id;
             $roomNew = $this->room->create($object);
             $room = $this->room->where('name', $request->name)->first();
             $images = $request->file('images');
