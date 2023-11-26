@@ -1207,6 +1207,12 @@ const BillDetail: React.FC = () => {
                   Số lượng
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Checkin
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Ngày trả
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Giá
                 </th>
                 <th>Trạng thái</th>
@@ -1228,6 +1234,9 @@ const BillDetail: React.FC = () => {
                       </div>
                     </th>
                     <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">{dataBill?.data?.booking?.checkin}</td>
+                    <td className="px-6 py-4">{room?.is_checkout ? (room?.is_checkout) : (dataBill?.data?.booking?.checkout) }</td>
+
                     <td className="px-6 py-4">{formatMoneyVN(room?.price)}</td>
                     <td>
                       <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
