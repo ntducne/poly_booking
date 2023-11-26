@@ -53,6 +53,7 @@ class RoomRepository
         $branch_id = $request->branch_id;
         $amount_room = $request->amount_room;
         $room_type_id = $request->room_type_id;
+
         $getRoom = [];
         if ($room_type_id) {
             $room = $this->room->where('room_type_id', $room_type_id)->get();
@@ -73,14 +74,26 @@ class RoomRepository
                 }
             }
         }
+
         $billing = $this->billing->whereNotIn('status', [2, 4, 6, 7])->where('branch_id', $branch_id)->get();
         if(count($billing) > 0){
-            $booking = $this->booking
+            if(!$room_type_id){
+                $booking = $this->booking
                 ->whereIn('room_type', $room_type->pluck('id'))
                 ->whereIn('_id', $billing->pluck('booking_id'))
-                ->where('checkin', '>=', $checkin)
-                ->where('checkout', '<=', $checkout)
+                ->where('checkin', '<=', $checkin)
+                ->where('checkout', '>=', $checkout)
                 ->get();
+            }
+            else {
+                $booking = $this->booking
+                    ->where('room_type', $room_type->id)
+                    ->whereIn('_id', $billing->pluck('booking_id'))
+                    ->where('checkin', '<=', $checkin)
+                    ->where('checkout', '>=', $checkout)
+                    ->get();
+            }
+            
             $room_completed = [];
             foreach ($getRoom as $room) {
                 $room_number = $this->bookDetail
@@ -161,7 +174,6 @@ class RoomRepository
             });
             return $room_completed_2;
         }
-
     }
 
     public function processBooking($request): JsonResponse|array
@@ -265,7 +277,7 @@ class RoomRepository
         $bookDetail = $this->bookDetail->where('booking_id', $booking->id)->first();
         if ($room_id == $bookDetail->room_id) {
             // thông tin phòng
-            $price_per_night = $this->room_type->find($bookDetail->room_type)->price_per_night;
+            $price_per_night = $this->room_type->find($booking->room_type)->price_per_night;
             $room_discount = $bookDetail->discount;
             // thông tin booking
             $count_room_detail = count($this->bookDetail->where('booking_id', $booking->id)->get()); // số lượng phòng ban đầu
