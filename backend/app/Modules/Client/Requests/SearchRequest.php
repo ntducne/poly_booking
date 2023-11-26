@@ -3,6 +3,8 @@
 namespace App\Modules\Client\Requests;
 
 use App\Http\Requests\Request;
+use App\Models\Branch;
+use Illuminate\Validation\Rule;
 
 class SearchRequest extends Request
 {
@@ -20,11 +22,10 @@ class SearchRequest extends Request
                 'after_or_equal:checkin',
             ],
             'adult' => 'required|numeric',
-            'children' => 'required|numeric',
+            'child' => 'required|numeric',
             'branch_id' => [
                 'required',
-                'numeric',
-                'exists:branches,_id',
+                Rule::exists(Branch::class, $this->column_id),
             ],
             'amount_room' => [
                 'required',
@@ -53,7 +54,7 @@ class SearchRequest extends Request
             'child.required' => 'Vui lòng nhập số trẻ em',
             'child.numeric' => 'Số trẻ em không hợp lệ',
             'branch_id.required' => 'Vui lòng nhập mã chi nhánh',
-            'branch_id.numeric' => 'Mã chi nhánh không hợp lệ',
+//            'branch_id.numeric' => 'Mã chi nhánh không hợp lệ',
             'amount_room.required' => 'Vui lòng nhập số lượng phòng',
             'amount_room.numeric' => 'Số lượng phòng không hợp lệ',
         ];

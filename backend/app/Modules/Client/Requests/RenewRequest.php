@@ -14,7 +14,7 @@ class RenewRequest extends Request {
             'checkout' => [ 'required', 'date', 'after_or_equal:checkin' ],
             'newCheckout' => [ 'required',  'date',  'after_or_equal:checkout' ],
             'adult' => 'required|numeric',
-            'children' => 'required|numeric',
+            'child' => 'required|numeric',
             'branch_id' => [ 'required',  'numeric', 'exists:branches,_id' ],
             'amount_room' => [ 'required',  'numeric', 'min:1',
                 // nhỏ hơn adult truyền vào
