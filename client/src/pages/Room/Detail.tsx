@@ -1,31 +1,33 @@
-import dayjs from "dayjs";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { MinusOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import {
   Button,
   DatePicker,
   Divider,
   Form,
-  Input,
   InputNumber,
-  Pagination,
   Rate,
   Select,
   message,
+<<<<<<< HEAD
   Avatar,
   Tooltip,
+=======
+>>>>>>> 81d4066155539d9e1fc21c5e66c5d7be7e49762e
 } from "antd";
+import TextArea from "antd/es/input/TextArea";
+import dayjs from "dayjs";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useGetBranchesQuery } from "../../api/Branch";
-import {
-  MinusOutlined,
-  PlusOutlined,
-  SearchOutlined,
-  StarFilled,
-} from "@ant-design/icons";
+import { useGetDetailQuery } from "../../api/Room";
+import { useProcessReviewMutation } from "../../api/User";
 
 const { RangePicker } = DatePicker;
 const Detail = () => {
   const { slug } = useParams();
+  const { data, refetch } = useGetDetailQuery(slug);
+  const [postComment] = useProcessReviewMutation();
+
   const [childs, setChilds] = useState<number>(0);
   const [adults, setAdults] = useState<number>(0);
   const [countRoom, setCountRoom] = useState<number>(0);
@@ -36,6 +38,19 @@ const Detail = () => {
   };
   const onFinishComment = (values: any) => {
     console.log("Success:", values);
+    if (values) {
+      postComment({ ...values, room_id: data.room.id })
+        .unwrap()
+        .then((req) => {
+          console.log(req);
+          message.success("Đánh giá thành công");
+          refetch();
+        })
+        .catch((error) => {
+          console.log(error);
+          message.error("Đánh giá thành ôcng");
+        });
+    }
   };
 
   const onFinishFailedComment = (errorInfo: any) => {
@@ -46,19 +61,19 @@ const Detail = () => {
       return;
     }
 
-    const { time, branch_id } = values;
-    const formattedDates = time?.map((item: any) =>
-      dayjs(item.$d).format("YYYY-MM-DD")
-    );
+    // const { time, branch_id } = values;
+    // const formattedDates = time?.map((item: any) =>
+    //   dayjs(item.$d).format("YYYY-MM-DD")
+    // );
 
-    const dataQuery = {
-      adult: adults,
-      child: childs,
-      branch_id,
-      soLuong: countRoom,
-      checkin: formattedDates?.[0],
-      checkout: formattedDates?.[1],
-    };
+    // const dataQuery = {
+    //   adult: adults,
+    //   child: childs,
+    //   branch_id,
+    //   soLuong: countRoom,
+    //   checkin: formattedDates?.[0],
+    //   checkout: formattedDates?.[1],
+    // };
 
     // setDataQuery(dataQuery);
     // if (!isLoading && !data?.data?.length) {
@@ -70,18 +85,22 @@ const Detail = () => {
     console.log("Failed:", errorInfo);
   };
 
+  if (!data) {
+    return <>loading...</>;
+  }
+
   return (
-    <div>
+    <div className="px-[160px]">
       <div>
-        <div className="mb-[160px] mt-[140px] flex justify-center gap-3">
-          <div className="flex flex-col gap-3 max-w-[800px]">
+        <div className="mt-[140px] flex justify-center gap-3">
+          <div className="flex flex-col gap-3 ">
             <img
               src="https://themewagon.github.io/sona/img/room/room-details.jpg"
               alt=""
             />
             <div>
               <div className="flex justify-between items-center flex-wrap">
-                <h1 className="text-3xl font-bold">Premium King Room</h1>
+                <h1 className="text-3xl font-bold">{data?.room?.name}</h1>
                 <div className="flex gap-3 items-center">
                   <Rate
                     allowHalf
@@ -100,33 +119,13 @@ const Detail = () => {
                 <span className="text-[24px] font-bold">159vnd</span>/đêm
               </h3>
               <ul className="flex flex-col gap-3 text-[16px] text-gray-500 mt-[20px]">
-                <li>Size: </li>
-                <li>Capacity: </li>
-                <li>Bed: </li>
-                <li>Services: </li>
+                <li>Người lớn: {data?.room?.adults}</li>
+                <li>Diện tích: {data?.room?.area}</li>
+                <li>Trẻ em: {data?.room?.children}</li>
+                <li>Chi nhánh: {data?.room?.branch.name}</li>
               </ul>
               <div className="mt-[20px] text-gray-500 w-full">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam
-                dicta a, sapiente iste quo odit illum sequi consectetur quam
-                officia dolorum quibusdam optio provident voluptates nostrum,
-                inventore quia, nisi voluptatibus. Lorem ipsum dolor sit amet,
-                consectetur adipisicing elit. Deleniti incidunt repellat labore,
-                eos dolor pariatur, doloribus mollitia deserunt numquam quaerat,
-                dolore quo odit recusandae corporis nihil facere! Veniam, dolore
-                repudiandae. Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Libero distinctio odio magni quae non dolores, alias quis
-                atque ipsa in unde impedit nobis corrupti ratione nisi
-                perspiciatis quas minus veritatis. Lorem, ipsum dolor sit amet
-                consectetur adipisicing elit. Laudantium quidem magni natus
-                optio perspiciatis rerum illo, provident impedit nesciunt
-                quibusdam nihil asperiores hic dolor, ut dolore consequuntur
-                ratione corporis ea? Lorem, ipsum dolor sit amet consectetur
-                adipisicing elit. Totam dicta a, sapiente iste quo odit illum
-                sequi consectetur quam officia dolorum quibusdam optio provident
-                voluptates nostrum, inventore quia, nisi voluptatibus. Lorem
-                ipsum dolor sit amet, consectetur adipisicing elit. Deleniti
-                incidunt repellat labore, eos dolor pariatur, doloribus mollitia
-                deserunt
+                {data?.room?.description}
               </div>
             </div>
           </div>
@@ -204,7 +203,7 @@ const Detail = () => {
                         message: "Vui lòng chọn số lượng phòng muốn",
                       },
                       {
-                        validator: (_, value) => {
+                        validator: (_) => {
                           if (countRoom < 1) {
                             return Promise.reject(
                               new Error("Vui lòng chọn ít 1 phòng")
@@ -261,7 +260,7 @@ const Detail = () => {
                         message: "Vui lòng chọn số lượng phòng muốn",
                       },
                       {
-                        validator: (_, value) => {
+                        validator: (_) => {
                           if (adults < 1) {
                             return Promise.reject(
                               new Error("Vui lòng chọn ít nhất một người lớn")
@@ -304,7 +303,7 @@ const Detail = () => {
                     </div>
                   </Form.Item>
                   <Form.List name="child">
-                    {(fields, { add, remove }, { errors }) => (
+                    {(fields, { add, remove }) => (
                       <>
                         <Form.Item>
                           <div className="flex gap-4 items-center flex-wrap">
@@ -343,7 +342,7 @@ const Detail = () => {
                           </div>
                         </Form.Item>
                         <div className="grid grid-cols-2 gap-2 ">
-                          {fields.map((field, index) => (
+                          {fields.map((field) => (
                             <Form.Item
                               required={false}
                               key={field.key}
@@ -405,8 +404,8 @@ const Detail = () => {
           </div>
         </div>
       </div>
-      {/* <Divider className="w-[800px]" /> */}
-      <div className="max-w-[1000px] flex justify-center w-full">
+      <Divider className="my-[50px]" />
+      <div className="w-full mb-[60px]">
         <Form
           name="basic"
           onFinish={onFinishComment}
@@ -414,45 +413,93 @@ const Detail = () => {
           autoComplete="off"
         >
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            name="rate"
+            rules={[{ required: true, message: "Đánh giá sao" }]}
           >
-            <Input />
+            <Rate allowHalf />
           </Form.Item>
-
           <Form.Item
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            name="comment"
+            rules={[{ required: true, message: "Vui lòng nhập bình luận" }]}
           >
-            <Input.Password />
+            <TextArea
+              rows={4}
+              placeholder="Đánh giá của bạn...."
+              className="pt-3"
+            />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Comment
-            </Button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Đánh giá
+            </button>
           </Form.Item>
         </Form>
+        {data?.room?.rate.length > 0 &&
+          data?.room?.rate.map((item: any) => (
+            <section className="bg-white  py-8 m-auto">
+              <div className="w-70% mx-auto ">
+                <article className="text-base bg-white rounded-lg ">
+                  <footer className="flex justify-between items-center mb-2">
+                    <div className="flex items-center">
+                      <p className="inline-flex items-center mr-3 text-sm text-gray-900  font-semibold">
+                        <img
+                          className="mr-2 w-6 h-6 rounded-full"
+                          src={item?.user?.image}
+                          alt={item?.user?.name}
+                        />
+                        {item?.user?.name}
+                      </p>
+                      <p className="text-sm text-gray-600 ">
+                        <time title="February 8th, 2022">Feb. 8, 2022</time>
+                      </p>
+                    </div>
 
-        <Comment
-          actions={actions}
-          author={<a>Han Solo</a>}
-          avatar={
-            <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
-          }
-          content={
-            <p>
-              We supply a series of design principles, practical patterns and
-              high quality design resources (Sketch and Axure), to help people
-              create their product prototypes beautifully and efficiently.
-            </p>
-          }
-          datetime={
-            <Tooltip title="2016-11-22 11:22:33">
-              <span>8 hours ago</span>
-            </Tooltip>
-          }
-        />
+                    <div
+                      id="dropdownComment1"
+                      className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow "
+                    >
+                      <ul
+                        className="py-1 text-sm text-gray-700 "
+                        aria-labelledby="dropdownMenuIconHorizontalButton"
+                      >
+                        <li>
+                          <a
+                            href="#"
+                            className="block py-2 px-4 hover:bg-gray-100 "
+                          >
+                            Edit
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block py-2 px-4 hover:bg-gray-100 "
+                          >
+                            Remove
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block py-2 px-4 hover:bg-gray-100 "
+                          >
+                            Report
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </footer>
+                  <div className=" mb-2">
+                    <div className="flex items-center space-x-1 ">
+                      <Rate allowHalf disabled defaultValue={item.star} />
+                    </div>
+                  </div>
+                  <p className="text-gray-500 ">{item.content}</p>
+                </article>
+              </div>
+            </section>
+          ))}
       </div>
     </div>
   );

@@ -1,14 +1,13 @@
 import { Pagination } from "antd";
 import { Link } from "react-router-dom";
 import {
-  useGetDetailHistoryBookingQuery,
-  useGetHistoryBookingQuery,
+  useGetHistoryBookingQuery
 } from "../../../api/User";
 import FormatPrice from "../../../utils/FormatPrice";
 
 type Props = {};
 
-export default function HistoryBooking({}: Props) {
+export default function HistoryBooking({ }: Props) {
   const { data, isLoading } = useGetHistoryBookingQuery({});
   console.log(data.data);
 

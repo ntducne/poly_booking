@@ -21,7 +21,8 @@ class RoomResource extends JsonResource
                     'image' => User::where('_id', $rate->user_id)->first()->image,
                 ],
                 'content' => $rate->comment,
-                'star' => $rate->rate
+                'star' => $rate->rate,
+                'time'=> $rate->time
             ];
         }
         return $arr;

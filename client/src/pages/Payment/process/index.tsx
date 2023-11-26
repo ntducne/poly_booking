@@ -13,15 +13,15 @@ export default function PaymentProcess() {
                 "room_id": cookie.bookingNow.room_id,
                 'checkin': cookie.roomSearch.checkin,
                 'checkout': cookie.roomSearch.checkout,
-                "soLuong": cookie.roomSearch.soLuong,
+                "amount_room": cookie.roomSearch.soLuong,
                 "branch_id": cookie.roomSearch.branch_id,
                 "adults": cookie.roomSearch.adult,
-                "children": cookie.roomSearch.child,
+                "child": cookie.roomSearch.child,
                 'email': cookie.userBook.email,
                 'phone': cookie.userBook.phone,
                 'name': cookie.userBook.name,
             }
-            fetch(`${import.meta.env.VITE_URL_API}/client/booking`, {
+            fetch(`${import.meta.env.VITE_URL_API}/client/v2/booking`, {
                 method: 'POST',
                 body: JSON.stringify(val),
                 headers: {

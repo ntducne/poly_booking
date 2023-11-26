@@ -1,25 +1,25 @@
 import {
-  MinusCircleOutlined,
   MinusOutlined,
   PlusOutlined,
-  SearchOutlined,
+  SearchOutlined
 } from "@ant-design/icons";
 import {
   Button,
   DatePicker,
   Form,
-  Input,
   InputNumber,
   Pagination,
   Select,
-  message,
+  message
 } from "antd";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useGetBranchesQuery } from "../../api/Branch";
 import { useGetRoomsQuery } from "../../api/Room";
-import dayjs from "dayjs";
 import {
   SlideRooms1,
   SlideRooms2,
@@ -29,13 +29,11 @@ import {
 } from "../../assets/images/Rooms/Slides";
 import Page from "../../components/Page";
 import Room from "../../components/Room";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 import PcLoading from "../../components/RoomLoading/PcLoading";
 type Props = {};
 
 const { RangePicker } = DatePicker;
-export default function Rooms({}: Props) {
+export default function Rooms({ }: Props) {
   const [width, setWidth] = useState(0);
   const navigate = useNavigate();
   const [dataQuery, setDataQuery] = useState({});
@@ -241,7 +239,7 @@ export default function Rooms({}: Props) {
                           message: "Vui lòng chọn số lượng phòng muốn",
                         },
                         {
-                          validator: (_, value) => {
+                          validator: (_) => {
                             if (countRoom < 1) {
                               return Promise.reject(
                                 new Error("Vui lòng chọn ít 1 phòng")
@@ -298,7 +296,7 @@ export default function Rooms({}: Props) {
                           message: "Vui lòng chọn số lượng phòng muốn",
                         },
                         {
-                          validator: (_, value) => {
+                          validator: (_) => {
                             if (adults < 1) {
                               return Promise.reject(
                                 new Error("Vui lòng chọn ít nhất một người lớn")
@@ -341,7 +339,7 @@ export default function Rooms({}: Props) {
                       </div>
                     </Form.Item>
                     <Form.List name="child">
-                      {(fields, { add, remove }, { errors }) => (
+                      {(fields, { add, remove }) => (
                         <>
                           <Form.Item>
                             <div className="flex gap-4 items-center flex-wrap">
@@ -380,7 +378,7 @@ export default function Rooms({}: Props) {
                             </div>
                           </Form.Item>
                           <div className="grid grid-cols-2 gap-2 ">
-                            {fields.map((field, index) => (
+                            {fields.map((field) => (
                               <Form.Item
                                 required={false}
                                 key={field.key}

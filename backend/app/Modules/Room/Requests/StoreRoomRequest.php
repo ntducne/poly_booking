@@ -23,7 +23,7 @@ class StoreRoomRequest extends Request
             'discount' => ['nullable', 'numeric', 'min:0'],
             'num_of_bed' => ['required', 'numeric', 'min:0'],
             'bed_size' => ['required', 'numeric', 'min:0'],
-            'branch_id' => ['required', 'string', Rule::exists(Branch::class, $this->column_id)],
+            // 'branch_id' => ['required', 'string', Rule::exists(Branch::class, $this->column_id)],
             'name' => ['required', 'string', Rule::unique(Room::class, 'name')],
             'images' => 'required|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
