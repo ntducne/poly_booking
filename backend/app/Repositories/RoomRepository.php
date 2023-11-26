@@ -87,7 +87,7 @@ class RoomRepository
             }
             else {
                 $booking = $this->booking
-                    ->where('room_type', $room_type->id)
+                    ->where('room_type', $room_type_id)
                     ->whereIn('_id', $billing->pluck('booking_id'))
                     ->where('checkin', '<=', $checkin)
                     ->where('checkout', '>=', $checkout)
@@ -298,7 +298,7 @@ class RoomRepository
             // Trường hợp 1: Số lượng phòng gia hạn nhỏ hơn số lượng phòng ban đầu
             if ($count_room_detail > $newAmountRoom) {
                 $roomNumberRenew = $request->roomNumberRenew;
-                if ($this->today->eq($newCheckout))  // ngày hiện tại bằng ngày checkout mới
+                if (Carbon::parse(Carbon::now()->format('Y-m-d H:i:s'))->eq($newCheckout))  // ngày hiện tại bằng ngày checkout mới
                 {
                     $this->bookDetail
                         ->where('booking_id', $booking->id)
@@ -308,13 +308,13 @@ class RoomRepository
                             'status' => 4,
                         ]);
                 }
-                elseif ($this->today->gt($newCheckout)) // ngày hiện tại lớn hơn ngày checkout mới
+                elseif (Carbon::parse(Carbon::now()->format('Y-m-d H:i:s'))->gt($newCheckout)) // ngày hiện tại lớn hơn ngày checkout mới
                 {
                     return response()->json([
                         'message' => 'Ngày gia hạn phải lớn hơn ngày hiện tại !',
                     ]);
                 }
-                elseif ($this->today->lt($newCheckout)) // ngày hiện tại nhỏ hơn ngày checkout mới
+                elseif (Carbon::parse(Carbon::now()->format('Y-m-d H:i:s'))->lt($newCheckout)) // ngày hiện tại nhỏ hơn ngày checkout mới
                 {
                     $this->bookDetail
                         ->where('booking_id', $booking->id)
@@ -366,6 +366,7 @@ class RoomRepository
             $booking->update([
                 'checkout' => $newCheckout,
                 'provisional' => $booking->provisional + $provisional,
+                'amount_room' => $newAmountRoom,
             ]);
             $newTotal = $billing->total + $provisional;
             $billing->update([
@@ -384,6 +385,12 @@ class RoomRepository
             $this->billing->where('_id', $billing->_id)->update([
                 'status' => 4,
             ]);
+            $this->bookDetail
+                ->where('booking_id', $booking->id)
+                ->where('status', 0)
+                ->update([
+                    'status' => 1,
+                ]);
             return $this->processBooking($request);
         }
     }
