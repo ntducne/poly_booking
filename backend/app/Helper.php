@@ -120,3 +120,8 @@ function convertToSlug($text) {
     return $text;
 }
 
+
+function tinhPhanTramTuHaiSo($soThuNhat, $soThuHai) {
+    $phanTram = (($soThuNhat - $soThuHai) / $soThuNhat) * 100;
+    return $phanTram;
+}

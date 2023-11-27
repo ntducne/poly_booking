@@ -15,18 +15,22 @@ import ChartFive from "../../../component/Charts/five";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { MoneyCollectOutlined } from "@ant-design/icons";
-
+import type { DatePickerProps } from 'antd';
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 const Dashboard = () => {
 
   const [formatDay, ] = useState('DD/MM/YYYY');
   const [formatMonth,] = useState('MM/YYYY');
+  const [weekFormat,] = useState('DD/MM');
+  const customWeekStartEndFormat: DatePickerProps['format'] = (value :any) =>
+  `${dayjs(value).startOf('week').format(weekFormat)} ~ ${dayjs(value)
+    .endOf('week')
+    .format(weekFormat)}`;
 
-  const [typeStat, setTypeStat] = useState("daily");
+  const [typeStat, setTypeStat] = useState('');
   const handleSelectStat = (value :string) => {
-    form.resetFields();
-
+    form.setFieldsValue({ typeValue: '' });
     setTypeStat(value);
   }
 
@@ -39,24 +43,40 @@ const Dashboard = () => {
     if(type === 'daily') {
       console.log({
         type,
-        day: dayjs(typeValue.$d).format(formatDay)
+        day: dayjs(typeValue.$d).format('YYYY-MM-DD')
+      });
+    }
+    if(type === 'weekly') {
+      console.log({
+        type,
+        day: dayjs(typeValue.$d).format('YYYY-MM-DD')
       });
     }
     if(type === 'monthly') {
       console.log({
         type,
-        day: dayjs(typeValue.$d).format(formatMonth)
+        month: dayjs(typeValue.$d).format('YYYY-MM'),
       });
     }
     if(type === 'yearly') {
       console.log({
         type,
-        day: dayjs(typeValue.$d)
+        year: dayjs(typeValue.$d).format('YYYY'),
       });
     }
     if(type === 'day_to_day') {
       const formatDay = typeValue?.map((item: any) =>
-        dayjs(item.$d).format(formatDay)
+        dayjs(item.$d).format('YYYY-MM-DD')
+      );
+      console.log({
+        type,
+        fromDay: formatDay?.[0],
+        toDay: formatDay?.[1],
+      });
+    }
+    if(type === 'week_to_week') {
+      const formatDay = typeValue?.map((item: any) =>
+        dayjs(item.$d).format('YYYY-MM-DD')
       );
       console.log({
         type,
@@ -66,7 +86,7 @@ const Dashboard = () => {
     }
     if(type === 'month_to_month') {
       const formatMonth = typeValue?.map((item: any) =>
-        dayjs(item.$d).format(formatMonth)
+        dayjs(item.$d).format('YYYY-MM')
       );
       console.log({
         type,
@@ -89,33 +109,54 @@ const Dashboard = () => {
   return (
     <>
       <Page title={`Trang chủ`}>
-        <Form form={form} name="basic"onFinish={submitStat}>
-          <div className="rounded-lg bg-white mb-4 flex items-center justify-end">
-            <span className="mr-3">Thống kê theo</span>
-              <Form.Item name="type" className="mb-0" initialValue="daily">
-              <Select
-                className="w-[220px] mr-2"
-                onChange={handleSelectStat}
-                // defaultValue="daily"
-                options={[
-                  { value: 'daily', label: 'Ngày' },
-                  { value: 'monthly', label: 'Tháng' },
-                  { value: 'yearly', label: 'Năm' },
-                  { value: 'day_to_day', label: 'Từ ngày đến ngày' },
-                  { value: 'month_to_month', label: 'Từ tháng đến tháng' },
-                  { value: 'year_to_year', label: 'Từ năm đến năm' },
-                ]}
-              />
+        <Form form={form} name="basic"onFinish={submitStat} style={{
+          height: 70
+        }}>
+          <div className="rounded-lg bg-white mb-4 flex items-start justify-end">
+              <Form.Item name="type" className="mb-0" 
+              // initialValue="daily" 
+              rules={[
+                {
+                  required: true,
+                  message: 'Vui lòng chọn loại thống kê',
+                },
+              ]}>
+                <Select
+                  className="w-[220px] mr-2"
+                  onChange={handleSelectStat}
+                  // defaultValue="daily"
+                  options={[
+                    { value: 'daily', label: 'Ngày' },
+                    { value: 'weekly', label: 'Tuần' },
+                    { value: 'monthly', label: 'Tháng' },
+                    { value: 'yearly', label: 'Năm' },
+                    { value: 'day_to_day', label: 'Từ ngày đến ngày' },
+                    { value: 'week_to_week', label: 'Từ tuần đến tuần'},
+                    { value: 'month_to_month', label: 'Từ tháng đến tháng' },
+                    { value: 'year_to_year', label: 'Từ năm đến năm' },
+                  ]}
+                />
               </Form.Item>
-                <Form.Item name="typeValue" className="mr-2 mb-0" initialValue={dayjs()}>
+                <Form.Item name="typeValue" className="mr-2 mb-0" 
+                initialValue={dayjs()} 
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng chọn thời gian',
+                  },
+                ]}>
                   {typeStat === 'daily' && <DatePicker className="w-[220px]" placeholder="Chọn ngày" format={formatDay}/>}
+                  {typeStat === 'weekly' && <DatePicker className="w-[220px]" picker="week" placeholder="Chọn tuần" format={customWeekStartEndFormat} />}
                   {typeStat === 'monthly' && <DatePicker picker="month" className="w-[220px]" placeholder="Chọn tháng" format={formatMonth}/>}
                   {typeStat === 'yearly' && <DatePicker picker="year" className="w-[220px]" placeholder="Chọn năm"/>}
                   {typeStat === 'day_to_day' && <RangePicker className="w-[220px]" format={formatDay} placeholder={['Từ ngày', 'Đến ngày']}/>}
+                  {typeStat === 'week_to_week' && <RangePicker className="w-[220px]" picker="week" format={customWeekStartEndFormat} placeholder={['Từ tuần', 'Đến tuần']}/>}
                   {typeStat === 'month_to_month' && <RangePicker picker="month" className="w-[220px]" format={formatMonth} placeholder={['Từ tháng', 'Đến tháng']}/>}
                   {typeStat === 'year_to_year' && <RangePicker picker="year" className="w-[220px]" placeholder={['Từ năm', 'Đến năm']}/>}
                 </Form.Item>
-              <Button loading={true} className="w-[100px]" htmlType="submit">
+              <Button 
+              // loading={true} 
+              className="w-[100px]" htmlType="submit">
                 Xem
               </Button>
           </div>
@@ -163,10 +204,8 @@ const Dashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-500">Profit</p>
-
                   <p className="text-2xl font-medium text-gray-900">$240.94</p>
                 </div>
-
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
                   <MoneyCollectOutlined className="text-3xl" />
                 </span>
