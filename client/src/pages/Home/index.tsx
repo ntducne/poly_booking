@@ -56,44 +56,44 @@ export default function Home({ }: Props) {
               <div className='lg:absolute hidden lg:block lg:top-1/2 lg:right-[-25%] lg:transform lg:-translate-y-1/2
              text-white'>
                 <div className='mb-5'>
-                  <span className='text-desc'>For luxury seekers</span>
+                  <span className='text-desc font-text_roboto'>Sang trọng và độc đáo</span>
 
                 </div>
-                <h2 className='max-w-[383px] text-h3 '>Discover a hotel that defines a new dimension of luxury. Emotional luxury.</h2>
-                <Link to='#' className='underline text-[24px]'>Views More</Link>
+                <h2 className='max-w-[383px] text-h3 font-text_roboto'>Khám phá một khách sạn xác định một khía cạnh mới của sự sang trọng. Cảm xúc sang trọng.</h2>
+                <Link to='/rooms' className='underline text-[24px] font-text_roboto'>Xem thêm</Link>
               </div>
 
             </div>
           </ObserverAnimate>
           <div className='text-white mt-[30px] flex flex-col lg:hidden items-center'>
             <div className='mb-5'>
-              <span className='text-desc'>For luxury seekers</span>
+              <span className='text-desc'>Sang trọng và độc đáo</span>
 
             </div>
-            <h2 className='text-[25px] text-center'>Discover a hotel that defines a new dimension of luxury. Emotional luxury.</h2>
-            <Link to='#' className='underline text-[24px] mt-[30px]'>View More</Link>
+            <h2 className='text-[25px] text-center'>Khám phá một khách sạn xác định một khía cạnh mới của sự sang trọng. Cảm xúc sang trọng.</h2>
+            <Link to='#' className='underline text-[24px] mt-[30px]'>Xem thêm</Link>
           </div>
         </div>
 
         <RoomsView />
         {/* restaurant */}
         <div className='mt-primary'>
-          <div className='flex justify-center  font-text_2nd mb-[60px]'>
+          <div className='flex justify-center font-text_2nd mb-[60px]'>
             <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
               <div className='text-center'>
-                <h2 className='text-h3 md:text-h1 max-w-[780px] text-center  font-medium'>We put a smile back on your face. Pleasing people the world over. The best surprise is no surprise.</h2>
-                <Link to='' className='border-b text-[20px] md:text-h3'>Views our rooms</Link>
+                <h2 className=' md:text-h1 max-w-[780px] text-center '>Một trải nghiệm tự nhiên được tạo nên từ sự chuyên nghiệp và quan tâm đặc biệt mà chúng tôi dành cho mỗi khách hàng.</h2>
+                <Link to='' className='border-b text-[20px] md:text-h3'>Xem phòng</Link>
               </div>
             </ObserverAnimate>
           </div>
-          <div className=' bg-[#111111] relative font-text_2nd lg:h-[675px] flex flex-col-reverse gap-5 lg:gap-0 lg:flex-row items-center justify-center text-white'>
+          <div className=' bg-[#111111] relative font-text_roboto lg:h-[675px] flex flex-col-reverse gap-5 lg:gap-0 lg:flex-row items-center justify-center text-white'>
             <ObserverAnimate position={{ x: 100, duration: 1.5 }}>
               <div className='absolute md:static z-50'>
-                <p className='text-desc'>Restaurant</p>
-                <h3 className='text-h3 md:text-h1 font-medium max-w-[300px] md:max-w-[580px] mb-4'>
-                  The art of meeting your highest expectations. Life’s better at the Garden
+                <p className='text-desc'>Nhà hàng</p>
+                <h3 className='text-h5 md:text-h1 max-w-[300px] md:max-w-[580px] mb-4'>
+                  Không gian nhà hàng bên trong khách sạn trang nhã và ấm cúng
                 </h3>
-                <Link to='' className='border-b text-[20px] md:text-h3'>Views our restaurant</Link>
+                <Link to='' className='border-b text-[20px] md:text-h3'>Xem thêm</Link>
               </div>
             </ObserverAnimate>
             <div className='absolute inset-0 bg-black opacity-50'></div>
@@ -106,9 +106,8 @@ export default function Home({ }: Props) {
         <div className='mt-primary px-4'>
           <div className='flex justify-center mb-[60px]'>
             <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
-              <h2 className='text-normal text-center text-[#202020] max-w-[800px] font-text font-light'>
-                Everything you need to live an unforgettable eco-luxury experience of health and well-being. The art of meeting your highest expectations.
-              </h2>
+              <h2 className='text-normal text-center text-[#202020] max-w-[800px] font-text_roboto font-light'>
+                Mọi thứ bạn cần để trải nghiệm một hành trình sang trọng, thân thiện với môi trường với sức khỏe và sự an lạc không thể quên.               </h2>
             </ObserverAnimate>
           </div>
           <div className='flex justify-center flex-col md:flex-row gap-[30px] md:gap-[50px]'>
@@ -117,11 +116,11 @@ export default function Home({ }: Props) {
                 <img src={Art1} className='w-full md:max-w-[570px] object-cover h-[450px]' alt="" />
                 <div className='absolute inset-0 bg-black opacity-50'></div>
                 <div className='absolute w-full bottom-[15%] group-hover:bottom-[50%] group-hover:translate-y-[70%] transition-all duration-1000 right-1/2 translate-x-1/2 text-white'>
-                  <h3 className='text-h3 font-text_2nd text-center'>Center Park</h3>
+                  <h3 className='text-h3 font-text_2nd text-center'>Sang trọng</h3>
                   <p className='text-small md:px-4 group-hover:md:block opacity-0 duration-300 transition-opacity ease-in-out 
                hidden md:text-center group-hover:opacity-100'>
-                    "Leather detail shoulder contrastic colour contour stunning silhouette working peplum. Statement buttons cover-up tweaks patch pockets perennial lapel collar flap chest pockets topline stitching cropped."
-                  </p>
+                    "
+                    Khách sạn chúng tôi tự hào là điểm đến sang trọng, nơi mỗi chi tiết đều được chăm chút kỹ lưỡng. Từ thiết kế độc đáo đến dịch vụ chăm sóc tận tâm, chúng tôi mang đến trải nghiệm lưu trú với đẳng cấp không giới hạn."                  </p>
 
                 </div>
               </Link>
@@ -131,11 +130,10 @@ export default function Home({ }: Props) {
                 <img src={Art2} className='w-full md:max-w-[570px] object-cover h-[450px]' alt="" />
                 <div className='absolute inset-0 bg-black opacity-50'></div>
                 <div className='absolute w-full bottom-[15%] group-hover:bottom-[50%] group-hover:translate-y-[70%] transition-all duration-1000 right-1/2 translate-x-1/2 text-white'>
-                  <h3 className='text-h3 font-text_2nd text-center'>Deluxe Suite</h3>
+                  <h3 className='text-h3 font-text_2nd text-center'>Ấm áp</h3>
                   <p className='text-small md:px-4 group-hover:md:block opacity-0 duration-300 transition-opacity ease-in-out 
                hidden md:text-center group-hover:opacity-100 '>
-                    "Leather detail shoulder contrastic colour contour stunning silhouette working peplum. Statement buttons cover-up tweaks patch pockets perennial lapel collar flap chest pockets topline stitching cropped."
-                  </p>
+                    "Không chỉ là nơi lưu trú, mà còn là một mái nhà ấm áp. Ánh đèn dịu dàng, không khí thân thiện và sự chăm sóc tận tâm tạo nên không gian ấm cúng, nơi mà mỗi khách hàng cảm nhận được sự ấm áp và chân thành từ đội ngũ nhân viên."                  </p>
 
                 </div>
               </Link>
@@ -148,8 +146,9 @@ export default function Home({ }: Props) {
         <div className='mt-primary ' ref={elementRef2}>
           <ObserverAnimate position={{ y: -50, duration: 1 }}>
             <div className='flex flex-col justify-center items-center text-white'>
-              <p className='text-center text-desc'>Hotel Gallery</p>
-              <h3 className='max-w-[800px] font-text_2nd text-center text-h3  md:text-h1 font-medium'>Enjoy and join the handful of guests who already sent their best photographic memories of their stay.</h3>
+              <p className='text-center text-desc'>PolyDev Hotel</p>
+              <h3 className='max-w-[800px] font-text_2nd text-center text-h3  md:text-h1 font-medium'>
+                Hãy tận hưởng và tham gia cùng những du khách đã chia sẻ những kí ức ảnh tốt nhất từ chuyến lưu trú của họ.</h3>
             </div>
 
           </ObserverAnimate>
