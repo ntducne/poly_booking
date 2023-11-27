@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 import { MenuOutlined, PieChartOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Head from "../component/header";
 import Footer from "../component/footer";
 import { ToastContainer } from "react-toastify";
@@ -41,6 +41,7 @@ import "react-toastify/dist/ReactToastify.css";
 export const LayoutContext = createContext("");
 
 const LayoutAdmin = () => {
+  const location = useLocation();
   const checkLogin = JSON.parse(cookies().Get('AuthUser') as any);
   if (!checkLogin) {
     return <Navigate to='/login' />
@@ -48,14 +49,14 @@ const LayoutAdmin = () => {
   const items: MenuItem[] = [
     getItem(
       "Thống kê",
-      "1",
-      <Link onClick={() => handleTitleChange("Thống kê")} to={`dashboard`}>
+      "/",
+      <Link onClick={() => handleTitleChange("Thống kê")} to={`/`}>
         <PieChartOutlined />
       </Link>
     ),
     getItem(
       "Chi nhánh",
-      "16",
+      "/branches",
       <Link onClick={() => handleTitleChange("Chi nhánh")} to={`branches`}>
         <AiTwotoneGift />
       </Link>
@@ -64,17 +65,17 @@ const LayoutAdmin = () => {
     getItem("Phòng", "sub1", <BiSolidBed />, [
       getItem(
         "Phòng",
-        "3",
+        "/room",
         <Link onClick={() => handleTitleChange("Phòng")} to={`room`} />
       ),
       getItem(
         "Loại Phòng",
-        "4",
+        "/room/type",
         <Link onClick={() => handleTitleChange("Loại phòng")} to={`room/type`} />
       ),
       getItem(
         "Tiện ích Phòng",
-        "5",
+        "/room/utilities",
         <Link
           onClick={() => handleTitleChange("Tiện ích")}
           to={`room/utilities`}
@@ -82,7 +83,7 @@ const LayoutAdmin = () => {
       ),
       getItem(
         "Đặt Phòng",
-        "6",
+        "/room/booking",
         <Link
           onClick={() => handleTitleChange("Đặt Phòng")}
           to={`room/booking`}
@@ -91,7 +92,7 @@ const LayoutAdmin = () => {
     ]),
     getItem(
       "Hoá đơn",
-      "7",
+      "/billing",
       <Link onClick={() => handleTitleChange("Hóa đơn")} to={`billing`}>
         {" "}
         <AiFillBank />
@@ -99,7 +100,7 @@ const LayoutAdmin = () => {
     ),
     getItem(
       "Dịch vụ",
-      "8",
+      "/services",
       <Link onClick={() => handleTitleChange("Dịch vụ")} to={`services`}>
         <AiOutlineCrown />
       </Link>
@@ -113,7 +114,7 @@ const LayoutAdmin = () => {
     // ),
     getItem(
       "Chính sách",
-      "10",
+      "/policy",
       <Link onClick={() => handleTitleChange("Chính sách")} to={`policy`}>
         <AiTwotonePrinter />
       </Link>
@@ -121,7 +122,7 @@ const LayoutAdmin = () => {
     getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
       getItem(
         "Nhân viên",
-        "11",
+        "/staff",
         <Link
           onClick={() => handleTitleChange("Nhân viên")}
           to={`staff`}
@@ -129,7 +130,7 @@ const LayoutAdmin = () => {
       ),
       getItem(
         "Người dùng",
-        "12",
+        "/user",
         <Link
           onClick={() => handleTitleChange("Người dùng")}
           to={`user`}
@@ -138,7 +139,7 @@ const LayoutAdmin = () => {
     ]),
     getItem(
       "Đánh giá",
-      "2",
+      "/feedback",
       <Link onClick={() => handleTitleChange("Đánh giá")} to={`feedback`}>
         <VscFeedback />
       </Link>
@@ -180,7 +181,9 @@ const LayoutAdmin = () => {
           <Menu
             className="text-[#737b8b] "
             theme="light"
-            // defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={[location.pathname]}
+            defaultOpenKeys={[location.pathname]}
+
             mode="inline"
             items={items}
           />
