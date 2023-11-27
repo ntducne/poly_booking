@@ -24,7 +24,4 @@ Route::get('/routes', function () {
     }
     echo "</table>";
 });
-Route::get('/daily_revenue_statistics', [DashboardController::class, 'daily_revenue_statistics']);
-Route::get('/weekly_revenue_statistics', [DashboardController::class, 'weekly_revenue_statistics']);
-Route::get('/monthly_revenue_statistics', [DashboardController::class, 'monthly_revenue_statistics']);
-Route::get('/yearly_revenue_statistics', [DashboardController::class, 'yearly_revenue_statistics']);
+Route::get('/revenue_statistics', [DashboardController::class, 'revenue_statistics']);
