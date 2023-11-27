@@ -222,7 +222,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -262,7 +262,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -298,7 +298,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -307,7 +307,10 @@ const BillDetail: React.FC = () => {
   const showModalExtend = () => {
     setIsModalExtendOpen(true);
   };
+
   const closeModalExtend = () => {
+    formRoomExtend.resetFields();
+    setIdRoomNewExtend(null)
     setRoomSearch([]);
     setIsModalExtendOpen(false);
   };
@@ -344,9 +347,8 @@ const BillDetail: React.FC = () => {
           encodeURIComponent(key) + "=" + encodeURIComponent(dataQuery[key])
       )
       .join("&");
-    const apiUrl = `${
-      import.meta.env.VITE_BASE_URL_API
-    }/client/v2/search?${queryString}`;
+    const apiUrl = `${import.meta.env.VITE_BASE_URL_API
+      }/client/v2/search?${queryString}`;
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -369,18 +371,21 @@ const BillDetail: React.FC = () => {
   // xu lý gia hạn phòng
   const [formRoomIdExtend] = Form.useForm();
   const [extendBooking] = useExtendBookingMutation();
+  const [idRoomNewExtend, setIdRoomNewExtend] = useState<any>(null);
+  const onSetIdRoomNewExtend = (value: any) => {
+    setIdRoomNewExtend(value);
+  };
 
   const onCheckRoomExtend = (values: any) => {
     console.log("values", values);
   };
-  console.log("dataRoomBook", dataRoomBook);
-  
+
   const onExtendBooking = () => {
     const { adults, childs, amount_room_renew, new_checkout } =
       formRoomExtend.getFieldsValue();
     const new_checkoutDate = dayjs(new_checkout.$d).format("YYYY-MM-DD");
     // TH1: Nếu số phòng gia hạn bằng số phòng hiện tại
-    if (amount_room_renew === dataBill?.data?.booking?.amount_room) {
+    if (amount_room_renew === dataBill?.data?.booking?.amount_room && idRoomNewExtend === null) {
       const dataExtendRoom = {
         billing_id: dataBill?.data?.id,
         amount_room: amount_room_renew,
@@ -394,15 +399,13 @@ const BillDetail: React.FC = () => {
             swal(res.message, {
               icon: "success",
             });
-            formRoomExtend.resetFields();
             closeModalExtend();
           }
         });
     }
-    console.log("1");
 
     // TH2: Nếu số phòng gia hạn nhỏ số phòng hiện tại
-    if (amount_room_renew < dataBill?.data?.booking?.amount_room) {
+    if (amount_room_renew < dataBill?.data?.booking?.amount_room && idRoomNewExtend === null) {
       const dataExtendRoom = {
         billing_id: dataBill?.data?.id,
         amount_room: amount_room_renew,
@@ -417,22 +420,21 @@ const BillDetail: React.FC = () => {
           if (res.message) {
             swal(res.message, {
               icon: "success",
-            });   
-            formRoomExtend.resetFilds();
+            });
             closeModalExtend();
           }
         });
     }
     // TH3: Nếu số phòng gia hạn lớn số phòng hiện tại
-    if (amount_room_renew >= dataBill?.data?.booking?.amount_room) {
+    if (amount_room_renew > dataBill?.data?.booking?.amount_room && idRoomNewExtend === null) {
       const dataExtendRoom = {
         adults: adults,
         childs: childs,
         checkin: dataBill?.data?.booking?.checkout,
         checkout: new_checkoutDate,
-        name: dataBill?.data?.representative?.name,
-        email: dataBill?.data?.representative?.email,
-        phone: dataBill?.data?.representative?.phone,
+        name: dataBill?.data?.booking?.representative?.name,
+        email: dataBill?.data?.booking?.representative?.email,
+        phone: dataBill?.data?.booking?.representative?.phone,
         billing_id: dataBill?.data?.id,
         amount_room: amount_room_renew,
         room_id: dataBill?.data?.booking?.detail[0].room_id,
@@ -445,13 +447,36 @@ const BillDetail: React.FC = () => {
             swal(res.message, {
               icon: "success",
             });
-            formRoomExtend.resetFields();
             closeModalExtend();
           }
         });
     }
 
     // TH4: Gia hạn khác phòng hiện tại
+    if (idRoomNewExtend !== null) {
+      const dataExtendRoom = {
+        adults: adults,
+        childs: childs,
+        checkin: dataBill?.data?.booking?.checkout,
+        checkout: new_checkoutDate,
+        branch_id: dataBill?.data?.branch?.id,
+        name: dataBill?.data?.booking?.representative?.name,
+        email: dataBill?.data?.booking?.representative?.email,
+        phone: dataBill?.data?.booking?.representative?.phone,
+        amount_room: amount_room_renew,
+        room_id: idRoomNewExtend,
+      };
+      extendBooking(dataExtendRoom)
+        .unwrap()
+        .then((res) => {
+          if (res.message) {
+            swal(res.message, {
+              icon: "success",
+            });
+            closeModalExtend();
+          }
+        });
+    }
   };
 
   // Table của lịch sử xem phòng
@@ -486,8 +511,6 @@ const BillDetail: React.FC = () => {
       key: "handle",
     },
   ];
-  
-  
 
   const dataHistory = dataBill?.data?.history?.map(
     (history: any, index: number) => {
@@ -502,7 +525,7 @@ const BillDetail: React.FC = () => {
 
   const changeRoomBook = (value: any) => {
     if (value < dataBill?.data?.booking.amount_room && value !== null) {
-      const dataRoomStatus = dataBill?.data?.booking?.detail.filter((item :any)=> item.status === 0      )
+      const dataRoomStatus = dataBill?.data?.booking?.detail;
       setRoomBook(dataRoomStatus);
     } else {
       setRoomBook([]);
@@ -529,6 +552,15 @@ const BillDetail: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center md:justify-end justify-start ml-5 md:ml-0 md:mr-3">
+          {dataBill?.data?.status === 0 && (
+            <button
+              type="button"
+              onClick={() => onCancelBooking(dataBill?.data?.id)}
+              className="text-gray-900 bg-gradient-to-r from-green-200 via-green-300 to-green-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            >
+              Chờ nhận phòng
+            </button>
+          )}
           {dataBill?.data?.status === 1 && (
             <button
               type="button"
@@ -808,11 +840,10 @@ const BillDetail: React.FC = () => {
                     {dataRoomSearch.map((room: any) => {
                       return (
                         <tr
-                          className={` border-b ${
-                            dataBill?.data?.booking.detail[0].room_id == room.id
+                          className={` border-b ${dataBill?.data?.booking.detail[0].room_id == room.id
                               ? "bg-gray-100"
                               : "bg-white"
-                          }`}
+                            }`}
                         >
                           <th
                             scope="row"
@@ -828,10 +859,10 @@ const BillDetail: React.FC = () => {
                             <p className="mb-2">{room.name}</p>
                             {dataBill?.data?.booking.detail[0].room_id ==
                               room.id && (
-                              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                Phòng hiện tại
-                              </span>
-                            )}
+                                <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                  Phòng hiện tại
+                                </span>
+                              )}
                           </td>
                           <td className="px-6 py-4">
                             {room.room_type.room_type_name}
@@ -858,23 +889,34 @@ const BillDetail: React.FC = () => {
                           <td>
                             {dataBill?.data?.booking.detail[0].room_id ==
                               room.id && (
-                              <button
-                                type="button"
-                                onClick={() => onExtendBooking()}
-                                className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                              >
-                                Gia hạn
-                              </button>
-                            )}
+                                <button
+                                  type="button"
+                                  onClick={() => onExtendBooking()}
+                                  className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                                >
+                                  Gia hạn
+                                </button>
+                              )}
                             {dataBill?.data?.booking.detail[0].room_id !=
                               room.id && (
-                              <button
-                                type="button"
-                                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                              >
-                                Chọn phòng mới
-                              </button>
-                            )}
+                                <button
+                                  type="button"
+                                  onClick={() => onSetIdRoomNewExtend(room.id)}
+                                  className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                                >
+                                  Chọn phòng mới
+                                </button>
+                              )}
+                            {idRoomNewExtend != null && dataBill?.data?.booking.detail[0].room_id !=
+                              room.id && (
+                                <button
+                                  type="button"
+                                  onClick={() => onExtendBooking()}
+                                  className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                                >
+                                  Gia hạn
+                                </button>
+                              )}
                           </td>
                         </tr>
                       );

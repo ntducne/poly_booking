@@ -21,6 +21,7 @@ import AccommodationReview from "./pages/Payment/accommodation/review";
 import PaymentProcess from "./pages/Payment/process";
 import PaymentStatus from "./pages/Payment/process/status";
 import SearchOrder from "./pages/SearchOrder";
+import LayoutClient2 from "./layouts/Layout2";
 
 function App() {
   return (
@@ -28,8 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LayoutClient />}>
           <Route index element={<Home />} />
-          <Route path="rooms" element={<Rooms />} />
-          <Route path="rooms/:slug" element={<Detail />} />
+
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="search-order" element={<SearchOrder />} />
@@ -38,6 +38,11 @@ function App() {
             <Route path="profile" element={<Edit />} />
           </Route>
         </Route>
+        <Route path="/rooms" element={<LayoutClient2 />}>
+          <Route index element={<Rooms />} />
+          <Route path=":slug" element={<Detail />} />
+        </Route>
+
         <Route path="/auth" element={<LayoutAuth />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

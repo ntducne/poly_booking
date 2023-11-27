@@ -3,8 +3,8 @@
 namespace App\Modules\RoomType\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RoomType\StoreRoomTypeRequest;
-use App\Http\Requests\RoomType\UpdateRoomTypeRequest;
+use App\Http\Modules\RoomType\Requests\StoreRoomTypeRequest;
+use App\Http\Modules\RoomType\Requests\UpdateRoomTypeRequest;
 use App\Models\RoomType;
 use App\Modules\RoomType\Resources\RoomTypeResource;
 use Exception;

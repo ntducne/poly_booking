@@ -53,7 +53,8 @@ const rootReducer = combineReducers({
     [ratesApi.reducerPath]: ratesApi.reducer,
     [permissonApi.reducerPath]: permissonApi.reducer,
     [policyApi.reducerPath]: policyApi.reducer,
-    [utilitiesApi.reducerPath]: utilitiesApi.reducer
+    [policyApi.reducerPath]: policyApi.reducer,
+    [utilitiesApi.reducerPath]: utilitiesApi.reducer,
 })
 
 

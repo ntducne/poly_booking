@@ -56,6 +56,8 @@ class Request extends FormRequest
             'filled' => ':attribute không được để trống !',
             'gt:value' => ':attribute phải lớn hơn :value !',
             'gte:value' => ':attribute phải lớn hơn hoặc bằng :value !',
+            'lt:value' => ':attribute phải nhỏ hơn :value !',
+            'lte:value' => ':attribute phải nhỏ hơn hoặc bằng :value !',
             'regex:pattern' => ':attribute không đúng định dạng :pattern !',
             'url' => ':attribute không đúng định dạng url !',
             'json' => ':attribute không đúng định dạng json !',

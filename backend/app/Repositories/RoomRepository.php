@@ -13,7 +13,9 @@ use App\Models\RoomType;
 use App\Models\User;
 use App\Modules\Branch\Resources\BranchResource;
 use App\Modules\RoomType\Resources\RoomTypeResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class RoomRepository
 {
@@ -26,6 +28,7 @@ class RoomRepository
     private Billing $billing;
     private User $user;
     private HistoryHandleBooking $history_handle;
+    private string $today;
 
     public function __construct()
     {
@@ -38,27 +41,27 @@ class RoomRepository
         $this->billing = new Billing();
         $this->user = new User();
         $this->history_handle = new HistoryHandleBooking();
+        $this->today = Carbon::parse(Carbon::now()->format('Y-m-d H:i:s'));
     }
 
     public function processSearchRoom($request)
     {
         $adult = $request->adult;
-        $children = $request->children;
-        $checkin = $request->checkin;
-        $checkout = $request->checkout;
+        $children = $request->child;
+        $checkin = Carbon::parse($request->checkin)->addHours(14)->format('Y-m-d H:i:s');
+        $checkout = Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s');
         $branch_id = $request->branch_id;
         $amount_room = $request->amount_room;
         $room_type_id = $request->room_type_id;
         $getRoom = [];
-        if($room_type_id){
+        if ($room_type_id) {
             $room = $this->room->where('room_type_id', $room_type_id)->get();
             foreach ($room as $item) {
                 if ($item->adults >= $adult && $item->children >= $children) {
                     $getRoom[] = $item;
                 }
             }
-
-        }
+        } 
         else {
             $room_type = $this->room_type->where('branch_id', $branch_id)->get();
             foreach ($room_type as $value) {
@@ -70,42 +73,74 @@ class RoomRepository
                 }
             }
         }
-        $billing = $this->billing
-                        ->whereNotIn('status', [2, 4, 6, 7])
-                        ->where('branch_id', $branch_id)
-                        ->get();
-        $booking = $this->booking
-                        // ->whereIn('room_type', $room_type->pluck('id'))
-                        ->whereIn('_id', $billing->pluck('booking_id'))
-                        ->where('checkin', '>=', $checkin)
-                        ->where('checkout', '<=', $checkout)
-                        ->get();
-
-        $room_completed = [];
-        foreach ($getRoom as $room) {
-            $room_number = $this->bookDetail
-                                ->where('status', 0)
-                                ->where('room_id', $room->id)
-                                ->whereIn('booking_id', $booking->pluck('_id'))
-                                ->pluck('room_number');
-            $newArray = [];
-            foreach ($room->room_number as $value) {
-                if (!in_array($value, $room_number->toArray())) {
-                    $newArray[] = $value;
+        $billing = $this->billing->whereNotIn('status', [2, 4, 6, 7])->where('branch_id', $branch_id)->get();
+        if(count($billing) > 0){
+            $booking = $this->booking
+                ->whereIn('room_type', $room_type->pluck('id'))
+                ->whereIn('_id', $billing->pluck('booking_id'))
+                ->where('checkin', '>=', $checkin)
+                ->where('checkout', '<=', $checkout)
+                ->get();
+            $room_completed = [];
+            foreach ($getRoom as $room) {
+                $room_number = $this->bookDetail
+                    ->where('status', 0)
+                    ->where('room_id', $room->id)
+                    ->whereIn('booking_id', $booking->pluck('id'))
+                    ->pluck('room_number');
+                $newArray = [];
+                foreach ($room->room_number as $value) {
+                    if (!in_array($value, $room_number->toArray())) {
+                        $newArray[] = $value;
+                    }
                 }
-            }
-            $price = 0;
-            $price_per_night = $this->room_type->find($room->room_type_id)->price_per_night;
-            if($room->discount > 0) {
-                if($room->discount < 95) {
-                    $price = $price_per_night * ($room->discount / 100);
+                $price = 0;
+                $price_per_night = $this->room_type->find($room->room_type_id)->price_per_night;
+                if ($room->discount > 0) {
+                    if ($room->discount < 95) {
+                        $price = $price_per_night * ($room->discount / 100);
+                    } else {
+                        $price = ($price_per_night - $room->discount);
+                    }
                 } else {
-                    $price = ($price_per_night - $room->discount);
+                    $price = $price_per_night;
                 }
-            } else {
-                $price = $price_per_night;
+                if (count($newArray) > 0) {
+                    $room_completed[] = [
+                        'id' => $room->id,
+                        'name' => $room->name,
+                        'amount' => $room->amount,
+                        'discount' => $room->discount,
+                        'price' => $price,
+                        'adults' => $room->adults,
+                        'children' => $room->children,
+                        'description' => $room->description,
+                        'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
+                        'branch' => new BranchResource($this->branch->find($room->branch_id)),
+                        'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
+                        'room_empty' => count($newArray)
+                    ];
+                }
             }
-            if(count($newArray) > 0){
+            $room_completed_2 = array_filter($room_completed, function ($room) use ($amount_room) {
+                return $room['amount'] >= $amount_room && $room['room_empty'] >= $amount_room;
+            });
+            return $room_completed_2;
+        }
+        else {
+            $room_completed = [];
+            foreach ($getRoom as $room) {
+                $price = 0;
+                $price_per_night = $this->room_type->find($room->room_type_id)->price_per_night;
+                if ($room->discount > 0) {
+                    if ($room->discount < 95) {
+                        $price = $price_per_night * ($room->discount / 100);
+                    } else {
+                        $price = ($price_per_night - $room->discount);
+                    }
+                } else {
+                    $price = $price_per_night;
+                }
                 $room_completed[] = [
                     'id' => $room->id,
                     'name' => $room->name,
@@ -118,21 +153,26 @@ class RoomRepository
                     'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
                     'branch' => new BranchResource($this->branch->find($room->branch_id)),
                     'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
-                    'room_empty' => count($newArray)
+                    'room_empty' => count($room->room_number)
                 ];
             }
+            $room_completed_2 = array_filter($room_completed, function ($room) use ($amount_room) {
+                return $room['amount'] >= $amount_room;
+            });
+            return $room_completed_2;
         }
-        $room_completed_2 = array_filter($room_completed, function ($room) use ($amount_room) {
-            return $room['amount'] >= $amount_room;
-        });
-        return $room_completed_2;
+
     }
 
-    public function processBooking($request)
+    public function processBooking($request): JsonResponse|array
     {
         $searchRoom = $this->processSearchRoom($request);
-        if(count($searchRoom) == 0){
-            return false;
+        if (count($searchRoom) == 0) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Không tìm thấy phòng !',
+                'data' => []
+            ]);
         }
         if (count($searchRoom) > 0) {
             $foundItem = collect($searchRoom)->firstWhere('id', $request->room_id);
@@ -148,8 +188,8 @@ class RoomRepository
         $provisional = $this->calculateProvisional($price_per_night, $room_discount, $number_of_nights, $request->amount_room);
         $bookingData = [
             'booking_date' => Carbon::now()->format('Y-m-d'),
-            'checkin' => $request->checkin,
-            'checkout' => $request->checkout,
+            'checkin' => Carbon::parse($request->checkin)->addHours(14)->format('Y-m-d H:i:s'),
+            'checkout' => Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s'),
             'room_type' => $room->room_type_id,
             'representative' => [
                 'name' => $request->name,
@@ -159,8 +199,8 @@ class RoomRepository
             'provisional' => $provisional,
             'amount_people' => [
                 'adult' => $request->adult,
-                'children' => $request->children,
-                'total' => $request->adult + $request->children,
+                'children' => $request->child,
+                'total' => $request->adult + $request->child,
             ],
             'amount_room' => $request->amount_room,
             'status' => 0,
@@ -176,6 +216,7 @@ class RoomRepository
                 'room_id' => $room->id,
                 'room_name' => $room->name,
                 'room_number' => $value,
+                'isCheckout' => Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s'),
                 'status' => 0,
             ]);
         }
@@ -203,7 +244,7 @@ class RoomRepository
         ];
     }
 
-    private function calculateProvisional($price_per_night, $room_discount, $number_of_nights, $amount_room)
+    private function calculateProvisional($price_per_night, $room_discount, $number_of_nights, $amount_room): float|int
     {
         if ($room_discount > 0) {
             if ($room_discount < 95) {
@@ -216,30 +257,64 @@ class RoomRepository
         }
     }
 
-    public function processRenew($request){
+    public function processRenew($request)
+    {
         $room_id = $request->room_id;
         $billing = $this->billing->find($request->billing_id);
         $booking = $this->booking->find($billing->booking_id);
         $bookDetail = $this->bookDetail->where('booking_id', $booking->id)->first();
-        if($room_id == $bookDetail->room_id){
-            $room = $this->room->find($room_id);
-            $newCheckout = $request->newCheckout;
-            $number_of_nights = Carbon::parse($booking->checkout)->diffInDays(Carbon::parse($newCheckout));
-            $price_per_night = $this->room_type->find($room->room_type_id)->price_per_night;
-            $room_discount = $room->discount;
-            $provisional = $this->calculateProvisional($price_per_night, $room_discount, $number_of_nights, $request->amount_room);
-            $count_room_detail = count($this->bookDetail->where('booking_id', $booking->id)->get());
-            if($request->amount_room < $count_room_detail){
-                $roomNumberRenew = $request->roomNumberRenew;
+        if ($room_id == $bookDetail->room_id) {
+            // thông tin phòng
+            $price_per_night = $this->room_type->find($bookDetail->room_type)->price_per_night;
+            $room_discount = $bookDetail->discount;
+            // thông tin booking
+            $count_room_detail = count($this->bookDetail->where('booking_id', $booking->id)->get()); // số lượng phòng ban đầu
+            $newAmountRoom = $request->amount_room; // số lượng phòng gia hạn
+            $newCheckIn = $booking->checkin;
+            $newCheckout = Carbon::parse($request->newCheckout)->addHours(12)->format('Y-m-d H:i:s');
+            $number_of_nights = Carbon::parse($newCheckIn)->diffInDays(Carbon::parse($newCheckout));
+            $provisional = $this->calculateProvisional($price_per_night, $room_discount, $number_of_nights, $newAmountRoom);
+//            // Trường hợp 1: Số lượng phòng gia hạn không thay đổi
+            if ($count_room_detail == $newAmountRoom) {
                 $this->bookDetail
                     ->where('booking_id', $booking->id)
                     ->where('status', 0)
-                    ->whereNotIn('_id', $roomNumberRenew)
                     ->update([
-                        'status' => 1,
+                        'is_checkout' => $newCheckout,
                     ]);
             }
-            if($request->amount_room > $count_room_detail){
+            // Trường hợp 1: Số lượng phòng gia hạn nhỏ hơn số lượng phòng ban đầu
+            if ($count_room_detail > $newAmountRoom) {
+                $roomNumberRenew = $request->roomNumberRenew;
+                if ($this->today->eq($newCheckout))  // ngày hiện tại bằng ngày checkout mới
+                {
+                    $this->bookDetail
+                        ->where('booking_id', $booking->id)
+                        ->where('status', 0)
+                        ->whereNotIn('_id', $roomNumberRenew)
+                        ->update([
+                            'status' => 4,
+                        ]);
+                }
+                elseif ($this->today->gt($newCheckout)) // ngày hiện tại lớn hơn ngày checkout mới
+                {
+                    return response()->json([
+                        'message' => 'Ngày gia hạn phải lớn hơn ngày hiện tại !',
+                    ]);
+                }
+                elseif ($this->today->lt($newCheckout)) // ngày hiện tại nhỏ hơn ngày checkout mới
+                {
+                    $this->bookDetail
+                        ->where('booking_id', $booking->id)
+                        ->where('status', 0)
+                        ->whereNotIn('_id', $roomNumberRenew)
+                        ->update([
+                            'is_checkout' => $newCheckout,
+                        ]);
+                }
+            }
+            // Trường hợp 2: Số lượng phòng gia hạn lớn hơn số lượng phòng ban đầu
+            if ($count_room_detail < $newAmountRoom) {
                 $searchRoom = $this->processSearchRoom($request);
                 if (count($searchRoom) > 0) {
                     $foundItem = collect($searchRoom)->firstWhere('_id', $request->room_id);
@@ -251,10 +326,9 @@ class RoomRepository
                 }
                 $roomNumbers = $room->room_number;
                 $newRoomNumber = [];
-
                 foreach ($roomNumbers as $value) {
                     $check = $this->bookDetail->where('room_number', $value)->first();
-                    if(!$check){
+                    if (!$check) {
                         $newRoomNumber[] = $value;
                     }
                 }
@@ -269,30 +343,34 @@ class RoomRepository
                         'status' => 0,
                     ]);
                 }
+
+                $this->bookDetail
+                    ->where('booking_id', $booking->id)
+                    ->where('status', 0)
+                    ->update([
+                        'is_checkout' => $newCheckout,
+                    ]);
             }
-            $this->booking->where('_id', $booking->_id)->update([
+            $booking->update([
                 'checkout' => $newCheckout,
                 'provisional' => $booking->provisional + $provisional,
-                'amount_room' => $request->amount_room,
             ]);
             $newTotal = $billing->total + $provisional;
-            $this->billing->where('_id', $billing->_id)->update([
-                'total' => $newTotal ,
+            $billing->update([
+                'total' => $newTotal,
             ]);
-            $values = [
+            $this->history_handle->create([
                 'booking_id' => $booking->_id,
                 'admin_id' => $request->user()->id,
                 'handle' => 'Gia hạn phòng',
                 'time' => Carbon::now()->format('Y-m-d H:i:s'),
-            ];
-            $this->history_handle->create($values);
+            ]);
             return response()->json([
                 'message' => 'Gia hạn phòng thành công !',
             ]);
-        }
-        else {
+        } else {
             $this->billing->where('_id', $billing->_id)->update([
-                'status' => 4 ,
+                'status' => 4,
             ]);
             return $this->processBooking($request);
         }

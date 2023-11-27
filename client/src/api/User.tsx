@@ -32,7 +32,7 @@ const userApi = createApi({
     updateProfile: builder.mutation({
       query: (data) => ({
         url: `update/profile`,
-        method: "PUT",
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["Users"],
