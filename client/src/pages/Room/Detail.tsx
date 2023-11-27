@@ -8,6 +8,11 @@ import {
   Rate,
   Select,
   message,
+<<<<<<< HEAD
+  Avatar,
+  Tooltip,
+=======
+>>>>>>> 81d4066155539d9e1fc21c5e66c5d7be7e49762e
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
@@ -20,8 +25,7 @@ import { useProcessReviewMutation } from "../../api/User";
 const { RangePicker } = DatePicker;
 const Detail = () => {
   const { slug } = useParams();
-  const { data, isLoading, refetch } = useGetDetailQuery(slug);
-  console.log(data);
+  const { data, refetch } = useGetDetailQuery(slug);
   const [postComment] = useProcessReviewMutation();
 
   const [childs, setChilds] = useState<number>(0);
@@ -57,19 +61,19 @@ const Detail = () => {
       return;
     }
 
-    const { time, branch_id } = values;
-    const formattedDates = time?.map((item: any) =>
-      dayjs(item.$d).format("YYYY-MM-DD")
-    );
+    // const { time, branch_id } = values;
+    // const formattedDates = time?.map((item: any) =>
+    //   dayjs(item.$d).format("YYYY-MM-DD")
+    // );
 
-    const dataQuery = {
-      adult: adults,
-      child: childs,
-      branch_id,
-      soLuong: countRoom,
-      checkin: formattedDates?.[0],
-      checkout: formattedDates?.[1],
-    };
+    // const dataQuery = {
+    //   adult: adults,
+    //   child: childs,
+    //   branch_id,
+    //   soLuong: countRoom,
+    //   checkin: formattedDates?.[0],
+    //   checkout: formattedDates?.[1],
+    // };
 
     // setDataQuery(dataQuery);
     // if (!isLoading && !data?.data?.length) {
@@ -199,7 +203,7 @@ const Detail = () => {
                         message: "Vui lòng chọn số lượng phòng muốn",
                       },
                       {
-                        validator: (_, value) => {
+                        validator: (_) => {
                           if (countRoom < 1) {
                             return Promise.reject(
                               new Error("Vui lòng chọn ít 1 phòng")
@@ -256,7 +260,7 @@ const Detail = () => {
                         message: "Vui lòng chọn số lượng phòng muốn",
                       },
                       {
-                        validator: (_, value) => {
+                        validator: (_) => {
                           if (adults < 1) {
                             return Promise.reject(
                               new Error("Vui lòng chọn ít nhất một người lớn")
@@ -299,7 +303,7 @@ const Detail = () => {
                     </div>
                   </Form.Item>
                   <Form.List name="child">
-                    {(fields, { add, remove }, { errors }) => (
+                    {(fields, { add, remove }) => (
                       <>
                         <Form.Item>
                           <div className="flex gap-4 items-center flex-wrap">
@@ -338,7 +342,7 @@ const Detail = () => {
                           </div>
                         </Form.Item>
                         <div className="grid grid-cols-2 gap-2 ">
-                          {fields.map((field, index) => (
+                          {fields.map((field) => (
                             <Form.Item
                               required={false}
                               key={field.key}

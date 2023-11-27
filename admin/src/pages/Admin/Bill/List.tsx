@@ -15,18 +15,20 @@ const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
 
   const onComfirm = (id: any) => {
+    console.log("id");
     swal({
       title: "Bạn có chắc chắn xác nhận không?",
-      icon: "success",
+      icon: "warning",
       buttons: ["Hủy", "Xác nhận"],
       dangerMode: true,
     }).then((willDelete: any) => {
       if (willDelete) {
+        
         swal("Xác nhận thành công!", {
           icon: "success",
         });
-      } else {
-        swal("Xác nhận thất bại!", {
+      }else{
+        swal("Đã hủy xác nhận!", {
           icon: "error",
         });
       }

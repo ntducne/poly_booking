@@ -1,14 +1,10 @@
 import type { TabsProps } from "antd";
-import { Tabs, Modal, Upload } from "antd";
+import { Tabs } from "antd";
 import { useGetProfileQuery } from "../../api/User";
 import HeroSlide from "../../components/HeroSlide";
-import UpdateProfile from "../../sections/Profile/UpdateProfile";
 import Page from "../../components/Page";
-import { PlusOutlined } from "@ant-design/icons";
-import type { RcFile, UploadProps } from "antd/es/upload";
-import type { UploadFile } from "antd/es/upload/interface";
-import { useState } from "react";
 import HistoryBooking from "../../sections/Profile/HistoryBooking";
+import UpdateProfile from "../../sections/Profile/UpdateProfile";
 
 export default function Edit() {
   const { data } = useGetProfileQuery({});
