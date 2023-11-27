@@ -333,7 +333,7 @@ const BillDetail: React.FC = () => {
       values;
     const new_checkoutDate = dayjs(new_checkout.$d).format("YYYY-MM-DD");
     const dataQuery: Record<string, string> = {
-      checkin: dataBill?.data?.booking?.checkout,
+      checkin: dayjs(dataBill?.data?.booking?.checkout).format("YYYY-MM-DD"),
       checkout: new_checkoutDate,
       adult: adults,
       child: childs,
@@ -358,13 +358,15 @@ const BillDetail: React.FC = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.message == "Hết phòng !") {
+        console.log(data?.status);
+        if (data?.message == "Hết phòng !") {
           message.error(data.message);
-        } else if (data.status == false) {
-          message.error(data.message);
-        } else {
-          message.success(data.message);
-          setRoomSearch(data.data);
+        }
+        if (data?.status == false) {
+          message.error(data?.error?.amount_room);
+        }else{
+          message.success(data?.message);
+          setRoomSearch(data?.data);
         }
       });
   };
@@ -395,14 +397,19 @@ const BillDetail: React.FC = () => {
       };
       extendBooking(dataExtendRoom)
         .unwrap()
-        .then((res) => {
+        .then((res:any) => {
           if (res.message) {
             swal(res.message, {
               icon: "success",
             });
             closeModalExtend();
-          }
-        });
+          }         
+        }).catch((err) => {
+          swal(err, {
+            icon: "error",
+          });
+        })
+        ;
     }
 
     // TH2: Nếu số phòng gia hạn nhỏ số phòng hiện tại
@@ -429,8 +436,8 @@ const BillDetail: React.FC = () => {
     // TH3: Nếu số phòng gia hạn lớn số phòng hiện tại
     if (amount_room_renew > dataBill?.data?.booking?.amount_room && idRoomNewExtend === null) {
       const dataExtendRoom = {
-        adults: adults,
-        childs: childs,
+        adult: adults,
+        children: childs,
         checkin: dataBill?.data?.booking?.checkout,
         checkout: new_checkoutDate,
         name: dataBill?.data?.booking?.representative?.name,
@@ -456,16 +463,18 @@ const BillDetail: React.FC = () => {
     // TH4: Gia hạn khác phòng hiện tại
     if (idRoomNewExtend !== null) {
       const dataExtendRoom = {
-        adults: adults,
-        childs: childs,
+        adult: adults,
+        child: childs,
         checkin: dataBill?.data?.booking?.checkout,
         checkout: new_checkoutDate,
+        newCheckout: new_checkoutDate,
         branch_id: dataBill?.data?.branch?.id,
         name: dataBill?.data?.booking?.representative?.name,
         email: dataBill?.data?.booking?.representative?.email,
         phone: dataBill?.data?.booking?.representative?.phone,
         amount_room: amount_room_renew,
         room_id: idRoomNewExtend,
+        billing_id: dataBill?.data?.id
       };      
       extendBooking(dataExtendRoom)
         .unwrap()
@@ -930,10 +939,10 @@ const BillDetail: React.FC = () => {
           </div>
         )}
       </Modal>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2  2xl:grid-rows-1 2xl:grid-cols-3 gap-4 mt-4 mb-4">
         {/* <div className="grid md:grid-rows-1 grid-rows-1 gap-4"> */}
 
-        <div>
+        <div className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 2xl:col-span-1 2xl:row-span-1">
           <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
             <h5 className=" mb-2 text-2xl font-bold tracking-tight text-gray-900">
               Thông tin đặt phòng
@@ -963,7 +972,7 @@ const BillDetail: React.FC = () => {
           </div>
         </div>
 
-        <div>
+        <div className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 2xl:col-span-1 2xl:row-span-1">
           <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
               Thông tin khách hàng
@@ -1073,9 +1082,9 @@ const BillDetail: React.FC = () => {
             </div>
           </div>
         </div>
-
         {/* </div> */}
-        <div>
+
+        <div className="col-span-1 row-span-1 md:col-span-2 md:row-span-1 2xl:col-span-1 2xl:row-span-1">
           <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow ">
             <div className="flex justify-between items-center">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
@@ -1198,6 +1207,12 @@ const BillDetail: React.FC = () => {
                   Số lượng
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Checkin
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Ngày trả
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Giá
                 </th>
                 <th>Trạng thái</th>
@@ -1219,6 +1234,9 @@ const BillDetail: React.FC = () => {
                       </div>
                     </th>
                     <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">{dataBill?.data?.booking?.checkin}</td>
+                    <td className="px-6 py-4">{room?.is_checkout ? (room?.is_checkout) : (dataBill?.data?.booking?.checkout) }</td>
+
                     <td className="px-6 py-4">{formatMoneyVN(room?.price)}</td>
                     <td>
                       <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
