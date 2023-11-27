@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Dashboard\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
@@ -23,7 +24,7 @@ Route::get('/routes', function () {
     }
     echo "</table>";
 });
-Route::get('/event', function () {
-    event(new App\Events\Message('Someone'));
-    echo "Event has been sent!";
-});
+Route::get('/daily_revenue_statistics', [DashboardController::class, 'daily_revenue_statistics']);
+Route::get('/weekly_revenue_statistics', [DashboardController::class, 'weekly_revenue_statistics']);
+Route::get('/monthly_revenue_statistics', [DashboardController::class, 'monthly_revenue_statistics']);
+Route::get('/yearly_revenue_statistics', [DashboardController::class, 'yearly_revenue_statistics']);

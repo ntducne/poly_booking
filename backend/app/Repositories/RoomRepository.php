@@ -355,7 +355,6 @@ class RoomRepository
                         'status' => 0,
                     ]);
                 }
-
                 $this->bookDetail
                     ->where('booking_id', $booking->id)
                     ->where('status', 0)

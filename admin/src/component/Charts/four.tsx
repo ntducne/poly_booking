@@ -56,7 +56,13 @@ export default function ChartFour() {
   } as any;
   return (
     <div id="chart">
-      <ReactApexChart options={state.options} series={state.series} type="line" height={350} />
+      <ReactApexChart 
+        options={state.options} 
+        series={state.series} 
+        type="line" 
+        height={350}
+         
+      />
     </div>
   );
 }

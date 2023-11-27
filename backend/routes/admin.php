@@ -23,6 +23,24 @@ Route::fallback(function () {
 });
 
 Route::middleware(CheckPermission::class)->group(function () {
+
+    Route::prefix('stats')->as('stats.')->group(function () {
+        Route::prefix('revenue')->as('revenue.')->group(function () {
+            Route::prefix('daily')->as('daily.')->group(function (){
+            
+            });
+            Route::prefix('weekly')->as('weekly.')->group(function (){
+                
+            });
+            Route::prefix('monthly')->as('monthly.')->group(function (){
+                
+            });
+            Route::prefix('year')->as('year.')->group(function (){
+                
+            });
+        });
+    });
+
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
 
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);
@@ -66,6 +84,9 @@ Route::middleware(CheckPermission::class)->group(function () {
             Route::post('/giaHan', [BookingController::class, 'giaHan'])->name('giaHan');
         });
     });
+
+    
+
 
 });
 Route::post('/logout', [AuthController::class, 'logout']);
