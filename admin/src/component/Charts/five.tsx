@@ -1,84 +1,67 @@
 import ReactApexChart from "react-apexcharts";
+
 export default function ChartFive() {
-    const state = {
-        series: [{
-            name: 'TEAM A',
-            type: 'column',
-            data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
-        }, {
-            name: 'TEAM B',
-            type: 'area',
-            data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
-        }, {
-            name: 'TEAM C',
-            type: 'line',
-            data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
-        }],
-        options: {
-            chart: {
-                height: 350,
-                type: 'line',
-                stacked: false,
-            },
-            stroke: {
-                width: [0, 2, 5],
-                curve: 'smooth'
-            },
-            plotOptions: {
-                bar: {
-                    columnWidth: '50%'
-                }
-            },
+  const state = {
+          
+    series: [{
+      name: 'Sales',
+      data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+    }],
+    options: {
+      chart: {
+        height: 350,
+        type: 'line',
+      },
+      forecastDataPoints: {
+        count: 7
+      },
+      stroke: {
+        width: 5,
+        curve: 'smooth'
+      },
+      xaxis: {
+        type: 'datetime',
+        categories: [
 
-            fill: {
-                opacity: [0.85, 0.25, 1],
-                gradient: {
-                    inverseColors: false,
-                    shade: 'light',
-                    type: "vertical",
-                    opacityFrom: 0.85,
-                    opacityTo: 0.55,
-                    stops: [0, 100, 100, 100]
-                }
-            },
-            labels: ['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003',
-                '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003'
-            ],
-            markers: {
-                size: 0
-            },
-            xaxis: {
-                type: 'datetime'
-            },
-            yaxis: {
-                title: {
-                    text: 'Points',
-                },
-                min: 0
-            },
-            tooltip: {
-                shared: true,
-                intersect: false,
-                y: {
-                    formatter: (y :any) => {
-                        if (typeof y !== "undefined") {
-                            return y.toFixed(0) + " points";
-                        }
-                        return y;
-
-                    }
-                }
-            }
+          '1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000', '7/11/2000', '8/11/2000', '9/11/2000', '10/11/2000', '11/11/2000', '12/11/2000', '1/11/2001', '2/11/2001', '3/11/2001','4/11/2001' ,'5/11/2001' ,'6/11/2001'
+        ],
+        tickAmount: 10,
+        labels: {
+          formatter: function(value :any, timestamp :any, opts :any) {
+            return opts.dateFormatter(new Date(timestamp), 'dd MMM')
+          }
+        }
+      },
+      title: {
+        text: 'New Customer',
+        align: 'left',
+        style: {
+          fontSize: "16px",
+          color: '#666'
+        }
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          gradientToColors: [ '#FDD835'],
+          shadeIntensity: 1,
+          type: 'horizontal',
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 100, 100, 100]
         },
-    } as any;
-    return (
-        <div id="chart">
-            <ReactApexChart 
-                options={state.options} 
-                series={state.series} 
-                type="line" 
-                height={350} 
-            />
-        </div>
-    )
+      },
+      yaxis: {
+        // min: -10,
+        // max: 40
+      }
+    },
+
+  } as any;
+  return (
+    <div id="chart">
+      <ReactApexChart options={state.options} series={state.series} type="line" height={350} />
+    </div>
+  );
 }
