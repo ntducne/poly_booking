@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { cookies } from '../config/cookies';
 
 const utilitiesApi = createApi({
-    reducerPath: "utilities",
+    reducerPath: "utilitie",
     tagTypes: ['Utilities'],
     baseQuery: fetchBaseQuery({
         // baseUrl: "https://api.polydevhotel.site",
@@ -13,7 +13,7 @@ const utilitiesApi = createApi({
         },
     }),
     endpoints: (builder) => ({
-        getUtilitie: builder.query<any, any>({
+        getAllUtilitie: builder.query<any, any>({
             // query: (query) => `admin/rooms/types?page=${query.page || 1}`,
             query: () => `utilities`,
             providesTags: ['Utilities']
@@ -56,6 +56,6 @@ const utilitiesApi = createApi({
     })
 })
 
-export const { useGetUtilitieQuery, useCreateUtilitieMutation, useGetDetailUtilitieQuery, useUpdateUtilitieMutation, useDeleteUtilitieMutation } = utilitiesApi
+export const { useGetAllUtilitieQuery, useCreateUtilitieMutation, useGetDetailUtilitieQuery, useUpdateUtilitieMutation, useDeleteUtilitieMutation } = utilitiesApi
 export const roomReducer = utilitiesApi.reducer
 export default utilitiesApi

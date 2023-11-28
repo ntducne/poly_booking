@@ -123,18 +123,16 @@ export default function Rooms({ }: Props) {
             <div className="absolute w-full h-full bg-black/50"></div>
             <div className="z-20 text-white text-center">
               <div className="uppercase tracking-[6px] mb-5">
-                Just enjoy and relax
+                Chỉ cần tận hưởng và thư giãn
               </div>
               <h1
                 className="text-[32px] font-extralight uppercase tracking-[3px] 
                         max-w-[920px] lg:text-[68px] leading-tight mb-6"
               >
-                Retreat Hotel at Santorini
+                Khách sạn nghỉ dưỡng tại Việt Nam
               </h1>
               <span className=" font-extralight tracking-[3px]  ">
-                Unwind the clock of modern life. Unlock the door to a wonder of
-                the world.
-              </span>
+                Làm chậm đồng hồ của cuộc sống hiện đại. Mở cửa ra một kỳ quan thế giới.</span>
             </div>
           </div>
         </div>
@@ -450,7 +448,7 @@ export default function Rooms({ }: Props) {
           <div className="flex justify-center  font-text_2nd mb-[60px]">
             <div className="text-center">
               <h2 className="text-[30px] md:text-h1 max-w-[780px] text-center  font-medium">
-                Get Ready to live for unlimited living experience
+                Hãy sẵn sàng để có trải nghiệm sống không giới hạn
               </h2>
             </div>
           </div>
@@ -501,10 +499,8 @@ export default function Rooms({ }: Props) {
             </SwiperSlide>
           </Swiper>
           <div className="flex justify-center mt-[60px]">
-            <h2 className="text-[23px] text-center text-[#202020] max-w-[600px] font-text font-light">
-              Tune Hotels tells potential customers what they can expect when
-              they visit – a beautiful and luxurious 5-star sleeping experience,
-              at a very affordable 1-star price.
+            <h2 className="text-[23px] text-center text-[#202020] max-w-[600px] font-text_roboto font-light">
+              PolyDev Hotels cho khách hàng tiềm năng biết những gì họ có thể mong đợi khi ghé thăm – trải nghiệm ngủ 5 sao đẹp và sang trọng với mức giá 1 sao rất phải chăng.
             </h2>
           </div>
         </div>
