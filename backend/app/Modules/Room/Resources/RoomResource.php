@@ -4,6 +4,7 @@ namespace App\Modules\Room\Resources;
 
 use App\Models\Branch;
 use App\Models\RateRoom;
+use App\Models\RoomType;
 use App\Models\User;
 use App\Modules\Branch\Resources\BranchResource;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -36,11 +37,12 @@ class RoomResource extends JsonResource
             'area' => $this->area,
             'adults' => $this->adults,
             'children' => $this->children,
-            'pay_upon_check_in' => $this->pay_upon_check_in,
+            'price' => $this->CalcPrice(),
+            // 'pay_upon_check_in' => $this->pay_upon_check_in,
             'description' => $this->description,
             'discount' => $this->discount,
             'status' => $this->status,
-            'policies_and_information' => $this->policies_and_information,
+            // 'policies_and_information' => $this->policies_and_information,
             'num_of_bed' => $this->num_of_bed,
             'bed_size' => $this->bed_size,
             'branch' => new BranchResource(Branch::find($this->branch_id)->first()),
