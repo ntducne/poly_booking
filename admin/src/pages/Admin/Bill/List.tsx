@@ -15,6 +15,7 @@ const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
 
   const onComfirm = (id: any) => {
+    console.log(id);
     swal({
       title: "Bạn có chắc chắn xác nhận không?",
       icon: "success",

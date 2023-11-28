@@ -18,7 +18,7 @@ import {
   Card,
   message,
   Table,
-  TableProps,
+  // TableProps,
   Skeleton,
 } from "antd";
 import {
@@ -841,8 +841,8 @@ const BillDetail: React.FC = () => {
                       return (
                         <tr
                           className={` border-b ${dataBill?.data?.booking.detail[0].room_id == room.id
-                              ? "bg-gray-100"
-                              : "bg-white"
+                            ? "bg-gray-100"
+                            : "bg-white"
                             }`}
                         >
                           <th
