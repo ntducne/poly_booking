@@ -21,7 +21,6 @@ const { RangePicker } = DatePicker;
 const Detail = () => {
   const { slug } = useParams();
   const { data, refetch } = useGetDetailQuery(slug);
-  console.log(data);
   const [postComment] = useProcessReviewMutation();
 
   const [childs, setChilds] = useState<number>(0);
@@ -57,21 +56,19 @@ const Detail = () => {
       return;
     }
 
-    const { time, branch_id } = values;
-    const formattedDates = time?.map((item: any) =>
-      dayjs(item.$d).format("YYYY-MM-DD")
-    );
+    // const { time, branch_id } = values;
+    // const formattedDates = time?.map((item: any) =>
+    //   dayjs(item.$d).format("YYYY-MM-DD")
+    // );
 
-    const dataQuery = {
-      adult: adults,
-      child: childs,
-      branch_id,
-      soLuong: countRoom,
-      checkin: formattedDates?.[0],
-      checkout: formattedDates?.[1],
-    };
-    console.log(dataQuery);
-
+    // const dataQuery = {
+    //   adult: adults,
+    //   child: childs,
+    //   branch_id,
+    //   soLuong: countRoom,
+    //   checkin: formattedDates?.[0],
+    //   checkout: formattedDates?.[1],
+    // };
 
     // setDataQuery(dataQuery);
     // if (!isLoading && !data?.data?.length) {

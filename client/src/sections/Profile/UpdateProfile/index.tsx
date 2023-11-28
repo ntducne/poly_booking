@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { Form, Input, message } from "antd";
+import { useEffect } from "react";
 import { useUpdateProfileMutation } from "../../../api/User";
 type Props = {
   data: {

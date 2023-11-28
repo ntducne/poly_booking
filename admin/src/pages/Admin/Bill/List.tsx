@@ -18,16 +18,17 @@ const BillList = () => {
     console.log(id);
     swal({
       title: "Bạn có chắc chắn xác nhận không?",
-      icon: "success",
+      icon: "warning",
       buttons: ["Hủy", "Xác nhận"],
       dangerMode: true,
     }).then((willDelete: any) => {
       if (willDelete) {
+
         swal("Xác nhận thành công!", {
           icon: "success",
         });
       } else {
-        swal("Xác nhận thất bại!", {
+        swal("Đã hủy xác nhận!", {
           icon: "error",
         });
       }

@@ -52,7 +52,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
           <Route index element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          {/* <Route path="dashboard" element={<Dashboard />} /> */}
           <Route path="billing">
             <Route index element={<BillList />} />
             <Route path=":id" element={<BillDetail />} />

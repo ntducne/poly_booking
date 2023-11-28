@@ -4,7 +4,6 @@ import FormatPrice from "../../utils/FormatPrice";
 export default function Room(props: any) {
   const {
     name,
-    // area,
     adults,
     children,
     description,

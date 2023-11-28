@@ -1,25 +1,25 @@
 import {
-  // MinusCircleOutlined,
   MinusOutlined,
   PlusOutlined,
-  SearchOutlined,
+  SearchOutlined
 } from "@ant-design/icons";
 import {
   Button,
   DatePicker,
   Form,
-  // Input,
   InputNumber,
   Pagination,
   Select,
-  message,
+  message
 } from "antd";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useGetBranchesQuery } from "../../api/Branch";
 import { useGetRoomsQuery } from "../../api/Room";
-import dayjs from "dayjs";
 import {
   SlideRooms1,
   SlideRooms2,
@@ -29,8 +29,6 @@ import {
 } from "../../assets/images/Rooms/Slides";
 import Page from "../../components/Page";
 import Room from "../../components/Room";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 import PcLoading from "../../components/RoomLoading/PcLoading";
 type Props = {};
 

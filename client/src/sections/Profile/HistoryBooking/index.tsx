@@ -1,8 +1,7 @@
 import { Pagination } from "antd";
 import { Link } from "react-router-dom";
 import {
-  // useGetDetailHistoryBookingQuery,
-  useGetHistoryBookingQuery,
+  useGetHistoryBookingQuery
 } from "../../../api/User";
 import FormatPrice from "../../../utils/FormatPrice";
 

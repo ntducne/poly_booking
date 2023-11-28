@@ -1,13 +1,9 @@
-import { Button, Card, Modal } from "antd";
-import { useEffect, useState } from "react";
-import { Checkbox, Form, Input } from "antd";
-import { Col, Row } from "antd";
 import type { CollapseProps } from "antd";
-import { Collapse } from "antd";
+import { Button, Card, Checkbox, Col, Collapse, Form, Input, Modal, Row } from "antd";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import {
-  useGetProfileQuery,
-  // useUpdateProfileMutation,
+  useGetProfileQuery
 } from "../../../api/User";
 
 const onFinish = (values: any) => {
