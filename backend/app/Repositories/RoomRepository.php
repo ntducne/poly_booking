@@ -15,7 +15,6 @@ use App\Modules\Branch\Resources\BranchResource;
 use App\Modules\RoomType\Resources\RoomTypeResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Validator;
 
 class RoomRepository
 {
@@ -78,29 +77,14 @@ class RoomRepository
         $billing = $this->billing->whereNotIn('status', [2, 4, 6, 7])->where('branch_id', $branch_id)->get();
         if(count($billing) > 0){
             if(!$room_type_id){
-                $booking = $this->booking
-                ->whereIn('room_type', $room_type->pluck('id'))
-                ->whereIn('_id', $billing->pluck('booking_id'))
-                ->where('checkin', '<=', $checkin)
-                ->where('checkout', '>=', $checkout)
-                ->get();
+                $booking = $this->booking->whereIn('room_type', $room_type->pluck('id'))->whereIn('_id', $billing->pluck('booking_id'))->where('checkin', '<=', $checkin)->where('checkout', '>=', $checkout)->get();
             }
             else {
-                $booking = $this->booking
-                    ->where('room_type', $room_type_id)
-                    ->whereIn('_id', $billing->pluck('booking_id'))
-                    ->where('checkin', '<=', $checkin)
-                    ->where('checkout', '>=', $checkout)
-                    ->get();
+                $booking = $this->booking->where('room_type', $room_type_id)->whereIn('_id', $billing->pluck('booking_id'))->where('checkin', '<=', $checkin)->where('checkout', '>=', $checkout)->get();
             }
-            
             $room_completed = [];
             foreach ($getRoom as $room) {
-                $room_number = $this->bookDetail
-                    ->where('status', 0)
-                    ->where('room_id', $room->id)
-                    ->whereIn('booking_id', $booking->pluck('id'))
-                    ->pluck('room_number');
+                $room_number = $this->bookDetail->where('status', 0)->where('room_id', $room->id)->whereIn('booking_id', $booking->pluck('id'))->pluck('room_number');
                 $newArray = [];
                 foreach ($room->room_number as $value) {
                     if (!in_array($value, $room_number->toArray())) {
@@ -219,9 +203,16 @@ class RoomRepository
             'people' => [],
             'time' => [],
         ];
+        $booking = $this->booking->where('status', 0)->where('checkin', '<=', Carbon::parse($request->checkin)->addHours(14)->format('Y-m-d H:i:s'))->where('checkout', '>=', Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s'))->get();
+        $room_number = $this->bookDetail->whereIn('booking_id', $booking->pluck('id'))->where('status', 0)->where('room_id', $room->id)->pluck('room_number');
+        $dataRoomNumber = [];
+        foreach ($room->room_number as $value) {
+            if (!in_array($value, $room_number->toArray())) {
+                $dataRoomNumber[] = $value;
+            }
+        }
+        $result = array_slice($dataRoomNumber, 0, $request->amount_room);
         $bookingCreate = $this->booking->create($bookingData);
-        $roomNumbers = $room->room_number;
-        $result = array_slice($roomNumbers, 0, $request->amount_room);
         foreach ($result as $value) {
             $this->bookDetail->create([
                 'booking_id' => $bookingCreate->id,
@@ -355,7 +346,6 @@ class RoomRepository
                         'status' => 0,
                     ]);
                 }
-
                 $this->bookDetail
                     ->where('booking_id', $booking->id)
                     ->where('status', 0)

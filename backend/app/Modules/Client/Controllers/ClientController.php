@@ -72,7 +72,7 @@ class ClientController extends Controller
             ->get();
         return response()->json([
             'room' => new RoomResource($room),
-            'room_same' => RoomResource::collection($room_same)
+            // 'room_same' => RoomResource::collection($room_same)
         ]);
     }
 

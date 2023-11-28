@@ -4,6 +4,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\CheckPermission;
 use App\Modules\Branch\Controllers\BranchController;
+use App\Modules\Dashboard\Controllers\DashboardController;
 use App\Modules\Orders\Controllers\BillingController;
 use App\Modules\Orders\Controllers\BookingController;
 use App\Modules\Policy\Controllers\CancellationPolicyController;
@@ -22,7 +23,10 @@ Route::fallback(function () {
     ], 404);
 });
 
-Route::middleware(CheckPermission::class)->group(function () {
+// Route::middleware(CheckPermission::class)->group(function () {
+
+    Route::post('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
+
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
 
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);
@@ -67,6 +71,9 @@ Route::middleware(CheckPermission::class)->group(function () {
         });
     });
 
-});
+    
+
+
+// });
 Route::post('/logout', [AuthController::class, 'logout']);
 

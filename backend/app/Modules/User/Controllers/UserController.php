@@ -213,6 +213,7 @@ class UserController extends Controller
             $input['images'] = $uploadedFileUrl;
         }
         $input['user_id'] = $request->user()->id;
+        $input['time'] = date('Y-m-d H:i:s');
         $rate = $this->rate_room->create($input);
         return response()->json([
             'message' => 'Rate room successfully',

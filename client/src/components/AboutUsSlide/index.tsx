@@ -6,16 +6,16 @@ import { Autoplay, EffectFade } from 'swiper/modules';
 import ObserverAnimate from '../ObserverAnimation';
 const slides = [
     {
-        title: "Homewood Suites",
-        title2: "Make Yourself at Home",
+        title: "Một nơi ấm áp,",
+        title2: "phong cách để bạn thư giãn.",
         bg: "https://hotellerv5.themegoods.com/minimal/wp-content/uploads/sites/3/2020/08/thought-catalog-344189-unsplash.jpg",
-        btnText: "Enjoy your most glorious moments with Hoteller"
+        btnText: "Tận hưởng những khoảnh khắc huy hoàng nhất của bạn cùng PolyDevHotel"
     },
     {
-        title: "Homewood Suites",
-        title2: "Make Yourself at Home",
+        title: "Một nơi ấm áp,",
+        title2: "phong cách để bạn thư giãn.",
         bg: "https://stelia-resort-tuy-hoa.hotelmix.vn/data/Photos/OriginalPhoto/12847/1284756/1284756874/Stelia-Beach-Resort-Tuy-Hoa-Exterior.JPEG",
-        btnText: "Enjoy your most glorious moments with Hoteller"
+        btnText: "Tận hưởng những khoảnh khắc huy hoàng nhất của bạn cùng PolyDevHotel"
     }
 ]
 

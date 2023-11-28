@@ -45,6 +45,7 @@ class BookingResource extends JsonResource
                 'room_number' => $item->room_number,
                 'price' => $this->provisional / 4,
                 'status'=> $item->status,
+                'is_checkout' => $item->is_checkout,
             ];
         }
         return $room;
