@@ -45,4 +45,21 @@ class Room extends Eloquent
 
     }
 
+    public function CalcPrice() {
+        $price = 0;
+        $price_per_night = RoomType::where('_id', $this->room_type_id)->first()->price_per_night;
+        $discount = $this->discount;
+        if ($discount > 0) {
+            if ($discount < 95) {
+                $price = $price_per_night * ($discount / 100);
+            } else {
+                $price = ($price_per_night - $discount);
+            }
+        } else {
+            $price = $price_per_night;
+        }
+        return $price;
+    }
+
+
 }

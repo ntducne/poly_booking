@@ -16,6 +16,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import { MoneyCollectOutlined } from "@ant-design/icons";
 import type { DatePickerProps } from 'antd';
+import ChartOne from "../../../component/Charts/one";
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 const Dashboard = () => {
@@ -49,7 +50,8 @@ const Dashboard = () => {
     if(type === 'weekly') {
       console.log({
         type,
-        day: dayjs(typeValue.$d).format('YYYY-MM-DD')
+        week: dayjs(typeValue.$d).format('w'),
+        year: dayjs(typeValue.$d).format('YYYY'),
       });
     }
     if(type === 'monthly') {
@@ -76,12 +78,12 @@ const Dashboard = () => {
     }
     if(type === 'week_to_week') {
       const formatDay = typeValue?.map((item: any) =>
-        dayjs(item.$d).format('YYYY-MM-DD')
+        dayjs(item.$d).format('YYYY-w')
       );
       console.log({
         type,
-        fromDay: formatDay?.[0],
-        toDay: formatDay?.[1],
+        fromWeek: formatDay?.[0],
+        toWeek: formatDay?.[1],
       });
     }
     if(type === 'month_to_month') {
@@ -146,11 +148,11 @@ const Dashboard = () => {
                   },
                 ]}>
                   {typeStat === 'daily' && <DatePicker className="w-[220px]" placeholder="Chọn ngày" format={formatDay}/>}
-                  {typeStat === 'weekly' && <DatePicker className="w-[220px]" picker="week" placeholder="Chọn tuần" format={customWeekStartEndFormat} />}
+                  {typeStat === 'weekly' && <DatePicker className="w-[220px]" picker="week" placeholder="Chọn tuần" format="w/YYYY" />}
                   {typeStat === 'monthly' && <DatePicker picker="month" className="w-[220px]" placeholder="Chọn tháng" format={formatMonth}/>}
                   {typeStat === 'yearly' && <DatePicker picker="year" className="w-[220px]" placeholder="Chọn năm"/>}
                   {typeStat === 'day_to_day' && <RangePicker className="w-[220px]" format={formatDay} placeholder={['Từ ngày', 'Đến ngày']}/>}
-                  {typeStat === 'week_to_week' && <RangePicker className="w-[220px]" picker="week" format={customWeekStartEndFormat} placeholder={['Từ tuần', 'Đến tuần']}/>}
+                  {typeStat === 'week_to_week' && <RangePicker className="w-[220px]" picker="week" format="w/YYYY" placeholder={['Từ tuần', 'Đến tuần']}/>}
                   {typeStat === 'month_to_month' && <RangePicker picker="month" className="w-[220px]" format={formatMonth} placeholder={['Từ tháng', 'Đến tháng']}/>}
                   {typeStat === 'year_to_year' && <RangePicker picker="year" className="w-[220px]" placeholder={['Từ năm', 'Đến năm']}/>}
                 </Form.Item>
@@ -162,12 +164,14 @@ const Dashboard = () => {
           </div>
         </Form>
         <div className="rounded-lg">
-          
           <div className="grid grid-cols-4 gap-4">
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Profit</p>
+                  <p className="text-sm text-gray-500">Doanh thu
+
+                  
+                  </p>
 
                   <p className="text-2xl font-medium text-gray-900">$240.94</p>
                 </div>
@@ -199,11 +203,10 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Profit</p>
+                  <p className="text-sm text-gray-500">Tài khoản đăng ký mới</p>
                   <p className="text-2xl font-medium text-gray-900">$240.94</p>
                 </div>
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
@@ -234,11 +237,10 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Profit</p>
+                  <p className="text-sm text-gray-500">Lượng đặt phòng</p>
 
                   <p className="text-2xl font-medium text-gray-900">$240.94</p>
                 </div>
@@ -270,11 +272,10 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Profit</p>
+                  <p className="text-sm text-gray-500">Lượng huỷ phòng</p>
 
                   <p className="text-2xl font-medium text-gray-900">$240.94</p>
                 </div>
@@ -307,6 +308,146 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
+            <article className="rounded-lg border border-gray-100 bg-white p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">Tổng số lượng phòng</p>
+                  <p className="text-2xl font-medium text-gray-900">$240.94</p>
+                </div>
+                <span className="rounded-full bg-blue-100 p-3 text-blue-600">
+                  <MoneyCollectOutlined className="text-3xl" />
+                </span>
+              </div>
+              <div className="mt-1 flex gap-1 text-green-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
+                </svg>
+
+                <p className="flex gap-2 text-xs">
+                  <span className="font-medium"> 67.81% </span>
+
+                  <span className="text-gray-500"> Since last week </span>
+                </p>
+              </div>
+            </article>
+            <article className="rounded-lg border border-gray-100 bg-white p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">Số phòng còn trống</p>
+
+                  <p className="text-2xl font-medium text-gray-900">$240.94</p>
+                </div>
+
+                <span className="rounded-full bg-blue-100 p-3 text-blue-600">
+                  <MoneyCollectOutlined className="text-3xl" />
+                </span>
+              </div>
+              <div className="mt-1 flex gap-1 text-green-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
+                </svg>
+
+                <p className="flex gap-2 text-xs">
+                  <span className="font-medium"> 67.81% </span>
+
+                  <span className="text-gray-500"> Since last week </span>
+                </p>
+              </div>
+            </article>
+            <article className="rounded-lg border border-gray-100 bg-white p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">Số lượng phòng đang đặt</p>
+
+                  <p className="text-2xl font-medium text-gray-900">$240.94</p>
+                </div>
+
+                <span className="rounded-full bg-blue-100 p-3 text-blue-600">
+                  <MoneyCollectOutlined className="text-3xl" />
+                </span>
+              </div>
+
+              <div className="mt-1 flex gap-1 text-red-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
+                  />
+                </svg>
+
+                <p className="flex gap-2 text-xs">
+                  <span className="font-medium"> 67.81% </span>
+
+                  <span className="text-gray-500"> Since last week </span>
+                </p>
+              </div>
+            </article>
+            <article className="rounded-lg border border-gray-100 bg-white p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">Số lượng nhân viên</p>
+                  <p className="text-2xl font-medium text-gray-900">$240.94</p>
+                </div>
+                <span className="rounded-full bg-blue-100 p-3 text-blue-600">
+                  <MoneyCollectOutlined className="text-3xl" />
+                </span>
+              </div>
+              <div className="mt-1 flex gap-1 text-red-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
+                  />
+                </svg>
+
+                <p className="flex gap-2 text-xs">
+                  <span className="font-medium"> 67.81% </span>
+
+                  <span className="text-gray-500"> Since last week </span>
+                </p>
+              </div>
+            </article>
+          </div>
+          <div className="mt-4">
+            <ChartOne></ChartOne>
           </div>
           <div className="grid grid-cols-2 mt-10 gap-6">
             <div>
@@ -316,7 +457,7 @@ const Dashboard = () => {
               <ChartFive/>
             </div>
           </div>
-          <div className="border rounded-2xl bg-white p-6 mt-8">
+          <div className="border rounded-2xl bg-white p-6 mt-8 hidden">
             <div>
               <Title level={4}>Đánh giá mới của khách hàng</Title>
             </div>
