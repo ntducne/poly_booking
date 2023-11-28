@@ -12,10 +12,10 @@ import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useGetUtilitieQuery } from "../../../api/utilities";
+import { useGetAllUtilitieQuery } from "../../../api/utilities";
 
 const ListRoomUtilities = () => {
-  const { data, isLoading } = useGetUtilitieQuery({});
+  const { data, isLoading } = useGetAllUtilitieQuery({});
   const [dataFetching, setDataFetching] = useState<any>([])
   console.log(data, "data");
 
