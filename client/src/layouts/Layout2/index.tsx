@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Footer from "../Client/Footer";
 import { Dropdown, MenuProps, Space } from "antd";
@@ -8,7 +8,7 @@ import { useCookies } from "react-cookie";
 import { BarsOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 type Props = {};
 
-export default function LayoutClient2({}: Props) {
+export default function LayoutClient2({ }: Props) {
   const navigate = useNavigate();
   const [cookies] = useCookies(["userInfo"]);
   const [logoutApi] = useProcessLogoutMutation();

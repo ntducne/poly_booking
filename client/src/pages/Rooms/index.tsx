@@ -1,5 +1,5 @@
 import {
-  MinusCircleOutlined,
+  // MinusCircleOutlined,
   MinusOutlined,
   PlusOutlined,
   SearchOutlined,
@@ -8,7 +8,7 @@ import {
   Button,
   DatePicker,
   Form,
-  Input,
+  // Input,
   InputNumber,
   Pagination,
   Select,
@@ -239,7 +239,7 @@ export default function Rooms({ }: Props) {
                           message: "Vui lòng chọn số lượng phòng muốn",
                         },
                         {
-                          validator: (_, value) => {
+                          validator: (_) => {
                             if (countRoom < 1) {
                               return Promise.reject(
                                 new Error("Vui lòng chọn ít 1 phòng")
@@ -296,7 +296,7 @@ export default function Rooms({ }: Props) {
                           message: "Vui lòng chọn số lượng phòng muốn",
                         },
                         {
-                          validator: (_, value) => {
+                          validator: (_) => {
                             if (adults < 1) {
                               return Promise.reject(
                                 new Error("Vui lòng chọn ít nhất một người lớn")
@@ -339,7 +339,7 @@ export default function Rooms({ }: Props) {
                       </div>
                     </Form.Item>
                     <Form.List name="child">
-                      {(fields, { add, remove }, { errors }) => (
+                      {(fields, { add, remove }) => (
                         <>
                           <Form.Item>
                             <div className="flex gap-4 items-center flex-wrap">
@@ -378,7 +378,7 @@ export default function Rooms({ }: Props) {
                             </div>
                           </Form.Item>
                           <div className="grid grid-cols-2 gap-2 ">
-                            {fields.map((field, index) => (
+                            {fields.map((field) => (
                               <Form.Item
                                 required={false}
                                 key={field.key}

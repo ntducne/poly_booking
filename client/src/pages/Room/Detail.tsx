@@ -20,7 +20,7 @@ import { useProcessReviewMutation } from "../../api/User";
 const { RangePicker } = DatePicker;
 const Detail = () => {
   const { slug } = useParams();
-  const { data, isLoading, refetch } = useGetDetailQuery(slug);
+  const { data, refetch } = useGetDetailQuery(slug);
   console.log(data);
   const [postComment] = useProcessReviewMutation();
 
@@ -70,6 +70,8 @@ const Detail = () => {
       checkin: formattedDates?.[0],
       checkout: formattedDates?.[1],
     };
+    console.log(dataQuery);
+
 
     // setDataQuery(dataQuery);
     // if (!isLoading && !data?.data?.length) {
@@ -199,7 +201,7 @@ const Detail = () => {
                         message: "Vui lòng chọn số lượng phòng muốn",
                       },
                       {
-                        validator: (_, value) => {
+                        validator: (_) => {
                           if (countRoom < 1) {
                             return Promise.reject(
                               new Error("Vui lòng chọn ít 1 phòng")
@@ -256,7 +258,7 @@ const Detail = () => {
                         message: "Vui lòng chọn số lượng phòng muốn",
                       },
                       {
-                        validator: (_, value) => {
+                        validator: (_) => {
                           if (adults < 1) {
                             return Promise.reject(
                               new Error("Vui lòng chọn ít nhất một người lớn")
@@ -299,7 +301,7 @@ const Detail = () => {
                     </div>
                   </Form.Item>
                   <Form.List name="child">
-                    {(fields, { add, remove }, { errors }) => (
+                    {(fields, { add, remove }) => (
                       <>
                         <Form.Item>
                           <div className="flex gap-4 items-center flex-wrap">
@@ -338,7 +340,7 @@ const Detail = () => {
                           </div>
                         </Form.Item>
                         <div className="grid grid-cols-2 gap-2 ">
-                          {fields.map((field, index) => (
+                          {fields.map((field) => (
                             <Form.Item
                               required={false}
                               key={field.key}

@@ -7,7 +7,7 @@ import { Collapse } from "antd";
 import { useCookies } from "react-cookie";
 import {
   useGetProfileQuery,
-  useUpdateProfileMutation,
+  // useUpdateProfileMutation,
 } from "../../../api/User";
 
 const onFinish = (values: any) => {
@@ -34,7 +34,7 @@ export default function AccommodationBook() {
   const [userPhone, setUserPhone] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [, setUserBook] = useState({});
-  const { data, isLoading } = useGetProfileQuery({});
+  const { data } = useGetProfileQuery({});
   const itemsColapper: CollapseProps["items"] = [
     {
       key: "1",
