@@ -17,6 +17,7 @@ import dayjs from "dayjs";
 import { MoneyCollectOutlined } from "@ant-design/icons";
 // import type { DatePickerProps } from 'antd';
 import ChartOne from "../../../component/Charts/one";
+import { useStatisticalsQuery } from "../../../api/statisticals";
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 const Dashboard = () => {
@@ -28,7 +29,10 @@ const Dashboard = () => {
   // `${dayjs(value).startOf('week').format(weekFormat)} ~ ${dayjs(value)
   //   .endOf('week')
   //   .format(weekFormat)}`;
-
+  const [query ,setQuery] = useState<any>(null)
+  const { data :dataStasisticals, isLoading } = useStatisticalsQuery(query);
+  console.log("data" ,dataStasisticals);
+  
   const [typeStat, setTypeStat] = useState('');
   const handleSelectStat = (value: string) => {
     form.setFieldsValue({ typeValue: '' });
@@ -40,12 +44,20 @@ const Dashboard = () => {
     if (!values) {
       return;
     }
+    
     const { type, typeValue } = values;
     if (type === 'daily') {
       console.log({
         type,
         day: dayjs(typeValue.$d).format('YYYY-MM-DD')
       });
+      const dataQuery = {
+        module: "revenue",
+        type,
+        day: dayjs(typeValue.$d).format('YYYY-MM-DD'),
+        status: [3,4]
+      } 
+      setQuery(dataQuery)
     }
     if (type === 'weekly') {
       console.log({
@@ -53,28 +65,53 @@ const Dashboard = () => {
         week: dayjs(typeValue.$d).format('w'),
         year: dayjs(typeValue.$d).format('YYYY'),
       });
+      const dataQuery = {
+        module: "revenue",
+        type,
+        week: dayjs(typeValue.$d).format('w'),
+        year: dayjs(typeValue.$d).format('YYYY'),
+        status: [3,4]
+      } 
+      setQuery(dataQuery)
     }
     if (type === 'monthly') {
       console.log({
         type,
         month: dayjs(typeValue.$d).format('YYYY-MM'),
       });
+      const dataQuery = {
+        module: "revenue",
+        type,
+        month: dayjs(typeValue.$d).format('YYYY-MM'),
+        status: [3,4]
+      } 
+      setQuery(dataQuery)
     }
     if (type === 'yearly') {
       console.log({
         type,
         year: dayjs(typeValue.$d).format('YYYY'),
       });
+      const dataQuery = {
+        module: "revenue",
+        type,
+        year: dayjs(typeValue.$d).format('YYYY'),
+        status: [3,4]
+      } 
+      setQuery(dataQuery)
     }
     if (type === 'day_to_day') {
       const formatDay = typeValue?.map((item: any) =>
         dayjs(item.$d).format('YYYY-MM-DD')
       );
-      console.log({
+      const dataQuery = {
+        module: "revenue",
         type,
         fromDay: formatDay?.[0],
         toDay: formatDay?.[1],
-      });
+        status: [3,4]
+      } 
+      setQuery(dataQuery)
     }
     if (type === 'week_to_week') {
       const formatDay = typeValue?.map((item: any) =>
@@ -85,6 +122,14 @@ const Dashboard = () => {
         fromWeek: formatDay?.[0],
         toWeek: formatDay?.[1],
       });
+      const dataQuery = {
+        module: "revenue",
+        type,
+        fromWeek: formatDay?.[0],
+        toWeek: formatDay?.[1],
+        status: [3,4]
+      } 
+      setQuery(dataQuery)
     }
     if (type === 'month_to_month') {
       const formatMonth = typeValue?.map((item: any) =>
@@ -95,6 +140,14 @@ const Dashboard = () => {
         fromMonth: formatMonth?.[0],
         toMonth: formatMonth?.[1],
       });
+      const dataQuery = {
+        module: "revenue",
+        type,
+        fromMonth: formatMonth?.[0],
+        toMonth: formatMonth?.[1],
+        status: [3,4]
+      } 
+      setQuery(dataQuery)
     }
     if (type === 'year_to_year') {
       const formatYear = typeValue?.map((item: any) =>
@@ -105,8 +158,19 @@ const Dashboard = () => {
         fromYear: formatYear?.[0],
         toYear: formatYear?.[1],
       });
+      const dataQuery = {
+        module: "revenue",
+        type,
+        fromYear: formatYear?.[0],
+        toYear: formatYear?.[1],
+        status: [3,4]
+      } 
+      setQuery(dataQuery)
     }
   }
+  if(isLoading){
+    return <div>Loading...</div>
+  }  
 
   return (
     <>
@@ -164,7 +228,7 @@ const Dashboard = () => {
           </div>
         </Form>
         <div className="rounded-lg">
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 2xl:grid-cols-4">
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -173,7 +237,7 @@ const Dashboard = () => {
 
                   </p>
 
-                  <p className="text-2xl font-medium text-gray-900">$240.94</p>
+                  <p className="text-2xl font-medium text-gray-900">{dataStasisticals?.total}</p>
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
@@ -449,7 +513,7 @@ const Dashboard = () => {
           <div className="mt-4">
             <ChartOne/>
           </div>
-          <div className="grid grid-cols-2 mt-10 gap-6">
+          <div className="grid grid-cols-1 2xl:grid-cols-2 mt-10 gap-6">
             <div>
               <ChartFour />
             </div>
