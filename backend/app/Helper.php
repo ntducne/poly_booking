@@ -125,6 +125,7 @@ function tinhPhanTramTuHaiSo($soThuNhat, $soThuHai) {
     if ($soThuNhat == 0) {
         return 0;
     }
+    
     $phanTram = (($soThuNhat - $soThuHai) / $soThuNhat) * 100;
     return $phanTram;
 }
