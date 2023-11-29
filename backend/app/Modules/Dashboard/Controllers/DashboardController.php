@@ -6,17 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Repositories\StatsRepository;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller {
-    private StatsRepository $statsRepository;
-    public function __construct(
-        StatsRepository $statsRepository
-    )
-    {
-        $this->statsRepository = $statsRepository;
-    }
+class DashboardController extends Controller 
+{
+    // public function __construct(StatsRepository $statsRepository)
+    // {
+    //     $this->statsRepository = new StatsRepository();
+    // }
 
-    public function statistical(Request $request){
-        echo 1;
+    public function revenue_statistical(Request $request){
+        $statsRepository = new StatsRepository();
+        return $statsRepository->revenue($request);
+        
+        // dd(1);
         // if($request->module == 'revenue'){
         //     return $this->statsRepository->revenue($request);
         // } 
@@ -24,5 +25,9 @@ class DashboardController extends Controller {
 
         //     return $this->statsRepository->room($request);
         // }
+    }
+
+    public function room(Request $request) {
+        // return $this->statsRepository->room($request);
     }
 }
