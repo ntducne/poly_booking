@@ -17,6 +17,7 @@ import dayjs from "dayjs";
 import { MoneyCollectOutlined } from "@ant-design/icons";
 // import type { DatePickerProps } from 'antd';
 import ChartOne from "../../../component/Charts/one";
+import { useStatisticalsQuery } from "../../../api/statisticals";
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 const Dashboard = () => {
@@ -28,6 +29,10 @@ const Dashboard = () => {
   // `${dayjs(value).startOf('week').format(weekFormat)} ~ ${dayjs(value)
   //   .endOf('week')
   //   .format(weekFormat)}`;
+  const [query ,setQuery] = useState<any>(null)
+  const { data :dataStasisticals, isLoading } = useStatisticalsQuery(query);
+
+  console.log(dataStasisticals , "data");
 
   const [typeStat, setTypeStat] = useState('');
   const handleSelectStat = (value: string) => {
@@ -40,6 +45,7 @@ const Dashboard = () => {
     if (!values) {
       return;
     }
+    
     const { type, typeValue } = values;
     if (type === 'daily') {
       console.log({
@@ -75,6 +81,14 @@ const Dashboard = () => {
         fromDay: formatDay?.[0],
         toDay: formatDay?.[1],
       });
+      const dataQuery = {
+        module: "revenue",
+        type,
+        fromDay: formatDay?.[0],
+        toDay: formatDay?.[1],
+        status: [3,4]
+      } 
+      setQuery(dataQuery)
     }
     if (type === 'week_to_week') {
       const formatDay = typeValue?.map((item: any) =>
@@ -107,6 +121,9 @@ const Dashboard = () => {
       });
     }
   }
+  if(isLoading){
+    return <div>Loading...</div>
+  }  
 
   return (
     <>

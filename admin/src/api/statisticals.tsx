@@ -5,7 +5,7 @@ const statisticalsApi = createApi({
   reducerPath: "statisticals",
   tagTypes: ["statisticals"],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_URL_API + '/',
+    baseUrl: import.meta.env.VITE_URL_API + "/",
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",
@@ -15,18 +15,30 @@ const statisticalsApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    statisticals: builder.mutation({
-      query: (data: any) => ({
-        url: `statisticals`,
-        method: "POST",
-        body: data
-      }),
-      invalidatesTags: ['statisticals']
+    statisticals: builder.query({
+      query: (data: any) => {
+        const keys = Object.keys(data);
+        const queryParams = keys
+          .map((key: any) => {
+            if (Array.isArray(data[key])) {
+              return data[key].map((item: any) => `${key}[]=${item}`).join("&");
+            } else {
+              return `${key}=${data[key]}`;
+            }
+          })
+          .join("&");
+        const url = `/statisticals${queryParams ? `?${queryParams}` : ""}`;
+        console.log("url: " + url);
+
+        return {
+          method: "GET",
+          url: url,
+        };
+      },
+      providesTags: ["statisticals"],
     }),
   }),
 });
 
-export const {
-    useStatisticalsMutation
-} = statisticalsApi;
+export const { useStatisticalsQuery } = statisticalsApi;
 export default statisticalsApi;
