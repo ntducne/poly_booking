@@ -25,7 +25,7 @@ Route::fallback(function () {
 
 // Route::middleware(CheckPermission::class)->group(function () {
 
-    Route::post('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
+    Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
 

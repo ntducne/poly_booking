@@ -4,15 +4,18 @@ namespace App\Repositories;
 
 use App\Models\Billing;
 use App\Repositories\Stats\Revenue;
+use App\Repositories\Stats\Room;
 use Illuminate\Support\Carbon;
 
 class StatsRepository
 {
     private Revenue $revenue;
+    private Room $room;
 
     public function __construct()
     {
         $this->revenue = new Revenue();
+        $this->room = new Room();
     }
 
     public function revenue($request)
@@ -43,6 +46,8 @@ class StatsRepository
         }
     }
 
-
-         
+    public function room($request)
+    {
+        return $this->room->daily($request);
+    }
 }

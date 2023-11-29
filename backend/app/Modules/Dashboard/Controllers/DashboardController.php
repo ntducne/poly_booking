@@ -16,8 +16,13 @@ class DashboardController extends Controller {
     }
 
     public function statistical(Request $request){
-        if($request->module == 'revenue'){
-            return $this->statsRepository->revenue($request);
-        } 
+        echo 1;
+        // if($request->module == 'revenue'){
+        //     return $this->statsRepository->revenue($request);
+        // } 
+        // if($request->module == 'room'){
+
+        //     return $this->statsRepository->room($request);
+        // }
     }
 }

@@ -51,9 +51,10 @@ class RoomRepository
         $checkout = Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s');
         $branch_id = $request->branch_id;
         $amount_room = $request->amount_room;
-        $room_type_id = $request->room_type_id;
 
         $getRoom = [];
+        
+        $room_type_id = $request->room_type_id;
         if ($room_type_id) {
             $room = $this->room->where('room_type_id', $room_type_id)->get();
             foreach ($room as $item) {
@@ -154,7 +155,7 @@ class RoomRepository
                 ];
             }
             $room_completed_2 = array_filter($room_completed, function ($room) use ($amount_room) {
-                return $room['amount'] >= $amount_room;
+                return $room['amount'] >= $amount_room && $room['room_empty'] >= $amount_room;
             });
             return $room_completed_2;
         }

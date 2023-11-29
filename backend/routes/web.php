@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Pay\VnpayController;
+use App\Models\Room;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
@@ -10,5 +11,9 @@ Route::get('unauthorized', function (){ return response()->json([
 ], 401); });
 
 Route::get('', function () {
-    echo Carbon::parse(Carbon::now())->format('Y-W');
+    $totalRoomBook = 0;
+    foreach (Room::all() as $value) {
+        $totalRoomBook += count($value->room_number);
+    }
+    return $totalRoomBook;
 });
