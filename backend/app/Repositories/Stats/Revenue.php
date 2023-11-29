@@ -1,11 +1,9 @@
 <?php
 
-
 namespace App\Repositories\Stats;
 
 use App\Interfaces\StatInterface;
 use App\Models\Billing;
-use App\Models\User;
 use Carbon\Carbon;
 
 class Revenue implements StatInterface
@@ -16,12 +14,16 @@ class Revenue implements StatInterface
     {
         $this->billing = new Billing();
     }
+    
+    public function getData($request){
+        return $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+    }
 
     public function daily($request){
         $day = $request->day;
         $total = 0;
         $sinceTotal = 0;
-        $data = $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+        $data = $this->getData($request);
         foreach ($data as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m-d') === Carbon::parse($day)->format('Y-m-d')) {
                 $total += $item->total;
@@ -42,7 +44,7 @@ class Revenue implements StatInterface
         $week = $request->week;
         $total = 0;
         $sinceTotal = 0;
-        $data = $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+        $data = $this->getData($request);
         foreach ($data as $item) {
             if (Carbon::parse($item->created_at)->format('Y-W') === $week) {
                 $total += $item->total;
@@ -63,7 +65,7 @@ class Revenue implements StatInterface
         $month = $request->month;
         $total = 0;
         $sinceTotal = 0;
-        $data = $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+        $data = $this->getData($request);
         foreach ($data as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m') === Carbon::parse($month)->format('Y-m')) {
                 $total += $item->total;
@@ -84,7 +86,7 @@ class Revenue implements StatInterface
         $year = $request->year;
         $total = 0;
         $sinceTotal = 0;
-        $data = $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+        $data = $this->getData($request);
         foreach ($data as $item) {
             if (Carbon::parse($item->created_at)->format('Y') === Carbon::parse($year)->format('Y')) {
                 $total += $item->total;
@@ -105,7 +107,7 @@ class Revenue implements StatInterface
         $fromDay = $request->fromDay;
         $toDay = $request->toDay;
         $total = 0;
-        $data = $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+        $data = $this->getData($request);
         foreach ($data as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m-d') >= Carbon::parse($fromDay)->format('Y-m-d') && Carbon::parse($item->created_at)->format('Y-m-d') <= Carbon::parse($toDay)->format('Y-m-d')) {
                 $total += $item->total;
@@ -122,7 +124,7 @@ class Revenue implements StatInterface
         $fromWeek = $request->fromWeek;
         $toWeek = $request->toWeek;
         $total = 0;
-        $data = $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+        $data = $this->getData($request);
         foreach ($data as $item) {
             if (Carbon::parse($item->created_at)->format('Y-W') >= $fromWeek && Carbon::parse($item->created_at)->format('Y-W') <= $toWeek) {
                 $total += $item->total;
@@ -138,7 +140,7 @@ class Revenue implements StatInterface
         $fromMonth = $request->fromMonth;
         $toMonth = $request->toMonth;
         $total = 0;
-        $data = $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+        $data = $this->getData($request);
         foreach ($data as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m') >= Carbon::parse($fromMonth)->format('Y-m') && Carbon::parse($item->created_at)->format('Y-m') <= Carbon::parse($toMonth)->format('Y-m')) {
                 $total += $item->total;
@@ -155,7 +157,7 @@ class Revenue implements StatInterface
         $fromYear = $request->fromYear;
         $toYear = $request->toYear;
         $total = 0;
-        $data = $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+        $data = $this->getData($request);
         foreach ($data as $item) {
             if (Carbon::parse($item->created_at)->format('Y') >= Carbon::parse($fromYear)->format('Y') && Carbon::parse($item->created_at)->format('Y') <= Carbon::parse($toYear)->format('Y')) {
                 $total += $item->total;

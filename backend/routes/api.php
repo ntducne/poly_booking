@@ -24,4 +24,4 @@ Route::get('/routes', function () {
     }
     echo "</table>";
 });
-Route::get('/revenue_statistics', [DashboardController::class, 'revenue_statistics']);
+Route::get('/statisticals', [DashboardController::class, 'stat']);

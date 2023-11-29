@@ -432,7 +432,7 @@ const Dashboard = () => {
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Số lượng nhân viên</p>
+                  <p className="text-sm text-gray-500">Số lượng người dùng</p>
                   <p className="text-2xl font-medium text-gray-900">$240.94</p>
                 </div>
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
@@ -464,7 +464,7 @@ const Dashboard = () => {
             </article>
           </div>
           <div className="mt-4">
-            <ChartOne></ChartOne>
+            <ChartOne/>
           </div>
           <div className="grid grid-cols-2 mt-10 gap-6">
             <div>
