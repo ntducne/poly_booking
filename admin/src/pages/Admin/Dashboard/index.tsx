@@ -228,7 +228,7 @@ const Dashboard = () => {
           </div>
         </Form>
         <div className="rounded-lg">
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 2xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -440,7 +440,7 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-            <article className="rounded-lg border border-gray-100 bg-white p-6">
+            <article className="lg:col-span-1 lg:row-span-2 md:row-span rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-500">Số lượng phòng đang đặt</p>
@@ -476,7 +476,7 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-            <article className="rounded-lg border border-gray-100 bg-white p-6">
+            <article className="lg:col-span-1 lg:row-span-1 rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-500">Số lượng người dùng</p>
