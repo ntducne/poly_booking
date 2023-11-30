@@ -227,17 +227,27 @@ class Revenue implements StatInterface
     public function year_to_year($request){
         $fromYear = $request->fromYear;
         $toYear = $request->toYear;
-        $total = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y') >= Carbon::parse($fromYear)->format('Y') && Carbon::parse($item->created_at)->format('Y') <= Carbon::parse($toYear)->format('Y')) {
-                $total += $item->total;
+                $countBook++;
+            }
+        }
+        $countCancel = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y') >= Carbon::parse($fromYear)->format('Y') && Carbon::parse($item->created_at)->format('Y') <= Carbon::parse($toYear)->format('Y')) {
+                $countCancel++;
             }
         }
         $returnData = [
-            'days' => Carbon::parse($fromYear)->format('Y') . ' - ' . Carbon::parse($toYear)->format('Y'),
-            'total' => $total,
+            'fromYear' => $fromYear,
+            'toYear' => $toYear,
+            'book' => $countBook,
+            'cancel' => $countCancel,
         ];
         return $returnData;
     }
+
 }
