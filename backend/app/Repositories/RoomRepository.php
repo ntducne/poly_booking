@@ -2,16 +2,20 @@
 
 namespace App\Repositories;
 
+use App\Events\BookingEvent;
+use App\Events\Message;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Branch;
 use App\Models\HistoryHandleBooking;
+use App\Models\Notification;
 use App\Models\Room;
 use App\Models\RoomImage;
 use App\Models\RoomType;
 use App\Models\User;
 use App\Modules\Branch\Resources\BranchResource;
+use App\Modules\Orders\Resources\BillingResource;
 use App\Modules\RoomType\Resources\RoomTypeResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
@@ -28,6 +32,7 @@ class RoomRepository
     private User $user;
     private HistoryHandleBooking $history_handle;
     private string $today;
+    private Notification $notification;
 
     public function __construct()
     {
@@ -41,6 +46,7 @@ class RoomRepository
         $this->user = new User();
         $this->history_handle = new HistoryHandleBooking();
         $this->today = Carbon::parse(Carbon::now()->format('Y-m-d H:i:s'));
+        $this->notification = new Notification();
     }
 
     public function processSearchRoom($request)
@@ -239,6 +245,27 @@ class RoomRepository
             'billingCode' => time(),
         ];
         $billing = $this->billing->create($billingData);
+        $newBilling_id = $billing->id;
+        event(new BookingEvent(new BillingResource($this->billing->find($newBilling_id))));
+        if($request->user()){
+            $this->history_handle->create([
+                'booking_id' => $bookingCreate->id,
+                'admin_id' => $request->user()->id,
+                'handle' => 'Đặt phòng',
+                'time' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+        }
+        else {
+            event(new Message([
+                'message' => 'Bạn có một đơn đặt phòng mới !',
+                'time' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]));
+            $this->notification->create([
+                'message' => 'Có một đơn đặt phòng mới !',
+                'time' => Carbon::now()->format('Y-m-d H:i:s'),
+                'billing_id' => $newBilling_id,
+            ]);
+        }
         return [
             'message' => 'Đặt phòng thành công !',
             'bill' => [

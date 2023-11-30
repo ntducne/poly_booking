@@ -10,9 +10,21 @@ import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import swal from "sweetalert";
+import { pusherInstance } from "../../../config/pusher";
+import { useEffect, useState } from "react";
 
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
+  const [billings, setBillings] = useState<any[]>([]);
+
+  useEffect(() => {
+    const unsubscribe = pusherInstance().getData('booking', 'processBooking', (data :any)  => {
+      setBillings(prevBillings => [...prevBillings, data.data]);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const onComfirm = (id: any) => {
     console.log(id);

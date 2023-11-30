@@ -10,23 +10,21 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserCreate implements ShouldBroadcast
+class BookingEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function __construct(
-        public string $user,
-    )
-    {
-    }
+        public mixed $data
+    ){}
 
     public function broadcastOn()
     {
-        return ['createUser'];
+        return ['booking']; // channel name
     }
 
     public function broadcastAs()
     {
-        return 'create-user';
+        return 'processBooking';  // event name
     }
 }

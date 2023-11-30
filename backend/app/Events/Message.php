@@ -20,11 +20,11 @@ class Message implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return ['chat'];
+        return ['chat']; // channel name
     }
 
     public function broadcastAs()
     {
-        return 'message';
+        return 'message';  // event name
     }
 }
