@@ -287,6 +287,7 @@ const Dashboard = () => {
                   className="w-[220px]"
                   format={formatDay}
                   placeholder={["Từ ngày", "Đến ngày"]}
+                  disabledDate={(current) => current && current > moment().endOf('day')}
                 />
               )}
               {typeStat === "week_to_week" && (
@@ -295,6 +296,7 @@ const Dashboard = () => {
                   picker="week"
                   format="w/YYYY"
                   placeholder={["Từ tuần", "Đến tuần"]}
+                  disabledDate={(current) => current && current > moment().endOf('week')}
                 />
               )}
               {typeStat === "month_to_month" && (
@@ -303,6 +305,7 @@ const Dashboard = () => {
                   className="w-[220px]"
                   format={formatMonth}
                   placeholder={["Từ tháng", "Đến tháng"]}
+                  disabledDate={(current) => current && current > moment().endOf('month')}
                 />
               )}
               {typeStat === "year_to_year" && (
@@ -310,6 +313,7 @@ const Dashboard = () => {
                   picker="year"
                   className="w-[220px]"
                   placeholder={["Từ năm", "Đến năm"]}
+                  disabledDate={(current) => current && current > moment().endOf('year')}
                 />
               )}
             </Form.Item>
