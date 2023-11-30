@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Client\Controllers\ClientController;
+use App\Modules\Services\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function () {

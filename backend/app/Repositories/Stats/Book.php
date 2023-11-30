@@ -6,7 +6,7 @@ use App\Interfaces\StatInterface;
 use App\Models\Billing;
 use Carbon\Carbon;
 
-class Revenue implements StatInterface
+class Book implements StatInterface
 {
     private Billing $billing;
 
@@ -14,10 +14,11 @@ class Revenue implements StatInterface
     {
         $this->billing = new Billing();
     }
-    
+
     public function getDataBook(){
         return $this->billing->where('status', 4)->get();
     }
+
     public function getDataCancel(){
         return $this->billing->whereIn('status', [2, 6])->get();
     }
@@ -57,63 +58,117 @@ class Revenue implements StatInterface
 
     public function weekly($request){
         $week = $request->week;
-        $total = 0;
-        $sinceTotal = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
-            if (Carbon::parse($item->created_at)->format('Y-W') === $week) {
-                $total += $item->total;
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        $countBookYesterday = 0;
+        foreach ($book as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-W') === Carbon::parse($week)->format('Y-W')) {
+                $countBook++;
             }
             if (Carbon::parse($item->created_at)->format('Y-W') <= Carbon::parse($week)->subWeek()->format('Y-W')) {
-                $sinceTotal += $item->total;
+                $countBookYesterday++;
             }
         }
+        $countCancel = 0;
+        $countCancelYesterday = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-W') === Carbon::parse($week)->format('Y-W')) {
+                $countCancel++;
+            }
+            if (Carbon::parse($item->created_at)->format('Y-W') <= Carbon::parse($week)->subWeek()->format('Y-W')) {
+                $countCancelYesterday++;
+            }
+        }
+        // lấy ngày đầu tiên của tuần
+        $firstDayOfWeek = Carbon::parse($week)->startOfWeek()->format('Y-m-d');
+        // lấy ngày cuối cùng của tuần
+        $lastDayOfWeek = Carbon::parse($week)->endOfWeek()->format('Y-m-d');
         $returnData = [
-            'days' => Carbon::parse($week)->format('W/Y'),
-            'total' => $total,
-            'since_last_week' => tinhPhanTramTuHaiSo($total, $sinceTotal),
+            'firstDayOfWeek' => $firstDayOfWeek,
+            'lastDayOfWeek' => $lastDayOfWeek,
+            'book' => $countBook,
+            'cancel' => $countCancel,
+            'since_book_yesterday' => tinhPhanTramTuHaiSo($countBook, $countBookYesterday),
+            'since_cancel_yesterday' => tinhPhanTramTuHaiSo($countCancel, $countCancelYesterday),
         ];
         return $returnData;
     }
 
     public function monthly($request){
         $month = $request->month;
-        $total = 0;
-        $sinceTotal = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        $countBookYesterday = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m') === Carbon::parse($month)->format('Y-m')) {
-                $total += $item->total;
+                $countBook++;
             }
             if (Carbon::parse($item->created_at)->format('Y-m') <= Carbon::parse($month)->subMonth()->format('Y-m')) {
-                $sinceTotal += $item->total;
+                $countBookYesterday++;
             }
         }
+        $countCancel = 0;
+        $countCancelYesterday = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-m') === Carbon::parse($month)->format('Y-m')) {
+                $countCancel++;
+            }
+            if (Carbon::parse($item->created_at)->format('Y-m') <= Carbon::parse($month)->subMonth()->format('Y-m')) {
+                $countCancelYesterday++;
+            }
+        }
+        // lấy ngày đầu tiên của tháng
+        $firstDayOfMonth = Carbon::parse($month)->startOfMonth()->format('Y-m-d');
+        // lấy ngày cuối cùng của tháng
+        $lastDayOfMonth = Carbon::parse($month)->endOfMonth()->format('Y-m-d');
         $returnData = [
-            'days' => Carbon::parse($month)->format('m/Y'),
-            'total' => $total,
-            'since_last_month' => tinhPhanTramTuHaiSo($total, $sinceTotal),
+            'firstDayOfMonth' => $firstDayOfMonth,
+            'lastDayOfMonth' => $lastDayOfMonth,
+            'book' => $countBook,
+            'cancel' => $countCancel,
+            'since_book_yesterday' => tinhPhanTramTuHaiSo($countBook, $countBookYesterday),
+            'since_cancel_yesterday' => tinhPhanTramTuHaiSo($countCancel, $countCancelYesterday),
         ];
         return $returnData;
     }
 
     public function yearly($request){
         $year = $request->year;
-        $total = 0;
-        $sinceTotal = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        $countBookYesterday = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y') === Carbon::parse($year)->format('Y')) {
-                $total += $item->total;
+                $countBook++;
             }
             if (Carbon::parse($item->created_at)->format('Y') <= Carbon::parse($year)->subYear()->format('Y')) {
-                $sinceTotal += $item->total;
+                $countBookYesterday++;
             }
         }
+        $countCancel = 0;
+        $countCancelYesterday = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y') === Carbon::parse($year)->format('Y')) {
+                $countCancel++;
+            }
+            if (Carbon::parse($item->created_at)->format('Y') <= Carbon::parse($year)->subYear()->format('Y')) {
+                $countCancelYesterday++;
+            }
+        }
+        // lấy ngày đầu tiên của năm
+        $firstDayOfYear = Carbon::parse($year)->startOfYear()->format('Y-m-d');
+        // lấy ngày cuối cùng của năm
+        $lastDayOfYear = Carbon::parse($year)->endOfYear()->format('Y-m-d');
         $returnData = [
-            'days' => Carbon::parse($year)->format('Y'),
-            'total' => $total,
-            'since_last_year' => tinhPhanTramTuHaiSo($total, $sinceTotal),
+            'firstDayOfYear' => $firstDayOfYear,
+            'lastDayOfYear' => $lastDayOfYear,
+            'book' => $countBook,
+            'cancel' => $countCancel,
+            'since_book_yesterday' => tinhPhanTramTuHaiSo($countBook, $countBookYesterday),
+            'since_cancel_yesterday' => tinhPhanTramTuHaiSo($countCancel, $countCancelYesterday),
         ];
         return $returnData;
     }
@@ -121,16 +176,25 @@ class Revenue implements StatInterface
     public function day_to_day($request){
         $fromDay = $request->fromDay;
         $toDay = $request->toDay;
-        $total = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m-d') >= Carbon::parse($fromDay)->format('Y-m-d') && Carbon::parse($item->created_at)->format('Y-m-d') <= Carbon::parse($toDay)->format('Y-m-d')) {
-                $total += $item->total;
+                $countBook++;
+            }
+        }
+        $countCancel = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-m-d') >= Carbon::parse($fromDay)->format('Y-m-d') && Carbon::parse($item->created_at)->format('Y-m-d') <= Carbon::parse($toDay)->format('Y-m-d')) {
+                $countCancel++;
             }
         }
         $returnData = [
-            'days' => Carbon::parse($fromDay)->format('d/m/Y') . ' - ' . Carbon::parse($toDay)->format('d/m/Y'),
-            'total' => $total,
+            'fromDay' => $fromDay,
+            'toDay' => $toDay,
+            'book' => $countBook,
+            'cancel' => $countCancel,
         ];
         return $returnData;
     }
@@ -138,34 +202,63 @@ class Revenue implements StatInterface
     public function week_to_week($request){
         $fromWeek = $request->fromWeek;
         $toWeek = $request->toWeek;
-        $total = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
-            if (Carbon::parse($item->created_at)->format('Y-W') >= $fromWeek && Carbon::parse($item->created_at)->format('Y-W') <= $toWeek) {
-                $total += $item->total;
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        foreach ($book as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-W') >= Carbon::parse($fromWeek)->format('Y-W') && Carbon::parse($item->created_at)->format('Y-W') <= Carbon::parse($toWeek)->format('Y-W')) {
+                $countBook++;
             }
         }
+        $countCancel = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-W') >= Carbon::parse($fromWeek)->format('Y-W') && Carbon::parse($item->created_at)->format('Y-W') <= Carbon::parse($toWeek)->format('Y-W')) {
+                $countCancel++;
+            }
+        }
+        // lấy ngày đầu tiên của tuần
+        $firstDayOfWeek = Carbon::parse($fromWeek)->startOfWeek()->format('Y-m-d');
+        // lấy ngày cuối cùng của tuần
+        $lastDayOfWeek = Carbon::parse($toWeek)->endOfWeek()->format('Y-m-d');
         $returnData = [
-            'days' => Carbon::parse($fromWeek)->format('W/Y') . ' - ' . Carbon::parse($toWeek)->format('W/Y'),
-            'total' => $total,
+            'firstDayOfWeek' => $firstDayOfWeek,
+            'lastDayOfWeek' => $lastDayOfWeek,
+            'fromWeek' => $fromWeek,
+            'toWeek' => $toWeek,
+            'book' => $countBook,
+            'cancel' => $countCancel,
         ];
         return $returnData;
-
     }
 
     public function month_to_month($request){
         $fromMonth = $request->fromMonth;
         $toMonth = $request->toMonth;
-        $total = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m') >= Carbon::parse($fromMonth)->format('Y-m') && Carbon::parse($item->created_at)->format('Y-m') <= Carbon::parse($toMonth)->format('Y-m')) {
-                $total += $item->total;
+                $countBook++;
             }
         }
+        $countCancel = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-m') >= Carbon::parse($fromMonth)->format('Y-m') && Carbon::parse($item->created_at)->format('Y-m') <= Carbon::parse($toMonth)->format('Y-m')) {
+                $countCancel++;
+            }
+        }
+        // lấy ngày đầu tiên của tháng
+        $firstDayOfMonth = Carbon::parse($fromMonth)->startOfMonth()->format('Y-m-d');
+        // lấy ngày cuối cùng của tháng
+        $lastDayOfMonth = Carbon::parse($toMonth)->endOfMonth()->format('Y-m-d');
         $returnData = [
-            'days' => Carbon::parse($fromMonth)->format('m/Y') . ' - ' . Carbon::parse($toMonth)->format('m/Y'),
-            'total' => $total,
+            'firstDayOfMonth' => $firstDayOfMonth,
+            'lastDayOfMonth' => $lastDayOfMonth,
+            'fromMonth' => $fromMonth,
+            'toMonth' => $toMonth,
+            'book' => $countBook,
+            'cancel' => $countCancel,
         ];
         return $returnData;
     }
@@ -173,16 +266,31 @@ class Revenue implements StatInterface
     public function year_to_year($request){
         $fromYear = $request->fromYear;
         $toYear = $request->toYear;
-        $total = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y') >= Carbon::parse($fromYear)->format('Y') && Carbon::parse($item->created_at)->format('Y') <= Carbon::parse($toYear)->format('Y')) {
-                $total += $item->total;
+                $countBook++;
             }
         }
+        $countCancel = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y') >= Carbon::parse($fromYear)->format('Y') && Carbon::parse($item->created_at)->format('Y') <= Carbon::parse($toYear)->format('Y')) {
+                $countCancel++;
+            }
+        }
+        // lấy ngày đầu tiên của năm
+        $firstDayOfYear = Carbon::parse($fromYear)->startOfYear()->format('Y-m-d');
+        // lấy ngày cuối cùng của năm
+        $lastDayOfYear = Carbon::parse($toYear)->endOfYear()->format('Y-m-d');
         $returnData = [
-            'days' => Carbon::parse($fromYear)->format('Y') . ' - ' . Carbon::parse($toYear)->format('Y'),
-            'total' => $total,
+            'firstDayOfYear' => $firstDayOfYear,
+            'lastDayOfYear' => $lastDayOfYear,
+            'fromYear' => $fromYear,
+            'toYear' => $toYear,
+            'book' => $countBook,
+            'cancel' => $countCancel,
         ];
         return $returnData;
     }

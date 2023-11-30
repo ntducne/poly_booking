@@ -46,6 +46,7 @@ const LayoutAdmin = () => {
   if (!checkLogin) {
     return <Navigate to="/login" />;
   }
+<<<<<<< HEAD
   const [title, setTitle] = useState<any>(" ");
   const handleTitleChange = (title: any) => {
     setTitle(title);
@@ -55,6 +56,14 @@ const LayoutAdmin = () => {
     location.pathname === "/branches" && handleTitleChange("Chi nhánh");
     location.pathname === "/billing" && handleTitleChange("Hoá đơn");
   }, []);
+=======
+  const [title, setTitle] = useState(" ");
+  useEffect(() => {
+    location.pathname === "/" && setTitle("Thống kê");
+    location.pathname === "/branches" && setTitle("Chi nhánh");
+    location.pathname === "/billing" && setTitle("Hoá đơn");
+  },[])
+>>>>>>> ac7e75956f6610d17aaf965118b8ad7f8daa9875
   const items: MenuItem[] = [
     getItem(
       "Thống kê",

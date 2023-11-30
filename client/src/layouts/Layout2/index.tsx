@@ -7,7 +7,7 @@ import { cookies as cookies2 } from "../../config/cookie";
 import Footer from "../Client/Footer";
 type Props = {};
 
-export default function LayoutClient2({ }: Props) {
+export default function LayoutClient2({}: Props) {
   const navigate = useNavigate();
   const [cookies] = useCookies(["userInfo"]);
   const [logoutApi] = useProcessLogoutMutation();
@@ -59,7 +59,7 @@ export default function LayoutClient2({ }: Props) {
             <div
               className={`
               text-dark py-6 
-              lg:flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] 
+              lg:flex gap-2 lg:gap-x-8 md:text-[15px] 
           items-center hidden 
           `}
             >
@@ -94,7 +94,8 @@ export default function LayoutClient2({ }: Props) {
           <div
             className={`
               text-dark py-6
-             flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] 
+             flex gap-2 lg:gap-x-8 
+             md:text-[15px] 
           items-center
           `}
           >
