@@ -15,27 +15,42 @@ class Revenue implements StatInterface
         $this->billing = new Billing();
     }
     
-    public function getData($request){
-        return $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+    public function getDataBook(){
+        return $this->billing->where('status', 4)->get();
+    }
+    public function getDataCancel(){
+        return $this->billing->whereIn('status', [2, 6])->get();
     }
 
     public function daily($request){
         $day = $request->day;
-        $total = 0;
-        $sinceTotal = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        $countBookYesterday = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m-d') === Carbon::parse($day)->format('Y-m-d')) {
-                $total += $item->total;
+                $countBook++;
             }
             if (Carbon::parse($item->created_at)->format('Y-m-d') <= Carbon::parse($day)->subDay()->format('Y-m-d')) {
-                $sinceTotal += $item->total;
+                $countBookYesterday++;
+            }
+        }
+        $countCancel = 0;
+        $countCancelYesterday = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-m-d') === Carbon::parse($day)->format('Y-m-d')) {
+                $countCancel++;
+            }
+            if (Carbon::parse($item->created_at)->format('Y-m-d') <= Carbon::parse($day)->subDay()->format('Y-m-d')) {
+                $countCancelYesterday++;
             }
         }
         $returnData = [
-            'days' => Carbon::parse($day)->format('d/m/Y'),
-            'total' => $total,
-            'since_yesterday' => tinhPhanTramTuHaiSo($total, $sinceTotal),
+            'book' => $countBook,
+            'cancel' => $countCancel,
+            'since_book_yesterday' => tinhPhanTramTuHaiSo($countBook, $countBookYesterday),
+            'since_cancel_yesterday' => tinhPhanTramTuHaiSo($countCancel, $countCancelYesterday),
         ];
         return $returnData;
     }
@@ -135,6 +150,7 @@ class Revenue implements StatInterface
             'total' => $total,
         ];
         return $returnData;
+
     }
 
     public function month_to_month($request){
