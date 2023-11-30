@@ -30,7 +30,6 @@ export default function ChartOne() {
           formatter: function (value: any, timestamp: any, opts: any) {
             return opts.dateFormatter(new Date(timestamp), 'dd MMM')
             console.log(value);
-
           }
         }
       },
