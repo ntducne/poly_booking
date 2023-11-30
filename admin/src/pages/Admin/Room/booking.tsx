@@ -27,8 +27,7 @@ export default function RoomBooking() {
   const [isDisabledForm, setDisableForm] = useState(false);
   const [searchRoom] = useSearchRoomMutation();
   const { data: dataRoomtype, isLoading } = useGetAllRoomTypeQuery({});
-  const { data: dataBranches, isLoading: loadingBranch } =
-    useGetAllBranchesQuery({});
+  const { data: dataBranches, isLoading: loadingBranch } = useGetAllBranchesQuery({});
   const [dataDetailRoom, setDataDetailRoom] = useState(null);
   const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
@@ -51,7 +50,7 @@ export default function RoomBooking() {
     name: room?.name,
     images: room?.images,
     room_type_name: room?.type?.room_type_name,
-    childrend: room?.children,
+    child: room?.children,
     area: room?.area,
     bed_size: room?.bed_size,
     description: room?.description,
@@ -61,72 +60,15 @@ export default function RoomBooking() {
     // discount: room?.discount,
   }));
 
-  console.log("dataRoom", dataRoom);
-
   const columns = [
-    { title: "STT", key: "key", dataIndex: "key" },
-    {
-      title: "Ảnh",
-      key: "images",
-      width: "7%",
-      dataIndex: "images",
-      render: (item: any) => (
-        <>
-          <Image
-            width={50}
-            height={50}
-            className="rounded-md"
-            src={item[0].image}
-          />
-        </>
-      ),
-    },
-    // {
-    //   title: "Loại phòng",
-    //   key: "discount",
-    //   width: "20%",
-    //   render: (item: any) => <>{item}</>,
-    // },
-
+    { title: "Ảnh", key: "image", width: "7%", dataIndex: "image", render: (item: any) => (<><Image width={50} height={50} className="rounded-md" src={item} /></>),},
+    { title: "Loại phòng", key: "room_type", width: "20%", render: (item: any) => <>{item.room_type_name}</> },
     { title: "Tên phòng", key: "name", dataIndex: "name" },
-    { title: "Khu vực", key: "area", dataIndex: "area" },
-    { title: "Người lớn", key: "adults", dataIndex: "adults" },
-    { title: "Trẻ con", key: "childrend", dataIndex: "childrend" },
-    { title: "Số giường ngủ", key: "bed_size", dataIndex: "bed_size" },
-    { title: "Số giường", key: "description", dataIndex: "description" },
-    {
-      title: "Chi nhánh",
-      key: "branch",
-      //   width: "20%",
-      dataIndex: "branch",
-      render: (item: any) => <>{item?.name}</>,
-    },
-    {
-      title: "Giá phòng",
-      key: "price",
-      //   width: "20%",
-      dataIndex: "price",
-      render: (item: any) => <>{formatMoneyVN(item)}</>,
-    },
-    // {
-    //   title: "Giá ( 1 đêm )",
-    //   key: "price",
-    //   width: "20%",
-    //   dataIndex: "price",
-    //   render: (record: any) => {
-    //     if (record?.type?.price_per_night > record?.discount) {
-    //       return (
-    //         <>
-    //           {formatMoneyVN(record?.type?.price_per_night - record?.discount)}
-    //         </>
-    //       );
-    //     }
-    //     return <>{formatMoneyVN(record?.type?.price_per_night)}</>;
-    //   },
-    // },
-    {
-      title: "Lựa chọn",
-      key: "action",
+    { title: "Người lớn", key: "adult", dataIndex: "adult" },
+    { title: "Trẻ con", key: "child", dataIndex: "child" },
+    { title: "Chi nhánh", key: "branch", dataIndex: "branch", render: (item: any) => <> {item?.name}</> },
+    { title: "Giá phòng", key: "price", dataIndex: "price", render: (item: any) => <>{formatMoneyVN(item)}</> },
+    { title: "Lựa chọn", key: "action",
       render: (record: any) => (
         <>
           <Button
@@ -144,77 +86,54 @@ export default function RoomBooking() {
         </>
       ),
     },
-
-    // {
-    //   title: "Giá ( 1 đêm )",
-    //   key: "price",
-    //   width: "20%",
-    //   render: (record: any) => {
-    //     if (record?.type?.price_per_night > record?.discount) {
-    //       return (
-    //         <>
-    //           {formatMoneyVN(record?.type?.price_per_night - record?.discount)}
-    //         </>
-    //       );
-    //     }
-    //     return <>{formatMoneyVN(record?.type?.price_per_night)}</>;
-    //   },
-    // },
-    // {
-    //   title: "Chi nhánh",
-    //   key: "branch",
-    //   width: "20%",
-    //   render: (record: any) => <>{record?.branch?.name}</>,
-    // },
-    // {
-    //   title: "",
-    //   key: "action",
-    //   render: (record: any) => (
-    //     <>
-    //       <Button
-    //         shape="round"
-    //         className="mr-3"
-    //         onClick={() => {
-    //           setDetailRoom(record);
-    //         }}
-    //       >
-    //         Chi tiết phòng
-    //       </Button>
-    //       <Button shape="round" onClick={showModal}>
-    //         Chọn phòng
-    //       </Button>
-    //     </>
-    //   ),
-    // },
   ];
 
   const onFinish = async (values: any) => {
     setLoading(true);
     setDisableForm(true);
     setDataRoom([]);
-    const value = {
-      room_type_id: values.room_type,
-      branch_id: values.branch_id,
-      amount_room: values.amount_room,
-      check_in: values.days[0].format("YYYY-MM-DD"),
-      check_out: values.days[1].format("YYYY-MM-DD"),
-      adults: values.adults,
-      children: values.childrens,
-    };
-    // console.log("value Search", value);
-
-    searchRoom(value)
-      .unwrap()
-      .then((res) => {
-        if (res.status == "success") {
-          message.success(res.message);
-          setDataRoom(res.data);
-        } else if (res.status == "error") {
-          message.error(res.message);
-        }
-        setLoading(false);
-        setDisableForm(false);
-      });
+    try {
+      const res = await searchRoom({
+        room_type_id: values.room_type,
+        branch_id: values.branch_id,
+        amount_room: values.amount_room,
+        check_in: values.days[0].format("YYYY-MM-DD"),
+        check_out: values.days[1].format("YYYY-MM-DD"),
+        adults: values.adults,
+        children: values.childrens,
+      }).unwrap();
+  
+      if (res.status === "success") {
+        message.success(res.message);
+        const valueRoom = res.data;
+        console.log(valueRoom);
+        setDataRoom((prevDataRoom) =>
+          [...prevDataRoom, ...valueRoom.map((room: any) => ({
+            id: room.id,
+            name: room.name,
+            amount: room.amount,
+            discount: room.discount,
+            price: room.price,
+            adult: room.adults,
+            child: room.children,
+            description: room.description,
+            room_type: room.room_type,
+            branch: room.branch,
+            image: room.image,
+            room_empty: room.room_empty,
+          }))]
+        );
+        console.log(dataRoom);
+      } else if (res.status === "error") {
+        message.error(res.message);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      // Handle error appropriately (e.g., show an error message to the user)
+    } finally {
+      setLoading(false);
+      setDisableForm(false);
+    }
   };
 
   return (
@@ -350,10 +269,10 @@ export default function RoomBooking() {
         </div>
       </Form>
       <Table
-        className={`${isLoading && "hidden"}`}
+        className={`${isLoading && "hidden"} mt-5`}
         loading={isLoadingData}
         columns={columns}
-        dataSource={newData}
+        dataSource={dataRoom}
         pagination={false}
       />
       {/* <TableCustom loading={isLoadingData} columns={columns} data={dataRoom}/> */}
