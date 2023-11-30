@@ -5,6 +5,7 @@ namespace App\Repositories\Stats;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
+use App\Models\Room as ModelsRoom;
 use Carbon\Carbon;
 
 class Room {
@@ -12,41 +13,32 @@ class Room {
     private Billing $billing;
     private Booking $booking;
     private BookDetail $bookDetail;
-    private Room $room;
+    private ModelsRoom $room;
 
-    public function __construct()
+    public function daily()
     {
         $this->billing = new Billing();
         $this->booking = new Booking();
         $this->bookDetail = new BookDetail();
-        $this->room = new Room();
-    }
-
-    public function getBilliing($request){
-        return $this->billing->whereIn('status', array_map(function ($item) { 
-            return (int)$item; 
-        }, $request->status))->get();
-    }
-
-    public function daily($request)
-    {
-        // $totalRoom = 0;
-        // foreach ($this->room->all() as $value) {
-        //     $totalRoom += count($value->room_number);
-        // }
-        // $totalRoomBook = 0;
-        // $now = Carbon::now();
-        // $billing = $this->getBilliing($request);
-        // foreach ($billing as $value) {
-        //     $booking = $this->booking->find($value->booking_id);
-        //     if($now->between($booking->checkin, $booking->checkout)){
-        //         $bookDetail = $this->bookDetail->where('booking_id', $value->booking_id)->get();
-        //         $totalRoomBook = count($bookDetail);
-        //     }
-        // }
-        // return [
-        //     'room_is_book' => $totalRoomBook,
-        //     'room_is_not_book' => $totalRoom - $totalRoomBook
-        // ];
+        $this->room = new ModelsRoom();
+        $totalRoom = 0;
+        foreach ($this->room->all() as $value) {
+            $totalRoom += count($value->room_number);
+        }
+        $totalRoomBook = 0;
+        $now = Carbon::parse(Carbon::now()->format('Y-m-d'));
+        $billing = $this->billing->where('status', 3)->get();
+        $booking = $this->booking->whereIn('_id', $billing->pluck('booking_id')->toArray())->get();
+        foreach ($booking as $value) {
+            if($now->between(Carbon::parse($value->checkin)->format('Y-m-d'), Carbon::parse($value->checkout)->format('Y-m-d'))){
+                $bookDetail = $this->bookDetail->where('booking_id', $value->_id)->get();
+                $totalRoomBook += count($bookDetail);
+            }
+        }
+        return [
+            'total_room' => $totalRoom,
+            'room_is_book' => $totalRoomBook,
+            'room_is_not_book' => $totalRoom - $totalRoomBook
+        ];
     }
 }

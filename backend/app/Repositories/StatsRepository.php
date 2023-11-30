@@ -42,7 +42,6 @@ class StatsRepository
     public function room($request)
     {
         $this->room = new Room();
-
         return $this->room->daily($request);
     }
 }
