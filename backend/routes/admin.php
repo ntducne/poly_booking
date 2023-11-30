@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\CheckPermission;
+use App\Models\Notification;
 use App\Modules\Branch\Controllers\BranchController;
 use App\Modules\Dashboard\Controllers\DashboardController;
 use App\Modules\Orders\Controllers\BillingController;
@@ -24,6 +25,18 @@ Route::fallback(function () {
 });
 
 // Route::middleware(CheckPermission::class)->group(function () {
+
+    Route::get('/notifications', function(){
+        $notification = Notification::all();
+        $newNotification = [];
+        foreach ($notification as $key => $value) {
+            $newNotification[] = [
+                'message' => $value->message,
+                'time' => $value->time,
+            ];
+        }
+        return response()->json($newNotification);
+    })->name('notifications');
 
     Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
