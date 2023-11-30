@@ -14,7 +14,7 @@ class Revenue implements StatInterface
     {
         $this->billing = new Billing();
     }
-    
+
     public function getDataBook(){
         return $this->billing->where('status', 4)->get();
     }
@@ -54,27 +54,38 @@ class Revenue implements StatInterface
         ];
         return $returnData;
     }
-
-    public function weekly($request){
-        $week = $request->week;
-        $total = 0;
-        $sinceTotal = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
-            if (Carbon::parse($item->created_at)->format('Y-W') === $week) {
-                $total += $item->total;
+        public function weekly($request){
+            $week = $request->week;
+            $book = $this->getDataBook($request);
+            $cancel = $this->getDataCancel($request);
+            $countBook = 0;
+            $countBookYesterday = 0;
+            foreach ($book as $item) {
+                if (Carbon::parse($item->created_at)->format('Y-W') === Carbon::parse($week)->format('Y-W')) {
+                    $countBook++;
+                }
+                if (Carbon::parse($item->created_at)->format('Y-W') <= Carbon::parse($week)->subWeek()->format('Y-W')) {
+                    $countBookYesterday++;
+                }
             }
-            if (Carbon::parse($item->created_at)->format('Y-W') <= Carbon::parse($week)->subWeek()->format('Y-W')) {
-                $sinceTotal += $item->total;
+            $countCancel = 0;
+            $countCancelYesterday = 0;
+            foreach ($cancel as $item) {
+                if (Carbon::parse($item->created_at)->format('Y-W') === Carbon::parse($week)->format('Y-W')) {
+                    $countCancel++;
+                }
+                if (Carbon::parse($item->created_at)->format('Y-W') <= Carbon::parse($week)->subWeek()->format('Y-W')) {
+                    $countCancelYesterday++;
+                }
             }
+            $returnData = [
+                'book' => $countBook,
+                'cancel' => $countCancel,
+                'since_book_yesterday' => tinhPhanTramTuHaiSo($countBook, $countBookYesterday),
+                'since_cancel_yesterday' => tinhPhanTramTuHaiSo($countCancel, $countCancelYesterday),
+            ];
+            return $returnData;
         }
-        $returnData = [
-            'days' => Carbon::parse($week)->format('W/Y'),
-            'total' => $total,
-            'since_last_week' => tinhPhanTramTuHaiSo($total, $sinceTotal),
-        ];
-        return $returnData;
-    }
 
     public function monthly($request){
         $month = $request->month;
