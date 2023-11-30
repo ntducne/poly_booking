@@ -2,16 +2,20 @@
 
 namespace App\Repositories;
 
+use App\Events\BookingEvent;
+use App\Events\Message;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Branch;
 use App\Models\HistoryHandleBooking;
+use App\Models\Notification;
 use App\Models\Room;
 use App\Models\RoomImage;
 use App\Models\RoomType;
 use App\Models\User;
 use App\Modules\Branch\Resources\BranchResource;
+use App\Modules\Orders\Resources\BillingResource;
 use App\Modules\RoomType\Resources\RoomTypeResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
@@ -28,6 +32,7 @@ class RoomRepository
     private User $user;
     private HistoryHandleBooking $history_handle;
     private string $today;
+    private Notification $notification;
 
     public function __construct()
     {
@@ -41,6 +46,7 @@ class RoomRepository
         $this->user = new User();
         $this->history_handle = new HistoryHandleBooking();
         $this->today = Carbon::parse(Carbon::now()->format('Y-m-d H:i:s'));
+        $this->notification = new Notification();
     }
 
     public function processSearchRoom($request)
@@ -51,9 +57,49 @@ class RoomRepository
         $checkout = Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s');
         $branch_id = $request->branch_id;
         $amount_room = $request->amount_room;
-
+        $room_id = $request->room_id;
+        if($room_id){
+            $room = $this->room->find($room_id);
+            if ($room->adults >= $adult && $room->children >= $children) {
+                $room_type_id = $room->room_type_id;
+                $room_type = $this->room_type->where('branch_id', $branch_id)->where('id', $room_type_id)->first();
+                $booking = $this->booking->where('room_type', $room_type_id)->where('checkin', '<=', $checkin)->where('checkout', '>=', $checkout)->get();
+                $roomBook = $this->bookDetail->whereIn('room_number', $room->room_number)->where('room_id', $room_id)->whereIn('booking_id', $booking->pluck('_id'))->get();
+                $roomNumerBook = $roomBook->pluck('room_number');
+                $roomNumberIsNotBook = count($room->room_number) - count($roomNumerBook);
+                $price = 0;
+                $price_per_night = $this->room_type->find($room->room_type_id)->price_per_night;
+                if ($room->discount > 0) {
+                    if ($room->discount < 95) {
+                        $price = $price_per_night * ($room->discount / 100);
+                    } else {
+                        $price = ($price_per_night - $room->discount);
+                    }
+                } else {
+                    $price = $price_per_night;
+                }
+                return [
+                    [
+                        'id' => $room->id,
+                        'name' => $room->name,
+                        'amount' => $room->amount,
+                        'discount' => $room->discount,
+                        'price' => $price,
+                        'adults' => $room->adults,
+                        'children' => $room->children,
+                        'description' => $room->description,
+                        'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
+                        'branch' => new BranchResource($this->branch->find($room->branch_id)),
+                        'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
+                        'room_empty' => $roomNumberIsNotBook
+                    ]
+                ];
+            }
+            else {
+                return [];
+            }
+        }
         $getRoom = [];
-        
         $room_type_id = $request->room_type_id;
         if ($room_type_id) {
             $room = $this->room->where('room_type_id', $room_type_id)->get();
@@ -62,7 +108,7 @@ class RoomRepository
                     $getRoom[] = $item;
                 }
             }
-        } 
+        }
         else {
             $room_type = $this->room_type->where('branch_id', $branch_id)->get();
             foreach ($room_type as $value) {
@@ -74,7 +120,6 @@ class RoomRepository
                 }
             }
         }
-
         $billing = $this->billing->whereNotIn('status', [2, 4, 6, 7])->where('branch_id', $branch_id)->get();
         if(count($billing) > 0){
             if(!$room_type_id){
@@ -176,7 +221,8 @@ class RoomRepository
             if ($foundItem) {
                 $room = $this->room->find($foundItem['id']);
             }
-        } else {
+        } 
+        else {
             $room = $this->room->find($request->room_id);
         }
         $price_per_night = $this->room_type->find($room->room_type_id)->price_per_night;
@@ -239,6 +285,27 @@ class RoomRepository
             'billingCode' => time(),
         ];
         $billing = $this->billing->create($billingData);
+        $newBilling_id = $this->billing->where('booking_id', $bookingCreate->id)->first();
+        event(new BookingEvent(new BillingResource($newBilling_id)));
+        if($request->user()){
+            $this->history_handle->create([
+                'booking_id' => $bookingCreate->id,
+                'admin_id' => $request->user()->id,
+                'handle' => 'Đặt phòng',
+                'time' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+        }
+        else {
+            event(new Message([
+                'message' => 'Bạn có một đơn đặt phòng mới !',
+                'time' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]));
+            $this->notification->create([
+                'message' => 'Có một đơn đặt phòng mới !',
+                'time' => Carbon::now()->format('Y-m-d H:i:s'),
+                'billing_id' => $newBilling_id,
+            ]);
+        }
         return [
             'message' => 'Đặt phòng thành công !',
             'bill' => [
@@ -372,7 +439,8 @@ class RoomRepository
             return response()->json([
                 'message' => 'Gia hạn phòng thành công !',
             ]);
-        } else {
+        } 
+        else {
             $this->billing->where('_id', $billing->_id)->update([
                 'status' => 4,
             ]);

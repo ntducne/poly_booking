@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { MenuOutlined, PieChartOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
@@ -46,6 +46,15 @@ const LayoutAdmin = () => {
   if (!checkLogin) {
     return <Navigate to='/login' />
   }
+  const [title, setTitle] = useState(" ");
+  const handleTitleChange = (title: any) => {
+    setTitle(title);
+  };
+  useEffect(() => {
+    location.pathname === "/" && handleTitleChange("Thống kê");
+    location.pathname === "/branches" && handleTitleChange("Chi nhánh");
+    location.pathname === "/billing" && handleTitleChange("Hoá đơn");
+  },[])
   const items: MenuItem[] = [
     getItem(
       "Thống kê",
@@ -144,6 +153,13 @@ const LayoutAdmin = () => {
         <VscFeedback />
       </Link>
     ),
+    getItem(
+      "Liên hệ",
+      "/contact",
+      <Link onClick={() => handleTitleChange("Liên hệ")} to={`contact`}>
+        <VscFeedback />
+      </Link>
+    ),
   ];
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -154,11 +170,7 @@ const LayoutAdmin = () => {
     setCollapsed(!collapsed);
   };
 
-  const [title, setTitle] = useState("Dashboard");
-  const handleTitleChange = (title: any) => {
-    setTitle(title);
-  };
-
+  
   return (
     <LayoutContext.Provider value={title}>
       <Layout style={{ minHeight: "100vh" }}>

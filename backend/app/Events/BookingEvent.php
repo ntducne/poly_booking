@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Message implements ShouldBroadcast
+class BookingEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,11 +20,11 @@ class Message implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return ['chat']; // channel name
+        return ['booking']; // channel name
     }
 
     public function broadcastAs()
     {
-        return 'message';  // event name
+        return 'processBooking';  // event name
     }
 }

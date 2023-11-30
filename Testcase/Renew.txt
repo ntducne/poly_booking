@@ -1,3 +1,0 @@
-- Testcase gia hạn phòng (adult, children, check in, check out, amount_room, name, email, phone, newCheckout):
-    + 
-    + 
