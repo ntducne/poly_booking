@@ -7,7 +7,7 @@ import HistoryBooking from "../../sections/Profile/HistoryBooking";
 import UpdateProfile from "../../sections/Profile/UpdateProfile";
 
 export default function Edit() {
-  const { data, isLoading } = useGetProfileQuery({});
+  const { data } = useGetProfileQuery({});
   const items: TabsProps["items"] = [
     {
       key: "1",

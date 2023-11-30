@@ -9,21 +9,17 @@ import {
   Select,
   message,
 } from "antd";
+import { useForm } from "antd/es/form/Form";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetBranchesQuery } from "../../api/Branch";
-import {
-  useGetDetailQuery,
-  useGetRoomsQuery,
-  useSearchRoomsMutation,
-} from "../../api/Room";
+import { useGetDetailQuery, useSearchRoomsMutation } from "../../api/Room";
 import { useProcessReviewMutation } from "../../api/User";
-import FormatPrice from "../../utils/FormatPrice";
 import PcLoading from "../../components/RoomLoading/PcLoading";
-import { useCookies } from "react-cookie";
-import { useForm } from "antd/es/form/Form";
+import FormatPrice from "../../utils/FormatPrice";
 
 const { RangePicker } = DatePicker;
 const Detail = () => {

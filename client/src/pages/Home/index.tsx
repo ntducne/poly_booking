@@ -1,7 +1,6 @@
 import { HomeOutlined } from "@ant-design/icons";
-import { MdBed } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { MdOutlineSportsKabaddi } from "react-icons/md";
+import { Link } from "react-router-dom";
 import {
   ImageStyle1,
   ImageStyle10,

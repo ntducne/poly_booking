@@ -11,7 +11,7 @@ import {
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useGetBranchesQuery } from "../../api/Branch";
@@ -161,7 +161,9 @@ export default function Rooms({}: Props) {
                 Khách sạn nghỉ dưỡng tại Việt Nam
               </h1>
               <span className=" font-extralight tracking-[3px]  ">
-                Làm chậm đồng hồ của cuộc sống hiện đại. Mở cửa ra một kỳ quan thế giới.</span>
+                Làm chậm đồng hồ của cuộc sống hiện đại. Mở cửa ra một kỳ quan
+                thế giới.
+              </span>
             </div>
           </div>
         </div>
@@ -529,7 +531,9 @@ export default function Rooms({}: Props) {
           </Swiper>
           <div className="flex justify-center mt-[60px]">
             <h2 className="text-[23px] text-center text-[#202020] max-w-[600px] font-text_roboto font-light">
-              PolyDev Hotels cho khách hàng tiềm năng biết những gì họ có thể mong đợi khi ghé thăm – trải nghiệm ngủ 5 sao đẹp và sang trọng với mức giá 1 sao rất phải chăng.
+              PolyDev Hotels cho khách hàng tiềm năng biết những gì họ có thể
+              mong đợi khi ghé thăm – trải nghiệm ngủ 5 sao đẹp và sang trọng
+              với mức giá 1 sao rất phải chăng.
             </h2>
           </div>
         </div>
