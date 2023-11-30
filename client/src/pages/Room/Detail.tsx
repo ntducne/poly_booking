@@ -9,28 +9,39 @@ import {
   Select,
   message,
 } from "antd";
+import { useForm } from "antd/es/form/Form";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetBranchesQuery } from "../../api/Branch";
-import { useGetDetailQuery } from "../../api/Room";
+import { useGetDetailQuery, useSearchRoomsMutation } from "../../api/Room";
 import { useProcessReviewMutation } from "../../api/User";
+import PcLoading from "../../components/RoomLoading/PcLoading";
+import FormatPrice from "../../utils/FormatPrice";
 
 const { RangePicker } = DatePicker;
 const Detail = () => {
   const { slug } = useParams();
-  const { data, refetch } = useGetDetailQuery(slug);
+  const { data, isLoading, refetch } = useGetDetailQuery(slug);
   const [postComment] = useProcessReviewMutation();
-
+  const [form] = useForm();
   const [childs, setChilds] = useState<number>(0);
   const [adults, setAdults] = useState<number>(0);
   const [countRoom, setCountRoom] = useState<number>(0);
-  const { data: dataBranches } = useGetBranchesQuery({});
+  const [searchRoom] = useSearchRoomsMutation();
+  const [dataSearch, setDataSearch] = useState<any>({});
+  const { data: dataBranches, isLoading: branchLoading } = useGetBranchesQuery(
+    {}
+  );
+  const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);
+  const navigate = useNavigate();
   const disabledDate = (current: any) => {
     const today = dayjs().startOf("day");
     return current && current < today;
   };
+
   const onFinishComment = (values: any) => {
     console.log("Success:", values);
     if (values) {
@@ -56,28 +67,64 @@ const Detail = () => {
       return;
     }
 
-    // const { time, branch_id } = values;
-    // const formattedDates = time?.map((item: any) =>
-    //   dayjs(item.$d).format("YYYY-MM-DD")
-    // );
+    const { time, branch_id } = values;
+    const formattedDates = time?.map((item: any) =>
+      dayjs(item.$d).format("YYYY-MM-DD")
+    );
 
-    // const dataQuery = {
-    //   adult: adults,
-    //   child: childs,
-    //   branch_id,
-    //   soLuong: countRoom,
-    //   checkin: formattedDates?.[0],
-    //   checkout: formattedDates?.[1],
-    // };
+    const dataQuery = {
+      adult: adults,
+      child: childs,
+      branch_id,
+      amount_room: countRoom,
+      checkin: formattedDates?.[0],
+      checkout: formattedDates?.[1],
+    };
 
-    // setDataQuery(dataQuery);
-    // if (!isLoading && !data?.data?.length) {
-    //   message.error("Không có phòng nào phù hợp");
-    // }
+    searchRoom(dataQuery)
+      .unwrap()
+      .then((response) => {
+        console.log(response);
+        if (response.status) {
+          message.success("Có phòng trống");
+          setDataSearch(dataQuery);
+          setCookie("roomSearch", dataQuery, { path: "/" });
+        } else {
+          message.error("Đã hết phòng");
+          form.resetFields();
+          setChilds(0);
+          setAdults(0);
+          setCountRoom(0);
+        }
+      });
+
+    // setDataSearch(dataQuery);
     // setCookie("roomSearch", dataQuery, { path: "/" });
   };
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const handleBookingNow = (item: any) => {
+    if (Object.keys(dataSearch).length) {
+      const { id, name, images, price, branch, bed_size } = item;
+      const checkinDate = dayjs(cookie.roomSearch.checkin);
+      const checkoutDate = dayjs(cookie.roomSearch.checkout);
+      const dateDiff = checkoutDate.diff(checkinDate, "day");
+      const bookingData = {
+        room_id: id,
+        room_name: name,
+        image: images?.[0]?.image,
+        price: +price * +dateDiff * +cookie?.roomSearch?.soLuong,
+        branch: branch?.name,
+        bed_size,
+      };
+
+      setCookie("bookingNow", bookingData, { path: "/" });
+      navigate("/accommodation/book");
+    } else {
+      message.error("Vui lòng chọn số ngày ở");
+    }
   };
 
   if (!data) {
@@ -87,43 +134,61 @@ const Detail = () => {
   return (
     <div className="px-[160px]">
       <div>
-        <div className="mt-[140px] flex justify-center gap-3">
-          <div className="flex flex-col gap-3 ">
-            <img
-              src="https://themewagon.github.io/sona/img/room/room-details.jpg"
-              alt=""
-            />
-            <div>
-              <div className="flex justify-between items-center flex-wrap">
-                <h1 className="text-3xl font-bold">{data?.room?.name}</h1>
-                <div className="flex gap-3 items-center">
-                  <Rate
-                    allowHalf
-                    disabled
-                    defaultValue={2.5}
-                    className="text-[18px]"
-                  />
-                  <button className="py-3 px-4 bg-blue-500 text-white font-bold">
-                    Đặt phòng ngay
-                  </button>
+        <div className="mt-[140px] flex flex-col-reverse lg:flex-row justify-center gap-3">
+          {isLoading && branchLoading ? (
+            <div className="flex flex-col gap-2">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <PcLoading key={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-3 ">
+              <img
+                src="https://themewagon.github.io/sona/img/room/room-details.jpg"
+                alt=""
+              />
+              <div>
+                <div className="flex justify-between items-center flex-wrap gap-2">
+                  <h1 className="text-3xl font-bold">{data?.room?.name}</h1>
+                  <div className="flex gap-3 items-center justify-between flex-wrap">
+                    <Rate
+                      allowHalf
+                      disabled
+                      defaultValue={2.5}
+                      className="text-[18px]"
+                    />
+                    <button
+                      className="py-3 px-4 bg-blue-500 text-white font-bold rounded-md"
+                      onClick={handleBookingNow}
+                    >
+                      Đặt phòng ngay
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-3">
+                <h3>
+                  <span className="text-[24px] font-bold">
+                    <FormatPrice price={data?.room?.price} />
+                  </span>
+                  /đêm
+                </h3>
+                <ul className="flex flex-col gap-3 text-[16px] text-gray-500 mt-[20px]">
+                  <li>Người lớn: {data?.room?.adults}</li>
+                  <li>Diện tích: {data?.room?.area}</li>
+                  <li>Trẻ em: {data?.room?.children}</li>
+                  <li>Chi nhánh: {data?.room?.branch.name}</li>
+                </ul>
+                <div className="mt-[20px] text-gray-500 w-full">
+                  {data?.room?.description} Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Tempore amet maiores suscipit.
+                  Excepturi adipisci in architecto eaque eligendi molestiae hic
+                  optio, eius ipsa, cupiditate itaque natus eum id harum
+                  asperiores.
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-3">
-              <h3>
-                <span className="text-[24px] font-bold">159vnd</span>/đêm
-              </h3>
-              <ul className="flex flex-col gap-3 text-[16px] text-gray-500 mt-[20px]">
-                <li>Người lớn: {data?.room?.adults}</li>
-                <li>Diện tích: {data?.room?.area}</li>
-                <li>Trẻ em: {data?.room?.children}</li>
-                <li>Chi nhánh: {data?.room?.branch.name}</li>
-              </ul>
-              <div className="mt-[20px] text-gray-500 w-full">
-                {data?.room?.description}
-              </div>
-            </div>
-          </div>
+          )}
           <div>
             <div className="lg:!w-[350px] w-full top-[10px] mb-[60px] md:mb-0 lg:ml-[40px]">
               <div
@@ -141,6 +206,7 @@ const Detail = () => {
                   onFinishFailed={onFinishFailed}
                   layout="vertical"
                   className="mt-[20px] w-full"
+                  form={form}
                   name="dynamic_form_item"
                   initialValues={{
                     adult: adults,
