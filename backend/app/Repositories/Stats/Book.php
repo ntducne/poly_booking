@@ -6,7 +6,7 @@ use App\Interfaces\StatInterface;
 use App\Models\Billing;
 use Carbon\Carbon;
 
-class Revenue implements StatInterface
+class Book implements StatInterface
 {
     private Billing $billing;
 
