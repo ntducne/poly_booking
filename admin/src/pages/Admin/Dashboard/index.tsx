@@ -18,8 +18,10 @@ import { MoneyCollectOutlined } from "@ant-design/icons";
 // import type { DatePickerProps } from 'antd';
 import ChartOne from "../../../component/Charts/one";
 import { useStatisticalsQuery } from "../../../api/statisticals";
+import { Skeleton } from 'antd';
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
+
 const Dashboard = () => {
 
   const [formatDay,] = useState('DD/MM/YYYY');
@@ -175,7 +177,7 @@ const Dashboard = () => {
     }
   }
   if(isLoading){
-    return <div>Loading...</div>
+    return <div><Skeleton /></div>
   }  
 
   return (

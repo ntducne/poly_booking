@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { MenuOutlined, PieChartOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
@@ -46,6 +46,12 @@ const LayoutAdmin = () => {
   if (!checkLogin) {
     return <Navigate to='/login' />
   }
+  const [title, setTitle] = useState(" ");
+  useEffect(() => {
+    location.pathname === "/" && setTitle("Thống kê");
+    location.pathname === "/branches" && setTitle("Chi nhánh");
+    location.pathname === "/billing" && setTitle("Hoá đơn");
+  },[])
   const items: MenuItem[] = [
     getItem(
       "Thống kê",
@@ -159,11 +165,6 @@ const LayoutAdmin = () => {
 
   const toggleSider = () => {
     setCollapsed(!collapsed);
-  };
-
-  const [title, setTitle] = useState("Dashboard");
-  const handleTitleChange = (title: any) => {
-    setTitle(title);
   };
 
   return (
