@@ -7,21 +7,21 @@ import HistoryBooking from "../../sections/Profile/HistoryBooking";
 import UpdateProfile from "../../sections/Profile/UpdateProfile";
 
 export default function Edit() {
-  const { data } = useGetProfileQuery({});
+  const { data, isLoading } = useGetProfileQuery({});
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: "Danh sách đơn hàng",
-      children: <HistoryBooking />,
-    },
-    {
-      key: "2",
-      label: "Cập nhật thông tin cá nhân",
+      label: "Thông tin cá nhân",
       children: (
         <UpdateProfile
           data={data && Object.keys(data)?.length ? data?.message : {}}
         />
       ),
+    },
+    {
+      key: "2",
+      label: "Danh sách đơn hàng",
+      children: <HistoryBooking />,
     },
     {
       key: "3",

@@ -1,14 +1,41 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { DatePicker, Form, Select } from "antd";
+import { DatePicker, Form, Select, message } from "antd";
 import "./style.css";
 import dayjs from "dayjs";
+import { useGetBranchesQuery } from "../../api/Branch";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 type Props = {};
 const { RangePicker } = DatePicker;
 
 export default function BookForm({}: Props) {
+  const [, setCookie] = useCookies(["bookingNow", "roomSearch"]);
+  const { data: dataBranches } = useGetBranchesQuery({});
+  const navigate = useNavigate();
   const onFinish = (values: any) => {
-    console.log(values);
+    if (!values) {
+      return;
+    }
+
+    const { time, branch_id, adults, child, soLuong } = values;
+    const formattedDates = time?.map((item: any) =>
+      dayjs(item.$d).format("YYYY-MM-DD")
+    );
+    const dataQuery = {
+      adult: adults,
+      child: child,
+      branch_id,
+      soLuong: soLuong,
+      checkin: formattedDates?.[0],
+      checkout: formattedDates?.[1],
+    };
+
+    setCookie("roomSearch", dataQuery, { path: "/" });
+
+    navigate(
+      `/rooms?checkin=${dataQuery.checkin}&checkout=${dataQuery.checkout}&adult=${dataQuery.adult}&child=${dataQuery.child}&branch_id=${dataQuery.branch_id}&soLuong=${dataQuery.soLuong}`
+    );
   };
 
   const disabledDate = (current: any) => {
@@ -17,13 +44,13 @@ export default function BookForm({}: Props) {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log(errorInfo);
+    console.log("error", errorInfo);
   };
   return (
-    <div className="container mx-auto relative w-[75%] bg-bgr">
+    <div className="container mx-auto relative w-[75%] bg-white">
       <div className=" pt-4  px-5 py-10  w-full items-center  lg:shadow-xl lg:absolute lg:left-0 lg:-top-[90px]  lg:right-0 lg:p-0 lg:z-30">
         <Form
-          className="bg-bgr min-h-[200px] flex py-[40px] px-[40px]"
+          className="bg-white min-h-[200px] flex py-[40px] px-[40px]"
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >
@@ -48,11 +75,11 @@ export default function BookForm({}: Props) {
 
               <Form.Item
                 className=""
-                name="branch"
+                name="branch_id"
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng chọn ngày",
+                    message: "Vui lòng chọn chi nhánh",
                   },
                 ]}
               >
@@ -61,9 +88,14 @@ export default function BookForm({}: Props) {
                   placeholder="Chi nhánh"
                   className="rounded-none min-h-[50px] w-full"
                 >
-                  <Select.Option value={""}>1</Select.Option>
-                  <Select.Option value={""}>2</Select.Option>
-                  <Select.Option value={""}>3</Select.Option>
+                  {dataBranches &&
+                    dataBranches?.data.map((item: any) => {
+                      return (
+                        <Select.Option value={item?.id}>
+                          {item?.name}
+                        </Select.Option>
+                      );
+                    })}
                 </Select>
               </Form.Item>
 
@@ -73,7 +105,7 @@ export default function BookForm({}: Props) {
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng chọn ngày",
+                    message: "Vui lòng chọn số người lớn",
                   },
                 ]}
               >
@@ -82,57 +114,75 @@ export default function BookForm({}: Props) {
                   placeholder="Người lớn"
                   className="rounded-none min-h-[50px] w-full"
                 >
-                  <Select.Option value={""}>1</Select.Option>
-                  <Select.Option value={""}>2</Select.Option>
-                  <Select.Option value={""}>3</Select.Option>
+                  {Array.from({ length: 30 }, (_, index) => (
+                    <Select.Option
+                      key={index + 1}
+                      value={(index + 1).toString()}
+                    >
+                      {index + 1}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
             </div>
             <div className="lg:grid lg:grid-cols-[1fr,1fr,2fr] gap-3 grid-cols-0 grid-rows-1">
               <Form.Item
                 className=""
-                name="adults"
+                name="soLuong"
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng chọn ngày",
+                    message: "Vui lòng chọn số lượng phòng muốn",
                   },
                 ]}
               >
                 <Select
                   size={window.innerWidth < 768 ? "large" : "middle"}
-                  placeholder="Người lớn"
+                  placeholder="Số lượng"
                   className="rounded-none min-h-[50px] w-full"
                 >
-                  <Select.Option value={""}>1</Select.Option>
-                  <Select.Option value={""}>2</Select.Option>
-                  <Select.Option value={""}>3</Select.Option>
+                  {Array.from({ length: 30 }, (_, index) => (
+                    <Select.Option
+                      key={index + 1}
+                      value={(index + 1).toString()}
+                    >
+                      {index + 1}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
               <Form.Item
                 className=""
-                name="adults"
+                name="child"
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng chọn ngày",
+                    message: "Vui lòng số trẻ em",
                   },
                 ]}
               >
                 <Select
                   size={window.innerWidth < 768 ? "large" : "middle"}
-                  placeholder="Người lớn"
+                  placeholder="Trẻ em"
                   className="rounded-none min-h-[50px] w-full"
                 >
-                  <Select.Option value={""}>1</Select.Option>
-                  <Select.Option value={""}>2</Select.Option>
-                  <Select.Option value={""}>3</Select.Option>
+                  {Array.from({ length: 6 }, (_, index) => (
+                    <Select.Option
+                      key={index + 1}
+                      value={(index + 1).toString()}
+                    >
+                      {index + 1}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
 
               <Form.Item className="w-full">
-                <button className="bg-blue-500 w-full min-h-[50px] rounded text-white text-sm font-bold">
-                  Submit
+                <button className="bg-blue-500 w-full min-h-[50px] rounded text-white text-sm font-bold flex justify-center items-center gap-2">
+                  <span>
+                    <SearchOutlined />
+                  </span>
+                  <span>Tìm kiếm</span>
                 </button>
               </Form.Item>
             </div>

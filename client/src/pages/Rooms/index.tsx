@@ -1,8 +1,4 @@
-import {
-  MinusOutlined,
-  PlusOutlined,
-  SearchOutlined
-} from "@ant-design/icons";
+import { MinusOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import {
   Button,
   DatePicker,
@@ -10,12 +6,12 @@ import {
   InputNumber,
   Pagination,
   Select,
-  message
+  message,
 } from "antd";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useGetBranchesQuery } from "../../api/Branch";
@@ -33,16 +29,29 @@ import PcLoading from "../../components/RoomLoading/PcLoading";
 type Props = {};
 
 const { RangePicker } = DatePicker;
-export default function Rooms({ }: Props) {
+
+const useQueryParams = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  return {
+    get: (param: any) => queryParams.get(param),
+    getAll: () => Object.fromEntries(queryParams.entries()),
+  };
+};
+
+export default function Rooms({}: Props) {
+  const { getAll } = useQueryParams();
+  const queryParams = useMemo(() => getAll(), [getAll]);
   const [width, setWidth] = useState(0);
   const navigate = useNavigate();
-  const [dataQuery, setDataQuery] = useState({});
+  const [dataQuery, setDataQuery] = useState<any>(queryParams || {});
   const { data, isLoading, refetch } = useGetRoomsQuery(dataQuery);
   const { data: dataBranches } = useGetBranchesQuery({});
   const [childs, setChilds] = useState<number>(0);
   const [adults, setAdults] = useState<number>(0);
   const [countRoom, setCountRoom] = useState<number>(0);
-  const [, setCookie] = useCookies(["bookingNow", "roomSearch"]);
+  const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);
 
   const onFinish = (values: any) => {
     if (!values) {
@@ -63,29 +72,44 @@ export default function Rooms({ }: Props) {
       checkout: formattedDates?.[1],
     };
 
+    navigate(
+      `/rooms?checkin=${dataQuery.checkin}&checkout=${dataQuery.checkout}&adult=${dataQuery.adult}&child=${dataQuery.child}&branch_id=${dataQuery.branch_id}&soLuong=${dataQuery.soLuong}`
+    );
     setDataQuery(dataQuery);
-    if (!isLoading && !data?.data?.length) {
-      message.error("Không có phòng nào phù hợp");
-    }
     setCookie("roomSearch", dataQuery, { path: "/" });
   };
 
-  const handleBookingNow = (item: any) => {
-    console.log(Object.keys(dataQuery).length);
-    if (Object.keys(dataQuery).length) {
-      console.log(item);
+  // const validateQueryParams = (params: any) => {
+  //   const requiredParams = [
+  //     "checkin",
+  //     "checkout",
+  //     "adult",
+  //     "child",
+  //     "branch_id",
+  //     "amount_room",
+  //   ];
 
+  //   return requiredParams.every(
+  //     (param) => params.hasOwnProperty(param) && params[param]
+  //   );
+  // };
+
+  const handleBookingNow = (item: any) => {
+    if (Object.keys(dataQuery).length) {
       const { id, name, images, price, branch, bed_size } = item;
-      // const price = type.price_per_night - discount;
+      const checkinDate = dayjs(cookie.roomSearch.checkin);
+      const checkoutDate = dayjs(cookie.roomSearch.checkout);
+      const dateDiff = checkoutDate.diff(checkinDate, "day");
 
       const bookingData = {
         room_id: id,
         room_name: name,
         image: images?.[0]?.image,
-        price,
+        price: +price * +dateDiff * +cookie?.roomSearch?.soLuong,
         branch: branch?.name,
         bed_size,
       };
+      console.log(bookingData);
 
       setCookie("bookingNow", bookingData, { path: "/" });
       navigate("/accommodation/book");
@@ -101,6 +125,11 @@ export default function Rooms({ }: Props) {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+  useEffect(() => {
+    if (!isLoading && data.status == false) {
+      message.error("Không có phòng nào phù hợp");
+    }
+  }, [data]);
   useEffect(() => {
     setWidth(window.innerWidth);
   }, [window.innerWidth]);

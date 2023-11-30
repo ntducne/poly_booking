@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { HomeOutlined } from "@ant-design/icons";
+import { MdBed } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Art1 from "../../assets/images/Home/Art/Image1.jpg";
-import Art2 from "../../assets/images/Home/Art/Image2.jpg";
+import { MdOutlineSportsKabaddi } from "react-icons/md";
 import {
   ImageStyle1,
   ImageStyle10,
@@ -16,7 +16,6 @@ import {
   ImageStyle9,
 } from "../../assets/images/Home/ImsViews";
 import ImageRestaurant from "../../assets/images/Home/Restaurant/Img2.jpg";
-import ImgHome from "../../assets/images/Home/view.jpg";
 import BookForm from "../../components/BookForm";
 import HeroSlide from "../../components/HeroSlide";
 import ObserverAnimate from "../../components/ObserverAnimation";
@@ -25,71 +24,52 @@ import RoomsView from "../../sections/Home/RoomsView";
 type Props = {};
 
 export default function Home({}: Props) {
-  const [bg, setBg] = useState<boolean>(false);
-  const [bg2, setBg2] = useState<boolean>(false);
-  const elementRef = useRef<any>(null);
-  const elementRef2 = useRef<any>(null);
-  useEffect(() => {
-    const handleScroll = () => {
-      const element = elementRef.current;
-      const element2 = elementRef2.current;
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        const isOnScreen =
-          rect.top < window.innerHeight - 250 && rect.bottom >= 470;
-
-        setBg(isOnScreen);
-      }
-      if (element2) {
-        const rect = element2.getBoundingClientRect();
-        const isOnScreen =
-          rect.top < window.innerHeight - 100 && rect.bottom >= 1200;
-        setBg2(isOnScreen);
-      }
-    };
-    // window.addEventListener("scroll", () => {
-    //   window.scrollY > 390 && window.scrollY < 1100 ? setBg(true) : setBg(false)
-    // })
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Khi trang được tải, kiểm tra luôn
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   return (
     <Page title="Trang chủ">
       <HeroSlide />
       <BookForm />
       <div
-        className={`py-[90px] lg:py-[190px]  ${
-          bg || bg2 ? "bg-[#202020]" : "bg-[#f9f8f6]"
-        } transition-all duration-300`}
+        className={`py-[90px] lg:py-[190px] bg-[#f9f8f6]" transition-all duration-300`}
       >
-        <div
-          ref={elementRef}
-          className="px-4 flex flex-col justify-center items-center lg:flex-row "
-        >
+        <div className="px-4 flex flex-col justify-center items-center lg:flex-row ">
           <ObserverAnimate position={{ y: 70 }}>
-            <div className="relative inline-block">
-              <img
-                src={ImgHome}
-                className="md:max-w-[780px] rounded lg:translate-x-[-20%]"
-                alt=""
-              />
-              <div
-                className="lg:absolute hidden lg:block lg:top-1/2 lg:right-[-25%] lg:transform lg:-translate-y-1/2
-             text-white"
-              >
-                <div className="mb-5">
-                  <span className="text-desc">For luxury seekers</span>
+            <div className="md:grid md:grid-cols-[1.5fr,2fr] gap-5">
+              <div className="flex flex-col gap-1">
+                <div className="flex gap-1">
+                  <img
+                    src="https://themewagon.github.io/seapalace/img/home/welcomeBanner1.png"
+                    alt=""
+                  />
+                  <img
+                    src="https://themewagon.github.io/seapalace/img/home/welcomeBanner2.png"
+                    alt=""
+                  />
                 </div>
-                <h2 className="max-w-[383px] text-h3 ">
-                  Discover a hotel that defines a new dimension of luxury.
-                  Emotional luxury.
-                </h2>
-                <Link to="#" className="underline text-[24px]">
-                  Views More
-                </Link>
+                <img
+                  src="https://themewagon.github.io/seapalace/img/home/welcomeBanner3.png"
+                  alt=""
+                />
+              </div>
+              <div className="ml-[30px]">
+                <div className="flex flex-col text-[40px] font-text_2nd font-bold">
+                  <p>Welcome</p>
+                  <p>to our residence</p>
+                </div>
+                <p className="max-w-[500px] mt-[30px]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
+                  veritatis dignissimos ducimus laboriosam, eaque quod
+                  aspernatur cumque unde fuga culpa ex dolore cupiditate minus,
+                  esse atque. Aut ipsa cupiditate non.
+                </p>
+                <p className="max-w-[500px] mt-[30px]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
+                  veritatis dignissimos ducimus laboriosam, eaque quod
+                  aspernatur cumque unde fuga culpa ex dolore cupiditate minus,
+                  esse atque. Aut ipsa cupiditate non.
+                </p>
+                <button className="mt-[30px] px-6 py-2 rounded-md bg-blue-500 text-white font-medium font-text_2nd text-[20px]">
+                  Learn more
+                </button>
               </div>
             </div>
           </ObserverAnimate>
@@ -110,7 +90,7 @@ export default function Home({}: Props) {
         <RoomsView />
         {/* restaurant */}
         <div className="mt-primary">
-          <div className="flex justify-center  font-text_2nd mb-[60px]">
+          <div className="flex justify-center  font-text_2nd mb-[40px]">
             <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
               <div className="text-center">
                 <h2 className="text-h3 md:text-h1 max-w-[780px] text-center  font-medium">
@@ -144,78 +124,75 @@ export default function Home({}: Props) {
         </div>
         {/* art */}
         <div className="mt-primary px-4">
-          <div className="flex justify-center mb-[60px]">
+          <div className="flex justify-center mb-[40px]">
             <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
-              <h2 className="text-normal text-center text-[#202020] max-w-[800px] font-text font-light">
-                Everything you need to live an unforgettable eco-luxury
-                experience of health and well-being. The art of meeting your
-                highest expectations.
+              <h2 className="text-[40px] flex flex-col items-center text-[#202020] max-w-[600px] font-text_2nd font-bold">
+                <p>
+                  <MdOutlineSportsKabaddi className="text-[50px]" />
+                </p>
+                <p> Special Facilities</p>
               </h2>
             </ObserverAnimate>
           </div>
-          <div className="flex justify-center flex-col md:flex-row gap-[30px] md:gap-[50px]">
-            <ObserverAnimate position={{ x: -150, duration: 1 }}>
-              <Link to="" className="relative group">
-                <img
-                  src={Art1}
-                  className="w-full md:max-w-[570px] object-cover h-[450px]"
-                  alt=""
-                />
-                <div className="absolute inset-0 bg-black opacity-50"></div>
-                <div className="absolute w-full bottom-[15%] group-hover:bottom-[50%] group-hover:translate-y-[70%] transition-all duration-1000 right-1/2 translate-x-1/2 text-white">
-                  <h3 className="text-h3 font-text_2nd text-center">
-                    Center Park
-                  </h3>
-                  <p
-                    className="text-small md:px-4 group-hover:md:block opacity-0 duration-300 transition-opacity ease-in-out 
-               hidden md:text-center group-hover:opacity-100"
-                  >
-                    "Leather detail shoulder contrastic colour contour stunning
-                    silhouette working peplum. Statement buttons cover-up tweaks
-                    patch pockets perennial lapel collar flap chest pockets
-                    topline stitching cropped."
-                  </p>
-                </div>
-              </Link>
-            </ObserverAnimate>
-            <ObserverAnimate position={{ x: 150, duration: 1 }}>
-              <Link to="" className="relative group">
-                <img
-                  src={Art2}
-                  className="w-full md:max-w-[570px] object-cover h-[450px]"
-                  alt=""
-                />
-                <div className="absolute inset-0 bg-black opacity-50"></div>
-                <div className="absolute w-full bottom-[15%] group-hover:bottom-[50%] group-hover:translate-y-[70%] transition-all duration-1000 right-1/2 translate-x-1/2 text-white">
-                  <h3 className="text-h3 font-text_2nd text-center">
-                    Deluxe Suite
-                  </h3>
-                  <p
-                    className="text-small md:px-4 group-hover:md:block opacity-0 duration-300 transition-opacity ease-in-out 
-               hidden md:text-center group-hover:opacity-100 "
-                  >
-                    "Leather detail shoulder contrastic colour contour stunning
-                    silhouette working peplum. Statement buttons cover-up tweaks
-                    patch pockets perennial lapel collar flap chest pockets
-                    topline stitching cropped."
-                  </p>
-                </div>
-              </Link>
-            </ObserverAnimate>
+          <div className="flex flex-col px-[60px] gap-8">
+            <div className="flex items-center flex-col">
+              <img
+                className="max-w-[1530px] w-full"
+                src="https://themewagon.github.io/seapalace/img/home/special.png"
+                alt="swiming"
+              />
+            </div>
+            <div className="flex gap-3 flex-wrap justify-center">
+              <div className="flex justify-center flex-col lg:max-w-[500px] p-[50px] shadow-lg">
+                <h1 className="flex gap-2 text-[25px] font-text_2nd">
+                  <span>
+                    <HomeOutlined />
+                  </span>
+                  <span>Conference Room</span>
+                </h1>
+                <p className="">
+                  Built purse maids cease her ham new seven among and. Pulled
+                  coming wooded tended it answer remain
+                </p>
+              </div>
+              <div className="flex justify-center flex-col lg:max-w-[500px] p-[50px] shadow-lg">
+                <h1 className="flex gap-2 text-[25px] font-text_2nd">
+                  <span>
+                    <HomeOutlined />
+                  </span>
+                  <span>Conference Room</span>
+                </h1>
+                <p className="">
+                  Built purse maids cease her ham new seven among and. Pulled
+                  coming wooded tended it answer remain
+                </p>
+              </div>
+              <div className="flex justify-center flex-col lg:max-w-[500px] p-[50px] shadow-lg">
+                <h1 className="flex gap-2 text-[25px] font-text_2nd">
+                  <span>
+                    <HomeOutlined />
+                  </span>
+                  <span>Conference Room</span>
+                </h1>
+                <p className="">
+                  Built purse maids cease her ham new seven among and. Pulled
+                  coming wooded tended it answer remain
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         {/* imgs */}
-        <div className="mt-primary " ref={elementRef2}>
+        <div className="mt-primary ">
           <ObserverAnimate position={{ y: -50, duration: 1 }}>
-            <div className="flex flex-col justify-center items-center text-white">
-              <p className="text-center text-desc">Hotel Gallery</p>
+            <div className="flex flex-col justify-center items-center">
               <h3 className="max-w-[800px] font-text_2nd text-center text-h3  md:text-h1 font-medium">
                 Enjoy and join the handful of guests who already sent their best
                 photographic memories of their stay.
               </h3>
             </div>
           </ObserverAnimate>
-          <div className="max-w-[1222px] md:columns-3 column-1 sm:columns-2 px-4 mt-[60px] mx-auto lg:columns-4 column gap-[30px]">
+          <div className="max-w-[1530px] md:columns-3 column-1 sm:columns-2 px-4 mt-[60px] mx-auto lg:columns-4 column gap-[30px]">
             <div className="w-full mb-[30px] break-inside-avoid">
               <img className="w-full" src={ImageStyle1} alt="" />
             </div>
