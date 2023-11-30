@@ -9,6 +9,9 @@ Route::fallback(function () {
     ], 404);
 });
 
+
+Route::post('contact', [ClientController::class, 'contact']);
+
 Route::get('branch', [ClientController::class, 'branch']);
 
 Route::prefix('room')->group(function () {

@@ -51,10 +51,6 @@ const Head = () => {
       })
     })
     const unsubscribe = pusherInstance().getData('chat', 'message', (data :any)  => {
-
-      
-      
-      
       setNewMessage(newMessage + 1);
       setNotifications(prevNotifications => [...prevNotifications, {
         label: (
