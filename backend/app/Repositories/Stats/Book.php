@@ -88,22 +88,35 @@ class Revenue implements StatInterface
         }
 
     public function monthly($request){
+
         $month = $request->month;
-        $total = 0;
-        $sinceTotal = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        $countBookYesterday = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m') === Carbon::parse($month)->format('Y-m')) {
-                $total += $item->total;
+                $countBook++;
             }
             if (Carbon::parse($item->created_at)->format('Y-m') <= Carbon::parse($month)->subMonth()->format('Y-m')) {
-                $sinceTotal += $item->total;
+                $countBookYesterday++;
+            }
+        }
+        $countCancel = 0;
+        $countCancelYesterday = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-m') === Carbon::parse($month)->format('Y-m')) {
+                $countCancel++;
+            }
+            if (Carbon::parse($item->created_at)->format('Y-m') <= Carbon::parse($month)->subMonth()->format('Y-m')) {
+                $countCancelYesterday++;
             }
         }
         $returnData = [
-            'days' => Carbon::parse($month)->format('m/Y'),
-            'total' => $total,
-            'since_last_month' => tinhPhanTramTuHaiSo($total, $sinceTotal),
+            'book' => $countBook,
+            'cancel' => $countCancel,
+            'since_book_yesterday' => tinhPhanTramTuHaiSo($countBook, $countBookYesterday),
+            'since_cancel_yesterday' => tinhPhanTramTuHaiSo($countCancel, $countCancelYesterday),
         ];
         return $returnData;
     }
