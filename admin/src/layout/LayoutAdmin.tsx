@@ -7,7 +7,7 @@ import Head from "../component/header";
 import Footer from "../component/footer";
 import { ToastContainer } from "react-toastify";
 const { Header, Content, Sider } = Layout;
-import { Navigate } from 'react-router-dom'
+import { Navigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -42,72 +42,63 @@ export const LayoutContext = createContext("");
 
 const LayoutAdmin = () => {
   const location = useLocation();
-  const checkLogin = JSON.parse(cookies().Get('AuthUser') as any);
+  const checkLogin = JSON.parse(cookies().Get("AuthUser") as any);
   if (!checkLogin) {
-    return <Navigate to='/login' />
+    return <Navigate to="/login" />;
   }
-  const [title, setTitle] = useState(" ");
+  const [title, setTitle] = useState<any>(" ");
   useEffect(() => {
     location.pathname === "/" && setTitle("Thống kê");
     location.pathname === "/branches" && setTitle("Chi nhánh");
-    location.pathname === "/billing" && setTitle("Hoá đơn");
-  },[])
+    location.pathname === "/room" && setTitle("Phòng");
+    location.pathname === "/room/type" && setTitle("Loại phòng");
+    location.pathname === "/room/utilities" && setTitle("Tiện ích");
+    location.pathname === "/room/booking" && setTitle("Đặt Phòng");
+    location.pathname === "/billing" && setTitle("Hóa đơn");
+    location.pathname === "/services" && setTitle("Dịch vụ");
+    location.pathname === "/policy" && setTitle("Chính sách");
+    location.pathname === "/staff" && setTitle("Nhân viên");
+    location.pathname === "/user" && setTitle("Người dùng");
+    location.pathname === "/feedback" && setTitle("Đánh giá");
+    location.pathname === "/contact" && setTitle("Liên hệ");
+  }, [location.pathname]);
   const items: MenuItem[] = [
     getItem(
       "Thống kê",
       "/",
-      <Link onClick={() => handleTitleChange("Thống kê")} to={`/`}>
+      <Link to={`/`}>
         <PieChartOutlined />
       </Link>
     ),
     getItem(
       "Chi nhánh",
       "/branches",
-      <Link onClick={() => handleTitleChange("Chi nhánh")} to={`branches`}>
+      <Link to={`branches`}>
         <AiTwotoneGift />
       </Link>
     ),
-    
+
     getItem("Phòng", "sub1", <BiSolidBed />, [
-      getItem(
-        "Phòng",
-        "/room",
-        <Link onClick={() => handleTitleChange("Phòng")} to={`room`} />
-      ),
-      getItem(
-        "Loại Phòng",
-        "/room/type",
-        <Link onClick={() => handleTitleChange("Loại phòng")} to={`room/type`} />
-      ),
+      getItem("Phòng", "/room", <Link to={`room`} />),
+      getItem("Loại Phòng", "/room/type", <Link to={`room/type`} />),
       getItem(
         "Tiện ích Phòng",
         "/room/utilities",
-        <Link
-          onClick={() => handleTitleChange("Tiện ích")}
-          to={`room/utilities`}
-        />
+        <Link to={`room/utilities`} />
       ),
-      getItem(
-        "Đặt Phòng",
-        "/room/booking",
-        <Link
-          onClick={() => handleTitleChange("Đặt Phòng")}
-          to={`room/booking`}
-        />
-      ),
+      getItem("Đặt Phòng", "/room/booking", <Link to={`room/booking`} />),
     ]),
     getItem(
       "Hoá đơn",
       "/billing",
-      <Link onClick={() => handleTitleChange("Hóa đơn")} to={`billing`}>
-        {" "}
+      <Link to={`billing`}>
         <AiFillBank />
       </Link>
     ),
     getItem(
       "Dịch vụ",
       "/services",
-      <Link onClick={() => handleTitleChange("Dịch vụ")} to={`services`}>
+      <Link to={`services`}>
         <AiOutlineCrown />
       </Link>
     ),
@@ -121,44 +112,30 @@ const LayoutAdmin = () => {
     getItem(
       "Chính sách",
       "/policy",
-      <Link onClick={() => handleTitleChange("Chính sách")} to={`policy`}>
+      <Link to={`policy`}>
         <AiTwotonePrinter />
       </Link>
     ),
     getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
-      getItem(
-        "Nhân viên",
-        "/staff",
-        <Link
-          onClick={() => handleTitleChange("Nhân viên")}
-          to={`staff`}
-        />
-      ),
-      getItem(
-        "Người dùng",
-        "/user",
-        <Link
-          onClick={() => handleTitleChange("Người dùng")}
-          to={`user`}
-        />
-      ),
+      getItem("Nhân viên", "/staff", <Link to={`staff`} />),
+      getItem("Người dùng", "/user", <Link to={`user`} />),
     ]),
     getItem(
       "Đánh giá",
       "/feedback",
-      <Link onClick={() => handleTitleChange("Đánh giá")} to={`feedback`}>
+      <Link to={`feedback`}>
         <VscFeedback />
       </Link>
     ),
     getItem(
       "Liên hệ",
       "/contact",
-      <Link onClick={() => handleTitleChange("Liên hệ")} to={`contact`}>
+      <Link to={`contact`}>
         <VscFeedback />
       </Link>
     ),
   ];
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState<any>(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -177,8 +154,7 @@ const LayoutAdmin = () => {
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
-          className={(!collapsed ? 'fixed z-50' : '') + ' h-screen'}
-         
+          className={(!collapsed ? "fixed z-50" : "") + " h-screen"}
         >
           {/* <div className="demo-logo-vertical" /> */}
           <img
@@ -191,17 +167,22 @@ const LayoutAdmin = () => {
             theme="light"
             defaultSelectedKeys={[location.pathname]}
             defaultOpenKeys={[location.pathname]}
-
             mode="inline"
             items={items}
           />
         </Sider>
-        {!collapsed ? <div className='fixed top-0 right-0 z-[1] w-screen h-full bg-[rgba(0,0,0,0.1)] md:hidden md:opacity-0 md:invisible'></div> : ''}
-        <Layout className={!collapsed ? 'md:pl-[200px]' : ''}>
+        {!collapsed ? (
+          <div className="fixed top-0 right-0 z-[1] w-screen h-full bg-[rgba(0,0,0,0.1)] md:hidden md:opacity-0 md:invisible"></div>
+        ) : (
+          ""
+        )}
+        <Layout className={!collapsed ? "md:pl-[200px]" : ""}>
           <Header
             className="flex items-center p-5 shadow-md"
-            style={{ padding: 0, background: colorBgContainer, 
-              position: 'sticky',
+            style={{
+              padding: 0,
+              background: colorBgContainer,
+              position: "sticky",
               top: 0,
               zIndex: 40,
             }}

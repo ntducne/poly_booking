@@ -38,7 +38,7 @@ import _ from "lodash";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
 import dayjs from "dayjs";
-
+import moment from "moment";
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const {
@@ -363,7 +363,7 @@ const BillDetail: React.FC = () => {
           message.error(data.message);
         }
         if (data?.status == false) {
-          message.error(data?.error?.amount_room);
+          message.warning(data?.error?.amount_room || data?.message);
         } else {
           message.success(data?.message);
           setRoomSearch(data?.data);
@@ -420,6 +420,7 @@ const BillDetail: React.FC = () => {
       amount_room_renew < dataBill?.data?.booking?.amount_room &&
       idRoomNewExtend === null
     ) {
+      // console.log()
       const dataExtendRoom = {
         billing_id: dataBill?.data?.id,
         amount_room: amount_room_renew,
@@ -574,7 +575,7 @@ const BillDetail: React.FC = () => {
           {dataBill?.data?.status === 0 && (
             <button
               type="button"
-              onClick={() => onCancelBooking(dataBill?.data?.id)}
+              // onClick={() => onCancelBooking(dataBill?.data?.id)}
               className="text-gray-900 bg-gradient-to-r from-green-200 via-green-300 to-green-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             >
               Chờ nhận phòng
@@ -716,7 +717,10 @@ const BillDetail: React.FC = () => {
                   },
                 ]}
               >
-                <Select defaultValue={dataBill?.data?.booking?.roomType.id}>
+                <Select
+                  defaultValue={dataBill?.data?.booking?.roomType.id}
+                  disabled
+                >
                   {dataRoomType?.data?.map((item: any) => {
                     return (
                       <Select.Option value={item.id} key={item.id}>
@@ -735,12 +739,17 @@ const BillDetail: React.FC = () => {
                     required: true,
                     message: "Vui lòng nhập số phòng",
                   },
+                  {
+                    type: 'number',
+                    min: 1,
+                    message: "Số phòng phải lớn hơn 1",
+                  },
                 ]}
               >
                 <InputNumber
                   onChange={changeRoomBook}
                   defaultValue={dataBill?.data?.booking.amount_room}
-                  min={1}
+                  min={0}
                   className="w-full"
                 />
               </Form.Item>
@@ -752,6 +761,11 @@ const BillDetail: React.FC = () => {
                   {
                     required: true,
                     message: "Vui lòng nhập số người lớn",
+                  },
+                  {
+                    type: 'number',
+                    min: 1,
+                    message: "Số phòng phải lớn hơn 1",
                   },
                 ]}
               >
@@ -769,6 +783,11 @@ const BillDetail: React.FC = () => {
                   {
                     required: true,
                     message: "Vui lòng nhập số trẻ em",
+                  },
+                  {
+                    type: 'number',
+                    min: 0,
+                    message: "Số phòng phải lớn hơn 1",
                   },
                 ]}
               >
@@ -788,7 +807,7 @@ const BillDetail: React.FC = () => {
                   },
                 ]}
               >
-                <DatePicker className="w-full" placeholder={"Checkout new"} />
+                <DatePicker className="w-full" placeholder={"Checkout new"}  disabledDate={(current) => current && current <= moment(dataBill?.data?.booking?.checkout)}/>
               </Form.Item>
               <div className="flex justify-end mt-5">
                 <Button htmlType="submit">Kiểm tra</Button>
@@ -797,7 +816,8 @@ const BillDetail: React.FC = () => {
           </Card>
         </div>
         {dataRoomBook.length > 0 && (
-          <div className="relative flex  overflow-x-auto w-full mb-4">
+          <div className="relative flex flex-col overflow-x-auto w-full mb-4">
+            <div className="text-center font-medium text-">Phòng đang ở hiện tại</div>
             <Form
               form={formRoomIdExtend}
               name="validate_other"
@@ -830,7 +850,10 @@ const BillDetail: React.FC = () => {
             </Form>
           </div>
         )}
-        {dataBill?.data?.booking?.amount_room >= dataRoomBook && (
+        {dataBill?.data?.booking?.amount_room < dataRoomBook && (
+          <div>Thông tin tìm kiếm</div>
+        )} 
+
           <div>
             {dataRoomSearch.length > 0 && (
               <div className="relative overflow-x-auto w-full">
@@ -908,13 +931,23 @@ const BillDetail: React.FC = () => {
                           <td className="px-6 py-4">{room.room_empty}</td>
                           <td>
                             {dataBill?.data?.booking.detail[0].room_id ==
-                              room.id && (
+                              room.id && idRoomNewExtend == null && (
                               <button
                                 type="button"
                                 onClick={() => onExtendBooking()}
                                 className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                               >
                                 Gia hạn
+                              </button>
+                            )}
+                             {idRoomNewExtend != null && dataBill?.data?.booking.detail[0].room_id !=
+                              room.id && (
+                              <button
+                                type="button"
+                                onClick={() => onSetIdRoomNewExtend(null)}
+                                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                              >
+                                Hủy
                               </button>
                             )}
                             {dataBill?.data?.booking.detail[0].room_id !=
@@ -947,7 +980,6 @@ const BillDetail: React.FC = () => {
               </div>
             )}
           </div>
-        )}
       </Modal>
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2  2xl:grid-rows-1 2xl:grid-cols-3 gap-4 mt-4 mb-4">
         {/* <div className="grid md:grid-rows-1 grid-rows-1 gap-4"> */}
@@ -1049,6 +1081,14 @@ const BillDetail: React.FC = () => {
                                     required: true,
                                     message: "Vui lòng nhập tên",
                                   },
+                                  {
+                                    pattern: /^\S.*\S$/,
+                                    message: "Không được để khoảng trắng ở đầu hoặc cuối",
+                                  },
+                                  {
+                                    min: 5,
+                                    message: "Tên phải có ít nhất 5 ký tự",
+                                  },
                                 ]}
                               >
                                 <Input placeholder="Họ tên" />
@@ -1060,6 +1100,10 @@ const BillDetail: React.FC = () => {
                                   {
                                     required: true,
                                     message: "Vui lòng nhập CCCD/CMTND",
+                                  },
+                                  {
+                                    pattern: /^[0-9]{9}$|^[0-9]{12}$/,
+                                    message: "CCCD/CMTND phải là số và gồm 9 hoặc 12 chữ số",
                                   },
                                 ]}
                               >
