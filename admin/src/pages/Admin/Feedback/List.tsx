@@ -76,82 +76,12 @@ const ListFeedback = () => {
       dataIndex: "rate_at",
       key: "rate_at",
     },
-    {
-      title: "Action",
-      dataIndex: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
-          >
-            <MdDeleteForever />
-          </Button>
-        </Space>
-      ),
-      // fixed: "right",
-    },
   ];
 
   const data: any = dataRates?.data?.map((item: any, index: number) => ({
     key: index + 1,
     ...item,
   }));
-  // [
-  //   {
-  //     key: "1",
-  //     review_id: 1,
-  //     user_id: {
-  //       image:
-  //         "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
-  //       email: "huynguyen@gmail.com",
-  //     },
-  //     content: "Đẹp quá nè",
-  //     rate_at: "2021-09-20",
-  //     images: "",
-  //     star: 5,
-  //   },
-  //   {
-  //     key: "2",
-  //     review_id: 2,
-  //     user_id: {
-  //       image:
-  //         "https://img1.kienthucvui.vn/uploads/2021/01/23/anh-chang-bac-si-han-quoc-dep-nhat_032531512.jpg",
-  //       email: "huynguyen123@gmail.com",
-  //     },
-  //     content: "Đẹp quá nè ahihi",
-  //     rate_at: "2021-09-20",
-  //     images: "",
-  //     star: 4,
-  //   },
-  // ];
-
-  const remove = (id: number) => {
-    try {
-      swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            // removeComment(id);
-            console.log(id);
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
-          }
-        })
-        .catch(() => {
-          swal("Error", {
-            icon: "error",
-          });
-        });
-    } catch (error) {}
-  };
 
   return (
     <Page title={`Đánh giá`}>
@@ -175,7 +105,8 @@ const ListFeedback = () => {
         loading={isLoading}
         columns={columns}
         dataSource={data}
-      />
+        pagination={{ pageSize: 10 }}
+        />
     </Page>
   );
 };
