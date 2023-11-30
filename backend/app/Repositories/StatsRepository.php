@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Repositories\Stats\Book;
 use App\Repositories\Stats\Revenue;
 use App\Repositories\Stats\Room;
 
@@ -43,5 +44,33 @@ class StatsRepository
     {
         $this->room = new Room();
         return $this->room->daily($request);
+    }
+
+    public function book($request){
+        $this->book = new Book();
+        if($request->type === 'daily'){
+            return $this->book->daily($request);
+        }
+        if($request->type === 'weekly'){
+            return $this->book->weekly($request);
+        }
+        if($request->type === 'monthly'){
+            return $this->book->monthly($request);
+        }
+        if($request->type === 'yearly'){
+            return $this->book->yearly($request);
+        }
+        if($request->type === 'day_to_day'){
+            return $this->book->day_to_day($request);
+        }
+        if($request->type === 'week_to_week'){
+            return $this->book->week_to_week($request);
+        }
+        if($request->type === 'month_to_month'){
+            return $this->book->month_to_month($request);
+        }
+        if($request->type === 'year_to_year'){
+            return $this->book->year_to_year($request);
+        }
     }
 }
