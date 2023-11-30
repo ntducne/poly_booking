@@ -26,7 +26,35 @@ const Head = () => {
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
 
   useEffect(() => {
+    fetch(`${import.meta.env.VITE_URL_API}/notifications`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(cookies().Get("AuthUser") as any)[2].token}`,
+      },
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      setNotifications([]);
+      setNewMessage(0);
+      res.forEach((item: any) => {
+        setNotifications(prevNotifications => [...prevNotifications, {
+          label: (
+            <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
+              <div className="ml-2">
+                <p className="font-medium">{item.message}</p>
+                <Text type="secondary">{item.time}</Text>
+              </div>
+            </div>
+          ),
+          key: `${item.id}`,
+        }])
+      })
+    })
     const unsubscribe = pusherInstance().getData('chat', 'message', (data :any)  => {
+
+      
+      
+      
       setNewMessage(newMessage + 1);
       setNotifications(prevNotifications => [...prevNotifications, {
         label: (
