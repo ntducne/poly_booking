@@ -71,11 +71,10 @@ export default function Header({}: Props) {
               />
             )}
           </Link>
-
           <div
             className={`${
               header ? "text-dark py-6" : "text-white  py-4"
-            } lg:flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] 
+            } lg:flex gap-2 lg:gap-x-8  md:text-[15px] 
           items-center hidden 
           `}
           >
@@ -104,7 +103,7 @@ export default function Header({}: Props) {
         <div
           className={`${
             header ? "text-dark py-6" : "text-white  py-4"
-          } flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] 
+          } flex gap-2 lg:gap-x-8  md:text-[15px] 
           items-center
           `}
         >
