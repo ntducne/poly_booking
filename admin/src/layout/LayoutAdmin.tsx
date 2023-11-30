@@ -47,13 +47,10 @@ const LayoutAdmin = () => {
     return <Navigate to='/login' />
   }
   const [title, setTitle] = useState(" ");
-  const handleTitleChange = (title: any) => {
-    setTitle(title);
-  };
   useEffect(() => {
-    location.pathname === "/" && handleTitleChange("Thống kê");
-    location.pathname === "/branches" && handleTitleChange("Chi nhánh");
-    location.pathname === "/billing" && handleTitleChange("Hoá đơn");
+    location.pathname === "/" && setTitle("Thống kê");
+    location.pathname === "/branches" && setTitle("Chi nhánh");
+    location.pathname === "/billing" && setTitle("Hoá đơn");
   },[])
   const items: MenuItem[] = [
     getItem(
@@ -170,7 +167,6 @@ const LayoutAdmin = () => {
     setCollapsed(!collapsed);
   };
 
-  
   return (
     <LayoutContext.Provider value={title}>
       <Layout style={{ minHeight: "100vh" }}>

@@ -3,9 +3,9 @@
 namespace App\Modules\Services\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Services\StoreRequest;
-use App\Http\Requests\Services\UpdateRequest;
 use App\Models\Services;
+use App\Modules\Services\Requests\StoreRequest;
+use App\Modules\Services\Requests\UpdateRequest;
 use App\Modules\Services\Resources\ServiceResource;
 use Exception;
 use Illuminate\Support\Facades\Log;
