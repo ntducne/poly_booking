@@ -1,0 +1,25 @@
+
+   INFO  Processing jobs from the [default] queue.  
+
+  2023-11-30 15:45:13 App\Events\Message ............................. RUNNING
+  2023-11-30 15:45:14 App\Events\Message ....................... 416.01ms DONE
+  2023-11-30 16:05:00 App\Events\Message ............................. RUNNING
+  2023-11-30 16:05:00 App\Events\Message ....................... 438.53ms DONE
+  2023-11-30 16:05:56 App\Events\Message ............................. RUNNING
+  2023-11-30 16:05:57 App\Events\Message ....................... 355.60ms DONE
+  2023-11-30 16:06:15 App\Events\Message ............................. RUNNING
+  2023-11-30 16:06:16 App\Events\Message ....................... 374.26ms DONE
+  2023-11-30 16:06:25 App\Events\Message ............................. RUNNING
+  2023-11-30 16:06:25 App\Events\Message ....................... 366.88ms DONE
+  2023-11-30 16:09:34 App\Events\Message ............................. RUNNING
+  2023-11-30 16:09:34 App\Events\Message ....................... 332.98ms DONE
+  2023-11-30 16:11:17 App\Events\Message ............................. RUNNING
+  2023-11-30 16:11:18 App\Events\Message ....................... 416.29ms DONE
+  2023-11-30 20:25:03 App\Events\BookingEvent ........................ RUNNING
+  2023-11-30 20:25:03 App\Events\BookingEvent ................... 48.19ms FAIL
+  2023-11-30 20:25:05 App\Events\Message ............................. RUNNING
+  2023-11-30 20:25:05 App\Events\Message ....................... 382.66ms DONE
+  2023-11-30 21:11:51 App\Events\BookingEvent ........................ RUNNING
+  2023-11-30 21:11:51 App\Events\BookingEvent ................... 36.28ms FAIL
+  2023-11-30 21:11:53 App\Events\Message ............................. RUNNING
+  2023-11-30 21:11:53 App\Events\Message ....................... 445.93ms DONE
