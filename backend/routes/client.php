@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Client\Controllers\ClientController;
+use App\Modules\Services\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function () {
@@ -11,6 +12,7 @@ Route::fallback(function () {
 
 
 Route::post('contact', [ClientController::class, 'contact']);
+Route::resource('services', ServicesController::class)->except(['create', 'edit']);
 
 Route::get('branch', [ClientController::class, 'branch']);
 
