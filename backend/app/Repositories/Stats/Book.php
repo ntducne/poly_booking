@@ -201,16 +201,25 @@ class Revenue implements StatInterface
     public function month_to_month($request){
         $fromMonth = $request->fromMonth;
         $toMonth = $request->toMonth;
-        $total = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m') >= Carbon::parse($fromMonth)->format('Y-m') && Carbon::parse($item->created_at)->format('Y-m') <= Carbon::parse($toMonth)->format('Y-m')) {
-                $total += $item->total;
+                $countBook++;
+            }
+        }
+        $countCancel = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-m') >= Carbon::parse($fromMonth)->format('Y-m') && Carbon::parse($item->created_at)->format('Y-m') <= Carbon::parse($toMonth)->format('Y-m')) {
+                $countCancel++;
             }
         }
         $returnData = [
-            'days' => Carbon::parse($fromMonth)->format('m/Y') . ' - ' . Carbon::parse($toMonth)->format('m/Y'),
-            'total' => $total,
+            'fromMonth' => $fromMonth,
+            'toMonth' => $toMonth,
+            'book' => $countBook,
+            'cancel' => $countCancel,
         ];
         return $returnData;
     }
