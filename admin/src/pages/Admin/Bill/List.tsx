@@ -16,8 +16,8 @@ import { useEffect, useState } from "react";
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
   const [billings, setBillings] = useState<any[]>([]);
-
   useEffect(() => {
+    setBillings(dataBilings?.data);
     const unsubscribe = pusherInstance().getData('booking', 'processBooking', (data :any)  => {
       setBillings(prevBillings => [...prevBillings, data.data]);
     });
@@ -184,7 +184,7 @@ const BillList = () => {
     },
   ];
 
-  const data = dataBilings?.data?.map((item: any, index: number) => ({
+  const data = billings?.map((item: any, index: number) => ({
     key: index + 1,
     id: item.id,
     booking: item.booking,
