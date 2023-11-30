@@ -38,7 +38,6 @@ import _ from "lodash";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
 import dayjs from "dayjs";
-
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const {
