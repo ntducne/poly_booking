@@ -87,7 +87,7 @@ Route::fallback(function () {
 
     Route::prefix('booking')->as('booking.')->group(function () {
         Route::post('/store', [BookingController::class, 'store'])->name('store');
-        Route::get('/search', [BookingController::class, 'search'])->name('search');
+        Route::post('/search', [BookingController::class, 'search'])->name('search');
         Route::prefix('handle')->as('handle.')->group(function (){
             Route::post('/cancel', [BookingController::class, 'cancel'])->name('cancel');
             Route::post('/checkin', [BookingController::class, 'checkin'])->name('checkin');
