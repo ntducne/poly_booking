@@ -164,6 +164,7 @@ const ListServices = () => {
         columns={columns}
         dataSource={data}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
     </Page>
   );

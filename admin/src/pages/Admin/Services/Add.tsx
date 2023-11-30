@@ -81,7 +81,7 @@ const AddServices = () => {
             name="service_name"
             rules={[
               { required: true, message: "Vui lòng nhập dịch vụ!" },
-              { pattern: /^\S*$/, message: "Không được chứa khoảng trắng!" },
+              { pattern: /^(\s*\S\s*)+$/, message: "Không được chứa khoảng trắng!" },
             ]}
           >
             <Input />
@@ -109,7 +109,7 @@ const AddServices = () => {
             rules={[
               { required: true, message: "Không được bỏ trống!" },
               { min: 5, message: "Mô tả phải có ít nhất 5 ký tự!" },
-              { pattern: /^\S*$/, message: "Không được chứa khoảng trắng!" },
+              { pattern: /^(\s*\S\s*)+$/, message: "Không được chứa khoảng trắng!" },
             ]}
           >
             <Input.TextArea rows={5} />

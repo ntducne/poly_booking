@@ -85,7 +85,6 @@ const EditServices = () => {
     return <div>Dịch vụ này không tồn tại</div>;
   }
   console.log("data: ", serviceDetail);
-  
 
   return (
     <div>
@@ -100,7 +99,9 @@ const EditServices = () => {
           {...formItemLayout}
           onFinish={onFinish}
           initialValues={{
-            branch_id: serviceDetail?.data?.branch_id
+            branch_id: serviceDetail?.data?.branch.map((item: any) => {
+              return item?.id;
+            }),
           }}
           style={{ maxWidth: 1000 }}
           className="grid grid-cols-1 xl:grid-cols-2"
@@ -110,8 +111,11 @@ const EditServices = () => {
             name="service_name"
             rules={[
               { required: true, message: "Vui lòng nhập dịch vụ!" },
-              { pattern: /^\S*$/, message: "Không được chứa khoảng trắng!" },
-            ]}  
+              {
+                pattern: /^(\s*\S\s*)+$/,
+                message: "Không được chứa khoảng trắng!",
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -138,7 +142,10 @@ const EditServices = () => {
             rules={[
               { required: true, message: "Không được bỏ trống!" },
               { min: 5, message: "Mô tả phải có ít nhất 5 ký tự!" },
-              { pattern: /^\S*$/, message: "Không được chứa khoảng trắng!" },
+              {
+                pattern: /^(\s*\S\s*)+$/,
+                message: "Không được chứa khoảng trắng!",
+              },
             ]}
           >
             <Input.TextArea rows={5} />
@@ -155,10 +162,10 @@ const EditServices = () => {
               },
             ]}
           >
-            <Select mode="multiple">
+            <Select mode="multiple" labelInValue>
               {dataBranches?.data?.map((item: any) => {
                 return (
-                  <Option key={item?._id} value={item?._id}>
+                  <Option key={item?.id} value={item?.id}>
                     {item?.name}
                   </Option>
                 );

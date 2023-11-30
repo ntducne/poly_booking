@@ -275,7 +275,7 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-            <article className="rounded-lg border border-gray-100 bg-white p-6">
+            {/* <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-500">Tài khoản đăng ký mới</p>
@@ -308,7 +308,7 @@ const Dashboard = () => {
                   <span className="text-gray-500"> Since last week </span>
                 </p>
               </div>
-            </article>
+            </article> */}
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>

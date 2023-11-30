@@ -7,7 +7,7 @@ import Head from "../component/header";
 import Footer from "../component/footer";
 import { ToastContainer } from "react-toastify";
 const { Header, Content, Sider } = Layout;
-import { Navigate } from 'react-router-dom'
+import { Navigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -42,11 +42,11 @@ export const LayoutContext = createContext("");
 
 const LayoutAdmin = () => {
   const location = useLocation();
-  const checkLogin = JSON.parse(cookies().Get('AuthUser') as any);
+  const checkLogin = JSON.parse(cookies().Get("AuthUser") as any);
   if (!checkLogin) {
-    return <Navigate to='/login' />
+    return <Navigate to="/login" />;
   }
-  const [title, setTitle] = useState(" ");
+  const [title, setTitle] = useState<any>(" ");
   const handleTitleChange = (title: any) => {
     setTitle(title);
   };
@@ -54,7 +54,7 @@ const LayoutAdmin = () => {
     location.pathname === "/" && handleTitleChange("Thống kê");
     location.pathname === "/branches" && handleTitleChange("Chi nhánh");
     location.pathname === "/billing" && handleTitleChange("Hoá đơn");
-  },[])
+  }, []);
   const items: MenuItem[] = [
     getItem(
       "Thống kê",
@@ -70,7 +70,7 @@ const LayoutAdmin = () => {
         <AiTwotoneGift />
       </Link>
     ),
-    
+
     getItem("Phòng", "sub1", <BiSolidBed />, [
       getItem(
         "Phòng",
@@ -80,7 +80,10 @@ const LayoutAdmin = () => {
       getItem(
         "Loại Phòng",
         "/room/type",
-        <Link onClick={() => handleTitleChange("Loại phòng")} to={`room/type`} />
+        <Link
+          onClick={() => handleTitleChange("Loại phòng")}
+          to={`room/type`}
+        />
       ),
       getItem(
         "Tiện ích Phòng",
@@ -132,18 +135,12 @@ const LayoutAdmin = () => {
       getItem(
         "Nhân viên",
         "/staff",
-        <Link
-          onClick={() => handleTitleChange("Nhân viên")}
-          to={`staff`}
-        />
+        <Link onClick={() => handleTitleChange("Nhân viên")} to={`staff`} />
       ),
       getItem(
         "Người dùng",
         "/user",
-        <Link
-          onClick={() => handleTitleChange("Người dùng")}
-          to={`user`}
-        />
+        <Link onClick={() => handleTitleChange("Người dùng")} to={`user`} />
       ),
     ]),
     getItem(
@@ -170,7 +167,6 @@ const LayoutAdmin = () => {
     setCollapsed(!collapsed);
   };
 
-  
   return (
     <LayoutContext.Provider value={title}>
       <Layout style={{ minHeight: "100vh" }}>
@@ -181,8 +177,7 @@ const LayoutAdmin = () => {
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
-          className={(!collapsed ? 'fixed z-50' : '') + ' h-screen'}
-         
+          className={(!collapsed ? "fixed z-50" : "") + " h-screen"}
         >
           {/* <div className="demo-logo-vertical" /> */}
           <img
@@ -195,17 +190,22 @@ const LayoutAdmin = () => {
             theme="light"
             defaultSelectedKeys={[location.pathname]}
             defaultOpenKeys={[location.pathname]}
-
             mode="inline"
             items={items}
           />
         </Sider>
-        {!collapsed ? <div className='fixed top-0 right-0 z-[1] w-screen h-full bg-[rgba(0,0,0,0.1)] md:hidden md:opacity-0 md:invisible'></div> : ''}
-        <Layout className={!collapsed ? 'md:pl-[200px]' : ''}>
+        {!collapsed ? (
+          <div className="fixed top-0 right-0 z-[1] w-screen h-full bg-[rgba(0,0,0,0.1)] md:hidden md:opacity-0 md:invisible"></div>
+        ) : (
+          ""
+        )}
+        <Layout className={!collapsed ? "md:pl-[200px]" : ""}>
           <Header
             className="flex items-center p-5 shadow-md"
-            style={{ padding: 0, background: colorBgContainer, 
-              position: 'sticky',
+            style={{
+              padding: 0,
+              background: colorBgContainer,
+              position: "sticky",
               top: 0,
               zIndex: 40,
             }}
