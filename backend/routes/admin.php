@@ -38,6 +38,20 @@ Route::fallback(function () {
         return response()->json($newNotification);
     })->name('notifications');
 
+    Route::get('/contact', function(){
+        $contacts = \App\Models\Contact::all();
+        $newContacts = [];
+        foreach ($contacts as $key => $value) {
+            $newContacts[] = [
+                'name' => $value->name,
+                'email' => $value->email,
+                'message' => $value->message,
+                'time' => $value->created_at,
+            ];
+        }
+        return response()->json($newContacts);
+    })->name('contact');
+
     Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);

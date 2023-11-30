@@ -144,6 +144,13 @@ const LayoutAdmin = () => {
         <VscFeedback />
       </Link>
     ),
+    getItem(
+      "Liên hệ",
+      "/contact",
+      <Link onClick={() => handleTitleChange("Liên hệ")} to={`contact`}>
+        <VscFeedback />
+      </Link>
+    ),
   ];
   const [collapsed, setCollapsed] = useState(false);
   const {
