@@ -3,7 +3,9 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\CheckPermission;
+use App\Models\Notification;
 use App\Modules\Branch\Controllers\BranchController;
+use App\Modules\Dashboard\Controllers\DashboardController;
 use App\Modules\Orders\Controllers\BillingController;
 use App\Modules\Orders\Controllers\BookingController;
 use App\Modules\Policy\Controllers\CancellationPolicyController;
@@ -22,7 +24,36 @@ Route::fallback(function () {
     ], 404);
 });
 
-Route::middleware(CheckPermission::class)->group(function () {
+// Route::middleware(CheckPermission::class)->group(function () {
+
+    Route::get('/notifications', function(){
+        $notification = Notification::all();
+        $newNotification = [];
+        foreach ($notification as $key => $value) {
+            $newNotification[] = [
+                'message' => $value->message,
+                'time' => $value->time,
+            ];
+        }
+        return response()->json($newNotification);
+    })->name('notifications');
+
+    Route::get('/contact', function(){
+        $contacts = \App\Models\Contact::all();
+        $newContacts = [];
+        foreach ($contacts as $key => $value) {
+            $newContacts[] = [
+                'name' => $value->name,
+                'email' => $value->email,
+                'message' => $value->message,
+                'time' => $value->created_at,
+            ];
+        }
+        return response()->json($newContacts);
+    })->name('contact');
+
+    Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
+
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
 
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);
@@ -67,6 +98,9 @@ Route::middleware(CheckPermission::class)->group(function () {
         });
     });
 
-});
+    
+
+
+// });
 Route::post('/logout', [AuthController::class, 'logout']);
 

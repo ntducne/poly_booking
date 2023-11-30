@@ -7,19 +7,19 @@ type Props = {}
 import { Autoplay, EffectFade } from 'swiper/modules';
 const slides = [
     {
-        title: "Your Luxury Hotel For Vacation",
+        title: "Điểm đến nghỉ dưỡng thích hợp",
         bg: "https://images.pexels.com/photos/1838554/pexels-photo-1838554.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        btnText: "Room & Suites"
+        btnText: "Phòng và dịch vụ"
     },
     {
-        title: "Your Luxury Hotel For Vacation",
+        title: "Điểm đến nghỉ dưỡng thích hợp",
         bg: "https://images.pexels.com/photos/5615059/pexels-photo-5615059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        btnText: "Room & Suites"
+        btnText: "Phòng và dịch vụ"
     },
     {
-        title: "Your Luxury Hotel For Vacation",
+        title: "Điểm đến nghỉ dưỡng thích hợp",
         bg: "https://images.pexels.com/photos/17871424/pexels-photo-17871424/free-photo-of-buildings-on-shore.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        btnText: "Room & Suites"
+        btnText: "Phòng và dịch vụ"
     }
 ]
 
@@ -48,7 +48,7 @@ export default function HeroSlide({ }: Props) {
                             initial="hidden"
                             animate='visible'
                         >
-                            <div className='uppercase tracking-[6px] mb-5'>Just enjoy and relax</div>
+                            <div className='uppercase tracking-[6px] mb-5'>Chỉ cần tận hưởng và thư giãn</div>
                             <h1 className='text-[32px] font-extralight uppercase tracking-[3px] 
                         max-w-[920px] lg:text-[68px] leading-tight mb-6'>{title}</h1>
                             <button className='btn mx-auto'>{btnText}</button>

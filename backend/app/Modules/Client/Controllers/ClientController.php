@@ -2,11 +2,13 @@
 
 namespace App\Modules\Client\Controllers;
 
+use App\Events\ContactEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Branch;
+use App\Models\Contact;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Modules\Branch\Resources\BranchResource;
@@ -18,6 +20,7 @@ use App\Repositories\BookingRepository;
 use App\Repositories\RoomRepository;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class ClientController extends Controller
@@ -72,7 +75,7 @@ class ClientController extends Controller
             ->get();
         return response()->json([
             'room' => new RoomResource($room),
-            'room_same' => RoomResource::collection($room_same)
+            // 'room_same' => RoomResource::collection($room_same)
         ]);
     }
 
@@ -110,6 +113,17 @@ class ClientController extends Controller
 
     public function processRenew(RenewRequest $request) {
         return $this->roomRepository->processRenew($request);
+    }
+
+    public function contact(Request $request) {
+        $value = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+            'time' => Carbon::now()->format('d/m/Y H:i:s')
+        ];
+        Contact::create($value);
+        event(new ContactEvent($value));
     }
 
 }
