@@ -222,7 +222,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
   //
 
@@ -262,7 +262,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
   //
 
@@ -298,7 +298,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
   //
 
@@ -310,7 +310,7 @@ const BillDetail: React.FC = () => {
 
   const closeModalExtend = () => {
     formRoomExtend.resetFields();
-    setIdRoomNewExtend(null)
+    setIdRoomNewExtend(null);
     setRoomSearch([]);
     setIsModalExtendOpen(false);
   };
@@ -347,8 +347,9 @@ const BillDetail: React.FC = () => {
           encodeURIComponent(key) + "=" + encodeURIComponent(dataQuery[key])
       )
       .join("&");
-    const apiUrl = `${import.meta.env.VITE_BASE_URL_API
-      }/client/v2/search?${queryString}`;
+    const apiUrl = `${
+      import.meta.env.VITE_BASE_URL_API
+    }/client/v2/search?${queryString}`;
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -387,7 +388,10 @@ const BillDetail: React.FC = () => {
       formRoomExtend.getFieldsValue();
     const new_checkoutDate = dayjs(new_checkout.$d).format("YYYY-MM-DD");
     // TH1: Nếu số phòng gia hạn bằng số phòng hiện tại
-    if (amount_room_renew === dataBill?.data?.booking?.amount_room && idRoomNewExtend === null) {
+    if (
+      amount_room_renew === dataBill?.data?.booking?.amount_room &&
+      idRoomNewExtend === null
+    ) {
       const dataExtendRoom = {
         billing_id: dataBill?.data?.id,
         amount_room: amount_room_renew,
@@ -403,16 +407,19 @@ const BillDetail: React.FC = () => {
             });
             closeModalExtend();
           }
-        }).catch((err) => {
+        })
+        .catch((err) => {
           swal(err, {
             icon: "error",
           });
-        })
-        ;
+        });
     }
 
     // TH2: Nếu số phòng gia hạn nhỏ số phòng hiện tại
-    if (amount_room_renew < dataBill?.data?.booking?.amount_room && idRoomNewExtend === null) {
+    if (
+      amount_room_renew < dataBill?.data?.booking?.amount_room &&
+      idRoomNewExtend === null
+    ) {
       const dataExtendRoom = {
         billing_id: dataBill?.data?.id,
         amount_room: amount_room_renew,
@@ -433,7 +440,10 @@ const BillDetail: React.FC = () => {
         });
     }
     // TH3: Nếu số phòng gia hạn lớn số phòng hiện tại
-    if (amount_room_renew > dataBill?.data?.booking?.amount_room && idRoomNewExtend === null) {
+    if (
+      amount_room_renew > dataBill?.data?.booking?.amount_room &&
+      idRoomNewExtend === null
+    ) {
       const dataExtendRoom = {
         adult: adults,
         children: childs,
@@ -473,7 +483,7 @@ const BillDetail: React.FC = () => {
         phone: dataBill?.data?.booking?.representative?.phone,
         amount_room: amount_room_renew,
         room_id: idRoomNewExtend,
-        billing_id: dataBill?.data?.id
+        billing_id: dataBill?.data?.id,
       };
       extendBooking(dataExtendRoom)
         .unwrap()
@@ -849,10 +859,11 @@ const BillDetail: React.FC = () => {
                     {dataRoomSearch.map((room: any) => {
                       return (
                         <tr
-                          className={` border-b ${dataBill?.data?.booking.detail[0].room_id == room.id
-                            ? "bg-gray-100"
-                            : "bg-white"
-                            }`}
+                          className={` border-b ${
+                            dataBill?.data?.booking.detail[0].room_id == room.id
+                              ? "bg-gray-100"
+                              : "bg-white"
+                          }`}
                         >
                           <th
                             scope="row"
@@ -868,10 +879,10 @@ const BillDetail: React.FC = () => {
                             <p className="mb-2">{room.name}</p>
                             {dataBill?.data?.booking.detail[0].room_id ==
                               room.id && (
-                                <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                  Phòng hiện tại
-                                </span>
-                              )}
+                              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                Phòng hiện tại
+                              </span>
+                            )}
                           </td>
                           <td className="px-6 py-4">
                             {room.room_type.room_type_name}
@@ -898,26 +909,27 @@ const BillDetail: React.FC = () => {
                           <td>
                             {dataBill?.data?.booking.detail[0].room_id ==
                               room.id && (
-                                <button
-                                  type="button"
-                                  onClick={() => onExtendBooking()}
-                                  className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                                >
-                                  Gia hạn
-                                </button>
-                              )}
+                              <button
+                                type="button"
+                                onClick={() => onExtendBooking()}
+                                className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                              >
+                                Gia hạn
+                              </button>
+                            )}
                             {dataBill?.data?.booking.detail[0].room_id !=
                               room.id && (
-                                <button
-                                  type="button"
-                                  onClick={() => onSetIdRoomNewExtend(room.id)}
-                                  className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                                >
-                                  Chọn phòng mới
-                                </button>
-                              )}
-                            {idRoomNewExtend != null && dataBill?.data?.booking.detail[0].room_id !=
-                              room.id && (
+                              <button
+                                type="button"
+                                onClick={() => onSetIdRoomNewExtend(room.id)}
+                                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                              >
+                                Chọn phòng mới
+                              </button>
+                            )}
+                            {idRoomNewExtend != null &&
+                              dataBill?.data?.booking.detail[0].room_id !=
+                                room.id && (
                                 <button
                                   type="button"
                                   onClick={() => onExtendBooking()}
@@ -1171,7 +1183,7 @@ const BillDetail: React.FC = () => {
                     ) : (
                       dataServices?.data?.map((service: any) => {
                         return (
-                          <Checkbox value={service?.id}>
+                          <Checkbox key={service?.id} value={service?.id}>
                             {service?.service_name}
                           </Checkbox>
                         );
@@ -1222,7 +1234,7 @@ const BillDetail: React.FC = () => {
             <tbody>
               {dataBill?.data?.booking?.detail?.map((room: any) => {
                 return (
-                  <tr className="bg-white border-b ">
+                  <tr key={room?.id} className="bg-white border-b">
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -1232,8 +1244,14 @@ const BillDetail: React.FC = () => {
                       </div>
                     </th>
                     <td className="px-6 py-4">1</td>
-                    <td className="px-6 py-4">{dataBill?.data?.booking?.checkin}</td>
-                    <td className="px-6 py-4">{room?.is_checkout ? (room?.is_checkout) : (dataBill?.data?.booking?.checkout)}</td>
+                    <td className="px-6 py-4">
+                      {dataBill?.data?.booking?.checkin}
+                    </td>
+                    <td className="px-6 py-4">
+                      {room?.is_checkout
+                        ? room?.is_checkout
+                        : dataBill?.data?.booking?.checkout}
+                    </td>
 
                     <td className="px-6 py-4">{formatMoneyVN(room?.price)}</td>
                     <td>

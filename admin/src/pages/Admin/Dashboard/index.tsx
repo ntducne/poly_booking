@@ -18,8 +18,10 @@ import { MoneyCollectOutlined } from "@ant-design/icons";
 // import type { DatePickerProps } from 'antd';
 import ChartOne from "../../../component/Charts/one";
 import { useStatisticalsQuery } from "../../../api/statisticals";
+import { Skeleton } from 'antd';
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
+
 const Dashboard = () => {
 
   const [formatDay,] = useState('DD/MM/YYYY');
@@ -29,7 +31,12 @@ const Dashboard = () => {
   // `${dayjs(value).startOf('week').format(weekFormat)} ~ ${dayjs(value)
   //   .endOf('week')
   //   .format(weekFormat)}`;
-  const [query ,setQuery] = useState<any>(null)
+  const [query ,setQuery] = useState<any>({
+    module: "revenue",
+    type: "daily",
+    day: dayjs().format('YYYY-MM-DD'),
+    status: [3,4]
+  })
   const { data :dataStasisticals, isLoading } = useStatisticalsQuery(query);
   console.log("data" ,dataStasisticals);
   
@@ -44,6 +51,7 @@ const Dashboard = () => {
     if (!values) {
       return;
     }
+
     
     const { type, typeValue } = values;
     if (type === 'daily') {
@@ -169,7 +177,7 @@ const Dashboard = () => {
     }
   }
   if(isLoading){
-    return <div>Loading...</div>
+    return <div><Skeleton /></div>
   }  
 
   return (
