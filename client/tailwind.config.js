@@ -18,8 +18,7 @@ export default {
       },
       fontFamily: {
         text: ['Heebo'],
-        text_2nd: ['Cormorant', 'serif'],
-        text_roboto: ['Roboto', 'serif']
+        text_2nd: ['Playfair Display', 'serif']
       },
       keyframes: {
         hover: {

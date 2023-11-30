@@ -104,11 +104,6 @@ const PaymentLayout = ({}: Props) => {
               </button>
               // )
             )}
-            {/* {current === steps.length - 1 && (
-                            <button className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => message.success('Processing complete!')}>
-                                Về trang chủ
-                            </button>
-                        )} */}
           </div>
           <div></div>
         </div>
