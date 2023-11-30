@@ -157,16 +157,25 @@ class Revenue implements StatInterface
     public function day_to_day($request){
         $fromDay = $request->fromDay;
         $toDay = $request->toDay;
-        $total = 0;
-        $data = $this->getData($request);
-        foreach ($data as $item) {
+        $book = $this->getDataBook($request);
+        $cancel = $this->getDataCancel($request);
+        $countBook = 0;
+        foreach ($book as $item) {
             if (Carbon::parse($item->created_at)->format('Y-m-d') >= Carbon::parse($fromDay)->format('Y-m-d') && Carbon::parse($item->created_at)->format('Y-m-d') <= Carbon::parse($toDay)->format('Y-m-d')) {
-                $total += $item->total;
+                $countBook++;
+            }
+        }
+        $countCancel = 0;
+        foreach ($cancel as $item) {
+            if (Carbon::parse($item->created_at)->format('Y-m-d') >= Carbon::parse($fromDay)->format('Y-m-d') && Carbon::parse($item->created_at)->format('Y-m-d') <= Carbon::parse($toDay)->format('Y-m-d')) {
+                $countCancel++;
             }
         }
         $returnData = [
-            'days' => Carbon::parse($fromDay)->format('d/m/Y') . ' - ' . Carbon::parse($toDay)->format('d/m/Y'),
-            'total' => $total,
+            'fromDay' => $fromDay,
+            'toDay' => $toDay,
+            'book' => $countBook,
+            'cancel' => $countCancel,
         ];
         return $returnData;
     }
