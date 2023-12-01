@@ -12,7 +12,7 @@ import {
 import { useForm } from "antd/es/form/Form";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetBranchesQuery } from "../../api/Branch";
@@ -126,10 +126,9 @@ const Detail = () => {
       message.error("Vui lòng chọn số ngày ở");
     }
   };
-
-  if (!data) {
-    return <>loading...</>;
-  }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="px-[160px]">

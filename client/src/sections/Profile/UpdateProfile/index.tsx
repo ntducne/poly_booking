@@ -15,7 +15,6 @@ type Props = {
 
 export default function UpdateProfile({ data }: Props) {
   const [updateProfile] = useUpdateProfileMutation();
-
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
     updateProfile(values)
@@ -23,10 +22,8 @@ export default function UpdateProfile({ data }: Props) {
       .then((res) => {
         console.log(res);
         message.success("Cập nhật thành công");
-        // console.log("sadadasasd");
       })
       .catch((error) => {
-        // data?.error.
         message.error("Lỗi không cập nhật được");
         console.log(error);
       });
@@ -35,7 +32,7 @@ export default function UpdateProfile({ data }: Props) {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-  const phonePattern = /^(?:\d{10}|\d{11})$/;
+  const phonePattern = /^(?:\d{10})$/;
   const validatePhoneNumber = (_: any, value: any) => {
     if (value) {
       if (!phonePattern.test(value)) {
@@ -50,6 +47,7 @@ export default function UpdateProfile({ data }: Props) {
         email: data.email,
         name: data.name,
         phone: data.phone,
+        address: data.address,
       };
       form.setFieldsValue(defaultValue);
     }
@@ -90,6 +88,18 @@ export default function UpdateProfile({ data }: Props) {
         ]}
       >
         <Input className="py-2" placeholder="+842938493043" />
+      </Form.Item>
+      <Form.Item
+        label="Địa chỉ"
+        name="address"
+        rules={[
+          {
+            required: true,
+            message: "Vui lòng cung cấp địa chỉ",
+          },
+        ]}
+      >
+        <Input className="py-2" placeholder="Địa chỉ ..." />
       </Form.Item>
 
       <Form.Item>
