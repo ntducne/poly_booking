@@ -15,7 +15,7 @@ export default function PaymentProcess() {
                 'checkout': cookie.roomSearch.checkout,
                 "amount_room": cookie.roomSearch.soLuong,
                 "branch_id": cookie.roomSearch.branch_id,
-                "adults": cookie.roomSearch.adult,
+                "adult": cookie.roomSearch.adult,
                 "child": cookie.roomSearch.child,
                 'email': cookie.userBook.email,
                 'phone': cookie.userBook.phone,

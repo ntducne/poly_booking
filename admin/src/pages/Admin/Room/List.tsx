@@ -92,34 +92,34 @@ const ListRoom = () => {
       key: "address",
       sorter: (a, b) => a.name.length - b.name.length,
     },
-    {
-      title: "Trạng thái",
-      dataIndex: "status",
-      filters: [
-        {
-          text: "Còn trống",
-          value: "Còn",
-        },
-        {
-          text: "Hết phòng",
-          value: "Hết",
-        },
-      ],
-      render: (_, record) => (
-        <div className="font-semibold">
-          {record?.status != 0 ? (
-            <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
-              Còn
-            </span>
-          ) : (
-            <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
-              Hết
-            </span>
-          )}
-        </div>
-      ),
-      onFilter: (value: any, record) => record.address.indexOf(value) === 0,
-    },
+    // {
+    //   title: "Trạng thái",
+    //   dataIndex: "status",
+    //   filters: [
+    //     {
+    //       text: "Còn trống",
+    //       value: "Còn",
+    //     },
+    //     {
+    //       text: "Hết phòng",
+    //       value: "Hết",
+    //     },
+    //   ],
+    //   render: (_, record) => (
+    //     <div className="font-semibold">
+    //       {record?.status != 0 ? (
+    //         <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
+    //           Còn
+    //         </span>
+    //       ) : (
+    //         <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
+    //           Hết
+    //         </span>
+    //       )}
+    //     </div>
+    //   ),
+    //   onFilter: (value: any, record) => record.address.indexOf(value) === 0,
+    // },
     {
       title: "Action",
       dataIndex: "action",

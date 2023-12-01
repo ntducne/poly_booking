@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
+  console.log("dataBilings",dataBilings );
+  
   const [billings, setBillings] = useState<any[]>([]);
   useEffect(() => {
     setBillings(dataBilings?.data);
@@ -85,7 +87,11 @@ const BillList = () => {
       dataIndex: "payment_method",
       key: "payment_method",
     },
-
+    {
+      title: "Thời gian thanh toán",
+      dataIndex: "payment_date",
+      key: "payment_date",
+    },
     {
       title: "Trạng thái thanh toán",
       dataIndex: "status",
@@ -155,6 +161,12 @@ const BillList = () => {
       dataIndex: "branch",
       key: "branch",
       render: (text) => <div>{text?.name}</div>,
+    },
+    {
+      title: "Ngày đặt",
+      dataIndex: "booking",
+      key: "booking",
+      render: (text) => <div>{text?.booking_date}</div>,
     },
     {
       title: "Action",

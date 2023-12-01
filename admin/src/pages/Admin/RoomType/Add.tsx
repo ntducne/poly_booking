@@ -12,6 +12,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useCreateRoomTypeMutation } from "../../../api/roomTypes";
 import { useNavigate } from "react-router-dom";
+import { useGetAllBranchesQuery } from "../../../api/branches";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -22,6 +23,8 @@ const formItemLayout = {
 };
 
 const AddRoomType = () => {
+  const { data: dataBranches, isLoading: loadingBranch } = useGetAllBranchesQuery({});
+
   const navigate = useNavigate()
   const [createRoomsType] = useCreateRoomTypeMutation({})
 
@@ -87,21 +90,20 @@ const AddRoomType = () => {
           </Form.Item>
 
           <Form.Item
-            name="status"
-            label="Trạng thái"
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập trạng thái loại phòng!",
-              },
-            ]}
-          >
-            <Select placeholder="Vui lòng nhập trạng thái!">
-              <Option value={1}>Còn</Option>
-              <Option value={0}>Hết</Option>
-            </Select>
-          </Form.Item>
+              label="Chi nhánh"
+              name="branch_id"
+              rules={[{ required: true, message: "Vui lòng chọn chi nhánh" }]}
+            >
+              <Select>
+                {dataBranches?.data?.map((item: any) => {
+                  return (
+                    <Select.Option value={item.id} key={item.id}>
+                      {item.name}
+                    </Select.Option>
+                  );
+                })}
+              </Select>
+            </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
