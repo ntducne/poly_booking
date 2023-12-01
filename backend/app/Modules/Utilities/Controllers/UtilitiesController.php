@@ -3,9 +3,9 @@
 namespace App\Modules\Utilities\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Utilities\StoreUtilitiesRequest;
-use App\Http\Requests\Utilities\UpdateUtilitiesRequest;
 use App\Models\Utilities;
+use App\Modules\Utilities\Requests\StoreUtilitiesRequest;
+use App\Modules\Utilities\Requests\UpdateUtilitiesRequest;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
