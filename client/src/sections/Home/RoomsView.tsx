@@ -5,7 +5,7 @@ import Room3 from "../../assets/images/Home/ViewRooms/Room3.jpg";
 type Props = {};
 import { MdBed } from "react-icons/md";
 
-export default function RoomsView({}: Props) {
+export default function RoomsView({ }: Props) {
   return (
     <div className="mt-[100px] px-4">
       <div className="flex justify-center mb-[60px]">
@@ -13,7 +13,7 @@ export default function RoomsView({}: Props) {
           <p>
             <MdBed className="text-[50px]" />
           </p>
-          <p>Explore Our Rooms</p>
+          <p>Về chúng tôi</p>
         </h2>
       </div>
       <div className="flex justify-center flex-col md:flex-row gap-[30px] md:gap-3">
@@ -25,16 +25,13 @@ export default function RoomsView({}: Props) {
           />
           <div className="absolute w-full bottom-[15%] group-hover:bottom-[50%] group-hover:translate-y-[70%] transition-all duration-1000 right-1/2 translate-x-1/2 text-white">
             <h3 className="text-[30px] font-text_2nd text-center">
-              Deluxe Suite
+              Sang trọng
             </h3>
             <p
               className="text-small md:px-4 group-hover:md:block opacity-0 duration-300 transition-opacity ease-in-out 
                hidden md:text-center group-hover:opacity-100"
             >
-              "Leather detail shoulder contrastic colour contour stunning
-              silhouette working peplum. Statement buttons cover-up tweaks patch
-              pockets perennial lapel collar flap chest pockets topline
-              stitching cropped."
+              "Khách sạn chúng tôi tự hào là điểm đến sang trọng, nơi mang đến không gian lưu trú đẳng cấp với thiết kế và trang trí độc đáo, tạo nên trải nghiệm sang trọng và tiện nghi."
             </p>
           </div>
         </Link>
@@ -46,16 +43,13 @@ export default function RoomsView({}: Props) {
           />
           <div className="absolute w-full bottom-[15%] group-hover:bottom-[50%] group-hover:translate-y-[70%] transition-all duration-1000 right-1/2 translate-x-1/2 text-white">
             <h3 className="text-[30px] font-text_2nd text-center">
-              Deluxe Suite
+              Tiện ích đa dạng
             </h3>
             <p
               className="text-small md:px-4 group-hover:md:block opacity-0 duration-300 transition-opacity ease-in-out 
                hidden md:text-center group-hover:opacity-100 "
             >
-              "Leather detail shoulder contrastic colour contour stunning
-              silhouette working peplum. Statement buttons cover-up tweaks patch
-              pockets perennial lapel collar flap chest pockets topline
-              stitching cropped."
+              "Với một loạt các tiện nghi và dịch vụ đa dạng như nhà hàng 5 sao, spa, và hồ bơi tiêu chuẩn quốc tế, khách sạn chúng tôi mang đến cho du khách trải nghiệm đắm chìm trong sự thoải mái và tiện lợi."
             </p>
           </div>
         </Link>
@@ -67,16 +61,13 @@ export default function RoomsView({}: Props) {
           />
           <div className="absolute w-full bottom-[15%] group-hover:bottom-[50%] group-hover:translate-y-[70%] transition-all duration-1000 right-1/2 translate-x-1/2 text-white">
             <h3 className="text-[30px] font-text_2nd text-center">
-              Deluxe Suite
+              Thân thiện
             </h3>
             <p
               className="text-small md:px-4 group-hover:md:block opacity-0 duration-300 transition-opacity ease-in-out 
                hidden md:text-center group-hover:opacity-100 "
             >
-              "Leather detail shoulder contrastic colour contour stunning
-              silhouette working peplum. Statement buttons cover-up tweaks patch
-              pockets perennial lapel collar flap chest pockets topline
-              stitching cropped."
+              "Khách sạn chúng tôi chào đón bạn với không khí ấm cúng và sự thân thiện đầy tràn từ đội ngũ nhân viên. Từ lúc bạn bước vào lễ tân cho đến lúc bạn rời đi, mỗi cử chỉ đều được chăm sóc tận tình, tạo nên một cảm giác như bạn đang ở nhà."
             </p>
           </div>
         </Link>

@@ -128,7 +128,7 @@ const AddServices = () => {
           >
             <Select
               mode="multiple"
-              //  placeholder="Vui lòng chọn chi nhánh!"
+            //  placeholder="Vui lòng chọn chi nhánh!"
             >
               {dataBranches?.data?.map((item: any) => {
                 return (

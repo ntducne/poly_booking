@@ -57,12 +57,10 @@ export default function Rooms({}: Props) {
     if (!values) {
       return;
     }
-
     const { time, branch_id } = values;
     const formattedDates = time?.map((item: any) =>
       dayjs(item.$d).format("YYYY-MM-DD")
     );
-
     const dataQuery = {
       adult: adults,
       child: childs,
@@ -71,7 +69,6 @@ export default function Rooms({}: Props) {
       checkin: formattedDates?.[0],
       checkout: formattedDates?.[1],
     };
-
     navigate(
       `/rooms?checkin=${dataQuery.checkin}&checkout=${dataQuery.checkout}&adult=${dataQuery.adult}&child=${dataQuery.child}&branch_id=${dataQuery.branch_id}&soLuong=${dataQuery.soLuong}`
     );
@@ -100,7 +97,6 @@ export default function Rooms({}: Props) {
       const checkinDate = dayjs(cookie.roomSearch.checkin);
       const checkoutDate = dayjs(cookie.roomSearch.checkout);
       const dateDiff = checkoutDate.diff(checkinDate, "day");
-
       const bookingData = {
         room_id: id,
         room_name: name,
@@ -109,8 +105,6 @@ export default function Rooms({}: Props) {
         branch: branch?.name,
         bed_size,
       };
-      console.log(bookingData);
-
       setCookie("bookingNow", bookingData, { path: "/" });
       navigate("/accommodation/book");
     } else {
@@ -130,6 +124,9 @@ export default function Rooms({}: Props) {
       message.error("Không có phòng nào phù hợp");
     }
   }, [data]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     setWidth(window.innerWidth);
   }, [window.innerWidth]);
