@@ -9,7 +9,7 @@ type Props = {};
 
 export default function HistoryBooking({ }: Props) {
   const { data, isLoading } = useGetHistoryBookingQuery({});
-  console.log(data.data);
+  // console.log(data.data);
 
   if (isLoading) return <>loading...</>;
   return (

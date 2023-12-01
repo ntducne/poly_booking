@@ -26,14 +26,14 @@ const formItemLayout = {
 const AddServices = () => {
 
   const [createServices] = useCreateServicesMutation();
-  const {  data:dataBranches , isLoading : loadingBranch } = useGetAllBranchesQuery({});
+  const { data: dataBranches, isLoading: loadingBranch } = useGetAllBranchesQuery({});
   const navigate = useNavigate();
 
   console.log(dataBranches, "dataBranches");
-  if(loadingBranch){
+  if (loadingBranch) {
     return <div>Loading...</div>
   }
-  
+
 
   const onFinish = (values: any) => {
     // Xử lý dữ liệu khi nhấn nút Submit
@@ -53,7 +53,7 @@ const AddServices = () => {
           theme: "light",
         });
       }
-      
+
     })
   };
 
@@ -95,7 +95,7 @@ const AddServices = () => {
           </Form.Item>
 
           <Form.Item name="description" label="Mô tả">
-            <Input.TextArea rows={5}/>
+            <Input.TextArea rows={5} />
           </Form.Item>
 
           <Form.Item
@@ -105,9 +105,9 @@ const AddServices = () => {
           >
             <Select
             //  placeholder="Vui lòng chọn chi nhánh!"
-             >
+            >
               {dataBranches?.data?.map((item: any) => {
-                return  <Option key={item?.id} value={item?.id}>{item?.name}</Option>
+                return <Option key={item?.id} value={item?.id}>{item?.name}</Option>
               }
               )}
             </Select>
