@@ -94,14 +94,12 @@ class ServicesController extends Controller
             }
             $name = $request->service_name;
             $branch_id = $request->branch_id;
-
             $branch = [];
-            if($branch_id[0]['key']){
+            if (isset($branch_id[0]['key'])) {
                 foreach ($branch_id as $value) {
                     $branch[] = $value['value'];
                 }
-            }
-            else {
+            } else {
                 foreach ($branch_id as $value) {
                     $branch[] = $value;
                 }
@@ -110,7 +108,6 @@ class ServicesController extends Controller
                 'service_name' => $name,
                 'branch_id' => $branch,
             ]);
-            
             if ($update) {
                 return response()->json([
                     'status' => 'success',
