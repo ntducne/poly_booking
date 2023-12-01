@@ -8,12 +8,23 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ServiceResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
+
+
+    public function getBranch(){
+        $newBranch = [];
+        foreach ($this->branch_id as $key => $value) {
+            $branch = Branch::find($value);
+            $newBranch[] = [
+                'id' => $branch->id,
+                'name' => $branch->name,
+                'address' => $branch->address,
+                'phone' => $branch->phone,
+            ];
+        }
+        return $newBranch;
+    }
+
+
     public function toArray($request)
     {
         return [
@@ -21,7 +32,7 @@ class ServiceResource extends JsonResource
             'service_name'=> $this->service_name,
             'price'=>$this->price,
             'description'=>$this->description,
-            'branch' => new BranchResource(Branch::find($this->branch_id)),
+            'branch' => $this->getBranch(),
         ];
     }
 }

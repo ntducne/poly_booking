@@ -3,9 +3,9 @@
 namespace App\Modules\Staff\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreAdminRequest;
-use App\Http\Requests\Admin\UpdateAdminRequest;
 use App\Models\Admin;
+use App\Modules\Staff\Requests\StoreAdminRequest;
+use App\Modules\Staff\Requests\UpdateAdminRequest;
 use App\Modules\Staff\Resources\StaffResource;
 use Exception;
 use Illuminate\Http\Request;

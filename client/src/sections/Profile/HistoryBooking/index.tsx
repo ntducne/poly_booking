@@ -1,15 +1,13 @@
 import { Pagination } from "antd";
 import { Link } from "react-router-dom";
-import {
-  useGetHistoryBookingQuery
-} from "../../../api/User";
+import { useGetHistoryBookingQuery } from "../../../api/User";
 import FormatPrice from "../../../utils/FormatPrice";
 
 type Props = {};
 
 export default function HistoryBooking({ }: Props) {
   const { data, isLoading } = useGetHistoryBookingQuery({});
-  // console.log(data.data);
+  // console.log(data);
 
   if (isLoading) return <>loading...</>;
   return (
@@ -17,7 +15,7 @@ export default function HistoryBooking({ }: Props) {
       {data?.data.map((item: any) => (
         <div className="px-5">
           <div className="border-t pt-[30px] flex gap-[30px] pb-[30px] ">
-            <Link to="">
+            <Link to={`/user/profile/roomBooked/${item?.id}`}>
               <img
                 className="max-w-[200px] max-h-[200px] overflow-hidden object-cover rounded-[10px]"
                 src={
@@ -27,7 +25,10 @@ export default function HistoryBooking({ }: Props) {
               />
             </Link>
             <div className="mb-2 w-full">
-              <Link to="" className="text-[20px] font-bold">
+              <Link
+                to={`/user/profile/roomBooked/${item?.id}`}
+                className="text-[20px] font-bold"
+              >
                 {item?.booking?.detail?.[0]?.room_name}
               </Link>
               <p className="text-[18px] font-bold mb-2">

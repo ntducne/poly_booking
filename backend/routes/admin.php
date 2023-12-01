@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\CheckPermission;
+use App\Models\Notification;
 use App\Modules\Branch\Controllers\BranchController;
 use App\Modules\Dashboard\Controllers\DashboardController;
 use App\Modules\Orders\Controllers\BillingController;
@@ -24,6 +25,32 @@ Route::fallback(function () {
 });
 
 // Route::middleware(CheckPermission::class)->group(function () {
+
+    Route::get('/notifications', function(){
+        $notification = Notification::all();
+        $newNotification = [];
+        foreach ($notification as $key => $value) {
+            $newNotification[] = [
+                'message' => $value->message,
+                'time' => $value->time,
+            ];
+        }
+        return response()->json($newNotification);
+    })->name('notifications');
+
+    Route::get('/contact', function(){
+        $contacts = \App\Models\Contact::all();
+        $newContacts = [];
+        foreach ($contacts as $key => $value) {
+            $newContacts[] = [
+                'name' => $value->name,
+                'email' => $value->email,
+                'message' => $value->message,
+                'time' => $value->created_at,
+            ];
+        }
+        return response()->json($newContacts);
+    })->name('contact');
 
     Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
@@ -60,7 +87,7 @@ Route::fallback(function () {
 
     Route::prefix('booking')->as('booking.')->group(function () {
         Route::post('/store', [BookingController::class, 'store'])->name('store');
-        Route::get('/search', [BookingController::class, 'search'])->name('search');
+        Route::post('/search', [BookingController::class, 'search'])->name('search');
         Route::prefix('handle')->as('handle.')->group(function (){
             Route::post('/cancel', [BookingController::class, 'cancel'])->name('cancel');
             Route::post('/checkin', [BookingController::class, 'checkin'])->name('checkin');

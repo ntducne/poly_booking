@@ -134,6 +134,7 @@ class Revenue implements StatInterface
             'days' => Carbon::parse($fromWeek)->format('W/Y') . ' - ' . Carbon::parse($toWeek)->format('W/Y'),
             'total' => $total,
         ];
+        return $returnData;
     }
 
     public function month_to_month($request){

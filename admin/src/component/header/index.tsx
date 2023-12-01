@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MenuProps, Typography } from "antd";
 import { Avatar, Badge, Space } from "antd";
 import { Dropdown } from "antd";
@@ -13,26 +13,67 @@ import { LayoutContext } from "../../layout/LayoutAdmin";
 import { cookies } from "../../config/cookies";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { PusherServer } from "../../socket/notification";
-
+import { pusherInstance } from "../../config/pusher";
 const { Text } = Typography;
 
 const Head = () => {
+  const [newMessage, setNewMessage] = useState(0);
+  const [notifications, setNotifications] = useState<any[]>([]);
+
   const title: any = useContext(LayoutContext);
   const navigate = useNavigate();
   const token = JSON.parse(cookies().Get("AuthUser") as any)[2].token;
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
 
   useEffect(() => {
-    const channel = PusherServer.subscribe("chat");
-    channel.bind("message", (data: any) => {
-      console.log(data);
+    fetch(`${import.meta.env.VITE_URL_API}/notifications`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(cookies().Get("AuthUser") as any)[2].token}`,
+      },
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      setNotifications([]);
+      setNewMessage(0);
+      res.forEach((item: any) => {
+        setNotifications(prevNotifications => [...prevNotifications, {
+          label: (
+            <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
+              <div className="ml-2">
+                <p className="font-medium">{item.message}</p>
+                <Text type="secondary">{item.time}</Text>
+              </div>
+            </div>
+          ),
+          key: `${item.id}`,
+        }])
+      })
+    })
+    const unsubscribe = pusherInstance().getData('chat', 'message', (data :any)  => {
+      setNewMessage(newMessage + 1);
+      setNotifications(prevNotifications => [...prevNotifications, {
+        label: (
+          <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
+            <div className="ml-2">
+              <p className="font-medium">{data.data.message}</p>
+              <>
+                <Text type="secondary">{data.data.time}</Text>
+              </>
+            </div>
+          </div>
+        ),
+        key: `${newMessage+1}`,
+      }])
     });
     return () => {
-      PusherServer.unsubscribe("chat");
-      PusherServer.disconnect();
+      unsubscribe();
     };
   }, []);
+
+  const removeNotification = () => {
+    setNewMessage(0);
+  }
 
   const logout = async () => {
     await fetch("https://api.polydevhotel.site/admin/logout", {
@@ -82,48 +123,7 @@ const Head = () => {
       danger: true,
     },
   ];
-  const bell: MenuProps["items"] = [
-    {
-      label: (
-        <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
-          <div>
-            <img
-              className="w-10 h-10 rounded-full"
-              src="https://bloganchoi.com/wp-content/uploads/2022/02/avatar-trang-y-nghia.jpeg"
-              alt=""
-            />
-          </div>
-          <div className="ml-2">
-            <p className="font-medium		">Dr sultads Send you Photo</p>
-            <>
-              <Text type="secondary">29 July 2022 - 02:26 PM</Text>
-            </>
-          </div>
-        </div>
-      ),
-      key: "0",
-    },
-    {
-      label: (
-        <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
-          <div>
-            <img
-              className="w-10 h-10 rounded-full"
-              src="https://bloganchoi.com/wp-content/uploads/2022/02/avatar-trang-y-nghia.jpeg"
-              alt=""
-            />
-          </div>
-          <div className="ml-2">
-            <p className="font-medium		">Dr sultads Send you Photo</p>
-            <>
-              <Text type="secondary">29 July 2022 - 02:26 PM</Text>
-            </>
-          </div>
-        </div>
-      ),
-      key: "1",
-    },
-  ];
+  const bell: MenuProps["items"] = notifications;
   return (
     <div className="flex justify-between items-center mx-4">
       <div>
@@ -131,13 +131,10 @@ const Head = () => {
       </div>
       <div>
         <Space size="large">
-          <Dropdown
-            className="hover:cursor-pointer hidden md:block"
-            menu={{ items: bell }}
-            trigger={["click"]}
-          >
-            <Badge count={bell.length}>
+          <Dropdown className="hover:cursor-pointer hidden md:block" menu={{ items: bell }} trigger={["click"]}>
+            <Badge count={newMessage}>
               <Avatar
+                onClick={removeNotification}
                 className="bg-white"
                 size={40}
                 icon={<BellFilled className="text-blue-400 font-black" />}

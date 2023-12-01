@@ -2,6 +2,8 @@
 
 namespace App\Modules\RoomType\Resources;
 
+use App\Models\Branch;
+use App\Modules\Branch\Resources\BranchResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoomTypeResource extends JsonResource
@@ -13,7 +15,7 @@ class RoomTypeResource extends JsonResource
             'room_type_name' => $this->room_type_name,
             'description' => $this->description,
             'price_per_night' => $this->price_per_night,
-            'status' => $this->status,
+            'branch' => new BranchResource(Branch::find($this->branch_id)),
         ];
     }
 }

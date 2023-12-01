@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Modules\RoomType\Requests;
+namespace App\Modules\RoomType\Requests;
+
 
 use App\Http\Requests\Request;
 use App\Models\RoomType;
@@ -16,7 +17,7 @@ class StoreRoomTypeRequest extends Request
             ],
             'description' => ['bail', 'required', 'string'],
             'price_per_night' => ['bail', 'required', 'numeric'],
-            'status' => ['bail', 'required'],
+            // 'status' => ['bail', 'required'],
         ];
     }
     public function attributes()

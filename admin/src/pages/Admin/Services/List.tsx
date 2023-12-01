@@ -17,6 +17,7 @@ import {
   useGetServicesQuery,
 } from "../../../api/services";
 import FormatPrice from "../../../utils/FormatPrice";
+import Page from "../../../component/page";
 
 const ListServices = () => {
   const { data: dataServices, isLoading } = useGetServicesQuery({});
@@ -55,12 +56,12 @@ const ListServices = () => {
       dataIndex: "description",
       key: "description",
     },
-    // {
-    //   title: "Địa điểm",
-    //   dataIndex: "branch_id",
-    //   key: "branch_id",
-    //   sorter: (a, b) => a.branch_id.length - b.branch_id.length,
-    // },
+    {
+      title: "Địa điểm",
+      dataIndex: "branch_id",
+      key: "branch_id",
+      sorter: (a, b) => a.branch_id.length - b.branch_id.length,
+    },
     {
       title: "Action",
       dataIndex: "action",
@@ -90,7 +91,7 @@ const ListServices = () => {
   const data: any = dataServices?.data?.map(
     (item: any, index: number) => ({
       key: index + 1,
-      _id: item?._id,
+      _id: item?.id,
       service_name: item?.service_name,
       price: item?.price,
       description: item?.description,
@@ -136,7 +137,7 @@ const ListServices = () => {
   };
 
   return (
-    <div className="">
+    <Page title={`Dịch vụ`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <FormSearch />
         <div className="flex flex-col md:flex-row md:ml-2">
@@ -163,8 +164,9 @@ const ListServices = () => {
         columns={columns}
         dataSource={data}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
-    </div>
+    </Page>
   );
 };
 

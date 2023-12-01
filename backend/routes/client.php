@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Client\Controllers\ClientController;
+use App\Modules\Services\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function () {
@@ -8,6 +9,9 @@ Route::fallback(function () {
         'message' => 'Page Not Found'
     ], 404);
 });
+
+
+Route::post('contact', [ClientController::class, 'contact']);
 
 Route::get('branch', [ClientController::class, 'branch']);
 

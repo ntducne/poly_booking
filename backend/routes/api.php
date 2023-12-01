@@ -1,6 +1,8 @@
 <?php
 
+use App\Events\Message;
 use App\Modules\Dashboard\Controllers\DashboardController;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
@@ -24,4 +26,9 @@ Route::get('/routes', function () {
     }
     echo "</table>";
 });
-Route::get('/statisticals', [DashboardController::class, 'revenue_statistical']);
+Route::get('/testNoti', function(){
+    event(new Message([
+        'message' => 'Hello world',
+        'time' => Carbon::now()->format('d/m/Y H:i:s')
+    ]));
+});

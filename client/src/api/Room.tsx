@@ -16,7 +16,7 @@ const roomApi = createApi({
       query: (data: any) => {
         const keys = Object.keys(data);
         const url =
-          keys.length === 0
+          keys.length === 0 && keys.length < 6
             ? `/client/room`
             : `/client/v2/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&amount_room=${data.soLuong}`;
         return {
@@ -25,6 +25,17 @@ const roomApi = createApi({
         };
       },
       providesTags: ["Rooms"],
+    }),
+    searchRooms: builder.mutation<any, any>({
+      query: (data: any) => {
+        const url = "/client/v2/search";
+        return {
+          method: "POST",
+          url: url,
+          body: data,
+        };
+      },
+      invalidatesTags: ["Rooms"],
     }),
     getDetail: builder.query<any, any>({
       query: (slug) => `/client/room/${slug}`,
@@ -54,6 +65,7 @@ export const {
   useGetDetailQuery,
   usePostBookingMutation,
   usePostRatesMutation,
+  useSearchRoomsMutation,
 } = roomApi;
 
 export const roomReducer = roomApi.reducer;

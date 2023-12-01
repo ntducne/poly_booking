@@ -34,7 +34,7 @@ class RoomController extends Controller
                 $searchTerm = $request->input('name');
                 $query->where('name', 'LIKE', '%' . $searchTerm . '%');
             }
-            $rooms = $query->paginate(10)->withQueryString();
+            $rooms = $query->paginate(10);
             return RoomResource::collection($rooms);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());
@@ -49,21 +49,27 @@ class RoomController extends Controller
     {
         try {
             $object = $request->all();
-            $object['adults'] = (int) $object['adults'];
-            $object['children'] = (int) $object['children'];
+            $object['adults'] = (integer) $object['adults'];
+            $object['children'] = (integer) $object['children'];
             $object['slug'] = convertToSlug($request->name);
-            $amount_room = [];
+            $object['amount_room'] = (integer)$object['amount'];
+            $object['branch_id'] = RoomType::find($object['room_type_id'])->branch_id;
+            $room_number = [];
 
-
-            for($i = 1; $i <= $object['amount']; $i++){
+            for($i = 1; $i <= $object['amount_room']; $i++){
                 if($i < 10){
                     $i = '0'.$i;
                 }
-                $amount_room[] = $object['floor'] + $i;
+                $room_number[] = $object['floor'] . $i;
             }
 
-            $object['amount_room'] = $amount_room;
-            $object['branch_id'] = RoomType::find($object['room_type_id'])->branch_id;
+            // foreach($object['amount_room'] as $key => $value){
+            //     if($value < 10){
+            //         $value = '0'.$value;
+            //     }
+            //     $room_number[] = $object['floor'] . $value;
+            // }
+            $object['room_number'] = $room_number;
             $roomNew = $this->room->create($object);
             $room = $this->room->where('name', $request->name)->first();
             $images = $request->file('images');
@@ -90,6 +96,7 @@ class RoomController extends Controller
             }
             return response()->json($response);
         } catch(Exception $exception){
+            throw $exception;
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,

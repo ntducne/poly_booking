@@ -10,9 +10,23 @@ import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import swal from "sweetalert";
+import { pusherInstance } from "../../../config/pusher";
+import { useEffect, useState } from "react";
 
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
+  console.log("dataBilings",dataBilings );
+  
+  const [billings, setBillings] = useState<any[]>([]);
+  useEffect(() => {
+    setBillings(dataBilings?.data);
+    const unsubscribe = pusherInstance().getData('booking', 'processBooking', (data :any)  => {
+      setBillings(prevBillings => [...prevBillings, data.data]);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const onComfirm = (id: any) => {
     console.log(id);
@@ -73,7 +87,11 @@ const BillList = () => {
       dataIndex: "payment_method",
       key: "payment_method",
     },
-
+    {
+      title: "Thời gian thanh toán",
+      dataIndex: "payment_date",
+      key: "payment_date",
+    },
     {
       title: "Trạng thái thanh toán",
       dataIndex: "status",
@@ -145,6 +163,12 @@ const BillList = () => {
       render: (text) => <div>{text?.name}</div>,
     },
     {
+      title: "Ngày đặt",
+      dataIndex: "booking",
+      key: "booking",
+      render: (text) => <div>{text?.booking_date}</div>,
+    },
+    {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
@@ -172,7 +196,7 @@ const BillList = () => {
     },
   ];
 
-  const data = dataBilings?.data?.map((item: any, index: number) => ({
+  const data = billings?.map((item: any, index: number) => ({
     key: index + 1,
     id: item.id,
     booking: item.booking,
