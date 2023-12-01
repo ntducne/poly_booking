@@ -71,9 +71,9 @@ const authApi = createApi({
 
     resetPassword: builder.mutation({
       query: (data: IResetPassword) => ({
-        url: `/auth/user/reset-password/${data.token}`,
+        url: `/auth/user/reset-password`,
         method: "PUT",
-        body: data.data,
+        body: data,
       }),
       invalidatesTags: ["Auth"],
     }),

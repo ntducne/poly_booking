@@ -15,19 +15,20 @@ export default function ResetPassword({ }: Props) {
 
     const { data } = useGetTokenQuery(token);
 
-    const confirmPasswordValidator = (value: any) => {
+    const confirmPasswordValidator = (_: any, value: any) => {
         const newPassword = form.getFieldValue('new_password');
+        // console.log(newPassword, value);
+
         if (newPassword !== value) {
             return Promise.reject('Mật khẩu xác nhận không khớp với mật khẩu.');
         }
         return Promise.resolve();
     };
 
-
     const onFinish = (values: any) => {
         const dataUpload = {
             token: token || "",
-            data: values
+            ...values
         }
         console.log(dataUpload);
 

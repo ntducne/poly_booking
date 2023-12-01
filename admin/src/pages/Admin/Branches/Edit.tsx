@@ -79,7 +79,7 @@ const EditBranche = () => {
     <div>
       <div className="max-w-[80%] mr-auto ml-10">
         <div className="mb-5">
-          <Title level={3}>Sửa loại phòng</Title>
+          <Title level={3}>Sửa chi nhánh</Title>
         </div>
 
         <Form

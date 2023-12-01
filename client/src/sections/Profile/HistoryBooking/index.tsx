@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 type Props = {};
 
-export default function HistoryBooking({}: Props) {
+export default function HistoryBooking({ }: Props) {
   const { data, isLoading, refetch } = useGetHistoryBookingQuery({
     userId: "someUserId",
   });
@@ -59,21 +59,18 @@ export default function HistoryBooking({}: Props) {
                       {Object.values(StatusOrders).map((status) => (
                         <div
                           key={status.id}
-                          className={`w-[20%] h-[13px] ${
-                            status.id <= item?.status
+                          className={`w-[20%] h-[13px] ${status.id <= item?.status
                               ? "bg-[#4F46B5]"
                               : "bg-[#E5E7EB]"
-                          }`}
+                            }`}
                         >
                           <h2
-                            className={`mt-5 font-medium text-[14px] ${
-                              status.id <= item?.status ? "text-[#4F46B5]" : ""
-                            } ${
-                              window.innerWidth < 768 &&
-                              status.id !== item?.status
+                            className={`mt-5 font-medium text-[14px] ${status.id <= item?.status ? "text-[#4F46B5]" : ""
+                              } ${window.innerWidth < 768 &&
+                                status.id !== item?.status
                                 ? "hidden"
                                 : ""
-                            }`}
+                              }`}
                           >
                             {status.id == item?.status ? status.value : ""}
                           </h2>
