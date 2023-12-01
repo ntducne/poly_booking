@@ -41,7 +41,7 @@ const userApi = createApi({
     updatePassword: builder.mutation({
       query: (data) => ({
         url: `update/password`,
-        method: "PUT",
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["Users"],

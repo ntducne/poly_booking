@@ -50,8 +50,8 @@ export default function SearchDetailOrder({}: Props) {
         </Form.Item>
 
         <Form.Item className="flex justify-end">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-            Tra cứu
+          <button className="bg-blue-500 hover:bg-blue-700 flex gap-2 items-center text-white font-bold py-2 px-4 border border-blue-700 rounded">
+            <span>Tra cứu</span>
             {isLoading ? <LoadingOutlined /> : <SearchOutlined />}
           </button>
         </Form.Item>
