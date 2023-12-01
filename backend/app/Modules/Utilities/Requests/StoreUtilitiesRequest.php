@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Requests\Utilities;
+namespace App\Modules\Utilities\Requests;
 
 use App\Http\Requests\Request;
 use App\Models\Utilities;

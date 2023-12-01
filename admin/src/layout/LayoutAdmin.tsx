@@ -109,13 +109,13 @@ const LayoutAdmin = () => {
     //     <AiTwotoneGift />
     //   </Link>
     // ),
-    getItem(
-      "Chính sách",
-      "/policy",
-      <Link to={`policy`}>
-        <AiTwotonePrinter />
-      </Link>
-    ),
+    // getItem(
+    //   "Chính sách",
+    //   "/policy",
+    //   <Link to={`policy`}>
+    //     <AiTwotonePrinter />
+    //   </Link>
+    // ),
     getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
       getItem("Nhân viên", "/staff", <Link to={`staff`} />),
       getItem("Người dùng", "/user", <Link to={`user`} />),

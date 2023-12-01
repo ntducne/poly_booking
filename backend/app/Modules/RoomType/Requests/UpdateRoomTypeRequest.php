@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\RoomType\Requests;
+namespace App\Modules\RoomType\Requests;
 
 use App\Http\Requests\Request;
 use App\Models\RoomType;
@@ -13,7 +13,7 @@ class UpdateRoomTypeRequest extends Request
             'room_type_name' => ['bail', 'required', 'string', Rule::unique(RoomType::class)->ignore($this->type, $this->column_id)],
             'description' => ['bail', 'required', 'string'],
             'price_per_night' => ['bail', 'required', 'numeric'],
-            'status' => ['bail', 'required'],
+            // 'status' => ['bail', 'required'],
         ];
     }
     public function attributes(): array

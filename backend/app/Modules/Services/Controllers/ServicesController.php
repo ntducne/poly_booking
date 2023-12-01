@@ -8,6 +8,7 @@ use App\Modules\Services\Requests\StoreRequest;
 use App\Modules\Services\Requests\UpdateRequest;
 use App\Modules\Services\Resources\ServiceResource;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class ServicesController extends Controller
@@ -80,7 +81,7 @@ class ServicesController extends Controller
     }
 
 
-    public function update(UpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
             $service = Services::find($id);
@@ -91,7 +92,25 @@ class ServicesController extends Controller
                     'data' => null
                 ]);
             }
-            $update = $service->update($request->all());
+            $name = $request->service_name;
+            $branch_id = $request->branch_id;
+
+            $branch = [];
+            if($branch_id[0]['key']){
+                foreach ($branch_id as $value) {
+                    $branch[] = $value['value'];
+                }
+            }
+            else {
+                foreach ($branch_id as $value) {
+                    $branch[] = $value;
+                }
+            }
+            $update = $service->update([
+                'service_name' => $name,
+                'branch_id' => $branch,
+            ]);
+            
             if ($update) {
                 return response()->json([
                     'status' => 'success',
@@ -100,6 +119,7 @@ class ServicesController extends Controller
                 ]);
             }
         } catch (Exception $exception) {
+            throw $exception;
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,

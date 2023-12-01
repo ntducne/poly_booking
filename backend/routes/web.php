@@ -1,7 +1,16 @@
 <?php
 
 use App\Http\Controllers\Pay\VnpayController;
+use App\Models\Billing;
+use App\Models\BookDetail;
+use App\Models\Booking;
+use App\Models\HistoryHandleBooking;
+use App\Models\Notification;
+use App\Models\RateRoom;
 use App\Models\Room;
+use App\Models\RoomType;
+use App\Models\Services;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
@@ -11,9 +20,5 @@ Route::get('unauthorized', function (){ return response()->json([
 ], 401); });
 
 Route::get('', function () {
-    $totalRoomBook = 0;
-    foreach (Room::all() as $value) {
-        $totalRoomBook += count($value->room_number);
-    }
-    return $totalRoomBook;
+    User::truncate();
 });
