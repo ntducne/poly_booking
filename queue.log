@@ -23,3 +23,199 @@
   2023-11-30 21:11:51 App\Events\BookingEvent ................... 36.28ms FAIL
   2023-11-30 21:11:53 App\Events\Message ............................. RUNNING
   2023-11-30 21:11:53 App\Events\Message ....................... 445.93ms DONE
+  2023-11-30 23:35:18 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-11-30 23:35:23 App\Notifications\ResetPasswordRequest ......... 4s DONE
+  2023-12-01 02:36:34 App\Events\BookingEvent ........................ RUNNING
+  2023-12-01 02:36:34 App\Events\BookingEvent .................. 548.07ms DONE
+  2023-12-01 12:08:39 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-01 12:08:43 App\Notifications\ResetPasswordRequest ......... 3s DONE
+  2023-12-01 12:47:15 App\Events\BookingEvent ........................ RUNNING
+  2023-12-01 12:47:15 App\Events\BookingEvent .................. 577.18ms DONE
+  2023-12-01 12:47:17 App\Events\Message ............................. RUNNING
+  2023-12-01 12:47:17 App\Events\Message ....................... 312.13ms DONE
+  2023-12-01 13:06:47 App\Events\BookingEvent ........................ RUNNING
+  2023-12-01 13:06:48 App\Events\BookingEvent .................. 576.65ms DONE
+  2023-12-01 13:06:49 App\Events\Message ............................. RUNNING
+  2023-12-01 13:06:49 App\Events\Message ....................... 320.25ms DONE
+  2023-12-01 13:40:16 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-01 13:40:20 App\Notifications\ResetPasswordRequest ......... 3s DONE
+  2023-12-01 13:40:21 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-01 13:40:24 App\Notifications\ResetPasswordRequest ......... 3s DONE
+  2023-12-01 13:43:32 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-01 13:43:36 App\Notifications\ResetPasswordRequest ......... 4s DONE
+  2023-12-01 13:48:51 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-01 13:48:55 App\Notifications\ResetPasswordRequest ......... 3s DONE
+  2023-12-01 14:52:44 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-01 14:52:49 App\Notifications\ResetPasswordRequest ......... 4s DONE
+  2023-12-01 16:00:24 App\Events\BookingEvent ........................ RUNNING
+  2023-12-01 16:00:25 App\Events\BookingEvent .................. 629.30ms DONE
+  2023-12-01 16:00:26 App\Events\Message ............................. RUNNING
+  2023-12-01 16:00:26 App\Events\Message ....................... 404.37ms DONE
+  2023-12-02 11:32:55 App\Events\BookingEvent ........................ RUNNING
+  2023-12-02 11:32:55 App\Events\BookingEvent .................. 590.90ms DONE
+  2023-12-02 11:32:57 App\Events\Message ............................. RUNNING
+  2023-12-02 11:32:57 App\Events\Message ....................... 392.03ms DONE
+  2023-12-02 19:58:27 App\Events\Message ............................. RUNNING
+  2023-12-02 19:58:28 App\Events\Message ....................... 414.69ms DONE
+  2023-12-02 19:58:46 App\Events\Message ............................. RUNNING
+  2023-12-02 19:58:47 App\Events\Message ....................... 390.55ms DONE
+  2023-12-02 19:59:19 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:19 App\Events\Message ....................... 384.84ms DONE
+  2023-12-02 19:59:20 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:20 App\Events\Message ....................... 381.24ms DONE
+  2023-12-02 19:59:22 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:22 App\Events\Message ....................... 381.14ms DONE
+  2023-12-02 19:59:23 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:23 App\Events\Message ....................... 381.02ms DONE
+  2023-12-02 19:59:25 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:25 App\Events\Message ....................... 461.72ms DONE
+  2023-12-02 19:59:26 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:27 App\Events\Message ....................... 385.50ms DONE
+  2023-12-02 19:59:28 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:29 App\Events\Message ....................... 420.88ms DONE
+  2023-12-02 19:59:30 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:31 App\Events\Message ....................... 381.50ms DONE
+  2023-12-02 19:59:32 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:32 App\Events\Message ....................... 364.70ms DONE
+  2023-12-02 19:59:34 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:34 App\Events\Message ....................... 375.15ms DONE
+  2023-12-02 19:59:35 App\Events\Message ............................. RUNNING
+  2023-12-02 19:59:36 App\Events\Message ....................... 408.40ms DONE
+  2023-12-02 20:00:30 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:30 App\Events\Message ....................... 392.37ms DONE
+  2023-12-02 20:00:32 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:32 App\Events\Message ....................... 396.78ms DONE
+  2023-12-02 20:00:33 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:33 App\Events\Message ....................... 384.85ms DONE
+  2023-12-02 20:00:35 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:35 App\Events\Message ....................... 379.31ms DONE
+  2023-12-02 20:00:40 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:41 App\Events\Message ....................... 399.18ms DONE
+  2023-12-02 20:00:42 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:42 App\Events\Message ....................... 314.75ms DONE
+  2023-12-02 20:00:44 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:44 App\Events\Message ....................... 389.22ms DONE
+  2023-12-02 20:00:45 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:46 App\Events\Message ....................... 447.89ms DONE
+  2023-12-02 20:00:47 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:47 App\Events\Message ....................... 445.26ms DONE
+  2023-12-02 20:00:49 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:49 App\Events\Message ....................... 447.68ms DONE
+  2023-12-02 20:00:51 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:51 App\Events\Message ....................... 377.62ms DONE
+  2023-12-02 20:00:52 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:53 App\Events\Message ....................... 435.90ms DONE
+  2023-12-02 20:00:54 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:54 App\Events\Message ....................... 370.85ms DONE
+  2023-12-02 20:00:56 App\Events\Message ............................. RUNNING
+  2023-12-02 20:00:59 App\Events\Message ............................. 3s DONE
+  2023-12-02 20:01:01 App\Events\Message ............................. RUNNING
+  2023-12-02 20:01:01 App\Events\Message ....................... 396.59ms DONE
+  2023-12-02 20:01:03 App\Events\Message ............................. RUNNING
+  2023-12-02 20:01:03 App\Events\Message ....................... 337.89ms DONE
+  2023-12-02 20:04:42 App\Events\Message ............................. RUNNING
+  2023-12-02 20:04:43 App\Events\Message ....................... 439.69ms DONE
+  2023-12-02 20:04:44 App\Events\Message ............................. RUNNING
+  2023-12-02 20:04:44 App\Events\Message ....................... 408.14ms DONE
+  2023-12-02 20:04:46 App\Events\Message ............................. RUNNING
+  2023-12-02 20:04:46 App\Events\Message ....................... 449.62ms DONE
+  2023-12-02 20:04:47 App\Events\Message ............................. RUNNING
+  2023-12-02 20:04:48 App\Events\Message ....................... 383.25ms DONE
+  2023-12-02 20:04:49 App\Events\Message ............................. RUNNING
+  2023-12-02 20:04:49 App\Events\Message ....................... 333.59ms DONE
+  2023-12-02 20:04:50 App\Events\Message ............................. RUNNING
+  2023-12-02 20:04:50 App\Events\Message ....................... 311.17ms DONE
+  2023-12-02 20:04:56 App\Events\Message ............................. RUNNING
+  2023-12-02 20:04:56 App\Events\Message ....................... 350.20ms DONE
+  2023-12-02 20:04:58 App\Events\Message ............................. RUNNING
+  2023-12-02 20:04:58 App\Events\Message ....................... 430.78ms DONE
+  2023-12-02 20:04:59 App\Events\Message ............................. RUNNING
+  2023-12-02 20:05:00 App\Events\Message ....................... 418.60ms DONE
+  2023-12-02 20:05:01 App\Events\Message ............................. RUNNING
+  2023-12-02 20:05:01 App\Events\Message ....................... 387.44ms DONE
+  2023-12-02 20:05:02 App\Events\Message ............................. RUNNING
+  2023-12-02 20:05:02 App\Events\Message ....................... 356.73ms DONE
+  2023-12-02 20:07:38 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:38 App\Events\Message ....................... 402.93ms DONE
+  2023-12-02 20:07:39 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:40 App\Events\Message ....................... 357.92ms DONE
+  2023-12-02 20:07:41 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:41 App\Events\Message ....................... 385.35ms DONE
+  2023-12-02 20:07:42 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:43 App\Events\Message ....................... 338.41ms DONE
+  2023-12-02 20:07:44 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:44 App\Events\Message ....................... 486.76ms DONE
+  2023-12-02 20:07:46 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:46 App\Events\Message ....................... 388.11ms DONE
+  2023-12-02 20:07:47 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:47 App\Events\Message ....................... 352.22ms DONE
+  2023-12-02 20:07:52 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:53 App\Events\Message ....................... 505.72ms DONE
+  2023-12-02 20:07:54 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:55 App\Events\Message ....................... 374.89ms DONE
+  2023-12-02 20:07:56 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:57 App\Events\Message ....................... 354.27ms DONE
+  2023-12-02 20:07:58 App\Events\Message ............................. RUNNING
+  2023-12-02 20:07:58 App\Events\Message ....................... 400.42ms DONE
+  2023-12-02 20:08:00 App\Events\Message ............................. RUNNING
+  2023-12-02 20:08:00 App\Events\Message ....................... 400.47ms DONE
+  2023-12-02 20:08:01 App\Events\Message ............................. RUNNING
+  2023-12-02 20:08:02 App\Events\Message ....................... 362.49ms DONE
+  2023-12-02 20:08:03 App\Events\Message ............................. RUNNING
+  2023-12-02 20:08:04 App\Events\Message ....................... 415.96ms DONE
+  2023-12-02 20:10:08 App\Events\Message ............................. RUNNING
+  2023-12-02 20:10:08 App\Events\Message ....................... 505.79ms DONE
+  2023-12-02 20:10:10 App\Events\Message ............................. RUNNING
+  2023-12-02 20:10:10 App\Events\Message ....................... 381.65ms DONE
+  2023-12-02 20:10:11 App\Events\Message ............................. RUNNING
+  2023-12-02 20:10:12 App\Events\Message ....................... 330.01ms DONE
+  2023-12-02 20:10:13 App\Events\Message ............................. RUNNING
+  2023-12-02 20:10:13 App\Events\Message ....................... 416.66ms DONE
+  2023-12-02 20:10:14 App\Events\Message ............................. RUNNING
+  2023-12-02 20:10:15 App\Events\Message ....................... 378.88ms DONE
+  2023-12-02 20:10:16 App\Events\Message ............................. RUNNING
+  2023-12-02 20:10:16 App\Events\Message ....................... 322.97ms DONE
+  2023-12-02 20:10:17 App\Events\Message ............................. RUNNING
+  2023-12-02 20:10:18 App\Events\Message ....................... 439.87ms DONE
+  2023-12-02 20:14:02 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:02 App\Events\Message ....................... 404.98ms DONE
+  2023-12-02 20:14:03 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:04 App\Events\Message ....................... 357.35ms DONE
+  2023-12-02 20:14:05 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:05 App\Events\Message ....................... 406.73ms DONE
+  2023-12-02 20:14:06 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:07 App\Events\Message ....................... 472.16ms DONE
+  2023-12-02 20:14:08 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:08 App\Events\Message ....................... 306.05ms DONE
+  2023-12-02 20:14:09 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:09 App\Events\Message ....................... 376.68ms DONE
+  2023-12-02 20:14:11 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:11 App\Events\Message ....................... 394.51ms DONE
+  2023-12-02 20:14:13 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:14 App\Events\Message ....................... 440.77ms DONE
+  2023-12-02 20:14:15 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:15 App\Events\Message ....................... 386.44ms DONE
+  2023-12-02 20:14:16 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:17 App\Events\Message ....................... 375.99ms DONE
+  2023-12-02 20:14:18 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:18 App\Events\Message ....................... 305.98ms DONE
+  2023-12-02 20:14:20 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:20 App\Events\Message ....................... 404.47ms DONE
+  2023-12-02 20:14:21 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:22 App\Events\Message ....................... 397.60ms DONE
+  2023-12-02 20:14:23 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:24 App\Events\Message ....................... 394.83ms DONE
+  2023-12-02 20:14:25 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:26 App\Events\Message ....................... 413.60ms DONE
+  2023-12-02 20:14:27 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:27 App\Events\Message ....................... 306.65ms DONE
+  2023-12-02 20:14:28 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:29 App\Events\Message ....................... 439.98ms DONE
+  2023-12-02 20:14:30 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:30 App\Events\Message ....................... 350.55ms DONE
+  2023-12-02 20:14:32 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:32 App\Events\Message ....................... 321.34ms DONE
+  2023-12-02 20:14:37 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:38 App\Events\Message ....................... 426.54ms DONE
+  2023-12-02 20:14:39 App\Events\Message ............................. RUNNING
+  2023-12-02 20:14:39 App\Events\Message ....................... 343.96ms DONE

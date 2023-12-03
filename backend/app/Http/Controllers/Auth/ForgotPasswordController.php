@@ -90,12 +90,12 @@ class ForgotPasswordController extends Controller
                 'message' => 'Chúng tôi không thể tìm thấy người dùng với địa chỉ email này !',
             ], 422);
         }
-        if (!Hash::check($request->old_password, $user->password)) {
-            return response()->json([
-                'status' => false,
-                'error' => 'Mật khẩu cũ không chính xác !',
-            ], 422);
-        }
+        // if (!Hash::check($request->old_password, $user->password)) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'error' => 'Mật khẩu cũ không chính xác !',
+        //     ], 422);
+        // }
         $user->update([
             'password' => Hash::make($request->new_password),
         ]);
