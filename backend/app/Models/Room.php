@@ -26,13 +26,12 @@ class Room extends Eloquent
         'name',
         'room_number',
         'amount',
-        'floor'
+        'floor',
+        'pay_is_checkin'
     ];
     protected $attributes = [
         'deleted_at' => null,
     ];
-
-
 
     public function getType()
     {

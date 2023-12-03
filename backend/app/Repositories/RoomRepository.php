@@ -81,6 +81,7 @@ class RoomRepository
                 return [
                     [
                         'id' => $room->id,
+                        'slug' => $room->slug,
                         'name' => $room->name,
                         'amount' => $room->amount,
                         'discount' => $room->discount,
@@ -91,7 +92,8 @@ class RoomRepository
                         'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
                         'branch' => new BranchResource($this->branch->find($room->branch_id)),
                         'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
-                        'room_empty' => $roomNumberIsNotBook
+                        'room_empty' => $roomNumberIsNotBook,
+                        'pay_is_checkin' => $room->pay_is_checkin,
                     ]
                 ];
             }
@@ -151,6 +153,7 @@ class RoomRepository
                 if (count($newArray) > 0) {
                     $room_completed[] = [
                         'id' => $room->id,
+                        'slug' => $room->slug,
                         'name' => $room->name,
                         'amount' => $room->amount,
                         'discount' => $room->discount,
@@ -161,7 +164,8 @@ class RoomRepository
                         'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
                         'branch' => new BranchResource($this->branch->find($room->branch_id)),
                         'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
-                        'room_empty' => count($newArray)
+                        'room_empty' => count($newArray),
+                        'pay_is_checkin' => $room->pay_is_checkin,
                     ];
                 }
             }
@@ -186,6 +190,7 @@ class RoomRepository
                 }
                 $room_completed[] = [
                     'id' => $room->id,
+                    'slug' => $room->slug,
                     'name' => $room->name,
                     'amount' => $room->amount,
                     'discount' => $room->discount,
@@ -196,7 +201,8 @@ class RoomRepository
                     'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
                     'branch' => new BranchResource($this->branch->find($room->branch_id)),
                     'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
-                    'room_empty' => count($room->room_number)
+                    'room_empty' => count($room->room_number),
+                    'pay_is_checkin' => $room->pay_is_checkin,
                 ];
             }
             $room_completed_2 = array_filter($room_completed, function ($room) use ($amount_room) {
@@ -212,8 +218,7 @@ class RoomRepository
         if (count($searchRoom) == 0) {
             return response()->json([
                 'status' => false,
-                'message' => 'Không tìm thấy phòng !',
-                'data' => []
+                'message' => 'Phòng đã hết !. Vui lòng chọn phòng khác',
             ]);
         }
         if (count($searchRoom) > 0) {
@@ -307,6 +312,7 @@ class RoomRepository
             ]);
         }
         return [
+            'status' => true,
             'message' => 'Đặt phòng thành công !',
             'bill' => [
                 'billingCode' => $billing->billingCode,

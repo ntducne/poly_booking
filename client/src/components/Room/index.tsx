@@ -13,7 +13,11 @@ export default function Room(props: any) {
     room_empty,
     price,
     discount,
+    images,
+    image,
   } = props?.data;
+  console.log(images?.[0]?.image);
+  
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
       <div className="lg:hidden block">
@@ -21,7 +25,7 @@ export default function Room(props: any) {
           <img
             className="group-hover:scale-110 transition-all duration-300 w-full"
             src={
-              "https://hotellerv1.themegoods.com/cultural/wp-content/uploads/sites/6/2018/09/pic-0203-04.jpg"
+              images?.[0]?.image ?? image
             }
             alt=""
           />
@@ -72,7 +76,7 @@ export default function Room(props: any) {
           <img
             className="group-hover:scale-110 transition-all duration-300 object-cover"
             src={
-              "https://hotellerv1.themegoods.com/cultural/wp-content/uploads/sites/6/2018/09/pic-0203-04.jpg"
+              images?.[0]?.image ?? image
             }
             alt=""
           />

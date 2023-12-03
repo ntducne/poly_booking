@@ -131,7 +131,7 @@ const Detail = () => {
   }, []);
 
   return (
-    <div className="px-[160px]">
+    <div className="md:px-[400px]">
       <div>
         <div className="mt-[140px] flex flex-col-reverse lg:flex-row justify-center gap-3">
           {isLoading && branchLoading ? (
@@ -143,7 +143,8 @@ const Detail = () => {
           ) : (
             <div className="flex flex-col gap-3 ">
               <img
-                src="https://themewagon.github.io/sona/img/room/room-details.jpg"
+                className="max-w-[800px] object-cover mx-auto "
+                src={data?.room?.images?.[0]?.image}
                 alt=""
               />
               <div>

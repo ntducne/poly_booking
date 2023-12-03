@@ -36,7 +36,7 @@ const Head = () => {
     .then((res) => {
       setNotifications([]);
       setNewMessage(0);
-      res.forEach((item: any) => {
+      res.forEach((item: any, key: number) => {
         setNotifications(prevNotifications => [...prevNotifications, {
           label: (
             <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
@@ -46,12 +46,11 @@ const Head = () => {
               </div>
             </div>
           ),
-          key: `${item.id}`,
+          key: `${key}`,
         }])
       })
     })
     const unsubscribe = pusherInstance().getData('chat', 'message', (data :any)  => {
-      setNewMessage(newMessage + 1);
       setNotifications(prevNotifications => [...prevNotifications, {
         label: (
           <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
@@ -63,8 +62,9 @@ const Head = () => {
             </div>
           </div>
         ),
-        key: `${newMessage+1}`,
+        key: `${Math.random()}`,
       }])
+      setNewMessage(notifications.length + 1);
     });
     return () => {
       unsubscribe();
