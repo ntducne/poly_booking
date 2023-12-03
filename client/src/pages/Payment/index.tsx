@@ -1,11 +1,13 @@
 import { Card } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import FormatPrice from '../../utils/FormatPrice';
 
 export default function PaymentView() {
     const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook', 'paymentMethod']);
-
+    const [paymentType, ] = useState(0);
     useEffect(() => {
+        // setPaymentType(cookie.paymentMethod);
         setCookie('paymentPage', 2, { path: '/' })
     },[])
 
@@ -24,27 +26,24 @@ export default function PaymentView() {
                 display: 'grid',
                 gridTemplateColumns: '2fr 1fr',
                 gridGap: '1rem',
-
             }}>
-                <div>
-                    <Card title={
-                        <div className='pb-2'>
-                            <p className='font-semibold text-xl mt-2'>Kiểm tra thông tin đặt phòng </p>
-                        </div>
-                    }>
-                        <div className="rounded-lg bg-white">
-                            <div className="flex flex-col rounded-lg bg-white sm:flex-row">
-                                <img className="h-24 w-28 rounded-md border object-cover object-center" src={cookie.bookingNow.image} alt="" />
-                                <div className="flex w-full flex-col px-4 py-4">
-                                    <span className="font-semibold">{cookie.bookingNow.room_name}</span>
-                                    <span className="float-right text-gray-400">({cookie.roomSearch.soLuong}x)</span>
-                                    <p className="text-lg font-bold">{cookie.bookingNow.price} VNĐ</p>
-                                </div>
+                <Card title={
+                    <div className='pb-2'>
+                        <p className='font-semibold text-xl mt-2'>Thông tin thanh toán</p>
+                    </div>
+                }>
+                    <div className="rounded-lg bg-white">
+                        <div className="flex flex-col rounded-lg bg-white sm:flex-row">
+                            <img className="h-24 w-28 rounded-md border object-cover object-center" src={cookie.bookingNow.image} alt="" />
+                            <div className="flex w-full flex-col px-4 py-4">
+                                <span className="font-semibold">{cookie.bookingNow.room_name}</span>
+                                <span className="float-right text-gray-400">({cookie.roomSearch.soLuong}x)</span>
+                                <p className="text-lg font-bold">{<FormatPrice price={cookie.bookingNow.price}/>}</p>
                             </div>
                         </div>
-                    </Card>
-                </div>
-                <div >
+                    </div>
+                </Card>
+                {paymentType == 1 && (
                     <Card title={
                         <div className='pb-2'>
                             <p className='font-semibold text-xl mt-2'>Phương thức thanh toán</p>
@@ -94,7 +93,17 @@ export default function PaymentView() {
                             </li>
                         </ul>
                     </Card>
-                </div>
+                )}
+                {paymentType == 0 && (
+                    <Card title={
+                        <div className='pb-2'>
+                            <p className='font-semibold text-xl mt-2'>Thẻ thanh toán</p>
+                        </div>
+                    }>
+                        
+                    </Card>
+                )}
+                
             </div>
         </div>
     )

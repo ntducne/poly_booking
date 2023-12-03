@@ -27,6 +27,7 @@ class UpdateRoomRequest extends Request
             'bed_size'    => ['required', 'numeric', 'min:0'],
             'branch_id'   => ['required', 'string', Rule::exists(Branch::class, $this->column_id)],
             'name'        => ['required', 'string', Rule::unique(Room::class, 'name')->ignore($this->room, $this->column_id)],
+            'pay_is_checkin' => ['required'],
         ];
     }
     public function attributes()
@@ -44,6 +45,7 @@ class UpdateRoomRequest extends Request
             'bed_size'    => 'Loại giường',
             'branch_id'   => 'Chi nhánh ',
             'name'        => 'Tên phòng',
+            'pay_is_checkin' => 'Thanh toán khi nhận phòng',
         ];
     }
 }

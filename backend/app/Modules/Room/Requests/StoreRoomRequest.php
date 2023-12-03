@@ -29,6 +29,7 @@ class StoreRoomRequest extends Request
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'amount' => ['required', 'numeric', 'min:0'],
             'floor' => ['required', 'numeric', 'min:0'],
+            'pay_is_checkin' => ['required'],
         ];
     }
 
@@ -39,7 +40,7 @@ class StoreRoomRequest extends Request
             'adults' => "Số người lớn",
             'children' => "Số trẻ em",
             'room_type_id' => "Loại phòng",
-            'pay_upon_check_in' => "Thanh toán khi nhận phòng",
+            'pay_is_checkin' => "Thanh toán khi nhận phòng",
             'description' => 'Mô tả ',
             'discount' => 'Mã ưu đãi',
             'status' => 'Trạng thái',
