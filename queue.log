@@ -219,3 +219,27 @@
   2023-12-02 20:14:38 App\Events\Message ....................... 426.54ms DONE
   2023-12-02 20:14:39 App\Events\Message ............................. RUNNING
   2023-12-02 20:14:39 App\Events\Message ....................... 343.96ms DONE
+
+   Symfony\Component\Process\Exception\ProcessTimedOutException 
+
+  The process "'/usr/bin/php8.2' 'artisan' 'queue:work' '--once' '--name=default' '--queue=default' '--backoff=0' '--memory=128' '--sleep=3' '--tries=1'" exceeded the timeout of 60 seconds.
+
+  at /var/www/poly_booking/backend/vendor/symfony/process/Process.php:1158
+    1154▕ 
+    1155▕         if (null !== $this->timeout && $this->timeout < microtime(true) - $this->starttime) {
+    1156▕             $this->stop(0);
+    1157▕ 
+  ➜ 1158▕             throw new ProcessTimedOutException($this, ProcessTimedOutException::TYPE_GENERAL);
+    1159▕         }
+    1160▕ 
+    1161▕         if (null !== $this->idleTimeout && $this->idleTimeout < microtime(true) - $this->lastOutputTime) {
+    1162▕             $this->stop(0);
+
+      [2m+17 vendor frames [22m
+
+  18  /var/www/poly_booking/backend/artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   INFO  Processing jobs from the [default] queue.  
+

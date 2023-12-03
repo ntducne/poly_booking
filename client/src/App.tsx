@@ -44,7 +44,6 @@ function App() {
           <Route index element={<Rooms />} />
           <Route path=":slug" element={<Detail />} />
         </Route>
-
         <Route path="/auth" element={<LayoutAuth />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
