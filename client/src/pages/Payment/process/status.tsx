@@ -43,6 +43,9 @@ export default function PaymentStatus() {
           message.error("Có lỗi xảy ra ! Vui lòng thử lại sau.");
         });
     }
+    else {
+      window.location.href = '/';
+    }
   }, []);
 
   return (

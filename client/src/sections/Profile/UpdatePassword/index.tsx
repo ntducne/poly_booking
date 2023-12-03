@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, Checkbox, Form, Input, message } from "antd";
+import { Form, Input, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useUpdatePasswordMutation } from "../../../api/User";
 

@@ -15,7 +15,7 @@ import Demo from "./pages/demo";
 import LayoutAuth from "./layouts/Auth";
 import PaymentLayout from "./layouts/Payment";
 import Edit from "./pages/InforUser/Edit";
-import PaymentView from "./pages/Payment";
+// import PaymentView from "./pages/Payment";
 import AccommodationBook from "./pages/Payment/accommodation";
 import AccommodationReview from "./pages/Payment/accommodation/review";
 import PaymentProcess from "./pages/Payment/process";
@@ -51,12 +51,12 @@ function App() {
           <Route path="forGotPassword" element={<ForgotPassword />} />
           <Route path="reset/:token" element={<ResetPassword />} />
         </Route>
-        <Route path="/accommodation/book" element={<PaymentLayout />}>
-          <Route index element={<AccommodationBook />} />
+        <Route path="/accommodation" element={<PaymentLayout />}>
+          <Route path="book" element={<AccommodationBook />} />
           <Route path="review" element={<AccommodationReview />} />
         </Route>
         <Route path="/payment" element={<PaymentLayout />}>
-          <Route index element={<PaymentView />} />
+          {/* <Route index element={<PaymentView />} /> */}
           <Route path="process" element={<PaymentProcess />} />
           <Route path="status" element={<PaymentStatus />} />
         </Route>

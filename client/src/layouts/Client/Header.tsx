@@ -59,14 +59,14 @@ export default function Header({}: Props) {
               <img
                 className="w-[90px]"
                 src={
-                  "https://res.cloudinary.com/dteefej4w/image/upload/v1696338661/logo_30_zwmslg.png"
+                  "/logo_light.png"
                 }
               />
             ) : (
               <img
                 className="w-[90px]"
                 src={
-                  "https://res.cloudinary.com/dteefej4w/image/upload/v1696338751/logo_31_olx95j.png"
+                  "/logo_dark.png"
                 }
               />
             )}

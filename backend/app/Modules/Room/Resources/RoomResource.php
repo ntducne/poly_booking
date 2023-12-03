@@ -38,7 +38,7 @@ class RoomResource extends JsonResource
             'adults' => $this->adults,
             'children' => $this->children,
             'price' => $this->CalcPrice(),
-            // 'pay_upon_check_in' => $this->pay_upon_check_in,
+            'pay_is_checkin' => $this->pay_is_checkin,
             'description' => $this->description,
             'discount' => $this->discount,
             'status' => $this->status,
