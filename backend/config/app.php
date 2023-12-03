@@ -174,6 +174,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         MongodbServiceProvider::class,
         // App\Modules\ModuleServiceProvider::class
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class
     ])->toArray(),
 
     /*

@@ -16,10 +16,14 @@ class Billing extends Eloquent
         'services',
         'total',
         'payment_method',
+        'payment_info',
         'payment_date',
         'branch_id',
         'status',
-        'billingCode'
+        'billingCode',
+        'moneyUSD',
+        'moneyVND',
+        'reason',
     ];
     protected $attributes = [
         'status' => null

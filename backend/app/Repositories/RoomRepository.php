@@ -288,6 +288,8 @@ class RoomRepository
             'branch_id' => $room->branch_id,
             'status' => 0,
             'billingCode' => time(),
+            'moneyUSD' => $total / 23000,
+            'moneyVND' => $total,
         ];
         $billing = $this->billing->create($billingData);
         $newBilling_id = $this->billing->where('booking_id', $bookingCreate->id)->first();
@@ -311,13 +313,40 @@ class RoomRepository
                 'billing_id' => $newBilling_id,
             ]);
         }
+        if($request->payment_method == 'vnpay'){
+            return [
+                'status' => true,
+                'message' => 'Đặt phòng thành công !',
+                'url' => route('vnpay.process', [
+                    'order_code' => $billing->billingCode,
+                    'amount' => $billing->total,
+                ]),
+            ];
+        }
+        if($request->payment_method == 'momo'){
+            return [
+                'status' => true,
+                'message' => 'Đặt phòng thành công !',
+                'url' => route('momo.process', [
+                    'order_code' => $billing->billingCode,
+                    'amount' => $billing->total,
+                ]),
+            ];
+        }
+        if($request->payment_method == 'paypal'){
+            return [
+                'status' => true,
+                'message' => 'Đặt phòng thành công !',
+                'url' => route('paypal.process', [
+                    'order_code' => $billing->billingCode,
+                    'amount' => $billing->total,
+                ]),
+            ];
+        }
         return [
             'status' => true,
             'message' => 'Đặt phòng thành công !',
-            'bill' => [
-                'billingCode' => $billing->billingCode,
-                'total' => $billing->total,
-            ]
+            'billingCode' => $billing->billingCode
         ];
     }
 
