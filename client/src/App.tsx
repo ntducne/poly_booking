@@ -19,13 +19,13 @@ import Edit from "./pages/InforUser/Edit";
 import AccommodationBook from "./pages/Payment/accommodation";
 import AccommodationReview from "./pages/Payment/accommodation/review";
 import PaymentProcess from "./pages/Payment/process";
-import PaymentStatus from "./pages/Payment/process/status";
 import SearchOrder from "./pages/SearchOrder";
 import LayoutClient2 from "./layouts/Layout2";
 import DetailRoomBooked from "./pages/DetailRoomBooked";
 import StatusPaymentVnpay from "./pages/Payment/status/vnpay";
 import StatusPaymentMomo from "./pages/Payment/status/momo";
 import StatusPaymentPaypal from "./pages/Payment/status/paypal";
+import StatusPayment from "./pages/Payment/status";
 
 function App() {
   return (
@@ -59,9 +59,8 @@ function App() {
           <Route path="review" element={<AccommodationReview />} />
         </Route>
         <Route path="/payment" element={<PaymentLayout />}>
-          {/* <Route index element={<PaymentView />} /> */}
           <Route path="process" element={<PaymentProcess />} />
-          <Route path="status" element={<PaymentStatus />} />
+          <Route path="status" element={<StatusPayment />} />
           <Route path="status/vnpay" element={<StatusPaymentVnpay />} />
           <Route path="status/momo" element={<StatusPaymentMomo />} />
           <Route path="status/paypal" element={<StatusPaymentPaypal />} />

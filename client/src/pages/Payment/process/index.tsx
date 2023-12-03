@@ -57,7 +57,7 @@ export default function PaymentProcess() {
                         }, 2000);
                     }
                     if(data?.billingCode){
-                        
+                        navigate(`/payment/status?billingCode=${data?.billingCode}`)
                     }
                 } 
             })
