@@ -43,6 +43,7 @@ class BillingResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'billingCode' => $this->billingCode,
             'booking' => new BookingResource(Booking::find($this->booking_id)),
             'services' => $this->services,
             'total' => $this->total,

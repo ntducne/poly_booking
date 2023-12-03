@@ -129,3 +129,8 @@ function tinhPhanTramTuHaiSo($soThuNhat, $soThuHai) {
     $phanTram = (($soThuNhat - $soThuHai) / $soThuNhat) * 100;
     return $phanTram;
 }
+
+
+function formatMoneyUSD($money) {
+    return number_format($money, 2, '.', ',');
+}

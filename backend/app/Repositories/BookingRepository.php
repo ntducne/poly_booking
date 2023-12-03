@@ -250,7 +250,10 @@ class BookingRepository
 
     public function checkBooking($request){
         $billing_id = $request->billing_id;
-        $billing = $this->billing->where('_id', '=', $billing_id)->first();
+        $billing = $this->billing
+            ->where('_id', '=', $billing_id)
+            ->orWhere('billingCode', '=', $billing_id)
+            ->first();
         if (!$billing) {
             return response()->json([
                 'status' => 'error',

@@ -27,6 +27,7 @@ export default function PaymentProcess() {
                 'email': cookie?.userBook?.email,
                 'phone': cookie?.userBook?.phone,
                 'name': cookie?.userBook?.name,
+                'payment_method': cookie?.paymentMethod
             }
             fetch(`${import.meta.env.VITE_URL_API}/client/v2/bookingg`, {
                 method: 'POST',
@@ -43,15 +44,20 @@ export default function PaymentProcess() {
                 }
             })
             .then(data => {
-                if(data.status == false){
+                if(data?.status == false){
+                    message.error(data?.message);
                     setStatus(2);
                 }
-                if(data.status == true){
+                if(data?.status == true){
+                    message.success(data?.message);
                     setStatus(1);
-                    if(cookie?.paymentMethod === 'vnpay'){
+                    if(data?.url){
                         setTimeout(() => {
-                            window.location.href = `${import.meta.env.VITE_URL_API}/pay/vnpay/process/${data.bill.billingCode}/${data.bill.total}`;
+                            window.location.href = data?.url;
                         }, 2000);
+                    }
+                    if(data?.billingCode){
+                        navigate(`/payment/status?billingCode=${data?.billingCode}`)
                     }
                 } 
             })
