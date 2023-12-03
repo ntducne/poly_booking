@@ -5,7 +5,7 @@ import FormatPrice from '../../utils/FormatPrice';
 
 export default function PaymentView() {
     const [cookie, setCookie] = useCookies(['paymentPage', 'bookingNow', 'roomSearch', 'userInfo', 'userBook', 'paymentMethod']);
-    const [paymentType, setPaymentType] = useState(0);
+    const [paymentType, ] = useState(0);
     useEffect(() => {
         // setPaymentType(cookie.paymentMethod);
         setCookie('paymentPage', 2, { path: '/' })
