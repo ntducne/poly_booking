@@ -1,5 +1,5 @@
 import { SmileOutlined } from "@ant-design/icons";
-import { Result, message } from "antd";
+import { Result } from "antd";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -8,37 +8,21 @@ import { Spin } from "antd";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-export default function VnpayCallback() {
-    const [status, setStatus] = useState(null);
-    const [, setCookie] = useCookies(["paymentPage"]);
-    const [billing_id, setBilling_id] = useState(null);
+export default function StatusPaymentPaypal() {
+    const [status, setStatus] = useState(0);
+    const [, setCookie, removeCookie] = useCookies(["paymentPage", "userBook", "roomSearch", "bookingNow", "paymentMethod"]);
     const location = useLocation();
     const Navigate = useNavigate();
 
     useEffect(() => {
+        removeCookie('bookingNow', { path: '/' });
+        removeCookie('roomSearch', { path: '/' });
+        removeCookie('userBook', { path: '/' });
+        removeCookie('paymentMethod', { path: '/' });
         setCookie("paymentPage", 3, { path: "/" });
         if (location.search) {
-            Navigate("/payment/status");
-            fetch(
-                `${import.meta.env.VITE_URL_API}/pay/vnpay/callback${location.search}`, {
-                method: "GET",
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        message.error("Có lỗi xảy ra.");
-                    }
-                })
-                .then((data) => {
-                    setStatus(data.status);
-                    if (data.status == 1) {
-                        setBilling_id(data.billing_id);
-                    }
-                })
-                .catch(() => {
-                    message.error("Có lỗi xảy ra ! Vui lòng thử lại sau.");
-                });
+            Navigate("/payment/status/paypal");
+            setStatus(+location.search.split('=')[1]);
         }
         else {
             window.location.href = '/';
@@ -51,7 +35,7 @@ export default function VnpayCallback() {
                 maxWidth: 1000,
             }}
         >
-            {!status && (
+            {status == 0 && (
                 <Result
                     icon={<SmileOutlined />}
                     title={
@@ -66,15 +50,11 @@ export default function VnpayCallback() {
                     <Result
                         status="success"
                         title="Đặt phòng thành công !"
-                        subTitle={`Cảm ơn quý khách đã đặt phòng tại khách sạn của chúng tôi. Chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất. Mã hoá đơn của quý khách là ${billing_id}.`}
+                        subTitle={`Cảm ơn quý khách đã đặt phòng tại khách sạn của chúng tôi. Chúng tôi sẽ liên hệ với quý khách trong thời gian sớm nhất.`}
                         extra={[
                             <>
                                 <Link to="/" type="button" key="buy">
                                     Về trang chủ
-                                </Link>
-                                , Quý khách có thể kiểm tra hoá đơn{" "}
-                                <Link to={`/search-order`} type="button" key="buy">
-                                    Tại đây
                                 </Link>
                             </>,
                         ]}
@@ -86,11 +66,11 @@ export default function VnpayCallback() {
                     <Result
                         status="error"
                         title="Đặt phòng thất bại !"
-                        subTitle="Có lỗi xảy ra trong quá trình đặt phòng. Vui lòng thử lại sau."
+                        subTitle="Quý khách đã huỷ thanh toán đặt phòng !"
                         extra={[
                             <Link to="/" type="button" key="buy">
                                 Về trang chủ
-                            </Link>,
+                            </Link>
                         ]}
                     />
                 </div>
@@ -100,10 +80,13 @@ export default function VnpayCallback() {
                     <Result
                         status="error"
                         title="Đặt phòng thất bại !"
-                        subTitle="Lỗi thanh toán ! Vui lòng thử lại sau."
+                        subTitle="Có lỗi xảy ra ! Vui lòng liên hệ với chúng tôi để được hỗ trợ"
                         extra={[
-                            <Link to="/" type="button" key="buy">
+                            <Link to="/" type="button" key="0">
                                 Về trang chủ
+                            </Link>,
+                            <Link to="/contact" type="button" key="1">
+                                Liên hệ
                             </Link>,
                         ]}
                     />

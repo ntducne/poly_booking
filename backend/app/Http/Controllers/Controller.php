@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Billing;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -43,5 +44,39 @@ class Controller extends BaseController
     protected function DeleteDirectory($folder): void
     {
         Http::delete(env('CLOUDINARY_RESOURCE').'folders/'.$folder)->json();
+    }
+
+    protected function checkStatusBilling($order_code){
+        $billing = Billing::where('billingCode', (integer)$order_code)->first();
+        if (!$billing) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Đơn không tồn tại.'
+            ]);
+        }
+        if($billing->status == 0 && $billing->payment_method == 'cash'){
+            return response()->json([
+                'status' => false,
+                'message' => 'Đơn không hỗ trợ thanh toán online.'
+            ]);
+        }
+        if($billing->status == 1 || $billing->status == 3 || $billing->status == 5){
+            return response()->json([
+                'status' => false,
+                'message' => 'Đơn đã thanh toán.'
+            ]);
+        }
+        if($billing->status == 2 || $billing->status == 6 || $billing->status == 7){
+            return response()->json([
+                'status' => false,
+                'message' => 'Đơn đã huỷ'
+            ]);
+        }
+        if($billing->status == 4){
+            return response()->json([
+                'status' => false,
+                'message' => 'Đơn đã trả phòng'
+            ]);
+        }
     }
 }

@@ -33,8 +33,12 @@ class VnpayController extends Controller
         $this->vnp_Bill_State   = '';
         $this->vnp_IpAddr     = $_SERVER['REMOTE_ADDR'];
     }
+
+    
+
     public function process($order_code, $amount)
     {
+        $this->checkStatusBilling($order_code);
         $inputData = array(
             "vnp_Version"       => "2.1.0",
             "vnp_TmnCode"       => $this->vnp_TmnCode,
@@ -71,10 +75,17 @@ class VnpayController extends Controller
         $vnp_Url = $this->vnp_Url . "?" . $query;
         $vnpSecureHash = hash_hmac('sha512', $hashdata, $this->vnp_HashSecret);
         $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-        return redirect($vnp_Url);
+        return $vnp_Url;
     }
     public function callback(Request $request)
     {
+        $billing = Billing::where('billingCode', (integer)$request->vnp_TxnRef)->first();
+        if (!$billing) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Đơn hàng không tồn tại.'
+            ]);
+        }
         $vnp_SecureHash = $request->vnp_SecureHash;
         $inputData = array();
         foreach ($_GET as $key => $value) {
