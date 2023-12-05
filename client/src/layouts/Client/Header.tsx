@@ -3,20 +3,25 @@ import { Dropdown, MenuProps, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
+import { useProcessLogoutMutation } from "../../api/User";
+import { cookies as cookies2 } from "../../config/cookie";
 
 type Props = {};
 
 export default function Header({}: Props) {
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies(["userInfo"]);
+  const [cookies] = useCookies(["userInfo"]);
   const [header, setHeader] = useState(false);
-  const handleLogout = () => {
-    removeCookie("userInfo", { path: "/" });
+  const [logoutApi] = useProcessLogoutMutation();
+
+  const handleLogout = async () => {
+    await logoutApi({});
+    cookies2().Delete("userInfo");
     navigate("/auth/login");
   };
   const items: MenuProps["items"] = [
     {
-      label: <Link to="/profile">Thông tin cá nhân</Link>,
+      label: <Link to="/user/profile">Thông tin cá nhân</Link>,
       key: "0",
     },
     {
@@ -54,23 +59,22 @@ export default function Header({}: Props) {
               <img
                 className="w-[90px]"
                 src={
-                  "https://res.cloudinary.com/dteefej4w/image/upload/v1696338661/logo_30_zwmslg.png"
+                  "/logo_light.png"
                 }
               />
             ) : (
               <img
                 className="w-[90px]"
                 src={
-                  "https://res.cloudinary.com/dteefej4w/image/upload/v1696338751/logo_31_olx95j.png"
+                  "/logo_dark.png"
                 }
               />
             )}
           </Link>
-
           <div
             className={`${
               header ? "text-dark py-6" : "text-white  py-4"
-            } lg:flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] 
+            } lg:flex gap-2 lg:gap-x-8  md:text-[15px] 
           items-center hidden 
           `}
           >
@@ -99,11 +103,11 @@ export default function Header({}: Props) {
         <div
           className={`${
             header ? "text-dark py-6" : "text-white  py-4"
-          } flex gap-2 lg:gap-x-8 md:tracking-[3px] tracking-[1px] md:text-[15px] 
+          } flex gap-2 lg:gap-x-8  md:text-[15px] 
           items-center
           `}
         >
-          {cookies && cookies?.userInfo?.accessToken ? (
+          {cookies && cookies?.userInfo ? (
             <div>
               <Dropdown menu={{ items }} trigger={["click"]}>
                 <a onClick={(e) => e.preventDefault()}>

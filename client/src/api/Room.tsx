@@ -5,7 +5,7 @@ const roomApi = createApi({
   reducerPath: "Rooms",
   tagTypes: ["Rooms"],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_URL_API,
+    baseUrl: import.meta.env.VITE_URL_CLIENT,
     prepareHeaders: (headers) => {
       const [cookies] = useCookies(['userInfo']);
       const token = cookies.userInfo?.accessToken?.token;
@@ -22,9 +22,9 @@ const roomApi = createApi({
       query: (data: any) => {
         const keys = Object.keys(data);
         const url =
-          keys.length === 0
-            ? `/client/room`
-            : `/client/room/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&soLuong=${data.soLuong}`;
+          keys.length === 0 && keys.length < 6
+            ? `/room`
+            : `/v2/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&amount_room=${data.soLuong}`;
         return {
           method: "GET",
           url: url,
@@ -32,12 +32,24 @@ const roomApi = createApi({
       },
       providesTags: ["Rooms"],
     }),
-    getDetial: builder.query<any, any>({
-      query: (slug) => `/client/room/${slug}`,
+    searchRooms: builder.mutation<any, any>({
+      query: (data: any) => {
+        const url = "/v2/search";
+        return {
+          method: "POST",
+          url: url,
+          body: data,
+        };
+      },
+      invalidatesTags: ["Rooms"],
+    }),
+    getDetail: builder.query<any, any>({
+      query: (slug) => `/room/${slug}`,
       providesTags: ["Rooms"],
     }),
     postBooking: builder.mutation({
       query: (data: any) => ({
+<<<<<<< HEAD
         url: `client/room/booking`,
         method: "POST",
         body: data,
@@ -47,19 +59,31 @@ const roomApi = createApi({
     postRates: builder.mutation({
       query: (data: any) => ({
         url: `user/rate`,
+=======
+        url: `/room/booking`,
+>>>>>>> 83f9c3ff58b82abddbb664bd706c4e060b814c66
         method: "POST",
         body: data,
       }),
       invalidatesTags: ["Rooms"],
     }),
+    // postRates: builder.mutation({
+    //   query: (data: any) => ({
+    //     url: `/user/rate`,
+    //     method: "POST",
+    //     body: data,
+    //   }),
+    //   invalidatesTags: ["Rooms"],
+    // }),
   }),
 });
 
 export const {
   useGetRoomsQuery,
-  useGetDetialQuery,
+  useGetDetailQuery,
   usePostBookingMutation,
-  usePostRatesMutation,
+  // usePostRatesMutation,
+  useSearchRoomsMutation,
 } = roomApi;
 
 export const roomReducer = roomApi.reducer;

@@ -1,7 +1,17 @@
-import { SearchOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Pagination, Select, message } from "antd";
+import { MinusOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  Button,
+  DatePicker,
+  Form,
+  InputNumber,
+  Pagination,
+  Select,
+  message,
+} from "antd";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useGetBranchesQuery } from "../../api/Branch";
@@ -15,69 +25,111 @@ import {
 } from "../../assets/images/Rooms/Slides";
 import Page from "../../components/Page";
 import Room from "../../components/Room";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 import PcLoading from "../../components/RoomLoading/PcLoading";
 type Props = {};
 
 const { RangePicker } = DatePicker;
+
+const useQueryParams = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  return {
+    get: (param: any) => queryParams.get(param),
+    getAll: () => Object.fromEntries(queryParams.entries()),
+  };
+};
+
 export default function Rooms({}: Props) {
+  const { getAll } = useQueryParams();
+  const queryParams = useMemo(() => getAll(), [getAll]);
   const [width, setWidth] = useState(0);
   const navigate = useNavigate();
-  const [dataQuery, setDataQuery] = useState({});
+  const [dataQuery, setDataQuery] = useState<any>(queryParams || {});
   const { data, isLoading, refetch } = useGetRoomsQuery(dataQuery);
   const { data: dataBranches } = useGetBranchesQuery({});
-  const [, setCookie] = useCookies(["bookingNow", "roomSearch"]);
+  const [childs, setChilds] = useState<number>(0);
+  const [adults, setAdults] = useState<number>(0);
+  const [countRoom, setCountRoom] = useState<number>(0);
+  const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);
+
   const onFinish = (values: any) => {
     if (!values) {
       return;
     }
-
-    const { time, adult, child, branch_id, soLuong } = values;
+    const { time, branch_id } = values;
     const formattedDates = time?.map((item: any) =>
       dayjs(item.$d).format("YYYY-MM-DD")
     );
-
     const dataQuery = {
-      adult,
-      child,
+      adult: adults,
+      child: childs,
       branch_id,
-      soLuong,
+      soLuong: countRoom,
       checkin: formattedDates?.[0],
       checkout: formattedDates?.[1],
     };
-
+    navigate(
+      `/rooms?checkin=${dataQuery.checkin}&checkout=${dataQuery.checkout}&adult=${dataQuery.adult}&child=${dataQuery.child}&branch_id=${dataQuery.branch_id}&soLuong=${dataQuery.soLuong}`
+    );
     setDataQuery(dataQuery);
-    if (!isLoading && !data?.data.length) {
-      message.error("Không có phòng nào phù hợp");
-    }
     setCookie("roomSearch", dataQuery, { path: "/" });
   };
 
+  // const validateQueryParams = (params: any) => {
+  //   const requiredParams = [
+  //     "checkin",
+  //     "checkout",
+  //     "adult",
+  //     "child",
+  //     "branch_id",
+  //     "amount_room",
+  //   ];
+
+  //   return requiredParams.every(
+  //     (param) => params.hasOwnProperty(param) && params[param]
+  //   );
+  // };
+
   const handleBookingNow = (item: any) => {
     if (Object.keys(dataQuery).length) {
-      const { id, name, images, type, discount, branch, bed_size } = item;
-      const price = type.price_per_night - discount;
-
+      const { id, name, images, price, branch, bed_size, image, children, adults, num_of_bed } = item;
+      const checkinDate = dayjs(cookie.roomSearch.checkin);
+      const checkoutDate = dayjs(cookie.roomSearch.checkout);
+      const dateDiff = checkoutDate.diff(checkinDate, "day");
       const bookingData = {
         room_id: id,
+        adults,
+        child: children,
+        num_of_bed,
         room_name: name,
-        image: images[0]?.image,
-        price,
+        image: images?.[0]?.image ?? image,
+        price: +price * +dateDiff * +cookie?.roomSearch?.soLuong,
         branch: branch?.name,
         bed_size,
       };
-
       setCookie("bookingNow", bookingData, { path: "/" });
       navigate("/accommodation/book");
     } else {
       navigate("/rooms/" + item?.slug);
     }
   };
+  const disabledDate = (current: any) => {
+    const today = dayjs().startOf("day");
+    return current && current < today;
+  };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+  useEffect(() => {
+    if (!isLoading && data.status == false) {
+      message.error("Không có phòng nào phù hợp");
+    }
+  }, [data]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     setWidth(window.innerWidth);
   }, [window.innerWidth]);
@@ -100,17 +152,17 @@ export default function Rooms({}: Props) {
             <div className="absolute w-full h-full bg-black/50"></div>
             <div className="z-20 text-white text-center">
               <div className="uppercase tracking-[6px] mb-5">
-                Just enjoy and relax
+                Chỉ cần tận hưởng và thư giãn
               </div>
               <h1
                 className="text-[32px] font-extralight uppercase tracking-[3px] 
                         max-w-[920px] lg:text-[68px] leading-tight mb-6"
               >
-                Retreat Hotel at Santorini
+                Khách sạn nghỉ dưỡng tại Việt Nam
               </h1>
               <span className=" font-extralight tracking-[3px]  ">
-                Unwind the clock of modern life. Unlock the door to a wonder of
-                the world.
+                Làm chậm đồng hồ của cuộc sống hiện đại. Mở cửa ra một kỳ quan
+                thế giới.
               </span>
             </div>
           </div>
@@ -118,7 +170,7 @@ export default function Rooms({}: Props) {
         <div className="pt-primary px-6 md:px-[120px]">
           <div className="container mx-auto w-full flex flex-col justify-start lg:px-0">
             <div className="mb-[20px] font-bold text-[18px]">
-              Đã tìm được tổng cộng là n rooms
+              Đã tìm được tổng cộng là {data?.data.length} phòng
             </div>
             <div className="flex lg:flex-row lg:justify-center flex-col-reverse justify-start lg:max-w-none lg:px-2 relative">
               <div className="flex flex-col gap-[30px]">
@@ -126,7 +178,7 @@ export default function Rooms({}: Props) {
                   Array.from({ length: 5 }).map((_, index) => (
                     <PcLoading key={index} />
                   ))
-                ) : data?.data ? (
+                ) : data?.data.length ? (
                   data?.data?.map((room: any) => (
                     <Room
                       key={room.id}
@@ -158,7 +210,13 @@ export default function Rooms({}: Props) {
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     layout="vertical"
-                    className="mt-[20px]"
+                    className="mt-[20px] w-full"
+                    name="dynamic_form_item"
+                    initialValues={{
+                      adult: adults,
+                      soLuong: countRoom,
+                      child: childs,
+                    }}
                   >
                     <Form.Item
                       label="Thời gian đặt phòng"
@@ -174,6 +232,7 @@ export default function Rooms({}: Props) {
                         size={window.innerWidth < 768 ? "large" : "middle"}
                         className="w-full"
                         placeholder={["Nhận phòng", "Trả phòng"]}
+                        disabledDate={disabledDate}
                       />
                     </Form.Item>
                     <Form.Item
@@ -202,71 +261,201 @@ export default function Rooms({}: Props) {
                       </Select>
                     </Form.Item>
                     <Form.Item
-                      label="Người lớn"
-                      name="adult"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Vui lòng chọn số người lớn",
-                        },
-                      ]}
-                    >
-                      <Select
-                        placeholder="Người lớn"
-                        className="rounded-none"
-                        size={window.innerWidth < 768 ? "large" : "middle"}
-                      >
-                        <Select.Option value="1">1</Select.Option>
-                        <Select.Option value="2">2</Select.Option>
-                        <Select.Option value="3">3</Select.Option>
-                        <Select.Option value="4">4</Select.Option>
-                        <Select.Option value="5">5</Select.Option>
-                      </Select>
-                    </Form.Item>
-                    <Form.Item
-                      label="Trẻ em"
-                      name="child"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Vui lòng chọn số trẻ em",
-                        },
-                      ]}
-                    >
-                      <Select
-                        placeholder="Trẻ em"
-                        className="rounded-none"
-                        size={window.innerWidth < 768 ? "large" : "middle"}
-                      >
-                        <Select.Option value="1">1</Select.Option>
-                        <Select.Option value="2">2</Select.Option>
-                        <Select.Option value="3">3</Select.Option>
-                        <Select.Option value="4">4</Select.Option>
-                        <Select.Option value="5">5</Select.Option>
-                      </Select>
-                    </Form.Item>
-                    <Form.Item
-                      label="Số lượng"
                       name="soLuong"
                       rules={[
                         {
                           required: true,
                           message: "Vui lòng chọn số lượng phòng muốn",
                         },
+                        {
+                          validator: (_) => {
+                            if (countRoom < 1) {
+                              return Promise.reject(
+                                new Error("Vui lòng chọn ít 1 phòng")
+                              );
+                            }
+                            if (countRoom > adults) {
+                              return Promise.reject(
+                                new Error(
+                                  "Số phòng không thể lớn hơn số người lớn"
+                                )
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
                       ]}
+                      validateTrigger="onChange"
                     >
-                      <Select
-                        placeholder="Số lượng"
-                        className="rounded-none"
-                        size={window.innerWidth < 768 ? "large" : "middle"}
-                      >
-                        <Select.Option value="1">1</Select.Option>
-                        <Select.Option value="2">2</Select.Option>
-                        <Select.Option value="3">3</Select.Option>
-                        <Select.Option value="4">4</Select.Option>
-                        <Select.Option value="5">5</Select.Option>
-                      </Select>
+                      <div className="flex gap-x-4 gap-y-2 items-center flex-wrap">
+                        <p>Số phòng: </p>
+                        <div className="flex gap-3 items-center">
+                          <MinusOutlined
+                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                            onClick={() => {
+                              if (countRoom > 0) {
+                                setCountRoom((prev) => prev - 1);
+                              }
+                            }}
+                          />
+                          <InputNumber
+                            min={0}
+                            max={30}
+                            value={countRoom}
+                            readOnly
+                            className=""
+                          />
+
+                          <PlusOutlined
+                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                            onClick={() => {
+                              if (countRoom < 30) {
+                                setCountRoom((prev) => prev + 1);
+                              }
+                            }}
+                          />
+                        </div>
+                      </div>
                     </Form.Item>
+                    <Form.Item
+                      name="adult"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng chọn số lượng phòng muốn",
+                        },
+                        {
+                          validator: (_) => {
+                            if (adults < 1) {
+                              return Promise.reject(
+                                new Error("Vui lòng chọn ít nhất một người lớn")
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
+                      validateTrigger="onChange"
+                    >
+                      <div className="flex gap-x-4 gap-y-2 items-center flex-wrap">
+                        <p>Người lớn: </p>
+                        <div className="flex gap-3 items-center">
+                          <MinusOutlined
+                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                            onClick={() => {
+                              if (adults > 0) {
+                                setAdults((prev) => prev - 1);
+                              }
+                            }}
+                          />
+                          <InputNumber
+                            min={0}
+                            max={30}
+                            value={adults}
+                            readOnly
+                            className=""
+                          />
+
+                          <PlusOutlined
+                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                            onClick={() => {
+                              if (adults < 30) {
+                                setAdults((prev) => prev + 1);
+                              }
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </Form.Item>
+                    <Form.List name="child">
+                      {(fields, { add, remove }) => (
+                        <>
+                          <Form.Item>
+                            <div className="flex gap-4 items-center flex-wrap">
+                              <p>Số trẻ em: </p>
+                              <div className="flex gap-3 items-center">
+                                <MinusOutlined
+                                  className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                                  onClick={() => {
+                                    if (childs > 0) {
+                                      setChilds((prev) => prev - 1);
+                                      remove(fields.length - 1);
+                                    }
+                                  }}
+                                />
+                                <InputNumber
+                                  min={0}
+                                  max={6}
+                                  value={childs}
+                                  onChange={(value) => {
+                                    console.log(value);
+                                  }}
+                                  readOnly
+                                  className=""
+                                />
+
+                                <PlusOutlined
+                                  className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                                  onClick={() => {
+                                    if (childs < 6) {
+                                      setChilds((prev) => prev + 1);
+                                      add();
+                                    }
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </Form.Item>
+                          <div className="grid grid-cols-2 gap-2 ">
+                            {fields.map((field) => (
+                              <Form.Item
+                                required={false}
+                                key={field.key}
+                                className=""
+                                style={{ width: "100%" }}
+                                label="Trẻ em"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Form.Item
+                                    {...field}
+                                    validateTrigger={["onChange", "onBlur"]}
+                                    noStyle
+                                    rules={[
+                                      {
+                                        required: true,
+                                        message: "Vui lòng số tuổi",
+                                      },
+                                    ]}
+                                  >
+                                    <Select
+                                      placeholder="Trẻ em"
+                                      className="rounded-none"
+                                      size={
+                                        window.innerWidth < 768
+                                          ? "large"
+                                          : "middle"
+                                      }
+                                    >
+                                      {Array.from(
+                                        { length: 17 },
+                                        (_, index) => (
+                                          <Select.Option
+                                            key={index + 1}
+                                            value={index + 1}
+                                          >
+                                            {index + 1}
+                                          </Select.Option>
+                                        )
+                                      )}
+                                    </Select>
+                                  </Form.Item>
+                                </div>
+                              </Form.Item>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </Form.List>
                     <Form.Item>
                       <Button
                         type="primary"
@@ -290,7 +479,7 @@ export default function Rooms({}: Props) {
           <div className="flex justify-center  font-text_2nd mb-[60px]">
             <div className="text-center">
               <h2 className="text-[30px] md:text-h1 max-w-[780px] text-center  font-medium">
-                Get Ready to live for unlimited living experience
+                Hãy sẵn sàng để có trải nghiệm sống không giới hạn
               </h2>
             </div>
           </div>
@@ -341,10 +530,10 @@ export default function Rooms({}: Props) {
             </SwiperSlide>
           </Swiper>
           <div className="flex justify-center mt-[60px]">
-            <h2 className="text-[23px] text-center text-[#202020] max-w-[600px] font-text font-light">
-              Tune Hotels tells potential customers what they can expect when
-              they visit – a beautiful and luxurious 5-star sleeping experience,
-              at a very affordable 1-star price.
+            <h2 className="text-[23px] text-center text-[#202020] max-w-[600px] font-text_roboto font-light">
+              PolyDev Hotels cho khách hàng tiềm năng biết những gì họ có thể
+              mong đợi khi ghé thăm – trải nghiệm ngủ 5 sao đẹp và sang trọng
+              với mức giá 1 sao rất phải chăng.
             </h2>
           </div>
         </div>

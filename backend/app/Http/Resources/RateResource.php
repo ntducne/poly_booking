@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use App\Models\Room;
 use App\Models\User;
+use App\Modules\Room\Resources\RoomResource;
+use App\Modules\User\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RateResource extends JsonResource
@@ -16,7 +18,7 @@ class RateResource extends JsonResource
      */
     public function toArray($request)
     {
-        return 
+        return
         [
             'id' => $this->id,
             'user' => new UserResource(User::find($this->user_id)),

@@ -120,3 +120,17 @@ function convertToSlug($text) {
     return $text;
 }
 
+
+function tinhPhanTramTuHaiSo($soThuNhat, $soThuHai) {
+    if ($soThuNhat == 0) {
+        return 0;
+    }
+    
+    $phanTram = (($soThuNhat - $soThuHai) / $soThuNhat) * 100;
+    return $phanTram;
+}
+
+
+function formatMoneyUSD($money) {
+    return number_format($money, 2, '.', ',');
+}

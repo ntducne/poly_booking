@@ -1,25 +1,33 @@
+import { MinusOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import {
-  AiOutlineCoffee,
-  AiOutlineRight,
-  AiOutlineShake,
-} from "react-icons/ai";
-import { BsFillSunFill } from "react-icons/bs";
-import { FaHotel } from "react-icons/fa";
-import { ImManWoman } from "react-icons/im";
-import { MdOutlineKingBed } from "react-icons/md";
-import SlideImages from "./Slideimage";
-import { motion } from "framer-motion";
-import { Rating, initTE } from "tw-elements";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetDetialQuery, usePostRatesMutation } from "../../api/Room";
-import { useCookies } from "react-cookie";
-import { Button, Form, Rate } from "antd";
+  Button,
+  DatePicker,
+  Divider,
+  Form,
+  InputNumber,
+  Rate,
+  Select,
+  message,
+} from "antd";
+import { useForm } from "antd/es/form/Form";
 import TextArea from "antd/es/input/TextArea";
+<<<<<<< HEAD
 import { useProcessReviewMutation } from "../../api/User";
+=======
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetBranchesQuery } from "../../api/Branch";
+import { useGetDetailQuery, useSearchRoomsMutation } from "../../api/Room";
+import { useProcessReviewMutation } from "../../api/User";
+import PcLoading from "../../components/RoomLoading/PcLoading";
+import FormatPrice from "../../utils/FormatPrice";
+>>>>>>> 83f9c3ff58b82abddbb664bd706c4e060b814c66
 
-initTE({ Rating });
-
+const { RangePicker } = DatePicker;
 const Detail = () => {
+<<<<<<< HEAD
     const navigate = useNavigate()
     const { slug } = useParams()
     const { data } = useGetDetialQuery(slug)
@@ -105,572 +113,547 @@ const Detail = () => {
         })
 };
   const [form] = Form.useForm();
+=======
+  const { slug } = useParams();
+  const { data, isLoading, refetch } = useGetDetailQuery(slug);
+  const [postComment] = useProcessReviewMutation();
+  const [form] = useForm();
+  const [childs, setChilds] = useState<number>(0);
+  const [adults, setAdults] = useState<number>(0);
+  const [countRoom, setCountRoom] = useState<number>(0);
+  const [searchRoom] = useSearchRoomsMutation();
+  const [dataSearch, setDataSearch] = useState<any>({});
+  const { data: dataBranches, isLoading: branchLoading } = useGetBranchesQuery(
+    {}
+  );
+  const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);
+  const navigate = useNavigate();
+  const disabledDate = (current: any) => {
+    const today = dayjs().startOf("day");
+    return current && current < today;
+  };
+
+  const onFinishComment = (values: any) => {
+    console.log("Success:", values);
+    if (values) {
+      postComment({ ...values, room_id: data.room.id })
+        .unwrap()
+        .then((req) => {
+          console.log(req);
+          message.success("Đánh giá thành công");
+          refetch();
+        })
+        .catch((error) => {
+          console.log(error);
+          message.error("Đánh giá thành ôcng");
+        });
+    }
+  };
+
+  const onFinishFailedComment = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
+  const onFinish = (values: any) => {
+    if (!values) {
+      return;
+    }
+
+    const { time, branch_id } = values;
+    const formattedDates = time?.map((item: any) =>
+      dayjs(item.$d).format("YYYY-MM-DD")
+    );
+
+    const dataQuery = {
+      adult: adults,
+      child: childs,
+      branch_id,
+      amount_room: countRoom,
+      checkin: formattedDates?.[0],
+      checkout: formattedDates?.[1],
+    };
+
+    searchRoom(dataQuery)
+      .unwrap()
+      .then((response) => {
+        console.log(response);
+        if (response.status) {
+          message.success("Có phòng trống");
+          setDataSearch(dataQuery);
+          setCookie("roomSearch", dataQuery, { path: "/" });
+        } else {
+          message.error("Đã hết phòng");
+          form.resetFields();
+          setChilds(0);
+          setAdults(0);
+          setCountRoom(0);
+        }
+      });
+
+    // setDataSearch(dataQuery);
+    // setCookie("roomSearch", dataQuery, { path: "/" });
+  };
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  const handleBookingNow = (item: any) => {
+    if (Object.keys(dataSearch).length) {
+      const { id, name, images, price, branch, bed_size } = item;
+      const checkinDate = dayjs(cookie.roomSearch.checkin);
+      const checkoutDate = dayjs(cookie.roomSearch.checkout);
+      const dateDiff = checkoutDate.diff(checkinDate, "day");
+      const bookingData = {
+        room_id: id,
+        room_name: name,
+        image: images?.[0]?.image,
+        price: +price * +dateDiff * +cookie?.roomSearch?.soLuong,
+        branch: branch?.name,
+        bed_size,
+      };
+
+      setCookie("bookingNow", bookingData, { path: "/" });
+      navigate("/accommodation/book");
+    } else {
+      message.error("Vui lòng chọn số ngày ở");
+    }
+  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+>>>>>>> 83f9c3ff58b82abddbb664bd706c4e060b814c66
   return (
-    <div className="pb-[100px] ">
-      {/* <SlideRooms /> */}
-      <form action="">
-        <div className="h-[600px] lg:h-[860px]">
-          <div className="text-white h-full bg-pink-300 relative flex items-center justify-center">
-            <div className="z-20 text-white text-center">
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 105 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                initial="hidden"
-                animate="visible"
-              >
-                <div className="uppercase tracking-[6px] mb-5">
-                  Just enjoy and relax
-                </div>
-                <h1 className="text-[32px] font-extralight uppercase tracking-[3px] max-w-[920px] lg:text-[68px] leading-tight mb-6">
-                  {data?.room?.name}
-                </h1>
-                <button className="btn mx-auto">Great for business trip</button>
-              </motion.div>
+    <div className="md:px-[400px]">
+      <div>
+        <div className="mt-[140px] flex flex-col-reverse lg:flex-row justify-center gap-3">
+          {isLoading && branchLoading ? (
+            <div className="flex flex-col gap-2">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <PcLoading key={index} />
+              ))}
             </div>
-            <div className="absolute top-0 w-full h-full">
+          ) : (
+            <div className="flex flex-col gap-3 ">
               <img
-                src="https://images.pexels.com/photos/5615059/pexels-photo-5615059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                className="max-w-[800px] object-cover mx-auto "
+                src={data?.room?.images?.[0]?.image}
                 alt=""
-                className="object-cover h-full w-full"
               />
-            </div>
-            <div className="absolute w-full h-full bg-black/70"></div>
-          </div>
-        </div>
-        <div
-          className=" max-w-[1425px] bg-white m-auto  h-full pb-16 z-50"
-          style={{
-            transform: "translateY(-20%)",
-          }}
-        >
-          <div className="p-[50px]  flex flex-col lg:flex-row">
-            <div className="w-full h-full lg:w-[60%] mr-[30px]">
-              <p className="pt-[15px] pb-[15px] ">
-                <span className="text-2xl">
-                  <b>
-                    Great choice for a relaxing vacation for families with
-                    children or a group of friends.
-                  </b>
-                </span>
-              </p>
-              <p className="pt-[15px] pb-[15px]">
-                Exercitation photo booth stumptown tote bag Banksy, elit small
-                batch freegan sed. Craft beer elit seitan exercitation, photo
-                booth et 8-bit kale chips proident chillwave deep v
-                laborum.&nbsp;
-                <em>
-                  <strong>
-                    Aliquip veniam delectus, Marfa eiusmod Pinterest
-                  </strong>
-                </em>
-                &nbsp;in do umami readymade swag.&nbsp;Selfies iPhone
-                Kickstarter, drinking vinegar jean vinegar stumptown&nbsp;yr
-                pop-up artisan.
-              </p>
-
-              <p className="pt-[15px] pb-[15px]">
-                See-through delicate embroidered organza blue lining luxury
-                acetate-mix stretch pleat detailing. Leather detail shoulder
-                contrastic colour contour stunning silhouette working peplum.
-                Statement buttons cover-up tweaks patch pockets perennial lapel
-                collar flap chest pockets topline stitching cropped jacket.
-                Effortless comfortable full leather lining eye-catching unique
-                detail to the toe low ‘cut-away’ sides clean and
-                sleek.&nbsp;Polished finish elegant court shoe work duty
-                stretchy slingback strap mid kitten heel this ladylike
-                design&nbsp;slingback strap mid kitten heel this ladylike
-                design.
-              </p>
-
-              <p className="pt-[15px] pb-[15px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                vel molestie nisl. Duis ac mi leo. Mauris at convallis erat.
-                Aliquam interdum semper luctus. Aenean ex tellus, gravida ut
-                rutrum dignissim, malesuada vitae nulla. Sed viverra, nisl
-                dapibus lobortis porttitor.
-              </p>
-            </div>
-            <div className="w-full h-full lg:w-[30%] border-s-4 float-left">
-              <div className="w-full  ml-[50px]">
-                <div className="text-base font-semibold tracking-wide ">
-                  Form
+              <div>
+                <div className="flex justify-between items-center flex-wrap gap-2">
+                  <h1 className="text-3xl font-bold">{data?.room?.name}</h1>
+                  <div className="flex gap-3 items-center justify-between flex-wrap">
+                    <Rate
+                      allowHalf
+                      disabled
+                      defaultValue={2.5}
+                      className="text-[18px]"
+                    />
+                    <button
+                      className="py-3 px-4 bg-blue-500 text-white font-bold rounded-md"
+                      onClick={handleBookingNow}
+                    >
+                      Đặt phòng ngay
+                    </button>
+                  </div>
                 </div>
-                <div className="font-mono text-6xl font-black ml-[50px]">
-                  <span>{data?.room?.discount}</span>
-                  <span>VNĐ</span>
+              </div>
+              <div className="flex flex-col gap-3">
+                <h3>
+                  <span className="text-[24px] font-bold">
+                    <FormatPrice price={data?.room?.price} />
+                  </span>
+                  /đêm
+                </h3>
+                <ul className="flex flex-col gap-3 text-[16px] text-gray-500 mt-[20px]">
+                  <li>Người lớn: {data?.room?.adults}</li>
+                  <li>Diện tích: {data?.room?.area}</li>
+                  <li>Trẻ em: {data?.room?.children}</li>
+                  <li>Chi nhánh: {data?.room?.branch.name}</li>
+                </ul>
+                <div className="mt-[20px] text-gray-500 w-full">
+                  {data?.room?.description} Lorem ipsum dolor sit, amet
+                  consectetur adipisicing elit. Tempore amet maiores suscipit.
+                  Excepturi adipisci in architecto eaque eligendi molestiae hic
+                  optio, eius ipsa, cupiditate itaque natus eum id harum
+                  asperiores.
                 </div>
-                <button
-                  onClick={() => booking()}
-                  className="w-full bg-cyan-500 rounded-xl h-[60px] mt-[30px] text-2xl font-semibold text-white"
+              </div>
+            </div>
+          )}
+          <div>
+            <div className="lg:!w-[350px] w-full top-[10px] mb-[60px] md:mb-0 lg:ml-[40px]">
+              <div
+                className="w-full shadow-lg p-4"
+                style={{ position: "sticky", top: "100px" }}
+              >
+                <h3 className="font-text_2nd text-[23px] font-bold">
+                  Chọn phòng của bạn
+                </h3>
+                <p className="mt-[15px] text-[12px] italic">
+                  Chọn trường dưới đây để tìm kiếm
+                </p>
+                <Form
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                  layout="vertical"
+                  className="mt-[20px] w-full"
+                  form={form}
+                  name="dynamic_form_item"
+                  initialValues={{
+                    adult: adults,
+                    soLuong: countRoom,
+                    child: childs,
+                  }}
                 >
-                  {" "}
-                  <span>Book now</span>
-                </button>
-              </div>
-              <div className="w-full  ml-[50px] mt-[30px] ">
-                <div>
-                  <div className="flex">
-                    <MdOutlineKingBed className="w-[90px] h-[50px]" />
-                    <span className="ml-[50px] text-2xl">King bed</span>
-                  </div>
-                  <div className="flex mt-[10px]">
-                    <ImManWoman className="w-[90px] h-[50px] mt-[10px]" />
-                    <span className="ml-[50px] text-2xl mt-[3px]">
-                      {data?.room?.adults}&nbsp;Adults&nbsp;
-                      {data?.room?.children}&nbsp;Children&nbsp;
-                    </span>
-                  </div>
-                  <div className="flex mt-[10px]">
-                    <FaHotel className="w-[90px] h-[50px] mt-[10px]" />
-                    <span className="ml-[50px] text-2xl mt-[3px]">
-                      {data?.room?.area}m²
-                    </span>
-                  </div>
-                  <div className="flex mt-[10px]">
-                    <BsFillSunFill className="w-[90px] h-[50px] mt-[10px]" />
-                    <span className="ml-[50px] text-2xl mt-[3px]">
-                      Sea view
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          style={{
-            transform: "translateY(-26%)",
-          }}
-          className="max-w-full bg-primary text-white m-auto flex flex-col lg:flex-row pt-[80px] pb-[80px]"
-        >
-          <div className="w-full h-full lg:w-[50%] m-auto  flex flex-col lg:flex-row ">
-            <div className="w-full h-full lg:w-[30%] flex text-xl ml-[30%]">
-              <div>
-                <AiOutlineShake className="w-[40px] h-[45px]" />
-              </div>
-              <span className="mt-[5px] ml-[20px] text-2xl font-semibold">
-                Amenities{" "}
-              </span>
-            </div>
-            <div className="w-full h-full lg:w-[50%]  mt-3">
-              <div className="flex ">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-            </div>
-          </div>
-          <div className="w-full h-full lg:w-[50%] flex flex-col lg:flex-row">
-            <div className="w-full h-full lg:w-[30%] flex text-xl">
-              <div>
-                <AiOutlineCoffee className="w-[40px] h-[45px]" />
-              </div>
-              <span className="mt-[5px] ml-[20px] font-semibold text-2xl">
-                Services
-              </span>
-            </div>
-            <div className="w-full h-full lg:w-[50%]  mt-3">
-              <div className="flex ">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5">40-inch Samsung® LED TV</span>
-              </div>
-              <div className="flex mt-4">
-                <div className="mt-1">
-                  {" "}
-                  <AiOutlineRight />
-                </div>
-                <span className="ml-5 font-light">40-inch Samsung® LED TV</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
+                  <Form.Item
+                    label="Thời gian đặt phòng"
+                    name="time"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng chọn ngày",
+                      },
+                    ]}
+                  >
+                    <RangePicker
+                      size={window.innerWidth < 768 ? "large" : "middle"}
+                      className="w-full"
+                      placeholder={["Nhận phòng", "Trả phòng"]}
+                      disabledDate={disabledDate}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Chi nhánh"
+                    name="branch_id"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng chọn chi nhánh",
+                      },
+                    ]}
+                  >
+                    <Select
+                      size={window.innerWidth < 768 ? "large" : "middle"}
+                      placeholder="Chi nhánh"
+                      className="rounded-none"
+                    >
+                      {dataBranches &&
+                        dataBranches?.data.map((item: any) => {
+                          return (
+                            <Select.Option value={item?.id}>
+                              {item?.name}
+                            </Select.Option>
+                          );
+                        })}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    name="soLuong"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng chọn số lượng phòng muốn",
+                      },
+                      {
+                        validator: (_) => {
+                          if (countRoom < 1) {
+                            return Promise.reject(
+                              new Error("Vui lòng chọn ít 1 phòng")
+                            );
+                          }
+                          if (countRoom > adults) {
+                            return Promise.reject(
+                              new Error(
+                                "Số phòng không thể lớn hơn số người lớn"
+                              )
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
+                    validateTrigger="onChange"
+                  >
+                    <div className="flex gap-x-4 gap-y-2 items-center flex-wrap">
+                      <p>Số phòng: </p>
+                      <div className="flex gap-3 items-center">
+                        <MinusOutlined
+                          className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                          onClick={() => {
+                            if (countRoom > 0) {
+                              setCountRoom((prev) => prev - 1);
+                            }
+                          }}
+                        />
+                        <InputNumber
+                          min={0}
+                          max={30}
+                          value={countRoom}
+                          readOnly
+                          className=""
+                        />
 
-      <div className="mt-[-120px]">
-        <SlideImages />
+                        <PlusOutlined
+                          className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                          onClick={() => {
+                            if (countRoom < 30) {
+                              setCountRoom((prev) => prev + 1);
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </Form.Item>
+                  <Form.Item
+                    name="adult"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng chọn số lượng phòng muốn",
+                      },
+                      {
+                        validator: (_) => {
+                          if (adults < 1) {
+                            return Promise.reject(
+                              new Error("Vui lòng chọn ít nhất một người lớn")
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
+                    validateTrigger="onChange"
+                  >
+                    <div className="flex gap-x-4 gap-y-2 items-center flex-wrap">
+                      <p>Người lớn: </p>
+                      <div className="flex gap-3 items-center">
+                        <MinusOutlined
+                          className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                          onClick={() => {
+                            if (adults > 0) {
+                              setAdults((prev) => prev - 1);
+                            }
+                          }}
+                        />
+                        <InputNumber
+                          min={0}
+                          max={30}
+                          value={adults}
+                          readOnly
+                          className=""
+                        />
+
+                        <PlusOutlined
+                          className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                          onClick={() => {
+                            if (adults < 30) {
+                              setAdults((prev) => prev + 1);
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </Form.Item>
+                  <Form.List name="child">
+                    {(fields, { add, remove }) => (
+                      <>
+                        <Form.Item>
+                          <div className="flex gap-4 items-center flex-wrap">
+                            <p>Số trẻ em: </p>
+                            <div className="flex gap-3 items-center">
+                              <MinusOutlined
+                                className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                                onClick={() => {
+                                  if (childs > 0) {
+                                    setChilds((prev) => prev - 1);
+                                    remove(fields.length - 1);
+                                  }
+                                }}
+                              />
+                              <InputNumber
+                                min={0}
+                                max={6}
+                                value={childs}
+                                onChange={(value) => {
+                                  console.log(value);
+                                }}
+                                readOnly
+                                className=""
+                              />
+
+                              <PlusOutlined
+                                className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
+                                onClick={() => {
+                                  if (childs < 6) {
+                                    setChilds((prev) => prev + 1);
+                                    add();
+                                  }
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </Form.Item>
+                        <div className="grid grid-cols-2 gap-2 ">
+                          {fields.map((field) => (
+                            <Form.Item
+                              required={false}
+                              key={field.key}
+                              className=""
+                              style={{ width: "100%" }}
+                              label="Trẻ em"
+                            >
+                              <div className="flex items-center gap-2">
+                                <Form.Item
+                                  {...field}
+                                  validateTrigger={["onChange", "onBlur"]}
+                                  noStyle
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "Vui lòng số tuổi",
+                                    },
+                                  ]}
+                                >
+                                  <Select
+                                    placeholder="Trẻ em"
+                                    className="rounded-none"
+                                    size={
+                                      window.innerWidth < 768
+                                        ? "large"
+                                        : "middle"
+                                    }
+                                  >
+                                    {Array.from({ length: 17 }, (_, index) => (
+                                      <Select.Option
+                                        key={index + 1}
+                                        value={index + 1}
+                                      >
+                                        {index + 1}
+                                      </Select.Option>
+                                    ))}
+                                  </Select>
+                                </Form.Item>
+                              </div>
+                            </Form.Item>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </Form.List>
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      className="bg-blue-500 flex py-5 w-full justify-center md:py-4 px-7 gap-1 items-center"
+                      htmlType="submit"
+                    >
+                      <SearchOutlined />
+                      <p>Tìm kiếm</p>
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <Divider className="my-[50px]" />
+      <div className="w-full mb-[60px]">
+        <Form
+          name="basic"
+          onFinish={onFinishComment}
+          onFinishFailed={onFinishFailedComment}
+          autoComplete="off"
+        >
+          <Form.Item
+            name="rate"
+            rules={[{ required: true, message: "Đánh giá sao" }]}
+          >
+            <Rate allowHalf />
+          </Form.Item>
+          <Form.Item
+            name="comment"
+            rules={[{ required: true, message: "Vui lòng nhập bình luận" }]}
+          >
+            <TextArea
+              rows={4}
+              placeholder="Đánh giá của bạn...."
+              className="pt-3"
+            />
+          </Form.Item>
 
-      <section className="bg-white  py-8 lg:py-16 antialiased max-w-[70%] m-auto">
-        <div className="w-70% mx-auto px-4">
-          <div className="flex   mb-6">
-            <h2 className="lg:text-2xl font-bold text-gray-900 text-3xl ">
-              Đánh giá{" "}
-            </h2>
-          </div>
-          <Form className="mb-6" form={form} onFinish={onFinish}>
-            <Form.Item name="rate">
-              <Rate
-                className="my-1 flex list-none gap-1 p-0 mb-5"
-                onChange={(value) => {
-                  console.log(value);
-                }}
-              />
-            </Form.Item>
+          <Form.Item>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Đánh giá
+            </button>
+          </Form.Item>
+        </Form>
+        {data?.room?.rate.length > 0 &&
+          data?.room?.rate.map((item: any) => (
+            <section className="bg-white  py-8 m-auto">
+              <div className="w-70% mx-auto ">
+                <article className="text-base bg-white rounded-lg ">
+                  <footer className="flex justify-between items-center mb-2">
+                    <div className="flex items-center">
+                      <p className="inline-flex items-center mr-3 text-sm text-gray-900  font-semibold">
+                        <img
+                          className="mr-2 w-6 h-6 rounded-full"
+                          src={item?.user?.image}
+                          alt={item?.user?.name}
+                        />
+                        {item?.user?.name}
+                      </p>
+                      <p className="text-sm text-gray-600 ">
+                        <time title="February 8th, 2022">Feb. 8, 2022</time>
+                      </p>
+                    </div>
 
-            <Form.Item
-              name="comment"
-              rules={[{ required: true, message: "Vui lòng nhập đánh giá" }]}
-            >
-              <TextArea rows={4} placeholder="Write a comment..." />
-            </Form.Item>
-
-            <Button
-              htmlType="submit"
-              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-cyan-500 rounded-xl focus:ring-4 focus:ring-primary-200  hover:bg-primary-800"
-            >
-              Post comment
-            </Button>
-          </Form>
-          <article className="p-6 text-base bg-white rounded-lg ">
-            <footer className="flex justify-between items-center mb-2">
-              <div className="flex items-center">
-                <p className="inline-flex items-center mr-3 text-sm text-gray-900  font-semibold">
-                  <img
-                    className="mr-2 w-6 h-6 rounded-full"
-                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                    alt="Michael Gough"
-                  />
-                  Michael Gough
-                </p>
-                <p className="text-sm text-gray-600 ">
-                  <time title="February 8th, 2022">Feb. 8, 2022</time>
-                </p>
+                    <div
+                      id="dropdownComment1"
+                      className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow "
+                    >
+                      <ul
+                        className="py-1 text-sm text-gray-700 "
+                        aria-labelledby="dropdownMenuIconHorizontalButton"
+                      >
+                        <li>
+                          <a
+                            href="#"
+                            className="block py-2 px-4 hover:bg-gray-100 "
+                          >
+                            Edit
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block py-2 px-4 hover:bg-gray-100 "
+                          >
+                            Remove
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block py-2 px-4 hover:bg-gray-100 "
+                          >
+                            Report
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </footer>
+                  <div className=" mb-2">
+                    <div className="flex items-center space-x-1 ">
+                      <Rate allowHalf disabled defaultValue={item.star} />
+                    </div>
+                  </div>
+                  <p className="text-gray-500 ">{item.content}</p>
+                </article>
               </div>
-
-              <div
-                id="dropdownComment1"
-                className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow "
-              >
-                <ul
-                  className="py-1 text-sm text-gray-700 "
-                  aria-labelledby="dropdownMenuIconHorizontalButton"
-                >
-                  <li>
-                    <a href="#" className="block py-2 px-4 hover:bg-gray-100 ">
-                      Edit
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="block py-2 px-4 hover:bg-gray-100 ">
-                      Remove
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="block py-2 px-4 hover:bg-gray-100 ">
-                      Report
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </footer>
-            <div className=" mb-2">
-              <div className="flex items-center space-x-1 ">
-                <svg
-                  className="w-4 h-4 text-yellow-300"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-                <svg
-                  className="w-4 h-4 text-yellow-300"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-                <svg
-                  className="w-4 h-4 text-yellow-300"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-                <svg
-                  className="w-4 h-4 text-yellow-300"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-                <svg
-                  className="w-4 h-4 text-gray-300 "
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-gray-500 ">
-              Very straight-to-point article. Really worth time reading. Thank
-              you! But tools are just the instruments for the UX designers. The
-              knowledge of the design tools are as important as the creation of
-              the design strategy.
-            </p>
-            <div className="flex items-center mt-4 space-x-4">
-              <button
-                type="button"
-                className="flex items-center text-sm text-gray-500 hover:underline  font-medium"
-              >
-                <svg
-                  className="mr-1.5 w-3.5 h-3.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 18"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                  />
-                </svg>
-                Reply
-              </button>
-            </div>
-          </article>
-          <article className="p-6 mb-3 ml-6 lg:ml-12 text-base bg-white rounded-lg ">
-            <footer className="flex justify-between items-center mb-2">
-              <div className="flex items-center">
-                <p className="inline-flex items-center mr-3 text-sm text-gray-900  font-semibold">
-                  <img
-                    className="mr-2 w-6 h-6 rounded-full"
-                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                    alt="Jese Leos"
-                  />
-                  Jese Leos
-                </p>
-                <p className="text-sm text-gray-600 ">
-                  <time title="February 12th, 2022">Feb. 12, 2022</time>
-                </p>
-              </div>
-              <button
-                id="dropdownComment2Button"
-                data-dropdown-toggle="dropdownComment2"
-                className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                type="button"
-              >
-                <svg
-                  className="w-4 h-4"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 16 3"
-                >
-                  <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                </svg>
-                <span className="sr-only">Comment settings</span>
-              </button>
-
-              <div
-                id="dropdownComment2"
-                className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow "
-              >
-                <ul
-                  className="py-1 text-sm text-gray-700 "
-                  aria-labelledby="dropdownMenuIconHorizontalButton"
-                >
-                  <li>
-                    <a href="#" className="block py-2 px-4 hover:bg-gray-100 ">
-                      Edit
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="block py-2 px-4 hover:bg-gray-100 ">
-                      Remove
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="block py-2 px-4 hover:bg-gray-100 ">
-                      Report
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </footer>
-            <div className=" mb-2">
-              <div className="flex items-center space-x-1 ">
-                <svg
-                  className="w-4 h-4 text-yellow-300"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-                <svg
-                  className="w-4 h-4 text-yellow-300"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-                <svg
-                  className="w-4 h-4 text-yellow-300"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-                <svg
-                  className="w-4 h-4 text-yellow-300"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-                <svg
-                  className="w-4 h-4 text-gray-300 dark:text-gray-500"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 20"
-                >
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-gray-500 dark:text-gray-400">
-              Much appreciated! Glad you liked it ☺️
-            </p>
-            <div className="flex items-center mt-4 space-x-4">
-              <button
-                type="button"
-                className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-              >
-                <svg
-                  className="mr-1.5 w-3.5 h-3.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 18"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                  />
-                </svg>
-                Reply
-              </button>
-            </div>
-          </article>
-        </div>
-      </section>
-      <div></div>
+            </section>
+          ))}
+      </div>
     </div>
   );
 };

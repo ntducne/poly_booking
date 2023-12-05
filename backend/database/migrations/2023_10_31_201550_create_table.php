@@ -15,11 +15,11 @@ return new class extends Migration
         Schema::connection('mongodb')->create('bookings', function (Blueprint $table) {});
         Schema::connection('mongodb')->create('branches', function (Blueprint $table) {});
         Schema::connection('mongodb')->create('cancellation_policy', function (Blueprint $table) {});
-        Schema::connection('mongodb')->create('history_handles', function (Blueprint $table) {});
+        Schema::connection('mongodb')->create('history_handle', function (Blueprint $table) {});
         Schema::connection('mongodb')->create('password_resets', function (Blueprint $table) {});
         Schema::connection('mongodb')->create('permissions', function (Blueprint $table) {});
         Schema::connection('mongodb')->create('promotions', function (Blueprint $table) {});
-        Schema::connection('mongodb')->create('rates', function (Blueprint $table) {});
+        Schema::connection('mongodb')->create('rate_rooms', function (Blueprint $table) {});
         Schema::connection('mongodb')->create('room_images', function (Blueprint $table) {});
         Schema::connection('mongodb')->create('room_types', function (Blueprint $table) {});
         Schema::connection('mongodb')->create('rooms', function (Blueprint $table) {});

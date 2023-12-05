@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\HasBookingTrait as BookingTrait;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +13,7 @@ use MongoDB\Laravel\Relations\HasMany;
 
 class User extends Eloquent implements AuthenticatableContract
 {
-    use Authenticatable, HasApiTokens, HasFactory, Notifiable, SoftDeletes, BookingTrait;
+    use Authenticatable, HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     protected $fillable = [
         'image',
         'name',

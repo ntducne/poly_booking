@@ -20,7 +20,7 @@ class ForgotPassword extends Request
             ];
         }
         return [
-            'old_password' => 'bail|required|min:6|max:32',
+            // 'old_password' => 'bail|required|min:6|max:32',
             'new_password' => 'bail|required|min:6|max:32|different:old_password',
             'new_password_confirmation' => 'bail|required|min:6|max:32|same:new_password|different:old_password',
         ];

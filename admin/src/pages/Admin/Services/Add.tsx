@@ -14,6 +14,8 @@ import { useGetAllBranchesQuery } from "../../../api/branches";
 import { useCreateServicesMutation } from "../../../api/services";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Skeleton } from "antd";
+
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -24,39 +26,41 @@ const formItemLayout = {
 };
 
 const AddServices = () => {
-
   const [createServices] = useCreateServicesMutation();
-  const {  data:dataBranches , isLoading : loadingBranch } = useGetAllBranchesQuery({});
+  const { data: dataBranches, isLoading: loadingBranch } =
+    useGetAllBranchesQuery({});
   const navigate = useNavigate();
 
-  console.log(dataBranches, "dataBranches");
-  if(loadingBranch){
-    return <div>Loading...</div>
+  if (loadingBranch) {
+    return (
+      <div>
+        {" "}
+        <Skeleton />
+      </div>
+    );
   }
-  
 
   const onFinish = (values: any) => {
-    // Xử lý dữ liệu khi nhấn nút Submit
-    createServices(values).unwrap().then((item) => {
-      if (item.status == 'Success') {
-        toast("Thêm mới thành công", {
-          autoClose: 3000,
-          theme: "light",
-        });
-        setTimeout(() => {
-          navigate("/services")
-        }, 3000)
-      } else {
-        console.log(item)
-        toast(item?.error?.name || "Lỗi rồi bạn", {
-          autoClose: 3000,
-          theme: "light",
-        });
-      }
-      
-    })
+    createServices(values)
+      .unwrap()
+      .then((item) => {
+        if (item.status == "Success") {
+          toast("Thêm mới thành công", {
+            autoClose: 3000,
+            theme: "light",
+          });
+          setTimeout(() => {
+            navigate("/services");
+          }, 3000);
+        } else {
+          console.log(item);
+          toast(item?.error?.name || "Lỗi rồi bạn", {
+            autoClose: 3000,
+            theme: "light",
+          });
+        }
+      });
   };
-
 
   return (
     <div>
@@ -69,19 +73,16 @@ const AddServices = () => {
           name="validate_other"
           {...formItemLayout}
           onFinish={onFinish}
-          initialValues={{
-            "input-number": 1,
-            "checkbox-group": ["A", "B"],
-            rate: 3.5,
-            "color-picker": null,
-          }}
           style={{ maxWidth: 1000 }}
           className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
             label="Tên dịch vụ"
             name="service_name"
-            rules={[{ required: true, message: "Vui lòng nhập dịch vụ!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập dịch vụ!" },
+              { pattern: /^(\s*\S\s*)+$/, message: "Không được chứa khoảng trắng!" },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -89,27 +90,53 @@ const AddServices = () => {
           <Form.Item
             label="Giá dịch vụ"
             name="price"
-            rules={[{ required: true, message: "Vui lòng nhập giá" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập giá" },
+              {
+                type: "number",
+                min: 1000,
+                message: "Giá phải lớn hơn hoặc bằng 1000!",
+              },
+              { type: "number", min: 0, message: "Giá không được nhỏ hơn 0!" },
+            ]}
           >
-            <InputNumber min={1} />
+            <InputNumber />
           </Form.Item>
 
-          <Form.Item name="description" label="Mô tả">
-            <Input.TextArea rows={5}/>
+          <Form.Item
+            name="description"
+            label="Mô tả"
+            rules={[
+              { required: true, message: "Không được bỏ trống!" },
+              { min: 5, message: "Mô tả phải có ít nhất 5 ký tự!" },
+              { pattern: /^(\s*\S\s*)+$/, message: "Không được chứa khoảng trắng!" },
+            ]}
+          >
+            <Input.TextArea rows={5} />
           </Form.Item>
 
           <Form.Item
             name="branch_id"
             label="Chi nhánh"
-            rules={[{ required: true, message: "Vui lòng chọn chi nhánh!" }]}
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng chọn chi nhánh!",
+                type: "array",
+              },
+            ]}
           >
             <Select
+              mode="multiple"
             //  placeholder="Vui lòng chọn chi nhánh!"
-             >
+            >
               {dataBranches?.data?.map((item: any) => {
-                return  <Option key={item?.id} value={item?.id}>{item?.name}</Option>
-              }
-              )}
+                return (
+                  <Option key={item?.id} value={item?.id}>
+                    {item?.name}
+                  </Option>
+                );
+              })}
             </Select>
           </Form.Item>
 

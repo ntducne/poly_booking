@@ -27,7 +27,7 @@ class LoginSocicalController extends Controller
 
     public function callback(Request $request)
     {
-        $guard = $request->segment(2);
+        $guard = $request->segment(1);
         $socialiteUser = Socialite::driver($request->segment(4))->stateless()->user();
         $column = 'email';
         $email = $socialiteUser->getEmail();

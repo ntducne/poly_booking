@@ -3,20 +3,48 @@ import { Button, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
-// import { Col, Row } from "antd";
-// interface DataType {
-//   key: React.Key;
-//   name: string;
-//   age: number;
-//   address: string;
-// }
+import { GiConfirmed } from "react-icons/gi";
 import FormSearch from "../../../component/formSearch";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
+import formatMoneyVN from "../../../config/formatMoneyVN";
+import swal from "sweetalert";
+import { pusherInstance } from "../../../config/pusher";
+import { useEffect, useState } from "react";
 
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
+  const [billings, setBillings] = useState<any[]>([]);
+  useEffect(() => {
+    setBillings(dataBilings?.data);
+    const unsubscribe = pusherInstance().getData('booking', 'processBooking', (data :any)  => {
+      setBillings(prevBillings => [...prevBillings, data.data]);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const onComfirm = (id: any) => {
+    console.log(id);
+    swal({
+      title: "Bạn có chắc chắn xác nhận không?",
+      icon: "warning",
+      buttons: ["Hủy", "Xác nhận"],
+      dangerMode: true,
+    }).then((willDelete: any) => {
+      if (willDelete) {
+        swal("Xác nhận thành công!", {
+          icon: "success",
+        });
+      } else {
+        swal("Đã hủy xác nhận!", {
+          icon: "error",
+        });
+      }
+    });
+  };
 
   const columns: ColumnsType<any> = [
     {
@@ -27,46 +55,40 @@ const BillList = () => {
       fixed: "left",
     },
     {
+      title: "Thông tin người đặt",
+      dataIndex: "representative",
+      key: "representative",
+      render: (text: any) => {
+        return (
+          <div className="flex flex-col">
+            <div>Email : {text?.email}</div>
+            <div>
+              <div>Tên : {text?.name}</div>
+              <div>Số điện thoại : {text?.phone}</div>
+            </div>
+          </div>
+        );
+      },
+      sorter: (a, b) =>
+        a.representative.name.localeCompare(b.representative.name),
+    },
+    {
       title: "Giá tiền",
       dataIndex: "total",
       key: "total",
+      render: (text: any) => <div>{formatMoneyVN(text)} VNĐ</div>,
       sorter: (a, b) => a.total - b.total,
-    },
-    {
-      title: "Ngày thanh toán",
-      dataIndex: "payment_date",
-      key: "payment_date",
     },
     {
       title: "Phương thức",
       dataIndex: "payment_method",
-      filters: [
-        {
-          text: "Tiền mặt",
-          value: "Tiền mặt",
-        },
-        {
-          text: "Chuyển khoản",
-          value: "Chuyển khoản",
-        },
-      ],
-      render: (text) => (
-        <div className="font-semibold">
-          {text === "Tiền mặt" ? (
-            <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
-              Tiền mặt
-            </span>
-          ) : (
-            <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
-              Chuyển khoản
-            </span>
-          )}
-        </div>
-      ),
-      onFilter: (value: any, record) =>
-        record.payment_method.indexOf(value) === 0,
+      key: "payment_method",
     },
-
+    {
+      title: "Thời gian thanh toán",
+      dataIndex: "payment_date",
+      key: "payment_date",
+    },
     {
       title: "Trạng thái thanh toán",
       dataIndex: "status",
@@ -138,35 +160,44 @@ const BillList = () => {
       render: (text) => <div>{text?.name}</div>,
     },
     {
+      title: "Ngày đặt",
+      dataIndex: "booking",
+      key: "booking",
+      render: (text) => <div>{text?.booking_date}</div>,
+    },
+    {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
           <Button
             type="primary"
-            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
+            className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
           >
             <Link to={`/billing/${record?.id}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
-          {/* <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            style={{ backgroundColor: "#e23428" }}
-          >
-            <MdDeleteForever />
-          </Button> */}
+          {record?.status === 0 && (
+            <Button
+              onClick={() => onComfirm(record?.id)}
+              type="primary"
+              className="text-gray-900 bg-gradient-to-r from-green-200 via-green-300 to-green-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            >
+              <GiConfirmed />
+            </Button>
+          )}
         </Space>
       ),
       // fixed: "right",
     },
   ];
 
-  const data = dataBilings?.data?.map((item: any, index: number) => ({
+  const data = billings?.map((item: any, index: number) => ({
     key: index + 1,
     id: item.id,
     booking: item.booking,
+    representative: item.booking.representative,
     services: item.services ? item.services : [],
     total: item.total,
     payment_method: item.payment_method,

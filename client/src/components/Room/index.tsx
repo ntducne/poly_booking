@@ -4,16 +4,20 @@ import FormatPrice from "../../utils/FormatPrice";
 export default function Room(props: any) {
   const {
     name,
-    area,
     adults,
     children,
     description,
     num_of_bed,
     slug,
     branch,
+    room_empty,
+    price,
+    discount,
+    images,
+    image,
   } = props?.data;
-  console.log(props?.data);
-
+  console.log(images?.[0]?.image);
+  
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
       <div className="lg:hidden block">
@@ -21,7 +25,7 @@ export default function Room(props: any) {
           <img
             className="group-hover:scale-110 transition-all duration-300 w-full"
             src={
-              "https://hotellerv1.themegoods.com/cultural/wp-content/uploads/sites/6/2018/09/pic-0203-04.jpg"
+              images?.[0]?.image ?? image
             }
             alt=""
           />
@@ -40,7 +44,6 @@ export default function Room(props: any) {
             <li>Người lớn: {adults || 1}</li>
             <li>Trẻ em: {children || 2}</li>
             <li>Mô tả: {description}</li>
-            <li>Diện tích: {area} m²</li>
             <li>Loại giường: Đơn</li>
             <li>Số giường: 3</li>
           </div>
@@ -62,7 +65,7 @@ export default function Room(props: any) {
           className="inline-block rounded bg-primary px-6 py-3 
                     text-xs uppercase leading-normal text-white
                     transition duration-150 ease-in-out hover:bg-primary-600 font-bold"
-          onClick={() => props.handleBooking(props.data)}
+          onClick={() => props?.handleBooking(props.data)}
         >
           Đặt phòng ngay
         </button>
@@ -73,7 +76,7 @@ export default function Room(props: any) {
           <img
             className="group-hover:scale-110 transition-all duration-300 object-cover"
             src={
-              "https://hotellerv1.themegoods.com/cultural/wp-content/uploads/sites/6/2018/09/pic-0203-04.jpg"
+              images?.[0]?.image ?? image
             }
             alt=""
           />
@@ -97,9 +100,6 @@ export default function Room(props: any) {
                   {adults} người lớn
                 </p>
                 <p className="text-center px-4 bg-gray-200 rounded-2xl">
-                  Diện tích: {area} m²
-                </p>
-                <p className="text-center px-4 bg-gray-200 rounded-2xl">
                   Số giường: {num_of_bed}
                 </p>
               </div>
@@ -111,8 +111,20 @@ export default function Room(props: any) {
               <p className="text-[12px] text-black mt-1">{branch.name}</p>
             </p>
             <p className="text-[16px] text-gray-500 font-bold flex-col flex items-end justify-end">
-              <FormatPrice price={1231312312} />
-              <p className="text-[12px] text-black mt-1">Chỉ còn 2 phòng</p>
+              <p className="text-[14px] text-gray-400 ">
+                <del>
+                  {discount > 95 ? (
+                    <FormatPrice price={discount} />
+                  ) : (
+                    discount + "%"
+                  )}
+                </del>
+              </p>
+
+              <FormatPrice price={price} />
+              <p className="text-[12px] text-black mt-1">
+                Còn {room_empty} phòng
+              </p>
             </p>
             <div className="text-right mt-4">
               <button
@@ -120,7 +132,7 @@ export default function Room(props: any) {
                 className="inline-block rounded bg-primary  
                     text-xs uppercase leading-normal text-white py-2 px-3 
                     transition duration-150 ease-in-out hover:bg-primary-600 font-bold max-w-[150px]"
-                onClick={() => props.handleBooking(props.data)}
+                onClick={() => props?.handleBooking(props.data)}
               >
                 Đặt phòng ngay
               </button>

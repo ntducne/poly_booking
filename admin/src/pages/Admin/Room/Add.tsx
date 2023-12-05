@@ -9,6 +9,10 @@ import {
   Typography,
   InputNumber,
   Space,
+  Checkbox,
+  Row,
+  Col,
+  Radio,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { BiReset } from "react-icons/bi";
@@ -124,7 +128,7 @@ const AddRoom = () => {
             rate: 3.5,
             "color-picker": null,
           }}
-          style={{ maxWidth: 1000 }}
+          // style={{ maxWidth: 1000 }}
           className="grid grid-cols-1 xl:grid-cols-2"
         >
           <Form.Item
@@ -136,14 +140,16 @@ const AddRoom = () => {
           </Form.Item>
 
           <Form.Item
+           
             label="Diện tích"
             name="area"
             rules={[{ required: true, message: "Vui lòng nhập diện tích" }]}
           >
-            <InputNumber min={1} />
+            <InputNumber min={1} className="w-full"/>
           </Form.Item>
 
           <Form.Item
+         
             name="room_type_id"
             label="Loại phòng"
             hasFeedback
@@ -167,7 +173,7 @@ const AddRoom = () => {
               { required: true, message: "Vui lòng nhập tối đa số người lớn" },
             ]}
           >
-            <InputNumber min={1} />
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
 
           <Form.Item
@@ -175,7 +181,7 @@ const AddRoom = () => {
             name="children"
             rules={[{ required: true, message: "Vui lòng nhập tối đa trẻ em" }]}
           >
-            <InputNumber min={1} />
+            <InputNumber min={1} className="w-full"/>
           </Form.Item>
 
           <Form.Item
@@ -183,19 +189,27 @@ const AddRoom = () => {
             name="num_of_bed"
             rules={[{ required: true, message: "Vui lòng nhập số giường" }]}
           >
-            <InputNumber min={1} />
+            <InputNumber min={1} className="w-full"/>
           </Form.Item>
 
-          <Form.Item name="bed_size" label="Số giường">
-            <InputNumber min={0} max={1} />
+          {/* <Form.Item name="bed_size" label="Số giường">
+            <InputNumber min={0} max={1} className="w-full"/>
+          </Form.Item> */}
+
+          <Form.Item
+            label="Tâng"
+            name="floor"
+            rules={[{ required: true, message: "Vui lòng nhập tầng" }]}
+          >
+            <InputNumber min={1} className="w-full"/>
           </Form.Item>
 
           <Form.Item
-            label="Giá tiền"
-            name="price"
-            rules={[{ required: true, message: "Vui lòng nhập giá tiền" }]}
+            label="Tổng số lượng phòng"
+            name="amount"
+            rules={[{ required: true, message: "Vui lòng nhập tổng số lượng phòng" }]}
           >
-            <InputNumber min={1} />
+            <InputNumber min={1} className="w-full"/>
           </Form.Item>
 
           <Form.Item
@@ -223,22 +237,41 @@ const AddRoom = () => {
             </Upload>
           </Form.Item>
 
-          {/* <Form.Item name="bed_size" label="Số giường">
-            <Checkbox.Group>
-              <Row className="flex items-center sm:flex-col">
-                <Col >
-                  <Checkbox value="A" style={{ lineHeight: "32px" }}>
-                    2 lớn , 1 nhỏ
-                  </Checkbox>
+          <Form.Item name="bed_size" label="Số giường">
+            <Radio.Group>
+              <Row className="">
+                <Col>
+                  <Radio value="0" style={{ lineHeight: "32px" }}>
+                    2 lớn
+                  </Radio>
                 </Col>
                 <Col >
-                  <Checkbox value="C" style={{ lineHeight: "32px" }}>
-                    1 lớn , 2 nhỏ
-                  </Checkbox>
+                  <Radio value="1" style={{ lineHeight: "32px" }}>
+                    1 lớn , 1 nhỏ
+                  </Radio>
                 </Col>
               </Row>
-            </Checkbox.Group>
-          </Form.Item> */}
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item name="pay_is_checkin" label="Hình thức thanh toán">
+            <Radio.Group>
+              <Row className="">
+                <Col>
+                  <Radio value="0" style={{ lineHeight: "32px" }}>
+                    Thanh toán khi nhận phòng
+                  </Radio>
+                </Col>
+                <Col >
+                  <Radio value="1" style={{ lineHeight: "32px" }}>
+                    Thanh toán trước
+                  </Radio>
+                </Col>
+              </Row>
+            </Radio.Group>
+          </Form.Item>
+
+          
 
           {/* <Form.Item
             name="policies_and_information"
@@ -264,8 +297,14 @@ const AddRoom = () => {
           {/* <Form.Item name="rate" label="Đánh giá">
             <Rate />
           </Form.Item> */}
-
           <Form.Item
+            label= "Giảm giá"
+            name="discount"
+            rules={[{ required: true, message: "Vui lòng nhập giảm giá" }]}
+          >
+            <InputNumber min={1} className="w-full"/>
+          </Form.Item>
+          {/* <Form.Item
             name="branch_id"
             label="Chi nhánh"
             rules={[
@@ -276,8 +315,6 @@ const AddRoom = () => {
             ]}
           >
             <Select
-            // mode="multiple"
-            // placeholder="Vui lòng chọn chi nhánh !"
             >
               {dataBranch?.data?.map((item: any) => {
                 console.log(item);
@@ -288,7 +325,7 @@ const AddRoom = () => {
                 );
               })}
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
             label="Mô tả"

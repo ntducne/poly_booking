@@ -4,7 +4,7 @@ const clientApi = createApi({
     reducerPath: "Clients",
     tagTypes: ["Clients"],
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_URL_API + '/client/',
+        baseUrl: import.meta.env.VITE_URL_CLIENT,
         prepareHeaders: (headers) => {
             return headers;
         },
@@ -21,8 +21,8 @@ const clientApi = createApi({
                 const keys = Object.keys(data);
                 const url =
                     keys.length === 0
-                        ? `/client/room`
-                        : `/client/room/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&soLuong=${data.soLuong}`;
+                        ? `/room`
+                        : `/room/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&soLuong=${data.soLuong}`;
                 return {
                     method: "GET",
                     url: url,
@@ -32,18 +32,18 @@ const clientApi = createApi({
         }),
 
         getDetailRoom: builder.query<any, any>({
-            query: (slug) => `room/${slug}`,
+            query: (slug) => `/room/${slug}`,
             providesTags: ["Clients"],
         }),
 
         getRoomType: builder.query<any, any>({
-            query: () => `room/type`,
+            query: () => `/room/type`,
             providesTags: ["Clients"],
         }),
 
         handleBooking: builder.mutation({
             query: (data) => ({
-                url: `room/booking`,
+                url: `/room/booking`,
                 method: "POST",
                 body: data,
             }),

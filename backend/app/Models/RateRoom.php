@@ -16,6 +16,7 @@ class RateRoom extends Eloquent
         'images',
         'rate',
         'comment',
+        'time'
     ];
 
 }

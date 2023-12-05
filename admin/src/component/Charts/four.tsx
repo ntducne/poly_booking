@@ -3,11 +3,11 @@ import ReactApexChart from "react-apexcharts";
 export default function ChartFour() {
   const state = {
     series: [{
-      name: 'TEAM A',
-      type: 'area',
+      name: 'Đặt phòng',
+      type: 'line',
       data: [44, 55, 31, 47, 31, 43, 26, 41, 31, 47, 33]
     }, {
-      name: 'TEAM B',
+      name: 'Huỷ đặt phòng',
       type: 'line',
       data: [55, 69, 45, 61, 43, 54, 37, 52, 44, 61, 43]
     }],
@@ -28,17 +28,17 @@ export default function ChartFour() {
         size: 0
       },
       yaxis: [
-        {
-          title: {
-            text: 'Series A',
-          },
-        },
-        {
-          opposite: true,
-          title: {
-            text: 'Series B',
-          },
-        },
+        // {
+        //   title: {
+        //     text: 'Series A',
+        //   },
+        // },
+        // {
+        //   opposite: true,
+        //   title: {
+        //     text: 'Series B',
+        //   },
+        // },
       ],
       tooltip: {
         shared: true,
@@ -46,7 +46,7 @@ export default function ChartFour() {
         y: {
           formatter: function (y :any) {
             if(typeof y !== "undefined") {
-              return  y.toFixed(0) + " points";
+              return  y.toFixed(0);
             }
             return y;
           }
@@ -56,7 +56,13 @@ export default function ChartFour() {
   } as any;
   return (
     <div id="chart">
-      <ReactApexChart options={state.options} series={state.series} type="line" height={350} />
+      <ReactApexChart 
+        options={state.options} 
+        series={state.series} 
+        type="line" 
+        height={350}
+         
+      />
     </div>
   );
 }

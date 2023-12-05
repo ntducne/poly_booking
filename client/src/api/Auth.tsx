@@ -29,7 +29,7 @@ const authApi = createApi({
   reducerPath: "auth",
   tagTypes: ["Auth"],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_URL_API,
+    baseUrl: import.meta.env.VITE_URL_AUTH,
     prepareHeaders: (headers) => {
       return headers;
     },
@@ -37,7 +37,7 @@ const authApi = createApi({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data: ILogin) => ({
-        url: `/auth/user/login`,
+        url: `/login`,
         method: "POST",
         body: data,
       }),
@@ -46,7 +46,7 @@ const authApi = createApi({
 
     register: builder.mutation({
       query: (data: IRegister) => ({
-        url: `/auth/user/register`,
+        url: `/register`,
         method: "POST",
         body: data,
       }),
@@ -55,7 +55,7 @@ const authApi = createApi({
 
     forgotPassword: builder.mutation({
       query: (data: IForgotPassword) => ({
-        url: `/auth/user/reset-password`,
+        url: `/reset-password`,
         method: "POST",
         body: data,
       }),
@@ -64,16 +64,16 @@ const authApi = createApi({
 
     getToken: builder.query({
       query: (token) => ({
-        url: `/auth/user/reset-password/${token}`,
+        url: `/reset-password/${token}`,
         method: "GET",
       }),
     }),
 
     resetPassword: builder.mutation({
       query: (data: IResetPassword) => ({
-        url: `/auth/user/reset-password/${data.token}`,
+        url: `/reset-password`,
         method: "PUT",
-        body: data.data,
+        body: data,
       }),
       invalidatesTags: ["Auth"],
     }),

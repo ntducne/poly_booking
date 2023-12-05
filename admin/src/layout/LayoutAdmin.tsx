@@ -1,13 +1,13 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { MenuOutlined, PieChartOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Head from "../component/header";
 import Footer from "../component/footer";
 import { ToastContainer } from "react-toastify";
 const { Header, Content, Sider } = Layout;
-import { Navigate } from 'react-router-dom'
+import { Navigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -41,121 +41,107 @@ import "react-toastify/dist/ReactToastify.css";
 export const LayoutContext = createContext("");
 
 const LayoutAdmin = () => {
-  const checkLogin = JSON.parse(cookies().Get('AuthUser') as any);
+  const location = useLocation();
+  const checkLogin = JSON.parse(cookies().Get("AuthUser") as any);
   if (!checkLogin) {
-    return <Navigate to='/login' />
+    return <Navigate to="/login" />;
   }
+  const [title, setTitle] = useState<any>(" ");
+  useEffect(() => {
+    location.pathname === "/" && setTitle("Thống kê");
+    location.pathname === "/branches" && setTitle("Chi nhánh");
+    location.pathname === "/room" && setTitle("Phòng");
+    location.pathname === "/room/type" && setTitle("Loại phòng");
+    location.pathname === "/room/utilities" && setTitle("Tiện ích");
+    location.pathname === "/room/booking" && setTitle("Đặt Phòng");
+    location.pathname === "/billing" && setTitle("Hóa đơn");
+    location.pathname === "/services" && setTitle("Dịch vụ");
+    location.pathname === "/policy" && setTitle("Chính sách");
+    location.pathname === "/staff" && setTitle("Nhân viên");
+    location.pathname === "/user" && setTitle("Người dùng");
+    location.pathname === "/feedback" && setTitle("Đánh giá");
+    location.pathname === "/contact" && setTitle("Liên hệ");
+  }, [location.pathname]);
   const items: MenuItem[] = [
     getItem(
       "Thống kê",
-      "1",
-      <Link onClick={() => handleTitleChange("Thống kê")} to={`dashboard`}>
+      "/",
+      <Link to={`/`}>
         <PieChartOutlined />
       </Link>
     ),
     getItem(
       "Chi nhánh",
-      "16",
-      <Link onClick={() => handleTitleChange("Chi nhánh")} to={`branches`}>
+      "/branches",
+      <Link to={`branches`}>
         <AiTwotoneGift />
       </Link>
     ),
-    
+
     getItem("Phòng", "sub1", <BiSolidBed />, [
-      getItem(
-        "Phòng",
-        "3",
-        <Link onClick={() => handleTitleChange("Phòng")} to={`room`} />
-      ),
-      getItem(
-        "Loại Phòng",
-        "4",
-        <Link onClick={() => handleTitleChange("Loại phòng")} to={`room/type`} />
-      ),
+      getItem("Phòng", "/room", <Link to={`room`} />),
+      getItem("Loại Phòng", "/room/type", <Link to={`room/type`} />),
       getItem(
         "Tiện ích Phòng",
-        "5",
-        <Link
-          onClick={() => handleTitleChange("Tiện ích")}
-          to={`room/utilities`}
-        />
+        "/room/utilities",
+        <Link to={`room/utilities`} />
       ),
-      getItem(
-        "Đặt Phòng",
-        "6",
-        <Link
-          onClick={() => handleTitleChange("Đặt Phòng")}
-          to={`room/booking`}
-        />
-      ),
+      getItem("Đặt Phòng", "/room/booking", <Link to={`room/booking`} />),
     ]),
     getItem(
       "Hoá đơn",
-      "7",
-      <Link onClick={() => handleTitleChange("Hóa đơn")} to={`billing`}>
-        {" "}
+      "/billing",
+      <Link to={`billing`}>
         <AiFillBank />
       </Link>
     ),
     getItem(
       "Dịch vụ",
-      "8",
-      <Link onClick={() => handleTitleChange("Dịch vụ")} to={`services`}>
+      "/services",
+      <Link to={`services`}>
         <AiOutlineCrown />
       </Link>
     ),
-    getItem(
-      "Khuyến mãi",
-      "9",
-      <Link onClick={() => handleTitleChange("Ưu đãi")} to={`offers`}>
-        <AiTwotoneGift />
-      </Link>
-    ),
-    getItem(
-      "Chính sách",
-      "10",
-      <Link onClick={() => handleTitleChange("Chính sách")} to={`policy`}>
-        <AiTwotonePrinter />
-      </Link>
-    ),
+    // getItem(
+    //   "Khuyến mãi",
+    //   "9",
+    //   <Link onClick={() => handleTitleChange("Ưu đãi")} to={`offers`}>
+    //     <AiTwotoneGift />
+    //   </Link>
+    // ),
+    // getItem(
+    //   "Chính sách",
+    //   "/policy",
+    //   <Link to={`policy`}>
+    //     <AiTwotonePrinter />
+    //   </Link>
+    // ),
     getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
-      getItem(
-        "Nhân viên",
-        "11",
-        <Link
-          onClick={() => handleTitleChange("Nhân viên")}
-          to={`staff`}
-        />
-      ),
-      getItem(
-        "Người dùng",
-        "12",
-        <Link
-          onClick={() => handleTitleChange("Người dùng")}
-          to={`user`}
-        />
-      ),
+      getItem("Nhân viên", "/staff", <Link to={`staff`} />),
+      getItem("Người dùng", "/user", <Link to={`user`} />),
     ]),
     getItem(
       "Đánh giá",
-      "2",
-      <Link onClick={() => handleTitleChange("Đánh giá")} to={`feedback`}>
+      "/feedback",
+      <Link to={`feedback`}>
+        <VscFeedback />
+      </Link>
+    ),
+    getItem(
+      "Liên hệ",
+      "/contact",
+      <Link to={`contact`}>
         <VscFeedback />
       </Link>
     ),
   ];
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState<any>(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
   const toggleSider = () => {
     setCollapsed(!collapsed);
-  };
-
-  const [title, setTitle] = useState("Dashboard");
-  const handleTitleChange = (title: any) => {
-    setTitle(title);
   };
 
   return (
@@ -168,8 +154,7 @@ const LayoutAdmin = () => {
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
-          className={(!collapsed ? 'fixed z-50' : '') + ' h-screen'}
-         
+          className={(!collapsed ? "fixed z-50" : "") + " h-screen"}
         >
           {/* <div className="demo-logo-vertical" /> */}
           <img
@@ -180,17 +165,24 @@ const LayoutAdmin = () => {
           <Menu
             className="text-[#737b8b] "
             theme="light"
-            // defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={[location.pathname]}
+            defaultOpenKeys={[location.pathname]}
             mode="inline"
             items={items}
           />
         </Sider>
-        {!collapsed ? <div className='fixed top-0 right-0 z-[1] w-screen h-full bg-[rgba(0,0,0,0.1)] md:hidden md:opacity-0 md:invisible'></div> : ''}
-        <Layout className={!collapsed ? 'md:pl-[200px]' : ''}>
+        {!collapsed ? (
+          <div className="fixed top-0 right-0 z-[1] w-screen h-full bg-[rgba(0,0,0,0.1)] md:hidden md:opacity-0 md:invisible"></div>
+        ) : (
+          ""
+        )}
+        <Layout className={!collapsed ? "md:pl-[200px]" : ""}>
           <Header
             className="flex items-center p-5 shadow-md"
-            style={{ padding: 0, background: colorBgContainer, 
-              position: 'sticky',
+            style={{
+              padding: 0,
+              background: colorBgContainer,
+              position: "sticky",
               top: 0,
               zIndex: 40,
             }}

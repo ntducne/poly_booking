@@ -6,9 +6,9 @@ import ListFeedBack from "./pages/Admin/Feedback/List";
 import ListAdmin from "./pages/Admin/Guset/Admin/List";
 import ListUser from "./pages/Admin/Guset/User/List";
 import NotFound from "./pages/Admin/NotFound";
-import AddOffers from "./pages/Admin/Offers/Add";
-import EditOffers from "./pages/Admin/Offers/Edit";
-import ListOffers from "./pages/Admin/Offers/List";
+// import AddOffers from "./pages/Admin/Offers/Add";
+// import EditOffers from "./pages/Admin/Offers/Edit";
+// import ListOffers from "./pages/Admin/Offers/List";
 import AddPolicy from "./pages/Admin/Policy/Add";
 import EditPolicy from "./pages/Admin/Policy/Edit";
 import ListPolicy from "./pages/Admin/Policy/List";
@@ -52,16 +52,16 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
           <Route index element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          {/* <Route path="dashboard" element={<Dashboard />} /> */}
           <Route path="billing">
             <Route index element={<BillList />} />
             <Route path=":id" element={<BillDetail />} />
           </Route>
-          <Route path="offers">
+          {/* <Route path="offers">
             <Route index element={<ListOffers />} />
             <Route path="add" element={<AddOffers />} />
             <Route path="edit/:id" element={<EditOffers />} />
-          </Route>
+          </Route> */}
           <Route path="policy">
             <Route index element={<ListPolicy />} />
             <Route path="add" element={<AddPolicy />} />

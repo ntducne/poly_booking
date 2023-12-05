@@ -7,6 +7,7 @@ import {
   Typography,
   Space,
   DatePicker,
+  Skeleton,
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
@@ -28,11 +29,12 @@ const AddOffers = () => {
   const [createPromotions] = useCreatePromotionsMutation();
   const { data: dataBranches, isLoading: loadingBranch } =
     useGetAllBranchesQuery({});
-
-  console.log("data", dataBranches);
-
   if (loadingBranch) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
   }
 
   const onFinish = (values: any) => {
@@ -80,7 +82,19 @@ const AddOffers = () => {
           <Form.Item
             label="Mã Code"
             name="code"
-            rules={[{ required: true, message: "Vui lòng nhập mã Code!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập mã Code!" },
+              {
+                validator: (_, value) => {
+                  if (value.trim() === "") {
+                    return Promise.reject(
+                      new Error("Không được chỉ nhập khoảng trắng!")
+                    );
+                  }
+                  return Promise.resolve();
+                },
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -132,9 +146,7 @@ const AddOffers = () => {
               },
             ]}
           >
-            <Select 
-              mode="multiple"
-              placeholder="Vui lòng chọn chi nhánh !">
+            <Select mode="multiple" placeholder="Vui lòng chọn chi nhánh !">
               {dataBranches?.data?.map((item: any) => {
                 return (
                   <Option key={item?.id} value={item?.id}>

@@ -1,28 +1,29 @@
-import React, { useEffect } from 'react';
-import Pusher from "pusher-js";
+import React, { useEffect, useState } from 'react';
+import { pusherInstance } from '../config/pusher';
 
-const Demo: React.FC = () =>
- {
+const Demo: React.FC = () => {
+  const [notifications, setNotifications] = useState<any[]>([]);
+
   useEffect(() => {
-    const pusher = new Pusher('50852ca08ffdb6700a75', {
-      cluster: 'ap1'
-    });
-    const channel = pusher.subscribe('chat');
-    channel.bind('message', function (data: any) {
+    const unsubscribe = pusherInstance().getData('chat', 'message', (data :any)  => {
       console.log(data);
-        
-    });
+      });
     return () => {
-      pusher.unsubscribe('chat');
-      pusher.disconnect();
+      unsubscribe();
     };
   }, []);
-
-  return (
-    <>
-      
-    </>
-  );
+  return (<>
+    {/* <div className="flex flex-col">
+      {notifications.map((item, key) => (
+        <div key={key} className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
+          <div className="ml-2">
+            <p className="font-medium">{item.message}</p>
+            <p className="text-xs text-gray-500">{item.time}</p>
+          </div>
+        </div>
+      ))}
+    </div> */}
+  </>);
 }
 
 export default Demo;
