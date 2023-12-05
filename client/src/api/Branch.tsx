@@ -4,7 +4,7 @@ const branchApi = createApi({
     reducerPath: "branches",
     tagTypes: ['Branches'],
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_URL_API,
+        baseUrl: import.meta.env.VITE_URL_CLIENT,
         prepareHeaders: (headers) => {
             const token = localStorage.getItem("access_token");
             headers.set("authorization", `Bearer ${token}`)
@@ -18,7 +18,7 @@ const branchApi = createApi({
             query: () => {
                 return ({
                     method: 'GET',
-                    url: "/client/branch"
+                    url: "/branch"
                 })
             },
             providesTags: ["Branches"]

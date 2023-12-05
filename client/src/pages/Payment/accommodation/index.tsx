@@ -47,6 +47,9 @@ export default function AccommodationBook() {
     if(!cookie?.bookingNow || !cookie?.roomSearch) {
       navigate('/')
     }
+    setUserName(cookie?.userBook?.name ?? '');
+    setUserEmail(cookie?.userBook?.email ?? '');
+    setUserPhone(cookie?.userBook?.phone ?? '');
     if (cookie?.userInfo) {
       if (data && data.message) {
         setUserName(data.message.name);
@@ -62,12 +65,6 @@ export default function AccommodationBook() {
           { path: "/" }
         );
       } 
-      else {
-        setUserName(cookie?.userBook?.name);
-        setUserEmail(cookie?.userBook?.email);
-        setUserPhone(cookie?.userBook?.phone);
-        setCookie("userBook", {}, { path: "/" });
-      }
     }
   }, []);
 

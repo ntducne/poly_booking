@@ -9,7 +9,7 @@ class CheckReferer
 {
     public function handle(Request $request, Closure $next)
     {
-        if($request->segment(2) !== 'user' && $request->segment(2) !== 'admin'){
+        if($request->segment(1) !== 'user' && $request->segment(1) !== 'admin'){
             return response()->json(['message' => 'You do not have access !'], 403);
         }
         return $next($request);
