@@ -14,11 +14,6 @@ use Illuminate\Support\Facades\Redis;
 
 class RatesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     protected RateRoom $rates;
     public function __construct()
     {
@@ -61,16 +56,5 @@ class RatesController extends Controller
                 'message' => 'Lỗi không lấy ra được dữ liệu đánh giá !'
             ]);
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

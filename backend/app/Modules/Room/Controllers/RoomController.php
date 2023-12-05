@@ -30,6 +30,7 @@ class RoomController extends Controller
     {
         try {
             $query = $this->room->newQuery();
+            $query->where('branch_id', $request->user()->branch_id);
             if ($request->has('name')) {
                 $searchTerm = $request->input('name');
                 $query->where('name', 'LIKE', '%' . $searchTerm . '%');
@@ -53,7 +54,7 @@ class RoomController extends Controller
             $object['children'] = (integer) $object['children'];
             $object['slug'] = convertToSlug($request->name);
             $object['amount_room'] = (integer)$object['amount'];
-            $object['branch_id'] = RoomType::find($object['room_type_id'])->branch_id;
+            $object['branch_id'] =  $request->user()->branch_id;
             $room_number = [];
 
             for($i = 1; $i <= $object['amount_room']; $i++){
@@ -107,7 +108,9 @@ class RoomController extends Controller
     public function show($id)
     {
         try {
-            $room = $this->room->find($id);
+            $room = $this->room->where('_id', $id)
+            ->where('branch_id', request()->user()->branch_id)
+            ->first();
             if (!$room) {
                 return response()->json([
                     'status' => 'error',
@@ -131,7 +134,9 @@ class RoomController extends Controller
     public function update(UpdateRoomRequest $request, $id)
     {
         try {
-            $object = $this->room->find($id);
+            $object = $this->room->where('_id', $id)
+            ->where('branch_id', request()->user()->branch_id)
+            ->first();
             if(!$object){
                 return response()->json([
                     'status' => 'error',
@@ -159,7 +164,9 @@ class RoomController extends Controller
 
     public function updateImage(Request $request, $id){
         try {
-            $object = $this->room->find($id);
+            $object = $this->room->where('_id', $id)
+            ->where('branch_id', request()->user()->branch_id)
+            ->first();
             if(!$object){
                 return response()->json([
                     'status' => 'error',
@@ -197,7 +204,9 @@ class RoomController extends Controller
     public function destroy($id)
     {
         try {
-            $room = Room::find($id);
+            $room = $this->room->where('_id', $id)
+            ->where('branch_id', request()->user()->branch_id)
+            ->first();
             if(!$room){
                 return response()->json([
                     'status' => 'error',
