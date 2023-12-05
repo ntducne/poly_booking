@@ -43,7 +43,7 @@ import BillDetail from "./pages/Admin/Bill/Detail";
 import Demo from "./pages/demo";
 import ListContact from "./pages/Admin/Contact/List";
 import ListNotifications from "./pages/Admin/Notifications/List";
-import { AuthorizedListBranches } from "./hoc/componentRole";
+import { AuthorizedListBranches, AuthorizedStoreBranches } from "./hoc/componentRole";
 // import withAuthorization from "./hoc/withAuthorization";
 function App() {
   // const AuthorizedListBranches = withAuthorization(ListBranches, 'admin.branches.index');
@@ -121,7 +121,7 @@ function App() {
           </Route>
           <Route path="branches">
             <Route index element={<AuthorizedListBranches />} />
-            <Route path="add" element={<AddBranche />} />
+            <Route path="add" element={<AuthorizedStoreBranches />} />
             <Route path="edit/:id" element={<EditBranche />} />
           </Route>
         </Route>

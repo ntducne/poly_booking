@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom"
 
 export default function Page403() { 
   const navigate = useNavigate()
-  // history.back()
   const goBack = () => {
     navigate(-2)
   }
