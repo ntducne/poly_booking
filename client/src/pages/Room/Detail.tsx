@@ -11,9 +11,6 @@ import {
 } from "antd";
 import { useForm } from "antd/es/form/Form";
 import TextArea from "antd/es/input/TextArea";
-<<<<<<< HEAD
-import { useProcessReviewMutation } from "../../api/User";
-=======
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
@@ -23,97 +20,9 @@ import { useGetDetailQuery, useSearchRoomsMutation } from "../../api/Room";
 import { useProcessReviewMutation } from "../../api/User";
 import PcLoading from "../../components/RoomLoading/PcLoading";
 import FormatPrice from "../../utils/FormatPrice";
->>>>>>> 83f9c3ff58b82abddbb664bd706c4e060b814c66
 
 const { RangePicker } = DatePicker;
 const Detail = () => {
-<<<<<<< HEAD
-    const navigate = useNavigate()
-    const { slug } = useParams()
-    const { data } = useGetDetialQuery(slug)
-    const [, setCookie, removeCookie] = useCookies(['roomBooking']);
-
-    const [postRate] = useProcessReviewMutation()
-    const [postRate1] = usePostRatesMutation()
-
-
-    const booking = () => {
-
-        removeCookie('roomBooking', { path: '/' })
-        setCookie('roomBooking', data.room, { path: '/' })
-        navigate('/demo')
-    }
-  //   const onFinish = (values: any) => {
-  //       const formData = {
-  //           ...values,
-  //           room_id: data?.room?.id,
-  //       };
-  //       console.log(formData);
-
-
-  //       const [cookies] = useCookies(['userInfo']);
-  //       // const token = cookie.userInfo.accessToken.token;
-
-  //       // console.log(token);
-
-
-  //       // fetch('https://api.polydevhotel.site/user/rate', {
-  //       //     headers: {
-  //       //         Authorization: `Bearer ${token}`
-  //       //     },
-  //       //     method: 'POST',
-  //       //     body: JSON.stringify(formData)
-  //       // },)
-
-  //       const token = cookies.userInfo?.accessToken?.token;
-  //       console.log(token);
-        
-  //       fetch('http://localhost:8000/user/rate', {
-  //           method: 'POST',
-  //           body: JSON.stringify(formData),
-  //           headers: {
-  //           'Authorization': `Bearer ${token}`,
-  //               'Content-Type': 'application/json'
-  //           },
-  //       })
-  //           .then((res) => res.json())
-  //           .then((res) => {
-  //               console.log(res);
-  //           })
-  //           .catch((err) => {
-  //               console.log(err);
-  //           })
-
-  //       // postRate1(formData)
-
-
-  // };
-
-  const onFinish = (values: any) => {
-    const valuesRate = {
-        ...values,
-        room_id: data?.room?.id,
-    }
-    const [cookies] = useCookies(['userInfo']);
-    const token = cookies.userInfo?.accessToken?.token;
-    fetch('https://api.polydevhotel.site/user/rate', {
-        method: 'POST',
-        body: JSON.stringify(valuesRate),
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        },
-    })
-        .then((res) => res.json())
-        .then((res) => {
-            console.log(res);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-};
-  const [form] = Form.useForm();
-=======
   const { slug } = useParams();
   const { data, isLoading, refetch } = useGetDetailQuery(slug);
   const [postComment] = useProcessReviewMutation();
@@ -221,7 +130,6 @@ const Detail = () => {
     window.scrollTo(0, 0);
   }, []);
 
->>>>>>> 83f9c3ff58b82abddbb664bd706c4e060b814c66
   return (
     <div className="md:px-[400px]">
       <div>

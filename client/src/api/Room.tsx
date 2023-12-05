@@ -49,7 +49,6 @@ const roomApi = createApi({
     }),
     postBooking: builder.mutation({
       query: (data: any) => ({
-<<<<<<< HEAD
         url: `client/room/booking`,
         method: "POST",
         body: data,
@@ -59,9 +58,6 @@ const roomApi = createApi({
     postRates: builder.mutation({
       query: (data: any) => ({
         url: `user/rate`,
-=======
-        url: `/room/booking`,
->>>>>>> 83f9c3ff58b82abddbb664bd706c4e060b814c66
         method: "POST",
         body: data,
       }),
