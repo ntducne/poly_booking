@@ -32,11 +32,11 @@ import {
   AiOutlineCrown,
   AiOutlineUserSwitch,
   AiTwotoneGift,
-  AiTwotonePrinter,
 } from "react-icons/ai";
 import { BiSolidBed } from "react-icons/bi";
 import { cookies } from "../config/cookies";
 import "react-toastify/dist/ReactToastify.css";
+import { MdContactPhone } from "react-icons/md";
 
 export const LayoutContext = createContext("");
 
@@ -131,7 +131,7 @@ const LayoutAdmin = () => {
       "Liên hệ",
       "/contact",
       <Link to={`contact`}>
-        <VscFeedback />
+        <MdContactPhone />
       </Link>
     ),
   ];
