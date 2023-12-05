@@ -43,6 +43,7 @@ import BillList from "./pages/Admin/Bill/List";
 import BillDetail from "./pages/Admin/Bill/Detail";
 import Demo from "./pages/demo";
 import ListContact from "./pages/Admin/Contact/List";
+import ListNotifications from "./pages/Admin/Notifications/List";
 
 function App() {
   return (
@@ -104,6 +105,9 @@ function App() {
           </Route>
           <Route path="contact">
             <Route index element={<ListContact />} />
+          </Route>
+          <Route path="notifications">
+            <Route index element={<ListNotifications />} />
           </Route>
           <Route path="staff">
             <Route index element={<ListAdmin />} />

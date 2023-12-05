@@ -14,6 +14,8 @@ import { cookies } from "../../config/cookies";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { pusherInstance } from "../../config/pusher";
+import { FaEye } from "react-icons/fa";
+
 const { Text } = Typography;
 
 const Head = () => {
@@ -135,7 +137,52 @@ const Head = () => {
       danger: true,
     },
   ];
-  const bell: MenuProps["items"] = notifications;
+
+  const bell: MenuProps["items"] = [
+    {
+      label: (
+        <div className="flex items-center justify-between">
+          <p className="text-xl font-semibold">Thông báo</p>
+          <Badge count={newMessage} />
+        </div>
+      ),
+      key: "10",
+    },
+    {
+      label: (
+        <div className="overflow-scroll overflow-x-auto max-h-72">
+          {notifications?.map((item: any) => {
+            return (
+              <div>
+                <div>{item?.label}</div>
+              </div>
+            );
+          })}
+        </div>
+        // <div>Hello</div>
+      ),
+      key: "11",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: (
+        <Link to={`/notifications`}>
+          <button
+            type="button"
+            className="text-white flex justify-center items-center border px-3 py-1 rounded-md bg-slate-400"
+          >
+            <FaEye />
+            <div className="ml-2 text-white font-semibold">Xem tất cả</div>
+          </button>
+        </Link>
+      ),
+      key: "12",
+    },
+  ];
+  
+
   return (
     <div className="flex justify-between items-center mx-4">
       <div>

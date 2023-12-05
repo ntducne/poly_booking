@@ -29,6 +29,7 @@ import policyApi from '../api/policy';
 import utilitiesApi from '../api/utilities';
 import statisticalsApi from '../api/statisticals';
 import contactApi from '../api/contact';
+import notificationsApi from '../api/notifications';
 '../api/account/staffs';
 
 const persistConfig = {
@@ -57,7 +58,8 @@ const rootReducer = combineReducers({
     [policyApi.reducerPath]: policyApi.reducer,
     [utilitiesApi.reducerPath]: utilitiesApi.reducer,
     [statisticalsApi.reducerPath]: statisticalsApi.reducer,
-    [contactApi.reducerPath]: contactApi.reducer
+    [contactApi.reducerPath]: contactApi.reducer,
+    [notificationsApi.reducerPath]: notificationsApi.reducer,
 })
 
 
@@ -79,7 +81,8 @@ const middlewares = [
     policyApi.middleware,
     utilitiesApi.middleware,
     statisticalsApi.middleware,
-    contactApi.middleware
+    contactApi.middleware,
+    notificationsApi.middleware
 ]
 
 const store = configureStore({
