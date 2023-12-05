@@ -76,7 +76,7 @@ const Head = () => {
   }
 
   const logout = async () => {
-    await fetch("https://api.polydevhotel.site/admin/logout", {
+    await fetch(`${import.meta.env.VITE_URL_API}/logout`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
