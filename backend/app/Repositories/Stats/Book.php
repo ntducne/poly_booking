@@ -15,12 +15,12 @@ class Book implements StatInterface
         $this->billing = new Billing();
     }
 
-    public function getDataBook(){
-        return $this->billing->where('status', 4)->get();
+    public function getDataBook($request){
+        return $this->billing->where('branch_id', '=', $request->user()->branch_id)->where('status', 4)->get();
     }
 
-    public function getDataCancel(){
-        return $this->billing->whereIn('status', [2, 6])->get();
+    public function getDataCancel($request){
+        return $this->billing->where('branch_id', '=', $request->user()->branch_id)->whereIn('status', [2, 6])->get();
     }
 
     public function daily($request){

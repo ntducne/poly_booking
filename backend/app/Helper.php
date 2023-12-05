@@ -68,16 +68,17 @@ function create_permision(): void
             'name' => $key,
         ]);
     }
-    $admins = Admin::where('role', 0)->get();
+    $admins = Admin::where('role', 'admin')->get();
+    AdminPermission::truncate();
     foreach ($admins as $admin){
         foreach ($permission as $value) {
-            AdminPermission::query()->updateOrCreate([
-                'id_admin' => $admin->id,
+            AdminPermission::create([
+                'id_admin' => $admin->_id,
                 'id_permission' => $value->id,
             ]);
         }
     }
-    echo "Create permission success";
+    echo "Success";
 }
 
 function convertToSlug($text) {
