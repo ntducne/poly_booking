@@ -35,52 +35,75 @@ const Detail = () => {
         setCookie('roomBooking', data.room, { path: '/' })
         navigate('/demo')
     }
-    const onFinish = (values: any) => {
-        const formData = {
-            ...values,
-            room_id: data?.room?.id,
-        };
-        console.log(formData);
+  //   const onFinish = (values: any) => {
+  //       const formData = {
+  //           ...values,
+  //           room_id: data?.room?.id,
+  //       };
+  //       console.log(formData);
 
 
-        const [cookies] = useCookies(['userInfo']);
-        // const token = cookie.userInfo.accessToken.token;
+  //       const [cookies] = useCookies(['userInfo']);
+  //       // const token = cookie.userInfo.accessToken.token;
 
-        // console.log(token);
+  //       // console.log(token);
 
 
-        // fetch('https://api.polydevhotel.site/user/rate', {
-        //     headers: {
-        //         Authorization: `Bearer ${token}`
-        //     },
-        //     method: 'POST',
-        //     body: JSON.stringify(formData)
-        // },)
+  //       // fetch('https://api.polydevhotel.site/user/rate', {
+  //       //     headers: {
+  //       //         Authorization: `Bearer ${token}`
+  //       //     },
+  //       //     method: 'POST',
+  //       //     body: JSON.stringify(formData)
+  //       // },)
 
-        const token = cookies.userInfo?.accessToken?.token;
-        console.log(token);
+  //       const token = cookies.userInfo?.accessToken?.token;
+  //       console.log(token);
         
-        fetch('http://localhost:8000/user/rate', {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: {
+  //       fetch('http://localhost:8000/user/rate', {
+  //           method: 'POST',
+  //           body: JSON.stringify(formData),
+  //           headers: {
+  //           'Authorization': `Bearer ${token}`,
+  //               'Content-Type': 'application/json'
+  //           },
+  //       })
+  //           .then((res) => res.json())
+  //           .then((res) => {
+  //               console.log(res);
+  //           })
+  //           .catch((err) => {
+  //               console.log(err);
+  //           })
+
+  //       // postRate1(formData)
+
+
+  // };
+
+  const onFinish = (values: any) => {
+    const valuesRate = {
+        ...values,
+        room_id: data?.room?.id,
+    }
+    const [cookies] = useCookies(['userInfo']);
+    const token = cookies.userInfo?.accessToken?.token;
+    fetch('https://api.polydevhotel.site/user/rate', {
+        method: 'POST',
+        body: JSON.stringify(valuesRate),
+        headers: {
             'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
+            'Content-Type': 'application/json'
+        },
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log(res);
         })
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-
-        // postRate1(formData)
-
-
-  };
-
+        .catch((err) => {
+            console.log(err);
+        })
+};
   const [form] = Form.useForm();
   return (
     <div className="pb-[100px] ">
