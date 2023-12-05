@@ -187,7 +187,6 @@ const Head = () => {
 
   return (
     <div className="flex justify-between items-center mx-4">
-      <button className="text-black">Chuông nè</button>
       <div>
         <p className="md:text-3xl">{title}</p>
       </div>
