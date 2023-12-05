@@ -1,5 +1,11 @@
+import { useNavigate } from "react-router-dom"
+
 export default function Page403() { 
+  const navigate = useNavigate()
   // history.back()
+  const goBack = () => {
+    navigate(-2)
+  }
   return (
     <>
       <div className="grid h-screen px-4 bg-white place-content-center">
@@ -38,7 +44,7 @@ export default function Page403() {
           <p className="mt-4 text-gray-500">Bạn không có quyền vào page này !</p>
         </div>
         <div className="flex items-center justify-center mt-5">
-        <button type="button" className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" >Quay lại</button>
+        <button onClick={() => goBack()} type="button" className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" >Quay lại</button>
         </div>
       </div>
     </>
