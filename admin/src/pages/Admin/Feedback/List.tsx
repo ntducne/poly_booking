@@ -8,9 +8,8 @@ import { Link } from "react-router-dom";
 //   age: number;
 //   address: string;
 // }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal from "sweetalert";
 import Page from "../../../component/page";
 import { useGetRatesQuery } from "../../../api/rate";
 
