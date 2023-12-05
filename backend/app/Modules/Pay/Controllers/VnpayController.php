@@ -75,7 +75,7 @@ class VnpayController extends Controller
         $vnp_Url = $this->vnp_Url . "?" . $query;
         $vnpSecureHash = hash_hmac('sha512', $hashdata, $this->vnp_HashSecret);
         $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-        return $vnp_Url;
+        return redirect()->to($vnp_Url);
     }
     public function callback(Request $request)
     {

@@ -4,3 +4,1627 @@
   2023-12-05 13:02:20 App\Events\BookingEvent .................. 710.80ms DONE
   2023-12-05 13:02:21 App\Events\Message ............................. RUNNING
   2023-12-05 13:02:22 App\Events\Message ....................... 413.17ms DONE
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at routes/api.php:32
+     28▕     }
+     29▕     echo "</table>";
+     30▕ });
+     31▕ Route::get('/testNoti', function(){
+  ➜  32▕ <<<<<<< HEAD
+     33▕     event(new Message([
+     34▕         'message' => 'Hello world',
+     35▕         'time' => Carbon::now()->format('d/m/Y H:i:s')
+     36▕     ]));
+sh: 1: cd: can't cd to api.php
+
+  i   Merge conflict from branch '83f9c3ff58b82abddbb664bd706c4e060b814c66' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:46
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+

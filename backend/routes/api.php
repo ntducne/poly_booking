@@ -1,7 +1,9 @@
 <?php
 
 use App\Events\Message;
+use App\Models\Billing;
 use App\Modules\Dashboard\Controllers\DashboardController;
+use App\Modules\Orders\Resources\BillingResource;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
@@ -27,10 +29,5 @@ Route::get('/routes', function () {
     echo "</table>";
 });
 Route::get('/testNoti', function(){
-    event(new Message([
-        'message' => 'Hello world',
-        'time' => Carbon::now()->format('d/m/Y H:i:s')
-    ]));
+    event(new Message(new BillingResource(Billing::find('65697362cbdded72ee00fb34'))));
 });
-
-
