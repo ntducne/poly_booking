@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         $input = $request->validated();
-        $guard = $request->segment(2);
+        $guard = $request->segment(1);
         $credentials = [
             'email' => $input['email'],
             'password' => $input['password']

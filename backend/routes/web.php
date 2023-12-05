@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Pay\VnpayController;
+use App\Modules\Pay\Controllers\MomoController;
+use App\Modules\Pay\Controllers\PaypalController;
 use App\Models\Billing;
 use App\Models\BookDetail;
 use App\Models\Booking;
@@ -18,7 +20,3 @@ Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Fou
 Route::get('unauthorized', function (){ return response()->json([
     'message' => 'Unauthorized !'
 ], 401); });
-
-Route::get('', function () {
-    User::truncate();
-});
