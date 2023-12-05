@@ -4,7 +4,7 @@ const roomApi = createApi({
   reducerPath: "Rooms",
   tagTypes: ["Rooms"],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_URL_API,
+    baseUrl: import.meta.env.VITE_URL_CLIENT,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("access_token");
       headers.set("authorization", `Bearer ${token}`);
@@ -17,8 +17,8 @@ const roomApi = createApi({
         const keys = Object.keys(data);
         const url =
           keys.length === 0 && keys.length < 6
-            ? `/client/room`
-            : `/client/v2/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&amount_room=${data.soLuong}`;
+            ? `/room`
+            : `/v2/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&amount_room=${data.soLuong}`;
         return {
           method: "GET",
           url: url,
@@ -28,7 +28,7 @@ const roomApi = createApi({
     }),
     searchRooms: builder.mutation<any, any>({
       query: (data: any) => {
-        const url = "/client/v2/search";
+        const url = "/v2/search";
         return {
           method: "POST",
           url: url,
@@ -38,25 +38,25 @@ const roomApi = createApi({
       invalidatesTags: ["Rooms"],
     }),
     getDetail: builder.query<any, any>({
-      query: (slug) => `/client/room/${slug}`,
+      query: (slug) => `/room/${slug}`,
       providesTags: ["Rooms"],
     }),
     postBooking: builder.mutation({
       query: (data: any) => ({
-        url: `client/room/booking`,
+        url: `/room/booking`,
         method: "POST",
         body: data,
       }),
       invalidatesTags: ["Rooms"],
     }),
-    postRates: builder.mutation({
-      query: (data: any) => ({
-        url: `/user/rate`,
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["Rooms"],
-    }),
+    // postRates: builder.mutation({
+    //   query: (data: any) => ({
+    //     url: `/user/rate`,
+    //     method: "POST",
+    //     body: data,
+    //   }),
+    //   invalidatesTags: ["Rooms"],
+    // }),
   }),
 });
 
@@ -64,7 +64,7 @@ export const {
   useGetRoomsQuery,
   useGetDetailQuery,
   usePostBookingMutation,
-  usePostRatesMutation,
+  // usePostRatesMutation,
   useSearchRoomsMutation,
 } = roomApi;
 
