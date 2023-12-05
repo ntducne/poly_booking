@@ -37,7 +37,7 @@ class AuthController extends Controller
         $user = Auth::guard($guard)->user();
         if ($user->status == 0) {
             $this->removeUser($user->id);
-            $tokenResult = $user->createToken(ucfirst($guard) . ' Access Token', [$request->segment(2)]);
+            $tokenResult = $user->createToken(ucfirst($guard) . ' Access Token', [$request->segment(1)]);
             $token = $tokenResult->token;
             $token->save();
             $response = [

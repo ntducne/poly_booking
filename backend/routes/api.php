@@ -32,3 +32,5 @@ Route::get('/testNoti', function(){
         'time' => Carbon::now()->format('d/m/Y H:i:s')
     ]));
 });
+
+
