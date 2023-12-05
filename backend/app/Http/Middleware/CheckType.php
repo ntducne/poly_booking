@@ -19,7 +19,7 @@ class CheckType
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->segment(2) !== 'user'){
+        if($request->segment(1) !== 'user'){
             return response()->json(['message' => 'You do not have access !'], 403);
         }
         return $next($request);
