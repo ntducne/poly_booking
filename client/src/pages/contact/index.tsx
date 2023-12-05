@@ -1,9 +1,34 @@
 
+import { Form, Input, message } from 'antd'
 import HeroSlide from '../../components/HeroSlide'
+import TextArea from 'antd/es/input/TextArea';
+import { useHandleContactMutation } from '../../api/Client';
 
 
 
 const Contact = () => {
+
+    const [postContact] = useHandleContactMutation();
+
+    const onFinishContact = (values: any) => {
+        console.log("Success:", values);
+        if (values) {
+            postContact({ ...values })
+                .unwrap()
+                .then((req) => {
+                    console.log(req);
+                    message.success("Liên hệ  thành công");
+                })
+                .catch((error) => {
+                    console.log(error);
+                    message.error("Liên hệ thất bại");
+                });
+        }
+    };
+
+    const onFinishFailedContact = (errorInfo: any) => {
+        console.log("Failed:", errorInfo);
+    };
     return (
         <div className='bg-white'>
             <HeroSlide />
@@ -97,29 +122,77 @@ const Contact = () => {
                             </div>
                             <div className="card h-fit max-w-6xl p-5 md:p-12" id="form">
                                 <h2 className="mb-4 text-2xl font-bold">Sẵn sàng để bắt đầu?</h2>
-                                <form id="contactForm">
+                                <Form
+                                    name="basic"
+                                    onFinish={onFinishContact}
+                                    onFinishFailed={onFinishFailedContact}
+                                    autoComplete="off"
+                                >
                                     <div className="mb-6">
                                         <div className="mx-0 mb-1 sm:mb-4">
                                             <div className="mx-0 mb-1 sm:mb-4">
-                                                <label htmlFor="name" className="pb-1 text-xs uppercase tracking-wider"></label><input type="text" id="name" autoComplete="given-name" placeholder="Tên" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0" name="name" />
+                                                <Form.Item
+                                                    className="pb-1 text-xs uppercase tracking-wider"
+                                                    name="name"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Vui lòng nhập tên!",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input placeholder="Tên" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0" />
+                                                </Form.Item>
                                             </div>
                                             <div className="mx-0 mb-1 sm:mb-4">
-                                                <label htmlFor="email" className="pb-1 text-xs uppercase tracking-wider"></label><input type="email" id="email" autoComplete="email" placeholder="Email" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0" name="email" />
+                                                <Form.Item
+                                                    className="pb-1 text-xs uppercase tracking-wider"
+                                                    name="email"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Vui lòng nhập Email!",
+                                                        },
+                                                        {
+                                                            type: "email",
+                                                            message: "Địa chỉ email không hợp lệ!",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input placeholder="Email" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0" />
+                                                </Form.Item>
                                             </div>
-                                        </div>
-                                        <div className="mx-0 mb-1 sm:mb-4">
-                                            <label htmlFor="textarea" className="pb-1 text-xs uppercase tracking-wider"></label><textarea id="textarea" name="textarea" placeholder="Nội dung câu hỏi..." className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"></textarea>
+                                            <div className="mx-0 mb-1 sm:mb-4">
+                                                <Form.Item
+                                                    name="message"
+                                                    rules={[{ required: true, message: "Vui lòng nhập bình luận" }]}
+                                                >
+                                                    <TextArea
+                                                        rows={3}
+                                                        placeholder="Nội dung câu hỏi"
+                                                        className="pt-3"
+                                                    />
+                                                </Form.Item>
+                                            </div>
+
                                         </div>
                                     </div>
-                                    <div className="text-center">
-                                        <button type="submit" className="w-full bg-blue-800 text-white px-6 py-3 font-xl rounded-md sm:mb-0">Gửi tin nhắn</button>
-                                    </div>
-                                </form>
+
+
+
+
+
+                                    <Form.Item>
+                                        <button className="w-full bg-blue-800 text-white px-6 py-3 font-xl rounded-md sm:mb-0">
+                                            Đánh giá
+                                        </button>
+                                    </Form.Item>
+                                </Form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
             <div className="container mx-auto w-100%">
 
                 <section className="">
@@ -139,7 +212,7 @@ const Contact = () => {
                 </section>
 
             </div>
-        </div>
+        </div >
 
 
     )

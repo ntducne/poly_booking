@@ -49,6 +49,15 @@ const clientApi = createApi({
             }),
             invalidatesTags: ["Clients"],
         }),
+
+        handleContact: builder.mutation({
+            query: (data) => ({
+                url: `/client/contact`,
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["Clients"],
+        }),
     }),
 });
 
@@ -58,6 +67,7 @@ export const {
     useGetDetailRoomQuery,
     useGetRoomTypeQuery,
     useHandleBookingMutation,
+    useHandleContactMutation,
 } = clientApi;
 
 export const userReducer = clientApi.reducer;
