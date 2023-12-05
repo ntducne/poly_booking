@@ -15,16 +15,12 @@ Route::fallback(function () {
 });
 
 Route::middleware(CheckReferer::class)->group(function () {
-     Route::group(['middleware' => 'throttle:3,5'], function () {
-        Route::post('login', [AuthController::class, 'login']);
-     });
+    Route::post('login', [AuthController::class, 'login']);
     Route::middleware(CheckType::class)->group(function () {
         Route::post('register', [AuthController::class, 'register']);
-        Route::group(['middleware' => 'throttle:3,5'], function () {
-            Route::post('reset-password', [ForgotPasswordController::class, 'sendMail']);
-            Route::get('reset-password/{token}', [ForgotPasswordController::class, 'checkToken']);
-            Route::put('reset-password', [ForgotPasswordController::class, 'reset']);
-        });
+        Route::post('reset-password', [ForgotPasswordController::class, 'sendMail']);
+        Route::get('reset-password/{token}', [ForgotPasswordController::class, 'checkToken']);
+        Route::put('reset-password', [ForgotPasswordController::class, 'reset']);
     });
     Route::get('/login/{provider}', [LoginSocicalController::class, 'redirect']);
     Route::get('/callback/{provider}', [LoginSocicalController::class, 'callback']);
