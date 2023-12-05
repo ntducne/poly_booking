@@ -15,8 +15,6 @@ import { useEffect, useState } from "react";
 
 const BillList = () => {
   const { data: dataBilings, isLoading } = useGetBilingsQuery({});
-  console.log("dataBilings",dataBilings );
-  
   const [billings, setBillings] = useState<any[]>([]);
   useEffect(() => {
     setBillings(dataBilings?.data);
@@ -37,7 +35,6 @@ const BillList = () => {
       dangerMode: true,
     }).then((willDelete: any) => {
       if (willDelete) {
-
         swal("Xác nhận thành công!", {
           icon: "success",
         });

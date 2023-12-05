@@ -29,7 +29,7 @@ export default function PaymentProcess() {
                 'name': cookie?.userBook?.name,
                 'payment_method': cookie?.paymentMethod
             }
-            fetch(`${import.meta.env.VITE_URL_API}/client/v2/booking`, {
+            fetch(`${import.meta.env.VITE_URL_CLIENT}/v2/booking`, {
                 method: 'POST',
                 body: JSON.stringify(val),
                 headers: {
