@@ -292,8 +292,10 @@ class RoomRepository
             'moneyVND' => $total,
         ];
         $billing = $this->billing->create($billingData);
-        $newBilling_id = $this->billing->where('booking_id', $bookingCreate->id)->first();
-        event(new BookingEvent(new BillingResource($newBilling_id)));
+        $newBilling = $this->billing->where('booking_id', $bookingCreate->id)->first()->_id;
+        event(new BookingEvent(new BillingResource(
+            $this->billing->find($newBilling)
+        )));
         if($request->user()){
             $this->history_handle->create([
                 'booking_id' => $bookingCreate->id,
@@ -310,7 +312,7 @@ class RoomRepository
             $this->notification->create([
                 'message' => 'Có một đơn đặt phòng mới !',
                 'time' => Carbon::now()->format('Y-m-d H:i:s'),
-                'billing_id' => $newBilling_id,
+                'billing_id' => $newBilling,
             ]);
         }
         if($request->payment_method == 'vnpay'){
