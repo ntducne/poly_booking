@@ -55,7 +55,7 @@ class RoomRepository
         $children = $request->child;
         $checkin = Carbon::parse($request->checkin)->addHours(14)->format('Y-m-d H:i:s');
         $checkout = Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s');
-        $branch_id = $request->branch_id;
+        $branch_id = $request->branch_id ?? $request->user()->branch_id;
         $amount_room = $request->amount_room;
         $room_id = $request->room_id;
         if($room_id){
@@ -285,7 +285,7 @@ class RoomRepository
             'total' => $total,
             'payment_method' => $request->payment_method,
             'payment_date' => null,
-            'branch_id' => $room->branch_id,
+            'branch_id' => $room->branch_id ?? $request->user()->branch_id,
             'status' => 0,
             'billingCode' => time(),
             'moneyUSD' => $total / 23000,
@@ -368,7 +368,9 @@ class RoomRepository
     public function processRenew($request)
     {
         $room_id = $request->room_id;
-        $billing = $this->billing->find($request->billing_id);
+        $billing = $this->billing->where('booking_id', $request->booking_id)
+            ->where('branch_id', $request->user()->branch_id)
+            ->first();
         $booking = $this->booking->find($billing->booking_id);
         $bookDetail = $this->bookDetail->where('booking_id', $booking->id)->first();
         if ($room_id == $bookDetail->room_id) {

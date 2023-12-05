@@ -9,3 +9,24 @@
 .ant-pagination-options {
     display: none !important;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+ }
+ 
+ /* Track */
+ ::-webkit-scrollbar-track {
+    border-radius: 5px;
+ }
+ 
+ /* Handle */
+ ::-webkit-scrollbar-thumb {
+    background: rgb(221, 221, 221);
+    border-radius: 10px;
+ }
+ 
+ /* Handle on hover */
+ ::-webkit-scrollbar-thumb:hover {
+    background: rgba(221, 221, 222);
+ }

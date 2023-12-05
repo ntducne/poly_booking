@@ -14,6 +14,8 @@ import { cookies } from "../../config/cookies";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { pusherInstance } from "../../config/pusher";
+import { FaEye } from "react-icons/fa";
+
 const { Text } = Typography;
 
 const Head = () => {
@@ -29,43 +31,55 @@ const Head = () => {
     fetch(`${import.meta.env.VITE_URL_API}/notifications`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${JSON.parse(cookies().Get("AuthUser") as any)[2].token}`,
+        Authorization: `Bearer ${
+          JSON.parse(cookies().Get("AuthUser") as any)[2].token
+        }`,
       },
     })
-    .then((res) => res.json())
-    .then((res) => {
-      setNotifications([]);
-      setNewMessage(0);
-      res.forEach((item: any, key: number) => {
-        setNotifications(prevNotifications => [...prevNotifications, {
-          label: (
-            <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
-              <div className="ml-2">
-                <p className="font-medium">{item.message}</p>
-                <Text type="secondary">{item.time}</Text>
+      .then((res) => res.json())
+      .then((res) => {
+        setNotifications([]);
+        setNewMessage(0);
+        res.forEach((item: any, key: number) => {
+          setNotifications((prevNotifications) => [
+            ...prevNotifications,
+            {
+              label: (
+                <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
+                  <div className="ml-2">
+                    <p className="font-medium">{item.message}</p>
+                    <Text type="secondary">{item.time}</Text>
+                  </div>
+                </div>
+              ),
+              key: `${key}`,
+            },
+          ]);
+        });
+      });
+    const unsubscribe = pusherInstance().getData(
+      "chat",
+      "message",
+      (data: any) => {
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          {
+            label: (
+              <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
+                <div className="ml-2">
+                  <p className="font-medium">{data.data.message}</p>
+                  <>
+                    <Text type="secondary">{data.data.time}</Text>
+                  </>
+                </div>
               </div>
-            </div>
-          ),
-          key: `${key}`,
-        }])
-      })
-    })
-    const unsubscribe = pusherInstance().getData('chat', 'message', (data :any)  => {
-      setNotifications(prevNotifications => [...prevNotifications, {
-        label: (
-          <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
-            <div className="ml-2">
-              <p className="font-medium">{data.data.message}</p>
-              <>
-                <Text type="secondary">{data.data.time}</Text>
-              </>
-            </div>
-          </div>
-        ),
-        key: `${Math.random()}`,
-      }])
-      setNewMessage(notifications.length + 1);
-    });
+            ),
+            key: `${Math.random()}`,
+          },
+        ]);
+        setNewMessage(notifications.length + 1);
+      }
+    );
     return () => {
       unsubscribe();
     };
@@ -73,10 +87,10 @@ const Head = () => {
 
   const removeNotification = () => {
     setNewMessage(0);
-  }
+  };
 
   const logout = async () => {
-    await fetch("https://api.polydevhotel.site/admin/logout", {
+    await fetch(`${import.meta.env.VITE_URL_API}/logout`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -90,7 +104,7 @@ const Head = () => {
           navigate("/login");
         }, 3000);
       });
-  }
+  };
 
   const profile: MenuProps["items"] = [
     {
@@ -123,7 +137,52 @@ const Head = () => {
       danger: true,
     },
   ];
-  const bell: MenuProps["items"] = notifications;
+
+  const bell: MenuProps["items"] = [
+    {
+      label: (
+        <div className="flex items-center justify-between">
+          <p className="text-xl font-semibold">Thông báo</p>
+          <Badge count={newMessage} />
+        </div>
+      ),
+      key: "10",
+    },
+    {
+      label: (
+        <div className="overflow-scroll overflow-x-auto max-h-72">
+          {notifications?.map((item: any) => {
+            return (
+              <div>
+                <div>{item?.label}</div>
+              </div>
+            );
+          })}
+        </div>
+        // <div>Hello</div>
+      ),
+      key: "11",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: (
+        <Link to={`/notifications`}>
+          <button
+            type="button"
+            className="text-white flex justify-center items-center border px-3 py-1 rounded-md bg-slate-400"
+          >
+            <FaEye />
+            <div className="ml-2 text-white font-semibold">Xem tất cả</div>
+          </button>
+        </Link>
+      ),
+      key: "12",
+    },
+  ];
+  
+
   return (
     <div className="flex justify-between items-center mx-4">
       <div>
@@ -131,7 +190,11 @@ const Head = () => {
       </div>
       <div>
         <Space size="large">
-          <Dropdown className="hover:cursor-pointer hidden md:block" menu={{ items: bell }} trigger={["click"]}>
+          <Dropdown
+            className="hover:cursor-pointer hidden md:block"
+            menu={{ items: bell }}
+            trigger={["click"]}
+          >
             <Badge count={newMessage}>
               <Avatar
                 onClick={removeNotification}

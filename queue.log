@@ -1628,3 +1628,7 @@ sh: 1: cd: can't cd to api.php
   20  [internal]:0
       Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
 
+  2023-12-05 21:41:23 App\Events\BookingEvent ........................ RUNNING
+  2023-12-05 21:41:23 App\Events\BookingEvent .................. 760.76ms DONE
+  2023-12-05 21:41:25 App\Events\Message ............................. RUNNING
+  2023-12-05 21:41:26 App\Events\Message ....................... 463.53ms DONE

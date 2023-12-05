@@ -10,6 +10,7 @@ class StatsRepository
 {
     private Revenue $revenue;
     private Room $room;
+    private Book $book;
 
     public function revenue($request)
     {
