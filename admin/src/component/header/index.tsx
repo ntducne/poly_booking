@@ -29,43 +29,55 @@ const Head = () => {
     fetch(`${import.meta.env.VITE_URL_API}/notifications`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${JSON.parse(cookies().Get("AuthUser") as any)[2].token}`,
+        Authorization: `Bearer ${
+          JSON.parse(cookies().Get("AuthUser") as any)[2].token
+        }`,
       },
     })
-    .then((res) => res.json())
-    .then((res) => {
-      setNotifications([]);
-      setNewMessage(0);
-      res.forEach((item: any, key: number) => {
-        setNotifications(prevNotifications => [...prevNotifications, {
-          label: (
-            <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
-              <div className="ml-2">
-                <p className="font-medium">{item.message}</p>
-                <Text type="secondary">{item.time}</Text>
+      .then((res) => res.json())
+      .then((res) => {
+        setNotifications([]);
+        setNewMessage(0);
+        res.forEach((item: any, key: number) => {
+          setNotifications((prevNotifications) => [
+            ...prevNotifications,
+            {
+              label: (
+                <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
+                  <div className="ml-2">
+                    <p className="font-medium">{item.message}</p>
+                    <Text type="secondary">{item.time}</Text>
+                  </div>
+                </div>
+              ),
+              key: `${key}`,
+            },
+          ]);
+        });
+      });
+    const unsubscribe = pusherInstance().getData(
+      "chat",
+      "message",
+      (data: any) => {
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          {
+            label: (
+              <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
+                <div className="ml-2">
+                  <p className="font-medium">{data.data.message}</p>
+                  <>
+                    <Text type="secondary">{data.data.time}</Text>
+                  </>
+                </div>
               </div>
-            </div>
-          ),
-          key: `${key}`,
-        }])
-      })
-    })
-    const unsubscribe = pusherInstance().getData('chat', 'message', (data :any)  => {
-      setNotifications(prevNotifications => [...prevNotifications, {
-        label: (
-          <div className="flex items-center rounded-2xl p-2 hover:bg-slate-100">
-            <div className="ml-2">
-              <p className="font-medium">{data.data.message}</p>
-              <>
-                <Text type="secondary">{data.data.time}</Text>
-              </>
-            </div>
-          </div>
-        ),
-        key: `${Math.random()}`,
-      }])
-      setNewMessage(notifications.length + 1);
-    });
+            ),
+            key: `${Math.random()}`,
+          },
+        ]);
+        setNewMessage(notifications.length + 1);
+      }
+    );
     return () => {
       unsubscribe();
     };
@@ -73,10 +85,10 @@ const Head = () => {
 
   const removeNotification = () => {
     setNewMessage(0);
-  }
+  };
 
   const logout = async () => {
-    await fetch("https://api.polydevhotel.site/admin/logout", {
+    await fetch(`${import.meta.env.VITE_URL_API}/logout`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -90,7 +102,7 @@ const Head = () => {
           navigate("/login");
         }, 3000);
       });
-  }
+  };
 
   const profile: MenuProps["items"] = [
     {
@@ -131,7 +143,11 @@ const Head = () => {
       </div>
       <div>
         <Space size="large">
-          <Dropdown className="hover:cursor-pointer hidden md:block" menu={{ items: bell }} trigger={["click"]}>
+          <Dropdown
+            className="hover:cursor-pointer hidden md:block"
+            menu={{ items: bell }}
+            trigger={["click"]}
+          >
             <Badge count={newMessage}>
               <Avatar
                 onClick={removeNotification}
