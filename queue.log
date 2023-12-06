@@ -2773,3 +2773,11 @@ sh: 1: cd: can't cd to auth.php
   20  [internal]:0
       Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
 
+  2023-12-05 23:57:15 App\Events\ContactEvent ........................ RUNNING
+  2023-12-05 23:57:15 App\Events\ContactEvent .................. 421.21ms DONE
+  2023-12-06 20:46:28 App\Events\ContactEvent ........................ RUNNING
+  2023-12-06 20:46:29 App\Events\ContactEvent .................. 427.10ms DONE
+  2023-12-06 20:46:52 App\Events\ContactEvent ........................ RUNNING
+  2023-12-06 20:46:52 App\Events\ContactEvent .................. 415.56ms DONE
+  2023-12-06 20:47:28 App\Events\ContactEvent ........................ RUNNING
+  2023-12-06 20:47:28 App\Events\ContactEvent .................. 407.36ms DONE

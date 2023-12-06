@@ -1,14 +1,14 @@
 <?php
 
 return [
-    [
-        'name' => 'notifications',
-        'label' => 'Thông báo'
-    ],
-    [
-        'name' => 'contact',
-        'label' => 'Liên hệ'
-    ],
+    // [
+    //     'name' => 'notifications',
+    //     'label' => 'Thông báo'
+    // ],
+    // [
+    //     'name' => 'contact',
+    //     'label' => 'Liên hệ'
+    // ],
     [
         'name' => 'statisticals',
         'label' => 'Thống kê'
