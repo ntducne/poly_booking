@@ -15,6 +15,7 @@ class CancellationPolicy extends Eloquent
     protected $fillable = [
         'conditions',
         'penalty',
+        'branch_id',
         'room_id',
     ];
 
