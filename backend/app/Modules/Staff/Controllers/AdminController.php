@@ -22,12 +22,13 @@ class AdminController extends Controller
     {
         try{
             $role = $request->user()->role;
-
+            $query = $this->admin->newQuery();
+            $query->where('branch_id', $request->user()->branch_id);
             if ($role == 0) {
-                $response = $this->admin->paginate(10);
+                $response = $query->paginate(10);
             }
             if ($role == 1) {
-                $response = $this->admin->where('created_by', $request->user()->id)->paginate(10);
+                $response = $query->where('created_by', $request->user()->id)->paginate(10);
             }
             return StaffResource::collection($response);
         } catch (Exception $exception){
@@ -73,7 +74,9 @@ class AdminController extends Controller
     public function show($id)
     {
         try{
-            $admin = $this->admin->find($id);
+            $admin = $this->admin->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
@@ -101,7 +104,9 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request,  $id)
     {
         try{
-            $admin = Admin::find($id);
+            $admin = $this->admin->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
@@ -136,7 +141,9 @@ class AdminController extends Controller
     public function destroy($id)
     {
         try{
-            $admin = Admin::find($id);
+            $admin = $this->admin->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
