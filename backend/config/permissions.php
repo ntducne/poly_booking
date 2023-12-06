@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'admin.notifications.index' => 'Danh sách thông báo',
-    'admin.contact.index' => 'Danh sách liên hệ',
-    
     'admin.statisticals.index' => 'Xem thống kê',
 
     'admin.branches.index' => 'Danh sách chi nhánh',
@@ -71,6 +68,6 @@ return [
     'admin.booking.handle.checkin' => 'Checkin đặt phòng',
     'admin.booking.handle.checkout' => 'Checkout đặt phòng  ',
     'admin.booking.handle.addPeople' => 'Thêm người đặt phòng',
-    'admin.booking.handle.addService	' => 'Thêm dịch vụ đặt phòng',
+    'admin.booking.handle.addService' => 'Thêm dịch vụ đặt phòng',
     'admin.booking.handle.giaHan' => 'Gia hạn đặt phòng',
 ];

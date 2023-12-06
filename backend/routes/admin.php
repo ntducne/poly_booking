@@ -24,37 +24,40 @@ Route::fallback(function () {
     ], 404);
 });
 
+Route::get('/notifications', function(){
+    $notification = Notification::all();
+    $newNotification = [];
+    foreach ($notification as $value) {
+        $newNotification[] = [
+            'message' => $value->message,
+            'time' => $value->time,
+        ];
+    }
+    return response()->json($newNotification);
+})->name('notifications');
+
+Route::get('/contact', function(){
+    $contacts = \App\Models\Contact::all();
+    $newContacts = [];
+    foreach ($contacts as $value) {
+        $newContacts[] = [
+            'name' => $value->name,
+            'email' => $value->email,
+            'message' => $value->message,
+            'time' => $value->created_at,
+        ];
+    }
+    return response()->json($newContacts);
+})->name('contact');
+
 Route::middleware(CheckPermission::class)->group(function () {
-
-    Route::get('/notifications', function(){
-        $notification = Notification::all();
-        $newNotification = [];
-        foreach ($notification as $value) {
-            $newNotification[] = [
-                'message' => $value->message,
-                'time' => $value->time,
-            ];
-        }
-        return response()->json($newNotification);
-    })->name('notifications');
-
-    Route::get('/contact', function(){
-        $contacts = \App\Models\Contact::all();
-        $newContacts = [];
-        foreach ($contacts as $value) {
-            $newContacts[] = [
-                'name' => $value->name,
-                'email' => $value->email,
-                'message' => $value->message,
-                'time' => $value->created_at,
-            ];
-        }
-        return response()->json($newContacts);
-    })->name('contact');
-
-    Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
-
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
+    Route::post('staffs/createAdmin', [AdminController::class, 'store']);
+});
+
+Route::middleware(CheckPermission::class)->group(function () {
+    
+    Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
     Route::resource('staffs', AdminController::class)->except(['create', 'edit']);
 

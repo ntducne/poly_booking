@@ -4,6 +4,7 @@ namespace App\Modules\Pay\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Billing;
+use App\Models\BookDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -89,6 +90,10 @@ class MomoController extends Controller
                 'reason' => $request->message,
                 'payment_info' => $request->orderInfo
             ]);
+            $booking_id = $billing->booking_id;
+            BookDetail::where('booking_id', $booking_id)->update([
+                'status' => 3
+            ]);
             return response()->json([
                 'status' => 6,
                 'message' => $request->message,
@@ -99,6 +104,10 @@ class MomoController extends Controller
                 'status' => 1,
                 'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
+            $booking_id = $billing->booking_id;
+            BookDetail::where('booking_id', $booking_id)->update([
+                'status' => 1
+            ]);
             return response()->json([
                 'status' => 1,
                 'message' => $request->message,
@@ -107,3 +116,6 @@ class MomoController extends Controller
         }
     }
 }
+
+
+
