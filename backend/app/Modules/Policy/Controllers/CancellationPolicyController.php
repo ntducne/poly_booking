@@ -7,6 +7,7 @@ use App\Http\Requests\CancellationPolicy\StoreCancellationPolicyRequest;
 use App\Http\Requests\CancellationPolicy\UpdateCancellationPolicyRequest;
 use App\Models\CancellationPolicy;
 use Exception;
+use http\Env\Request;
 use Illuminate\Support\Facades\Log;
 
 class CancellationPolicyController extends Controller
@@ -18,10 +19,12 @@ class CancellationPolicyController extends Controller
         $this->cancellationPolicy = new CancellationPolicy();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $cancellationPolicy =  $this->cancellationPolicy->paginate(6);
+            $query = $this->cancellationPolicy->newQuery();
+            $query->where('branch_id', $request->user()->branch_id);
+            $cancellationPolicy =  $query>paginate(6);
             return response()->json([
                 'message' => 'Get Data',
                 'data'    => $cancellationPolicy,
@@ -58,7 +61,9 @@ class CancellationPolicyController extends Controller
     public function show($id)
     {
         try {
-            $cancellationPolicy = $this->cancellationPolicy->find($id);
+            $cancellationPolicy = $this->cancellationPolicy->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();;
             if(!$cancellationPolicy){
                 return response()->json([
                     'status' => 'error',
@@ -84,7 +89,9 @@ class CancellationPolicyController extends Controller
     public function update(UpdateCancellationPolicyRequest $request,  $id)
     {
         try {
-            $cancellationPolicy = CancellationPolicy::find($id);
+            $cancellationPolicy = $this->cancellationPolicy->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$cancellationPolicy) {
                 return response()->json([
                     'status' => 'error',
@@ -110,7 +117,9 @@ class CancellationPolicyController extends Controller
     public function destroy($id)
     {
         try {
-            $cancellationPolicy = CancellationPolicy::find($id);
+            $cancellationPolicy =  $this->cancellationPolicy->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$cancellationPolicy) {
                 return response()->json([
                     'status' => 'error',
