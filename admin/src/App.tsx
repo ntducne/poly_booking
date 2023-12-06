@@ -35,7 +35,6 @@ import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
 import EditUser from "./pages/Admin/Guset/User/Edit";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
-import ListBranches from "./pages/Admin/Branches/List";
 import AddBranche from "./pages/Admin/Branches/Add";
 import EditBranche from "./pages/Admin/Branches/Edit";
 import RoomBooking from "./pages/Admin/Room/booking";
@@ -44,8 +43,11 @@ import BillDetail from "./pages/Admin/Bill/Detail";
 import Demo from "./pages/demo";
 import ListContact from "./pages/Admin/Contact/List";
 import ListNotifications from "./pages/Admin/Notifications/List";
-
+import { AuthorizedListBranches, AuthorizedStoreBranches } from "./hoc/componentRole";
+// import withAuthorization from "./hoc/withAuthorization";
 function App() {
+  // const AuthorizedListBranches = withAuthorization(ListBranches, 'admin.branches.index');
+
   return (
     <>
       <Routes>
@@ -118,8 +120,8 @@ function App() {
             <Route path="edit/:id" element={<EditUser />} />
           </Route>
           <Route path="branches">
-            <Route index element={<ListBranches />} />
-            <Route path="add" element={<AddBranche />} />
+            <Route index element={<AuthorizedListBranches />} />
+            <Route path="add" element={<AuthorizedStoreBranches />} />
             <Route path="edit/:id" element={<EditBranche />} />
           </Route>
         </Route>

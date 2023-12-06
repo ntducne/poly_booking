@@ -11,7 +11,7 @@ class CheckPermission
     {
         $route = $request->route()->getName();
         $user  = $request->user()->getAllPermission();
-        if (!in_array($route, $user)) {
+        if (!in_array($route, $user) && $request->user()->role !== 'admin') {
             return response()->json([
                 'message' => 'Bạn không có quyền truy cập !'
             ], 403);

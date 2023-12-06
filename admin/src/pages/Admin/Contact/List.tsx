@@ -5,53 +5,48 @@ import FormSearch from "../../../component/formSearch";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Table } from "antd";
+import moment from "moment";
 
 const ListContact = () => {
   const { data: dataContact, isLoading } = useGetContactQuery({});
 
-    const columns: ColumnsType<any> = [
-        {
-        title: "ID",
-        dataIndex: "key",
-        sorter: (a, b) => a.key - b.key,
-        sortDirections: ["descend"],
-        fixed: "left",
-        },
-        {
-        title: "Họ và tên",
-        dataIndex: "name",
-        key: "name",
-        },
-        {
-        title: "Email",
-        dataIndex: "email",
-        key: "email",
-        },
-        {
-        title: "Số điện thoại",
-        dataIndex: "phone",
-        key: "phone",
-        },
-        {
-        title: "Nội dung",
-        dataIndex: "content",
-        key: "content",
-        },
-        {
-        title: "Thời gian",
-        dataIndex: "created_at",
-        key: "created_at",
-        },
-    ];
+  const columns: ColumnsType<any> = [
+    {
+      title: "ID",
+      dataIndex: "key",
+      sorter: (a, b) => a.key - b.key,
+      sortDirections: ["descend"],
+      fixed: "left",
+    },
+    {
+      title: "Họ và tên",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Nội dung",
+      dataIndex: "message",
+      key: "message",
+    },
+    {
+      title: "Thời gian",
+      dataIndex: "time",
+      key: "time",
+    },
+  ];
 
-    const data = dataContact?.data?.map((item, index) => ({
-        key: index + 1,
-        name: item.name,
-        email: item.email,
-        phone: item.phone,
-        content: item.content,
-        created_at: item.created_at,
-    }));
+  const data = dataContact?.map((item, index) => ({
+    key: index + 1,
+    name: item.name,
+    email: item.email,
+    message: item.message,
+    time: moment(item.time).format("h:mm:ss    DD/MM/YYYY"),
+  }));
   return (
     <Page title={`Đánh giá`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between  ">

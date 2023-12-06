@@ -71,6 +71,6 @@ return [
     'admin.booking.handle.checkin' => 'Checkin đặt phòng',
     'admin.booking.handle.checkout' => 'Checkout đặt phòng  ',
     'admin.booking.handle.addPeople' => 'Thêm người đặt phòng',
-    'admin.booking.handle.addService	' => 'Thêm dịch vụ đặt phòng',
+    'admin.booking.handle.addService' => 'Thêm dịch vụ đặt phòng',
     'admin.booking.handle.giaHan' => 'Gia hạn đặt phòng',
 ];

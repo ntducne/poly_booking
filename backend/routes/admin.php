@@ -24,7 +24,6 @@ Route::fallback(function () {
     ], 404);
 });
 
-
 Route::get('/notifications', function(){
     $notification = Notification::all();
     $newNotification = [];
@@ -35,7 +34,7 @@ Route::get('/notifications', function(){
         ];
     }
     return response()->json($newNotification);
-})->name('notifications.index');
+})->name('notifications');
 
 Route::get('/contact', function(){
     $contacts = \App\Models\Contact::all();
@@ -49,15 +48,16 @@ Route::get('/contact', function(){
         ];
     }
     return response()->json($newContacts);
-})->name('contact.index');
+})->name('contact');
 
 Route::middleware(CheckPermission::class)->group(function () {
-
-    
-
-    Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
-
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
+    Route::post('staffs/createAdmin', [AdminController::class, 'store']);
+});
+
+Route::middleware(CheckPermission::class)->group(function () {
+    
+    Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
     Route::resource('staffs', AdminController::class)->except(['create', 'edit']);
 

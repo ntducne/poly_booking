@@ -4,6 +4,7 @@ namespace App\Modules\Pay\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Billing;
+use App\Models\BookDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -113,6 +114,10 @@ class VnpayController extends Controller
                     'payment_method' => 'VNPAY',
                     'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
+                $booking_id = $billing->booking_id;
+                BookDetail::where('booking_id', $booking_id)->update([
+                    'status' => 1
+                ]);
             }
             else {
                 Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update([
@@ -120,12 +125,20 @@ class VnpayController extends Controller
                     'payment_method' => 'VNPAY',
                     'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
+                $booking_id = $billing->booking_id;
+                BookDetail::where('booking_id', $booking_id)->update([
+                    'status' => 3
+                ]);
             }
         } else {
             Billing::where('billingCode', (integer)$request->vnp_TxnRef)->update([
                 'status' => 7,
                 'payment_method' => 'VNPAY',
                 'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+            $booking_id = $billing->booking_id;
+            BookDetail::where('booking_id', $booking_id)->update([
+                'status' => 3
             ]);
         }
         return response()->json([

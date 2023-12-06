@@ -52,7 +52,7 @@ const clientApi = createApi({
 
         handleContact: builder.mutation({
             query: (data) => ({
-                url: `/client/contact`,
+                url: `/contact`,
                 method: "POST",
                 body: data,
             }),

@@ -26,6 +26,7 @@ const Head = () => {
   const navigate = useNavigate();
   const token = JSON.parse(cookies().Get("AuthUser") as any)[2].token;
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
+  const notificationSound = new Audio("./src/utils/telegram.mp3");
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_URL_API}/notifications`, {
@@ -78,6 +79,7 @@ const Head = () => {
           },
         ]);
         setNewMessage(notifications.length + 1);
+        notificationSound.play()
       }
     );
     return () => {
@@ -150,7 +152,7 @@ const Head = () => {
     },
     {
       label: (
-        <div className="overflow-scroll overflow-x-auto max-h-72">
+        <div className="bg-white overflow-scroll overflow-x-auto max-h-72">
           {notifications?.map((item: any) => {
             return (
               <div>
@@ -181,7 +183,7 @@ const Head = () => {
       key: "12",
     },
   ];
-  
+
 
   return (
     <div className="flex justify-between items-center mx-4">

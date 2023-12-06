@@ -13,6 +13,7 @@ class Utilities extends Eloquent
 
     protected $fillable = [
         'name',
+        'branch_id',
         'room_id',
     ];
 
