@@ -4,6 +4,7 @@ namespace App\Modules\Pay\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Billing;
+use App\Models\BookDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
@@ -41,6 +42,8 @@ class PaypalController extends Controller {
                 ]
             ]
         ]);
+        $billing = Billing::where('billingCode', (integer)$order_code)->first();
+
         if (isset($response['id']) && $response['id'] != null) {
             foreach ($response['links'] as $links) {
                 if ($links['rel'] == 'approve') {
@@ -51,6 +54,10 @@ class PaypalController extends Controller {
                 'status' => 7,
                 'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
+            $booking_id = $billing->booking_id;
+            BookDetail::where('booking_id', $booking_id)->update([
+                'status' => 3
+            ]);
             return response()->json([
                 'status' => 'error',
                 'message' => 'Payment failed.'
@@ -60,6 +67,10 @@ class PaypalController extends Controller {
             Billing::where('billingCode', (integer)$order_code)->update([
                 'status' => 7,
                 'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+            $booking_id = $billing->booking_id;
+            BookDetail::where('booking_id', $booking_id)->update([
+                'status' => 3
             ]);
             return response()->json([
                 'status' => 'error',
@@ -80,6 +91,10 @@ class PaypalController extends Controller {
         Billing::where('billingCode', (integer)$order_code)->update([
             'status' => 6,
             'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        $booking_id = $billing->booking_id;
+        BookDetail::where('booking_id', $booking_id)->update([
+            'status' => 3
         ]);
         return redirect()->to(env('FE_URL') . '/payment/status/paypal?status=6');
     }
@@ -103,12 +118,20 @@ class PaypalController extends Controller {
                 'status' => 1,
                 'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
+            $booking_id = $billing->booking_id;
+            BookDetail::where('booking_id', $booking_id)->update([
+                'status' => 1
+            ]);
             return redirect()->to(env('FE_URL') . '/payment/status/paypal?status=1');
 
         } else {
             Billing::where('billingCode', (integer)$order_code)->update([
                 'status' => 7,
                 'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+            $booking_id = $billing->booking_id;
+            BookDetail::where('booking_id', $booking_id)->update([
+                'status' => 3
             ]);
             return redirect()->to(env('FE_URL') . '/payment/status/momo?status=7&billingCode=' . $order_code);
         }

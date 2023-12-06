@@ -21,14 +21,8 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         try{
-            $role = $request->user()->role;
-
-            if ($role == 0) {
-                $response = $this->admin->paginate(10);
-            }
-            if ($role == 1) {
-                $response = $this->admin->where('created_by', $request->user()->id)->paginate(10);
-            }
+            // $role = $request->user()->role;
+            $response = $this->admin->paginate(10);
             return StaffResource::collection($response);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
