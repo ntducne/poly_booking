@@ -3,7 +3,6 @@ import {
   Form,
   Input,
   Button,
-  Select,
   Typography,
   InputNumber,
   Space,
@@ -16,7 +15,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 // import { Skeleton } from "antd";
 import { role } from "../../../hoc/withAuthorization";
-const { Option } = Select;
+// const { Option } = Select;
 
 const { Title, Text } = Typography;
 
@@ -122,7 +121,7 @@ const AddServices = () => {
             <Input.TextArea rows={5} />
           </Form.Item>
 
-          {role === "super_admin" && (
+          {/* {role === "super_admin" && (
             <Form.Item
               name="branch_id"
               label="Chi nhánh"
@@ -147,7 +146,7 @@ const AddServices = () => {
                 })}
               </Select>
             </Form.Item>
-          )}
+          )} */}
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">

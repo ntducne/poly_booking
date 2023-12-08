@@ -48,20 +48,20 @@ export default function RoomBooking() {
     setIsModalOpen(true);
   };
 
-  const newData = dataRoom?.map((room: any, index) => ({
-    key: index + 1,
-    name: room?.name,
-    images: room?.images,
-    room_type_name: room?.type?.room_type_name,
-    child: room?.children,
-    area: room?.area,
-    bed_size: room?.bed_size,
-    description: room?.description,
-    adults: room?.adults,
-    branch: room?.branch,
-    price: room?.type?.price_per_night,
-    // discount: room?.discount,
-  }));
+  // const newData = dataRoom?.map((room: any, index) => ({
+  //   key: index + 1,
+  //   name: room?.name,
+  //   images: room?.images,
+  //   room_type_name: room?.type?.room_type_name,
+  //   child: room?.children,
+  //   area: room?.area,
+  //   bed_size: room?.bed_size,
+  //   description: room?.description,
+  //   adults: room?.adults,
+  //   branch: room?.branch,
+  //   price: room?.type?.price_per_night,
+  //   // discount: room?.discount,
+  // }));
 
   const columns = [
     {
