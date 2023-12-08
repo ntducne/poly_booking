@@ -22,7 +22,7 @@ const BillList = () => {
       setBillings(prevBillings => [...prevBillings, data.data]);
     });
     return () => {
-      unsubscribe();
+      unsubscribe();  
     };
   }, []);
 
