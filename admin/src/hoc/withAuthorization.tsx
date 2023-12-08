@@ -25,7 +25,7 @@ export const role = (() => {
   const authUser = cookies().Get("AuthUser");
   if (authUser) {
     const parsed = JSON.parse(cookies().Get("AuthUser") as any);
-    return parsed ? parsed[1]?.role : null;
+    return parsed ? parsed[1].role : null;
   }
   return null;
 })();
