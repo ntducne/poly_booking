@@ -84,9 +84,7 @@ class ServicesController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $service = $this->services->where('_id', $id)
-                ->where('branch_id', request()->user()->branch_id)
-                ->first();
+            $service = $this->services->where('_id', $id)->where('branch_id', request()->user()->branch_id)->first();
             if (!$service) {
                 return response()->json([
                     'status' => 'error',

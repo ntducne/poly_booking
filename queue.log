@@ -4310,3 +4310,3709 @@ In permissions.php line 4:
   10  artisan:35
       Illuminate\Foundation\Console\Kernel::handle()
 
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<"
+
+  at app/Providers/RouteServiceProvider.php:73
+     69▕                 ->middleware('api')
+     70▕                 ->namespace($this->namespace)
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+  ➜  73▕ <<<<<<< HEAD
+     74▕             Route::
+     75▕                 domain('api.' . env('APP_DOMAIN'))
+     76▕ =======
+     77▕             Route::domain('api.' . env('APP_DOMAIN'))
+sh: 1: cd: can't cd to RouteServiceProvider.php
+
+  i   Merge conflict from branch '3a8079aedb4d3070d25fb3cc18d138d9a4f7cb78' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+
+PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use in /var/www/poly_booking/backend/routes/admin.php on line 21
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+
+   Whoops\Exception\ErrorException 
+
+  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRoleSuperAdmin because the name is already in use
+
+  at routes/admin.php:21
+     17▕ use App\Modules\Staff\Controllers\AdminController;
+     18▕ use App\Modules\User\Controllers\UserController;
+     19▕ use App\Modules\Utilities\Controllers\UtilitiesController;
+     20▕ use Illuminate\Support\Facades\Route;
+  ➜  21▕ use App\Http\Middleware\CheckRoleSuperAdmin;
+     22▕ 
+     23▕ Route::fallback(function () {
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+
+      [2m+1 vendor frames [22m
+
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
+

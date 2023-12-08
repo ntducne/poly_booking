@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\CheckRoleSuperAdmin;
 use App\Models\Notification;
 use App\Modules\Branch\Controllers\BranchController;
 use App\Modules\Dashboard\Controllers\DashboardController;
@@ -34,6 +35,8 @@ Route::get('/notifications', function(){
             'time' => $value->time,
         ];
     }
+    // đảo ngược mảng
+    $newNotification = array_reverse($newNotification);
     return response()->json($newNotification);
 })->name('notifications');
 
