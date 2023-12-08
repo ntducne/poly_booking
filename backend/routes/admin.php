@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\CheckRoleAdmin;
 use App\Http\Middleware\CheckRoleSuperAdmin;
 use App\Models\Notification;
 use App\Modules\Branch\Controllers\BranchController;
@@ -57,6 +58,11 @@ Route::get('/contact', function(){
 Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
     Route::post('staffs/createAdmin', [AdminController::class, 'store']);
+    Route::get('staffs/listAdmin', [AdminController::class, 'index']);
+    Route::post('staffs/updateAdmin/{id}', [AdminController::class, 'update']);
+    Route::post('staffs/deleteAdmin/{id}', [AdminController::class, 'destroy']);
+    Route::post('staffs/assignPermissionAdmin/{id}', [AdminController::class, 'assignPermission']);
+
 });
 
 Route::get('/room/search', [BookingController::class, 'search'])->name('search');
@@ -66,9 +72,13 @@ Route::middleware(CheckPermission::class)->group(function () {
     
     Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
-    Route::resource('staffs', AdminController::class)->except(['create', 'edit']);
+    Route::middleware(CheckRoleAdmin::class)->group(function () {
+    
+        Route::resource('staffs', AdminController::class)->except(['create', 'edit']);
 
-    Route::post('staffs/assignPermission/{id}', [AdminController::class, 'assignPermission'])->name('staffs.assignPermission');
+        Route::post('staffs/assignPermission/{id}', [AdminController::class, 'assignPermission'])->name('staffs.assignPermission');
+    
+    });
 
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);
 
