@@ -17,16 +17,14 @@ export default function Room(props: any) {
     image,
   } = props?.data;
   console.log(images?.[0]?.image);
-  
+
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
       <div className="lg:hidden block">
         <Link to={`/rooms/${slug}`}>
           <img
             className="group-hover:scale-110 transition-all duration-300 w-full"
-            src={
-              images?.[0]?.image ?? image
-            }
+            src={images?.[0]?.image ?? image}
             alt=""
           />
         </Link>
@@ -45,7 +43,7 @@ export default function Room(props: any) {
             <li>Trẻ em: {children || 2}</li>
             <li>Mô tả: {description}</li>
             <li>Loại giường: Đơn</li>
-            <li>Số giường: 3</li>
+            <li>Số giường: {num_of_bed}</li>
           </div>
         </div>
 
@@ -75,9 +73,7 @@ export default function Room(props: any) {
         <Link to={`/rooms/${slug}`} className="min-w-[200px]">
           <img
             className="group-hover:scale-110 transition-all duration-300 object-cover"
-            src={
-              images?.[0]?.image ?? image
-            }
+            src={images?.[0]?.image ?? image}
             alt=""
           />
         </Link>

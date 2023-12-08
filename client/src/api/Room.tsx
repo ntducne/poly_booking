@@ -1,21 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { useCookies } from "react-cookie";
 
 const roomApi = createApi({
-  reducerPath: "Rooms",
+  reducerPath: "rooms",
   tagTypes: ["Rooms"],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_URL_CLIENT,
+    baseUrl: import.meta.env.VITE_URL_API,
     prepareHeaders: (headers) => {
-      const [cookies] = useCookies(['userInfo']);
-      const token = cookies.userInfo?.accessToken?.token;
-      console.log(token);
-      
-      if (token) {
-          headers.set("authorization", `Bearer ${token}`);
-      }
       return headers;
-  },
+    },
   }),
   endpoints: (builder) => ({
     getRooms: builder.query<any, any>({
@@ -49,7 +41,7 @@ const roomApi = createApi({
     }),
     postBooking: builder.mutation({
       query: (data: any) => ({
-        url: `client/room/booking`,
+        url: `/room/booking`,
         method: "POST",
         body: data,
       }),
