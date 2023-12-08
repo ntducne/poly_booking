@@ -1,4 +1,3 @@
-import React from "react";
 import Page from "../../../component/page";
 import { useGetContactQuery } from "../../../api/contact";
 import FormSearch from "../../../component/formSearch";

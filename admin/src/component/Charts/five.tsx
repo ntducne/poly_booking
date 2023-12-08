@@ -28,6 +28,7 @@ export default function ChartFive() {
         tickAmount: 10,
         labels: {
           formatter: function(value :any, timestamp :any, opts :any) {
+            console.log(value);
             return opts.dateFormatter(new Date(timestamp), 'dd MMM')
           }
         }

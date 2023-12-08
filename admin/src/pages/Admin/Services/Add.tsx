@@ -10,11 +10,11 @@ import {
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
-import { useGetAllBranchesQuery } from "../../../api/branches";
+// import { useGetAllBranchesQuery } from "../../../api/branches";
 import { useCreateServicesMutation } from "../../../api/services";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Skeleton } from "antd";
+// import { Skeleton } from "antd";
 import { role } from "../../../hoc/withAuthorization";
 const { Option } = Select;
 
@@ -29,24 +29,24 @@ const AddServices = () => {
   console.log("role", role);
 
   const [createServices] = useCreateServicesMutation();
-  const { data: dataBranches, isLoading: loadingBranch } =
-    useGetAllBranchesQuery({});
+  // const { data: dataBranches, isLoading: loadingBranch } =
+  //   useGetAllBranchesQuery({});
   const navigate = useNavigate();
 
-  if (loadingBranch) {
-    return (
-      <div>
-        <Skeleton />
-      </div>
-    );
-  }
+  // if (loadingBranch) {
+  //   return (
+  //     <div>
+  //       <Skeleton />
+  //     </div>
+  //   );
+  // }
 
   const onFinish = (values: any) => {
     createServices(values)
       .unwrap()
       .then((item) => {
         if (item.status == "Success") {
-          toast("Thêm mới thành công", {
+          toast(item?.message, {
             autoClose: 3000,
             theme: "light",
           });
