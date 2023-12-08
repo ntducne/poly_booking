@@ -5,7 +5,7 @@ const userApi = createApi({
   reducerPath: "Users",
   tagTypes: ["Users"],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_URL_API + "/user/",
+    baseUrl: import.meta.env.VITE_URL_USER,
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",
@@ -16,13 +16,13 @@ const userApi = createApi({
   }),
   endpoints: (builder) => ({
     getProfile: builder.query<any, any>({
-      query: () => `profile`,
+      query: () => `/profile`,
       providesTags: ["Users"],
     }),
 
     updateAvatar: builder.mutation({
       query: (data) => ({
-        url: `update/avatar`,
+        url: `/update/avatar`,
         method: "PUT",
         body: data, // image
       }),
@@ -31,7 +31,7 @@ const userApi = createApi({
 
     updateProfile: builder.mutation({
       query: (data) => ({
-        url: `update/profile`,
+        url: `/update/profile`,
         method: "POST",
         body: data,
       }),
@@ -40,7 +40,7 @@ const userApi = createApi({
 
     updatePassword: builder.mutation({
       query: (data) => ({
-        url: `update/password`,
+        url: `/update/password`,
         method: "POST",
         body: data,
       }),
@@ -48,12 +48,12 @@ const userApi = createApi({
     }),
 
     getHistoryBooking: builder.query<any, any>({
-      query: () => `booking/history`,
+      query: () => `/booking/history`,
       providesTags: ["Users"],
     }),
 
     getDetailHistoryBooking: builder.query<any, any>({
-      query: (id) => `booking/detail/${id}`,
+      query: (id) => `/booking/${id}`,
       providesTags: ["Users"],
     }),
 
@@ -67,7 +67,7 @@ const userApi = createApi({
 
     processReview: builder.mutation({
       query: (data) => ({
-        url: `rate`,
+        url: `/rate`,
         method: "POST",
         body: data,
       }),
@@ -76,7 +76,7 @@ const userApi = createApi({
 
     processLogout: builder.mutation<any, any>({
       query: () => ({
-        url: `logout`,
+        url: `/logout`,
         method: "POST",
       }),
       invalidatesTags: ["Users"],

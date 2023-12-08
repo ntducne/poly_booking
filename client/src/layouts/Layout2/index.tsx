@@ -47,7 +47,7 @@ export default function LayoutClient2({}: Props) {
         <div className="container mx-auto lg:flex-row lg:justify-between lg:gap-y-0 flex justify-between">
           {/* logo */}
           <div className="flex gap-5 items-center ">
-            <Link to="">
+            <Link to="/">
               <img
                 className="w-[90px]"
                 src={

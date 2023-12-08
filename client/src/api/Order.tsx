@@ -16,7 +16,7 @@ const orderApi = createApi({
       query: (data: { billing_id: string }) => {
         return {
           method: "POST",
-          url: "/client/booking/check",
+          url: "/booking/check",
           body: data,
         };
       },

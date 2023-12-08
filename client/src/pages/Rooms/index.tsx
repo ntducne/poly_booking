@@ -15,7 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useGetBranchesQuery } from "../../api/Branch";
-import { useGetRoomsQuery } from "../../api/Room";
+import { useGetRoomsQuery, useSearchRoomsMutation } from "../../api/Room";
 import {
   SlideRooms1,
   SlideRooms2,
@@ -33,7 +33,6 @@ const { RangePicker } = DatePicker;
 const useQueryParams = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-
   return {
     get: (param: any) => queryParams.get(param),
     getAll: () => Object.fromEntries(queryParams.entries()),
@@ -46,7 +45,9 @@ export default function Rooms({}: Props) {
   const [width, setWidth] = useState(0);
   const navigate = useNavigate();
   const [dataQuery, setDataQuery] = useState<any>(queryParams || {});
-  const { data, isLoading, refetch } = useGetRoomsQuery(dataQuery);
+  const [data, setData] = useState<any>({});
+  const { data: dataAll, isLoading, refetch } = useGetRoomsQuery({});
+  const [searchRooms, { isLoading: loadingSearch }] = useSearchRoomsMutation();
   const { data: dataBranches } = useGetBranchesQuery({});
   const [childs, setChilds] = useState<number>(0);
   const [adults, setAdults] = useState<number>(0);
@@ -76,20 +77,20 @@ export default function Rooms({}: Props) {
     setCookie("roomSearch", dataQuery, { path: "/" });
   };
 
-  // const validateQueryParams = (params: any) => {
-  //   const requiredParams = [
-  //     "checkin",
-  //     "checkout",
-  //     "adult",
-  //     "child",
-  //     "branch_id",
-  //     "amount_room",
-  //   ];
+  const validateQueryParams = (params: any) => {
+    const requiredParams = [
+      "checkin",
+      "checkout",
+      "adult",
+      "child",
+      "branch_id",
+      "soLuong",
+    ];
 
-  //   return requiredParams.every(
-  //     (param) => params.hasOwnProperty(param) && params[param]
-  //   );
-  // };
+    return requiredParams.every(
+      (param) => params.hasOwnProperty(param) && params[param]
+    );
+  };
 
   const handleBookingNow = (item: any) => {
     if (Object.keys(dataQuery).length) {
@@ -120,22 +121,37 @@ export default function Rooms({}: Props) {
     console.log("Failed:", errorInfo);
   };
   useEffect(() => {
-    if (!isLoading && data.status == false) {
-      message.error("Không có phòng nào phù hợp");
-    }
-  }, [data]);
-  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
     setWidth(window.innerWidth);
   }, [window.innerWidth]);
   useEffect(() => {
-    refetch();
-    if (data?.message === "Tìm thành công !") {
-      message.success("Tìm phòng thành công !!");
+    if (dataAll && Object.keys(dataAll).length) {
+      setData(dataAll);
     }
-  }, [isLoading, data]);
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (validateQueryParams(dataQuery)) {
+      const dataUpload = {
+        ...dataQuery,
+        amount_room: dataQuery.soLuong,
+      };
+      delete dataUpload.soLuong;
+      searchRooms(dataUpload)
+        .unwrap()
+        .then((res: any) => {
+          if (res.status) {
+            setData(res);
+            message.success("Tìm phòng thành công");
+          } else {
+            setData({});
+            message.error("Không có phòng nào phù hợp");
+          }
+        });
+    }
+  }, [dataQuery]);
   return (
     <Page title="Phòng">
       <div className="pb-[100px] bg-bgr">
@@ -167,7 +183,7 @@ export default function Rooms({}: Props) {
         <div className="pt-primary px-6 md:px-[120px]">
           <div className="container mx-auto w-full flex flex-col justify-start lg:px-0">
             <div className="mb-[20px] font-bold text-[18px]">
-              Đã tìm được tổng cộng là {data?.data.length} phòng
+              Đã tìm được tổng cộng là {data?.data?.length || 0} phòng
             </div>
             <div className="flex lg:flex-row lg:justify-center flex-col-reverse justify-start lg:max-w-none lg:px-2 relative">
               <div className="flex flex-col gap-[30px]">
@@ -175,7 +191,7 @@ export default function Rooms({}: Props) {
                   Array.from({ length: 5 }).map((_, index) => (
                     <PcLoading key={index} />
                   ))
-                ) : data?.data.length ? (
+                ) : data?.data?.length ? (
                   data?.data?.map((room: any) => (
                     <Room
                       key={room.id}
@@ -384,9 +400,6 @@ export default function Rooms({}: Props) {
                                   min={0}
                                   max={6}
                                   value={childs}
-                                  onChange={(value) => {
-                                    console.log(value);
-                                  }}
                                   readOnly
                                   className=""
                                 />

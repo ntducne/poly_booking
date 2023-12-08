@@ -23,6 +23,7 @@ import PaymentStatus from "./pages/Payment/process/status";
 import SearchOrder from "./pages/SearchOrder";
 import LayoutClient2 from "./layouts/Layout2";
 import DetailRoomBooked from "./pages/DetailRoomBooked";
+import LayoutProfile from "./layouts/LayoutProfile";
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
           <Route path="about" element={<AboutPage />} />
           <Route path="search-order" element={<SearchOrder />} />
         </Route>
-        <Route path="user" element={<LayoutClient2 />}>
+        <Route path="user" element={<LayoutProfile />}>
           <Route path="room-booked" element={<RoomBooked />} />
           <Route path="profile" element={<Edit />} />
           <Route path="profile/roomBooked/:id" element={<DetailRoomBooked />} />
