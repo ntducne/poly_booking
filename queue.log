@@ -3861,3 +3861,11 @@ In permissions.php line 4:
   syntax error, unexpected token "<<", expecting "]"  
                                                       
 
+  2023-12-08 20:43:30 App\Events\BookingEvent ........................ RUNNING
+  2023-12-08 20:43:30 App\Events\BookingEvent .................. 677.75ms DONE
+  2023-12-08 20:43:31 App\Events\Message ............................. RUNNING
+  2023-12-08 20:43:32 App\Events\Message ....................... 396.53ms DONE
+  2023-12-08 20:46:04 App\Events\BookingEvent ........................ RUNNING
+  2023-12-08 20:46:04 App\Events\BookingEvent .................. 657.82ms DONE
+  2023-12-08 20:46:05 App\Events\Message ............................. RUNNING
+  2023-12-08 20:46:06 App\Events\Message ....................... 429.48ms DONE
