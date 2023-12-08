@@ -254,6 +254,25 @@ const AddRoom = () => {
             </Radio.Group>
           </Form.Item>
 
+          <Form.Item name="pay_is_checkin" label="Hình thức thanh toán">
+            <Radio.Group>
+              <Row className="">
+                <Col>
+                  <Radio value="0" style={{ lineHeight: "32px" }}>
+                    Thanh toán khi nhận phòng
+                  </Radio>
+                </Col>
+                <Col >
+                  <Radio value="1" style={{ lineHeight: "32px" }}>
+                    Thanh toán trước
+                  </Radio>
+                </Col>
+              </Row>
+            </Radio.Group>
+          </Form.Item>
+
+          
+
           {/* <Form.Item
             name="policies_and_information"
             label="Chính sách"

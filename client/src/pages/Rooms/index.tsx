@@ -94,14 +94,17 @@ export default function Rooms({}: Props) {
 
   const handleBookingNow = (item: any) => {
     if (Object.keys(dataQuery).length) {
-      const { id, name, images, price, branch, bed_size } = item;
+      const { id, name, images, price, branch, bed_size, image, children, adults, num_of_bed } = item;
       const checkinDate = dayjs(cookie.roomSearch.checkin);
       const checkoutDate = dayjs(cookie.roomSearch.checkout);
       const dateDiff = checkoutDate.diff(checkinDate, "day");
       const bookingData = {
         room_id: id,
+        adults,
+        child: children,
+        num_of_bed,
         room_name: name,
-        image: images?.[0]?.image,
+        image: images?.[0]?.image ?? image,
         price: +price * +dateDiff * +cookie?.roomSearch?.soLuong,
         branch: branch?.name,
         bed_size,

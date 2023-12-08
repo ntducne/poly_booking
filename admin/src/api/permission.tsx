@@ -5,7 +5,7 @@ const permissonApi = createApi({
   reducerPath: "permission",
   tagTypes: ["permission"],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL_API + "/api/",
+    baseUrl: import.meta.env.VITE_URL_API,
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",
@@ -16,7 +16,7 @@ const permissonApi = createApi({
   }),
   endpoints: (builder) => ({
     getPermisson: builder.query<any, any>({
-      query: () => `permission`,
+      query: () => `/permission`,
       providesTags: ["permission"],
     }),
   }),

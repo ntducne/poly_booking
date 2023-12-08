@@ -28,25 +28,52 @@ class BookingRepository
         $this->history_handle = new HistoryHandleBooking();
     }
 
-    public function orderList(): AnonymousResourceCollection
+    public function orderList($request): AnonymousResourceCollection
     {
-        return BillingResource::collection($this->billing->paginate(10));
+        return BillingResource::collection(
+            $this->billing
+                ->where('branch_id', '=', $request->user()->branch_id)
+                ->orderBy('id', 'desc')
+                ->paginate(10)
+        );
     }
 
-    public function orderDetail($id): BillingResource
+    public function orderDetail($request, $id): BillingResource
     {
-        return new BillingResource($this->billing->find($id));
+        $billingId =  $this->billing
+            ->where('branch_id', '=', $request->user()->branch_id)
+            ->where('_id', $id)
+            ->first();
+
+        $billingCode = $this->billing
+                ->where('branch_id', '=', $request->user()->branch_id)
+                ->where('billingCode', +$id)
+                ->first();
+
+        if($billingId){
+            return new BillingResource(
+                $billingId 
+            );
+        }
+        if($billingCode){
+            return new BillingResource(
+                $billingCode 
+            );
+        }
+
+
+        
     }
 
     public function addService($request)
     {
         $services = $request->services;
         $arrService = [];
-        $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
+        $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
         $total = 0;
         if(count($billing->services) > 0){
             foreach ($services as $key => $value) {
-                $service = Services::find($value);
+                $service = Services::where('_id', '=', $value)->where('branch_id', '=', $request->user()->branch_id)->first();
                 $existingService = array_filter($billing->services, function ($item) use ($service) {
                     return $item['service_id'] == $service->_id;
                 });
@@ -68,7 +95,7 @@ class BookingRepository
         }
         else {
             foreach ($services as $key => $value) {
-                $service = Services::find($value);
+                $service = Services::where('_id', '=', $value)->where('branch_id', '=', $request->user()->branch_id)->first();
                 $arrService[] = [
                     'service_id' => $service->_id,
                     'service_name' => $service->service_name,
@@ -98,7 +125,7 @@ class BookingRepository
 
     public function addPeople($request)
     {
-        $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
+        $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
         if (!$billing) {
             return response()->json([
                 'status' => 'error',
@@ -142,7 +169,7 @@ class BookingRepository
 
     public function processCheckIn($request)
     {
-        $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
+        $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
         if (!$billing) {
             return response()->json([
                 'status' => 'error',
@@ -163,7 +190,7 @@ class BookingRepository
                 'data' => null
             ]);
         }
-        $this->billing->where('_id', $request->billing_id)->update([
+        $this->billing->where('_id', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
             'status' => 3
         ]);
         $values = [
@@ -182,7 +209,7 @@ class BookingRepository
 
     public function processCheckOut($request)
     {
-        $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
+        $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
         if (!$billing) {
             return response()->json([
                 'status' => 'error',
@@ -197,7 +224,7 @@ class BookingRepository
                 'data' => null
             ]);
         }
-        $this->billing->where('_id', '=', $request->billing_id)->update([
+        $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
             'status' => 4
         ]);
         $values = [
@@ -216,7 +243,7 @@ class BookingRepository
 
     public function cancelBooking($request)
     {
-        $billing = $this->billing->where('_id', '=', $request->billing_id)->first();
+        $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
         if (!$billing) {
             return response()->json([
                 'status' => 'error',
@@ -225,7 +252,7 @@ class BookingRepository
             ]);
         }
         if ($billing->status == 0 || $billing->status == 1) {
-            $this->billing->where('_id', '=', $request->billing_id)->update([
+            $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
                 'status' => 2
             ]);
             $values = [
@@ -250,7 +277,10 @@ class BookingRepository
 
     public function checkBooking($request){
         $billing_id = $request->billing_id;
-        $billing = $this->billing->where('_id', '=', $billing_id)->first();
+        $billing = $this->billing
+            ->where('_id', '=', $billing_id)
+            ->orWhere('billingCode', '=', $billing_id)
+            ->first();
         if (!$billing) {
             return response()->json([
                 'status' => 'error',

@@ -14,8 +14,9 @@ export default function Room(props: any) {
     price,
     discount,
     images,
+    image,
   } = props?.data;
-  console.log(props.data);
+  console.log(images?.[0]?.image);
 
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
@@ -23,10 +24,7 @@ export default function Room(props: any) {
         <Link to={`/rooms/${slug}`}>
           <img
             className="group-hover:scale-110 transition-all duration-300 w-full"
-            src={
-              images?.[0]?.image ||
-              "https://hotellerv1.themegoods.com/cultural/wp-content/uploads/sites/6/2018/09/pic-0203-04.jpg"
-            }
+            src={images?.[0]?.image ?? image}
             alt=""
           />
         </Link>
@@ -75,9 +73,7 @@ export default function Room(props: any) {
         <Link to={`/rooms/${slug}`} className="min-w-[200px]">
           <img
             className="group-hover:scale-110 transition-all duration-300 object-cover"
-            src={
-              "https://hotellerv1.themegoods.com/cultural/wp-content/uploads/sites/6/2018/09/pic-0203-04.jpg"
-            }
+            src={images?.[0]?.image ?? image}
             alt=""
           />
         </Link>

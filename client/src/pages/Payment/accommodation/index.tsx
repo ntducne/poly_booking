@@ -1,20 +1,29 @@
 import type { CollapseProps } from "antd";
-import { Button, Card, Checkbox, Col, Collapse, Form, Input, Modal, Row } from "antd";
+import { Button, Card, Collapse, Form, Input, Modal, message } from "antd";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import {
   useGetProfileQuery
 } from "../../../api/User";
+import { useLoginMutation } from "../../../api/Auth";
+import { cookies } from "../../../config/cookie";
+import { convertFromNowToSeconds } from "../../../config/convertDate";
+import { Link, useNavigate } from "react-router-dom";
+import FormatPrice from "../../../utils/FormatPrice";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-};
+
+
 
 type FieldType = {
   email?: string;
   password?: string;
   remember?: string;
 };
+
+
 
 export default function AccommodationBook() {
   const [isModalLogin, setIsModalLogin] = useState(false);
@@ -29,71 +38,23 @@ export default function AccommodationBook() {
   const [userName, setUserName] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [, setUserBook] = useState({});
   const { data } = useGetProfileQuery({});
-  const itemsColapper: CollapseProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <div className="flex justify-between items-center">
-          <p className="text-xl font-bold">Thành tiền</p>
-          <p className="text-xl font-bold">{cookie.bookingNow.price} VNĐ</p>
-        </div>
-      ),
-      children: (
-        <div className="flex justify-between items-center">
-          <p className="text-sm">
-            ({cookie.roomSearch.soLuong}x) {cookie.bookingNow.room_name}
-          </p>
-          <p className="text-sm">{cookie.bookingNow.price} VNĐ</p>
-        </div>
-      ),
-    },
-  ];
-
-  const handleNameChange = (e: any) => {
-    setUserName(e.target.value);
-    setCookie(
-      "userBook",
-      { ...cookie.userBook, name: e.target.value },
-      { path: "/" }
-    );
-    setUserBook(cookie.userBook);
-  };
-
-  const handlePhoneChange = (e: any) => {
-    setUserPhone(e.target.value);
-    setCookie(
-      "userBook",
-      { ...cookie.userBook, phone: e.target.value },
-      { path: "/" }
-    );
-    setUserBook(cookie.userBook);
-  };
-
-  const handleEmailChange = (e: any) => {
-    setUserEmail(e.target.value);
-    setCookie(
-      "userBook",
-      { ...cookie.userBook, email: e.target.value },
-      { path: "/" }
-    );
-    setUserBook(cookie.userBook);
-  };
+  const [Login, { isLoading }] = useLoginMutation()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    removeCookie("paymentPage", { path: "/" });
-
-    if (cookie.userInfo) {
+    setCookie("paymentPage", 0, { path: "/" });
+    if(!cookie?.bookingNow || !cookie?.roomSearch) {
+      navigate('/')
+    }
+    setUserName(cookie?.userBook?.name ?? '');
+    setUserEmail(cookie?.userBook?.email ?? '');
+    setUserPhone(cookie?.userBook?.phone ?? '');
+    if (cookie?.userInfo) {
       if (data && data.message) {
         setUserName(data.message.name);
         setUserEmail(data.message.email);
         setUserPhone(data.message.phone);
-        setUserBook({
-          name: data.message.name,
-          email: data.message.email,
-          phone: data.message.phone,
-        });
         setCookie(
           "userBook",
           {
@@ -103,16 +64,59 @@ export default function AccommodationBook() {
           },
           { path: "/" }
         );
-      } else {
-        setUserName("");
-        setUserEmail("");
-        setUserPhone("");
-        setUserBook({});
-        setCookie("userBook", {}, { path: "/" });
-      }
+      } 
     }
   }, []);
 
+
+  const itemsColapper: CollapseProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <div className="flex justify-between items-center">
+          <p className="text-xl font-bold">Thành tiền</p>
+          <p className="text-xl font-bold">{<FormatPrice price={cookie?.bookingNow?.price}/>}</p>
+        </div>
+      ),
+      children: (
+        <div className="flex justify-between items-center">
+          <p className="text-sm">
+            ({cookie?.roomSearch?.soLuong}x) {cookie?.bookingNow?.room_name}
+          </p>
+          <p className="text-sm">{<FormatPrice price={cookie?.bookingNow?.price}/>}</p>
+        </div>
+      ),
+    },
+  ];
+
+  const handleNameChange = (e: any) => {
+    setUserName(e.target.value);
+    setCookie(
+      "userBook",
+      { ...cookie?.userBook, name: e.target.value },
+      { path: "/" }
+    );
+  };
+
+  const handlePhoneChange = (e: any) => {
+    setUserPhone(e.target.value);
+    setCookie(
+      "userBook",
+      { ...cookie?.userBook, phone: e.target.value },
+      { path: "/" }
+    );
+  };
+
+  const handleEmailChange = (e: any) => {
+    setUserEmail(e.target.value);
+    setCookie(
+      "userBook",
+      { ...cookie?.userBook, email: e.target.value },
+      { path: "/" }
+    );
+  };
+
+ 
   const showModalLogin = () => {
     setIsModalLogin(true);
   };
@@ -125,46 +129,104 @@ export default function AccommodationBook() {
     setIsModalLogin(false);
   };
 
+
+  const onSubmitLogin = (values: any) => { 
+    Login(values)
+      .unwrap()
+      .then((values: any) => {
+        if (values.accessToken && values.user) {
+          cookies().Set(
+            "userInfo",
+            JSON.stringify(Object.values(values)),
+            convertFromNowToSeconds(values.accessToken.expires_at)
+          );
+          handleCancel()
+          message.success("Đăng nhập thành công");
+        } else {
+          message.error("Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại.");
+        }
+      }).catch((error: any) => {
+        console.log(error);
+        message.error(error?.data?.message || "some thing error");
+      })
+  }
+
+  const accommodationReview = () => {
+    if(userName == '' || userPhone == '' || userEmail == '') {
+      message.error("Vui lòng nhập đầy đủ thông tin liên hệ")
+      return
+    }
+    MySwal.fire({
+      imageUrl: '/logo_light.png',
+      imageWidth: 100,
+      imageHeight: 70,
+
+      // title: <p>Hello World</p>,
+      // icon: "info",
+      html: `
+        <div className="text-left">
+          <p>Thông tin bạn điền đã chính xác chưa?</p>
+          <ul>
+            <li>Họ và tên: ${userName}</li>
+            <li>Số điện thoại: ${userPhone}</li>
+            <li>Email: ${userEmail}</li>
+          </ul>
+          <p>Vé điện tử/phiếu thanh toán sẽ được gửi qua email và tóm tắt đặt chỗ sẽ được gửi đến số di động của bạn.</p>
+        </div>
+      `,
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText: `
+        Thông tin đã chính xác
+      `,
+      cancelButtonText: `
+        Thay đổi
+      `,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/accommodation/review')
+        setCookie("paymentPage", 1, { path: "/" });
+      } else {
+        // return MySwal.fire("Cancelled", "", "error");
+      }
+      // return MySwal.fire(<p>Shorthand works too</p>)
+    })
+    // navigate('/accommodation/review')
+    // setCookie("paymentPage", 1, { path: "/" });
+  }
+
+  const cancelBooking = () => { 
+    navigate('/rooms')
+    removeCookie("paymentPage", { path: "/" });
+    removeCookie("bookingNow", { path: "/" });
+    removeCookie("roomSearch", { path: "/" });
+    removeCookie("userInfo", { path: "/" });
+  }
+
   return (
     <>
-      {!cookie.userInfo && (
-        <Modal
-          title="Đăng nhập"
-          open={isModalLogin}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={[]}
-        >
-          <Form
-            name="basic"
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            autoComplete="off"
-          >
-            <Form.Item<FieldType>
-              label="Email"
-              name="email"
+      {!cookie?.userInfo && (
+        <Modal title="Đăng nhập" open={isModalLogin} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+          <Form name="basic" className="mt-5" onFinish={onSubmitLogin} autoComplete="off">
+            <Form.Item<FieldType> name="email"
               rules={[
                 { required: true, message: "Vui lòng nhập địa chỉ Email!" },
                 { type: "email", message: "Địa chỉ email không hợp lệ!" },
               ]}
             >
-              <Input type="email" />
+              <Input type="email" placeholder="Email" />
             </Form.Item>
-            <Form.Item<FieldType>
-              label="Mật khẩu"
-              name="password"
-              rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
-            >
-              <Input.Password />
+            <Form.Item<FieldType> name="password" rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}>
+              <Input.Password className="w-full" placeholder="Mật khẩu"/>
             </Form.Item>
-            <Form.Item className="flex justify-around">
-              <Button htmlType="submit" className="max-w-[200px]">
-                Đăng nhập
-              </Button>
-            </Form.Item>
+            <div className="flex justify-between">
+              <Form.Item><Button htmlType="submit" className="max-w-[200px]" loading={isLoading}>Đăng nhập</Button></Form.Item>
+              <Link to="/auth/forGotPassword">Quên mật khẩu ?</Link>
+            </div>
+            <div>
+              Chưa có tài khoản ? <Link to="/auth/register">Đăng ký ngay</Link>
+            </div>
           </Form>
         </Modal>
       )}
@@ -185,7 +247,7 @@ export default function AccommodationBook() {
           }}
         >
           <div>
-            {!cookie.userInfo && (
+            {!cookie?.userInfo && (
               <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row">
                 <img
                   className="object-cover w-full rounded-t-lg h-60 md:h-auto md:w-20 md:rounded-none md:rounded-l-lg ml-5"
@@ -212,9 +274,9 @@ export default function AccommodationBook() {
               </div>
             )}
 
-            <div className={`${!cookie.userInfo && "mt-6"}`}>
+            <div className={`${!cookie?.userInfo && "mt-6"}`}>
               <h1 className="text-xl font-bold mb-3">
-                Chi tiết liên hệ (cho Vé điện tử/Phiếu xác nhận)
+                Chi tiết liên hệ
               </h1>
               <div className="bg-white rounded-md border border-gray-200 shadow-sm">
                 <div className="p-5">
@@ -232,7 +294,7 @@ export default function AccommodationBook() {
                       id="text"
                       className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
                     />
-                    <div className="mt-1 text-gray-400">
+                    <div className="mt-1 text-gray-400 hidden">
                       *Nhập tên như trên CMND/hộ chiếu (không dấu)
                     </div>
                   </div>
@@ -251,7 +313,7 @@ export default function AccommodationBook() {
                         id="phone"
                         className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
                       />
-                      <div className="mt-1 text-gray-400">
+                      <div className="mt-1 text-gray-400 hidden">
                         VD: +84 901234567 trong đó (+84) là mã quốc gia còn
                         901234567 là số di động
                       </div>
@@ -270,204 +332,13 @@ export default function AccommodationBook() {
                         id="email"
                         className="border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5"
                       />
-                      <div className="mt-1 text-gray-400">
+                      <div className="mt-1 text-gray-400 hidden">
                         VD: email@example.com
                       </div>
                     </div>
                   </div>
                 </div>
                 <div></div>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <h1 className="text-xl font-bold mb-3">Yêu cầu đặc biệt</h1>
-              <div className="">
-                <Card
-                  title={
-                    <div className="text-xs">
-                      Cơ sở lưu trú sẽ cố gắng đáp ứng yêu cầu của bạn dựa trên
-                      tình trạng sẵn có. <br /> Lưu ý rằng bạn có thể phải trả
-                      thêm phí cho một số yêu cầu và bạn không thể sửa yêu cầu
-                      sau khi đã gửi.
-                    </div>
-                  }
-                  headStyle={{
-                    backgroundColor: "#f5f5f5",
-                  }}
-                >
-                  <div className="">
-                    <Checkbox.Group style={{ width: "100%" }}>
-                      <Row>
-                        <Col span={8}>
-                          <Checkbox value="A">Phòng không hút thuốc</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                          <Checkbox value="B">Tầng lầu</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                          <Checkbox value="C">Phòng liên thông</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                          <Checkbox value="D">Loại giường</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                          <Checkbox value="E">Giờ nhận phòng</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                          <Checkbox value="F">Giờ trả phòng</Checkbox>
-                        </Col>
-                        <Col span={8}>
-                          <Checkbox value="G">Khác</Checkbox>
-                        </Col>
-                      </Row>
-                    </Checkbox.Group>
-                  </div>
-                </Card>
-              </div>
-            </div>
-
-            <div className="mt-6 ">
-              <h1 className="text-xl font-bold mb-3">
-                Chính sách hủy đặt phòng
-              </h1>
-              <div className="bg-white border border-gray-200 rounded-lg p-5">
-                <div className="mb-5">
-                  <p className="text-md font-bold mb-1">
-                    Có áp dụng chính sách hủy phòng
-                  </p>
-                  <p className="text-gray-500">
-                    Hủy đặt phòng này có thể phải chịu một khoản phí hủy phòng
-                    nhất định.
-                  </p>
-                </div>
-                <div>
-                  <p className="text-md font-bold mb-1">Có thể đổi lịch</p>
-                  <p className="text-gray-500">
-                    Đặt phòng này có thể đổi lịch nhưng bạn có thể phải chịu một
-                    khoản phí hủy.
-                  </p>
-                  <ul className="mt-2 space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-                    <li>
-                      Bất kỳ mã giảm giá hoặc điểm đã sử dụng trong đặt phòng
-                      ban đầu sẽ không thể áp dụng cho đặt phòng mới.
-                    </li>
-                    <li>
-                      Phí đổi lịch có thể được áp dụng dựa trên sự chênh lệch
-                      giá giữa đặt phòng cũ và mới.
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <h1 className="text-xl font-bold mb-3">
-                Tiện Ích Bổ Sung cho Kỳ Nghỉ Của Bạn
-              </h1>
-              <div className="">
-                <Card
-                  title={
-                    <div className="">
-                      <Checkbox value="AFF">
-                        Bảo hiểm Du lịch Chubb - Hotel Protect
-                      </Checkbox>
-                      <p className="text-gray-500 text-xs">
-                        Bảo vệ kỳ nghỉ của Quý khách khỏi rủi ro bị hủy, mất đặt
-                        phòng khách sạn, và hơn thế nữa
-                      </p>
-                    </div>
-                  }
-                >
-                  <div className="">
-                    <ul className="space-y-4 text-left">
-                      <li className="flex items-center space-x-3">
-                        <svg
-                          className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 16 12"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M1 5.917 5.724 10.5 15 1.5"
-                          />
-                        </svg>
-                        <span>
-                          Bảo hiểm lên đến tối đa VND 850,000/phòng/đêm cho
-                          Quyền lợi Hủy hoặc Gián đoạn Đặt phòng khách sạn.
-                        </span>
-                      </li>
-                      <li className="flex items-center space-x-3">
-                        <svg
-                          className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 16 12"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M1 5.917 5.724 10.5 15 1.5"
-                          />
-                        </svg>
-                        <span>
-                          Bảo hiểm lên đến tối đa VND 850,000/phòng/đêm cho
-                          Quyền lợi Đặt phòng khách sạn.
-                        </span>
-                      </li>
-                      <li className="flex items-center space-x-3">
-                        <svg
-                          className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 16 12"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M1 5.917 5.724 10.5 15 1.5"
-                          />
-                        </svg>
-                        <span>
-                          Bảo hiểm lên đến VND 210,000,000 cho Quyền lợi Tai nạn
-                          cá nhân
-                        </span>
-                      </li>
-                      <li className="flex items-center space-x-3">
-                        <svg
-                          className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 16 12"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M1 5.917 5.724 10.5 15 1.5"
-                          />
-                        </svg>
-                        <span>
-                          Bảo hiểm lên đến VND 20,000,000 cho Quyền lợi Mất hoặc
-                          hư hại hành lý, quần áo và vật dụng cá nhân
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </Card>
               </div>
             </div>
 
@@ -481,7 +352,18 @@ export default function AccommodationBook() {
                 />
               </div>
             </div>
+
+            <div className="w-full flex justify-end mt-6">
+              <button onClick={cancelBooking} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white ">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+                  Quay lại
+                </span>
+              </button>
+              <button type="button" onClick={accommodationReview} className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-blfont-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Tiếp tục</button>
+            </div>
+
           </div>
+          
           <div>
             <Card
               title={
@@ -492,10 +374,10 @@ export default function AccommodationBook() {
                   />
                   <div className="flex flex-col justify-between p-4 leading-normal">
                     <h5 className=" text-md font-bold tracking-tight text-gray-900">
-                      {cookie.bookingNow.branch}
+                      {cookie?.bookingNow?.branch}
                     </h5>
                     <p className="font-normal text-gray-700 flex">
-                      {cookie.bookingNow.branch}
+                      {cookie?.bookingNow?.branch}
                     </p>
                   </div>
                 </div>
@@ -506,20 +388,20 @@ export default function AccommodationBook() {
             >
               <div
                 className="grid"
-                style={{ display: "grid", gridTemplateColumns: "3fr 3fr" }}
+                style={{ display: "grid", gridTemplateColumns: "2fr 3fr" }}
               >
-                <p>Ngày nhận phòng</p>
-                <p className="font-bold">
-                  {cookie.roomSearch.checkin} - Từ 12:00
+                <p className="mb-1">Nhận phòng</p>
+                <p className="font-bold text-xs mt-1">
+                  {cookie?.roomSearch?.checkin} - Từ 12:00
                 </p>
               </div>
               <div
                 className="grid"
-                style={{ display: "grid", gridTemplateColumns: "3fr 3fr" }}
+                style={{ display: "grid", gridTemplateColumns: "2fr 3fr" }}
               >
-                <p>Ngày trả phòng</p>
-                <p className="font-bold">
-                  {cookie.roomSearch.checkout} - Trước 14:00
+                <p>Trả phòng</p>
+                <p className="font-bold text-xs mt-1">
+                  {cookie?.roomSearch?.checkout} - Trước 14:00
                 </p>
               </div>
             </Card>
@@ -529,39 +411,39 @@ export default function AccommodationBook() {
                 <div className="flex items-center">
                   <img
                     className="w-14 h-14 rounded-md"
-                    src={cookie.bookingNow.image}
+                    src={cookie?.bookingNow?.image}
                     alt=""
                   />
                   <div className="flex flex-col justify-between p-4 leading-normal">
                     <h5 className=" text-md font-bold tracking-tight text-gray-900">
-                      {cookie.bookingNow.room_name}
+                      {cookie?.bookingNow?.room_name}
                     </h5>
                     <p className="font-normal text-gray-700 flex">
-                      ({cookie.roomSearch.soLuong}x){" "}
-                      {cookie.bookingNow.room_name}
+                      ({cookie?.roomSearch?.soLuong}x){" "}
+                      {cookie?.bookingNow?.room_name}
                     </p>
                   </div>
                 </div>
               }
             >
-              {/* <div className="grid" style={{
-                                display: 'grid',
-                                gridTemplateColumns: '2fr 3fr',
-                            }}>
-                                <p>khách/phòng</p>
-                                <p className='font-bold'>2 khách</p>
-                            </div>
-
-                            <div className="grid" style={{
-                                display: 'grid',
-                                gridTemplateColumns: '2fr 3fr',
-                            }}>
-                                <p>Kiểu giường</p>
-                                <p className='font-bold'>2 giường đôi</p>
-                            </div> */}
+              <div className="grid" style={{
+                display: 'grid',
+                gridTemplateColumns: '2fr 3fr',
+              }}>
+                <p>Khách/phòng</p>
+                <p className='font-bold'>2 khách</p>
+              </div>
+              <div className="grid" style={{
+                display: 'grid',
+                gridTemplateColumns: '2fr 3fr',
+              }}>
+                <p>Kiểu giường</p>
+                <p className='font-bold'>2 giường đôi</p>
+              </div>
             </Card>
           </div>
         </div>
+        
       </div>
     </>
   );

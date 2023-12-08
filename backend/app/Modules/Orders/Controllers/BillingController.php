@@ -25,14 +25,14 @@ class BillingController extends Controller
         $this->history = new HistoryHandleBooking();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->bookingRespository->orderList();
+        return $this->bookingRespository->orderList($request);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return $this->bookingRespository->orderDetail($id);
+        return $this->bookingRespository->orderDetail($request, $id);
     }
 
 }

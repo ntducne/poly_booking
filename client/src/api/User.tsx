@@ -59,7 +59,7 @@ const userApi = createApi({
 
     cancelBooking: builder.mutation({
       query: (id) => ({
-        url: `booking/cancel/${id}`,
+        url: `/booking/cancel/${id}`,
         method: "PUT",
       }),
       invalidatesTags: ["Users"],

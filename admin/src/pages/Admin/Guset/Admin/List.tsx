@@ -58,36 +58,25 @@ const ListAdmin = () => {
         {item?.permissions?.map((permission: any, index: any) => {
           const key = Object.keys(permission)[0];
           const value = permission[key];
-          // console.log("key", key);
-          // console.log("permissionUser", staff?.data?.permissions);
           if (loadingStaff) {
             return <>...........</>;
           }
-          console.log("data", dataStaff);
-
           if (dataStaff?.data?.permissions) {
             const check = dataStaff?.data?.permissions.find(
               (item: any) => item === key
             );
             if (check) {
               return (
-                <Checkbox key={index} defaultChecked>
+                <Checkbox value={permission} key={index} defaultChecked name="permissions[]">
                   {value}
                 </Checkbox>
               );
             } else {
-              return <Checkbox key={index}>{value}</Checkbox>;
+              return (
+                <Checkbox value={permission} key={index} name="permissions[]">{value}</Checkbox>
+              );
             }
           }
-
-          // // const permissionUser = staff?.data?.staff_permission?.map(
-          // //   (item: any) => {}
-          // // );
-          // // if (loadingStaff) {
-          // //   return <>...Loading</>;
-          // // }
-          // return <Checkbox key={index}>{value}</Checkbox>;
-          // return <CheckboxGroup key={index} options={valuePermission} />
         })}
       </>
     ),
@@ -195,13 +184,13 @@ const ListAdmin = () => {
   }));
 
   const onChange: TableProps<DataType>["onChange"] = () =>
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-    {
-      // console.log("params", pagination, filters, sorter, extra);
-    };
+  // pagination,
+  // filters,
+  // sorter,
+  // extra
+  {
+    // console.log("params", pagination, filters, sorter, extra);
+  };
 
   // const [checkedValues, setCheckedValues] = useState<any>({});
 
@@ -209,7 +198,9 @@ const ListAdmin = () => {
   //   setCheckedValues((prevState) => ({ ...prevState, [key]: checked }));
   // };
 
-  const handleSubmit = () => {
+  const handleSubmit = (values: any) => {
+    console.log(values);
+
     // Call API to update the permissions in the database
     // The API call will depend on your backend
   };
@@ -230,12 +221,13 @@ const ListAdmin = () => {
             items={items}
           />
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button htmlType="submit">
               Cập nhật
             </Button>
           </Form.Item>
         </Form>
       </Modal>
+
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <div className="mb-3">
           <FormSearch />

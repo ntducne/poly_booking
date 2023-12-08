@@ -55,7 +55,7 @@ class RoomRepository
         $children = $request->child;
         $checkin = Carbon::parse($request->checkin)->addHours(14)->format('Y-m-d H:i:s');
         $checkout = Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s');
-        $branch_id = $request->branch_id;
+        $branch_id = $request->branch_id ?? $request->user()->branch_id;
         $amount_room = $request->amount_room;
         $room_id = $request->room_id;
         if($room_id){
@@ -81,6 +81,7 @@ class RoomRepository
                 return [
                     [
                         'id' => $room->id,
+                        'slug' => $room->slug,
                         'name' => $room->name,
                         'amount' => $room->amount,
                         'discount' => $room->discount,
@@ -91,7 +92,8 @@ class RoomRepository
                         'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
                         'branch' => new BranchResource($this->branch->find($room->branch_id)),
                         'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
-                        'room_empty' => $roomNumberIsNotBook
+                        'room_empty' => $roomNumberIsNotBook,
+                        'pay_is_checkin' => $room->pay_is_checkin,
                     ]
                 ];
             }
@@ -151,6 +153,7 @@ class RoomRepository
                 if (count($newArray) > 0) {
                     $room_completed[] = [
                         'id' => $room->id,
+                        'slug' => $room->slug,
                         'name' => $room->name,
                         'amount' => $room->amount,
                         'discount' => $room->discount,
@@ -161,7 +164,8 @@ class RoomRepository
                         'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
                         'branch' => new BranchResource($this->branch->find($room->branch_id)),
                         'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
-                        'room_empty' => count($newArray)
+                        'room_empty' => count($newArray),
+                        'pay_is_checkin' => $room->pay_is_checkin,
                     ];
                 }
             }
@@ -186,6 +190,7 @@ class RoomRepository
                 }
                 $room_completed[] = [
                     'id' => $room->id,
+                    'slug' => $room->slug,
                     'name' => $room->name,
                     'amount' => $room->amount,
                     'discount' => $room->discount,
@@ -196,7 +201,8 @@ class RoomRepository
                     'room_type' => new RoomTypeResource($this->room_type->find($room->room_type_id)),
                     'branch' => new BranchResource($this->branch->find($room->branch_id)),
                     'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
-                    'room_empty' => count($room->room_number)
+                    'room_empty' => count($room->room_number),
+                    'pay_is_checkin' => $room->pay_is_checkin,
                 ];
             }
             $room_completed_2 = array_filter($room_completed, function ($room) use ($amount_room) {
@@ -212,8 +218,7 @@ class RoomRepository
         if (count($searchRoom) == 0) {
             return response()->json([
                 'status' => false,
-                'message' => 'Không tìm thấy phòng !',
-                'data' => []
+                'message' => 'Phòng đã hết !. Vui lòng chọn phòng khác',
             ]);
         }
         if (count($searchRoom) > 0) {
@@ -280,13 +285,17 @@ class RoomRepository
             'total' => $total,
             'payment_method' => $request->payment_method,
             'payment_date' => null,
-            'branch_id' => $room->branch_id,
+            'branch_id' => $room->branch_id ?? $request->user()->branch_id,
             'status' => 0,
             'billingCode' => time(),
+            'moneyUSD' => $total / 23000,
+            'moneyVND' => $total,
         ];
         $billing = $this->billing->create($billingData);
-        $newBilling_id = $this->billing->where('booking_id', $bookingCreate->id)->first();
-        event(new BookingEvent(new BillingResource($newBilling_id)));
+        $newBilling = $this->billing->where('booking_id', $bookingCreate->id)->first()->_id;
+        event(new BookingEvent(new BillingResource(
+            $this->billing->find($newBilling)
+        )));
         if($request->user()){
             $this->history_handle->create([
                 'booking_id' => $bookingCreate->id,
@@ -303,15 +312,43 @@ class RoomRepository
             $this->notification->create([
                 'message' => 'Có một đơn đặt phòng mới !',
                 'time' => Carbon::now()->format('Y-m-d H:i:s'),
-                'billing_id' => $newBilling_id,
+                'billing_id' => $newBilling,
             ]);
         }
+        if($request->payment_method == 'vnpay'){
+            return [
+                'status' => true,
+                'message' => 'Đặt phòng thành công !',
+                'url' => route('vnpay.process', [
+                    'order_code' => $billing->billingCode,
+                    'amount' => $billing->total,
+                ]),
+            ];
+        }
+        if($request->payment_method == 'momo'){
+            return [
+                'status' => true,
+                'message' => 'Đặt phòng thành công !',
+                'url' => route('momo.process', [
+                    'order_code' => $billing->billingCode,
+                    'amount' => $billing->total,
+                ]),
+            ];
+        }
+        if($request->payment_method == 'paypal'){
+            return [
+                'status' => true,
+                'message' => 'Đặt phòng thành công !',
+                'url' => route('paypal.process', [
+                    'order_code' => $billing->billingCode,
+                    'amount' => $billing->total,
+                ]),
+            ];
+        }
         return [
+            'status' => true,
             'message' => 'Đặt phòng thành công !',
-            'bill' => [
-                'billingCode' => $billing->billingCode,
-                'total' => $billing->total,
-            ]
+            'billingCode' => $billing->billingCode
         ];
     }
 
@@ -331,7 +368,9 @@ class RoomRepository
     public function processRenew($request)
     {
         $room_id = $request->room_id;
-        $billing = $this->billing->find($request->billing_id);
+        $billing = $this->billing->where('booking_id', $request->booking_id)
+            ->where('branch_id', $request->user()->branch_id)
+            ->first();
         $booking = $this->booking->find($billing->booking_id);
         $bookDetail = $this->bookDetail->where('booking_id', $booking->id)->first();
         if ($room_id == $bookDetail->room_id) {
@@ -388,11 +427,12 @@ class RoomRepository
             if ($count_room_detail < $newAmountRoom) {
                 $searchRoom = $this->processSearchRoom($request);
                 if (count($searchRoom) > 0) {
-                    $foundItem = collect($searchRoom)->firstWhere('_id', $request->room_id);
+                    $foundItem = collect($searchRoom)->firstWhere('id', $request->room_id);
                     if ($foundItem) {
                         $room = $this->room->find($foundItem['id']);
                     }
-                } else {
+                } 
+                else {
                     $room = $this->room->find($request->room_id);
                 }
                 $roomNumbers = $room->room_number;

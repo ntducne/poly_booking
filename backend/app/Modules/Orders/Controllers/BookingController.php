@@ -118,13 +118,13 @@ class BookingController extends Controller
     }
 
     public function giaHan(Request $request) {
-        try {
+        // try {
             return $this->roomRepository->processRenew($request);
-        } catch (Exception $exception) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Lỗi không thực hiện được gia hạn phòng !'
-            ]);
-        }
+        // } catch (Exception $exception) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Lỗi không thực hiện được gia hạn phòng !'
+        //     ]);
+        // }
     }
 }

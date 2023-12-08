@@ -24,37 +24,44 @@ Route::fallback(function () {
     ], 404);
 });
 
+Route::get('/notifications', function(){
+    $notification = Notification::all();
+    $newNotification = [];
+    foreach ($notification as $value) {
+        $newNotification[] = [
+            'message' => $value->message,
+            'time' => $value->time,
+        ];
+    }
+    return response()->json($newNotification);
+})->name('notifications');
+
+Route::get('/contact', function(){
+    $contacts = \App\Models\Contact::all();
+    $newContacts = [];
+    foreach ($contacts as $value) {
+        $newContacts[] = [
+            'name' => $value->name,
+            'email' => $value->email,
+            'message' => $value->message,
+            'time' => $value->created_at,
+        ];
+    }
+    return response()->json($newContacts);
+})->name('contact');
+
+Route::middleware(CheckPermission::class)->group(function () {
+    Route::resource('branches', BranchController::class)->except(['create', 'edit']);
+    Route::post('staffs/createAdmin', [AdminController::class, 'store']);
+});
+
 // Route::middleware(CheckPermission::class)->group(function () {
-
-    Route::get('/notifications', function(){
-        $notification = Notification::all();
-        $newNotification = [];
-        foreach ($notification as $key => $value) {
-            $newNotification[] = [
-                'message' => $value->message,
-                'time' => $value->time,
-            ];
-        }
-        return response()->json($newNotification);
-    })->name('notifications');
-
-    Route::get('/contact', function(){
-        $contacts = \App\Models\Contact::all();
-        $newContacts = [];
-        foreach ($contacts as $key => $value) {
-            $newContacts[] = [
-                'name' => $value->name,
-                'email' => $value->email,
-                'message' => $value->message,
-                'time' => $value->created_at,
-            ];
-        }
-        return response()->json($newContacts);
-    })->name('contact');
-
+    
     Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
-    Route::resource('branches', BranchController::class)->except(['create', 'edit']);
+    Route::resource('staffs', AdminController::class)->except(['create', 'edit']);
+
+    Route::post('staffs/assignPermission/{id}', [AdminController::class, 'assignPermission'])->name('staffs.assignPermission');
 
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);
 
@@ -68,15 +75,9 @@ Route::fallback(function () {
 
     Route::resource('users', UserController::class)->except(['create', 'edit']);
 
-    Route::resource('staffs', AdminController::class)->except(['create', 'edit']);
-
-    Route::post('staffs/assignPermission/{id}', [AdminController::class, 'assignPermission'])->name('staffs.assignPermission');
-
-    Route::resource('rates', RatesController::class)->except(['create', 'edit']);
+    Route::resource('rates', RatesController::class)->except(['create', 'edit', 'store']);
 
     Route::resource('policies', CancellationPolicyController::class)->except(['create', 'edit']);
-
-//    Route::resource('promotions', PromotionController::class)->except(['create', 'edit']);
 
     Route::resource('services', ServicesController::class)->except(['create', 'edit']);
 
@@ -92,15 +93,11 @@ Route::fallback(function () {
             Route::post('/cancel', [BookingController::class, 'cancel'])->name('cancel');
             Route::post('/checkin', [BookingController::class, 'checkin'])->name('checkin');
             Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout');
-            Route::post('/addPeople', [BookingController::class, 'addPeople'])->name('addService');
+            Route::post('/addPeople', [BookingController::class, 'addPeople'])->name('addPeople');
             Route::post('/addService', [BookingController::class, 'addService'])->name('addService');
             Route::post('/giaHan', [BookingController::class, 'giaHan'])->name('giaHan');
         });
     });
 
-    
-
-
 // });
 Route::post('/logout', [AuthController::class, 'logout']);
-

@@ -16,7 +16,7 @@ class Revenue implements StatInterface
     }
     
     public function getData($request){
-        return $this->billing->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
+        return $this->billing->where('branch_id', '=', $request->user()->branch_id)->whereIn('status', array_map(function ($item) { return (int)$item; }, $request->status))->get();
     }
 
     public function daily($request){

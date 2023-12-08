@@ -28,13 +28,14 @@ import permissonApi from '../api/permission';
 import policyApi from '../api/policy';
 import utilitiesApi from '../api/utilities';
 import statisticalsApi from '../api/statisticals';
+import contactApi from '../api/contact';
+import notificationsApi from '../api/notifications';
 '../api/account/staffs';
 
 const persistConfig = {
     key: 'root',
     storage,
-    whileList: ['auth', 'cartUser'],
-    backlist: ['products']
+    whileList: ['auth'],
 }
 
 
@@ -56,7 +57,9 @@ const rootReducer = combineReducers({
     [policyApi.reducerPath]: policyApi.reducer,
     [policyApi.reducerPath]: policyApi.reducer,
     [utilitiesApi.reducerPath]: utilitiesApi.reducer,
-    [statisticalsApi.reducerPath]: statisticalsApi.reducer
+    [statisticalsApi.reducerPath]: statisticalsApi.reducer,
+    [contactApi.reducerPath]: contactApi.reducer,
+    [notificationsApi.reducerPath]: notificationsApi.reducer,
 })
 
 
@@ -77,7 +80,9 @@ const middlewares = [
     permissonApi.middleware,
     policyApi.middleware,
     utilitiesApi.middleware,
-    statisticalsApi.middleware
+    statisticalsApi.middleware,
+    contactApi.middleware,
+    notificationsApi.middleware
 ]
 
 const store = configureStore({

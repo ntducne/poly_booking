@@ -18,10 +18,12 @@ class ServicesController extends Controller
     {
         $this->services = new Services();
     }
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $services = $this->services->paginate(5);
+            $query = $this->services->newQuery();
+            $query->where('branch_id', $request->user()->branch_id);
+            $services = $query->paginate(5);
             // $response = [
             //     'message' => 'get Mongo',
             //     'data' => $services
@@ -57,7 +59,9 @@ class ServicesController extends Controller
     public function show($id)
     {
         try {
-            $services = $this->services->find($id);
+            $services = $this->services->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$services) {
                 return response()->json([
                     'status' => 'error',
@@ -84,7 +88,9 @@ class ServicesController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $service = Services::find($id);
+            $service = $this->services->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$service) {
                 return response()->json([
                     'status' => 'error',
@@ -128,7 +134,9 @@ class ServicesController extends Controller
     public function destroy($id)
     {
         try {
-            $service = Services::find($id);
+            $service = $this->services->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$service) {
                 return response()->json([
                     'status' => 'error',

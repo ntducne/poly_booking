@@ -48,10 +48,19 @@ const clientApi = createApi({
       }),
       invalidatesTags: ["Clients"],
     }),
+    handleContact: builder.mutation({
+      query: (data) => ({
+        url: `/contact`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Clients"],
+    }),
   }),
 });
 
 export const {
+  useHandleContactMutation,
   useGetBranchQuery,
   useGetRoomsQuery,
   useGetDetailRoomQuery,

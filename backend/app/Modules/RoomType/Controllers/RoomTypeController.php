@@ -24,7 +24,9 @@ class RoomTypeController extends Controller
     public function index(Request $request): JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         try {
-            $roomTypes = $this->roomType->orderBy('id', 'desc');
+            $roomTypes = $this->roomType
+                ->where('branch_id', $request->user()->branch_id)
+                ->orderBy('id', 'desc');
             if($request->page){
                 if($request->page == 'all') {
                     $roomTypes = $roomTypes->get();
@@ -50,13 +52,16 @@ class RoomTypeController extends Controller
     public function store(StoreRoomTypeRequest $request)
     {
         try {
-            $object = $request->all();
-            $roomtype = new RoomType($object);
-            $roomtype->save();
+            $object = RoomType::create([
+                'room_type_name' => $request->room_type_name,
+                'description' => $request->description,
+                'price_per_night' => $request->price_per_night,
+                'branch_id' => $request->user()->branch_id
+            ]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Thêm loại phòng thành công !',
-                'data' => new RoomTypeResource($roomtype)
+                'data' => new RoomTypeResource($object)
             ]);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
@@ -71,7 +76,9 @@ class RoomTypeController extends Controller
     public function show($id)
     {
         try {
-            $roomType = $this->roomType->find($id);
+            $roomType = $this->roomType->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$roomType) {
                 return response()->json([
                     'status' => 'error',
@@ -96,14 +103,16 @@ class RoomTypeController extends Controller
     public function update(UpdateRoomTypeRequest $request, $id): JsonResponse
     {
         try {
-            $roomType = RoomType::find($id);
+            $roomType = $this->roomType->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$roomType) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Loại phòng không tồn tại !',
                 ], 404);
             }
-            $roomType->update($request->all());
+            $roomType->update($request->validated());
             return response()->json([
                 'status' => 'success',
                 'message' => 'Cập nhật loại phòng thành công !',
@@ -119,10 +128,12 @@ class RoomTypeController extends Controller
 
     }
 
-    public function destroy($id): JsonResponse
+    public function destroy(Request $request, $id): JsonResponse
     {
         try {
-            $roomType = RoomType::find($id);
+            $roomType = $this->roomType->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$roomType) {
                 return response()->json([
                     'status' => 'error',

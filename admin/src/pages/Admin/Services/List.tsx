@@ -18,12 +18,12 @@ import {
 } from "../../../api/services";
 import FormatPrice from "../../../utils/FormatPrice";
 import Page from "../../../component/page";
-
+import { permissions } from "../../../hoc/withAuthorization";
 const ListServices = () => {
   const { data: dataServices, isLoading } = useGetServicesQuery({});
 
-  console.log("dataServices" , dataServices);
-  
+  console.log("dataServices", dataServices);
+
   const [deleteServices] = useDeleteServicesMutation();
 
   const columns: ColumnsType<any> = [
@@ -75,29 +75,29 @@ const ListServices = () => {
               <AiOutlineEdit />
             </Link>
           </Button>
-          <Button
-            onClick={() => removeServices(record?._id)}
-            type="primary"
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
-          >
-            <MdDeleteForever />
-          </Button>
+          {permissions?.includes("admin.services.destroy") && (
+            <Button
+              onClick={() => removeServices(record?._id)}
+              type="primary"
+              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
+            >
+              <MdDeleteForever />
+            </Button>
+          )}
         </Space>
       ),
       // fixed: "right",
     },
   ];
 
-  const data: any = dataServices?.data?.map(
-    (item: any, index: number) => ({
-      key: index + 1,
-      _id: item?.id,
-      service_name: item?.service_name,
-      price: item?.price,
-      description: item?.description,
-      branch_id: item?.branch_id,
-    })
-  );
+  const data: any = dataServices?.data?.map((item: any, index: number) => ({
+    key: index + 1,
+    _id: item?.id,
+    service_name: item?.service_name,
+    price: item?.price,
+    description: item?.description,
+    branch_id: item?.branch_id,
+  }));
 
   const onChange: TableProps<DataType>["onChange"] = () =>
     // pagination,

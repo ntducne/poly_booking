@@ -35,15 +35,16 @@ import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
 import EditUser from "./pages/Admin/Guset/User/Edit";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
-import ListBranches from "./pages/Admin/Branches/List";
-import AddBranche from "./pages/Admin/Branches/Add";
 import EditBranche from "./pages/Admin/Branches/Edit";
 import RoomBooking from "./pages/Admin/Room/booking";
 import BillList from "./pages/Admin/Bill/List";
 import BillDetail from "./pages/Admin/Bill/Detail";
 import Demo from "./pages/demo";
-
+import ListContact from "./pages/Admin/Contact/List";
+import ListNotifications from "./pages/Admin/Notifications/List";
+import { AuthorizedListBranches, AuthorizedStoreBranches } from "./hoc/componentRole";
 function App() {
+
   return (
     <>
       <Routes>
@@ -101,6 +102,12 @@ function App() {
           <Route path="feedback">
             <Route index element={<ListFeedBack />} />
           </Route>
+          <Route path="contact">
+            <Route index element={<ListContact />} />
+          </Route>
+          <Route path="notifications">
+            <Route index element={<ListNotifications />} />
+          </Route>
           <Route path="staff">
             <Route index element={<ListAdmin />} />
             <Route path="edit/:id" element={<EditAdmin />} />
@@ -110,8 +117,8 @@ function App() {
             <Route path="edit/:id" element={<EditUser />} />
           </Route>
           <Route path="branches">
-            <Route index element={<ListBranches />} />
-            <Route path="add" element={<AddBranche />} />
+            <Route index element={<AuthorizedListBranches />} />
+            <Route path="add" element={<AuthorizedStoreBranches />} />
             <Route path="edit/:id" element={<EditBranche />} />
           </Route>
         </Route>

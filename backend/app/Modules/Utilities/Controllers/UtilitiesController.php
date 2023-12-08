@@ -3,6 +3,7 @@
 namespace App\Modules\Utilities\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
 use App\Models\Utilities;
 use App\Modules\Utilities\Requests\StoreUtilitiesRequest;
 use App\Modules\Utilities\Requests\UpdateUtilitiesRequest;
@@ -18,10 +19,12 @@ class UtilitiesController extends Controller
         $this->utilities = new Utilities();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $utilities =  $this->utilities->paginate(6);
+            $query = $this->utilities->newQuery();
+            $query->where('branch_id', $request->user()->branch_id);
+            $utilities =  $query->paginate(6);
             return response()->json([
                 'message' => 'Get Data',
                 'data'    => $utilities,
@@ -58,7 +61,9 @@ class UtilitiesController extends Controller
     public function show($id)
     {
         try {
-            $utilities = $this->utilities->find($id);
+            $utilities = $this->utilities->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if(!$utilities){
                 return response()->json([
                     'status' => 'error',
@@ -84,7 +89,9 @@ class UtilitiesController extends Controller
     public function update(UpdateUtilitiesRequest $request,  $id)
     {
         try {
-            $utilities = Utilities::find($id);
+            $utilities = $this->utilities->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$utilities) {
                 return response()->json([
                     'status' => 'error',
@@ -110,7 +117,9 @@ class UtilitiesController extends Controller
     public function destroy($id)
     {
         try {
-            $utilities = Utilities::find($id);
+            $utilities = $this->utilities->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$utilities) {
                 return response()->json([
                     'status' => 'error',
