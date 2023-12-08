@@ -1,6 +1,9 @@
 <?php
 
 return [
+    // 'admin.notifications.index' => 'Danh sách thông báo',
+    // 'admin.contact.index' => 'Danh sách liên hệ',
+    
     'admin.statisticals.index' => 'Xem thống kê',
 
     'admin.branches.index' => 'Danh sách chi nhánh',

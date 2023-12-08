@@ -427,11 +427,12 @@ class RoomRepository
             if ($count_room_detail < $newAmountRoom) {
                 $searchRoom = $this->processSearchRoom($request);
                 if (count($searchRoom) > 0) {
-                    $foundItem = collect($searchRoom)->firstWhere('_id', $request->room_id);
+                    $foundItem = collect($searchRoom)->firstWhere('id', $request->room_id);
                     if ($foundItem) {
                         $room = $this->room->find($foundItem['id']);
                     }
-                } else {
+                } 
+                else {
                     $room = $this->room->find($request->room_id);
                 }
                 $roomNumbers = $room->room_number;

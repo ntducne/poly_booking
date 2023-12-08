@@ -40,13 +40,29 @@ class BookingRepository
 
     public function orderDetail($request, $id): BillingResource
     {
-        return new BillingResource(
-            $this->billing
+        $billingId =  $this->billing
+            ->where('branch_id', '=', $request->user()->branch_id)
+            ->where('_id', $id)
+            ->first();
+
+        $billingCode = $this->billing
                 ->where('branch_id', '=', $request->user()->branch_id)
-                ->where('_id', '=', $id)
-                ->orWhere('billingCode', '=', $id)
-                ->first()
-        );
+                ->where('billingCode', +$id)
+                ->first();
+
+        if($billingId){
+            return new BillingResource(
+                $billingId 
+            );
+        }
+        if($billingCode){
+            return new BillingResource(
+                $billingCode 
+            );
+        }
+
+
+        
     }
 
     public function addService($request)

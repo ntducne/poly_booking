@@ -62,7 +62,7 @@ export default function RoomBooking() {
 
   const columns = [
     { title: "Ảnh", key: "image", width: "7%", dataIndex: "image", render: (item: any) => (<><Image width={50} height={50} className="rounded-md" src={item} /></>),},
-    { title: "Loại phòng", key: "room_type", width: "20%", render: (item: any) => <>{item.room_type_name}</> },
+    { title: "Loại phòng", key: "room_type", width: "20%", render: (item: any) => {return <>{item?.room_type?.room_type_name}</>}},
     { title: "Tên phòng", key: "name", dataIndex: "name" },
     { title: "Người lớn", key: "adult", dataIndex: "adult" },
     { title: "Trẻ con", key: "child", dataIndex: "child" },

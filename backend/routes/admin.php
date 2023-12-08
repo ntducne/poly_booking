@@ -55,7 +55,7 @@ Route::middleware(CheckPermission::class)->group(function () {
     Route::post('staffs/createAdmin', [AdminController::class, 'store']);
 });
 
-Route::middleware(CheckPermission::class)->group(function () {
+// Route::middleware(CheckPermission::class)->group(function () {
     
     Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
@@ -99,5 +99,5 @@ Route::middleware(CheckPermission::class)->group(function () {
         });
     });
 
-});
+// });
 Route::post('/logout', [AuthController::class, 'logout']);
