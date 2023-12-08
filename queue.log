@@ -3869,3 +3869,444 @@ In permissions.php line 4:
   2023-12-08 20:46:04 App\Events\BookingEvent .................. 657.82ms DONE
   2023-12-08 20:46:05 App\Events\Message ............................. RUNNING
   2023-12-08 20:46:06 App\Events\Message ....................... 429.48ms DONE
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+
+
+   ParseError 
+
+  syntax error, unexpected identifier "prefix"
+
+  at app/Providers/RouteServiceProvider.php:75
+     71▕                 ->group(base_path('routes/auth.php'));
+     72▕ 
+     73▕             Route::
+     74▕                 domain('api.' . env('APP_DOMAIN'))
+  ➜  75▕                 prefix('admin')
+     76▕                 ->as('admin.')
+     77▕                 ->middleware(['api','auth:admin-api','scopes:admin'])
+     78▕                 ->namespace($this->namespace)
+     79▕                 ->group(base_path('routes/admin.php'));
+
+      [2m+9 vendor frames [22m
+
+  10  artisan:35
+      Illuminate\Foundation\Console\Kernel::handle()
+

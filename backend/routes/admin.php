@@ -17,6 +17,7 @@ use App\Modules\Staff\Controllers\AdminController;
 use App\Modules\User\Controllers\UserController;
 use App\Modules\Utilities\Controllers\UtilitiesController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckRoleSuperAdmin;
 
 Route::fallback(function () {
     return response()->json([
@@ -50,12 +51,15 @@ Route::get('/contact', function(){
     return response()->json($newContacts);
 })->name('contact');
 
-Route::middleware(CheckPermission::class)->group(function () {
+Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
     Route::post('staffs/createAdmin', [AdminController::class, 'store']);
 });
 
-// Route::middleware(CheckPermission::class)->group(function () {
+Route::get('/room/search', [BookingController::class, 'search'])->name('search');
+
+
+Route::middleware(CheckPermission::class)->group(function () {
     
     Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
@@ -99,5 +103,5 @@ Route::middleware(CheckPermission::class)->group(function () {
         });
     });
 
-// });
+});
 Route::post('/logout', [AuthController::class, 'logout']);

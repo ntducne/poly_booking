@@ -23,13 +23,14 @@ class AdminController extends Controller
         try{
             $role = $request->user()->role;
             $query = $this->admin->newQuery();
-            $query->where('branch_id', $request->user()->branch_id);
-            if ($role == 0) {
-                $response = $query->paginate(10);
-            }
-            if ($role == 1) {
-                $response = $query->where('created_by', $request->user()->id)->paginate(10);
-            }
+            // $query->where('branch_id', $request->user()->branch_id);
+            // if ($role == '') {
+            //     $response = $query->paginate(10);
+            // }
+            // if ($role == 1) {
+            //     $response = $query->where('created_by', $request->user()->id)->paginate(10);
+            // }
+            $response = $query->get();
             return StaffResource::collection($response);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
