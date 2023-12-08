@@ -42,6 +42,7 @@ class Revenue implements StatInterface
 
     public function weekly($request){
         $week = $request->week;
+        $year = $request->year;
         $total = 0;
         $sinceTotal = 0;
         $data = $this->getData($request);
@@ -49,12 +50,12 @@ class Revenue implements StatInterface
             if (Carbon::parse($item->created_at)->format('Y-W') === $week) {
                 $total += $item->total;
             }
-            if (Carbon::parse($item->created_at)->format('Y-W') <= Carbon::parse($week)->subWeek()->format('Y-W')) {
+            if (Carbon::parse($item->created_at)->format('Y-W') <= $year.'-'.$week-1) {
                 $sinceTotal += $item->total;
             }
         }
         $returnData = [
-            'days' => Carbon::parse($week)->format('W/Y'),
+            'week' => $week.'/'.$year,
             'total' => $total,
             'since_last_week' => tinhPhanTramTuHaiSo($total, $sinceTotal),
         ];

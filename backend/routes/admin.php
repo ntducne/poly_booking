@@ -54,7 +54,6 @@ Route::get('/contact', function(){
     return response()->json($newContacts);
 })->name('contact');
 
-
 Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
     Route::post('staffs/createAdmin', [AdminController::class, 'store']);
