@@ -22,12 +22,8 @@ class ServicesController extends Controller
     {
         try {
             $query = $this->services->newQuery();
-            // $query->where('branch_id', $request->user()->branch_id);
+            $query->where('branch_id', $request->user()->branch_id);
             $services = $query->paginate(10);
-            // $response = [
-            //     'message' => 'get Mongo',
-            //     'data' => $services
-            // ];
             return ServiceResource::collection($services);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
@@ -41,12 +37,7 @@ class ServicesController extends Controller
     public function store(StoreRequest $request)
     {
         try {
-            $service = $this->services->create([
-                'service_name' => $request->service_name,
-                'price' => $request->price,
-                'description' => $request->description,
-                'branch_id' => $request->user()->branch_id
-            ]);
+            $service = $this->services->create($request->all());
             return response()->json([
                 'status' => 'Success',
                 'message' => 'Thêm thành công !',
@@ -93,9 +84,7 @@ class ServicesController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $service = $this->services->where('_id', $id)
-                ->where('branch_id', request()->user()->branch_id)
-                ->first();
+            $service = $this->services->where('_id', $id)->where('branch_id', request()->user()->branch_id)->first();
             if (!$service) {
                 return response()->json([
                     'status' => 'error',
