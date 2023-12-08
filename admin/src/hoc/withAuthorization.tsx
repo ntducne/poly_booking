@@ -16,7 +16,7 @@ const withAuthorization = (WrappedComponent: any, requiredPermission: any) => {
 export const permissions = (() => {
   const authUser = cookies().Get("AuthUser");
   if (authUser) {
-    const parsed = JSON.parse(authUser as any);
+    const parsed = JSON.parse(cookies().Get("AuthUser") as any);
     return parsed ? parsed[3] : null;
   }
   return null;
