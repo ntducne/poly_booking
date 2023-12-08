@@ -153,9 +153,9 @@ const Head = () => {
     {
       label: (
         <div className="bg-white overflow-scroll overflow-x-auto max-h-72">
-          {notifications?.map((item: any) => {
+          {notifications?.map((item: any , index : any) => {
             return (
-              <div>
+              <div key={index}>
                 <div>{item?.label}</div>
               </div>
             );
