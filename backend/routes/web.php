@@ -7,10 +7,3 @@ Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Fou
 Route::get('unauthorized', function (){ return response()->json([
     'message' => 'Unauthorized !'
 ], 401); })->name('unauthorized');
-
-
-
-Route::prefix('billings')->as('billings.')->group(function () {
-    Route::get('/', [BillingController::class, 'index'])->name('index');
-    Route::get('/{id}', [BillingController::class, 'show'])->name('show');
-});
