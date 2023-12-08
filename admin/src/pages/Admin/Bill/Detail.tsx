@@ -348,8 +348,8 @@ const BillDetail: React.FC = () => {
       )
       .join("&");
     const apiUrl = `${
-      import.meta.env.VITE_BASE_URL_API
-    }/client/v2/search?${queryString}`;
+      import.meta.env.VITE_URL_API_CLIENT
+    }/v2/search?${queryString}`;
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -401,11 +401,15 @@ const BillDetail: React.FC = () => {
       extendBooking(dataExtendRoom)
         .unwrap()
         .then((res: any) => {
-          if (res.message) {
+          if (res.message && res.status === true) {
             swal(res.message, {
               icon: "success",
             });
             closeModalExtend();
+          } else if (res.message && res.status === false) {
+            swal(res.message, {
+              icon: "error",
+            });
           }
         })
         .catch((err) => {
@@ -432,12 +436,21 @@ const BillDetail: React.FC = () => {
       extendBooking(dataExtendRoom)
         .unwrap()
         .then((res) => {
-          if (res.message) {
+          if (res.message && res.status === true) {
             swal(res.message, {
               icon: "success",
             });
             closeModalExtend();
+          } else if (res.message && res.status === false) {
+            swal(res.message, {
+              icon: "error",
+            });
           }
+        })
+        .catch((err) => {
+          swal(err, {
+            icon: "error",
+          });
         });
     }
     // TH3: Nếu số phòng gia hạn lớn số phòng hiện tại
@@ -448,7 +461,7 @@ const BillDetail: React.FC = () => {
       const dataExtendRoom = {
         adult: adults,
         children: childs,
-        checkin: dataBill?.data?.booking?.checkout,
+        checkin: dayjs(dataBill?.data?.booking?.checkout).format("YYYY-MM-DD"),
         checkout: new_checkoutDate,
         name: dataBill?.data?.booking?.representative?.name,
         email: dataBill?.data?.booking?.representative?.email,
@@ -457,16 +470,26 @@ const BillDetail: React.FC = () => {
         amount_room: amount_room_renew,
         room_id: dataBill?.data?.booking?.detail[0].room_id,
         newCheckout: new_checkoutDate,
+        booking_id: dataBill?.data?.booking?.id,
       };
       extendBooking(dataExtendRoom)
         .unwrap()
         .then((res) => {
-          if (res.message) {
+          if (res.message && res.status === true) {
             swal(res.message, {
               icon: "success",
             });
             closeModalExtend();
+          } else if (res.message && res.status === false) {
+            swal(res.message, {
+              icon: "error",
+            });
           }
+        })
+        .catch((err) => {
+          swal(err, {
+            icon: "error",
+          });
         });
     }
 
@@ -495,6 +518,11 @@ const BillDetail: React.FC = () => {
             });
             closeModalExtend();
           }
+        })
+        .catch((err) => {
+          swal(err, {
+            icon: "error",
+          });
         });
     }
   };
@@ -740,7 +768,7 @@ const BillDetail: React.FC = () => {
                     message: "Vui lòng nhập số phòng",
                   },
                   {
-                    type: 'number',
+                    type: "number",
                     min: 1,
                     message: "Số phòng phải lớn hơn 1",
                   },
@@ -763,7 +791,7 @@ const BillDetail: React.FC = () => {
                     message: "Vui lòng nhập số người lớn",
                   },
                   {
-                    type: 'number',
+                    type: "number",
                     min: 1,
                     message: "Số phòng phải lớn hơn 1",
                   },
@@ -785,7 +813,7 @@ const BillDetail: React.FC = () => {
                     message: "Vui lòng nhập số trẻ em",
                   },
                   {
-                    type: 'number',
+                    type: "number",
                     min: 0,
                     message: "Số phòng phải lớn hơn 1",
                   },
@@ -807,7 +835,14 @@ const BillDetail: React.FC = () => {
                   },
                 ]}
               >
-                <DatePicker className="w-full" placeholder={"Checkout new"}  disabledDate={(current) => current && current <= moment(dataBill?.data?.booking?.checkout)}/>
+                <DatePicker
+                  className="w-full"
+                  placeholder={"Checkout new"}
+                  disabledDate={(current) =>
+                    current &&
+                    current <= moment(dataBill?.data?.booking?.checkout)
+                  }
+                />
               </Form.Item>
               <div className="flex justify-end mt-5">
                 <Button htmlType="submit">Kiểm tra</Button>
@@ -817,7 +852,9 @@ const BillDetail: React.FC = () => {
         </div>
         {dataRoomBook.length > 0 && (
           <div className="relative flex flex-col overflow-x-auto w-full mb-4">
-            <div className="text-center font-medium text-">Phòng đang ở hiện tại</div>
+            <div className="text-center font-medium text-">
+              Phòng đang ở hiện tại
+            </div>
             <Form
               form={formRoomIdExtend}
               name="validate_other"
@@ -852,86 +889,85 @@ const BillDetail: React.FC = () => {
         )}
         {dataBill?.data?.booking?.amount_room < dataRoomBook && (
           <div>Thông tin tìm kiếm</div>
-        )} 
+        )}
 
-          <div>
-            {dataRoomSearch.length > 0 && (
-              <div className="relative overflow-x-auto w-full">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">
-                        Room Image
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Room Name
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Category
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Price
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Amount room empty
-                      </th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dataRoomSearch.map((room: any) => {
-                      return (
-                        <tr
-                          className={` border-b ${
-                            dataBill?.data?.booking.detail[0].room_id == room.id
-                              ? "bg-gray-100"
-                              : "bg-white"
-                          }`}
+        <div>
+          {dataRoomSearch.length > 0 && (
+            <div className="relative overflow-x-auto w-full">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Room Image
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Room Name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Category
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Price
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Amount room empty
+                    </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dataRoomSearch.map((room: any) => {
+                    return (
+                      <tr
+                        className={` border-b ${
+                          dataBill?.data?.booking.detail[0].room_id == room.id
+                            ? "bg-gray-100"
+                            : "bg-white"
+                        }`}
+                      >
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                         >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                          >
-                            <img
-                              width={50}
-                              src={room.image}
-                              alt={`Image Room ${room.id}`}
-                            />
-                          </th>
-                          <td className="px-6 py-4">
-                            <p className="mb-2">{room.name}</p>
-                            {dataBill?.data?.booking.detail[0].room_id ==
-                              room.id && (
-                              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                Phòng hiện tại
-                              </span>
-                            )}
-                          </td>
-                          <td className="px-6 py-4">
-                            {room.room_type.room_type_name}
-                          </td>
-                          <td className="px-6 py-4">
-                            {formatMoneyVN(room.price)}{" "}
-                            {room.discount > 0 && room.discount < 95 ? (
-                              <>
-                                <br />
-                                <del>{room.discount} %</del>
-                              </>
-                            ) : (
-                              <>
-                                <br />
-                                <del>
-                                  {formatMoneyVN(
-                                    room.room_type.price_per_night
-                                  )}
-                                </del>
-                              </>
-                            )}
-                          </td>
-                          <td className="px-6 py-4">{room.room_empty}</td>
-                          <td>
-                            {dataBill?.data?.booking.detail[0].room_id ==
-                              room.id && idRoomNewExtend == null && (
+                          <img
+                            width={50}
+                            src={room.image}
+                            alt={`Image Room ${room.id}`}
+                          />
+                        </th>
+                        <td className="px-6 py-4">
+                          <p className="mb-2">{room.name}</p>
+                          {dataBill?.data?.booking.detail[0].room_id ==
+                            room.id && (
+                            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                              Phòng hiện tại
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4">
+                          {room.room_type.room_type_name}
+                        </td>
+                        <td className="px-6 py-4">
+                          {formatMoneyVN(room.price)}{" "}
+                          {room.discount > 0 && room.discount < 95 ? (
+                            <>
+                              <br />
+                              <del>{room.discount} %</del>
+                            </>
+                          ) : (
+                            <>
+                              <br />
+                              <del>
+                                {formatMoneyVN(room.room_type.price_per_night)}
+                              </del>
+                            </>
+                          )}
+                        </td>
+                        <td className="px-6 py-4">{room.room_empty}</td>
+                        <td>
+                          {dataBill?.data?.booking.detail[0].room_id ==
+                            room.id &&
+                            idRoomNewExtend == null && (
                               <button
                                 type="button"
                                 onClick={() => onExtendBooking()}
@@ -940,7 +976,8 @@ const BillDetail: React.FC = () => {
                                 Gia hạn
                               </button>
                             )}
-                             {idRoomNewExtend != null && dataBill?.data?.booking.detail[0].room_id !=
+                          {idRoomNewExtend != null &&
+                            dataBill?.data?.booking.detail[0].room_id !=
                               room.id && (
                               <button
                                 type="button"
@@ -950,36 +987,36 @@ const BillDetail: React.FC = () => {
                                 Hủy
                               </button>
                             )}
-                            {dataBill?.data?.booking.detail[0].room_id !=
+                          {dataBill?.data?.booking.detail[0].room_id !=
+                            room.id && (
+                            <button
+                              type="button"
+                              onClick={() => onSetIdRoomNewExtend(room.id)}
+                              className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                            >
+                              Chọn phòng mới
+                            </button>
+                          )}
+                          {idRoomNewExtend != null &&
+                            dataBill?.data?.booking.detail[0].room_id !=
                               room.id && (
                               <button
                                 type="button"
-                                onClick={() => onSetIdRoomNewExtend(room.id)}
-                                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                                onClick={() => onExtendBooking()}
+                                className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                               >
-                                Chọn phòng mới
+                                Gia hạn
                               </button>
                             )}
-                            {idRoomNewExtend != null &&
-                              dataBill?.data?.booking.detail[0].room_id !=
-                                room.id && (
-                                <button
-                                  type="button"
-                                  onClick={() => onExtendBooking()}
-                                  className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                                >
-                                  Gia hạn
-                                </button>
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </Modal>
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2  2xl:grid-rows-1 2xl:grid-cols-3 gap-4 mt-4 mb-4">
         {/* <div className="grid md:grid-rows-1 grid-rows-1 gap-4"> */}
@@ -1083,7 +1120,8 @@ const BillDetail: React.FC = () => {
                                   },
                                   {
                                     pattern: /^\S.*\S$/,
-                                    message: "Không được để khoảng trắng ở đầu hoặc cuối",
+                                    message:
+                                      "Không được để khoảng trắng ở đầu hoặc cuối",
                                   },
                                   {
                                     min: 5,
@@ -1103,7 +1141,8 @@ const BillDetail: React.FC = () => {
                                   },
                                   {
                                     pattern: /^[0-9]{9}$|^[0-9]{12}$/,
-                                    message: "CCCD/CMTND phải là số và gồm 9 hoặc 12 chữ số",
+                                    message:
+                                      "CCCD/CMTND phải là số và gồm 9 hoặc 12 chữ số",
                                   },
                                 ]}
                               >
@@ -1299,9 +1338,36 @@ const BillDetail: React.FC = () => {
 
                     <td className="px-6 py-4">{formatMoneyVN(room?.price)}</td>
                     <td>
-                      <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                        Paid
-                      </span>
+                      {(() => {
+                        switch (room?.status) {
+                          case 0:
+                            return (
+                              <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                                Đã đặt
+                              </span>
+                            );
+                          case 1:
+                            return (
+                              <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                                Đang ở
+                              </span>
+                            );
+                          case 2:
+                            return (
+                              <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                                Đã trả
+                              </span>
+                            );
+                          case 3:
+                            return (
+                              <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                                Đã huỷ
+                              </span>
+                            );
+                          default:
+                            return null;
+                        }
+                      })()}
                     </td>
                     <td>
                       {room?.status == 0 ? (

@@ -24,7 +24,7 @@ class UpdateCheckOutBookDetail extends Command
         $booking = $this->booking->where('status', 3)->get();
         foreach ($booking as $item) {
             $bookDetail = $this->bookDetail->where('booking_id', $item->id)->get();
-
+                
         }
     }
 }
