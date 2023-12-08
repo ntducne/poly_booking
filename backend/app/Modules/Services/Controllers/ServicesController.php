@@ -22,7 +22,7 @@ class ServicesController extends Controller
     {
         try {
             $query = $this->services->newQuery();
-            $query->where('branch_id', $request->user()->branch_id);
+            // $query->where('branch_id', $request->user()->branch_id);
             $services = $query->paginate(5);
             // $response = [
             //     'message' => 'get Mongo',
