@@ -35,7 +35,6 @@ import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
 import EditUser from "./pages/Admin/Guset/User/Edit";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
-import AddBranche from "./pages/Admin/Branches/Add";
 import EditBranche from "./pages/Admin/Branches/Edit";
 import RoomBooking from "./pages/Admin/Room/booking";
 import BillList from "./pages/Admin/Bill/List";
@@ -44,9 +43,7 @@ import Demo from "./pages/demo";
 import ListContact from "./pages/Admin/Contact/List";
 import ListNotifications from "./pages/Admin/Notifications/List";
 import { AuthorizedListBranches, AuthorizedStoreBranches } from "./hoc/componentRole";
-// import withAuthorization from "./hoc/withAuthorization";
 function App() {
-  // const AuthorizedListBranches = withAuthorization(ListBranches, 'admin.branches.index');
 
   return (
     <>

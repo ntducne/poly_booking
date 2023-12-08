@@ -75,7 +75,7 @@ const ListServices = () => {
               <AiOutlineEdit />
             </Link>
           </Button>
-          {permissions.includes("admin.services.destroy") && (
+          {permissions?.includes("admin.services.destroy") && (
             <Button
               onClick={() => removeServices(record?._id)}
               type="primary"
