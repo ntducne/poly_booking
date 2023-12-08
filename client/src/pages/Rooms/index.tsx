@@ -47,6 +47,8 @@ export default function Rooms({}: Props) {
   const [dataQuery, setDataQuery] = useState<any>(queryParams || {});
   const [data, setData] = useState<any>({});
   const { data: dataAll, isLoading, refetch } = useGetRoomsQuery({});
+  console.log(isLoading);
+
   const [searchRooms, { isLoading: loadingSearch }] = useSearchRoomsMutation();
   const { data: dataBranches } = useGetBranchesQuery({});
   const [childs, setChilds] = useState<number>(0);
@@ -94,7 +96,18 @@ export default function Rooms({}: Props) {
 
   const handleBookingNow = (item: any) => {
     if (Object.keys(dataQuery).length) {
-      const { id, name, images, price, branch, bed_size, image, children, adults, num_of_bed } = item;
+      const {
+        id,
+        name,
+        images,
+        price,
+        branch,
+        bed_size,
+        image,
+        children,
+        adults,
+        num_of_bed,
+      } = item;
       const checkinDate = dayjs(cookie.roomSearch.checkin);
       const checkoutDate = dayjs(cookie.roomSearch.checkout);
       const dateDiff = checkoutDate.diff(checkinDate, "day");

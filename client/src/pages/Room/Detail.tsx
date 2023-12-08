@@ -107,23 +107,21 @@ const Detail = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-  console.log(data);
-
   const handleBookingNow = (item: any) => {
     if (Object.keys(dataSearch).length) {
       const { id, name, images, price, branch, bed_size } = item;
       const checkinDate = dayjs(cookie.roomSearch.checkin);
       const checkoutDate = dayjs(cookie.roomSearch.checkout);
       const dateDiff = checkoutDate.diff(checkinDate, "day");
+      console.log("item", dataSearch);
       const bookingData = {
         room_id: id,
         room_name: name,
         image: images?.[0]?.image,
-        price: +price * +dateDiff * +cookie?.roomSearch?.soLuong,
+        price: +price * +dateDiff * dataSearch.amount_room,
         branch: branch?.name,
         bed_size,
       };
-
       setCookie("bookingNow", bookingData, { path: "/" });
       navigate("/accommodation/book");
     } else {
@@ -163,7 +161,7 @@ const Detail = () => {
                       />
                       <button
                         className="py-3 px-4 bg-blue-500 text-white font-bold rounded-md"
-                        onClick={handleBookingNow}
+                        onClick={() => handleBookingNow(data?.room)}
                       >
                         Đặt phòng ngay
                       </button>
