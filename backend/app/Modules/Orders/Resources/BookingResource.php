@@ -40,6 +40,7 @@ class BookingResource extends JsonResource
         $room = [];
         foreach ($data as $item) {
             $room[] = [
+                'id' => $item->id,
                 'room_id' => $item->room_id,
                 'room_name' => $item->room_name,
                 'room_number' => $item->room_number,
