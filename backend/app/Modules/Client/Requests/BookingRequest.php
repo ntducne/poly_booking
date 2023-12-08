@@ -24,10 +24,10 @@ class BookingRequest extends Request {
             ],
             'adult' => 'required|numeric',
             'child' => 'required|numeric',
-            'branch_id' => [
-                'required',
-                Rule::exists(Branch::class, $this->column_id),
-            ],
+            // 'branch_id' => [
+            //     'required',
+            //     Rule::exists(Branch::class, $this->column_id),
+            // ],
             'amount_room' => [
                 'required',
                 'numeric',

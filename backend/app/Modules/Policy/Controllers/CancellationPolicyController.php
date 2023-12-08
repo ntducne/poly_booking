@@ -7,7 +7,7 @@ use App\Http\Requests\CancellationPolicy\StoreCancellationPolicyRequest;
 use App\Http\Requests\CancellationPolicy\UpdateCancellationPolicyRequest;
 use App\Models\CancellationPolicy;
 use Exception;
-use http\Env\Request;
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Log;
 
 class CancellationPolicyController extends Controller
@@ -19,7 +19,7 @@ class CancellationPolicyController extends Controller
         $this->cancellationPolicy = new CancellationPolicy();
     }
 
-    public function index(Request $request)
+    public function index(HttpRequest $request)
     {
         try {
             $query = $this->cancellationPolicy->newQuery();

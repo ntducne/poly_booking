@@ -23,11 +23,7 @@ class ServicesController extends Controller
         try {
             $query = $this->services->newQuery();
             $query->where('branch_id', $request->user()->branch_id);
-            $services = $query->paginate(5);
-            // $response = [
-            //     'message' => 'get Mongo',
-            //     'data' => $services
-            // ];
+            $services = $query->paginate(10);
             return ServiceResource::collection($services);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
@@ -88,9 +84,7 @@ class ServicesController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $service = $this->services->where('_id', $id)
-                ->where('branch_id', request()->user()->branch_id)
-                ->first();
+            $service = $this->services->where('_id', $id)->where('branch_id', request()->user()->branch_id)->first();
             if (!$service) {
                 return response()->json([
                     'status' => 'error',
@@ -99,20 +93,10 @@ class ServicesController extends Controller
                 ]);
             }
             $name = $request->service_name;
-            $branch_id = $request->branch_id;
-            $branch = [];
-            if (isset($branch_id[0]['key'])) {
-                foreach ($branch_id as $value) {
-                    $branch[] = $value['value'];
-                }
-            } else {
-                foreach ($branch_id as $value) {
-                    $branch[] = $value;
-                }
-            }
             $update = $service->update([
                 'service_name' => $name,
-                'branch_id' => $branch,
+                'price' => $request->price,
+                'description' => $request->description,
             ]);
             if ($update) {
                 return response()->json([

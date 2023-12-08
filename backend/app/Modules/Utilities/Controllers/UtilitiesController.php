@@ -24,7 +24,7 @@ class UtilitiesController extends Controller
         try {
             $query = $this->utilities->newQuery();
             $query->where('branch_id', $request->user()->branch_id);
-            $utilities =  $query->paginate(6);
+            $utilities =  $query->paginate(10);
             return response()->json([
                 'message' => 'Get Data',
                 'data'    => $utilities,

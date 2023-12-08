@@ -16,7 +16,7 @@ class StoreRequest extends Request
             'service_name' => ['required'],
             'price' => ['required', 'numeric'],
             'description' => ['required'],
-            'branch_id' => ['required', 'array' ,'exists:App\Models\Branch,_id']
+            // 'branch_id' => ['required', 'array' ,'exists:App\Models\Branch,_id']
         ];
     }
     public function attributes()

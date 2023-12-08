@@ -33,18 +33,39 @@ import LoginAdmin from "./pages/Auth/login";
 import EditServices from "./pages/Admin/Services/Edit";
 import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
-import EditUser from "./pages/Admin/Guset/User/Edit";
-import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
-import EditBranche from "./pages/Admin/Branches/Edit";
 import RoomBooking from "./pages/Admin/Room/booking";
-import BillList from "./pages/Admin/Bill/List";
-import BillDetail from "./pages/Admin/Bill/Detail";
 import Demo from "./pages/demo";
 import ListContact from "./pages/Admin/Contact/List";
 import ListNotifications from "./pages/Admin/Notifications/List";
-import { AuthorizedListBranches, AuthorizedStoreBranches } from "./hoc/componentRole";
+import {
+  AuthorizedListBillings,
+  AuthorizedListBranches,
+  AuthorizedListPolicies,
+  AuthorizedListRates,
+  AuthorizedListRooms,
+  AuthorizedListServices,
+  AuthorizedListStaffs,
+  AuthorizedListTypes,
+  AuthorizedListUsers,
+  AuthorizedListUtilities,
+  AuthorizedStoreBillings,
+  AuthorizedStoreBranches,
+  AuthorizedStorePolicies,
+  AuthorizedStoreRooms,
+  AuthorizedStoreServices,
+  AuthorizedStoreTypes,
+  AuthorizedStoreUtilities,
+  AuthorizedUpdateBranches,
+  AuthorizedUpdatePolicies,
+  AuthorizedUpdateRooms,
+  AuthorizedUpdateServices,
+  AuthorizedUpdateStaffs,
+  AuthorizedUpdateTypes,
+  AuthorizedUpdateUsers,
+  AuthorizedUpdateUtilities,
+} from "./hoc/componentRole";
+import { role } from "./hoc/withAuthorization";
 function App() {
-
   return (
     <>
       <Routes>
@@ -55,8 +76,8 @@ function App() {
           <Route index element={<Dashboard />} />
           {/* <Route path="dashboard" element={<Dashboard />} /> */}
           <Route path="billing">
-            <Route index element={<BillList />} />
-            <Route path=":id" element={<BillDetail />} />
+            <Route index element={<AuthorizedListBillings />} />
+            <Route path=":id" element={<AuthorizedStoreBillings />} />
           </Route>
           {/* <Route path="offers">
             <Route index element={<ListOffers />} />
@@ -64,9 +85,9 @@ function App() {
             <Route path="edit/:id" element={<EditOffers />} />
           </Route> */}
           <Route path="policy">
-            <Route index element={<ListPolicy />} />
-            <Route path="add" element={<AddPolicy />} />
-            <Route path="edit/:id" element={<EditPolicy />} />
+            <Route index element={<AuthorizedListPolicies />} />
+            <Route path="add" element={<AuthorizedStorePolicies />} />
+            <Route path="edit/:id" element={<AuthorizedUpdatePolicies />} />
           </Route>
           <Route path="review">
             <Route index element={<ListReview />} />
@@ -74,33 +95,33 @@ function App() {
             <Route path="edit/:id" element={<EditReview />} />
           </Route>
           <Route path="room">
-            <Route index element={<ListRoom />} />
-            <Route path="add" element={<AddRoom />} />
-            <Route path="edit/:id" element={<EditRoom />} />
+            <Route index element={<AuthorizedListRooms />} />
+            <Route path="add" element={<AuthorizedStoreRooms />} />
+            <Route path="edit/:id" element={<AuthorizedUpdateRooms />} />
             <Route path="type">
-              <Route index element={<ListRoomType />} />
-              <Route path="add" element={<AddRoomType />} />
-              <Route path="edit/:id" element={<EditRoomType />} />
+              <Route index element={<AuthorizedListTypes />} />
+              <Route path="add" element={<AuthorizedStoreTypes />} />
+              <Route path="edit/:id" element={<AuthorizedUpdateTypes />} />
             </Route>
             <Route path="utilities">
-              <Route index element={<ListRoomUtilities />} />
-              <Route path="add" element={<AddRoomUtilities />} />
-              <Route path="edit/:id" element={<EditRoomUtilities />} />
+              <Route index element={<AuthorizedListUtilities />} />
+              <Route path="add" element={<AuthorizedStoreUtilities />} />
+              <Route path="edit/:id" element={<AuthorizedUpdateUtilities />} />
             </Route>
-            <Route path="renew">
+            {/* <Route path="renew">
               <Route index element={<ListRoomExtend />} />
               <Route path="add" element={<AddRoomExtend />} />
               <Route path="edit/:id" element={<EditRoomExtend />} />
-            </Route>
+            </Route> */}
             <Route path="booking" element={<RoomBooking />} />
           </Route>
           <Route path="services">
-            <Route index element={<ListServices />} />
-            <Route path="add" element={<AddServices />} />
-            <Route path="edit/:id" element={<EditServices />} />
+            <Route index element={<AuthorizedListServices />} />
+            <Route path="add" element={<AuthorizedStoreServices />} />
+            <Route path="edit/:id" element={<AuthorizedUpdateServices />} />
           </Route>
           <Route path="feedback">
-            <Route index element={<ListFeedBack />} />
+            <Route index element={<AuthorizedListRates />} />
           </Route>
           <Route path="contact">
             <Route index element={<ListContact />} />
@@ -109,18 +130,20 @@ function App() {
             <Route index element={<ListNotifications />} />
           </Route>
           <Route path="staff">
-            <Route index element={<ListAdmin />} />
-            <Route path="edit/:id" element={<EditAdmin />} />
+            <Route index element={<AuthorizedListStaffs />} />
+            <Route path="edit/:id" element={<AuthorizedUpdateStaffs />} />
           </Route>
           <Route path="user">
-            <Route index element={<ListUser />} />
-            <Route path="edit/:id" element={<EditUser />} />
+            <Route index element={<AuthorizedListUsers />} />
+            <Route path="edit/:id" element={<AuthorizedUpdateUsers />} />
           </Route>
-          <Route path="branches">
-            <Route index element={<AuthorizedListBranches />} />
-            <Route path="add" element={<AuthorizedStoreBranches />} />
-            <Route path="edit/:id" element={<EditBranche />} />
-          </Route>
+          {role === "super_admin" && (
+            <Route path="branches">
+              <Route index element={<AuthorizedListBranches />} />
+              <Route path="add" element={<AuthorizedStoreBranches />} />
+              <Route path="edit/:id" element={<AuthorizedUpdateBranches />} />
+            </Route>
+          )}  
         </Route>
         <Route path="/403" element={<Page403 />}></Route>
         <Route path="/demo" element={<Demo />}></Route>

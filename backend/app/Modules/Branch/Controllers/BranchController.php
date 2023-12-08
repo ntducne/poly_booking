@@ -20,7 +20,7 @@ class BranchController extends Controller
     public function index()
     {
         try {
-            $branches = $this->branch->paginate(6);
+            $branches = $this->branch->paginate(10);
             return BranchResource::collection($branches);
         } catch(Exception $exception){
             Log::debug($exception->getMessage());
