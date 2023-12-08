@@ -22,8 +22,16 @@ class AdminController extends Controller
     {
         try{
             $role = $request->user()->role;
+            if ($role === 'super_admin') {
+                $query = $this->admin->newQuery();
+                $response = $query
+                ->where('role', 'admin')
+                ->paginate(10);
+                return StaffResource::collection($response);
+            }
             $query = $this->admin->newQuery();
-            $response = $query->get();
+            $query->where('branch_id', $request->user()->branch_id);
+            $response = $query->where('created_by', $request->user()->id)->paginate(10);
             return StaffResource::collection($response);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
@@ -95,6 +103,7 @@ class AdminController extends Controller
         }
 
     }
+
     public function update(UpdateAdminRequest $request,  $id)
     {
         try{
@@ -183,6 +192,7 @@ class AdminController extends Controller
                 'message' => 'Lỗi !'
             ]);
         }
-
     }
+
+    
 }
