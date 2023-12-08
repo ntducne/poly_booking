@@ -174,7 +174,7 @@ const BillList = () => {
             type="primary"
             className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
           >
-            <Link to={`/billing/${record?.id}`}>
+            <Link to={`/billing/${record?.billingCode}`}>
               <AiOutlineEdit />
             </Link>
           </Button>
@@ -197,6 +197,7 @@ const BillList = () => {
     key: index + 1,
     id: item.id,
     booking: item.booking,
+    billingCode: item.billingCode,
     representative: item.booking.representative,
     services: item.services ? item.services : [],
     total: item.total,

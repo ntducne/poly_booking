@@ -15,7 +15,7 @@ import { useCreateServicesMutation } from "../../../api/services";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "antd";
-
+import { role } from "../../../hoc/withAuthorization";
 const { Option } = Select;
 
 const { Title, Text } = Typography;
@@ -26,6 +26,8 @@ const formItemLayout = {
 };
 
 const AddServices = () => {
+  console.log("role", role);
+
   const [createServices] = useCreateServicesMutation();
   const { data: dataBranches, isLoading: loadingBranch } =
     useGetAllBranchesQuery({});
@@ -34,7 +36,6 @@ const AddServices = () => {
   if (loadingBranch) {
     return (
       <div>
-        {" "}
         <Skeleton />
       </div>
     );
@@ -81,7 +82,10 @@ const AddServices = () => {
             name="service_name"
             rules={[
               { required: true, message: "Vui lòng nhập dịch vụ!" },
-              { pattern: /^(\s*\S\s*)+$/, message: "Không được chứa khoảng trắng!" },
+              {
+                pattern: /^(\s*\S\s*)+$/,
+                message: "Không được chứa khoảng trắng!",
+              },
             ]}
           >
             <Input />
@@ -109,36 +113,41 @@ const AddServices = () => {
             rules={[
               { required: true, message: "Không được bỏ trống!" },
               { min: 5, message: "Mô tả phải có ít nhất 5 ký tự!" },
-              { pattern: /^(\s*\S\s*)+$/, message: "Không được chứa khoảng trắng!" },
+              {
+                pattern: /^(\s*\S\s*)+$/,
+                message: "Không được chứa khoảng trắng!",
+              },
             ]}
           >
             <Input.TextArea rows={5} />
           </Form.Item>
 
-          <Form.Item
-            name="branch_id"
-            label="Chi nhánh"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn chi nhánh!",
-                type: "array",
-              },
-            ]}
-          >
-            <Select
-              mode="multiple"
-            //  placeholder="Vui lòng chọn chi nhánh!"
+          {role === "super_admin" && (
+            <Form.Item
+              name="branch_id"
+              label="Chi nhánh"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn chi nhánh!",
+                  type: "array",
+                },
+              ]}
             >
-              {dataBranches?.data?.map((item: any) => {
-                return (
-                  <Option key={item?.id} value={item?.id}>
-                    {item?.name}
-                  </Option>
-                );
-              })}
-            </Select>
-          </Form.Item>
+              <Select
+                mode="multiple"
+                //  placeholder="Vui lòng chọn chi nhánh!"
+              >
+                {dataBranches?.data?.map((item: any) => {
+                  return (
+                    <Option key={item?.id} value={item?.id}>
+                      {item?.name}
+                    </Option>
+                  );
+                })}
+              </Select>
+            </Form.Item>
+          )}
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
