@@ -18,7 +18,6 @@ use App\Modules\Staff\Controllers\AdminController;
 use App\Modules\User\Controllers\UserController;
 use App\Modules\Utilities\Controllers\UtilitiesController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\CheckRoleSuperAdmin;
 
 Route::fallback(function () {
     return response()->json([
