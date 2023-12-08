@@ -71,6 +71,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/auth.php'));
 
             Route::domain('api.' . env('APP_DOMAIN'))
+                ->prefix('admin')
                 ->as('admin.')
                 ->middleware(['api','auth:admin-api','scopes:admin'])
                 ->namespace($this->namespace)
