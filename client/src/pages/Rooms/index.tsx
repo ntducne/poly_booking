@@ -46,10 +46,8 @@ export default function Rooms({}: Props) {
   const navigate = useNavigate();
   const [dataQuery, setDataQuery] = useState<any>(queryParams || {});
   const [data, setData] = useState<any>({});
-  const { data: dataAll, isLoading, refetch } = useGetRoomsQuery({});
-  console.log(isLoading);
-
-  const [searchRooms, { isLoading: loadingSearch }] = useSearchRoomsMutation();
+  const { data: dataAll, isLoading } = useGetRoomsQuery({});
+  const [searchRooms] = useSearchRoomsMutation();
   const { data: dataBranches } = useGetBranchesQuery({});
   const [childs, setChilds] = useState<number>(0);
   const [adults, setAdults] = useState<number>(0);
