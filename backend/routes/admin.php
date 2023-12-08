@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\CheckRoleSuperAdmin;
 use App\Models\Notification;
 use App\Modules\Branch\Controllers\BranchController;
 use App\Modules\Dashboard\Controllers\DashboardController;
@@ -33,6 +34,8 @@ Route::get('/notifications', function(){
             'time' => $value->time,
         ];
     }
+    // đảo ngược mảng
+    $newNotification = array_reverse($newNotification);
     return response()->json($newNotification);
 })->name('notifications');
 
@@ -50,12 +53,16 @@ Route::get('/contact', function(){
     return response()->json($newContacts);
 })->name('contact');
 
-Route::middleware(CheckPermission::class)->group(function () {
+
+Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
     Route::post('staffs/createAdmin', [AdminController::class, 'store']);
 });
 
-// Route::middleware(CheckPermission::class)->group(function () {
+Route::get('/room/search', [BookingController::class, 'search'])->name('search');
+
+
+Route::middleware(CheckPermission::class)->group(function () {
     
     Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
@@ -99,5 +106,5 @@ Route::middleware(CheckPermission::class)->group(function () {
         });
     });
 
-// });
+});
 Route::post('/logout', [AuthController::class, 'logout']);
