@@ -54,7 +54,7 @@ export default function Header({}: Props) {
       <div className="container mx-auto lg:flex-row lg:justify-between lg:gap-y-0 flex justify-between">
         {/* logo */}
         <div className="flex gap-5 items-center ">
-          <Link to="">
+          <Link to="/">
             {header ? (
               <img
                 className="w-[90px]"
@@ -108,7 +108,7 @@ export default function Header({}: Props) {
           `}
         >
           {cookies && cookies?.userInfo ? (
-            <div>
+            <div className="md:block hidden">
               <Dropdown menu={{ items }} trigger={["click"]}>
                 <a onClick={(e) => e.preventDefault()}>
                   <Space>

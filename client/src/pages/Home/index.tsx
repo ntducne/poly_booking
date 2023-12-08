@@ -22,19 +22,19 @@ import Page from "../../components/Page";
 import RoomsView from "../../sections/Home/RoomsView";
 type Props = {};
 
-export default function Home({ }: Props) {
+export default function Home({}: Props) {
   return (
     <Page title="Trang chủ">
       <HeroSlide />
       <BookForm />
       <div
-        className={`py-[90px] lg:py-[190px] bg-[#f9f8f6]" transition-all duration-300`}
+        className={`py-[60px] md:py-[90px] lg:py-[190px] bg-bgr transition-all duration-300`}
       >
         <div className="px-4 flex flex-col justify-center items-center lg:flex-row ">
           <ObserverAnimate position={{ y: 70 }}>
-            <div className="md:grid md:grid-cols-[1.5fr,2fr] gap-5">
+            <div className="lg:grid lg:grid-cols-[1.5fr,2fr] flex flex-col gap-5">
               <div className="flex flex-col gap-1">
-                <div className="flex gap-1">
+                <div className="gap-1 lg:flex hidden">
                   <img
                     src="https://themewagon.github.io/seapalace/img/home/welcomeBanner1.png"
                     alt=""
@@ -50,34 +50,31 @@ export default function Home({ }: Props) {
                 />
               </div>
               <div className="ml-[30px]">
-                <div className="flex flex-col text-[40px] font-text_2nd font-bold">
+                <div className="flex flex-col text-[30px] md:text-[40px] font-text_2nd font-bold">
                   <p>Chào mừng</p>
                   <p>đến với khách sạn chúng tôi</p>
                 </div>
                 <p className="max-w-[500px] mt-[30px]">
-                  Chào mừng quý khách đến với khách sạn chúng tôi, nơi mà trải nghiệm tuyệt vời và dịch vụ chân thành đặt lên hàng đầu ưu tiên. Khách sạn của chúng tôi tự hào là điểm đến lý tưởng cho những chuyến du lịch, công tác hay nghỉ dưỡng, mang đến cho quý khách không gian thoải mái và tiện nghi đẳng cấp.
+                  Chào mừng quý khách đến với khách sạn chúng tôi, nơi mà trải
+                  nghiệm tuyệt vời và dịch vụ chân thành đặt lên hàng đầu ưu
+                  tiên. Khách sạn của chúng tôi tự hào là điểm đến lý tưởng cho
+                  những chuyến du lịch, công tác hay nghỉ dưỡng, mang đến cho
+                  quý khách không gian thoải mái và tiện nghi đẳng cấp.
                 </p>
                 <p className="max-w-[500px] my-[30px]">
-                  Không chỉ với vị trí đắc địa, khách sạn của chúng tôi còn tự hào về không gian sang trọng, phòng nghỉ thoải mái và trang thiết bị hiện đại. Đội ngũ nhân viên nhiệt tình.
+                  Không chỉ với vị trí đắc địa, khách sạn của chúng tôi còn tự
+                  hào về không gian sang trọng, phòng nghỉ thoải mái và trang
+                  thiết bị hiện đại. Đội ngũ nhân viên nhiệt tình.
                 </p>
-                <Link to={"/about"} className="mt-[30px] px-6 py-2 rounded-md bg-blue-500 text-white font-medium font-text_2nd text-[20px]">
+                <Link
+                  to={"/about"}
+                  className="mt-[30px] px-6 py-2 rounded-md bg-blue-500 text-white font-medium font-text_2nd text-[20px]"
+                >
                   Tìm hiểu thêm
                 </Link>
               </div>
             </div>
           </ObserverAnimate>
-          <div className="text-white mt-[30px] flex flex-col lg:hidden items-center">
-            <div className="mb-5">
-              <span className="text-desc">For luxury seekers</span>
-            </div>
-            <h2 className="text-[25px] text-center">
-              Discover a hotel that defines a new dimension of luxury. Emotional
-              luxury.
-            </h2>
-            <Link to="#" className="underline text-[24px] mt-[30px]">
-              View More
-            </Link>
-          </div>
         </div>
 
         <RoomsView />
@@ -87,7 +84,8 @@ export default function Home({ }: Props) {
             <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
               <div className="text-center">
                 <h2 className="text-h3 md:text-h1 max-w-[780px] text-center  font-medium">
-                  Chúng tôi mang đến nụ cười trên khuôn mặt của bạn. Hài lòng mọi người trên toàn thế giới.
+                  Chúng tôi mang đến nụ cười trên khuôn mặt của bạn. Hài lòng
+                  mọi người trên toàn thế giới.
                 </h2>
                 <Link to="/rooms" className="border-b text-[20px] md:text-h3">
                   Đặt phòng ngay
@@ -97,12 +95,15 @@ export default function Home({ }: Props) {
           </div>
           <div className=" bg-[#111111] relative font-text_2nd lg:h-[675px] flex flex-col-reverse gap-5 lg:gap-0 lg:flex-row items-center justify-center text-white">
             <ObserverAnimate position={{ x: 100, duration: 1.5 }}>
-              <div className="absolute md:static z-50">
+              <div className=" hidden md:block md:static md:pb-7 z-50 bg-black ">
                 <p className="text-desc">PolyDev Hotel</p>
-                <h3 className="text-h3 md:text-h1 font-medium max-w-[300px] md:max-w-[580px] mb-4">
-                  Chúng toi đáp ứng tất cả các mong muốn yêu cầu của bạn.
+                <h3 className="text-h3 md:text-h1 font-medium w-full hidden md:block md:max-w-[580px] mb-4">
+                  Chúng tôi đáp ứng tất cả các mong muốn yêu cầu của bạn.
                 </h3>
-                <Link to="/rooms" className="border-b text-[20px] md:text-h3">
+                <Link
+                  to="/rooms"
+                  className="border-b text-[20px] md:text-h3 pt-3 "
+                >
                   Đặt phòng ngay
                 </Link>
               </div>
@@ -117,7 +118,7 @@ export default function Home({ }: Props) {
         <div className="mt-primary px-4">
           <div className="flex justify-center mb-[40px]">
             <ObserverAnimate position={{ y: 50, duration: 1.5 }}>
-              <h2 className="text-[40px] flex flex-col items-center text-[#202020] max-w-[600px] font-text_2nd font-bold">
+              <h2 className="text-[30px] md:text-[40px] flex flex-col items-center text-[#202020] max-w-[600px] font-text_2nd font-bold">
                 <p>
                   <MdOutlineSportsKabaddi className="text-[50px]" />
                 </p>
