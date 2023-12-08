@@ -22,7 +22,7 @@ class RatesController extends Controller
     public function index()
     {
         try {
-            $rate = $this->rates->paginate(5)->withQueryString();
+            $rate = $this->rates->paginate(10)->withQueryString();
             return RateResource::collection($rate);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());

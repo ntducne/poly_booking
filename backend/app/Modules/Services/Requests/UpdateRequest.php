@@ -31,7 +31,7 @@ class UpdateRequest extends FormRequest
             ],
             'price' => ['required', 'numeric'],
             'description' => ['required'],
-            'branch_id'=>['required','exists:App\Models\Branch,_id']
+            // 'branch_id'=>['required','exists:App\Models\Branch,_id']
         ];
     }
     public function attributes()

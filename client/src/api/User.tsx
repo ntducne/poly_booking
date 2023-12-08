@@ -53,7 +53,7 @@ const userApi = createApi({
     }),
 
     getDetailHistoryBooking: builder.query<any, any>({
-      query: (id) => `/booking/detail/${id}`,
+      query: (id) => `/booking/${id}`,
       providesTags: ["Users"],
     }),
 

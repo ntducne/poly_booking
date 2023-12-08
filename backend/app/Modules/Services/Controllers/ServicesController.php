@@ -22,8 +22,8 @@ class ServicesController extends Controller
     {
         try {
             $query = $this->services->newQuery();
-            $query->where('branch_id', $request->user()->branch_id);
-            $services = $query->paginate(5);
+            // $query->where('branch_id', $request->user()->branch_id);
+            $services = $query->paginate(10);
             // $response = [
             //     'message' => 'get Mongo',
             //     'data' => $services
@@ -41,7 +41,12 @@ class ServicesController extends Controller
     public function store(StoreRequest $request)
     {
         try {
-            $service = $this->services->create($request->all());
+            $service = $this->services->create([
+                'service_name' => $request->service_name,
+                'price' => $request->price,
+                'description' => $request->description,
+                'branch_id' => $request->user()->branch_id
+            ]);
             return response()->json([
                 'status' => 'Success',
                 'message' => 'Thêm thành công !',
@@ -99,20 +104,10 @@ class ServicesController extends Controller
                 ]);
             }
             $name = $request->service_name;
-            $branch_id = $request->branch_id;
-            $branch = [];
-            if (isset($branch_id[0]['key'])) {
-                foreach ($branch_id as $value) {
-                    $branch[] = $value['value'];
-                }
-            } else {
-                foreach ($branch_id as $value) {
-                    $branch[] = $value;
-                }
-            }
             $update = $service->update([
                 'service_name' => $name,
-                'branch_id' => $branch,
+                'price' => $request->price,
+                'description' => $request->description,
             ]);
             if ($update) {
                 return response()->json([

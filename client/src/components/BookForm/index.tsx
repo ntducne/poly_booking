@@ -47,8 +47,8 @@ export default function BookForm({}: Props) {
     console.log("error", errorInfo);
   };
   return (
-    <div className="container mx-auto relative w-[75%] bg-white">
-      <div className=" pt-4  px-5 py-10  w-full items-center  lg:shadow-xl lg:absolute lg:left-0 lg:-top-[90px]  lg:right-0 lg:p-0 lg:z-30">
+    <div className="container mx-auto relative w-full md:w-[75%] bg-white">
+      <div className=" md:pt-4 md:px-5 md:py-10  w-full items-center  lg:shadow-xl lg:absolute lg:left-0 lg:-top-[90px]  lg:right-0 lg:p-0 lg:z-30">
         <Form
           className="bg-white min-h-[200px] flex py-[40px] px-[40px]"
           onFinish={onFinish}

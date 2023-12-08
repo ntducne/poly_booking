@@ -22,6 +22,7 @@ import PaymentProcess from "./pages/Payment/process";
 import SearchOrder from "./pages/SearchOrder";
 import LayoutClient2 from "./layouts/Layout2";
 import DetailRoomBooked from "./pages/DetailRoomBooked";
+import LayoutProfile from "./layouts/LayoutProfile";
 import StatusPaymentVnpay from "./pages/Payment/status/vnpay";
 import StatusPaymentMomo from "./pages/Payment/status/momo";
 import StatusPaymentPaypal from "./pages/Payment/status/paypal";
@@ -38,7 +39,7 @@ function App() {
           <Route path="about" element={<AboutPage />} />
           <Route path="search-order" element={<SearchOrder />} />
         </Route>
-        <Route path="user" element={<LayoutClient2 />}>
+        <Route path="user" element={<LayoutProfile />}>
           <Route path="room-booked" element={<RoomBooked />} />
           <Route path="profile" element={<Edit />} />
           <Route path="profile/roomBooked/:id" element={<DetailRoomBooked />} />

@@ -1,18 +1,14 @@
 import type { TabsProps } from "antd";
 import { Tabs } from "antd";
 import { useGetProfileQuery } from "../../api/User";
-import HeroSlide from "../../components/HeroSlide";
 import Page from "../../components/Page";
-import HistoryBooking from "../../sections/Profile/HistoryBooking";
-import UpdateProfile from "../../sections/Profile/UpdateProfile";
-import UpdatePassword from "../../sections/Profile/UpdatePassword";
 import PcLoading from "../../components/RoomLoading/PcLoading";
-import { cookies } from "../../config/cookie";
+import HistoryBooking from "../../sections/Profile/HistoryBooking";
+import UpdatePassword from "../../sections/Profile/UpdatePassword";
+import UpdateProfile from "../../sections/Profile/UpdateProfile";
 
 export default function Edit() {
   const { data, isLoading } = useGetProfileQuery({});
-  console.log(data);
-  console.log(`${JSON.parse(cookies().Get("userInfo") as any)[2].token}`);
 
   const items: TabsProps["items"] = [
     {
@@ -35,20 +31,20 @@ export default function Edit() {
       children: <UpdatePassword />,
     },
   ];
-  console.log(isLoading);
   return (
     <Page title="Thông tin người dùng">
-      <HeroSlide />
-      <div title="Profile" />
-      {isLoading ? (
-        <div className="mt-5 w-full">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <PcLoading key={index} />
-          ))}
-        </div>
-      ) : (
-        <div className="">
-          <div className="container mx-auto my-5 p-5">
+      <h1 className=" text-[30px] font-bold">Thông tin người dùng</h1>
+
+      <div className="bg-bgr pt-[60px]">
+        <div className="container mx-auto py-5 px-8">
+          <h1 className="mb-6 font-bold text-[30px]">Thông tin cá nhân</h1>
+          {isLoading ? (
+            <div className="mt-5 w-full">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <PcLoading key={index} />
+              ))}
+            </div>
+          ) : (
             <div className="md:flex no-wrap md:-mx-2 ">
               <div className="w-full md:w-3/12 md:mx-2">
                 <div className="bg-white shadow-md rounded-xl p-3 border-t-8 border-b-8 border-gray-400">
@@ -74,8 +70,8 @@ export default function Edit() {
                       </span>
                     </li>
                     <li className="flex items-center py-3">
-                      <span>Member since</span>
-                      {/*<span className="ml-auto">{auth.user.created_at}</span>*/}
+                      <span>Thành viên từ: </span>
+                      <span className="ml-auto">23/08/2023</span>
                     </li>
                   </ul>
                 </div>
@@ -123,9 +119,9 @@ export default function Edit() {
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </Page>
   );
 }
