@@ -51,9 +51,9 @@ const EditServices = () => {
     };
     updateServices(data)
       .unwrap()
-      .then((item) => {
+      .then((item:any) => {
         if (item.status == "success") {
-          toast("Update thành công", {
+          toast(item.message, {
             autoClose: 3000,
             theme: "light",
           });
@@ -61,7 +61,6 @@ const EditServices = () => {
             navigate("/services");
           }, 3000);
         } else {
-          console.log(item);
           toast(item?.error?.name || "Lỗi rồi bạn", {
             autoClose: 3000,
             theme: "light",
@@ -95,11 +94,6 @@ const EditServices = () => {
           name="validate_other"
           {...formItemLayout}
           onFinish={onFinish}
-          initialValues={{
-            branch_id: serviceDetail?.data?.branch.map((item: any) => {
-              return item?.id;
-            }),
-          }}
           style={{ maxWidth: 1000 }}
           className="grid grid-cols-1 xl:grid-cols-2"
         >
