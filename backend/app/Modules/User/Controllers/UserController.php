@@ -152,7 +152,12 @@ class UserController extends Controller
     }
     public function changePassword(ChangePasswordRequest $request)
     {
-        $this->userRepository->updatePassword($request, $request->user()->id);
+        $check = $this->userRepository->updatePassword($request, $request->user()->id);
+        if(!$check){
+            return response()->json([
+                'message' => 'Mật khẩu cũ không đúng !',
+            ], 400);
+        }
         return response()->json([
             'message' => 'Change password successfully',
             'data' => $request->user()

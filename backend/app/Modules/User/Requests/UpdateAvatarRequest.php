@@ -11,13 +11,13 @@ class UpdateAvatarRequest extends Request
     public function rules()
     {
         return [
-            'image'     => ['bail', 'required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'image' => ['bail', 'required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
     public function attributes()
     {
         return [
-            'image'    => 'Ảnh',
+            'image' => 'Ảnh',
         ];
     }
 }
