@@ -39,6 +39,7 @@ import formatMoneyVN from "../../../config/formatMoneyVN";
 import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
 import dayjs from "dayjs";
 import moment from "moment";
+import { useSearchRoomMutation } from "../../../api/booking";
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const {
@@ -53,6 +54,7 @@ const BillDetail: React.FC = () => {
   const { data: dataServices, isLoading: loadingServer } = useGetServicesQuery(
     {}
   );
+  const [searchRoom] = useSearchRoomMutation();
 
   const [dataRoomSearch, setRoomSearch] = useState([]);
   const [dataRoomBook, setRoomBook] = useState([]);
@@ -336,27 +338,13 @@ const BillDetail: React.FC = () => {
       checkin: dayjs(dataBill?.data?.booking?.checkout).format("YYYY-MM-DD"),
       checkout: new_checkoutDate,
       adult: adults,
-      child: childs,
-      branch_id: dataBill?.data?.branch?.id,
+      children: childs,
+      // branch_id: dataBill?.data?.branch?.id,
       room_type_id: room_type_id,
       amount_room: amount_room_renew,
     };
-    const queryString = Object.keys(dataQuery)
-      .map(
-        (key) =>
-          encodeURIComponent(key) + "=" + encodeURIComponent(dataQuery[key])
-      )
-      .join("&");
-    const apiUrl = `${
-      import.meta.env.VITE_URL_API_CLIENT
-    }/v2/search?${queryString}`;
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+    searchRoom(dataQuery)
+      .unwrap()
       .then((data) => {
         console.log(data?.status);
         if (data?.message == "Hết phòng !") {
@@ -393,6 +381,7 @@ const BillDetail: React.FC = () => {
       idRoomNewExtend === null
     ) {
       const dataExtendRoom = {
+        booking_id: dataBill?.data?.booking?.id,
         billing_id: dataBill?.data?.id,
         amount_room: amount_room_renew,
         room_id: dataBill?.data?.booking?.detail[0].room_id,
@@ -401,16 +390,17 @@ const BillDetail: React.FC = () => {
       extendBooking(dataExtendRoom)
         .unwrap()
         .then((res: any) => {
-          if (res.message && res.status === true) {
+          if (res.message) {
             swal(res.message, {
               icon: "success",
             });
             closeModalExtend();
-          } else if (res.message && res.status === false) {
-            swal(res.message, {
-              icon: "error",
-            });
-          }
+          } 
+          // else if (res.message && res.status === false) {
+          //   swal(res.message, {
+          //     icon: "error",
+          //   });
+          // }
         })
         .catch((err) => {
           swal(err, {

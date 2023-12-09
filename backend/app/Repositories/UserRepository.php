@@ -241,11 +241,10 @@ class UserRepository
             if(!$user){
                 return false;
             }
-            $arr = $request->all();
-            if(!Hash::check($arr['old_password'], $user->password)){
+            if(!Hash::check($request->old_password, $user->password)){
                 return false;
             }
-            $user->password = Hash::make($arr['password']);
+            $user->password = Hash::make($request->new_password);
             $user->save();
             return true;
         } catch (Exception $e) {

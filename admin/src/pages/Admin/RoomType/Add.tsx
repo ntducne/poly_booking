@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { useCreateRoomTypeMutation } from "../../../api/roomTypes";
 import { useNavigate } from "react-router-dom";
 import { useGetAllBranchesQuery } from "../../../api/branches";
-const { Option } = Select;
+// const { Option } = Select;
 
 const { Title, Text } = Typography;
 
@@ -25,6 +25,7 @@ const formItemLayout = {
 const AddRoomType = () => {
   const { data: dataBranches, isLoading: loadingBranch } = useGetAllBranchesQuery({});
 
+  if(loadingBranch){}
   const navigate = useNavigate()
   const [createRoomsType] = useCreateRoomTypeMutation({})
 

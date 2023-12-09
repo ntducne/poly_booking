@@ -34,6 +34,14 @@ const bookingApi = createApi({
       }),
       invalidatesTags: ['booking']
     }),
+    bookingRoom: builder.mutation({
+      query: (data: any) => ({
+        url: `booking/store`,
+        method: "POST",
+        body: data
+      }),
+      invalidatesTags: ['booking']
+    }),
   }),
 });
 

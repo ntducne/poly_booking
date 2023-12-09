@@ -7,14 +7,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class BookRoom extends Notification implements ShouldQueue
+class PaymentSuccess extends Notification
 {
     use Queueable;
 
     public function __construct(
         public mixed $name,
         public mixed $info,
-        public mixed $url
     ) {
 
         
@@ -28,10 +27,9 @@ class BookRoom extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('Thông báo thanh toán hoá đơn đặt phòng !')
-            ->markdown('mail.booking', [
+            ->markdown('mail.PaymentSuccess', [
                 'name' => $this->name,
                 'info' => $this->info,
-                'url' => $this->url,
             ]);
     }
 

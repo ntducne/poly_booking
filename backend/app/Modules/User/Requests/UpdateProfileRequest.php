@@ -13,20 +13,12 @@ class UpdateProfileRequest extends Request
     {
         return [
             'name' => [
-                'bail','required','string'
-            ],
-            'email' => [
-                'bail','required', 'string', new MailRule(),
-                Rule::unique(User::class, 'email')->ignore(request()->user()->id, $this->column_id),
+                'bail', 'required', 'string'
             ],
             'phone' => [
                 'bail','required', 'digits:10', new PhoneRule(),
                 Rule::unique(User::class, 'phone')->ignore(request()->user()->id,$this->column_id),
             ],
-            'address' => [ 'required' ],
         ];
     }
-
-    
-
 }

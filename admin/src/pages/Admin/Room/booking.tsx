@@ -18,7 +18,8 @@ import { RoomInterface } from "../../../Interface/RoomInterface";
 import Page from "../../../component/page";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import { DetailRoomModal } from "../../../component/Modal/DetailRoomModal";
-import { useGetAllBranchesQuery } from "../../../api/branches";
+// import { useGetAllBranchesQuery } from "../../../api/branches";
+// import { role } from "../../../hoc/withAuthorization";
 
 export default function RoomBooking() {
   const [form] = Form.useForm();
@@ -27,7 +28,8 @@ export default function RoomBooking() {
   const [isDisabledForm, setDisableForm] = useState(false);
   const [searchRoom] = useSearchRoomMutation();
   const { data: dataRoomtype, isLoading } = useGetAllRoomTypeQuery({});
-  const { data: dataBranches, isLoading: loadingBranch } = useGetAllBranchesQuery({});
+  // const { data: dataBranches, isLoading: loadingBranch } =
+  //   useGetAllBranchesQuery({});
   const [dataDetailRoom, setDataDetailRoom] = useState(null);
   const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
@@ -41,34 +43,64 @@ export default function RoomBooking() {
 
   const setDetailRoom = (data_room: RoomInterface) => {
     setDataDetailRoom(null);
+    
     setDataDetailRoom(data_room as any);
     setIsModalOpen(true);
   };
 
-  const newData = dataRoom?.map((room: any, index) => ({
-    key: index + 1,
-    name: room?.name,
-    images: room?.images,
-    room_type_name: room?.type?.room_type_name,
-    child: room?.children,
-    area: room?.area,
-    bed_size: room?.bed_size,
-    description: room?.description,
-    adults: room?.adults,
-    branch: room?.branch,
-    price : room?.type?.price_per_night
-    // discount: room?.discount,
-  }));
+  // const newData = dataRoom?.map((room: any, index) => ({
+  //   key: index + 1,
+  //   name: room?.name,
+  //   images: room?.images,
+  //   room_type_name: room?.type?.room_type_name,
+  //   child: room?.children,
+  //   area: room?.area,
+  //   bed_size: room?.bed_size,
+  //   description: room?.description,
+  //   adults: room?.adults,
+  //   branch: room?.branch,
+  //   price: room?.type?.price_per_night,
+  //   // discount: room?.discount,
+  // }));
 
   const columns = [
-    { title: "Ảnh", key: "image", width: "7%", dataIndex: "image", render: (item: any) => (<><Image width={50} height={50} className="rounded-md" src={item} /></>),},
-    { title: "Loại phòng", key: "room_type", width: "20%", render: (item: any) => {return <>{item?.room_type?.room_type_name}</>}},
+    {
+      title: "Ảnh",
+      key: "image",
+      width: "7%",
+      dataIndex: "image",
+      render: (item: any) => (
+        <>
+          <Image width={50} height={50} className="rounded-md" src={item} />
+        </>
+      ),
+    },
+    {
+      title: "Loại phòng",
+      key: "room_type",
+      width: "20%",
+      render: (item: any) => {
+        return <>{item?.room_type?.room_type_name}</>;
+      },
+    },
     { title: "Tên phòng", key: "name", dataIndex: "name" },
     { title: "Người lớn", key: "adult", dataIndex: "adult" },
     { title: "Trẻ con", key: "child", dataIndex: "child" },
-    { title: "Chi nhánh", key: "branch", dataIndex: "branch", render: (item: any) => <> {item?.name}</> },
-    { title: "Giá phòng", key: "price", dataIndex: "price", render: (item: any) => <>{formatMoneyVN(item)}</> },
-    { title: "Lựa chọn", key: "action",
+    {
+      title: "Chi nhánh",
+      key: "branch",
+      dataIndex: "branch",
+      render: (item: any) => <> {item?.name}</>,
+    },
+    {
+      title: "Giá phòng",
+      key: "price",
+      dataIndex: "price",
+      render: (item: any) => <>{formatMoneyVN(item)}</>,
+    },
+    {
+      title: "Lựa chọn",
+      key: "action",
       render: (record: any) => (
         <>
           <Button
@@ -102,13 +134,14 @@ export default function RoomBooking() {
         adults: values.adults,
         children: values.childrens,
       }).unwrap();
-  
+
       if (res.status === "success") {
         message.success(res.message);
         const valueRoom = res.data;
         console.log(valueRoom);
-        setDataRoom((prevDataRoom) =>
-          [...prevDataRoom, ...valueRoom.map((room: any) => ({
+        setDataRoom((prevDataRoom) => [
+          ...prevDataRoom,
+          ...valueRoom.map((room: any) => ({
             id: room.id,
             name: room.name,
             amount: room.amount,
@@ -121,8 +154,8 @@ export default function RoomBooking() {
             branch: room.branch,
             image: room.image,
             room_empty: room.room_empty,
-          }))]
-        );
+          })),
+        ]);
         console.log(dataRoom);
       } else if (res.status === "error") {
         message.error(res.message);
@@ -159,23 +192,25 @@ export default function RoomBooking() {
           <Card
             title="Thông tin phòng"
             bordered={false}
-            loading={isLoading && loadingBranch}
+            loading={isLoading}
           >
-            <Form.Item
-              label="Chi nhánh"
-              name="branch_id"
-              rules={[{ required: true, message: "Vui lòng chọn chi nhánh" }]}
-            >
-              <Select>
-                {dataBranches?.data?.map((item: any) => {
-                  return (
-                    <Select.Option value={item.id} key={item.id}>
-                      {item.name}
-                    </Select.Option>
-                  );
-                })}
-              </Select>
-            </Form.Item>
+            {/* {role === "super_admin" && (
+              <Form.Item
+                label="Chi nhánh"
+                name="branch_id"
+                rules={[{ required: true, message: "Vui lòng chọn chi nhánh" }]}
+              >
+                <Select>
+                  {dataBranches?.data?.map((item: any) => {
+                    return (
+                      <Select.Option value={item.id} key={item.id}>
+                        {item.name}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
+              </Form.Item>
+            )} */}
             <Form.Item
               label="Loại phòng"
               name="room_type"

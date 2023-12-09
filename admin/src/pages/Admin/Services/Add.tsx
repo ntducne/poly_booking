@@ -3,20 +3,19 @@ import {
   Form,
   Input,
   Button,
-  Select,
   Typography,
   InputNumber,
   Space,
 } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
-import { useGetAllBranchesQuery } from "../../../api/branches";
+// import { useGetAllBranchesQuery } from "../../../api/branches";
 import { useCreateServicesMutation } from "../../../api/services";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Skeleton } from "antd";
+// import { Skeleton } from "antd";
 import { role } from "../../../hoc/withAuthorization";
-const { Option } = Select;
+// const { Option } = Select;
 
 const { Title, Text } = Typography;
 
@@ -29,24 +28,24 @@ const AddServices = () => {
   console.log("role", role);
 
   const [createServices] = useCreateServicesMutation();
-  const { data: dataBranches, isLoading: loadingBranch } =
-    useGetAllBranchesQuery({});
+  // const { data: dataBranches, isLoading: loadingBranch } =
+  //   useGetAllBranchesQuery({});
   const navigate = useNavigate();
 
-  if (loadingBranch) {
-    return (
-      <div>
-        <Skeleton />
-      </div>
-    );
-  }
+  // if (loadingBranch) {
+  //   return (
+  //     <div>
+  //       <Skeleton />
+  //     </div>
+  //   );
+  // }
 
   const onFinish = (values: any) => {
     createServices(values)
       .unwrap()
       .then((item) => {
         if (item.status == "Success") {
-          toast("Thêm mới thành công", {
+          toast(item?.message, {
             autoClose: 3000,
             theme: "light",
           });
@@ -122,7 +121,7 @@ const AddServices = () => {
             <Input.TextArea rows={5} />
           </Form.Item>
 
-          {role === "super_admin" && (
+          {/* {role === "super_admin" && (
             <Form.Item
               name="branch_id"
               label="Chi nhánh"
@@ -147,7 +146,7 @@ const AddServices = () => {
                 })}
               </Select>
             </Form.Item>
-          )}
+          )} */}
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">

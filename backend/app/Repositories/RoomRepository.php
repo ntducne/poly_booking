@@ -271,13 +271,14 @@ class RoomRepository
                 'room_id' => $room->id,
                 'room_name' => $room->name,
                 'room_number' => $value,
-                'isCheckout' => Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s'),
+                'is_checkout' => Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s'),
                 'status' => 0,
             ]);
         }
         $user = $this->user->where('email', $request->email)->orWhere('phone', $request->phone)->first();
         $user_id = $user ? $user->id : null;
         $total = $provisional;
+        $billingCode = time();
         $billingData = [
             'booking_id' => $bookingCreate->id,
             'user_id' => $user_id,
@@ -287,7 +288,7 @@ class RoomRepository
             'payment_date' => null,
             'branch_id' => $room->branch_id ?? $request->user()->branch_id,
             'status' => 0,
-            'billingCode' => time(),
+            'billingCode' => $billingCode,
             'moneyUSD' => $total / 23000,
             'moneyVND' => $total,
         ];
@@ -296,6 +297,27 @@ class RoomRepository
         event(new BookingEvent(new BillingResource(
             $this->billing->find($newBilling)
         )));
+        if($user){
+            $user->notify(new \App\Notifications\BookRoom(
+                $request->name,
+                [
+                    'order_code' => $billingCode,
+                    'order_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'payment' => $request->payment_method,
+                    'total' => $total,
+                    'rooms' => $result,
+                    'customer' => [
+                        'name' => $request->name,
+                        'phone' => $request->phone,
+                        'email' => $request->email,
+                    ],
+                    'check_in' => $request->checkin,
+                    'check_out' => $request->checkout,
+                    'status' => 'Đã đặt phòng',
+                ],
+                env('FE_URL') . '/search-order/?billingCode=' . $billingCode
+            ));
+        }
         if($request->user()){
             $this->history_handle->create([
                 'booking_id' => $bookingCreate->id,
