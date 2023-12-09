@@ -9,9 +9,9 @@ interface DetailRoomModalProps {
 }
 
 export const DetailRoomModal = (props: DetailRoomModalProps) => {
-  console.log(props.room);
+  console.log(props?.room);
 
-  if (props.room === null) return <></>;
+  if (props?.room === null) return <></>;
   return (
     <>
       <Modal
@@ -25,7 +25,7 @@ export const DetailRoomModal = (props: DetailRoomModalProps) => {
             <Row gutter={[16, 16]}>
                 <Col span={12}>
                 <Image
-                    src={props.room?.images[0]?.image}
+                    src={props.room?.image}
                     width={200}
                     height={200}
                     alt="image"
@@ -43,11 +43,11 @@ export const DetailRoomModal = (props: DetailRoomModalProps) => {
                     </div>
                     <div className="flex flex-col">
                     <p className="font-bold">Người lớn</p>
-                    <p>{props.room?.adults}</p>
+                    <p>{props.room?.adult}</p>
                     </div>
                     <div className="flex flex-col">
                     <p className="font-bold">Trẻ con</p>
-                    <p>{props.room?.childrend}</p>
+                    <p>{props.room?.child}</p>
                     </div>
                     <div className="flex flex-col">
                     <p className="font-bold">Chi nhánh</p>

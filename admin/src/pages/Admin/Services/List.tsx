@@ -22,8 +22,6 @@ import { permissions } from "../../../hoc/withAuthorization";
 const ListServices = () => {
   const { data: dataServices, isLoading } = useGetServicesQuery({});
 
-  console.log("dataServices", dataServices);
-
   const [deleteServices] = useDeleteServicesMutation();
 
   const columns: ColumnsType<any> = [

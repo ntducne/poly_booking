@@ -3,7 +3,6 @@ import {
   Form,
   Input,
   Button,
-  Select,
   Typography,
   InputNumber,
   Space,
@@ -11,7 +10,7 @@ import {
 // import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useGetAllBranchesQuery } from "../../../api/branches";
+// import { useGetAllBranchesQuery } from "../../../api/branches";
 import {
   useGetDetailServicesQuery,
   useUpdateServicesMutation,
@@ -21,7 +20,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Skeleton } from "antd";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 const { Title, Text } = Typography;
 
@@ -31,8 +30,8 @@ const formItemLayout = {
 };
 
 const EditServices = () => {
-  const { data: dataBranches, isLoading: loadingBranch } =
-    useGetAllBranchesQuery({});
+  // const { data: dataBranches, isLoading: loadingBranch } =
+  //   useGetAllBranchesQuery({});
   const { id } = useParams();
   const { data: serviceDetail, isLoading: loadingData } =
     useGetDetailServicesQuery(id || "");
@@ -44,7 +43,6 @@ const EditServices = () => {
     form.setFieldsValue(serviceDetail?.data);
   }, [serviceDetail?.data]);
 
-  console.log("dataBranches", dataBranches);
 
   const onFinish = (values: any) => {
     const data = {
@@ -72,10 +70,9 @@ const EditServices = () => {
       });
   };
 
-  if (loadingData || loadingBranch) {
+  if (loadingData) {
     return (
       <div>
-        {" "}
         <Skeleton />
       </div>
     );
@@ -151,7 +148,7 @@ const EditServices = () => {
             <Input.TextArea rows={5} />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             name="branch_id"
             label="Chi nhánh"
             rules={[
@@ -171,7 +168,7 @@ const EditServices = () => {
                 );
               })}
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">

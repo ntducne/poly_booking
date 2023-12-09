@@ -9,16 +9,16 @@ import {
   Typography,
   InputNumber,
   Space,
-  Checkbox,
   Row,
   Col,
   Radio,
+  Skeleton,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useGetRoomTypeQuery } from "../../../api/roomTypes";
-import { useGetAllBranchesQuery } from "../../../api/branches";
+// import { useGetAllBranchesQuery } from "../../../api/branches";
 import { useCreateRoomMutation } from "../../../api/room";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -35,8 +35,8 @@ const { TextArea } = Input;
 const AddRoom = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useGetRoomTypeQuery({});
-  const { data: dataBranch, isLoading: isLoadingBranch } =
-    useGetAllBranchesQuery({});
+  // const { data: dataBranch, isLoading: isLoadingBranch } =
+  //   useGetAllBranchesQuery({});
   const [createUser, { isLoading: isLoadingCreate }] = useCreateRoomMutation();
 
   const onFinish = (values: any) => {
@@ -107,8 +107,8 @@ const AddRoom = () => {
     setFileList(fileList);
   };
 
-  if (isLoading && isLoadingBranch) {
-    return <>loading...</>;
+  if (isLoading) {
+    return <><Skeleton/></>;
   }
 
   return (

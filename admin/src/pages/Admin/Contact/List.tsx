@@ -1,4 +1,3 @@
-import React from "react";
 import Page from "../../../component/page";
 import { useGetContactQuery } from "../../../api/contact";
 import FormSearch from "../../../component/formSearch";
@@ -6,15 +5,16 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Table } from "antd";
 import moment from "moment";
+// import { ColumnsType } from "antd/es/table";
 
 const ListContact = () => {
   const { data: dataContact, isLoading } = useGetContactQuery({});
 
-  const columns: ColumnsType<any> = [
+  const columns : any = [
     {
       title: "ID",
       dataIndex: "key",
-      sorter: (a, b) => a.key - b.key,
+      sorter: (a :any, b:any) => a.key - b.key,
       sortDirections: ["descend"],
       fixed: "left",
     },
@@ -40,7 +40,7 @@ const ListContact = () => {
     },
   ];
 
-  const data = dataContact?.map((item, index) => ({
+  const data = dataContact?.map((item :any, index : any) => ({
     key: index + 1,
     name: item.name,
     email: item.email,

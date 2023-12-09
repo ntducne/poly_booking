@@ -1,8 +1,6 @@
-import { Collapse, CollapseProps, Skeleton, Table } from "antd";
-import React from "react";
+import { Skeleton, Table } from "antd";
 import { useGetNotificationsQuery } from "../../../api/notifications";
 import { ColumnsType } from "antd/es/table";
-const { Panel } = Collapse;
 
 const ListNotifications = () => {
   const { data, isLoading } = useGetNotificationsQuery({});
@@ -14,11 +12,11 @@ const ListNotifications = () => {
     );
   console.log("data", data);
 
-  const items: CollapseProps["items"] = data?.map((item: any) => ({
-    key: item.id,
-    label: item.message,
-    children: <p>{item.time}</p>,
-  }));
+  // const items: CollapseProps["items"] = data?.map((item: any) => ({
+  //   key: item.id,
+  //   label: item.message,
+  //   children: <p>{item.time}</p>,
+  // }));
   const dataNotifications = data?.map((item: any, index: number) => ({
     key: index + 1,
     message: item.message,

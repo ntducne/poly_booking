@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { pusherInstance } from '../config/pusher';
 
 const Demo: React.FC = () => {
-  const [notifications, setNotifications] = useState<any[]>([]);
+  // const [notifications, setNotifications] = useState<any[]>([]);
 
   useEffect(() => {
     const unsubscribe = pusherInstance().getData('chat', 'message', (data :any)  => {

@@ -21,9 +21,9 @@ const Test: React.FC = () => {
             "day": "2023-11-29",
         })
     }, []);
-    const processStatistical = (data: any) => {
-        fetchStatistical(data)
-    }
+    // const processStatistical = (data: any) => {
+    //     fetchStatistical(data)
+    // }
     return (
         <></>
     );
