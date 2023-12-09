@@ -6,10 +6,10 @@
     Chúng tôi xin thông báo bạn cần thanh toán cho việc đặt phòng tại {{ config('app.name') }}. Dưới đây là chi tiết về việc đặt phòng của bạn:
 
     <x-mail::table>
-        | Mã đặt phòng      | {{ $info['billing_id'] }}  |
+        | Mã đặt phòng      | {{ $info['billingCode'] }}  |
         | Check in          | {{ $info['check_in'] }}    |
         | Check out         | {{ $info['check_out'] }}   |
-        | Số tiền cần thanh toán | {{ $info['amount_due'] }}  |
+        | Số tiền cần thanh toán | {{ $info['total'] }}  |
     </x-mail::table>
 
     Vui lòng thanh toán sớm nhất có thể để tránh bất kỳ sự bất tiện nào.

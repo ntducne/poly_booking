@@ -14,9 +14,16 @@ class ReminderPayment extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+
+    public mixed $name;
+    public mixed $info;
+    public mixed $payment_url;
+
+    public function __construct($name, $info, $payment_url)
     {
-        //
+        $this->name = $name;
+        $this->info = $info;
+        $this->payment_url = $payment_url;
     }
 
     /**
@@ -35,9 +42,12 @@ class ReminderPayment extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('Thông báo thanh toán hoá đơn đặt phòng !')
+            ->markdown('mail.reminderPayment', [
+                'name' => $this->name,
+                'info' => $this->info,
+                'payment_url' => $this->payment_url,
+            ]);
     }
 
     /**

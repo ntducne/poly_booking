@@ -37,7 +37,12 @@ class ServicesController extends Controller
     public function store(StoreRequest $request)
     {
         try {
-            $service = $this->services->create($request->all());
+            $service = $this->services->create([
+                'service_name' => $request->service_name,
+                'price' => $request->price,
+                'description' => $request->description,
+                'branch_id' => $request->user()->branch_id
+            ]);
             return response()->json([
                 'status' => 'Success',
                 'message' => 'Thêm thành công !',

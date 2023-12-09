@@ -9,7 +9,9 @@ class ChangePasswordRequest extends Request
     public function rules()
     {
         return [
-            'password' => ['required', 'string', 'min:8'],
+            'new_password' => ['required', 'string', 'min:8'],
+            'old_password' => ['required', 'string', 'min:8'],
+            'confirm_new_password' => ['required', 'string', 'min:8', 'same:new_password'],
         ];
     }
 

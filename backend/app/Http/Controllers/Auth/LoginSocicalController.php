@@ -22,22 +22,17 @@ class LoginSocicalController extends Controller
 
     public function redirect(Request $request): RedirectResponse
     {
-        return Redirect::to(Socialite::driver($request->segment(4))->stateless()->redirect()->getTargetUrl());
+        return Redirect::to(Socialite::driver($request->segment(3))->stateless()->redirect()->getTargetUrl());
     }
 
     public function callback(Request $request)
     {
         $guard = $request->segment(1);
-        $socialiteUser = Socialite::driver($request->segment(4))->stateless()->user();
+        $socialiteUser = Socialite::driver($request->segment(3))->stateless()->user();
         $column = 'email';
         $email = $socialiteUser->getEmail();
-        if ($guard == 'admin') {
-            $admin = Admin::where($column, $email)->first();
-            return $this->extracted($admin, $guard);
-        } else if ($guard == 'user') {
-            $user = User::where($column, $email)->first();
-            return $this->extracted($user, $guard);
-        }
+        $user = User::where($column, $email)->first();
+        return $this->extracted($user, $guard);
     }
 
     public function extracted($user, string $guard): JsonResponse
@@ -45,7 +40,7 @@ class LoginSocicalController extends Controller
         if (!$user) {
             return response()->json([
                 'status' => false,
-                'message' => 'Unauthorized'
+                'message' => 'Tài khoản không tồn tại !'
             ], 401);
         }
         if ($user->status == 0) {
@@ -64,11 +59,9 @@ class LoginSocicalController extends Controller
                     'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
                 ],
             ];
-            if ($guard == 'admin') {
-                $response['permission'] = $user->getAllPermission();
-            }
             return response()->json($response, 200);
-        } else {
+        } 
+        else {
             return response()->json([
                 'status' => false,
                 'message' => 'Tài khoản của bạn đã bị khóa !'

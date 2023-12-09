@@ -41,6 +41,10 @@ export default function Login({ }: Props) {
         }
     };
 
+    const loginGoogle = () => {
+        location.href = `${import.meta.env.VITE_URL_AUTH}/login/google`
+    }
+
     return (
         <Page title='Đăng nhập'>
             <div className="flex items-center justify-center h-[100vh] lg:h-full md:h-screen bg-bgr">
@@ -63,6 +67,7 @@ export default function Login({ }: Props) {
                                             className="flex flex-row items-center justify-center lg:justify-start">
                                             <p className="mb-0 mr-4 text-normal">Đăng nhập bằng</p>
                                             <button
+                                                onClick={loginGoogle}
                                                 type="button"
                                                 data-te-ripple-init
                                                 data-te-ripple-color="light"
