@@ -117,10 +117,13 @@ const ListServices = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            deleteServices(id);
-            swal("Bạn đã xóa thành công !", {
-              icon: "success",
-              timer: 3000,
+            deleteServices(id).unwrap()
+            .then((res:any) => {
+              if(res.status === "success"){
+                swal(res.message, {
+                  icon: "success",
+                });
+              }
             });
           }
         })
