@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Console\Commands\CreateNotification;
+use App\Console\Commands\ReminderPayment;
 use App\Console\Commands\UpdateCheckOutBookDetail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -10,13 +10,13 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        // UpdateCheckOutBookDetail::class,
-        CreateNotification::class,
+        UpdateCheckOutBookDetail::class,
+        ReminderPayment::class,
     ];
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('app:update-check-out-book-detail')->everyMinute();
-        $schedule->command('app:create-notification')->everySecond();
+        $schedule->command('app:update-check-out-book-detail')->hourly();
+        $schedule->command('app:reminder-payment')->hourly();
     }
 
     protected function commands(): void

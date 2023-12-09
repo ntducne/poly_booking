@@ -17,10 +17,10 @@
 
     Thông tin phòng:
     <x-mail::table>
-        | Room              | Price                      |
-        | ----------------- | -------------------------- |
+        | Room              | 
+        | ----------------- | 
         @foreach ($info['rooms'] as $room)
-            | {{ $room['name'] }} | {{ $room['price'] }} |
+            | {{ $room['name'] }} |
         @endforeach
     </x-mail::table>
 
@@ -45,7 +45,7 @@
         | Status            | {{ $info['status'] }}      |
     </x-mail::table>
 
-    Để xem chi tiết đơn hàng, vui lòng nhấp vào nút bên dưới.
+    Để xem chi tiết đặt phòng, vui lòng nhấp vào nút bên dưới.
     <x-mail::button :url="$url">
         View
     </x-mail::button>
