@@ -19,12 +19,11 @@ export default function GoogleCallback() {
         .then(res => res.json())
         .then(values => {
             if(values.status === true){
-
                 cookies().Set(
                     "userInfo",
                     JSON.stringify(Object.values(values)),
                     convertFromNowToSeconds(values.accessToken.expires_at)
-                    );
+                );
             }
             if(values.status === false){
                 message.error(values.message);
