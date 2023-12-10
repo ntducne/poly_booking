@@ -7,6 +7,8 @@ export default function GoogleCallback() {
     const location = useLocation();
     const navigate = useNavigate();
     React.useEffect(() => {
+        if(!location.search) navigate('/auth/login');
+        if(location.search) navigate('/auth/social/callback');
         fetch(`${import.meta.env.VITE_URL_AUTH}/callback/google/${location.search}`, {
             method: 'GET',
             headers: {
@@ -30,4 +32,5 @@ export default function GoogleCallback() {
             }
         })
     }, [location.search]);
+    return <></>
 }

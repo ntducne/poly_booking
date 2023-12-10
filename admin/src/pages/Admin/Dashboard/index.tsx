@@ -202,7 +202,7 @@ const Dashboard = () => {
     <>
       <Page title={`Trang chủ`}>
         <Form
-        className="hidden"
+        className=""
           form={form}
           name="basic"
           onFinish={submitStat}
