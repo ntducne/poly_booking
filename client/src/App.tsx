@@ -27,6 +27,7 @@ import StatusPaymentVnpay from "./pages/Payment/status/vnpay";
 import StatusPaymentMomo from "./pages/Payment/status/momo";
 import StatusPaymentPaypal from "./pages/Payment/status/paypal";
 import StatusPayment from "./pages/Payment/status";
+import GoogleCallback from "./pages/Auth/googleCallback";
 
 function App() {
   return (
@@ -53,7 +54,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="forGotPassword" element={<ForgotPassword />} />
           <Route path="reset/:token" element={<ResetPassword />} />
-          
+          <Route path="social/callback" element={<GoogleCallback />} />
         </Route>
         <Route path="/accommodation" element={<PaymentLayout />}>
           <Route path="book" element={<AccommodationBook />} />

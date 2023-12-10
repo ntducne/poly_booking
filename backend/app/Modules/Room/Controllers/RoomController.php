@@ -3,6 +3,10 @@
 namespace App\Modules\Room\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Billing;
+use App\Models\BookDetail;
+use App\Models\Booking;
+use App\Models\RateRoom;
 use App\Models\Room;
 use App\Models\RoomImage;
 use App\Models\RoomType;
@@ -13,6 +17,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
@@ -37,29 +42,28 @@ class RoomController extends Controller
             }
             $rooms = $query->paginate(10);
             return RoomResource::collection($rooms);
-        } catch(Exception $exception){
+        } catch (Exception $exception) {
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
                 'message' => 'Lỗi không lấy được dữ liệu !'
             ], 500);
         }
-
     }
     public function store(StoreRoomRequest $request)
     {
         try {
             $object = $request->all();
-            $object['adults'] = (integer) $object['adults'];
-            $object['children'] = (integer) $object['children'];
+            $object['adults'] = (int) $object['adults'];
+            $object['children'] = (int) $object['children'];
             $object['slug'] = convertToSlug($request->name);
-            $object['amount_room'] = (integer)$object['amount'];
+            $object['amount_room'] = (int)$object['amount'];
             $object['branch_id'] =  $request->user()->branch_id;
             $room_number = [];
 
-            for($i = 1; $i <= $object['amount_room']; $i++){
-                if($i < 10){
-                    $i = '0'.$i;
+            for ($i = 1; $i <= $object['amount_room']; $i++) {
+                if ($i < 10) {
+                    $i = '0' . $i;
                 }
                 $room_number[] = $object['floor'] . $i;
             }
@@ -74,13 +78,13 @@ class RoomController extends Controller
             $roomNew = $this->room->create($object);
             $room = $this->room->where('name', $request->name)->first();
             $images = $request->file('images');
-            if($images){
-                $uploadFileUrl = $this->UploadMultiImage($images, 'rooms/'.$room->id.'/');
-                foreach($uploadFileUrl as $key => $image){
+            if ($images) {
+                $uploadFileUrl = $this->UploadMultiImage($images, 'rooms/' . $room->id . '/');
+                foreach ($uploadFileUrl as $key => $image) {
                     $this->room_image->create([
                         'room_id' => $room->id,
                         'image' => $image,
-                        'serial' => $key+1,
+                        'serial' => $key + 1,
                     ]);
                 }
                 $response = [
@@ -88,7 +92,7 @@ class RoomController extends Controller
                     'message' => 'Thêm phòng thành công ! ',
                     'data'    => $roomNew
                 ];
-            } else{
+            } else {
                 $response = [
                     'status' => 'error',
                     'message' => 'Thêm phòng không thành công ! ',
@@ -96,7 +100,7 @@ class RoomController extends Controller
                 ];
             }
             return response()->json($response);
-        } catch(Exception $exception){
+        } catch (Exception $exception) {
             throw $exception;
             Log::debug($exception->getMessage());
             return response()->json([
@@ -105,12 +109,40 @@ class RoomController extends Controller
             ], 500);
         }
     }
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try {
+            $check = false;
+
+            if ($request->user()) {
+                $userId = $request->user()->id;
+
+                // Đếm số lượng đánh giá của user
+                $reviewCount = RateRoom::where('user_id', $userId)->count();
+
+                // Lấy số billing của user và kiểm tra điều kiện
+                $billing = Billing::where('user_id', $userId)->where('status', 4)->first();
+                if ($billing && $billing->count() >= $reviewCount) {
+                    $bookDetail = BookDetail::where('booking_id', $billing->booking_id)->where('room_id', $id)->first();
+                    if ($bookDetail) {
+                        $booking = Booking::where('_id', $bookDetail->booking_id)->first();
+                        $rate = RateRoom::where('user_id', $userId)->where('room_id', $id)->first();
+
+                        if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
+                            $check = false;
+                        } else {
+                            $check = true;
+                        }
+                    }
+                }
+            }
+
+
+
+
             $room = $this->room->where('_id', $id)
-            ->where('branch_id', request()->user()->branch_id)
-            ->first();
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
             if (!$room) {
                 return response()->json([
                     'status' => 'error',
@@ -121,9 +153,10 @@ class RoomController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Chi tiết phòng !',
-                'data' => new RoomResource($room)
+                'data' => new RoomResource($room),
+                'check' => $check
             ], 200);
-        } catch(Exception $exception){
+        } catch (Exception $exception) {
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
@@ -135,16 +168,16 @@ class RoomController extends Controller
     {
         try {
             $object = $this->room->where('_id', $id)
-            ->where('branch_id', request()->user()->branch_id)
-            ->first();
-            if(!$object){
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
+            if (!$object) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Phòng không tồn tại !',
                     'data' => null
                 ], 404);
             }
-            if($request->name != $object->name){
+            if ($request->name != $object->name) {
                 $object->slug = convertToSlug($request->name);
             }
             $arr = $request->all();
@@ -153,7 +186,7 @@ class RoomController extends Controller
                 'status' => 'success',
                 'message' => 'Update phòng thành công!',
             ], 200);
-        } catch(Exception $exception){
+        } catch (Exception $exception) {
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
@@ -162,12 +195,13 @@ class RoomController extends Controller
         }
     }
 
-    public function updateImage(Request $request, $id){
+    public function updateImage(Request $request, $id)
+    {
         try {
             $object = $this->room->where('_id', $id)
-            ->where('branch_id', request()->user()->branch_id)
-            ->first();
-            if(!$object){
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
+            if (!$object) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Phòng không tồn tại !',
@@ -175,16 +209,16 @@ class RoomController extends Controller
                 ], 404);
             }
             $images = $request->file('images');
-//            dd($images);
+            //            dd($images);
             $arrayImg = [];
-            if($images){
-                $uploadFileUrl = $this->UploadMultiImage($images, 'rooms/'.$object->id.'/');
+            if ($images) {
+                $uploadFileUrl = $this->UploadMultiImage($images, 'rooms/' . $object->id . '/');
                 $arrayImg[] = $uploadFileUrl;
-                foreach($uploadFileUrl as $key => $image){
+                foreach ($uploadFileUrl as $key => $image) {
                     $this->room_image->create([
                         'room_id' => $object->id,
                         'image' => $image,
-                        'serial' => $key+1,
+                        'serial' => $key + 1,
                     ]);
                 }
             }
@@ -193,7 +227,7 @@ class RoomController extends Controller
                 'message' => 'Update anh thành công!',
                 'data' => $arrayImg,
             ], 200);
-        } catch(Exception $exception){
+        } catch (Exception $exception) {
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
@@ -205,9 +239,9 @@ class RoomController extends Controller
     {
         try {
             $room = $this->room->where('_id', $id)
-            ->where('branch_id', request()->user()->branch_id)
-            ->first();
-            if(!$room){
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
+            if (!$room) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Phòng không tồn tại !',
@@ -220,7 +254,7 @@ class RoomController extends Controller
                 'message' => 'Xoá phòng thành công !',
                 'data' => $room
             ], 200);
-        } catch(Exception $exception){
+        } catch (Exception $exception) {
             Log::debug($exception->getMessage());
             return response()->json([
                 'status' => false,
@@ -228,16 +262,17 @@ class RoomController extends Controller
             ], 500);
         }
     }
-    public function deleteImageRoom(Request $request) {
+    public function deleteImageRoom(Request $request)
+    {
         $image = $this->room_image->where('image', $request->filePath)->where('room_id', $request->room_id)->first();
-        if($image){
+        if ($image) {
             $image->delete();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Xoá ảnh thành công !',
                 'data' => $image
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Ảnh không tồn tại !',

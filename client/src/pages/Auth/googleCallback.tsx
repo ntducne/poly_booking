@@ -7,6 +7,8 @@ export default function GoogleCallback() {
     const location = useLocation();
     const navigate = useNavigate();
     React.useEffect(() => {
+        if(!location.search) navigate('/auth/login');
+        if(location.search) navigate('/auth/social/callback');
         fetch(`${import.meta.env.VITE_URL_AUTH}/callback/google/${location.search}`, {
             method: 'GET',
             headers: {
@@ -17,12 +19,11 @@ export default function GoogleCallback() {
         .then(res => res.json())
         .then(values => {
             if(values.status === true){
-
                 cookies().Set(
                     "userInfo",
                     JSON.stringify(Object.values(values)),
                     convertFromNowToSeconds(values.accessToken.expires_at)
-                    );
+                );
             }
             if(values.status === false){
                 message.error(values.message);
@@ -30,4 +31,5 @@ export default function GoogleCallback() {
             }
         })
     }, [location.search]);
+    return <></>
 }
