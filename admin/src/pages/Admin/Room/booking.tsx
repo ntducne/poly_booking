@@ -9,6 +9,7 @@ import {
   message,
   Image,
   Table,
+  Modal,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
@@ -23,7 +24,11 @@ import { DetailRoomModal } from "../../../component/Modal/DetailRoomModal";
 
 export default function RoomBooking() {
   const [form] = Form.useForm();
+  const [formBooking] = Form.useForm();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalBookingOpen, setIsModalBookingOpen] = useState(false);
+
   const [isLoadingData, setLoading] = useState(false);
   const [isDisabledForm, setDisableForm] = useState(false);
   const [searchRoom] = useSearchRoomMutation();
@@ -36,32 +41,31 @@ export default function RoomBooking() {
   const showModal = () => {
     setIsModalOpen(true);
   };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
+  const showModalAddPeople = (data_room: RoomInterface) => {
+    // console.log("1");
+    setDataDetailRoom(null);
+
+    setDataDetailRoom(data_room as any);
+
+    setIsModalBookingOpen(true);
+  };
+  const handleOkeAddPeople = () => {
+    setIsModalBookingOpen(true);
+  };
+  const handleCancelAddPeople = () => {
+    setIsModalBookingOpen(false);
+  };
+
   const setDetailRoom = (data_room: RoomInterface) => {
     setDataDetailRoom(null);
-    
+
     setDataDetailRoom(data_room as any);
     setIsModalOpen(true);
   };
-
-  // const newData = dataRoom?.map((room: any, index) => ({
-  //   key: index + 1,
-  //   name: room?.name,
-  //   images: room?.images,
-  //   room_type_name: room?.type?.room_type_name,
-  //   child: room?.children,
-  //   area: room?.area,
-  //   bed_size: room?.bed_size,
-  //   description: room?.description,
-  //   adults: room?.adults,
-  //   branch: room?.branch,
-  //   price: room?.type?.price_per_night,
-  //   // discount: room?.discount,
-  // }));
 
   const columns = [
     {
@@ -112,8 +116,8 @@ export default function RoomBooking() {
           >
             Chi tiết phòng
           </Button>
-          <Button shape="round" onClick={showModal}>
-            Chọn phòng
+          <Button shape="round" onClick={() => showModalAddPeople(record)}>
+            Đặt phòng
           </Button>
         </>
       ),
@@ -127,12 +131,11 @@ export default function RoomBooking() {
     try {
       const res = await searchRoom({
         room_type_id: values.room_type,
-        branch_id: values.branch_id,
         amount_room: values.amount_room,
-        check_in: values.days[0].format("YYYY-MM-DD"),
-        check_out: values.days[1].format("YYYY-MM-DD"),
-        adults: values.adults,
-        children: values.childrens,
+        checkin: values.days[0].format("YYYY-MM-DD"),
+        checkout: values.days[1].format("YYYY-MM-DD"),
+        adult: values.adult,
+        child: values.childrens,
       }).unwrap();
 
       if (res.status === "success") {
@@ -169,17 +172,79 @@ export default function RoomBooking() {
     }
   };
 
+  const onBooking = (values: any) => {
+    console.log("Received values of form:", values);
+    console.log("data" , form.getFieldsValue());
+    const dataSearch = form.getFieldsValue();
+
+    const dataBooking = {
+      room_id: dataDetailRoom?.id,
+      checkin: dataSearch?.days[0].format("YYYY-MM-DD"),
+      checkout: dataSearch?.days[1].format("YYYY-MM-DD"),
+      amount_room: dataSearch?.amount_room,
+      // branch_id: dataSearch?.branch_id,
+      adult: dataSearch?.adult,
+      child: dataSearch?.childrens,
+      email: values?.email,
+      phone: values?.phone,
+      name: values?.name,
+    };
+    console.log("dataBooking", dataBooking);
+    
+  };
+
   return (
     <Page title={`Đặt phòng`}>
       {dataDetailRoom !== null ? (
-        <DetailRoomModal
-          room={dataDetailRoom}
-          setIsModalOpen={handleCancel}
-          isOpen={isModalOpen}
-        />
+        <>
+          <DetailRoomModal
+            room={dataDetailRoom}
+            setIsModalOpen={handleCancel}
+            isOpen={isModalOpen}
+          />
+        </>
       ) : (
         <></>
       )}
+      <Modal
+        title="Thông tin của khách hàng"
+        open={isModalBookingOpen}
+        onOk={handleOkeAddPeople}
+        onCancel={handleCancelAddPeople}
+        footer={[]}
+      >
+        <Form
+          form={formBooking}
+          className="mt-5"
+          name="dynamic_form_nest_item"
+          onFinish={onBooking}
+          style={{ maxWidth: 600 }}
+          autoComplete="off"
+        >
+          <Form.Item label="Tên khách hàng" name="name">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Số điện thoại" name="phone">
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                type: "email",
+                message: "Địa chỉ email không hợp lệ!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item className="flex justify-end">
+            <Button htmlType="submit">Đặt phòng</Button>
+          </Form.Item>
+        </Form>
+      </Modal>
       <Form
         disabled={isDisabledForm}
         form={form}
@@ -189,11 +254,7 @@ export default function RoomBooking() {
         onFinish={onFinish}
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card
-            title="Thông tin phòng"
-            bordered={false}
-            loading={isLoading}
-          >
+          <Card title="Thông tin phòng" bordered={false} loading={isLoading}>
             {/* {role === "super_admin" && (
               <Form.Item
                 label="Chi nhánh"
@@ -251,7 +312,7 @@ export default function RoomBooking() {
           <Card title="Thông tin khác" loading={isLoading} bordered={false}>
             <Form.Item
               label="Người lớn"
-              name="adults"
+              name="adult"
               rules={[
                 { required: true, message: "Vui lòng nhập số người lớn" },
               ]}
