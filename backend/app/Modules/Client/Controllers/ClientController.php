@@ -94,15 +94,15 @@ class ClientController extends Controller
 
     public function processSearch(SearchRequest $request){
         $data = $this->roomRepository->processSearchRoom($request);
-        // phân trang ( data đang trả về là dạng mảng, viết thuật toán phân trang dựa vào page và limit )
-        $page = $request->page;
-        $limit = $request->limit;
-        $offset = ($page - 1) * $limit;
-        // lấy tổng số page
-        $total_page = ceil(count($data) / $limit);
-        // lấy dữ liệu theo page
-        $data = array_slice($data, $offset, $limit);
-        // trả về dữ liệu
+        // // phân trang ( data đang trả về là dạng mảng, viết thuật toán phân trang dựa vào page và limit )
+        // $page = $request->page;
+        // $limit = $request->limit;
+        // $offset = ($page - 1) * $limit;
+        // // lấy tổng số page
+        // $total_page = ceil(count($data) / $limit);
+        // // lấy dữ liệu theo page
+        // $data = array_slice($data, $offset, $limit);
+        // // trả về dữ liệu
         if(count($data) == 0){
             return response()->json([
                 'status' => false,
@@ -114,7 +114,7 @@ class ClientController extends Controller
             'status' => true,
             'message' => 'Lấy dữ liệu thành công !',
             'data' => $data,
-            'total_page' => $total_page
+            // 'total_page' => $total_page
         ]);
     }
 
