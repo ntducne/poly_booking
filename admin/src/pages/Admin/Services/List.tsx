@@ -117,14 +117,15 @@ const ListServices = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            deleteServices(id).unwrap()
-            .then((res:any) => {
-              if(res.status === "success"){
-                swal(res.message, {
-                  icon: "success",
-                });
-              }
-            });
+            deleteServices(id)
+              .unwrap()
+              .then((res: any) => {
+                if (res.status === "success") {
+                  swal(res.message, {
+                    icon: "success",
+                  });
+                }
+              });
           }
         })
         .catch(() => {
@@ -134,6 +135,9 @@ const ListServices = () => {
         });
     } catch (error) {
       console.log(error);
+      swal("Lỗi", {
+        icon: "error",
+      });
     }
   };
 

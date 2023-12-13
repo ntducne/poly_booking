@@ -24,7 +24,7 @@ const BillList = () => {
     return () => {
       unsubscribe();  
     };
-  }, []);
+  }, [dataBilings?.data]);
 
   const onComfirm = (id: any) => {
     console.log(id);
