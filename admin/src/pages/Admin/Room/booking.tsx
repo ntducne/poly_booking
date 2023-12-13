@@ -13,7 +13,10 @@ import {
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { useSearchRoomMutation } from "../../../api/booking";
+import {
+  useBookingRoomMutation,
+  useSearchRoomMutation,
+} from "../../../api/booking";
 import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
 import { RoomInterface } from "../../../Interface/RoomInterface";
 import Page from "../../../component/page";
@@ -38,9 +41,11 @@ export default function RoomBooking() {
   const [dataDetailRoom, setDataDetailRoom] = useState(null);
   const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  const [bookingRoom] = useBookingRoomMutation();
+
+  // const showModal = () => {
+  //   setIsModalOpen(true);
+  // };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -174,7 +179,7 @@ export default function RoomBooking() {
 
   const onBooking = (values: any) => {
     console.log("Received values of form:", values);
-    console.log("data" , form.getFieldsValue());
+    console.log("data", form.getFieldsValue());
     const dataSearch = form.getFieldsValue();
 
     const dataBooking = {
@@ -189,9 +194,22 @@ export default function RoomBooking() {
       phone: values?.phone,
       name: values?.name,
     };
-    console.log("dataBooking", dataBooking);
-    
+    bookingRoom(dataBooking)
+      .unwrap()
+      .then((res: any) => {
+        setVisible(true);
+        // setAmountQR(res.amount);
+        // setBillingCodeQR(res.billingCode);
+        setCodeQR(
+          `https://img.vietqr.io/image/mb-0823565831-compact2.jpg?amount=${res?.amount}&addInfo=POLYDEVHOTELHD${res?.billingCode}&accountName=NGUYEN%20THIEN%20DUC`
+        );
+      });
   };
+  const [codeQR, setCodeQR] = useState("");
+  // const [billingCodeQR ,setBillingCodeQR] = useState(0)
+
+  const [visible, setVisible] = useState(false);
+  console.log("qr", codeQR);
 
   return (
     <Page title={`Đặt phòng`}>
@@ -213,6 +231,16 @@ export default function RoomBooking() {
         onCancel={handleCancelAddPeople}
         footer={[]}
       >
+        <Modal
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          footer={null}
+        >
+          <div className="flex justify-center items-center h-full">
+            <Image src={codeQR} width={300} />
+          </div>
+          {/* <Button  onClick={() => setVisible(false)}>Đóng</Button> */}
+        </Modal>
         <Form
           form={formBooking}
           className="mt-5"
