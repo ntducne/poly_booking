@@ -70006,3 +70006,9 @@ PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRol
   2023-12-09 09:53:01 App\Events\Message ....................... 460.29ms DONE
   2023-12-09 10:11:10 App\Events\ContactEvent ........................ RUNNING
   2023-12-09 10:11:11 App\Events\ContactEvent .................. 436.52ms DONE
+  2023-12-13 17:36:33 App\Events\BookingEvent ........................ RUNNING
+  2023-12-13 17:36:34 App\Events\BookingEvent .................. 692.30ms DONE
+  2023-12-13 22:11:10 App\Events\BookingEvent ........................ RUNNING
+  2023-12-13 22:11:11 App\Events\BookingEvent .................. 768.54ms DONE
+  2023-12-13 22:11:12 App\Events\Message ............................. RUNNING
+  2023-12-13 22:11:13 App\Events\Message ....................... 416.67ms DONE

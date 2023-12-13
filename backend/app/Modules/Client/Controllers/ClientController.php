@@ -57,7 +57,8 @@ class ClientController extends Controller
         if (request()->has('checkin') && request()->has('checkout') && request()->has('adult') && request()->has('child') && request()->has('branch_id') && request()->has('soLuong')) {
             return $this->roomRepository->processSearchRoom($request);
         }
-        return RoomResource::collection(Room::paginate(10));
+        
+        return RoomResource::collection(Room::paginate(1));
     }
 
     public function roomDetail($id)
@@ -93,6 +94,10 @@ class ClientController extends Controller
 
     public function processSearch(SearchRequest $request){
         $data = $this->roomRepository->processSearchRoom($request);
+        $page = $request->page;
+        $limit = $request->limit;
+        $offset = ($page - 1) * $limit;
+        $data = array_slice($data, $offset, $limit);
         if(count($data) == 0){
             return response()->json([
                 'status' => false,
