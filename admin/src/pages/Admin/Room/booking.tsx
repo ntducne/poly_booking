@@ -194,23 +194,6 @@ export default function RoomBooking() {
             bordered={false}
             loading={isLoading}
           >
-            {/* {role === "super_admin" && (
-              <Form.Item
-                label="Chi nhánh"
-                name="branch_id"
-                rules={[{ required: true, message: "Vui lòng chọn chi nhánh" }]}
-              >
-                <Select>
-                  {dataBranches?.data?.map((item: any) => {
-                    return (
-                      <Select.Option value={item.id} key={item.id}>
-                        {item.name}
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
-              </Form.Item>
-            )} */}
             <Form.Item
               label="Loại phòng"
               name="room_type"
