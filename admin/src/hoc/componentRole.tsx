@@ -4,6 +4,8 @@ import AddBranche from "../pages/Admin/Branches/Add";
 import EditBranche from "../pages/Admin/Branches/Edit";
 import ListBranches from "../pages/Admin/Branches/List";
 import ListFeedback from "../pages/Admin/Feedback/List";
+import EditAdmin from "../pages/Admin/Guset/Admin/Edit";
+import ListAdmin from "../pages/Admin/Guset/Admin/List";
 import EditUser from "../pages/Admin/Guset/User/Edit";
 import ListUser from "../pages/Admin/Guset/User/List";
 import AddPolicy from "../pages/Admin/Policy/Add";
@@ -43,9 +45,9 @@ const AuthorizedListUsers = withAuthorization(ListUser, 'admin.users.index');
 // const AuthorizedStoreUsers = withAuthorization(AddBranche, 'admin.users.store');
 const AuthorizedUpdateUsers = withAuthorization(EditUser, 'admin.users.update');
 
-const AuthorizedListStaffs = withAuthorization(ListUser, 'admin.staffs.index');
+const AuthorizedListStaffs = withAuthorization(ListAdmin, 'admin.staffs.index');
 // const AuthorizedStoreStaffs = withAuthorization(AddBranche, 'admin.staffs.store');
-const AuthorizedUpdateStaffs = withAuthorization(EditUser, 'admin.staffs.update');
+const AuthorizedUpdateStaffs = withAuthorization(EditAdmin, 'admin.staffs.update');
 
 const AuthorizedListRates = withAuthorization(ListFeedback, 'admin.rates.index');
 // const AuthorizedStoreRates = withAuthorization(AddBranche, 'admin.rates.store');
