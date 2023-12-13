@@ -1299,9 +1299,6 @@ const BillDetail: React.FC = () => {
                   Giá
                 </th>
                 <th>Trạng thái</th>
-                <th scope="col" className="px-6 py-3">
-                  Tạm tính
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -1358,20 +1355,6 @@ const BillDetail: React.FC = () => {
                             return null;
                         }
                       })()}
-                    </td>
-                    <td>
-                      {room?.status == 0 ? (
-                        <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                          Đang ở
-                        </span>
-                      ) : (
-                        <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">
-                          Đã trả
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4">
-                      {/* {formatMoneyVN(room?.price)} */}
                     </td>
                   </tr>
                 );
