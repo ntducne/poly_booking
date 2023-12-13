@@ -3,6 +3,8 @@
 namespace App\Modules\Orders\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Client\Requests\BookingRequest;
+use App\Modules\Orders\Requests\AdminSearchRequest;
 use App\Repositories\BookingRepository;
 use App\Repositories\RoomRepository;
 use Exception;
@@ -22,17 +24,10 @@ class BookingController extends Controller
         $this->roomRepository = $roomRepository;
     }
 
-    public function store(Request $request)
+    public function store(BookingRequest $request)
     {
         try {
-            $booking = $this->roomRepository->processBooking($request);
-            if ($booking) {
-                return $booking;
-            }
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Tiếc quá, phòng đã được đặt !'
-            ]);
+            return $this->roomRepository->processBooking($request);
         } catch (Exception $exception) {
             return response()->json([
                 'status' => 'error',
@@ -41,7 +36,7 @@ class BookingController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search(AdminSearchRequest $request)
     {
         $search = $this->roomRepository->processSearchRoom($request);
         if ($search) {
