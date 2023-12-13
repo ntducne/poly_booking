@@ -1,6 +1,15 @@
 import { useEffect } from "react";
 
-import { Form, Input, Button, Typography, InputNumber, Space, Radio } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Typography,
+  InputNumber,
+  Space,
+  Radio,
+  Skeleton,
+} from "antd";
 // import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -32,7 +41,11 @@ const EditUser = () => {
   }, [data?.data]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
   }
 
   const onFinish = (values: any) => {
@@ -45,23 +58,27 @@ const EditUser = () => {
     updateUsers(updateData)
       .unwrap()
       .then((item: any) => {
-        if (item.status == "success") {
+        if (item.status == true) {
           toast("Sửa thành công", {
             autoClose: 3000,
             theme: "light",
           });
-          navigate("/auth/user");
+          navigate("/user");
         } else {
-          console.log(item);
-          toast(item?.error?.name || "Lỗi rồi bạn", {
+          toast(item?.error?.name || "Lỗi khi sửa", {
             autoClose: 3000,
             theme: "light",
           });
         }
+      })
+      .catch(() => {
+        toast("Lỗi khi sửa", {
+          autoClose: 3000,
+          theme: "light",
+        })
       });
   };
 
-  
   // Xử lý dữ liệu khi nhấn nút Submit
 
   return (
@@ -78,7 +95,7 @@ const EditUser = () => {
           onFinish={onFinish}
           initialValues={{
             "input-number": 1,
-            "status" : data?.data?.status,
+            status: data?.data?.status,
             "checkbox-group": ["A", "B"],
             rate: 3.5,
             "color-picker": null,
@@ -97,7 +114,10 @@ const EditUser = () => {
           <Form.Item
             label="Email khách"
             name="email"
-            rules={[{ required: true, message: "Vui lòng nhập email!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập email!" },
+              { type: "email", message: "Email không hợp lệ!" },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -105,15 +125,29 @@ const EditUser = () => {
           <Form.Item
             label="Số điện thoại"
             name="phone"
-            rules={[{ required: true, message: "Vui lòng nhập số điện thoại" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại" },
+              {
+                pattern: /^[0-9]{10,11}$/,
+                message: "Số điện thoại không hợp lệ",
+              },
+            ]}
           >
-            <InputNumber />
+            <Input />
           </Form.Item>
 
           <Form.Item
             label="Địa chỉ"
             name="address"
-            rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập địa chỉ" },
+              {
+                validator: (_:any, value:any) =>
+                  value.trim().length === 0
+                    ? Promise.reject("Vui lòng nhập địa chỉ")
+                    : Promise.resolve(),
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -127,9 +161,9 @@ const EditUser = () => {
           </Form.Item> */}
 
           <Form.Item name="status" label="Trạng thái">
-            <Radio.Group defaultValue={data?.data?.status}>
-              <Radio value="0">Hoạt động</Radio>
-              <Radio value="1">Span</Radio>
+            <Radio.Group value={data?.data?.status}>
+              <Radio value={0}>Hoạt động</Radio>
+              <Radio value={1}>Span</Radio>
             </Radio.Group>
           </Form.Item>
 
