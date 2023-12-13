@@ -25,14 +25,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         try {
-            $booking = $this->roomRepository->processBooking($request);
-            if ($booking) {
-                return $booking;
-            }
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Tiếc quá, phòng đã được đặt !'
-            ]);
+            return $this->roomRepository->processBooking($request);
         } catch (Exception $exception) {
             return response()->json([
                 'status' => 'error',
