@@ -2,6 +2,7 @@
 
 use App\Events\Message;
 use App\Models\Billing;
+use App\Modules\Client\Controllers\ClientController;
 use App\Modules\Dashboard\Controllers\DashboardController;
 use App\Modules\Orders\Resources\BillingResource;
 use Illuminate\Support\Carbon;
@@ -31,3 +32,6 @@ Route::get('/routes', function () {
 Route::get('/testNoti', function(){
     event(new Message(new BillingResource(Billing::find('65697362cbdded72ee00fb34'))));
 });
+
+Route::post('/search', [ClientController::class, 'processSearch']);
+

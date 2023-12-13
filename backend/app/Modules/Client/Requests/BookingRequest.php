@@ -60,9 +60,9 @@ class BookingRequest extends Request {
                 new PhoneRule()
             ],
 
-            'payment_method' => [
-                'required',
-            ],
+            // 'payment_method' => [
+            //     'required',
+            // ],
 
             'room_type_id' => [
                 'nullable',

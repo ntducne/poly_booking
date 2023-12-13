@@ -27,7 +27,7 @@ class Room {
         }
         $totalRoomBook = 0;
         $now = Carbon::parse(Carbon::now()->format('Y-m-d'));
-        $billing = $this->billing->where('branch_id', '=', $request->user()->branch_id)->where('status', 3)->get();
+        $billing = $this->billing->where('branch_id', '=', $request->user()->branch_id)->whereIn('status', [0, 1, 3])->get();
         $booking = $this->booking->whereIn('_id', $billing->pluck('booking_id')->toArray())->get();
         foreach ($booking as $value) {
             if($now->between(Carbon::parse($value->checkin)->format('Y-m-d'), Carbon::parse($value->checkout)->format('Y-m-d'))){
