@@ -17,8 +17,6 @@ const ListUser = () => {
 
   const { data: users  , isLoading} = useGetAllUsersQuery([]);
   
- 
-
   const columns: ColumnsType<any> = [
     {
       title: "STT",

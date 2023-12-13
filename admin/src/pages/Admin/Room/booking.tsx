@@ -22,6 +22,7 @@ import { RoomInterface } from "../../../Interface/RoomInterface";
 import Page from "../../../component/page";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import { DetailRoomModal } from "../../../component/Modal/DetailRoomModal";
+import moment from "moment";
 // import { useGetAllBranchesQuery } from "../../../api/branches";
 // import { role } from "../../../hoc/withAuthorization";
 
@@ -133,48 +134,50 @@ export default function RoomBooking() {
     setLoading(true);
     setDisableForm(true);
     setDataRoom([]);
-    try {
-      const res = await searchRoom({
-        room_type_id: values.room_type,
-        amount_room: values.amount_room,
-        checkin: values.days[0].format("YYYY-MM-DD"),
-        checkout: values.days[1].format("YYYY-MM-DD"),
-        adult: values.adult,
-        child: values.childrens,
-      }).unwrap();
+    console.log("1");
 
-      if (res.status === "success") {
-        message.success(res.message);
-        const valueRoom = res.data;
-        console.log(valueRoom);
-        setDataRoom((prevDataRoom) => [
-          ...prevDataRoom,
-          ...valueRoom.map((room: any) => ({
-            id: room.id,
-            name: room.name,
-            amount: room.amount,
-            discount: room.discount,
-            price: room.price,
-            adult: room.adults,
-            child: room.children,
-            description: room.description,
-            room_type: room.room_type,
-            branch: room.branch,
-            image: room.image,
-            room_empty: room.room_empty,
-          })),
-        ]);
-        console.log(dataRoom);
-      } else if (res.status === "error") {
-        message.error(res.message);
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-      // Handle error appropriately (e.g., show an error message to the user)
-    } finally {
-      setLoading(false);
-      setDisableForm(false);
-    }
+    searchRoom({
+      room_type_id: values.room_type,
+      amount_room: values.amount_room,
+      checkin: values.days[0].format("YYYY-MM-DD"),
+      checkout: values.days[1].format("YYYY-MM-DD"),
+      adult: values.adult,
+      child: values.childrens,
+    })
+      .unwrap()
+      .then((res: any) => {
+        console.log("111111111");
+        if (res.status === "success") {
+          const valueRoom = res.data;
+          setDataRoom((prevDataRoom) => [
+            ...prevDataRoom,
+            ...valueRoom.map((room: any) => ({
+              id: room.id,
+              name: room.name,
+              amount: room.amount,
+              discount: room.discount,
+              price: room.price,
+              adult: room.adults,
+              child: room.children,
+              description: room.description,
+              room_type: room.room_type,
+              branch: room.branch,
+              image: room.image,
+              room_empty: room.room_empty,
+            })),
+          ]);
+        } else {
+          message.error(res.message);
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);        
+        message.error(err?.data?.error?.amount_room);
+      })
+      .finally(() => {
+        setLoading(false);
+        setDisableForm(false);
+      });
   };
 
   const onBooking = (values: any) => {
@@ -198,18 +201,13 @@ export default function RoomBooking() {
       .unwrap()
       .then((res: any) => {
         setVisible(true);
-        // setAmountQR(res.amount);
-        // setBillingCodeQR(res.billingCode);
         setCodeQR(
           `https://img.vietqr.io/image/mb-0823565831-compact2.jpg?amount=${res?.amount}&addInfo=POLYDEVHOTELHD${res?.billingCode}&accountName=NGUYEN%20THIEN%20DUC`
         );
       });
   };
   const [codeQR, setCodeQR] = useState("");
-  // const [billingCodeQR ,setBillingCodeQR] = useState(0)
-
   const [visible, setVisible] = useState(false);
-  console.log("qr", codeQR);
 
   return (
     <Page title={`Đặt phòng`}>
@@ -249,20 +247,38 @@ export default function RoomBooking() {
           style={{ maxWidth: 600 }}
           autoComplete="off"
         >
-          <Form.Item label="Tên khách hàng" name="name">
+          <Form.Item
+            label="Tên khách hàng"
+            name="name"
+            rules={[
+              { required: true, message: "Vui lòng nhập tên!" },
+              {
+                pattern: /^.*\S+.*$/,
+                message: "Vui lòng không nhập chỉ toàn khoảng trắng!",
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item label="Số điện thoại" name="phone">
+          <Form.Item
+            label="Số điện thoại"
+            name="phone"
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại" },
+              {
+                pattern: /^[0-9]{10,11}$/,
+                message: "Số điện thoại không hợp lệ",
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
           <Form.Item
             label="Email"
             name="email"
             rules={[
-              {
-                type: "email",
-                message: "Địa chỉ email không hợp lệ!",
-              },
+              { required: true, message: "Vui lòng nhập email!" },
+              { type: "email", message: "Email không hợp lệ!" },
             ]}
           >
             <Input />
@@ -281,7 +297,7 @@ export default function RoomBooking() {
         className={`${isLoading && "mt-5 mb-5"}`}
         onFinish={onFinish}
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-2 gap-4">
           <Card title="Thông tin phòng" bordered={false} loading={isLoading}>
             {/* {role === "super_admin" && (
               <Form.Item
@@ -334,6 +350,9 @@ export default function RoomBooking() {
               <DatePicker.RangePicker
                 className="w-full"
                 placeholder={["Ngày ở", "Ngày trả"]}
+                disabledDate={(current: any) =>
+                  current && current < moment().startOf("day")
+                }
               />
             </Form.Item>
           </Card>
@@ -365,30 +384,6 @@ export default function RoomBooking() {
                 </Button>
               </Form.Item>
             </div>
-          </Card>
-          <Card
-            title="Thông tin khách hàng"
-            loading={isLoading}
-            bordered={false}
-          >
-            <Form.Item label="Tên khách hàng" name="name">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Số điện thoại" name="phone">
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                {
-                  type: "email",
-                  message: "Địa chỉ email không hợp lệ!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
           </Card>
         </div>
       </Form>
