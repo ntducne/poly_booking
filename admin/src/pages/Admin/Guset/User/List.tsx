@@ -9,9 +9,7 @@ interface DataType {
   age: number;
   address: string;
 }
-import { MdDeleteForever } from "react-icons/md";
-import FormSearch from "../../../../component/formSearch";
-import swal , { } from "sweetalert";
+// import FormSearch from "../../../../component/formSearch";
 import Page from "../../../../component/page";
 import { useGetAllUsersQuery } from "../../../../api/account/users";
 
@@ -103,14 +101,6 @@ const ListUser = () => {
               <AiOutlineEdit />
             </Link>
           </button>
-          <button
-            onClick={() => remove(record?.key)}
-            type="button"
-            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
-          >
-            <MdDeleteForever />
-            {/* Xóa */}
-          </button>
         </Space>
       ),
       // fixed: "right",
@@ -137,54 +127,13 @@ const ListUser = () => {
     // console.log("params", pagination, filters, sorter, extra);
   };
 
-  const remove = (id: any) => {
-    console.log(id);
-    try {
-      swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            // removeComment(id);
-            console.log(id);
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
-          }
-        })
-        .catch(() => {
-          swal("Error", {
-            icon: "error",
-          });
-        });
-    } catch (error) {}
-  };
-
   return (
     <Page title={`Tài khoản người dùng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         <div className="mb-3">
-          <FormSearch />
+          {/* <FormSearch /> */}
         </div>
         <div className="flex flex-col md:flex-row">
-          {/* <Button
-            className="bg-teal-700	text-[#fff] hover:drop-shadow-2xl mb-2"
-            type="default"
-            icon={<AiOutlinePlus />}
-          >
-            <Link to={`/room/add`}>Thêm phòng</Link>
-          </Button>
-          <Button
-            className="bg-red-400	text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
-            type="default"
-            icon={<MdOutlineDeleteOutline />}
-          >
-            <Link to={`/room/add`}>Thùng rác</Link>
-          </Button> */}
         </div>
       </div>
       <Table
