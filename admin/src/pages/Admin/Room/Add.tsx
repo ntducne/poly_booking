@@ -108,7 +108,11 @@ const AddRoom = () => {
   };
 
   if (isLoading) {
-    return <><Skeleton/></>;
+    return (
+      <>
+        <Skeleton />
+      </>
+    );
   }
 
   return (
@@ -128,6 +132,7 @@ const AddRoom = () => {
             rate: 3.5,
             "color-picker": null,
           }}
+          layout="vertical"
           // style={{ maxWidth: 1000 }}
           className="grid grid-cols-1 xl:grid-cols-2"
         >
@@ -140,16 +145,14 @@ const AddRoom = () => {
           </Form.Item>
 
           <Form.Item
-           
             label="Diện tích"
             name="area"
             rules={[{ required: true, message: "Vui lòng nhập diện tích" }]}
           >
-            <InputNumber min={1} className="w-full"/>
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
 
           <Form.Item
-         
             name="room_type_id"
             label="Loại phòng"
             hasFeedback
@@ -181,7 +184,7 @@ const AddRoom = () => {
             name="children"
             rules={[{ required: true, message: "Vui lòng nhập tối đa trẻ em" }]}
           >
-            <InputNumber min={1} className="w-full"/>
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
 
           <Form.Item
@@ -189,27 +192,24 @@ const AddRoom = () => {
             name="num_of_bed"
             rules={[{ required: true, message: "Vui lòng nhập số giường" }]}
           >
-            <InputNumber min={1} className="w-full"/>
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
-
-          {/* <Form.Item name="bed_size" label="Số giường">
-            <InputNumber min={0} max={1} className="w-full"/>
-          </Form.Item> */}
-
           <Form.Item
-            label="Tâng"
+            label="Tầng"
             name="floor"
             rules={[{ required: true, message: "Vui lòng nhập tầng" }]}
           >
-            <InputNumber min={1} className="w-full"/>
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
 
           <Form.Item
             label="Tổng số lượng phòng"
             name="amount"
-            rules={[{ required: true, message: "Vui lòng nhập tổng số lượng phòng" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập tổng số lượng phòng" },
+            ]}
           >
-            <InputNumber min={1} className="w-full"/>
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
 
           <Form.Item
@@ -237,7 +237,7 @@ const AddRoom = () => {
             </Upload>
           </Form.Item>
 
-          <Form.Item name="bed_size" label="Số giường">
+          <Form.Item name="bed_size" label="Kích cỡ giường">
             <Radio.Group>
               <Row className="">
                 <Col>
@@ -245,7 +245,7 @@ const AddRoom = () => {
                     2 lớn
                   </Radio>
                 </Col>
-                <Col >
+                <Col>
                   <Radio value="1" style={{ lineHeight: "32px" }}>
                     1 lớn , 1 nhỏ
                   </Radio>
@@ -262,7 +262,7 @@ const AddRoom = () => {
                     Thanh toán khi nhận phòng
                   </Radio>
                 </Col>
-                <Col >
+                <Col>
                   <Radio value="1" style={{ lineHeight: "32px" }}>
                     Thanh toán trước
                   </Radio>
@@ -270,8 +270,6 @@ const AddRoom = () => {
               </Row>
             </Radio.Group>
           </Form.Item>
-
-          
 
           {/* <Form.Item
             name="policies_and_information"
@@ -298,11 +296,11 @@ const AddRoom = () => {
             <Rate />
           </Form.Item> */}
           <Form.Item
-            label= "Giảm giá"
+            label="Giảm giá"
             name="discount"
             rules={[{ required: true, message: "Vui lòng nhập giảm giá" }]}
           >
-            <InputNumber min={1} className="w-full"/>
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
           {/* <Form.Item
             name="branch_id"
