@@ -139,7 +139,7 @@ export default function Header({}: Props) {
             </Link>
             {cookies && cookies?.userInfo ? (
               <Link
-                to="/about"
+                to="/user/profile?defaultActive=1"
                 className="relative transition md:hidden block group-aria-hidden: text-[18px] lg:text-[16px] group"
                 onClick={closeToggleBar}
               >
@@ -194,7 +194,7 @@ export default function Header({}: Props) {
             </div>
           ) : (
             <Link
-              to="auth/login"
+              to="/auth/login"
               className="relative md:flex hidden transition text-[16px] items-center gap-x-2 group"
             >
               <LockOutlined className="text-[15px] mb-1" />

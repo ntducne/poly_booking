@@ -126,7 +126,7 @@ export default function LayoutClient2({}: Props) {
               </Link>
               {cookies && cookies?.userInfo ? (
                 <Link
-                  to="/about"
+                  to="/user/profile?defaultActive=1"
                   className="relative transition text-[18px] lg:text-[16px] group md:hidden block"
                   onClick={closeToggleBar}
                 >
@@ -135,7 +135,7 @@ export default function LayoutClient2({}: Props) {
                 </Link>
               ) : (
                 <Link
-                  to="/about"
+                  to="/auth/login"
                   className="relative transition md:hidden block text-[18px] lg:text-[16px] group"
                   onClick={closeToggleBar}
                 >
@@ -179,7 +179,7 @@ export default function LayoutClient2({}: Props) {
               </div>
             ) : (
               <Link
-                to="auth/login"
+                to="/auth/login"
                 className="relative md:flex hidden transition text-[16px] items-center gap-x-2 group"
               >
                 <LockOutlined className="text-[15px] mb-1" />
