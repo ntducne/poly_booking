@@ -14,7 +14,6 @@ import LoginAdmin from "./pages/Auth/login";
 import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
 import RoomBooking from "./pages/Admin/Room/booking";
-import Demo from "./pages/demo";
 import ListContact from "./pages/Admin/Contact/List";
 import ListNotifications from "./pages/Admin/Notifications/List";
 import {
@@ -130,7 +129,6 @@ function App() {
           )}
         </Route>
         <Route path="/403" element={<Page403 />}></Route>
-        <Route path="/demo" element={<Demo />}></Route>
       </Routes>
     </>
   );
