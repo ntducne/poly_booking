@@ -8,20 +8,21 @@ export default function UpdatePassword({}: Props) {
   const [updatePassword] = useUpdatePasswordMutation();
   const [form] = useForm();
   const onFinish = (values: any) => {
-    console.log("Success:", values);
     if (Object.keys(values).length) {
       const dataNewPass = {
         old_password: values.old_password,
-        password: values.new_password,
+        new_password: values.new_password,
+        confirm_new_password: values.confirm_new_password,
       };
       updatePassword(dataNewPass)
         .unwrap()
-        .then((res) => {
-          console.log(res);
-          message.success(res?.message);
+        .then(() => {
+          form.resetFields();
+          message.success("Cập nhật mật khẩu thành công");
         })
         .catch((error) => {
           console.log(error);
+          message.error("Cập nhật mật khẩu không thành công");
         });
     }
   };
@@ -49,7 +50,13 @@ export default function UpdatePassword({}: Props) {
       <Form.Item
         name="old_password"
         label="Mật khẩu cũ"
-        rules={[{ required: true, message: "Vui lòng không bỏ trống" }]}
+        rules={[
+          { required: true, message: "Vui lòng không bỏ trống" },
+          {
+            min: 8,
+            message: "Mật khẩu phải có ít nhất 8 ký tự!",
+          },
+        ]}
       >
         <Input.Password className="py-2" />
       </Form.Item>
@@ -57,7 +64,13 @@ export default function UpdatePassword({}: Props) {
       <Form.Item
         name="new_password"
         label="Mật khẩu mới"
-        rules={[{ required: true, message: "Vui lòng không bỏ trống" }]}
+        rules={[
+          { required: true, message: "Vui lòng không bỏ trống" },
+          {
+            min: 8,
+            message: "Mật khẩu phải có ít nhất 8 ký tự!",
+          },
+        ]}
       >
         <Input.Password className="py-2" />
       </Form.Item>
