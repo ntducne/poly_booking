@@ -12,17 +12,20 @@ export default function ChartFour(props: any) {
     return months;
   }
 
+  const bookingData = props?.data?.booking || [];
+  const cancelData = props?.data?.cancel || [];
+
   const state = {
     series: [
       {
         name: "Đặt phòng",
         type: "line",
-        data: props?.data?.booking,
+        data: bookingData,
       },
       {
         name: "Huỷ đặt phòng",
         type: "line",
-        data: props?.data?.cancel,
+        data: cancelData,
       },
     ],
     options: {
@@ -39,7 +42,9 @@ export default function ChartFour(props: any) {
       },
       xaxis: {
         type: "datetime",
-        categories: generateMonths(props?.data.length).reverse(),
+        categories: generateMonths(
+          Math.max(bookingData.length, cancelData.length)
+        ).reverse(),
         tickAmount: 10,
         labels: {
           formatter: function (timestamp: any) {
@@ -59,19 +64,6 @@ export default function ChartFour(props: any) {
       markers: {
         size: 0,
       },
-      yaxis: [
-        // {
-        //   title: {
-        //     text: 'Series A',
-        //   },
-        // },
-        // {
-        //   opposite: true,
-        //   title: {
-        //     text: 'Series B',
-        //   },
-        // },
-      ],
       tooltip: {
         shared: true,
         intersect: false,
@@ -86,6 +78,7 @@ export default function ChartFour(props: any) {
       },
     },
   } as any;
+
   return (
     <div id="chart">
       <ReactApexChart

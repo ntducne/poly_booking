@@ -11,12 +11,13 @@ export default function ChartFive(props: any) {
     }
     return months;
   }
+  const userData = props?.data || [];
 
   const state = {
     series: [
       {
         name: "User",
-        data: props?.data,
+        data: userData,
       },
     ],
     options: {
@@ -33,7 +34,7 @@ export default function ChartFive(props: any) {
       },
       xaxis: {
         type: "datetime",
-        categories: generateMonths(props?.data.length).reverse(),
+        categories: generateMonths(userData.length).reverse(),
         tickAmount: 10,
         labels: {
           formatter: function (timestamp: any) {

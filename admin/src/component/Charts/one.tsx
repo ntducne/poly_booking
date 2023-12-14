@@ -12,12 +12,13 @@ export default function ChartOne(props: any) {
     }
     return months;
   }
+  const dataRevenue = props?.data || [];
 
   const state = {
     series: [
       {
         name: "Số tiền",
-        data: props?.data,
+        data: dataRevenue,
       },
     ],
     options: {
@@ -34,7 +35,7 @@ export default function ChartOne(props: any) {
       },
       xaxis: {
         type: "datetime",
-        categories: generateMonths(props?.data.length).reverse(),
+        categories: generateMonths(dataRevenue.length).reverse(),
         tickAmount: 10,
         labels: {
           formatter: function (timestamp: any) {
