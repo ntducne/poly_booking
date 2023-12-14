@@ -137,6 +137,37 @@ export default function Header({}: Props) {
               Về chúng tôi
               <span className="absolute left-0 w-0 bg-white h-0 bottom-[1%] transition-all group-hover:w-full group-hover:h-[1px] "></span>
             </Link>
+            {cookies && cookies?.userInfo ? (
+              <Link
+                to="/about"
+                className="relative transition text-[18px] lg:text-[16px] group"
+                onClick={closeToggleBar}
+              >
+                Thông tin cá nhân
+                <span className="absolute md:hidden block left-0 w-0 bg-white h-0 bottom-[1%] transition-all group-hover:w-full group-hover:h-[1px] "></span>
+              </Link>
+            ) : (
+              <Link
+                to="/about"
+                className="relative transition md:hidden block text-[18px] lg:text-[16px] group"
+                onClick={closeToggleBar}
+              >
+                Đăng nhập
+                <span className="absolute md:hidden block left-0 w-0 bg-white h-0 bottom-[1%] transition-all group-hover:w-full group-hover:h-[1px] "></span>
+              </Link>
+            )}
+            {cookies && cookies?.userInfo ? (
+              <Link
+                to="/about"
+                className="relative transition text-[18px] lg:text-[16px]  md:hidden block  group"
+                onClick={closeToggleBar}
+              >
+                Đăng xuất
+                <span className="absolute left-0 w-0 bg-white h-0 bottom-[1%] transition-all group-hover:w-full group-hover:h-[1px] "></span>
+              </Link>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
@@ -164,7 +195,7 @@ export default function Header({}: Props) {
           ) : (
             <Link
               to="auth/login"
-              className="relative transition text-[16px] flex items-center gap-x-2 group"
+              className="relative md:flex hidden transition text-[16px] items-center gap-x-2 group"
             >
               <LockOutlined className="text-[15px] mb-1" />
               <span>Đăng nhập</span>
