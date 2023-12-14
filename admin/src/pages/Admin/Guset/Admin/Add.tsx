@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Input, Upload, Button, message, Typography, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { BiReset } from "react-icons/bi";

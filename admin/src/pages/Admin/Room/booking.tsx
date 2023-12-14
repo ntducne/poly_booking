@@ -39,7 +39,8 @@ export default function RoomBooking() {
   const { data: dataRoomtype, isLoading } = useGetAllRoomTypeQuery({});
   // const { data: dataBranches, isLoading: loadingBranch } =
   //   useGetAllBranchesQuery({});
-  const [dataDetailRoom, setDataDetailRoom] = useState(null);
+  
+  const [dataDetailRoom , setDataDetailRoom] = useState(null);
   const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
   const [bookingRoom] = useBookingRoomMutation();
@@ -185,7 +186,7 @@ export default function RoomBooking() {
     console.log("data", form.getFieldsValue());
     const dataSearch = form.getFieldsValue();
 
-    const dataBooking = {
+    const dataBooking : any = {
       room_id: dataDetailRoom?.id,
       checkin: dataSearch?.days[0].format("YYYY-MM-DD"),
       checkout: dataSearch?.days[1].format("YYYY-MM-DD"),

@@ -1,6 +1,6 @@
-import React from "react";
+// import React from "react";
 import Page from "../../../component/page";
-import { Skeleton } from "antd";
+// import { Skeleton } from "antd";
 
 const Profile = () => {
 

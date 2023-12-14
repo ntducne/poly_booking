@@ -1,7 +1,6 @@
 // import React from "react";
 import { Image, Rate, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { Link } from "react-router-dom";
 // interface DataType {
 //   key: React.Key;
 //   name: string;
