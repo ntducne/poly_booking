@@ -6,6 +6,7 @@ import {
   // Select,
   Typography,
   Space,
+  Skeleton,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -72,7 +73,7 @@ const EditBranche = () => {
     form.setFieldsValue(data?.data);
   }, [isLoading, data?.data]);
   if (isLoading) {
-    return <>loading...</>;
+    return <><Skeleton/></>;
   }
 
   return (

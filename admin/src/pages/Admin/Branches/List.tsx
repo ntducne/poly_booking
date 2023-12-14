@@ -30,7 +30,7 @@ const ListBranches = () => {
     setDataFetching(
       data?.data?.map((item: any) => {
         return {
-          key: item._id,
+          key: item.id,
           name: item.name,
           address: item.address,
           phone: item.phone,

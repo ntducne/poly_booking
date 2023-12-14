@@ -3,12 +3,10 @@ import { Button, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { GiConfirmed } from "react-icons/gi";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
 import formatMoneyVN from "../../../config/formatMoneyVN";
-import swal from "sweetalert";
 import { pusherInstance } from "../../../config/pusher";
 import { useEffect, useState } from "react";
 
@@ -25,25 +23,6 @@ const BillList = () => {
     };
   }, [dataBilings?.data]);
 
-  const onComfirm = (id: any) => {
-    console.log(id);
-    swal({
-      title: "Bạn có chắc chắn xác nhận không?",
-      icon: "warning",
-      buttons: ["Hủy", "Xác nhận"],
-      dangerMode: true,
-    }).then((willDelete: any) => {
-      if (willDelete) {
-        swal("Xác nhận thành công!", {
-          icon: "success",
-        });
-      } else {
-        swal("Đã hủy xác nhận!", {
-          icon: "error",
-        });
-      }
-    });
-  };
 
   const columns: ColumnsType<any> = [
     {
