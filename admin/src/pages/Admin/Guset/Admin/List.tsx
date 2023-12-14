@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Checkbox, Collapse, Form, Image, Modal, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { Link } from "react-router-dom";
@@ -8,7 +8,6 @@ interface DataType {
   age: number;
   address: string;
 }
-import FormSearch from "../../../../component/formSearch";
 import Page from "../../../../component/page";
 import {
   useGetAllStaffsQuery,
@@ -17,19 +16,19 @@ import {
 import { useGetPermissonQuery } from "../../../../api/permission";
 import { AiOutlinePlus } from "react-icons/ai";
 import { skipToken } from "@reduxjs/toolkit/query";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const ListAdmin = () => {
   const { data: staffs, isLoading } = useGetAllStaffsQuery({});
-
   const { data: valuePermission } = useGetPermissonQuery([]);
-
   const [isStaff, setIsStaff] = useState("");
-  const [dataStaff, setDataStaff] = useState<any>({});
-
   const { data: staff, isLoading: loadingStaff } = useGetDetailStaffsQuery(
     isStaff || skipToken
   );
 
+  const [dataStaff, setDataStaff] = useState<any>({});
+  const formRef = useRef<any>(null);
+  const [activeKey, setActiveKey] = useState<string | string[]>([]);
   useEffect(() => {
     if (isStaff && staff) {
       setDataStaff(staff);
@@ -43,19 +42,38 @@ const ListAdmin = () => {
     setIsModalOpen(true);
   };
   const handleCancel = () => {
+    formRef.current.resetFields();
     setIsModalOpen(false);
+    setActiveKey([]);
+  };
+
+  const handleCheckboxChange = (name: string, checked: boolean) => {
+    const parts = name.split(".");
+    if (parts.length < 3) return;
+
+    const [admin, item, action] = parts;
+
+    if (["update", "store", "destroy", "show"].includes(action) && checked) {
+      formRef.current.setFieldsValue({
+        [`${admin}.${item}.index`]: true,
+      });
+    }
   };
 
   const items = valuePermission?.map((item: any, index: number) => ({
     key: `${index}`,
     label: item?.label,
     children: (
-      <>
+      <div className="flex">
         {item?.permissions?.map((permission: any, index: any) => {
           const key = Object.keys(permission)[0];
           const value = permission[key];
           if (loadingStaff) {
-            return <></>;
+            return (
+              <>
+                <LoadingOutlined />
+              </>
+            );
           }
           if (dataStaff?.data?.permissions) {
             const check = dataStaff?.data?.permissions.find(
@@ -63,25 +81,37 @@ const ListAdmin = () => {
             );
             if (check) {
               return (
-                <Checkbox
-                  value={permission}
-                  key={index}
-                  defaultChecked
-                  name="permissions[]"
-                >
-                  {value}
-                </Checkbox>
+                <Form.Item name={`${key}`} valuePropName="checked">
+                  <Checkbox
+                    value={permission}
+                    key={index}
+                    defaultChecked={!!check}
+                    onChange={(e) =>
+                      handleCheckboxChange(`${key}`, e.target.checked)
+                    }
+                  >
+                    {value}
+                  </Checkbox>
+                </Form.Item>
               );
             } else {
               return (
-                <Checkbox value={permission} key={index} name="permissions[]">
-                  {value}
-                </Checkbox>
+                <Form.Item name={`${key}`} valuePropName="checked">
+                  <Checkbox
+                    value={permission}
+                    key={index}
+                    onChange={(e) =>
+                      handleCheckboxChange(`${key}`, e.target.checked)
+                    }
+                  >
+                    {value}
+                  </Checkbox>
+                </Form.Item>
               );
             }
           }
         })}
-      </>
+      </div>
     ),
   }));
   // console.log(items);
@@ -166,8 +196,10 @@ const ListAdmin = () => {
         footer={[]}
         style={{ minWidth: "60%" }}
       >
-        <Form onFinish={handleSubmit}>
+        <Form ref={formRef} onFinish={handleSubmit}>
           <Collapse
+            activeKey={activeKey}
+            onChange={setActiveKey}
             destroyInactivePanel={true}
             accordion={true}
             ghost
