@@ -22,17 +22,16 @@ class AdminController extends Controller
     {
         try{
             $role = $request->user()->role;
+            $query = $this->admin->newQuery();
             if ($role === 'super_admin') {
-                $query = $this->admin->newQuery();
-                $response = $query
-                ->where('role', 'admin')
-                ->paginate(10);
+                $response = $query->where('role', 'admin')->paginate(10);
                 return StaffResource::collection($response);
             }
-            $query = $this->admin->newQuery();
-            $query->where('branch_id', $request->user()->branch_id);
-            $response = $query->where('created_by', $request->user()->id)->paginate(10);
-            return StaffResource::collection($response);
+            if($role === 'admin'){
+                $query->where('branch_id', $request->user()->branch_id);
+                $response = $query->where('created_by', $request->user()->id)->paginate(10);
+                return StaffResource::collection($response);
+            }
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
@@ -49,6 +48,9 @@ class AdminController extends Controller
             if ($image) {
                 $uploadImage = $this->UploadImage($image, 'admin');
                 $object['image'] = $uploadImage;
+                $object['role'] = $request->user()->role === 'super_admin' ? 'admin' : 'staff';
+                $object['branch_id'] = $request->user()->role === 'super_admin' ? $request->branch_id : $request->user()->branch_id;
+                $object['created_by'] = $request->user()->id;
                 $admin = new Admin($object);
                 $admin->save();
                 $response = [
@@ -63,8 +65,7 @@ class AdminController extends Controller
                     'data'    => null
                 ];
             }
-//            return response()->json($response);
-            return StaffResource::collection($response);
+           return response()->json($response);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
@@ -107,9 +108,7 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request,  $id)
     {
         try{
-            $admin = $this->admin->where('_id', $id)
-                ->where('branch_id', request()->user()->branch_id)
-                ->first();
+            $admin = $this->admin->where('_id', $id)->where('branch_id', request()->user()->branch_id)->first();
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
