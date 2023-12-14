@@ -23,12 +23,8 @@ const formItemLayout = {
 };
 
 const AddRoomType = () => {
-  const { data: dataBranches, isLoading: loadingBranch } = useGetAllBranchesQuery({});
-
-  if(loadingBranch){}
-  const navigate = useNavigate()
-  const [createRoomsType] = useCreateRoomTypeMutation({})
-
+  const navigate = useNavigate();
+  const [createRoomsType] = useCreateRoomTypeMutation({});
 
   const onFinish = (values: any) => {
     createRoomsType(values)
@@ -73,6 +69,11 @@ const AddRoomType = () => {
             name="room_type_name"
             rules={[
               { required: true, message: "Vui lòng nhập tên loại phòng!" },
+              { min: 2, message: "Tên loại phòng phải có ít nhất 2 ký tự!" },
+              {
+                max: 50,
+                message: "Tên loại phòng không được vượt quá 50 ký tự!",
+              },
             ]}
           >
             <Input />
@@ -81,16 +82,30 @@ const AddRoomType = () => {
           <Form.Item
             label="Giá mỗi đêm"
             name="price_per_night"
-            rules={[{ required: true, message: "Vui lòng nhập giá mỗi đêm" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập giá mỗi đêm" },
+              {
+                type: "number",
+                min: 1,
+                message: "Giá mỗi đêm phải là một số dương",
+              },
+            ]}
           >
             <InputNumber min={1} />
           </Form.Item>
 
-          <Form.Item name="description" label="Mô tả">
+          <Form.Item
+            name="description"
+            label="Mô tả"
+            rules={[
+              { required: true, message: "Vui lòng nhập mô tả" },
+              { max: 500, message: "Mô tả không được vượt quá 500 ký tự" },
+            ]}
+          >
             <Input.TextArea />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
               label="Chi nhánh"
               name="branch_id"
               rules={[{ required: true, message: "Vui lòng chọn chi nhánh" }]}
@@ -104,7 +119,7 @@ const AddRoomType = () => {
                   );
                 })}
               </Select>
-            </Form.Item>
+            </Form.Item> */}
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">

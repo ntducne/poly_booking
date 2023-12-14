@@ -29,13 +29,10 @@ const EditRoomType = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const { data, isLoading, refetch } = useGetDetailRoomTypeQuery(id)
-  console.log(data);
 
   const [updateData] = useUpdateRoomTypeMutation()
 
   const onFinish = (values: any) => {
-    console.log(values);
-    // Xử lý dữ liệu khi nhấn nút Submit
     const data = {
       ...values,
     }
@@ -114,23 +111,6 @@ const EditRoomType = () => {
 
           <Form.Item name="description" label="Mô tả">
             <Input.TextArea />
-          </Form.Item>
-
-          <Form.Item
-            name="status"
-            label="Trạng thái"
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập trạng thái loại phòng!",
-              },
-            ]}
-          >
-            <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value={1}>Còn</Option>
-              <Option value={0}>Hết</Option>
-            </Select>
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>

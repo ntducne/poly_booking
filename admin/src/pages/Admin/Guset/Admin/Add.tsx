@@ -101,7 +101,7 @@ const AddAdmin = () => {
     <div>
       <div className="max-w-[80%] mr-auto ml-10">
         <div className="mb-5">
-          <Title level={3}>Thêm tài khoản</Title>
+          <Title level={3}>Thêm nhân viên</Title>
         </div>
 
         <Form
