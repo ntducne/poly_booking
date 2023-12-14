@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Image, Space, Table } from "antd";
+import { Button, Image, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
@@ -24,11 +24,15 @@ const ListRoom = () => {
   const [page, setPage] = useState<number>(1);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  console.log();
   const { data, isLoading, refetch } = useGetRoomsQuery(page);
+  const navigate = useNavigate();
   const [dataFetching, setDataFetching] = useState<any>([]);
   const [deleteRoom] = useDeleteRoomMutation();
-
+  const handlePaginationChange = (page: number) => {
+    setPage(page);
+    navigate(`/room?page=${page}`);
+    refetch();
+  };
   useEffect(() => {
     setDataFetching(
       data?.data.map((item: any) => {
@@ -71,15 +75,6 @@ const ListRoom = () => {
         );
       },
     },
-    // {
-    //   title: "Loại phòng",
-    //   dataIndex: "imageType",
-    //   render: (_, record) => {
-    //     console.log(record);
-
-    //     return <div className="flex items-center">đâsd</div>;
-    //   },
-    // },
     {
       title: "Giá phòng",
       dataIndex: "discount",
@@ -153,7 +148,6 @@ const ListRoom = () => {
           </Button>
         </Space>
       ),
-      // fixed: "right",
     },
   ];
 
@@ -228,7 +222,16 @@ const ListRoom = () => {
         dataSource={dataFetching}
         onChange={onChange}
         loading={isLoading}
+        pagination={false}
       />
+      <div className="flex justify-end items-center mt-5">
+        <Pagination
+          defaultCurrent={1}
+          total={+data?.meta?.last_page * 10}
+          onChange={handlePaginationChange}
+          current={page}
+        />
+      </div>
     </Page>
   );
 };

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const roomApi = createApi({
-  reducerPath: "rooms",
+  reducerPath: "Rooms",
   tagTypes: ["Rooms"],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_URL_API,
