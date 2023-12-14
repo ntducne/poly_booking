@@ -178,7 +178,7 @@ const BillList = () => {
               <AiOutlineEdit />
             </Link>
           </Button>
-          {record?.status === 0 && (
+          {/* {record?.status === 0 && (
             <Button
               onClick={() => onComfirm(record?.id)}
               type="primary"
@@ -186,7 +186,7 @@ const BillList = () => {
             >
               <GiConfirmed />
             </Button>
-          )}
+          )} */}
         </Space>
       ),
       // fixed: "right",

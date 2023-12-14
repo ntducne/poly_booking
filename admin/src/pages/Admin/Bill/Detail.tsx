@@ -224,7 +224,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
   //
 
@@ -264,7 +264,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
   //
 
@@ -300,7 +300,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
   //
 
@@ -356,6 +356,9 @@ const BillDetail: React.FC = () => {
           message.success(data?.message);
           setRoomSearch(data?.data);
         }
+      })
+      .catch((err) => {
+        message.error(err?.data?.error?.amount_room);
       });
   };
 
@@ -467,8 +470,12 @@ const BillDetail: React.FC = () => {
               icon: "success",
             });
             closeModalExtend();
-          } else if (res.message && res.status === false) {
+          } else if (res.message) {
             swal(res.message, {
+              icon: "success",
+            });
+          } else if (res.status === false) {
+            swal("Lỗi gia hạn", {
               icon: "error",
             });
           }
@@ -588,7 +595,7 @@ const BillDetail: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center md:justify-end justify-start ml-5 md:ml-0 md:mr-3">
-          {dataBill?.data?.status === 0 && (
+          {/* {dataBill?.data?.status === 0 && (
             <button
               type="button"
               // onClick={() => onCancelBooking(dataBill?.data?.id)}
@@ -596,7 +603,7 @@ const BillDetail: React.FC = () => {
             >
               Chờ nhận phòng
             </button>
-          )}
+          )} */}
           {dataBill?.data?.status === 1 && (
             <button
               type="button"
@@ -765,7 +772,7 @@ const BillDetail: React.FC = () => {
                 <InputNumber
                   onChange={changeRoomBook}
                   defaultValue={dataBill?.data?.booking.amount_room}
-                  min={0}
+                  min={1}
                   className="w-full"
                 />
               </Form.Item>
@@ -906,10 +913,11 @@ const BillDetail: React.FC = () => {
                   {dataRoomSearch.map((room: any) => {
                     return (
                       <tr
-                        className={` border-b ${dataBill?.data?.booking.detail[0].room_id == room.id
+                        className={` border-b ${
+                          dataBill?.data?.booking.detail[0].room_id == room.id
                             ? "bg-gray-100"
                             : "bg-white"
-                          }`}
+                        }`}
                       >
                         <th
                           scope="row"
@@ -925,10 +933,10 @@ const BillDetail: React.FC = () => {
                           <p className="mb-2">{room.name}</p>
                           {dataBill?.data?.booking.detail[0].room_id ==
                             room.id && (
-                              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                Phòng hiện tại
-                              </span>
-                            )}
+                            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                              Phòng hiện tại
+                            </span>
+                          )}
                         </td>
                         <td className="px-6 py-4">
                           {room.room_type.room_type_name}
@@ -951,8 +959,8 @@ const BillDetail: React.FC = () => {
                         </td>
                         <td className="px-6 py-4">{room.room_empty}</td>
                         <td>
-                          {dataBill?.data?.booking.detail[0].room_id ==
-                            room.id  &&
+                          {dataRoomBook.length == 0 && dataBill?.data?.booking.detail[0].room_id ==
+                            room.id &&
                             idRoomNewExtend == null && (
                               <button
                                 type="button"
@@ -962,9 +970,9 @@ const BillDetail: React.FC = () => {
                                 Gia hạn
                               </button>
                             )}
-                          {idRoomNewExtend != null &&
+                          {idRoomNewExtend == room.id &&
                             dataBill?.data?.booking.detail[0].room_id !=
-                            room.id && (
+                              room.id && (
                               <button
                                 type="button"
                                 onClick={() => onSetIdRoomNewExtend(null)}
@@ -975,17 +983,17 @@ const BillDetail: React.FC = () => {
                             )}
                           {dataBill?.data?.booking.detail[0].room_id !=
                             room.id && (
-                              <button
-                                type="button"
-                                onClick={() => onSetIdRoomNewExtend(room.id)}
-                                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                              >
-                                Chọn phòng mới
-                              </button>
-                            )}
-                          {idRoomNewExtend != null &&
+                            <button
+                              type="button"
+                              onClick={() => onSetIdRoomNewExtend(room.id)}
+                              className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                            >
+                              Chọn phòng mới
+                            </button>
+                          )}
+                          {idRoomNewExtend == room.id &&
                             dataBill?.data?.booking.detail[0].room_id !=
-                            room.id && (
+                              room.id && (
                               <button
                                 type="button"
                                 onClick={() => onExtendBooking()}
@@ -1365,11 +1373,8 @@ const BillDetail: React.FC = () => {
                       {service?.service_name}
                     </th>
                     <td className="px-6 py-4">1</td>
-                    <td className="px-6 py-4">
-                      {formatMoneyVN(service.time)}
-                    </td>
-                    <td>
-                    </td>
+                    <td className="px-6 py-4">{formatMoneyVN(service.time)}</td>
+                    <td></td>
                     <td className="px-6 py-4">
                       {formatMoneyVN(service.price)}
                     </td>
