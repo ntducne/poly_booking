@@ -27,4 +27,8 @@ export const StatusOrders = {
     id: 6,
     value: "Hủy thanh toán",
   },
+  STATUS_7: {
+    id: 7,
+    value: "Thanh toán lỗi",
+  },
 };
