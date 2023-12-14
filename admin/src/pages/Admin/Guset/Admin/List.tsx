@@ -16,6 +16,7 @@ import {
 } from "../../../../api/account/staffs";
 import { useGetPermissonQuery } from "../../../../api/permission";
 import { AiOutlinePlus } from "react-icons/ai";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const ListAdmin = () => {
   const { data: staffs, isLoading } = useGetAllStaffsQuery({});
@@ -24,14 +25,16 @@ const ListAdmin = () => {
 
   const [isStaff, setIsStaff] = useState("");
   const [dataStaff, setDataStaff] = useState<any>({});
+
   const { data: staff, isLoading: loadingStaff } = useGetDetailStaffsQuery(
-    isStaff || ""
+    isStaff || skipToken
   );
+
   useEffect(() => {
-    if (isStaff) {
+    if (isStaff && staff) {
       setDataStaff(staff);
     }
-  }, [isStaff]);
+  }, [isStaff, staff]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,7 +55,7 @@ const ListAdmin = () => {
           const key = Object.keys(permission)[0];
           const value = permission[key];
           if (loadingStaff) {
-            return <>...........</>;
+            return <></>;
           }
           if (dataStaff?.data?.permissions) {
             const check = dataStaff?.data?.permissions.find(
@@ -114,34 +117,6 @@ const ListAdmin = () => {
       key: "phone",
     },
     {
-      title: "Trạng thái",
-      dataIndex: "status",
-      filters: [
-        {
-          text: "Hoạt động",
-          value: 0,
-        },
-        {
-          text: "Không hoạt động",
-          value: 1,
-        },
-      ],
-      render: (text) => (
-        <div className="font-semibold">
-          {text === 1 ? (
-            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
-              Hoạt động
-            </button>
-          ) : (
-            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
-              Không hoạt động
-            </button>
-          )}
-        </div>
-      ),
-      onFilter: (value: any, record) => record.status === value,
-    },
-    {
       title: "Hành động",
       key: "action",
       render: (_, record) => (
@@ -160,12 +135,6 @@ const ListAdmin = () => {
             Sửa
           </Link>
           &nbsp;
-          <button
-            type="button"
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
-          >
-            Xoá
-          </button>
         </>
       ),
     },
@@ -183,26 +152,10 @@ const ListAdmin = () => {
     // address: item?.address,
   }));
 
-  const onChange: TableProps<DataType>["onChange"] = () =>
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-    {
-      // console.log("params", pagination, filters, sorter, extra);
-    };
-
-  // const [checkedValues, setCheckedValues] = useState<any>({});
-
-  // const handleCheckboxChange = (key: string, checked: boolean) => {
-  //   setCheckedValues((prevState) => ({ ...prevState, [key]: checked }));
-  // };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
   const handleSubmit = (values: any) => {
     console.log(values);
-
-    // Call API to update the permissions in the database
-    // The API call will depend on your backend
   };
   return (
     <Page title={`Tài khoản quản trị`}>
@@ -227,7 +180,8 @@ const ListAdmin = () => {
       </Modal>
 
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <FormSearch />
+        {/* <FormSearch /> */}
+        <div></div>
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
             to={`/staff/add`}

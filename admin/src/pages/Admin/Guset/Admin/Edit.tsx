@@ -36,7 +36,6 @@ const EditAdmin = () => {
   
   const onFinish = (values: any) => {
     console.log(values.image);
-    // Xử lý dữ liệu khi nhấn nút Submit
   };
 
   return (
