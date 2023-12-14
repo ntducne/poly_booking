@@ -1,14 +1,5 @@
-import { MinusOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import {
-  Button,
-  DatePicker,
-  Divider,
-  Form,
-  InputNumber,
-  Rate,
-  Select,
-  message,
-} from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, DatePicker, Divider, Form, Rate, Select, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
@@ -32,9 +23,6 @@ const Detail = () => {
   const [postComment] = useProcessReviewMutation();
   const [form] = useForm();
   const [commentForm] = useForm();
-  const [childs, setChilds] = useState<number>(0);
-  const [adults, setAdults] = useState<number>(0);
-  const [countRoom, setCountRoom] = useState<number>(0);
   const [searchRoom] = useSearchRoomsMutation();
   const [dataSearch, setDataSearch] = useState<any>({});
   const { data: dataBranches, isLoading: branchLoading } = useGetBranchesQuery(
@@ -48,12 +36,10 @@ const Detail = () => {
   };
 
   const onFinishComment = (values: any) => {
-    console.log("Success:", values);
     if (values) {
       postComment({ ...values, room_id: data.room.id })
         .unwrap()
-        .then((req) => {
-          console.log(req);
+        .then(() => {
           message.success("Đánh giá thành công");
           commentForm.resetFields();
           refetch();
@@ -73,16 +59,24 @@ const Detail = () => {
       return;
     }
 
-    const { time, branch_id } = values;
+    const { time, branch_id, adult, child, soLuong } = values;
+    if (soLuong > adult) {
+      form.setFieldsValue({
+        soLuong: undefined,
+        adult: undefined,
+      });
+      return message.error("Số phòng không thể lớn hơn số người lớn");
+    }
+
     const formattedDates = time?.map((item: any) =>
       dayjs(item.$d).format("YYYY-MM-DD")
     );
 
     const dataQuery = {
-      adult: adults,
-      child: childs,
+      adult: adult,
+      child: child,
       branch_id: branch_id?.value,
-      amount_room: countRoom,
+      amount_room: soLuong,
       checkin: formattedDates?.[0],
       checkout: formattedDates?.[1],
     };
@@ -90,7 +84,6 @@ const Detail = () => {
     searchRoom(dataQuery)
       .unwrap()
       .then((response) => {
-        console.log(response);
         if (response.status) {
           message.success("Có phòng trống");
           setDataSearch(dataQuery);
@@ -98,9 +91,6 @@ const Detail = () => {
         } else {
           message.error("Đã hết phòng");
           form.resetFields();
-          setChilds(0);
-          setAdults(0);
-          setCountRoom(0);
         }
       });
   };
@@ -113,7 +103,6 @@ const Detail = () => {
       const checkinDate = dayjs(cookie.roomSearch.checkin);
       const checkoutDate = dayjs(cookie.roomSearch.checkout);
       const dateDiff = checkoutDate.diff(checkinDate, "day");
-      console.log("item", dataSearch);
       const bookingData = {
         room_id: id,
         room_name: name,
@@ -128,13 +117,18 @@ const Detail = () => {
       message.error("Vui lòng chọn số ngày ở");
     }
   };
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
+  useEffect(() => {
+    form.setFieldsValue({
+      branch_id: {
+        label: data?.room?.branch?.name,
+        value: data?.room?.branch?.id,
+      },
+    });
+  }, [data?.room, data, isLoading]);
   return (
     <Page title={data?.room?.name || "Chi tiết phòng"}>
-      <div className="px-[160px] bg-bgr">
+      <div className="px-[20px] md:px-[160px] bg-bgr">
         <div>
           <div className="pt-[140px] flex flex-col-reverse lg:flex-row justify-center gap-3">
             {isLoading && branchLoading ? (
@@ -145,10 +139,7 @@ const Detail = () => {
               </div>
             ) : (
               <div className="flex flex-col gap-3 ">
-                <img
-                  src="https://themewagon.github.io/sona/img/room/room-details.jpg"
-                  alt=""
-                />
+                <img src={data?.room?.images?.[0]?.image} alt="" />
                 <div>
                   <div className="flex justify-between items-center flex-wrap gap-2">
                     <h1 className="text-3xl font-bold">{data?.room?.name}</h1>
@@ -182,11 +173,7 @@ const Detail = () => {
                     <li>Chi nhánh: {data?.room?.branch.name}</li>
                   </ul>
                   <div className="mt-[20px] text-gray-500 w-full">
-                    {data?.room?.description} Lorem ipsum dolor sit, amet
-                    consectetur adipisicing elit. Tempore amet maiores suscipit.
-                    Excepturi adipisci in architecto eaque eligendi molestiae
-                    hic optio, eius ipsa, cupiditate itaque natus eum id harum
-                    asperiores.
+                    {data?.room?.description}
                   </div>
                 </div>
               </div>
@@ -211,9 +198,6 @@ const Detail = () => {
                     form={form}
                     name="dynamic_form_item"
                     initialValues={{
-                      adult: adults,
-                      soLuong: countRoom,
-                      child: childs,
                       branch_id: {
                         label: data?.room?.branch?.name,
                         value: data?.room?.branch?.id,
@@ -256,204 +240,73 @@ const Detail = () => {
                     </Form.Item>
                     <Form.Item
                       name="soLuong"
+                      label="Số lượng phòng"
                       rules={[
                         {
                           required: true,
                           message: "Vui lòng chọn số lượng phòng muốn",
                         },
-                        {
-                          validator: (_) => {
-                            if (countRoom < 1) {
-                              return Promise.reject(
-                                new Error("Vui lòng chọn ít 1 phòng")
-                              );
-                            }
-                            if (countRoom > adults) {
-                              return Promise.reject(
-                                new Error(
-                                  "Số phòng không thể lớn hơn số người lớn"
-                                )
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
                       ]}
                       validateTrigger="onChange"
                     >
-                      <div className="flex gap-x-4 gap-y-2 items-center flex-wrap">
-                        <p>Số phòng: </p>
-                        <div className="flex gap-3 items-center">
-                          <MinusOutlined
-                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                            onClick={() => {
-                              if (countRoom > 0) {
-                                setCountRoom((prev) => prev - 1);
-                              }
-                            }}
-                          />
-                          <InputNumber
-                            min={0}
-                            max={30}
-                            value={countRoom}
-                            readOnly
-                            className=""
-                          />
-
-                          <PlusOutlined
-                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                            onClick={() => {
-                              if (countRoom < 30) {
-                                setCountRoom((prev) => prev + 1);
-                              }
-                            }}
-                          />
-                        </div>
-                      </div>
+                      <Select
+                        placeholder="Số lượng phòng"
+                        className="rounded-none w-full"
+                      >
+                        {Array.from({ length: 30 }, (_, index) => (
+                          <Select.Option
+                            key={index + 1}
+                            value={(index + 1).toString()}
+                          >
+                            {index + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
                     </Form.Item>
                     <Form.Item
                       name="adult"
+                      label="Người lớn"
                       rules={[
                         {
                           required: true,
                           message: "Vui lòng chọn số lượng phòng muốn",
                         },
-                        {
-                          validator: (_) => {
-                            if (adults < 1) {
-                              return Promise.reject(
-                                new Error("Vui lòng chọn ít nhất một người lớn")
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
                       ]}
                       validateTrigger="onChange"
                     >
-                      <div className="flex gap-x-4 gap-y-2 items-center flex-wrap">
-                        <p>Người lớn: </p>
-                        <div className="flex gap-3 items-center">
-                          <MinusOutlined
-                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                            onClick={() => {
-                              if (adults > 0) {
-                                setAdults((prev) => prev - 1);
-                              }
-                            }}
-                          />
-                          <InputNumber
-                            min={0}
-                            max={30}
-                            value={adults}
-                            readOnly
-                            className=""
-                          />
-
-                          <PlusOutlined
-                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                            onClick={() => {
-                              if (adults < 30) {
-                                setAdults((prev) => prev + 1);
-                              }
-                            }}
-                          />
-                        </div>
-                      </div>
+                      <Select
+                        placeholder="Người lớn"
+                        className="rounded-none w-full"
+                      >
+                        {Array.from({ length: 30 }, (_, index) => (
+                          <Select.Option
+                            key={index + 1}
+                            value={(index + 1).toString()}
+                          >
+                            {index + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
                     </Form.Item>
-                    <Form.List name="child">
-                      {(fields, { add, remove }) => (
-                        <>
-                          <Form.Item>
-                            <div className="flex gap-4 items-center flex-wrap">
-                              <p>Số trẻ em: </p>
-                              <div className="flex gap-3 items-center">
-                                <MinusOutlined
-                                  className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                                  onClick={() => {
-                                    if (childs > 0) {
-                                      setChilds((prev) => prev - 1);
-                                      remove(fields.length - 1);
-                                    }
-                                  }}
-                                />
-                                <InputNumber
-                                  min={0}
-                                  max={6}
-                                  value={childs}
-                                  onChange={(value) => {
-                                    console.log(value);
-                                  }}
-                                  readOnly
-                                  className=""
-                                />
-
-                                <PlusOutlined
-                                  className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                                  onClick={() => {
-                                    if (childs < 6) {
-                                      setChilds((prev) => prev + 1);
-                                      add();
-                                    }
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          </Form.Item>
-                          <div className="grid grid-cols-2 gap-2 ">
-                            {fields.map((field) => (
-                              <Form.Item
-                                required={false}
-                                key={field.key}
-                                className=""
-                                style={{ width: "100%" }}
-                                label="Trẻ em"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <Form.Item
-                                    {...field}
-                                    validateTrigger={["onChange", "onBlur"]}
-                                    noStyle
-                                    rules={[
-                                      {
-                                        required: true,
-                                        message: "Vui lòng số tuổi",
-                                      },
-                                    ]}
-                                  >
-                                    <Select
-                                      placeholder="Trẻ em"
-                                      className="rounded-none"
-                                      size={
-                                        window.innerWidth < 768
-                                          ? "large"
-                                          : "middle"
-                                      }
-                                    >
-                                      {Array.from(
-                                        { length: 17 },
-                                        (_, index) => (
-                                          <Select.Option
-                                            key={index + 1}
-                                            value={index + 1}
-                                          >
-                                            {index + 1}
-                                          </Select.Option>
-                                        )
-                                      )}
-                                    </Select>
-                                  </Form.Item>
-                                </div>
-                              </Form.Item>
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </Form.List>
+                    <Form.Item label="Số lượng phòng" name="child">
+                      <Select
+                        placeholder="Trẻ em"
+                        className="rounded-none w-full"
+                      >
+                        {Array.from({ length: 6 }, (_, index) => (
+                          <Select.Option
+                            key={index + 1}
+                            value={(index + 1).toString()}
+                          >
+                            {index + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
                     <Form.Item>
                       <Button
                         type="primary"
-                        className="bg-blue-500 flex py-5 w-full justify-center md:py-4 px-7 gap-1 items-center"
+                        className="bg-blue-500 mt-5 flex py-5 w-full justify-center md:py-4 px-7 gap-1 items-center"
                         htmlType="submit"
                       >
                         <SearchOutlined />

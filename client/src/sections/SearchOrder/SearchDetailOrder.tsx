@@ -22,7 +22,6 @@ export default function SearchDetailOrder({}: Props) {
           message.error(err?.data.message);
         });
     }
-    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo: any) => {

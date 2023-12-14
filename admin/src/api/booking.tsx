@@ -49,5 +49,6 @@ export const {
   useGetBookingQuery,
   useGetDetailBookingQuery,
   useSearchRoomMutation,
+  useBookingRoomMutation
 } = bookingApi;
 export default bookingApi;

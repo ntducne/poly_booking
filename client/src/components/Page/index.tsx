@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 
 type Props = {
-  children: React.ReactNode,
-  title: string
-}
+  children: React.ReactNode;
+  title: string;
+};
 
 export default function Page({ children, title }: Props) {
-
   useEffect(() => {
-    window.document.title = `${title || ''} | Hotel Fpoly`
-  }, [])
-  return (
-    <div>
-      {children}
-    </div>
-  )
+    window.document.title = `${title || ""} | Hotel Fpoly`;
+  }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  return <div>{children}</div>;
 }
