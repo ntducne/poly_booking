@@ -81,7 +81,7 @@ const Detail = () => {
         // Create Blob and File objects
         const blob = new Blob([uint8Array], { type: "image/jpeg" });
         const file = new File([blob], `image_${index}.jpg`);
-        // formData.append(`images[]`, file);
+        formData.append(`images[]`, file);
       });
       formData.append(`rate`, values?.rate);
       formData.append(`comment`, values?.commet);
