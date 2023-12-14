@@ -83,6 +83,7 @@ const BillList = () => {
       title: "Phương thức",
       dataIndex: "payment_method",
       key: "payment_method",
+      render: (text:any) => <div>{text === null ? "Thanh toán tại quầy" : `${text}`}</div>,
     },
     {
       title: "Thời gian thanh toán",
@@ -99,7 +100,7 @@ const BillList = () => {
 
         switch (status) {
           case 0:
-            statusText = "Đã đặt";
+            statusText = "Giữ phòng";
             statusClass = "text-green-500";
             break;
           case 1:

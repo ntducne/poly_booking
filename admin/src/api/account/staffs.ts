@@ -26,9 +26,17 @@ export const staffsApi = createApi({
       }),
       providesTags: ["Staffs"],
     }),
+    createStaffs: builder.mutation({
+      query: (data) => ({
+        url: `/staffs`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Staffs"],
+    }),
   }),
 
 });
 
 
-export const { useGetAllStaffsQuery  , useGetDetailStaffsQuery} = staffsApi;
+export const { useGetAllStaffsQuery  , useGetDetailStaffsQuery, useCreateStaffsMutation} = staffsApi;
