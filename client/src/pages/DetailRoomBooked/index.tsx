@@ -87,6 +87,15 @@ const BillDetail: React.FC = () => {
                   <li>Số khách: {data?.data?.booking?.amount_people?.total}</li>
                 </ul>
               </div>
+              <div className="mt-1 mb-3"></div>
+              <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900">
+                Trạng thái đơn hàng
+              </h5>
+              <div className="font-normal text-gray-700">
+                <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
+                  <li>Đơn hàng: {data?.data?.status_name}</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

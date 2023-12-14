@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import HeroSlide from "../../components/HeroSlide";
 import SearchDetailOrder from "../../sections/SearchOrder/SearchDetailOrder";
+import Page from "../../components/Page";
 
 type Props = {};
 
 export default function SearchOrder({}: Props) {
   return (
-    <div>
+    <Page title="Tra cứu đơn hàng">
       <HeroSlide />
-      <div className="w-full my-[60px] ">
-        <div className="px-[50px] bg-white max-w-[1200px] rounded-xl flex flex-col mx-auto">
+      <div className="w-full py-[60px] bg-bgr">
+        <div className="px-[50px] bg-bgr max-w-[1200px] rounded-xl flex flex-col mx-auto">
           <ul
             className="mb-5 flex list-none flex-row flex-wrap border-b-0 pl-0"
             role="tablist"
@@ -107,6 +108,6 @@ export default function SearchOrder({}: Props) {
           </div>
         </div>
       </div>
-    </div>
+    </Page>
   );
 }

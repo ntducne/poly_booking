@@ -16,7 +16,7 @@ const clientApi = createApi({
     }),
 
     getRooms: builder.query<any, any>({
-      query: (data: any) => {
+      query: () => {
         return {
           method: "GET",
           url: `/room`,
