@@ -211,9 +211,6 @@ const BillList = () => {
   return (
     <Page title={`Hóa đơn`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <div className="mb-3">
-          <FormSearch />
-        </div>
         <div className="flex flex-col md:flex-row"></div>
       </div>
       <Table

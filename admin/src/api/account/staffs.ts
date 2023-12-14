@@ -37,6 +37,15 @@ export const staffsApi = createApi({
       }),
       invalidatesTags: ["Staffs"],
     }),
+    updateStaffs: builder.mutation({
+      query: (data) => ({
+        url: `/staffs/${data.idStaff}`,
+        method: "PUT",
+        body: data.data,
+      }),
+      invalidatesTags: ["Staffs"],
+    }),
+    
     assignPermission: builder.mutation({
       query: (data) => ({
         url: `/staffs/assignPermission/${data.idStaff}`,
@@ -52,5 +61,6 @@ export const {
   useGetAllStaffsQuery,
   useGetDetailStaffsQuery,
   useCreateStaffsMutation,
+  useUpdateStaffsMutation,
   useAssignPermissionMutation,
 } = staffsApi;

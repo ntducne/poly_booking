@@ -91,11 +91,6 @@ function App() {
               <Route path="add" element={<AuthorizedStoreUtilities />} />
               <Route path="edit/:id" element={<AuthorizedUpdateUtilities />} />
             </Route>
-            {/* <Route path="renew">
-              <Route index element={<ListRoomExtend />} />
-              <Route path="add" element={<AddRoomExtend />} />
-              <Route path="edit/:id" element={<EditRoomExtend />} />
-            </Route> */}
             <Route path="booking" element={<RoomBooking />} />
           </Route>
           <Route path="services">

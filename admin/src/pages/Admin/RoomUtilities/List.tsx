@@ -153,6 +153,7 @@ const ListRoomUtilities = () => {
         columns={columns}
         dataSource={dataFetching}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
     </Page>
   );

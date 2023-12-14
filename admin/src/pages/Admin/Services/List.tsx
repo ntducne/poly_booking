@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
@@ -9,8 +9,7 @@ interface DataType {
   age: number;
   address: string;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+import { MdDeleteForever,  } from "react-icons/md";
 import swal from "sweetalert";
 import {
   useDeleteServicesMutation,
@@ -143,25 +142,6 @@ const ListServices = () => {
 
   return (
     <Page title={`Dịch vụ`}>
-      <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <FormSearch />
-        <div className="flex flex-col md:flex-row md:ml-2">
-          <Link
-            to={`/services/add`}
-            className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
-          >
-            <AiOutlinePlus />
-            Thêm dịch vụ
-          </Link>
-          <Link
-            to={`/services`}
-            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
-          >
-            <MdOutlineDeleteOutline />
-            Thùng rác
-          </Link>
-        </div>
-      </div>
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"

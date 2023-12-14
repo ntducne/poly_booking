@@ -258,6 +258,7 @@ const ListAdmin = () => {
         loading={isLoading}
         dataSource={data}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
     </Page>
   );
