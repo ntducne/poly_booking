@@ -49,7 +49,7 @@ class AdminController extends Controller
                 $uploadImage = $this->UploadImage($image, 'admin');
                 $object['image'] = $uploadImage;
                 $object['role'] = $request->user()->role === 'super_admin' ? 'admin' : 'staff';
-                $object['branch_id'] = $request->user()->branch_id;
+                $object['branch_id'] = $request->user()->role === 'super_admin' ? $request->branch_id : $request->user()->branch_id;
                 $object['created_by'] = $request->user()->id;
                 $admin = new Admin($object);
                 $admin->save();
@@ -108,9 +108,7 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request,  $id)
     {
         try{
-            $admin = $this->admin->where('_id', $id)
-                ->where('branch_id', request()->user()->branch_id)
-                ->first();
+            $admin = $this->admin->where('_id', $id)->where('branch_id', request()->user()->branch_id)->first();
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
