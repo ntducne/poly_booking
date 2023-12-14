@@ -2,48 +2,34 @@
 
 namespace App\Repositories\Stats;
 
-use App\Interfaces\StatInterface;
+use App\Models\Billing;
+use Carbon\Carbon;
 
-class Chart implements StatInterface
+class Chart
 {
-
-    public function daily($request)
+    protected $billing;
+    public function __construct()
     {
-        // TODO: Implement daily() method.
-    }
-
-    public function weekly($request)
-    {
-        // TODO: Implement weekly() method.
-    }
-
-    public function monthly($request)
-    {
-        // TODO: Implement monthly() method.
+        $this->billing = new Billing();
     }
 
     public function yearly($request)
     {
-        // TODO: Implement yearly() method.
-    }
+        $year = $request->year ?? date('Y');
 
-    public function day_to_day($request)
-    {
-        // TODO: Implement day_to_day() method.
-    }
-
-    public function week_to_week($request)
-    {
-        // TODO: Implement week_to_week() method.
-    }
-
-    public function month_to_month($request)
-    {
-        // TODO: Implement month_to_month() method.
-    }
-
-    public function year_to_year($request)
-    {
-        // TODO: Implement year_to_year() method.
+        $arrData = [];
+        for($i = 1; $i <= 12; $i++){
+            $billing = $this->billing->where('status', 1)->whereYear('created_at', $year)->get();
+            foreach($billing as $bill){
+                if(Carbon::parse($bill->created_at)->format('Y-m') == Carbon::parse($year.'-'.$i)->format('Y-m')){
+                    $arrData[] = $bill->total;
+                }
+                else{
+                    $arrData[] = 0;
+                }
+            }
+                
+        }
+        return $arrData;
     }
 }

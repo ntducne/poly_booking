@@ -65,11 +65,12 @@ Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
 });
 
 Route::get('/room/search', [BookingController::class, 'search'])->name('search');
+Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
+Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');
 
 
 Route::middleware(CheckPermission::class)->group(function () {
     
-    Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 
     Route::middleware(CheckRoleAdmin::class)->group(function () {
     

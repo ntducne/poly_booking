@@ -8,8 +8,11 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     private StatsRepository $statsRepository;
-    public function statistical(Request $request){
+    public function __construct()
+    {
         $this->statsRepository = new StatsRepository();
+    }
+    public function statistical(Request $request){
         if($request->module == 'revenue'){
             return $this->statsRepository->revenue($request);
         }
@@ -20,5 +23,8 @@ class DashboardController extends Controller
         if($request->module == 'book'){
             return $this->statsRepository->book($request);
         }
+    }
+    public function chartRevenue(Request $request){
+        return $this->statsRepository->chart($request);
     }
 }
