@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   useCancelBookingMutation,
@@ -7,10 +7,15 @@ import {
 import dayjs from "dayjs";
 import FormatPrice from "../../utils/FormatPrice";
 import Page from "../../components/Page";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
 import { message } from "antd";
 const BillDetail: React.FC = () => {
   const { id } = useParams();
-  const { data } = useGetDetailHistoryBookingQuery(id);
+  const { data, refetch } = useGetDetailHistoryBookingQuery(id);
+  console.log(data);
+
   const [cancelBookingRoom] = useCancelBookingMutation();
   function getCountNights(checkin: any, checkout: any) {
     const checkinDate = dayjs(checkin);
@@ -22,13 +27,42 @@ const BillDetail: React.FC = () => {
     if (![0, 1].includes(data?.data?.status)) {
       return;
     }
-    cancelBookingRoom(data?.data?.id)
-      .unwrap()
-      .then((res: any) => {
-        console.log("re", res);
-        message.success("Hủy phòng thành công");
-      });
+
+    MySwal.fire({
+      imageUrl: "/logo_light.png",
+      imageWidth: 100,
+      imageHeight: 70,
+
+      html: `
+        <div className="text-left">
+          <p>Bạn có chắc là muốn hủy đặt phòng</p>
+        </div>
+      `,
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText: `
+        Xác nhận
+      `,
+      cancelButtonText: `
+        Hủy
+      `,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        cancelBookingRoom(data?.data?.id)
+          .unwrap()
+          .then((res: any) => {
+            console.log("re", res);
+            message.success("Hủy phòng thành công");
+          });
+      } else {
+      }
+    });
   };
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <Page title={data?.data?.booking?.detail?.[0].room_name}>

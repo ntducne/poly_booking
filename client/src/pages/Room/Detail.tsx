@@ -1,4 +1,8 @@
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  FileImageOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { Button, DatePicker, Divider, Form, Rate, Select, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import TextArea from "antd/es/input/TextArea";
@@ -14,9 +18,11 @@ import { useProcessReviewMutation } from "../../api/User";
 import Page from "../../components/Page";
 import PcLoading from "../../components/RoomLoading/PcLoading";
 import FormatPrice from "../../utils/FormatPrice";
+import { AnyMxRecord } from "dns";
 
 const { RangePicker } = DatePicker;
 const Detail = () => {
+  const [imagePreviews, setImagePreviews] = useState<any>([]);
   const { slug } = useParams();
   const { data, isLoading, refetch } = useGetDetailQuery(slug);
   const [cookies] = useCookies(["userInfo"]);
@@ -25,6 +31,37 @@ const Detail = () => {
   const [commentForm] = useForm();
   const [searchRoom] = useSearchRoomsMutation();
   const [dataSearch, setDataSearch] = useState<any>({});
+  console.log(data);
+  console.log("preview", imagePreviews);
+
+  const handleImageChange = (e: any) => {
+    const files = e.target.files;
+
+    if (files.length > 0) {
+      const newPreviews = Array.from(files).map((file: any) => {
+        const reader = new FileReader();
+
+        return new Promise((resolve) => {
+          reader.onloadend = () => {
+            resolve(reader.result);
+          };
+
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(newPreviews).then((previews) => {
+        setImagePreviews([...imagePreviews, ...previews]);
+      });
+    }
+  };
+
+  const handleRemoveImage = (index: any) => {
+    const updatedPreviews = [...imagePreviews];
+    updatedPreviews.splice(index, 1);
+    setImagePreviews(updatedPreviews);
+  };
+
   const { data: dataBranches, isLoading: branchLoading } = useGetBranchesQuery(
     {}
   );
@@ -358,15 +395,47 @@ const Detail = () => {
               >
                 <Rate allowHalf />
               </Form.Item>
+              <div className="text-[18px] cursor-pointer ml-1">
+                <label htmlFor="imgUp" className="!text-[20px]">
+                  <FileImageOutlined />
+                </label>
+                <input
+                  type="file"
+                  name=""
+                  multiple
+                  id="imgUp"
+                  className="!hidden"
+                  onChange={handleImageChange}
+                />
+              </div>
               <Form.Item
                 name="comment"
                 rules={[{ required: true, message: "Vui lòng nhập bình luận" }]}
+                className="bg-white"
               >
                 <TextArea
                   rows={4}
                   placeholder="Đánh giá của bạn...."
-                  className="pt-3"
+                  className="pt-3 bg-none outline-none border-none"
                 />
+                <div className="flex">
+                  {imagePreviews.map((item: any, index: any) => (
+                    <div className="relative  mt-2  p-3">
+                      <img
+                        src={item}
+                        alt=""
+                        className="max-w-[200px] object-cover rounded"
+                      />
+
+                      <div
+                        onClick={() => handleRemoveImage(index)}
+                        className="absolute bottom-[90%] right-[2%] z-50 cursor-pointer bg-white rounded-full px-2 py-1 shadow-lg"
+                      >
+                        <CloseOutlined />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </Form.Item>
 
               <Form.Item>
