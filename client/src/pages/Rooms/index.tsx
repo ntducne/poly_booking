@@ -115,7 +115,6 @@ export default function Rooms({}: Props) {
     );
   };
   const handleBookingNow = (item: any) => {
-    console.log(dataQuery);
     if (Object.keys(dataQuery).length >= 6) {
       const {
         id,

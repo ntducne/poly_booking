@@ -97,8 +97,6 @@ export default function AccommodationReview() {
     },
   ];
 
-  console.log(cookie["paymentMethod"]);
-
   const accommodationBook = () => {
     setCookie("paymentPage", 0, { path: "/" });
     navigate("/accommodation/book");

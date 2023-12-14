@@ -8,12 +8,10 @@ const Contact = () => {
   const [postContact] = useHandleContactMutation();
 
   const onFinishContact = (values: any) => {
-    console.log("Success:", values);
     if (values) {
       postContact({ ...values })
         .unwrap()
-        .then((req) => {
-          console.log(req);
+        .then(() => {
           message.success("Liên hệ  thành công");
         })
         .catch((error) => {

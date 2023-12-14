@@ -23,8 +23,6 @@ export default function HistoryBooking({}: Props) {
   } = useGetHistoryBookingQuery({
     userId: "someUserId",
   });
-  console.log(dataRoom);
-
   useEffect(() => {
     const fetchData = async () => {
       await refetch();
@@ -76,7 +74,7 @@ export default function HistoryBooking({}: Props) {
                       Được đặt vào ngày nào đó
                     </h2>
                     <div className="flex mt-3 h-[13px] rounded-lg bg-[#E5E7EB]">
-                      {orderedStatus.map((status, index) => (
+                      {orderedStatus.map((status) => (
                         <div
                           key={status.id}
                           className={`w-[20%] h-[13px] ${

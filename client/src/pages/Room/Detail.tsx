@@ -36,12 +36,10 @@ const Detail = () => {
   };
 
   const onFinishComment = (values: any) => {
-    console.log("Success:", values);
     if (values) {
       postComment({ ...values, room_id: data.room.id })
         .unwrap()
-        .then((req) => {
-          console.log(req);
+        .then(() => {
           message.success("Đánh giá thành công");
           commentForm.resetFields();
           refetch();
@@ -86,7 +84,6 @@ const Detail = () => {
     searchRoom(dataQuery)
       .unwrap()
       .then((response) => {
-        console.log(response);
         if (response.status) {
           message.success("Có phòng trống");
           setDataSearch(dataQuery);
@@ -106,7 +103,6 @@ const Detail = () => {
       const checkinDate = dayjs(cookie.roomSearch.checkin);
       const checkoutDate = dayjs(cookie.roomSearch.checkout);
       const dateDiff = checkoutDate.diff(checkinDate, "day");
-      console.log("item", dataSearch);
       const bookingData = {
         room_id: id,
         room_name: name,
@@ -121,7 +117,6 @@ const Detail = () => {
       message.error("Vui lòng chọn số ngày ở");
     }
   };
-  console.log(dataBranches);
 
   useEffect(() => {
     form.setFieldsValue({

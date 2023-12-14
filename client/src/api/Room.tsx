@@ -12,7 +12,6 @@ const roomApi = createApi({
   endpoints: (builder) => ({
     getRooms: builder.query<any, any>({
       query: (page?: number) => {
-        console.log(page);
         return {
           method: "GET",
           url: `/room?page=${page || 2}`,
