@@ -42,6 +42,8 @@ export default function Rooms({}: Props) {
   const [dataQuery, setDataQuery] = useState<any>(queryParams || {});
   const [data, setData] = useState<any>({});
   const { data: dataAll, isLoading, refetch } = useGetRoomsQuery(page);
+  console.log(isLoading);
+
   const [searchRooms] = useSearchRoomsMutation();
   const { data: dataBranches } = useGetBranchesQuery({});
   const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);

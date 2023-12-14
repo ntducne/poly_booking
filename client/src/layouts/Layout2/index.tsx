@@ -127,7 +127,7 @@ export default function LayoutClient2({}: Props) {
               {cookies && cookies?.userInfo ? (
                 <Link
                   to="/about"
-                  className="relative transition text-[18px] lg:text-[16px] group"
+                  className="relative transition text-[18px] lg:text-[16px] group md:hidden block"
                   onClick={closeToggleBar}
                 >
                   Thông tin cá nhân
