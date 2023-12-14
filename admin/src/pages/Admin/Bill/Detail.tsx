@@ -338,7 +338,7 @@ const BillDetail: React.FC = () => {
       checkin: dayjs(dataBill?.data?.booking?.checkout).format("YYYY-MM-DD"),
       checkout: new_checkoutDate,
       adult: adults,
-      children: childs,
+      child: childs,
       // branch_id: dataBill?.data?.branch?.id,
       room_type_id: room_type_id,
       amount_room: amount_room_renew,
