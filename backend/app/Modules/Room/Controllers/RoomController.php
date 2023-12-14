@@ -41,7 +41,7 @@ class RoomController extends Controller
                 $query->where('name', 'LIKE', '%' . $searchTerm . '%');
             }
             $rooms = $query->paginate(10);
-            return RoomResource::collection($rooms);
+            return RoomResource::collectionư($rooms);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
             return response()->json([
