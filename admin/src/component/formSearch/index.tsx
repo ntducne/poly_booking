@@ -12,7 +12,6 @@ const FormSearch = () => {
   };
 
   const handleSearchSubmit = () => {
-    // Gửi yêu cầu tìm kiếm hoặc xử lý dữ liệu tại đây
     console.log("Đã gửi yêu cầu tìm kiếm:", searchValue);
   };
 

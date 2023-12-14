@@ -67,7 +67,6 @@ const AddRoom = () => {
           });
           navigate("/room");
         } else {
-          console.log(item);
           toast(item?.error?.name || "Lỗi rồi bạn", {
             autoClose: 3000,
             theme: "light",
@@ -302,29 +301,6 @@ const AddRoom = () => {
           >
             <InputNumber min={1} className="w-full" />
           </Form.Item>
-          {/* <Form.Item
-            name="branch_id"
-            label="Chi nhánh"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn chi nhánh!",
-              },
-            ]}
-          >
-            <Select
-            >
-              {dataBranch?.data?.map((item: any) => {
-                console.log(item);
-                return (
-                  <Option key={item.id} value={item.id}>
-                    {item.name}
-                  </Option>
-                );
-              })}
-            </Select>
-          </Form.Item> */}
-
           <Form.Item
             label="Mô tả"
             name="description"

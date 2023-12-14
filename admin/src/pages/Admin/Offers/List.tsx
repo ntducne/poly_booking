@@ -20,7 +20,7 @@ import {
 } from "../../../api/promotions";
 
 const ListOffers = () => {
-  const { data: dataPromotions  ,isLoading} = useGetPromotionsQuery({});
+  const { data: dataPromotions, isLoading } = useGetPromotionsQuery({});
   const [deletePromotions] = useDeletePromotionsMutation();
 
   const columns: ColumnsType<any> = [
@@ -82,14 +82,7 @@ const ListOffers = () => {
     ...item,
   }));
 
-  const onChange: TableProps<DataType>["onChange"] = () =>
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-    {
-      // console.log("params", pagination, filters, sorter, extra);
-    };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
   const remove = (id: any) => {
     try {
@@ -103,7 +96,6 @@ const ListOffers = () => {
         .then((willDelete) => {
           if (willDelete) {
             deletePromotions(id);
-            // console.log(id);
             setTimeout(() => {
               swal("You have successfully deleted", {
                 icon: "success",

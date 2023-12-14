@@ -18,16 +18,19 @@ const BillList = () => {
   const [billings, setBillings] = useState<any[]>([]);
   useEffect(() => {
     setBillings(dataBilings?.data);
-    const unsubscribe = pusherInstance().getData('booking', 'processBooking', (data :any)  => {
-      setBillings(prevBillings => [...prevBillings, data.data]);
-    });
+    const unsubscribe = pusherInstance().getData(
+      "booking",
+      "processBooking",
+      (data: any) => {
+        setBillings((prevBillings) => [...prevBillings, data.data]);
+      }
+    );
     return () => {
-      unsubscribe();  
+      unsubscribe();
     };
   }, [dataBilings?.data]);
 
   const onComfirm = (id: any) => {
-    console.log(id);
     swal({
       title: "Bạn có chắc chắn xác nhận không?",
       icon: "warning",
@@ -83,7 +86,9 @@ const BillList = () => {
       title: "Phương thức",
       dataIndex: "payment_method",
       key: "payment_method",
-      render: (text:any) => <div>{text === null ? "Thanh toán tại quầy" : `${text}`}</div>,
+      render: (text: any) => (
+        <div>{text === null ? "Thanh toán tại quầy" : `${text}`}</div>
+      ),
     },
     {
       title: "Thời gian thanh toán",

@@ -81,7 +81,6 @@ const ListAdmin = () => {
       </>
     ),
   }));
-  // console.log(items);
   const columns: ColumnsType<any> = [
     {
       title: "STT",
@@ -183,26 +182,10 @@ const ListAdmin = () => {
     // address: item?.address,
   }));
 
-  const onChange: TableProps<DataType>["onChange"] = () =>
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-    {
-      // console.log("params", pagination, filters, sorter, extra);
-    };
-
-  // const [checkedValues, setCheckedValues] = useState<any>({});
-
-  // const handleCheckboxChange = (key: string, checked: boolean) => {
-  //   setCheckedValues((prevState) => ({ ...prevState, [key]: checked }));
-  // };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
   const handleSubmit = (values: any) => {
     console.log(values);
-
-    // Call API to update the permissions in the database
-    // The API call will depend on your backend
   };
   return (
     <Page title={`Tài khoản quản trị`}>

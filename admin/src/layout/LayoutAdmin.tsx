@@ -37,7 +37,7 @@ import { BiSolidBed } from "react-icons/bi";
 import { cookies } from "../config/cookies";
 import "react-toastify/dist/ReactToastify.css";
 import { MdContactPhone } from "react-icons/md";
-import { role } from "../hoc/withAuthorization.tsx"
+import { role } from "../hoc/withAuthorization.tsx";
 
 export const LayoutContext = createContext("");
 
@@ -68,8 +68,7 @@ const LayoutAdmin = () => {
     location.pathname === "/contact" && setTitle("Liên hệ");
     location.pathname === "/profile" && setTitle("Thông tin");
   }, [location.pathname]);
-  console.log("role",role);
-  
+
   const items: MenuItem[] = [
     getItem(
       "Thống kê",
@@ -88,18 +87,17 @@ const LayoutAdmin = () => {
     // ),
 
     ...(role === "super_admin"
-    ? [
-        getItem(
-          "Chi nhánh",
-          "/branches",
-          <Link to={`branches`}>
-            <AiTwotoneGift />
-          </Link>
-        ),
-      ]
-    : []),
+      ? [
+          getItem(
+            "Chi nhánh",
+            "/branches",
+            <Link to={`branches`}>
+              <AiTwotoneGift />
+            </Link>
+          ),
+        ]
+      : []),
 
-    
     getItem("Phòng", "sub1", <BiSolidBed />, [
       getItem("Phòng", "/room", <Link to={`room`} />),
       getItem("Loại Phòng", "/room/type", <Link to={`room/type`} />),

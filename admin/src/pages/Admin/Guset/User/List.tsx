@@ -14,9 +14,8 @@ import Page from "../../../../component/page";
 import { useGetAllUsersQuery } from "../../../../api/account/users";
 
 const ListUser = () => {
+  const { data: users, isLoading } = useGetAllUsersQuery([]);
 
-  const { data: users  , isLoading} = useGetAllUsersQuery([]);
-  
   const columns: ColumnsType<any> = [
     {
       title: "STT",
@@ -37,11 +36,7 @@ const ListUser = () => {
       render: (_, record) => (
         <div className="flex items-center">
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-          <Image
-            className="rounded-3xl "
-            width={80}
-            src={record?.image}
-          />
+          <Image className="rounded-3xl " width={80} src={record?.image} />
           <div className="ml-3 text-gray-500">
             <p>{record?.email}</p>
           </div>
@@ -92,10 +87,14 @@ const ListUser = () => {
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <button type="button" 
-          className=" bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-brfont-medium rounded-lg  px-5 py-2.5 ml-1" 
+          <button
+            type="button"
+            className=" bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-brfont-medium rounded-lg  px-5 py-2.5 ml-1"
           >
-            <Link className="text-white text-sm text-center" to={`/user/edit/${record?.id}`}>
+            <Link
+              className="text-white text-sm text-center"
+              to={`/user/edit/${record?.id}`}
+            >
               <AiOutlineEdit />
             </Link>
           </button>
@@ -105,7 +104,7 @@ const ListUser = () => {
     },
   ];
 
-  const data :any = users?.data?.map((item: any, index : number) => ({
+  const data: any = users?.data?.map((item: any, index: number) => ({
     key: index + 1,
     id: item.id,
     name: item.name,
@@ -114,28 +113,18 @@ const ListUser = () => {
     image: item.image,
     address: item.address,
     status: item.status,
-  }))
+  }));
 
-  const onChange: TableProps<DataType>["onChange"] = (
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
   return (
     <Page title={`Tài khoản người dùng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <div className="mb-3">
-          {/* <FormSearch /> */}
-        </div>
-        <div className="flex flex-col md:flex-row">
-        </div>
+        <div className="mb-3">{/* <FormSearch /> */}</div>
+        <div className="flex flex-col md:flex-row"></div>
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         loading={isLoading}

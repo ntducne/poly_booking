@@ -27,10 +27,7 @@ const formItemLayout = {
 };
 
 const AddBill = () => {
-  const onFinish = (values: any) => {
-    console.log(values.image);
-    // Xử lý dữ liệu khi nhấn nút Submit
-  };
+  const onFinish = () => {};
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -111,7 +108,6 @@ const AddBill = () => {
             </Select>
           </Form.Item>
 
-
           <Form.Item
             label="Số người"
             name="num_of_people"
@@ -131,12 +127,12 @@ const AddBill = () => {
           <Form.Item name="bed_size" label="Số giường">
             <Checkbox.Group>
               <Row className="flex items-center sm:flex-col">
-                <Col >
+                <Col>
                   <Checkbox value="A" style={{ lineHeight: "32px" }}>
                     2 lớn , 1 nhỏ
                   </Checkbox>
                 </Col>
-                <Col >
+                <Col>
                   <Checkbox value="C" style={{ lineHeight: "32px" }}>
                     1 lớn , 2 nhỏ
                   </Checkbox>
@@ -195,16 +191,12 @@ const AddBill = () => {
             <Form.Item name="discount" noStyle>
               <InputNumber min={1} max={10} />
             </Form.Item>
-            <span className="ant-form-text" style={{ marginLeft: 8 }}>
-              
-            </span>
+            <span className="ant-form-text" style={{ marginLeft: 8 }}></span>
           </Form.Item>
-
 
           <Form.Item name="rate" label="Đánh giá">
             <Rate />
           </Form.Item>
-
 
           <Form.Item
             name="branch_id"
@@ -217,10 +209,7 @@ const AddBill = () => {
               },
             ]}
           >
-            <Select
-              mode="multiple"
-              placeholder="Vui lòng chọn chi nhánh !"
-            >
+            <Select mode="multiple" placeholder="Vui lòng chọn chi nhánh !">
               <Option value="red">Hà Đông</Option>
               <Option value="green">Cầu Giấy</Option>
               <Option value="blue">Trịnh Văn Bô</Option>
@@ -229,13 +218,20 @@ const AddBill = () => {
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-              <Button  className="flex items-center w-30 bg-[rgb(76,167,68)]  py-5 rounded-3xl hover:bg-sky-500" type="default" htmlType="submit">
-                <AiOutlineCheck className="text-[#fff] "/>
+              <Button
+                className="flex items-center w-30 bg-[rgb(76,167,68)]  py-5 rounded-3xl hover:bg-sky-500"
+                type="default"
+                htmlType="submit"
+              >
+                <AiOutlineCheck className="text-[#fff] " />
                 <Text className=" text-[#fff] ml-2">Thêm</Text>
               </Button>
-              <Button className="flex items-center max-w-30 bg-[rgb(119,145,115)]  py-5 rounded-3xl hover:bg-indigo-400" htmlType="reset">
-                 <BiReset className="text-[#fff]"/> 
-                 <Text className="text-[#fff] ml-3">Làm mới</Text>
+              <Button
+                className="flex items-center max-w-30 bg-[rgb(119,145,115)]  py-5 rounded-3xl hover:bg-indigo-400"
+                htmlType="reset"
+              >
+                <BiReset className="text-[#fff]" />
+                <Text className="text-[#fff] ml-3">Làm mới</Text>
               </Button>
             </Space>
           </Form.Item>
