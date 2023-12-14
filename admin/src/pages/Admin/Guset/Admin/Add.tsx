@@ -55,7 +55,7 @@ const AddAdmin = () => {
             autoClose: 3000,
             theme: "light",
           });
-          navigate("/room");
+          navigate("/staff");
         } else {
           console.log(item);
           toast(item?.error?.name || "Lỗi rồi bạn", {
