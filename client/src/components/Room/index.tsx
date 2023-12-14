@@ -70,9 +70,9 @@ export default function Room(props: any) {
       </div>
 
       <div className="gap-3 w-full lg:flex hidden">
-        <Link to={`/rooms/${slug}`} className="min-w-[200px]">
+        <Link to={`/rooms/${slug}`} className="max-w-[300px]">
           <img
-            className="group-hover:scale-110 transition-all duration-300 object-cover"
+            className="group-hover:scale-110 transition-all duration-300 w-full h-full object-cover"
             src={images?.[0]?.image ?? image}
             alt=""
           />
