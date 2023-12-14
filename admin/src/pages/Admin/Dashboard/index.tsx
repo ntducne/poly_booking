@@ -13,7 +13,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 // import type { DatePickerProps } from 'antd';
 import ChartOne from "../../../component/Charts/one";
-import { useStatisticalsQuery } from "../../../api/statisticals";
+import { useStatisticalsChartQuery, useStatisticalsQuery } from "../../../api/statisticals";
 import { Skeleton } from "antd";
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -39,6 +39,9 @@ const Dashboard = () => {
     day: dayjs().format("YYYY-MM-DD"),
     status: [3, 4],
   });
+  const { data : dataChart , isLoading : loadingChart } = useStatisticalsChartQuery<any>([]);
+  console.log("dataChart", dataChart);
+  
 
   const { data: dataRevenue, isLoading } = useStatisticalsQuery({
     module: "revenue",
@@ -55,9 +58,6 @@ const Dashboard = () => {
     }
   );
 
-  console.log("dataRevenue", dataRevenue);
-  console.log("dataRoom", dataRoom);
-  console.log("dataBooking", dataBooking);
 
   const [typeStat, setTypeStat] = useState("");
   const handleSelectStat = (value: string) => {
@@ -194,7 +194,7 @@ const Dashboard = () => {
       setQuery(dataQuery);
     }
   };
-  if (isLoading || loadingRoom || loadingBooking) {
+  if (isLoading || loadingRoom || loadingBooking || loadingChart) {
     return (
       <div>
         <Skeleton />
@@ -582,7 +582,7 @@ const Dashboard = () => {
             </article> */}
           </div>
           <div className="mt-4">
-            <ChartOne />
+            <ChartOne data={dataChart} />
           </div>
           <div className="grid grid-cols-1 2xl:grid-cols-2 mt-10 gap-6">
             <div>

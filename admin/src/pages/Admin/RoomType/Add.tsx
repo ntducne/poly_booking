@@ -2,7 +2,6 @@ import {
   Form,
   Input,
   Button,
-  Select,
   Typography,
   InputNumber,
   Space,
@@ -12,7 +11,6 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useCreateRoomTypeMutation } from "../../../api/roomTypes";
 import { useNavigate } from "react-router-dom";
-import { useGetAllBranchesQuery } from "../../../api/branches";
 // const { Option } = Select;
 
 const { Title, Text } = Typography;

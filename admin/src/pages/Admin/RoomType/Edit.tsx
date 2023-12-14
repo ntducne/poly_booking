@@ -3,10 +3,10 @@ import {
   Form,
   Input,
   Button,
-  Select,
   Typography,
   InputNumber,
   Space,
+  Skeleton,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -16,7 +16,6 @@ import {
 } from "../../../api/roomTypes";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-const { Option } = Select;
 
 const { Title, Text } = Typography;
 
@@ -70,7 +69,7 @@ const EditRoomType = () => {
     form.setFieldsValue(data?.data);
   }, [isLoading, data?.data]);
   if (isLoading) {
-    return <>loading...</>;
+    return <><Skeleton/></>;
   }
 
   return (
