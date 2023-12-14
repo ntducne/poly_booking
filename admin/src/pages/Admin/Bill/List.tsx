@@ -100,7 +100,7 @@ const BillList = () => {
 
         switch (status) {
           case 0:
-            statusText = "Đã đặt";
+            statusText = "Giữ phòng";
             statusClass = "text-green-500";
             break;
           case 1:

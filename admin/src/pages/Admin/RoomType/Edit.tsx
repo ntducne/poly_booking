@@ -10,7 +10,10 @@ import {
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useGetDetailRoomTypeQuery, useUpdateRoomTypeMutation } from "../../../api/roomTypes";
+import {
+  useGetDetailRoomTypeQuery,
+  useUpdateRoomTypeMutation,
+} from "../../../api/roomTypes";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 const { Option } = Select;
@@ -23,40 +26,37 @@ const formItemLayout = {
 };
 
 const EditRoomType = () => {
-  const { id } = useParams()
+  const { id } = useParams();
   console.log(id);
 
-  const navigate = useNavigate()
-  const [form] = Form.useForm()
-  const { data, isLoading, refetch } = useGetDetailRoomTypeQuery(id)
-  console.log(data);
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const { data, isLoading, refetch } = useGetDetailRoomTypeQuery(id);
 
-  const [updateData] = useUpdateRoomTypeMutation()
+  const [updateData] = useUpdateRoomTypeMutation();
 
   const onFinish = (values: any) => {
-    console.log(values);
-    // Xử lý dữ liệu khi nhấn nút Submit
     const data = {
       ...values,
-    }
+    };
     const dataUpload = {
       id,
-      ...data
-    }
+      ...data,
+    };
 
     updateData(dataUpload)
       .unwrap()
       .then((result) => {
-        if (result.status === 'success') {
-          toast.success('Cập nhật thông tin loại phòng thành công');
-          navigate('/room/type');
+        if (result.status === "success") {
+          toast.success("Cập nhật thông tin loại phòng thành công");
+          navigate("/room/type");
         } else {
           toast.error(result.error.message);
         }
       })
       .catch((error) => {
         // Xử lý lỗi nếu có lỗi xảy ra trong quá trình gọi mutation hoặc xử lý kết quả
-        toast.error('Có lỗi xảy ra khi cập nhật thông tin loại phòng');
+        toast.error("Có lỗi xảy ra khi cập nhật thông tin loại phòng");
         console.error(error);
       });
   };
@@ -67,10 +67,10 @@ const EditRoomType = () => {
   }, [id]);
 
   useEffect(() => {
-    form.setFieldsValue(data?.data)
-  }, [isLoading, data?.data])
+    form.setFieldsValue(data?.data);
+  }, [isLoading, data?.data]);
   if (isLoading) {
-    return <>loading...</>
+    return <>loading...</>;
   }
 
   return (
@@ -99,6 +99,11 @@ const EditRoomType = () => {
             name="room_type_name"
             rules={[
               { required: true, message: "Vui lòng nhập tên loại phòng!" },
+              { min: 2, message: "Tên loại phòng phải có ít nhất 2 ký tự!" },
+              {
+                max: 50,
+                message: "Tên loại phòng không được vượt quá 50 ký tự!",
+              },
             ]}
           >
             <Input />
@@ -107,30 +112,27 @@ const EditRoomType = () => {
           <Form.Item
             label="Giá mỗi đêm"
             name="price_per_night"
-            rules={[{ required: true, message: "Vui lòng nhập giá mỗi đêm" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập giá mỗi đêm" },
+              {
+                type: "number",
+                min: 1,
+                message: "Giá mỗi đêm phải là một số dương",
+              },
+            ]}
           >
             <InputNumber min={1} />
           </Form.Item>
 
-          <Form.Item name="description" label="Mô tả">
-            <Input.TextArea />
-          </Form.Item>
-
           <Form.Item
-            name="status"
-            label="Trạng thái"
-            hasFeedback
+            name="description"
+            label="Mô tả"
             rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập trạng thái loại phòng!",
-              },
+              { required: true, message: "Vui lòng nhập mô tả" },
+              { max: 500, message: "Mô tả không được vượt quá 500 ký tự" },
             ]}
           >
-            <Select placeholder="Vui lòng nhập loại phòng!">
-              <Option value={1}>Còn</Option>
-              <Option value={0}>Hết</Option>
-            </Select>
+            <Input.TextArea />
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
