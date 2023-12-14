@@ -10,6 +10,7 @@ interface DataType {
 }
 import Page from "../../../../component/page";
 import {
+  useAssignPermissionMutation,
   useGetAllStaffsQuery,
   useGetDetailStaffsQuery,
 } from "../../../../api/account/staffs";
@@ -17,6 +18,7 @@ import { useGetPermissonQuery } from "../../../../api/permission";
 import { AiOutlinePlus } from "react-icons/ai";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { LoadingOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
 
 const ListAdmin = () => {
   const { data: staffs, isLoading } = useGetAllStaffsQuery({});
@@ -84,7 +86,7 @@ const ListAdmin = () => {
                 <Form.Item name={`${key}`} valuePropName="checked">
                   <Checkbox
                     value={permission}
-                    key={index}
+                    key={key}
                     defaultChecked={!!check}
                     onChange={(e) =>
                       handleCheckboxChange(`${key}`, e.target.checked)
@@ -99,7 +101,7 @@ const ListAdmin = () => {
                 <Form.Item name={`${key}`} valuePropName="checked">
                   <Checkbox
                     value={permission}
-                    key={index}
+                    key={key}
                     onChange={(e) =>
                       handleCheckboxChange(`${key}`, e.target.checked)
                     }
@@ -184,8 +186,33 @@ const ListAdmin = () => {
 
   const onChange: TableProps<DataType>["onChange"] = () => {};
 
+  const [assignPermission] = useAssignPermissionMutation();
+
   const handleSubmit = (values: any) => {
-    console.log(values);
+    // console.log(values);
+    const keysWithTrueValue = Object.entries(values)
+      .filter(([key, value]) => value === true)
+      .map(([key, value]) => key);
+
+    const dataPermission = {
+      idStaff: isStaff,
+      data: {
+        permissions: keysWithTrueValue,
+      },
+    };
+    assignPermission(dataPermission)
+      .unwrap()
+      .then((res: any) => {
+        if (res.status === "success") {
+          toast.success(res.message);
+          handleCancel();
+        } else {
+          toast.error(res.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <Page title={`Tài khoản quản trị`}>

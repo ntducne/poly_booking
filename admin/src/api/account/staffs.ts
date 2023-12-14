@@ -7,9 +7,12 @@ export const staffsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_URL_API,
     prepareHeaders: (headers) => {
-      headers.set("Authorization", `Bearer ${JSON.parse(cookies().Get('AuthUser') as any)[2].token}`)
-      return headers
-    }
+      headers.set(
+        "Authorization",
+        `Bearer ${JSON.parse(cookies().Get("AuthUser") as any)[2].token}`
+      );
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getAllStaffs: builder.query({
@@ -34,9 +37,20 @@ export const staffsApi = createApi({
       }),
       invalidatesTags: ["Staffs"],
     }),
+    assignPermission: builder.mutation({
+      query: (data) => ({
+        url: `/staffs/assignPermission/${data.idStaff}`,
+        method: "POST",
+        body: data.data,
+      }),
+      invalidatesTags: ["Staffs"],
+    }),
   }),
-
 });
 
-
-export const { useGetAllStaffsQuery  , useGetDetailStaffsQuery, useCreateStaffsMutation} = staffsApi;
+export const {
+  useGetAllStaffsQuery,
+  useGetDetailStaffsQuery,
+  useCreateStaffsMutation,
+  useAssignPermissionMutation,
+} = staffsApi;
