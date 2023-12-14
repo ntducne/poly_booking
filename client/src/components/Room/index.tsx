@@ -16,8 +16,6 @@ export default function Room(props: any) {
     images,
     image,
   } = props?.data;
-  console.log(images?.[0]?.image);
-
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
       <div className="lg:hidden block">
@@ -47,26 +45,28 @@ export default function Room(props: any) {
           </div>
         </div>
 
-        <div className="mt-[20px]">
+        <div className="mt-[20px] px-[20px]">
           <h3>
             <span className="font-bold text-[18px] text-gray-500">
               Giá một đêm:
             </span>{" "}
             <span className="text-[20px] text-gray-500 font-bold">
-              <FormatPrice price={1231312312} />
+              <FormatPrice price={price} />
             </span>
           </h3>
         </div>
-        <div className="border my-[32px]"></div>
-        <button
-          type="button"
-          className="inline-block rounded bg-primary px-6 py-3 
+        <div className="border my-[20px]"></div>
+        <div className="flex items-center px-3 pb-[20px]">
+          <button
+            type="button"
+            className="inline-block rounded bg-primary px-6 py-3 
                     text-xs uppercase leading-normal text-white
-                    transition duration-150 ease-in-out hover:bg-primary-600 font-bold"
-          onClick={() => props?.handleBooking(props.data)}
-        >
-          Đặt phòng ngay
-        </button>
+                    transition duration-150 ease-in-out hover:bg-primary-600 font-bold "
+            onClick={() => props?.handleBooking(props.data)}
+          >
+            Đặt phòng ngay
+          </button>
+        </div>
       </div>
 
       <div className="gap-3 w-full lg:flex hidden">
@@ -81,11 +81,8 @@ export default function Room(props: any) {
           <div className="py-2">
             <h1 className="text-[16px] font-bold">{name}</h1>
             <p className="text-[12px] mb-2 italic">Khách sạn</p>
-            <p className="text-[13px] overflow-hidden whitespace-nowrap overflow-ellipsis max-w-[350px]">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui
-              eaque, quis consequuntur error nam molestiae, ut, ex optio
-              sapiente consequatur id quas culpa sed ipsa eveniet dolore facere
-              perferendis. Dolorem!
+            <p className="text-[13px] overflow-hidden whitespace-nowrap overflow-ellipsis min-w-[350px]">
+              {description}
             </p>
             <div className="text-[12px] mt-3 gap-5 text-black w-full">
               <div className="flex flex-wrap max-w-[700px] gap-2">

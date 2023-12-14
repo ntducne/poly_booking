@@ -3,29 +3,49 @@ import { Link } from "react-router-dom";
 import { useGetHistoryBookingQuery } from "../../../api/User";
 import FormatPrice from "../../../utils/FormatPrice";
 import { StatusOrders } from "../../../utils/status";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {};
 
-export default function HistoryBooking({ }: Props) {
-  const { data, isLoading, refetch } = useGetHistoryBookingQuery({
+const orderedStatus = [
+  StatusOrders.STATUS_0,
+  StatusOrders.STATUS_5,
+  StatusOrders.STATUS_1,
+  StatusOrders.STATUS_3,
+];
+
+export default function HistoryBooking({}: Props) {
+  const [data, setData] = useState<any>([]);
+  const {
+    data: dataRoom,
+    isLoading,
+    refetch,
+  } = useGetHistoryBookingQuery({
     userId: "someUserId",
   });
+  console.log(dataRoom);
+
   useEffect(() => {
     const fetchData = async () => {
-      console.log("Before refetch");
       await refetch();
-      console.log("After refetch");
     };
-
     fetchData();
   }, []);
+  useEffect(() => {
+    if (!isLoading && data) {
+      const filteredData = dataRoom?.data.filter(
+        (item: any) => ![4, 6, 2].includes(item.status)
+      );
+      setData(filteredData);
+    }
+  }, [isLoading, dataRoom?.data]);
+
   if (isLoading) return <>loading...</>;
   return (
     <div>
-      {data && data?.data.length ? (
+      {data && data?.length ? (
         <div>
-          {data?.data.map((item: any) => (
+          {data?.map((item: any) => (
             <div className="px-5">
               <div className="border-t pt-[30px] flex gap-[30px] pb-[30px] ">
                 <Link to={`/user/profile/roomBooked/${item?.id}`}>
@@ -56,23 +76,26 @@ export default function HistoryBooking({ }: Props) {
                       Được đặt vào ngày nào đó
                     </h2>
                     <div className="flex mt-3 h-[13px] rounded-lg bg-[#E5E7EB]">
-                      {Object.values(StatusOrders).map((status) => (
+                      {orderedStatus.map((status, index) => (
                         <div
                           key={status.id}
-                          className={`w-[20%] h-[13px] ${status.id <= item?.status
+                          className={`w-[20%] h-[13px] ${
+                            status.id <= item?.status
                               ? "bg-[#4F46B5]"
                               : "bg-[#E5E7EB]"
-                            }`}
+                          }`}
                         >
                           <h2
-                            className={`mt-5 font-medium text-[14px] ${status.id <= item?.status ? "text-[#4F46B5]" : ""
-                              } ${window.innerWidth < 768 &&
-                                status.id !== item?.status
+                            className={`mt-5 font-medium text-[14px] ${
+                              status.id <= item?.status ? "text-[#4F46B5]" : ""
+                            } ${
+                              window.innerWidth < 768 &&
+                              status.id !== item?.status
                                 ? "hidden"
                                 : ""
-                              }`}
+                            }`}
                           >
-                            {status.id == item?.status ? status.value : ""}
+                            {status.id === item?.status ? status.value : ""}
                           </h2>
                         </div>
                       ))}

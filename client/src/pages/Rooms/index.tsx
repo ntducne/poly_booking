@@ -1,13 +1,6 @@
-import { MinusOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import {
-  Button,
-  DatePicker,
-  Form,
-  InputNumber,
-  Pagination,
-  Select,
-  message,
-} from "antd";
+import { ReloadOutlined, SearchOutlined } from "@ant-design/icons";
+import { Button, DatePicker, Form, Pagination, Select, message } from "antd";
+import { useForm } from "antd/es/form/Form";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { useCookies } from "react-cookie";
@@ -30,7 +23,7 @@ type Props = {};
 
 const { RangePicker } = DatePicker;
 
-const useQueryParams = () => {
+export const useQueryParams = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   return {
@@ -38,35 +31,41 @@ const useQueryParams = () => {
     getAll: () => Object.fromEntries(queryParams.entries()),
   };
 };
-
 export default function Rooms({}: Props) {
   const { getAll } = useQueryParams();
+  const [isSpinning, setIsSpinning] = useState(false);
+  const [form] = useForm();
+  const [page, setPage] = useState<number>(1);
   const queryParams = useMemo(() => getAll(), [getAll]);
   const [width, setWidth] = useState(0);
   const navigate = useNavigate();
   const [dataQuery, setDataQuery] = useState<any>(queryParams || {});
   const [data, setData] = useState<any>({});
-  const { data: dataAll, isLoading } = useGetRoomsQuery({});
+  const { data: dataAll, isLoading, refetch } = useGetRoomsQuery(page);
   const [searchRooms] = useSearchRoomsMutation();
   const { data: dataBranches } = useGetBranchesQuery({});
-  const [childs, setChilds] = useState<number>(0);
-  const [adults, setAdults] = useState<number>(0);
-  const [countRoom, setCountRoom] = useState<number>(0);
   const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);
-
   const onFinish = (values: any) => {
     if (!values) {
       return;
     }
-    const { time, branch_id } = values;
+    const { time, branch_id, adult, child, soLuong } = values;
+    if (soLuong > adult) {
+      form.setFieldsValue({
+        soLuong: undefined,
+        adult: undefined,
+      });
+      return message.error("Số phòng không thể lớn hơn số người lớn");
+    }
+
     const formattedDates = time?.map((item: any) =>
       dayjs(item.$d).format("YYYY-MM-DD")
     );
     const dataQuery = {
-      adult: adults,
-      child: childs,
+      adult: adult,
+      child: child,
       branch_id,
-      soLuong: countRoom,
+      soLuong: soLuong,
       checkin: formattedDates?.[0],
       checkout: formattedDates?.[1],
     };
@@ -75,6 +74,30 @@ export default function Rooms({}: Props) {
     );
     setDataQuery(dataQuery);
     setCookie("roomSearch", dataQuery, { path: "/" });
+  };
+
+  const handleClickReset = () => {
+    setIsSpinning(true);
+    setTimeout(() => {
+      setIsSpinning(false);
+      navigate(`/rooms?page=${page}`);
+      setData(dataAll);
+      setCookie("bookingNow", {}, { path: "/" });
+      setDataQuery({});
+      form.setFieldsValue({
+        time: undefined,
+        branch_id: undefined,
+        adult: undefined,
+        child: undefined,
+        soLuong: undefined,
+      });
+    }, 1000);
+  };
+
+  const handlePaginationChange = (page: number) => {
+    setPage(page);
+    navigate(`/rooms?page=${page}`);
+    refetch();
   };
 
   const validateQueryParams = (params: any) => {
@@ -91,9 +114,9 @@ export default function Rooms({}: Props) {
       (param) => params.hasOwnProperty(param) && params[param]
     );
   };
-
   const handleBookingNow = (item: any) => {
-    if (Object.keys(dataQuery).length) {
+    console.log(dataQuery);
+    if (Object.keys(dataQuery).length >= 6) {
       const {
         id,
         name,
@@ -130,7 +153,6 @@ export default function Rooms({}: Props) {
     const today = dayjs().startOf("day");
     return current && current < today;
   };
-
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
@@ -144,14 +166,14 @@ export default function Rooms({}: Props) {
     if (dataAll && Object.keys(dataAll).length) {
       setData(dataAll);
     }
-  }, [isLoading]);
-
+  }, [isLoading, dataAll]);
   useEffect(() => {
     if (validateQueryParams(dataQuery)) {
       const dataUpload = {
         ...dataQuery,
         amount_room: dataQuery.soLuong,
       };
+
       delete dataUpload.soLuong;
       searchRooms(dataUpload)
         .unwrap()
@@ -227,9 +249,19 @@ export default function Rooms({}: Props) {
                   className="w-full shadow-lg p-4"
                   style={{ position: "sticky", top: "100px" }}
                 >
-                  <h3 className="font-text_2nd text-[23px] font-bold">
-                    Chọn phòng của bạn
-                  </h3>
+                  <div className="flex justify-between items-center">
+                    <h3 className="font-text_2nd text-[23px] font-bold">
+                      Chọn phòng của bạn
+                    </h3>
+                    <div
+                      className={`px-3 cursor-pointer ${
+                        isSpinning && "animate-spin"
+                      }`}
+                      onClick={handleClickReset}
+                    >
+                      <ReloadOutlined />
+                    </div>
+                  </div>
                   <p className="mt-[15px] text-[12px] italic">
                     Chọn trường dưới đây để tìm kiếm
                   </p>
@@ -239,10 +271,23 @@ export default function Rooms({}: Props) {
                     layout="vertical"
                     className="mt-[20px] w-full"
                     name="dynamic_form_item"
+                    form={form}
                     initialValues={{
-                      adult: adults,
-                      soLuong: countRoom,
-                      child: childs,
+                      time:
+                        dataQuery?.checkin && dataQuery?.checkout
+                          ? [
+                              dayjs(dataQuery?.checkin),
+                              dayjs(dataQuery?.checkout),
+                            ]
+                          : undefined,
+                      branch_id: dataQuery?.branch_id
+                        ? dataQuery?.branch_id
+                        : undefined,
+                      soLuong: dataQuery?.soLuong
+                        ? dataQuery?.soLuong
+                        : undefined,
+                      adult: dataQuery?.adult ? dataQuery.adult : undefined,
+                      child: dataQuery?.child ? dataQuery?.child : undefined,
                     }}
                   >
                     <Form.Item
@@ -256,7 +301,6 @@ export default function Rooms({}: Props) {
                       ]}
                     >
                       <RangePicker
-                        size={window.innerWidth < 768 ? "large" : "middle"}
                         className="w-full"
                         placeholder={["Nhận phòng", "Trả phòng"]}
                         disabledDate={disabledDate}
@@ -272,11 +316,7 @@ export default function Rooms({}: Props) {
                         },
                       ]}
                     >
-                      <Select
-                        size={window.innerWidth < 768 ? "large" : "middle"}
-                        placeholder="Chi nhánh"
-                        className="rounded-none"
-                      >
+                      <Select placeholder="Chi nhánh" className="rounded-none">
                         {dataBranches &&
                           dataBranches?.data.map((item: any) => {
                             return (
@@ -289,197 +329,79 @@ export default function Rooms({}: Props) {
                     </Form.Item>
                     <Form.Item
                       name="soLuong"
+                      label="Số lượng phòng"
                       rules={[
                         {
                           required: true,
                           message: "Vui lòng chọn số lượng phòng muốn",
                         },
-                        {
-                          validator: (_) => {
-                            if (countRoom < 1) {
-                              return Promise.reject(
-                                new Error("Vui lòng chọn ít 1 phòng")
-                              );
-                            }
-                            if (countRoom > adults) {
-                              return Promise.reject(
-                                new Error(
-                                  "Số phòng không thể lớn hơn số người lớn"
-                                )
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
                       ]}
                       validateTrigger="onChange"
                     >
-                      <div className="flex gap-x-4 gap-y-2 items-center flex-wrap">
-                        <p>Số phòng: </p>
-                        <div className="flex gap-3 items-center">
-                          <MinusOutlined
-                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                            onClick={() => {
-                              if (countRoom > 0) {
-                                setCountRoom((prev) => prev - 1);
-                              }
-                            }}
-                          />
-                          <InputNumber
-                            min={0}
-                            max={30}
-                            value={countRoom}
-                            readOnly
-                            className=""
-                          />
-
-                          <PlusOutlined
-                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                            onClick={() => {
-                              if (countRoom < 30) {
-                                setCountRoom((prev) => prev + 1);
-                              }
-                            }}
-                          />
-                        </div>
-                      </div>
+                      <Select
+                        placeholder="Số lượng phòng"
+                        className="rounded-none w-full"
+                      >
+                        {Array.from({ length: 30 }, (_, index) => (
+                          <Select.Option
+                            key={index + 1}
+                            value={(index + 1).toString()}
+                          >
+                            {index + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
                     </Form.Item>
                     <Form.Item
                       name="adult"
+                      label="Người lớn"
                       rules={[
                         {
                           required: true,
                           message: "Vui lòng chọn số lượng phòng muốn",
                         },
-                        {
-                          validator: (_) => {
-                            if (adults < 1) {
-                              return Promise.reject(
-                                new Error("Vui lòng chọn ít nhất một người lớn")
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
                       ]}
                       validateTrigger="onChange"
                     >
-                      <div className="flex gap-x-4 gap-y-2 items-center flex-wrap">
-                        <p>Người lớn: </p>
-                        <div className="flex gap-3 items-center">
-                          <MinusOutlined
-                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                            onClick={() => {
-                              if (adults > 0) {
-                                setAdults((prev) => prev - 1);
-                              }
-                            }}
-                          />
-                          <InputNumber
-                            min={0}
-                            max={30}
-                            value={adults}
-                            readOnly
-                            className=""
-                          />
-
-                          <PlusOutlined
-                            className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                            onClick={() => {
-                              if (adults < 30) {
-                                setAdults((prev) => prev + 1);
-                              }
-                            }}
-                          />
-                        </div>
-                      </div>
+                      <Select
+                        placeholder="Người lớn"
+                        className="rounded-none w-full"
+                      >
+                        {Array.from({ length: 30 }, (_, index) => (
+                          <Select.Option
+                            key={index + 1}
+                            value={(index + 1).toString()}
+                          >
+                            {index + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
                     </Form.Item>
-                    <Form.List name="child">
-                      {(fields, { add, remove }) => (
-                        <>
-                          <Form.Item>
-                            <div className="flex gap-4 items-center flex-wrap">
-                              <p>Số trẻ em: </p>
-                              <div className="flex gap-3 items-center">
-                                <MinusOutlined
-                                  className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                                  onClick={() => {
-                                    if (childs > 0) {
-                                      setChilds((prev) => prev - 1);
-                                      remove(fields.length - 1);
-                                    }
-                                  }}
-                                />
-                                <InputNumber
-                                  min={0}
-                                  max={6}
-                                  value={childs}
-                                  readOnly
-                                  className=""
-                                />
-
-                                <PlusOutlined
-                                  className="py-2 px-3 text-blue-600 rounded-xl bg-[rgba(229,226,226,0.84)]"
-                                  onClick={() => {
-                                    if (childs < 6) {
-                                      setChilds((prev) => prev + 1);
-                                      add();
-                                    }
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          </Form.Item>
-                          <div className="grid grid-cols-2 gap-2 ">
-                            {fields.map((field) => (
-                              <Form.Item
-                                required={false}
-                                key={field.key}
-                                className=""
-                                style={{ width: "100%" }}
-                                label="Trẻ em"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <Form.Item
-                                    {...field}
-                                    validateTrigger={["onChange", "onBlur"]}
-                                    noStyle
-                                    rules={[
-                                      {
-                                        required: true,
-                                        message: "Vui lòng số tuổi",
-                                      },
-                                    ]}
-                                  >
-                                    <Select
-                                      placeholder="Trẻ em"
-                                      className="rounded-none"
-                                      size={
-                                        window.innerWidth < 768
-                                          ? "large"
-                                          : "middle"
-                                      }
-                                    >
-                                      {Array.from(
-                                        { length: 17 },
-                                        (_, index) => (
-                                          <Select.Option
-                                            key={index + 1}
-                                            value={index + 1}
-                                          >
-                                            {index + 1}
-                                          </Select.Option>
-                                        )
-                                      )}
-                                    </Select>
-                                  </Form.Item>
-                                </div>
-                              </Form.Item>
-                            ))}
-                          </div>
-                        </>
-                      )}
-                    </Form.List>
+                    <Form.Item
+                      className=""
+                      name="child"
+                      label="Trẻ em"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng số trẻ em",
+                        },
+                      ]}
+                    >
+                      <Select
+                        placeholder="Trẻ em"
+                        className="rounded-none w-full"
+                      >
+                        {Array.from({ length: 6 }, (_, index) => (
+                          <Select.Option
+                            key={index + 1}
+                            value={(index + 1).toString()}
+                          >
+                            {index + 1}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
                     <Form.Item>
                       <Button
                         type="primary"
@@ -496,7 +418,12 @@ export default function Rooms({}: Props) {
             </div>
           </div>
           <div className="flex justify-end mt-[50px] md:mt-[90px]">
-            <Pagination defaultCurrent={6} total={10} />
+            <Pagination
+              defaultCurrent={1}
+              total={+data?.meta?.last_page * 10}
+              onChange={handlePaginationChange}
+              current={page}
+            />
           </div>
         </div>
         <div className="mt-primary">
