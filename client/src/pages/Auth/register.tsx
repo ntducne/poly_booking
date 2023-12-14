@@ -12,8 +12,6 @@ export default function Register({}: Props) {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    console.log("Dữ liệu biểu mẫu:", values);
-    // Thực hiện logic đăng ký ở đây
     if (values) {
       Register(values)
         .unwrap()
@@ -31,7 +29,6 @@ export default function Register({}: Props) {
             } else {
             }
           } else {
-            console.log(response);
             message.success("Đăng ký thành công");
             setTimeout(() => {
               navigate("/auth/login");
