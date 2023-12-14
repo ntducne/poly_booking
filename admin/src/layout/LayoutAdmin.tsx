@@ -62,6 +62,7 @@ const LayoutAdmin = () => {
     location.pathname === "/user" && setTitle("Người dùng");
     location.pathname === "/feedback" && setTitle("Đánh giá");
     location.pathname === "/contact" && setTitle("Liên hệ");
+    location.pathname === "/profile" && setTitle("Thông tin");
   }, [location.pathname]);
   console.log("role",role);
   

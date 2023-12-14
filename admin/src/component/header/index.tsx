@@ -119,7 +119,7 @@ const Head = () => {
     },
     {
       label: (
-        <Link rel="noopener noreferrer" to="/changePass">
+        <Link rel="noopener noreferrer" to="/forGotPassword">
           <LockOutlined /> Đổi mật khẩu
         </Link>
       ),

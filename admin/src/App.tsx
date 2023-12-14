@@ -33,6 +33,7 @@ import {
   AuthorizedStorePolicies,
   AuthorizedStoreRooms,
   AuthorizedStoreServices,
+  AuthorizedStoreStaffs,
   AuthorizedStoreTypes,
   AuthorizedStoreUtilities,
   AuthorizedUpdateBranches,
@@ -45,6 +46,7 @@ import {
   AuthorizedUpdateUtilities,
 } from "./hoc/componentRole";
 import { role } from "./hoc/withAuthorization";
+import Profile from "./pages/Admin/Profile";
 function App() {
   return (
     <>
@@ -54,6 +56,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
           <Route index element={<Dashboard />} />
+          <Route path="profile" element={<Profile />} />
           {/* <Route path="dashboard" element={<Dashboard />} /> */}
           <Route path="billing">
             <Route index element={<AuthorizedListBillings />} />
@@ -112,6 +115,7 @@ function App() {
           <Route path="staff">
             <Route index element={<AuthorizedListStaffs />} />
             <Route path="edit/:id" element={<AuthorizedUpdateStaffs />} />
+            <Route path="add" element={<AuthorizedStoreStaffs />} />
           </Route>
           <Route path="user">
             <Route index element={<AuthorizedListUsers />} />
@@ -123,7 +127,7 @@ function App() {
               <Route path="add" element={<AuthorizedStoreBranches />} />
               <Route path="edit/:id" element={<AuthorizedUpdateBranches />} />
             </Route>
-          )}  
+          )}
         </Route>
         <Route path="/403" element={<Page403 />}></Route>
         <Route path="/demo" element={<Demo />}></Route>

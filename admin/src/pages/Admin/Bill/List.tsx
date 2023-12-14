@@ -83,6 +83,7 @@ const BillList = () => {
       title: "Phương thức",
       dataIndex: "payment_method",
       key: "payment_method",
+      render: (text:any) => <div>{text === null ? "Thanh toán tại quầy" : `${text}`}</div>,
     },
     {
       title: "Thời gian thanh toán",
