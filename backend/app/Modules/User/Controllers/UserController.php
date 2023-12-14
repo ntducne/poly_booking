@@ -179,9 +179,11 @@ class UserController extends Controller
             ]);
         }
     }
-    public function cancelBooking($id)
+    public function cancelBooking(Request $request, $id)
     {
-        $billing = Billing::find($id);
+        $billing = Billing::where('_id', $id)->whereIn('status', [
+            0, 1
+        ])->where('user_id', $request->user()->id)->first();
         if (!$billing) {
             return response()->json([
                 'status' => 'error',
@@ -225,5 +227,7 @@ class UserController extends Controller
             'data' => $rate
         ], 201);
     }
+
+    
 
 }

@@ -36,8 +36,9 @@ export default function ChartOne(props: any) {
         categories: generateMonths(props?.data.length).reverse(),
         tickAmount: 10,
         labels: {
-          formatter: function (timestamp: any, opts: any) {
-            return opts.dateFormatter(new Date(timestamp), "MMM");
+          formatter: function (timestamp: any) {
+            const date = new Date(timestamp);
+            return `${date.getMonth() + 1}/${date.getFullYear()}`;
           },
         },
       },

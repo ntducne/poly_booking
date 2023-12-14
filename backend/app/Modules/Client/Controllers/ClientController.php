@@ -9,6 +9,7 @@ use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Branch;
 use App\Models\Contact;
+use App\Models\RateRoom;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Modules\Branch\Resources\BranchResource;
@@ -61,7 +62,7 @@ class ClientController extends Controller
         return RoomResource::collection(Room::paginate(10));
     }
 
-    public function roomDetail($id)
+    public function roomDetail(Request $request, $id)
     {
         $room = Room::where('slug', '=', $id)->first();
         if (!$room) {
@@ -70,12 +71,28 @@ class ClientController extends Controller
                 'message' => 'Phòng không tồn tại !',
             ]);
         }
-        $room_same = Room::where('room_type_id', '=', $room->room_type_id)
-            ->where('branch_id', '=', $room->branch_id)
-            ->where('_id', '!=', $id)
-            ->get();
+        $check = false;
+        if ($request->user()) {
+            $userId = $request->user()->id;
+            // Đếm số lượng đánh giá của user
+            $reviewCount = RateRoom::where('user_id', $userId)->count();
+            // Lấy số billing của user và kiểm tra điều kiện
+            $billing = Billing::where('user_id', $userId)->where('status', 4)->first();
+            if ($billing && $billing->count() >= $reviewCount) {
+                $bookDetail = BookDetail::where('booking_id', $billing->booking_id)->where('room_id', $id)->first();
+                if ($bookDetail) {
+                    $booking = Booking::where('_id', $bookDetail->booking_id)->first();
+                    if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
+                        $check = false;
+                    } else {
+                        $check = true;
+                    }
+                }
+            }
+        }
         return response()->json([
             'room' => new RoomResource($room),
+            'check' => $check
             // 'room_same' => RoomResource::collection($room_same)
         ]);
     }
