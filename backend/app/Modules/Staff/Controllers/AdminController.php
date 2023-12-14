@@ -22,14 +22,13 @@ class AdminController extends Controller
     {
         try{
             $role = $request->user()->role;
+            $query = $this->admin->newQuery();
             if ($role === 'super_admin') {
-                $query = $this->admin->newQuery();
                 $response = $query
                 ->where('role', 'admin')
                 ->paginate(10);
                 return StaffResource::collection($response);
             }
-            $query = $this->admin->newQuery();
             $query->where('branch_id', $request->user()->branch_id);
             $response = $query->where('created_by', $request->user()->id)->paginate(10);
             return StaffResource::collection($response);
@@ -194,5 +193,5 @@ class AdminController extends Controller
         }
     }
 
-    
+
 }
