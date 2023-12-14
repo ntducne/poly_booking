@@ -6,7 +6,7 @@ const roomApi = createApi({
   reducerPath: "Room",
   tagTypes: ["rooms"],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_URL_API + '/',
+    baseUrl: import.meta.env.VITE_URL_API + "/",
     prepareHeaders: (headers) => {
       headers.set(
         "Authorization",
@@ -17,7 +17,7 @@ const roomApi = createApi({
   }),
   endpoints: (builder) => ({
     getRooms: builder.query<any, any>({
-      query: () => `rooms`,
+      query: (page: number) => `rooms?page=${page || 1}`,
       providesTags: ["rooms"],
     }),
     createRoom: builder.mutation<any, any>({

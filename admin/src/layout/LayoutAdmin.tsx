@@ -52,16 +52,21 @@ const LayoutAdmin = () => {
     location.pathname === "/" && setTitle("Thống kê");
     location.pathname === "/branches" && setTitle("Chi nhánh");
     location.pathname === "/room" && setTitle("Phòng");
+    location.pathname === "/room/add" && setTitle("Thêm phòng");
     location.pathname === "/room/type" && setTitle("Loại phòng");
     location.pathname === "/room/utilities" && setTitle("Tiện ích");
+    location.pathname === "/room/utilities/add" && setTitle("Thêm tiện ích");
     location.pathname === "/room/booking" && setTitle("Đặt Phòng");
     location.pathname === "/billing" && setTitle("Hóa đơn");
     location.pathname === "/services" && setTitle("Dịch vụ");
+    location.pathname === "/services/add" && setTitle("Thêm dịch vụ");
     location.pathname === "/policy" && setTitle("Chính sách");
     location.pathname === "/staff" && setTitle("Nhân viên");
+    location.pathname === "/staff/add" && setTitle("Thêm nhân viên");
     location.pathname === "/user" && setTitle("Người dùng");
     location.pathname === "/feedback" && setTitle("Đánh giá");
     location.pathname === "/contact" && setTitle("Liên hệ");
+    location.pathname === "/profile" && setTitle("Thông tin");
   }, [location.pathname]);
   console.log("role",role);
   

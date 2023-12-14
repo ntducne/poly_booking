@@ -86,7 +86,7 @@ class ClientController extends Controller
                         $check = false;
                     } else {
                         $check = true;
-                    }   
+                    }
                 }
             }
         }

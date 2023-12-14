@@ -1,7 +1,6 @@
 // import React from "react";
 import { Image, Rate, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { Link } from "react-router-dom";
 // interface DataType {
 //   key: React.Key;
 //   name: string;
@@ -15,7 +14,7 @@ import { useGetRatesQuery } from "../../../api/rate";
 
 const ListFeedback = () => {
   const { data: dataRates, isLoading } = useGetRatesQuery({});
-  
+
 
   const columns: ColumnsType<any> = [
     {
@@ -45,7 +44,7 @@ const ListFeedback = () => {
       dataIndex: "room",
       key: "room",
       render: (room) => (
-         <div>{room?.name}</div>
+        <div>{room?.name}</div>
       ),
     },
     {
@@ -105,7 +104,7 @@ const ListFeedback = () => {
         columns={columns}
         dataSource={data}
         pagination={{ pageSize: 10 }}
-        />
+      />
     </Page>
   );
 };

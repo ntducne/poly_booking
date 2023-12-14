@@ -5,9 +5,12 @@ import {
 } from "@ant-design/icons";
 import {
   Button,
+  Col,
   Form,
   Input,
   InputNumber,
+  Radio,
+  Row,
   Select,
   Space,
   Typography,
@@ -19,7 +22,6 @@ import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useGetAllBranchesQuery } from "../../../api/branches";
 import {
   useDeleteImgRoomMutation,
   useGetDetailRoomQuery,
@@ -44,19 +46,11 @@ const EditRoom = () => {
   const { data, isLoading, refetch } = useGetDetailRoomQuery(id);
   const { data: dataRoomTypes, isLoading: isLoadingTypes } =
     useGetRoomTypeQuery({});
-  const { data: dataBranch, isLoading: isLoadingBranch } =
-    useGetAllBranchesQuery({});
-  console.log(data, isLoading);
-
   const [updateData, { isLoading: isLoadingUpdate }] = useUpdateRoomMutation();
   const [updateImg] = useUpdateImgRoomMutation();
   const [imgs, setImgs] = useState([]);
   const [deleteImg, { isLoading: isLoadingDeleteImg }] =
     useDeleteImgRoomMutation();
-
-  if (isLoadingTypes && isLoadingBranch) {
-    return <>loading...</>;
-  }
   const onFinish = (values: any) => {
     const uploadedFiles =
       values.images &&
@@ -87,8 +81,7 @@ const EditRoom = () => {
             };
             updateImg(dataUploadImg)
               .unwrap()
-              .then((req) => {
-                console.log(req);
+              .then(() => {
                 message.success("Sửa phòng thành công");
                 return navigate("/room");
               })
@@ -141,24 +134,6 @@ const EditRoom = () => {
     setFileList(fileList);
   };
 
-  useEffect(() => {
-    setImgs(data?.data?.images);
-    const defaultValue = {
-      ...data?.data,
-      room_type_id: {
-        value: data?.data.type.room_type_name,
-        id: data?.data.type.id,
-      },
-      branch_id: {
-        value: data?.data?.branch?.name,
-        id: data?.data?.branch?.id,
-      },
-      images: undefined,
-    };
-
-    form.setFieldsValue(defaultValue);
-  }, [isLoading, data?.data]);
-
   const handleDeleteImg = (img: string, idCheck: string) => {
     const dataUpload = {
       filePath: img,
@@ -180,18 +155,36 @@ const EditRoom = () => {
     refetch();
     window.scrollTo(0, 0);
   }, [id]);
-  if (isLoading) {
+  useEffect(() => {
+    setImgs(data?.data?.images);
+    const defaultValue = {
+      ...data?.data,
+      room_type_id: {
+        value: data?.data.type.room_type_name,
+        id: data?.data.type.id,
+      },
+      branch_id: {
+        value: data?.data?.branch?.name,
+        id: data?.data?.branch?.id,
+      },
+      images: undefined,
+    };
+
+    form.setFieldsValue(defaultValue);
+  }, [isLoading, data?.data]);
+  if (isLoading || isLoadingTypes) {
     return <>loading...</>;
   }
   return (
     <div>
       <div className="max-w-[80%] mr-auto ml-10">
         <div className="mb-5">
-          <Title level={3}>Thêm mới</Title>
+          <Title level={3}>Sửa thông tin phòng</Title>
         </div>
 
         <Form
           form={form}
+          layout={"vertical"}
           name="validate_other"
           {...formItemLayout}
           onFinish={onFinish}
@@ -210,14 +203,6 @@ const EditRoom = () => {
             rules={[{ required: true, message: "Vui lòng nhập tên phòng" }]}
           >
             <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Diện tích"
-            name="area"
-            rules={[{ required: true, message: "Vui lòng nhập diện tích" }]}
-          >
-            <InputNumber min={1} />
           </Form.Item>
 
           <Form.Item
@@ -244,7 +229,7 @@ const EditRoom = () => {
               { required: true, message: "Vui lòng nhập tối đa số người lớn" },
             ]}
           >
-            <InputNumber min={1} />
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
 
           <Form.Item
@@ -252,19 +237,37 @@ const EditRoom = () => {
             name="children"
             rules={[{ required: true, message: "Vui lòng nhập tối đa trẻ em" }]}
           >
-            <InputNumber min={1} />
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
-
+          <Form.Item
+            label="Diện tích"
+            name="area"
+            rules={[{ required: true, message: "Vui lòng nhập diện tích" }]}
+          >
+            <InputNumber min={1} className="w-full" />
+          </Form.Item>
           <Form.Item
             label="Số giường"
             name="num_of_bed"
             rules={[{ required: true, message: "Vui lòng nhập số giường" }]}
           >
-            <InputNumber min={1} />
+            <InputNumber min={1} className="w-full" />
           </Form.Item>
-
-          <Form.Item name="bed_size" label="Số giường">
-            <InputNumber min={0} max={1} />
+          <Form.Item name="bed_size" label="Kích cỡ giường">
+            <Radio.Group>
+              <Row className="">
+                <Col>
+                  <Radio value="0" style={{ lineHeight: "32px" }}>
+                    2 lớn
+                  </Radio>
+                </Col>
+                <Col>
+                  <Radio value="1" style={{ lineHeight: "32px" }}>
+                    1 lớn , 1 nhỏ
+                  </Radio>
+                </Col>
+              </Row>
+            </Radio.Group>
           </Form.Item>
 
           <Form.Item
@@ -274,7 +277,22 @@ const EditRoom = () => {
           >
             <InputNumber min={1} />
           </Form.Item>
-
+          <Form.Item name="pay_is_checkin" label="Hình thức thanh toán">
+            <Radio.Group>
+              <Row className="">
+                <Col>
+                  <Radio value="0" style={{ lineHeight: "32px" }}>
+                    Thanh toán khi nhận phòng
+                  </Radio>
+                </Col>
+                <Col>
+                  <Radio value="1" style={{ lineHeight: "32px" }}>
+                    Thanh toán trước
+                  </Radio>
+                </Col>
+              </Row>
+            </Radio.Group>
+          </Form.Item>
           <div className="mb-4">
             <Form.Item
               label="Ảnh"
@@ -306,10 +324,10 @@ const EditRoom = () => {
                 imgs.map((img: any) => {
                   return (
                     <div
-                      className="w-full flex justify-center"
+                      className="w-full flex justify-start"
                       onClick={() => handleDeleteImg(img.image, img.id)}
                     >
-                      <div className="flex max-w-[291px] ml-10 h-[66px] p-[8px] w-full justify-between items-center border rounded-[8px] overflow-hidden">
+                      <div className="flex max-w-[291px] h-[66px] p-[8px] w-full justify-between items-center border rounded-[8px] overflow-hidden">
                         <img
                           src={img.image}
                           className="w-[50px] h-[50px] object-cover"
@@ -331,30 +349,6 @@ const EditRoom = () => {
               )}
             </div>
           </div>
-
-          <Form.Item
-            name="branch_id"
-            label="Chi nhánh"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn chi nhánh!",
-              },
-            ]}
-          >
-            <Select
-            // mode="multiple"
-            // placeholder="Vui lòng chọn chi nhánh !"
-            >
-              {dataBranch?.data.map((item: any) => {
-                return (
-                  <Option key={item.id} value={item.id}>
-                    {item.name}
-                  </Option>
-                );
-              })}
-            </Select>
-          </Form.Item>
 
           <Form.Item label="Mô tả" name="description">
             <TextArea rows={4} />

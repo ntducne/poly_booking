@@ -12,7 +12,6 @@ import { useQueryParams } from "../Rooms";
 import { useLocation } from "react-router-dom";
 export default function Edit() {
   const location = useLocation();
-  const queryParamsUrl = new URLSearchParams(location.search);
   const { getAll } = useQueryParams();
   const queryParams = useMemo(() => getAll(), [getAll]);
   const { data, isLoading } = useGetProfileQuery({});

@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Checkbox,
-  Collapse,
-  Form,
-  Image,
-  Modal,
-  Table,
-} from "antd";
+import { Button, Checkbox, Collapse, Form, Image, Modal, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { Link } from "react-router-dom";
 interface DataType {
@@ -23,6 +15,7 @@ import {
   useGetDetailStaffsQuery,
 } from "../../../../api/account/staffs";
 import { useGetPermissonQuery } from "../../../../api/permission";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const ListAdmin = () => {
   const { data: staffs, isLoading } = useGetAllStaffsQuery({});
@@ -67,13 +60,20 @@ const ListAdmin = () => {
             );
             if (check) {
               return (
-                <Checkbox value={permission} key={index} defaultChecked name="permissions[]">
+                <Checkbox
+                  value={permission}
+                  key={index}
+                  defaultChecked
+                  name="permissions[]"
+                >
                   {value}
                 </Checkbox>
               );
             } else {
               return (
-                <Checkbox value={permission} key={index} name="permissions[]">{value}</Checkbox>
+                <Checkbox value={permission} key={index} name="permissions[]">
+                  {value}
+                </Checkbox>
               );
             }
           }
@@ -184,13 +184,13 @@ const ListAdmin = () => {
   }));
 
   const onChange: TableProps<DataType>["onChange"] = () =>
-  // pagination,
-  // filters,
-  // sorter,
-  // extra
-  {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+    // pagination,
+    // filters,
+    // sorter,
+    // extra
+    {
+      // console.log("params", pagination, filters, sorter, extra);
+    };
 
   // const [checkedValues, setCheckedValues] = useState<any>({});
 
@@ -221,18 +221,22 @@ const ListAdmin = () => {
             items={items}
           />
           <Form.Item>
-            <Button htmlType="submit">
-              Cập nhật
-            </Button>
+            <Button htmlType="submit">Cập nhật</Button>
           </Form.Item>
         </Form>
       </Modal>
 
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <div className="mb-3">
-          <FormSearch />
+        <FormSearch />
+        <div className="flex flex-col md:flex-row md:ml-2">
+          <Link
+            to={`/staff/add`}
+            className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
+          >
+            <AiOutlinePlus />
+            <div className="ml-1">Thêm nhân viên</div>
+          </Link>
         </div>
-        <div className="flex flex-col md:flex-row"></div>
       </div>
       <Table
         scroll={{ x: true }}

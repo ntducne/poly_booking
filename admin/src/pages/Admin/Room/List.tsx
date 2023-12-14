@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Image, Space, Table } from "antd";
+import { Button, Image, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import { useDeleteRoomMutation, useGetRoomsQuery } from "../../../api/room";
 import FormatPrice from "../../../utils/FormatPrice";
+import { useLocation } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
@@ -20,10 +21,18 @@ interface DataType {
 }
 
 const ListRoom = () => {
-  const { data, isLoading, refetch } = useGetRoomsQuery({});
+  const [page, setPage] = useState<number>(1);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const { data, isLoading, refetch } = useGetRoomsQuery(page);
+  const navigate = useNavigate();
   const [dataFetching, setDataFetching] = useState<any>([]);
   const [deleteRoom] = useDeleteRoomMutation();
-
+  const handlePaginationChange = (page: number) => {
+    setPage(page);
+    navigate(`/room?page=${page}`);
+    refetch();
+  };
   useEffect(() => {
     setDataFetching(
       data?.data.map((item: any) => {
@@ -49,20 +58,18 @@ const ListRoom = () => {
       fixed: "left",
     },
     {
-      title: "Loại phòng",
+      title: "Ảnh phòng",
       dataIndex: "imageType",
       render: (_, record) => {
         return (
-          <div className="flex items-center">
-            {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
+          <div className="flex items-center ">
             <Image
-              className="rounded-3xl max-w-[150px] object-cover"
+              className="rounded-3xl max-h-[200px] max-w-[150px] object-cover"
               src={record?.images?.[0]}
             />
             <div className="ml-3 text-gray-500">
               <p>#68e365</p>
               <p>{record?.num_of_bed} giường ngủ</p>
-              {/* <p>{record?.key}</p> */}
             </div>
           </div>
         );
@@ -74,14 +81,13 @@ const ListRoom = () => {
       key: "discount",
       sorter: (a, b) => a.name.length - b.name.length,
       render: (text) => {
-        // Sử dụng hàm định dạng (format) ở đây để định dạng giá phòng theo ý muốn
         return (
           <span className="font-bold">{FormatPrice({ price: text })}</span>
         );
       },
     },
     {
-      title: "Diện tích",
+      title: "Diện tích (m2)",
       dataIndex: "area",
       key: "area",
       sorter: (a, b) => a.name.length - b.name.length,
@@ -92,34 +98,34 @@ const ListRoom = () => {
       key: "address",
       sorter: (a, b) => a.name.length - b.name.length,
     },
-    // {
-    //   title: "Trạng thái",
-    //   dataIndex: "status",
-    //   filters: [
-    //     {
-    //       text: "Còn trống",
-    //       value: "Còn",
-    //     },
-    //     {
-    //       text: "Hết phòng",
-    //       value: "Hết",
-    //     },
-    //   ],
-    //   render: (_, record) => (
-    //     <div className="font-semibold">
-    //       {record?.status != 0 ? (
-    //         <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
-    //           Còn
-    //         </span>
-    //       ) : (
-    //         <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
-    //           Hết
-    //         </span>
-    //       )}
-    //     </div>
-    //   ),
-    //   onFilter: (value: any, record) => record.address.indexOf(value) === 0,
-    // },
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      filters: [
+        {
+          text: "Còn trống",
+          value: "Còn",
+        },
+        {
+          text: "Hết phòng",
+          value: "Hết",
+        },
+      ],
+      render: (_, record) => (
+        <div className="font-semibold">
+          {record?.status != 0 ? (
+            <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
+              Còn
+            </span>
+          ) : (
+            <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
+              Hết
+            </span>
+          )}
+        </div>
+      ),
+      onFilter: (value: any, record) => record.address.indexOf(value) === 0,
+    },
     {
       title: "Action",
       dataIndex: "action",
@@ -142,18 +148,10 @@ const ListRoom = () => {
           </Button>
         </Space>
       ),
-      // fixed: "right",
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = () =>
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-    {
-      // console.log("params", pagination, filters, sorter, extra);
-    };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
   const remove = (id: any) => {
     try {
@@ -187,6 +185,12 @@ const ListRoom = () => {
     } catch (error) {}
   };
   useEffect(() => {
+    if (queryParams.get("page")) {
+      const page: any = queryParams.get("page");
+      setPage(+page);
+    }
+  }, [location?.search]);
+  useEffect(() => {
     refetch();
   }, []);
 
@@ -218,7 +222,16 @@ const ListRoom = () => {
         dataSource={dataFetching}
         onChange={onChange}
         loading={isLoading}
+        pagination={false}
       />
+      <div className="flex justify-end items-center mt-5">
+        <Pagination
+          defaultCurrent={1}
+          total={+data?.meta?.last_page * 10}
+          onChange={handlePaginationChange}
+          current={page}
+        />
+      </div>
     </Page>
   );
 };
