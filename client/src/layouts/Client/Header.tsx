@@ -140,7 +140,7 @@ export default function Header({}: Props) {
             {cookies && cookies?.userInfo ? (
               <Link
                 to="/about"
-                className="relative transition text-[18px] lg:text-[16px] group"
+                className="relative transition md:hidden block group-aria-hidden: text-[18px] lg:text-[16px] group"
                 onClick={closeToggleBar}
               >
                 Thông tin cá nhân

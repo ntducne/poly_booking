@@ -1,4 +1,3 @@
-import { Pagination } from "antd";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetHistoryBookingQuery } from "../../../api/User";
@@ -11,10 +10,13 @@ const orderedStatus = [
   StatusOrders.STATUS_6,
   StatusOrders.STATUS_4,
   StatusOrders.STATUS_2,
+  StatusOrders.STATUS_7,
 ];
 
 export default function HistoryRoom({}: Props) {
   const [data, setData] = useState<any>([]);
+  console.log(data);
+
   const {
     data: dataRoom,
     isLoading,
@@ -31,7 +33,7 @@ export default function HistoryRoom({}: Props) {
   useEffect(() => {
     if (!isLoading && data) {
       const filteredData = dataRoom?.data.filter(
-        (item: any) => ![1, 2, 3, 0, 5].includes(item.status)
+        (item: any) => ![1, 3, 0, 5].includes(item.status)
       );
       setData(filteredData);
     }
@@ -64,7 +66,7 @@ export default function HistoryRoom({}: Props) {
                   <p className="text-[18px] font-bold mb-2">
                     <FormatPrice price={item?.total} />
                   </p>
-                  <p className="text-[#c2d0ec] w-full tracking-[1px] text-[16px]">
+                  <p className="text-[#6B7280] w-full tracking-[1px] text-[16px]">
                     Rất hân hạnh được đón tiếp bạn
                   </p>
                   <div className="w-full border-[#cccc] border-b h-[1px] py-2"></div>
@@ -74,7 +76,7 @@ export default function HistoryRoom({}: Props) {
                       return (
                         <div className="mt-2">
                           <h2 className="text-[16px] font-medium">
-                            Được đặt vào ngày nào đó
+                            Được đặt vào ngày {item?.booking?.booking_date}
                           </h2>
                           <div className="flex mt-3 h-[13px] rounded-lg bg-[#E5E7EB]">
                             <div
@@ -102,9 +104,9 @@ export default function HistoryRoom({}: Props) {
               </div>
             </div>
           ))}
-          <div className="flex justify-end mt-10">
+          {/* <div className="flex justify-end mt-10">
             <Pagination defaultCurrent={6} total={500} />
-          </div>
+          </div> */}
         </div>
       ) : (
         <span>
