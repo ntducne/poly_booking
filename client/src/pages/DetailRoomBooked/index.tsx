@@ -7,12 +7,11 @@ import {
 import dayjs from "dayjs";
 import FormatPrice from "../../utils/FormatPrice";
 import Page from "../../components/Page";
+import { message } from "antd";
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const { data } = useGetDetailHistoryBookingQuery(id);
   const [cancelBookingRoom] = useCancelBookingMutation();
-  console.log(data);
-
   function getCountNights(checkin: any, checkout: any) {
     const checkinDate = dayjs(checkin);
     const checkoutDate = dayjs(checkout);
@@ -27,6 +26,7 @@ const BillDetail: React.FC = () => {
       .unwrap()
       .then((res: any) => {
         console.log("re", res);
+        message.success("Hủy phòng thành công");
       });
   };
 

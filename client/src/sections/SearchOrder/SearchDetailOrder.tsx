@@ -19,8 +19,6 @@ export default function SearchDetailOrder({}: Props) {
             setDataSearch({});
             return message.error(req?.message);
           }
-          console.log(req);
-
           message.success(req?.message);
           setDataSearch(req.data);
         });

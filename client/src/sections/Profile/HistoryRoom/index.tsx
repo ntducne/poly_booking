@@ -15,8 +15,6 @@ const orderedStatus = [
 
 export default function HistoryRoom({}: Props) {
   const [data, setData] = useState<any>([]);
-  console.log(data);
-
   const {
     data: dataRoom,
     isLoading,

@@ -14,7 +14,6 @@ export default function HistoryBooking({}: Props) {
   } = useGetHistoryBookingQuery({
     userId: "someUserId",
   });
-  console.log(data);
 
   useEffect(() => {
     const fetchData = async () => {
