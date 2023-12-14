@@ -6,7 +6,6 @@ import FormatPrice from "../../utils/FormatPrice";
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const { data } = useGetDetailHistoryBookingQuery(id);
-  console.log(data);
 
   function getCountNights(checkin: any, checkout: any) {
     const checkinDate = dayjs(checkin);
@@ -15,9 +14,9 @@ const BillDetail: React.FC = () => {
   }
 
   return (
-    <div className="mt-[100px] mb-[100px]">
+    <div className="pt-[100px] pb-[100px] bg-bgr">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-4 ">
-        <div className="bg-white border border-gray-200 rounded-lg shadow">
+        <div className="bg-bgr border border-gray-200 rounded-lg shadow">
           <Link to="#">
             <img
               className="rounded-t-lg"
@@ -39,7 +38,7 @@ const BillDetail: React.FC = () => {
         </div>
         <div className="grid md:grid-rows-1 grid-rows-1 gap-4">
           <div className="grid md:grid-cols-1 gap-4">
-            <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+            <div className="block h-full p-6 bg-bgr border border-gray-200 rounded-lg shadow">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                 Thông tin đặt phòng
               </h5>
@@ -63,7 +62,7 @@ const BillDetail: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow">
+            <div className="block h-full p-6 bg-bgr border border-gray-200 rounded-lg shadow">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                 Thông tin khách hàng
               </h5>
@@ -92,7 +91,7 @@ const BillDetail: React.FC = () => {
           </div>
         </div>
         <div>
-          <div className="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow ">
+          <div className="block h-full p-6 bg-bgr border border-gray-200 rounded-lg shadow ">
             <div className="flex justify-between items-center">
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                 Dịch vụ
@@ -133,7 +132,7 @@ const BillDetail: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="block h-full bg-white border border-gray-200 rounded-lg shadow">
+      <div className="block h-full bg-bgr border border-gray-200 rounded-lg shadow">
         <h5 className="mb-2 p-6 text-2xl font-bold tracking-tight text-gray-900">
           Thông tin hoá đơn
         </h5>
@@ -154,7 +153,7 @@ const BillDetail: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b ">
+              <tr className="bg-bgr border-b ">
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
@@ -179,7 +178,7 @@ const BillDetail: React.FC = () => {
               </tr>
             </tbody>
             <tfoot>
-              <tr className="bg-white border-b ">
+              <tr className="bg-bgr border-b ">
                 <th></th>
                 <td className="px-6 py-4"></td>
                 <td className="px-6 py-4 font-bold">Tổng thanh toán</td>

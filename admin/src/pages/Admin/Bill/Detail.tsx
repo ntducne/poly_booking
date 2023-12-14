@@ -952,7 +952,7 @@ const BillDetail: React.FC = () => {
                         <td className="px-6 py-4">{room.room_empty}</td>
                         <td>
                           {dataBill?.data?.booking.detail[0].room_id ==
-                            room.id &&
+                            room.id  &&
                             idRoomNewExtend == null && (
                               <button
                                 type="button"

@@ -9,21 +9,30 @@ import {
   message,
   Image,
   Table,
+  Modal,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { useSearchRoomMutation } from "../../../api/booking";
+import {
+  useBookingRoomMutation,
+  useSearchRoomMutation,
+} from "../../../api/booking";
 import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
 import { RoomInterface } from "../../../Interface/RoomInterface";
 import Page from "../../../component/page";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import { DetailRoomModal } from "../../../component/Modal/DetailRoomModal";
+import moment from "moment";
 // import { useGetAllBranchesQuery } from "../../../api/branches";
 // import { role } from "../../../hoc/withAuthorization";
 
 export default function RoomBooking() {
   const [form] = Form.useForm();
+  const [formBooking] = Form.useForm();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalBookingOpen, setIsModalBookingOpen] = useState(false);
+
   const [isLoadingData, setLoading] = useState(false);
   const [isDisabledForm, setDisableForm] = useState(false);
   const [searchRoom] = useSearchRoomMutation();
@@ -33,35 +42,36 @@ export default function RoomBooking() {
   const [dataDetailRoom, setDataDetailRoom] = useState(null);
   const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  const [bookingRoom] = useBookingRoomMutation();
 
+  // const showModal = () => {
+  //   setIsModalOpen(true);
+  // };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
+  const showModalAddPeople = (data_room: RoomInterface) => {
+    // console.log("1");
+    setDataDetailRoom(null);
+
+    setDataDetailRoom(data_room as any);
+
+    setIsModalBookingOpen(true);
+  };
+  const handleOkeAddPeople = () => {
+    setIsModalBookingOpen(true);
+  };
+  const handleCancelAddPeople = () => {
+    setIsModalBookingOpen(false);
+  };
+
   const setDetailRoom = (data_room: RoomInterface) => {
     setDataDetailRoom(null);
-    
+
     setDataDetailRoom(data_room as any);
     setIsModalOpen(true);
   };
-
-  // const newData = dataRoom?.map((room: any, index) => ({
-  //   key: index + 1,
-  //   name: room?.name,
-  //   images: room?.images,
-  //   room_type_name: room?.type?.room_type_name,
-  //   child: room?.children,
-  //   area: room?.area,
-  //   bed_size: room?.bed_size,
-  //   description: room?.description,
-  //   adults: room?.adults,
-  //   branch: room?.branch,
-  //   price: room?.type?.price_per_night,
-  //   // discount: room?.discount,
-  // }));
 
   const columns = [
     {
@@ -112,8 +122,8 @@ export default function RoomBooking() {
           >
             Chi tiết phòng
           </Button>
-          <Button shape="round" onClick={showModal}>
-            Chọn phòng
+          <Button shape="round" onClick={() => showModalAddPeople(record)}>
+            Đặt phòng
           </Button>
         </>
       ),
@@ -124,62 +134,161 @@ export default function RoomBooking() {
     setLoading(true);
     setDisableForm(true);
     setDataRoom([]);
-    try {
-      const res = await searchRoom({
-        room_type_id: values.room_type,
-        branch_id: values.branch_id,
-        amount_room: values.amount_room,
-        check_in: values.days[0].format("YYYY-MM-DD"),
-        check_out: values.days[1].format("YYYY-MM-DD"),
-        adults: values.adults,
-        children: values.childrens,
-      }).unwrap();
+    console.log("1");
 
-      if (res.status === "success") {
-        message.success(res.message);
-        const valueRoom = res.data;
-        console.log(valueRoom);
-        setDataRoom((prevDataRoom) => [
-          ...prevDataRoom,
-          ...valueRoom.map((room: any) => ({
-            id: room.id,
-            name: room.name,
-            amount: room.amount,
-            discount: room.discount,
-            price: room.price,
-            adult: room.adults,
-            child: room.children,
-            description: room.description,
-            room_type: room.room_type,
-            branch: room.branch,
-            image: room.image,
-            room_empty: room.room_empty,
-          })),
-        ]);
-        console.log(dataRoom);
-      } else if (res.status === "error") {
-        message.error(res.message);
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-      // Handle error appropriately (e.g., show an error message to the user)
-    } finally {
-      setLoading(false);
-      setDisableForm(false);
-    }
+    searchRoom({
+      room_type_id: values.room_type,
+      amount_room: values.amount_room,
+      checkin: values.days[0].format("YYYY-MM-DD"),
+      checkout: values.days[1].format("YYYY-MM-DD"),
+      adult: values.adult,
+      child: values.childrens,
+    })
+      .unwrap()
+      .then((res: any) => {
+        console.log("111111111");
+        if (res.status === "success") {
+          const valueRoom = res.data;
+          setDataRoom((prevDataRoom) => [
+            ...prevDataRoom,
+            ...valueRoom.map((room: any) => ({
+              id: room.id,
+              name: room.name,
+              amount: room.amount,
+              discount: room.discount,
+              price: room.price,
+              adult: room.adults,
+              child: room.children,
+              description: room.description,
+              room_type: room.room_type,
+              branch: room.branch,
+              image: room.image,
+              room_empty: room.room_empty,
+            })),
+          ]);
+        } else {
+          message.error(res.message);
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);        
+        message.error(err?.data?.error?.amount_room);
+      })
+      .finally(() => {
+        setLoading(false);
+        setDisableForm(false);
+      });
   };
+
+  const onBooking = (values: any) => {
+    console.log("Received values of form:", values);
+    console.log("data", form.getFieldsValue());
+    const dataSearch = form.getFieldsValue();
+
+    const dataBooking = {
+      room_id: dataDetailRoom?.id,
+      checkin: dataSearch?.days[0].format("YYYY-MM-DD"),
+      checkout: dataSearch?.days[1].format("YYYY-MM-DD"),
+      amount_room: dataSearch?.amount_room,
+      // branch_id: dataSearch?.branch_id,
+      adult: dataSearch?.adult,
+      child: dataSearch?.childrens,
+      email: values?.email,
+      phone: values?.phone,
+      name: values?.name,
+    };
+    bookingRoom(dataBooking)
+      .unwrap()
+      .then((res: any) => {
+        setVisible(true);
+        setCodeQR(
+          `https://img.vietqr.io/image/mb-0823565831-compact2.jpg?amount=${res?.amount}&addInfo=POLYDEVHOTELHD${res?.billingCode}&accountName=NGUYEN%20THIEN%20DUC`
+        );
+      });
+  };
+  const [codeQR, setCodeQR] = useState("");
+  const [visible, setVisible] = useState(false);
 
   return (
     <Page title={`Đặt phòng`}>
       {dataDetailRoom !== null ? (
-        <DetailRoomModal
-          room={dataDetailRoom}
-          setIsModalOpen={handleCancel}
-          isOpen={isModalOpen}
-        />
+        <>
+          <DetailRoomModal
+            room={dataDetailRoom}
+            setIsModalOpen={handleCancel}
+            isOpen={isModalOpen}
+          />
+        </>
       ) : (
         <></>
       )}
+      <Modal
+        title="Thông tin của khách hàng"
+        open={isModalBookingOpen}
+        onOk={handleOkeAddPeople}
+        onCancel={handleCancelAddPeople}
+        footer={[]}
+      >
+        <Modal
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          footer={null}
+        >
+          <div className="flex justify-center items-center h-full">
+            <Image src={codeQR} width={300} />
+          </div>
+          {/* <Button  onClick={() => setVisible(false)}>Đóng</Button> */}
+        </Modal>
+        <Form
+          form={formBooking}
+          className="mt-5"
+          name="dynamic_form_nest_item"
+          onFinish={onBooking}
+          style={{ maxWidth: 600 }}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Tên khách hàng"
+            name="name"
+            rules={[
+              { required: true, message: "Vui lòng nhập tên!" },
+              {
+                pattern: /^.*\S+.*$/,
+                message: "Vui lòng không nhập chỉ toàn khoảng trắng!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Số điện thoại"
+            name="phone"
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại" },
+              {
+                pattern: /^[0-9]{10,11}$/,
+                message: "Số điện thoại không hợp lệ",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Vui lòng nhập email!" },
+              { type: "email", message: "Email không hợp lệ!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item className="flex justify-end">
+            <Button htmlType="submit">Đặt phòng</Button>
+          </Form.Item>
+        </Form>
+      </Modal>
       <Form
         disabled={isDisabledForm}
         form={form}
@@ -188,12 +297,8 @@ export default function RoomBooking() {
         className={`${isLoading && "mt-5 mb-5"}`}
         onFinish={onFinish}
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card
-            title="Thông tin phòng"
-            bordered={false}
-            loading={isLoading}
-          >
+        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-2 gap-4">
+          <Card title="Thông tin phòng" bordered={false} loading={isLoading}>
             {/* {role === "super_admin" && (
               <Form.Item
                 label="Chi nhánh"
@@ -245,13 +350,16 @@ export default function RoomBooking() {
               <DatePicker.RangePicker
                 className="w-full"
                 placeholder={["Ngày ở", "Ngày trả"]}
+                disabledDate={(current: any) =>
+                  current && current < moment().startOf("day")
+                }
               />
             </Form.Item>
           </Card>
           <Card title="Thông tin khác" loading={isLoading} bordered={false}>
             <Form.Item
               label="Người lớn"
-              name="adults"
+              name="adult"
               rules={[
                 { required: true, message: "Vui lòng nhập số người lớn" },
               ]}
@@ -276,30 +384,6 @@ export default function RoomBooking() {
                 </Button>
               </Form.Item>
             </div>
-          </Card>
-          <Card
-            title="Thông tin khách hàng"
-            loading={isLoading}
-            bordered={false}
-          >
-            <Form.Item label="Tên khách hàng" name="name">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Số điện thoại" name="phone">
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                {
-                  type: "email",
-                  message: "Địa chỉ email không hợp lệ!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
           </Card>
         </div>
       </Form>

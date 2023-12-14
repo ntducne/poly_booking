@@ -55,7 +55,6 @@ const rootReducer = combineReducers({
     [ratesApi.reducerPath]: ratesApi.reducer,
     [permissonApi.reducerPath]: permissonApi.reducer,
     [policyApi.reducerPath]: policyApi.reducer,
-    [policyApi.reducerPath]: policyApi.reducer,
     [utilitiesApi.reducerPath]: utilitiesApi.reducer,
     [statisticalsApi.reducerPath]: statisticalsApi.reducer,
     [contactApi.reducerPath]: contactApi.reducer,

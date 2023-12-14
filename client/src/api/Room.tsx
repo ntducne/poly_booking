@@ -11,15 +11,10 @@ const roomApi = createApi({
   }),
   endpoints: (builder) => ({
     getRooms: builder.query<any, any>({
-      query: (data: any) => {
-        const keys = Object.keys(data);
-        const url =
-          keys.length === 0 && keys.length < 6
-            ? `/room`
-            : `/v2/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&amount_room=${data.soLuong}`;
-        return {  
+      query: (page?: number) => {
+        return {
           method: "GET",
-          url: url,
+          url: `/room?page=${page || 2}`,
         };
       },
       providesTags: ["Rooms"],

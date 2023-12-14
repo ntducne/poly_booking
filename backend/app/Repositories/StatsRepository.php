@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Repositories\Stats\Book;
+use App\Repositories\Stats\Chart;
 use App\Repositories\Stats\Revenue;
 use App\Repositories\Stats\Room;
 
@@ -11,6 +12,7 @@ class StatsRepository
     private Revenue $revenue;
     private Room $room;
     private Book $book;
+    private Chart $chart;
 
     public function revenue($request)
     {
@@ -73,5 +75,10 @@ class StatsRepository
         if($request->type === 'year_to_year'){
             return $this->book->year_to_year($request);
         }
+    }
+    public function chart($request){
+        $this->chart = new Chart();
+        return $this->chart->yearly($request);
+        
     }
 }

@@ -1,20 +1,19 @@
 import { Pagination } from "antd";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetHistoryBookingQuery } from "../../../api/User";
 import FormatPrice from "../../../utils/FormatPrice";
 import { StatusOrders } from "../../../utils/status";
-import { useEffect, useState } from "react";
 
 type Props = {};
 
 const orderedStatus = [
-  StatusOrders.STATUS_0,
-  StatusOrders.STATUS_5,
-  StatusOrders.STATUS_1,
-  StatusOrders.STATUS_3,
+  StatusOrders.STATUS_6,
+  StatusOrders.STATUS_4,
+  StatusOrders.STATUS_2,
 ];
 
-export default function HistoryBooking({}: Props) {
+export default function HistoryRoom({}: Props) {
   const [data, setData] = useState<any>([]);
   const {
     data: dataRoom,
@@ -32,7 +31,7 @@ export default function HistoryBooking({}: Props) {
   useEffect(() => {
     if (!isLoading && data) {
       const filteredData = dataRoom?.data.filter(
-        (item: any) => ![4, 6, 2].includes(item.status)
+        (item: any) => ![1, 2, 3, 0, 5].includes(item.status)
       );
       setData(filteredData);
     }
@@ -65,40 +64,40 @@ export default function HistoryBooking({}: Props) {
                   <p className="text-[18px] font-bold mb-2">
                     <FormatPrice price={item?.total} />
                   </p>
-                  <p className="text-[#6B7280] w-full tracking-[1px] text-[16px]">
+                  <p className="text-[#c2d0ec] w-full tracking-[1px] text-[16px]">
                     Rất hân hạnh được đón tiếp bạn
                   </p>
                   <div className="w-full border-[#cccc] border-b h-[1px] py-2"></div>
-                  <div className="mt-2">
-                    <h2 className="text-[16px] font-medium">
-                      Được đặt vào ngày nào đó
-                    </h2>
-                    <div className="flex mt-3 h-[13px] rounded-lg bg-[#E5E7EB]">
-                      {orderedStatus.map((status) => (
-                        <div
-                          key={status.id}
-                          className={`w-[20%] h-[13px] ${
-                            status.id <= item?.status
-                              ? "bg-[#4F46B5]"
-                              : "bg-[#E5E7EB]"
-                          }`}
-                        >
-                          <h2
-                            className={`mt-5 font-medium text-[14px] ${
-                              status.id <= item?.status ? "text-[#4F46B5]" : ""
-                            } ${
-                              window.innerWidth < 768 &&
-                              status.id !== item?.status
-                                ? "hidden"
-                                : ""
-                            }`}
-                          >
-                            {status.id === item?.status ? status.value : ""}
+                  {orderedStatus
+                    .filter((status: any) => status?.id === item?.status)
+                    .map((status: any) => {
+                      return (
+                        <div className="mt-2">
+                          <h2 className="text-[16px] font-medium">
+                            Được đặt vào ngày nào đó
                           </h2>
+                          <div className="flex mt-3 h-[13px] rounded-lg bg-[#E5E7EB]">
+                            <div
+                              className={`w-[100%] h-[13px] ${
+                                status.id == 4
+                                  ? "bg-[#b3b3b3]"
+                                  : "bg-[#ff000099]"
+                              } `}
+                            >
+                              <h2
+                                className={`mt-5 font-medium text-[14px] ${
+                                  status.id == 4
+                                    ? "text-[#b3b3b3]"
+                                    : "text-[#ff000099]"
+                                } `}
+                              >
+                                {status?.value}
+                              </h2>
+                            </div>
+                          </div>
                         </div>
-                      ))}
-                    </div>
-                  </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>

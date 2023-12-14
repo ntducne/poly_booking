@@ -370,7 +370,8 @@ class RoomRepository
         return [
             'status' => true,
             'message' => 'Đặt phòng thành công !',
-            'billingCode' => $billing->billingCode
+            'billingCode' => $billing->billingCode,
+            'amount' => $billing->total,
         ];
     }
 

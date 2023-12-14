@@ -11,7 +11,6 @@ import ChartFour from "../../../component/Charts/four";
 import ChartFive from "../../../component/Charts/five";
 import { useState } from "react";
 import dayjs from "dayjs";
-import { MoneyCollectOutlined } from "@ant-design/icons";
 // import type { DatePickerProps } from 'antd';
 import ChartOne from "../../../component/Charts/one";
 import { useStatisticalsQuery } from "../../../api/statisticals";
@@ -20,6 +19,11 @@ const { Title } = Typography;
 const { RangePicker } = DatePicker;
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import moment from 'moment';
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { MdMeetingRoom } from "react-icons/md";
+import { MdNoMeetingRoom } from "react-icons/md";
+import { MdRoomPreferences } from "react-icons/md";
+
 
 const Dashboard = () => {
   const [formatDay] = useState("DD/MM/YYYY");
@@ -328,7 +332,7 @@ const Dashboard = () => {
           </div>
         </Form>
         <div className="rounded-lg">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -340,7 +344,7 @@ const Dashboard = () => {
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MoneyCollectOutlined className="text-3xl" />
+                  <FaMoneyBillTrendUp  className="text-3xl" />
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
@@ -366,40 +370,6 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-            {/* <article className="rounded-lg border border-gray-100 bg-white p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-500">Tài khoản đăng ký mới</p>
-                  <p className="text-2xl font-medium text-gray-900">$240.94</p>
-                </div>
-                <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MoneyCollectOutlined className="text-3xl" />
-                </span>
-              </div>
-
-              <div className="mt-1 flex gap-1 text-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-                  />
-                </svg>
-
-                <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
-                </p>
-              </div>
-            </article> */}
             <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -409,7 +379,7 @@ const Dashboard = () => {
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MoneyCollectOutlined className="text-3xl" />
+                  <MdMeetingRoom  className="text-3xl" />
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
@@ -444,7 +414,7 @@ const Dashboard = () => {
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MoneyCollectOutlined className="text-3xl" />
+                  <MdNoMeetingRoom  className="text-3xl" />
                 </span>
               </div>
 
@@ -478,7 +448,7 @@ const Dashboard = () => {
                   <p className="text-2xl font-medium text-gray-900">{dataRoom?.total_room}</p>
                 </div>
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MoneyCollectOutlined className="text-3xl" />
+                  <MdRoomPreferences className="text-3xl" />
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
@@ -513,7 +483,7 @@ const Dashboard = () => {
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MoneyCollectOutlined className="text-3xl" />
+                  <MdMeetingRoom className="text-3xl" />
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
@@ -550,7 +520,7 @@ const Dashboard = () => {
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MoneyCollectOutlined className="text-3xl" />
+                  <MdRoomPreferences  className="text-3xl" />
                 </span>
               </div>
 
@@ -577,7 +547,7 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-            <article className="lg:col-span-1 lg:row-span-1 rounded-lg border border-gray-100 bg-white p-6">
+            {/* <article className="lg:col-span-1 lg:row-span-1 rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-500">Số lượng người dùng</p>
@@ -609,7 +579,7 @@ const Dashboard = () => {
                   <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
                 </p>
               </div>
-            </article>
+            </article> */}
           </div>
           <div className="mt-4">
             <ChartOne />
