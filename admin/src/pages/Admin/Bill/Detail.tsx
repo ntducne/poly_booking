@@ -224,7 +224,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -264,7 +264,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -300,7 +300,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -338,7 +338,7 @@ const BillDetail: React.FC = () => {
       checkin: dayjs(dataBill?.data?.booking?.checkout).format("YYYY-MM-DD"),
       checkout: new_checkoutDate,
       adult: adults,
-      children: childs,
+      child: childs,
       // branch_id: dataBill?.data?.branch?.id,
       room_type_id: room_type_id,
       amount_room: amount_room_renew,
@@ -395,7 +395,7 @@ const BillDetail: React.FC = () => {
               icon: "success",
             });
             closeModalExtend();
-          } 
+          }
           // else if (res.message && res.status === false) {
           //   swal(res.message, {
           //     icon: "error",
@@ -906,11 +906,10 @@ const BillDetail: React.FC = () => {
                   {dataRoomSearch.map((room: any) => {
                     return (
                       <tr
-                        className={` border-b ${
-                          dataBill?.data?.booking.detail[0].room_id == room.id
+                        className={` border-b ${dataBill?.data?.booking.detail[0].room_id == room.id
                             ? "bg-gray-100"
                             : "bg-white"
-                        }`}
+                          }`}
                       >
                         <th
                           scope="row"
@@ -926,10 +925,10 @@ const BillDetail: React.FC = () => {
                           <p className="mb-2">{room.name}</p>
                           {dataBill?.data?.booking.detail[0].room_id ==
                             room.id && (
-                            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                              Phòng hiện tại
-                            </span>
-                          )}
+                              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                Phòng hiện tại
+                              </span>
+                            )}
                         </td>
                         <td className="px-6 py-4">
                           {room.room_type.room_type_name}
@@ -965,7 +964,7 @@ const BillDetail: React.FC = () => {
                             )}
                           {idRoomNewExtend != null &&
                             dataBill?.data?.booking.detail[0].room_id !=
-                              room.id && (
+                            room.id && (
                               <button
                                 type="button"
                                 onClick={() => onSetIdRoomNewExtend(null)}
@@ -976,17 +975,17 @@ const BillDetail: React.FC = () => {
                             )}
                           {dataBill?.data?.booking.detail[0].room_id !=
                             room.id && (
-                            <button
-                              type="button"
-                              onClick={() => onSetIdRoomNewExtend(room.id)}
-                              className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                            >
-                              Chọn phòng mới
-                            </button>
-                          )}
+                              <button
+                                type="button"
+                                onClick={() => onSetIdRoomNewExtend(room.id)}
+                                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                              >
+                                Chọn phòng mới
+                              </button>
+                            )}
                           {idRoomNewExtend != null &&
                             dataBill?.data?.booking.detail[0].room_id !=
-                              room.id && (
+                            room.id && (
                               <button
                                 type="button"
                                 onClick={() => onExtendBooking()}
