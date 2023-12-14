@@ -19,8 +19,7 @@ export default function UpdateProfile({ data }: Props) {
   const onFinish = (values: any) => {
     updateProfile(values)
       .unwrap()
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         message.success("Cập nhật thành công");
       })
       .catch((error) => {
@@ -47,7 +46,6 @@ export default function UpdateProfile({ data }: Props) {
         email: data.email,
         name: data.name,
         phone: data.phone,
-        address: data.address,
       };
       form.setFieldsValue(defaultValue);
     }
@@ -88,18 +86,6 @@ export default function UpdateProfile({ data }: Props) {
         ]}
       >
         <Input className="py-2" placeholder="+842938493043" />
-      </Form.Item>
-      <Form.Item
-        label="Địa chỉ"
-        name="address"
-        rules={[
-          {
-            required: true,
-            message: "Vui lòng cung cấp địa chỉ",
-          },
-        ]}
-      >
-        <Input className="py-2" placeholder="Địa chỉ ..." />
       </Form.Item>
 
       <Form.Item>
