@@ -224,7 +224,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -264,7 +264,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -300,7 +300,7 @@ const BillDetail: React.FC = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) { }
   };
   //
 
@@ -395,7 +395,7 @@ const BillDetail: React.FC = () => {
               icon: "success",
             });
             closeModalExtend();
-          } 
+          }
           // else if (res.message && res.status === false) {
           //   swal(res.message, {
           //     icon: "error",
@@ -421,20 +421,17 @@ const BillDetail: React.FC = () => {
         room_id: dataBill?.data?.booking?.detail[0].room_id,
         newCheckout: new_checkoutDate,
         roomNumberRenew: formRoomIdExtend.getFieldsValue().room_id,
+        booking_id: dataBill?.data?.booking?.id,
       };
       console.log("dataExtendRoom", dataExtendRoom);
       extendBooking(dataExtendRoom)
         .unwrap()
         .then((res) => {
-          if (res.message && res.status === true) {
+          if (res.message) {
             swal(res.message, {
               icon: "success",
             });
             closeModalExtend();
-          } else if (res.message && res.status === false) {
-            swal(res.message, {
-              icon: "error",
-            });
           }
         })
         .catch((err) => {
@@ -497,6 +494,7 @@ const BillDetail: React.FC = () => {
         phone: dataBill?.data?.booking?.representative?.phone,
         amount_room: amount_room_renew,
         room_id: idRoomNewExtend,
+        booking_id: dataBill?.data?.booking?.id,
         billing_id: dataBill?.data?.id,
       };
       extendBooking(dataExtendRoom)
@@ -586,7 +584,7 @@ const BillDetail: React.FC = () => {
             <span className="text-2xl" style={{ fontSize: 20 }}>
               Chi tiết đặt phòng
             </span>{" "}
-            - #1231231238
+            - #{dataBill?.data?.billingCode}
           </div>
         </div>
         <div className="flex items-center md:justify-end justify-start ml-5 md:ml-0 md:mr-3">
@@ -877,10 +875,9 @@ const BillDetail: React.FC = () => {
             </Form>
           </div>
         )}
-        {dataBill?.data?.booking?.amount_room < dataRoomBook && (
+        {dataBill?.data?.booking?.amount_room < dataRoomBook.length && (
           <div>Thông tin tìm kiếm</div>
         )}
-
         <div>
           {dataRoomSearch.length > 0 && (
             <div className="relative overflow-x-auto w-full">
@@ -888,19 +885,19 @@ const BillDetail: React.FC = () => {
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                   <tr>
                     <th scope="col" className="px-6 py-3">
-                      Room Image
+                      Ảnh phòng
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Room Name
+                      Tên phòng
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Category
+                      Loại phòng
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Price
+                      Giá
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Amount room empty
+                      Số lượng
                     </th>
                     <th></th>
                   </tr>
@@ -909,11 +906,10 @@ const BillDetail: React.FC = () => {
                   {dataRoomSearch.map((room: any) => {
                     return (
                       <tr
-                        className={` border-b ${
-                          dataBill?.data?.booking.detail[0].room_id == room.id
+                        className={` border-b ${dataBill?.data?.booking.detail[0].room_id == room.id
                             ? "bg-gray-100"
                             : "bg-white"
-                        }`}
+                          }`}
                       >
                         <th
                           scope="row"
@@ -929,10 +925,10 @@ const BillDetail: React.FC = () => {
                           <p className="mb-2">{room.name}</p>
                           {dataBill?.data?.booking.detail[0].room_id ==
                             room.id && (
-                            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                              Phòng hiện tại
-                            </span>
-                          )}
+                              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                Phòng hiện tại
+                              </span>
+                            )}
                         </td>
                         <td className="px-6 py-4">
                           {room.room_type.room_type_name}
@@ -968,7 +964,7 @@ const BillDetail: React.FC = () => {
                             )}
                           {idRoomNewExtend != null &&
                             dataBill?.data?.booking.detail[0].room_id !=
-                              room.id && (
+                            room.id && (
                               <button
                                 type="button"
                                 onClick={() => onSetIdRoomNewExtend(null)}
@@ -979,17 +975,17 @@ const BillDetail: React.FC = () => {
                             )}
                           {dataBill?.data?.booking.detail[0].room_id !=
                             room.id && (
-                            <button
-                              type="button"
-                              onClick={() => onSetIdRoomNewExtend(room.id)}
-                              className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                            >
-                              Chọn phòng mới
-                            </button>
-                          )}
+                              <button
+                                type="button"
+                                onClick={() => onSetIdRoomNewExtend(room.id)}
+                                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                              >
+                                Chọn phòng mới
+                              </button>
+                            )}
                           {idRoomNewExtend != null &&
                             dataBill?.data?.booking.detail[0].room_id !=
-                              room.id && (
+                            room.id && (
                               <button
                                 type="button"
                                 onClick={() => onExtendBooking()}
@@ -1290,18 +1286,15 @@ const BillDetail: React.FC = () => {
                   Số lượng
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Checkin
+                  Thời gian
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Ngày trả
+                  Ngày hết
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Giá
                 </th>
                 <th>Trạng thái</th>
-                <th scope="col" className="px-6 py-3">
-                  Tạm tính
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -1359,20 +1352,6 @@ const BillDetail: React.FC = () => {
                         }
                       })()}
                     </td>
-                    <td>
-                      {room?.status == 0 ? (
-                        <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                          Đang ở
-                        </span>
-                      ) : (
-                        <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">
-                          Đã trả
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4">
-                      {/* {formatMoneyVN(room?.price)} */}
-                    </td>
                   </tr>
                 );
               })}
@@ -1387,15 +1366,17 @@ const BillDetail: React.FC = () => {
                     </th>
                     <td className="px-6 py-4">1</td>
                     <td className="px-6 py-4">
+                      {formatMoneyVN(service.time)}
+                    </td>
+                    <td>
+                    </td>
+                    <td className="px-6 py-4">
                       {formatMoneyVN(service.price)}
                     </td>
                     <td>
                       <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">
                         Chưa thanh toán
                       </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      {formatMoneyVN(service.price)}
                     </td>
                   </tr>
                 );
