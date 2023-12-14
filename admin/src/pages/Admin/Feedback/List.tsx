@@ -15,7 +15,7 @@ import { useGetRatesQuery } from "../../../api/rate";
 
 const ListFeedback = () => {
   const { data: dataRates, isLoading } = useGetRatesQuery({});
-  
+
 
   const columns: ColumnsType<any> = [
     {
@@ -45,7 +45,7 @@ const ListFeedback = () => {
       dataIndex: "room",
       key: "room",
       render: (room) => (
-         <div>{room?.name}</div>
+        <div>{room?.name}</div>
       ),
     },
     {
@@ -105,7 +105,7 @@ const ListFeedback = () => {
         columns={columns}
         dataSource={data}
         pagination={{ pageSize: 10 }}
-        />
+      />
     </Page>
   );
 };
