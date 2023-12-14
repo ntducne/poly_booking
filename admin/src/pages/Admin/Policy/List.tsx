@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
@@ -9,8 +9,7 @@ interface DataType {
   penalty: string;
   room_id: string;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+import { MdDeleteForever } from "react-icons/md";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import { useGetAllPolicyQuery } from "../../../api/policy";

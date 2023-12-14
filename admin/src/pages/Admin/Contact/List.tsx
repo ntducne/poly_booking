@@ -1,8 +1,5 @@
 import Page from "../../../component/page";
 import { useGetContactQuery } from "../../../api/contact";
-import FormSearch from "../../../component/formSearch";
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { Table } from "antd";
 import moment from "moment";
 // import { ColumnsType } from "antd/es/table";

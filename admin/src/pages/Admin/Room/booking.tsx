@@ -26,6 +26,7 @@ import moment from "moment";
 // import { useGetAllBranchesQuery } from "../../../api/branches";
 // import { role } from "../../../hoc/withAuthorization";
 
+
 export default function RoomBooking() {
   const [form] = Form.useForm();
   const [formBooking] = Form.useForm();
@@ -40,7 +41,7 @@ export default function RoomBooking() {
   // const { data: dataBranches, isLoading: loadingBranch } =
   //   useGetAllBranchesQuery({});
   
-  const [dataDetailRoom , setDataDetailRoom] = useState(null);
+  const [dataDetailRoom , setDataDetailRoom] = useState<any>(null);
   const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
   const [bookingRoom] = useBookingRoomMutation();
@@ -182,8 +183,6 @@ export default function RoomBooking() {
   };
 
   const onBooking = (values: any) => {
-    console.log("Received values of form:", values);
-    console.log("data", form.getFieldsValue());
     const dataSearch = form.getFieldsValue();
 
     const dataBooking : any = {

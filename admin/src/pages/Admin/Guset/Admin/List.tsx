@@ -86,7 +86,7 @@ const ListAdmin = () => {
                 <Form.Item name={`${key}`} valuePropName="checked">
                   <Checkbox
                     value={permission}
-                    key={key}
+                    key={index}
                     defaultChecked={!!check}
                     onChange={(e) =>
                       handleCheckboxChange(`${key}`, e.target.checked)
@@ -101,7 +101,7 @@ const ListAdmin = () => {
                 <Form.Item name={`${key}`} valuePropName="checked">
                   <Checkbox
                     value={permission}
-                    key={key}
+                    key={index}
                     onChange={(e) =>
                       handleCheckboxChange(`${key}`, e.target.checked)
                     }
@@ -191,9 +191,8 @@ const ListAdmin = () => {
   const handleSubmit = (values: any) => {
     // console.log(values);
     const keysWithTrueValue = Object.entries(values)
-      .filter(([key, value]) => value === true)
-      .map(([key, value]) => key);
-
+      .filter(([_, value]: [any, any]) => value === true)
+      .map(([key, _]: [any, any]) => key);
     const dataPermission = {
       idStaff: isStaff,
       data: {

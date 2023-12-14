@@ -1,17 +1,13 @@
 // import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   Form,
   Input,
-  Upload,
   Button,
-  message,
   Typography,
   Space,
   Skeleton,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";

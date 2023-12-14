@@ -4,7 +4,6 @@ import type { ColumnsType } from "antd/es/table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { GiConfirmed } from "react-icons/gi";
-import FormSearch from "../../../component/formSearch";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
