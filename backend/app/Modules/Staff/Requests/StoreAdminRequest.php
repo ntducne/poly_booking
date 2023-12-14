@@ -19,8 +19,7 @@ class StoreAdminRequest extends Request
             'email'     => ['bail', 'required', new MailRule() , Rule::unique(Admin::class, 'email')],
             'password'  => ['bail', 'required', 'string', 'min:6'],
             'phone'     => ['bail', 'required', new PhoneRule() , Rule::unique(Admin::class, 'phone')],
-            'branch_id' => ['bail', 'required', Rule::exists(Branch::class, $this->column_id)],
-            'role'      => ['bail', 'required', 'integer', Rule::in(RoleEnum::asArray())],
+            'role'      => ['bail', 'required', 'string' ]
         ];
     }
     public function attributes()

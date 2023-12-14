@@ -20,8 +20,8 @@ class UpdateAdminRequest extends Request
             'confirm_password' => ['bail', 'nullable', 'string', 'min:6', 'same:new_password'],
             'phone' => ['bail', 'required', 'numeric', 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/', Rule::unique(Admin::class, 'phone')->ignore($this->admin, $this->column_id)],
             'status' => ['bail', 'nullable', 'integer', Rule::in(StatusEnum::asArray())],
-            'branch_id' => ['bail', 'required', Rule::exists(Branch::class, $this->column_id)],
-            'role' => ['bail', 'required', 'integer', Rule::in(RoleEnum::asArray())],
+            // 'branch_id' => ['bail', 'required', Rule::exists(Branch::class, $this->column_id)],
+            'role' => ['bail', 'required', 'string'],
             'image' => ['bail', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
