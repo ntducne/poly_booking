@@ -7,6 +7,8 @@ use App\Models\Admin;
 use App\Modules\Staff\Requests\StoreAdminRequest;
 use App\Modules\Staff\Requests\UpdateAdminRequest;
 use App\Modules\Staff\Resources\StaffResource;
+use App\Modules\User\Requests\ChangePasswordRequest;
+use App\Modules\User\Requests\UpdateProfileRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -213,5 +215,76 @@ class AdminController extends Controller
         }
     }
 
+    public function profile(Request $request)
+    {
+        try{
+            $admin = $request->user();
+            return new StaffResource($admin);
+        } catch (Exception $exception){
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status'  => false,
+                'message' => 'Lỗi !'
+            ]);
+        }
+    }
 
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        try{
+            $admin = $request->user();
+            $input = $request->validated();
+            $image = $request->file('image');
+            if ($image) {
+                $this->DeleteImage($admin['image']);
+                $uploadImage = $this->UploadImage($image, 'admin');
+                $input['image'] = $uploadImage;
+            } else {
+                $input['image'] = $admin['image'];
+            }
+            $admin->fill($input)->save();
+            return response()->json([
+                'status'   => 'success',
+                'message' => 'Cập nhập nhân viên thành công !',
+                'data'    => new StaffResource($admin)
+            ]);
+        } catch (Exception $exception){
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status'  => false,
+                'message' => 'Lỗi !'
+            ]);
+        }
+
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        try{
+            $admin = $request->user();
+            $input = $request->all();
+            if (!Hash::check($input['old_password'], $admin->password)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Mật khẩu cũ không đúng !',
+                    'data' => null
+                ]);
+            }
+            $admin->password = Hash::make($input['new_password']);
+            $admin->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Cập nhập mật khẩu thành công !',
+                'data' => null
+            ]);
+        } catch (Exception $exception){
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status'  => false,
+                'message' => 'Lỗi !'
+            ]);
+
+        }
+
+    }
 }
