@@ -43,7 +43,6 @@ function App() {
         <Route path="user" element={<LayoutProfile />}>
           <Route path="room-booked" element={<RoomBooked />} />
           <Route path="profile" element={<Edit />} />
-          <Route path="profile/roomBooked/:id" element={<DetailRoomBooked />} />
         </Route>
         <Route path="/rooms" element={<LayoutClient2 />}>
           <Route index element={<Rooms />} />
