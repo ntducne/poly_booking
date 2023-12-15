@@ -28,8 +28,6 @@ const statisticalsApi = createApi({
           })
           .join("&");
         const url = `/statisticals${queryParams ? `?${queryParams}` : ""}`;
-        console.log("url: " + url);
-
         return {
           method: "GET",
           url: url,
@@ -44,5 +42,6 @@ const statisticalsApi = createApi({
   }),
 });
 
-export const { useStatisticalsQuery , useStatisticalsChartQuery } = statisticalsApi;
+export const { useStatisticalsQuery, useStatisticalsChartQuery } =
+  statisticalsApi;
 export default statisticalsApi;

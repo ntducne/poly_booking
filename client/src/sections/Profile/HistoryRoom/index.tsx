@@ -15,8 +15,6 @@ const orderedStatus = [
 
 export default function HistoryRoom({}: Props) {
   const [data, setData] = useState<any>([]);
-  console.log(data);
-
   const {
     data: dataRoom,
     isLoading,
@@ -46,10 +44,10 @@ export default function HistoryRoom({}: Props) {
         <div>
           {data?.map((item: any) => (
             <div className="px-5">
-              <div className="border-t pt-[30px] flex gap-[30px] pb-[30px] ">
+              <div className="border-t pt-[30px] flex flex-col md:flex-row gap-[30px] pb-[30px] ">
                 <Link to={`/user/profile/roomBooked/${item?.id}`}>
                   <img
-                    className="max-w-[200px] max-h-[200px] overflow-hidden object-cover rounded-[10px]"
+                    className="w-full md:max-w-[200px] max-h-[200px] overflow-hidden object-cover rounded-[10px]"
                     src={
                       "https://www.imgacademy.com/sites/default/files/legacy-hotel-rendering-guest-room.jpg"
                     }

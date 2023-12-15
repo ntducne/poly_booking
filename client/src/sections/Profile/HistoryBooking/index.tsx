@@ -14,7 +14,6 @@ export default function HistoryBooking({}: Props) {
   } = useGetHistoryBookingQuery({
     userId: "someUserId",
   });
-  console.log(data);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,10 +37,10 @@ export default function HistoryBooking({}: Props) {
         <div>
           {data?.map((item: any) => (
             <div className="px-5">
-              <div className="border-t pt-[30px] flex gap-[30px] pb-[30px] ">
+              <div className="border-t pt-[30px] flex-col md:flex-row  flex gap-[30px] pb-[30px] ">
                 <Link to={`/user/profile/roomBooked/${item?.id}`}>
                   <img
-                    className="max-w-[200px] max-h-[200px] overflow-hidden object-cover rounded-[10px]"
+                    className="w-full md:max-w-[200px] max-h-[200px] overflow-hidden object-cover rounded-[10px]"
                     src={
                       "https://www.imgacademy.com/sites/default/files/legacy-hotel-rendering-guest-room.jpg"
                     }

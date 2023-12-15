@@ -23,7 +23,6 @@ import {
 const ListBranches = () => {
   const { data, isLoading, refetch } = useGetAllBranchesQuery({});
   const [dataFetching, setDataFetching] = useState<any>([]);
-  // console.log(data?.data);
   const [deleteBranch] = useDeleteBranchMutation();
 
   useEffect(() => {
@@ -91,9 +90,7 @@ const ListBranches = () => {
     // filters,
     // sorter,
     // extra
-    {
-      // console.log("params", pagination, filters, sorter, extra);
-    };
+    {};
 
   const remove = (id: any) => {
     try {
@@ -109,8 +106,6 @@ const ListBranches = () => {
             deleteBranch(id)
               .unwrap()
               .then((data) => {
-                console.log(id);
-                console.log(data);
                 if (data.status === "success") {
                   refetch();
                   swal("You have successfully deleted", {

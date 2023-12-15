@@ -26,8 +26,6 @@ const formItemLayout = {
 
 const EditRoomType = () => {
   const { id } = useParams();
-  console.log(id);
-
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { data, isLoading, refetch } = useGetDetailRoomTypeQuery(id);
@@ -69,7 +67,11 @@ const EditRoomType = () => {
     form.setFieldsValue(data?.data);
   }, [isLoading, data?.data]);
   if (isLoading) {
-    return <><Skeleton/></>;
+    return (
+      <>
+        <Skeleton />
+      </>
+    );
   }
 
   return (

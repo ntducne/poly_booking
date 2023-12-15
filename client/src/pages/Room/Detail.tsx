@@ -1,4 +1,8 @@
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  FileImageOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { Button, DatePicker, Divider, Form, Rate, Select, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import TextArea from "antd/es/input/TextArea";
@@ -17,6 +21,7 @@ import FormatPrice from "../../utils/FormatPrice";
 
 const { RangePicker } = DatePicker;
 const Detail = () => {
+  const [imagePreviews, setImagePreviews] = useState<any>([]);
   const { slug } = useParams();
   const { data, isLoading, refetch } = useGetDetailQuery(slug);
   const [cookies] = useCookies(["userInfo"]);
@@ -25,6 +30,33 @@ const Detail = () => {
   const [commentForm] = useForm();
   const [searchRoom] = useSearchRoomsMutation();
   const [dataSearch, setDataSearch] = useState<any>({});
+  const handleImageChange = (e: any) => {
+    const files = e.target.files;
+    if (files.length > 0 && imagePreviews.length < 4) {
+      const newPreviews = Array.from(files).map((file: any) => {
+        const reader = new FileReader();
+
+        return new Promise((resolve) => {
+          reader.onloadend = () => {
+            resolve(reader.result);
+          };
+
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(newPreviews).then((previews) => {
+        setImagePreviews([...imagePreviews, ...previews]);
+      });
+    }
+  };
+
+  const handleRemoveImage = (index: any) => {
+    const updatedPreviews = [...imagePreviews];
+    updatedPreviews.splice(index, 1);
+    setImagePreviews(updatedPreviews);
+  };
+
   const { data: dataBranches, isLoading: branchLoading } = useGetBranchesQuery(
     {}
   );
@@ -37,7 +69,24 @@ const Detail = () => {
 
   const onFinishComment = (values: any) => {
     if (values) {
-      postComment({ ...values, room_id: data.room.id })
+      const formData = new FormData();
+      imagePreviews.forEach((preview: any, index: any) => {
+        const base64Data = preview.split(",")[1];
+        const binaryData = atob(base64Data);
+        const uint8Array = new Uint8Array(binaryData.length);
+        for (let i = 0; i < binaryData.length; i++) {
+          uint8Array[i] = binaryData.charCodeAt(i);
+        }
+
+        // Create Blob and File objects
+        const blob = new Blob([uint8Array], { type: "image/jpeg" });
+        const file = new File([blob], `image_${index}.jpg`);
+        formData.append(`images[]`, file);
+      });
+      formData.append(`rate`, values?.rate);
+      formData.append(`comment`, values?.commet);
+      formData.append(`room_id `, data?.room?.id);
+      postComment({ ...values, room_id: data?.room?.id })
         .unwrap()
         .then(() => {
           message.success("Đánh giá thành công");
@@ -46,10 +95,19 @@ const Detail = () => {
         })
         .catch((error) => {
           console.log(error);
-          message.error("Đánh giá thành ôcng");
+          if (error?.data?.message == "Room not found") {
+            return message.error(
+              "Không thể đánh giá phòng khi chưa trải nghiệm"
+            );
+          }
+          message.error("Đánh giá không thành công");
         });
     }
   };
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const onFinishFailedComment = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -358,14 +416,46 @@ const Detail = () => {
               >
                 <Rate allowHalf />
               </Form.Item>
+              <div className="text-[18px] cursor-pointer ml-1">
+                <label htmlFor="imgUp" className="!text-[20px]">
+                  <FileImageOutlined />
+                </label>
+                <input
+                  type="file"
+                  name=""
+                  multiple
+                  id="imgUp"
+                  className="!hidden"
+                  onChange={handleImageChange}
+                />
+              </div>
+              <div className="flex bg-white">
+                {imagePreviews.map((item: any, index: any) => (
+                  <div className="relative mt-2 overflow-hidden p-3">
+                    <img
+                      src={item}
+                      alt=""
+                      className=" object-cover rounded w-[150px] h-[100px]"
+                    />
+
+                    <div
+                      onClick={() => handleRemoveImage(index)}
+                      className="absolute bottom-[75%] right-[2%] cursor-pointer bg-white rounded-full px-2 py-1 shadow-lg"
+                    >
+                      <CloseOutlined />
+                    </div>
+                  </div>
+                ))}
+              </div>
               <Form.Item
                 name="comment"
                 rules={[{ required: true, message: "Vui lòng nhập bình luận" }]}
+                className=""
               >
                 <TextArea
                   rows={4}
                   placeholder="Đánh giá của bạn...."
-                  className="pt-3"
+                  className="pt-3 bg-none outline-none border-none"
                 />
               </Form.Item>
 

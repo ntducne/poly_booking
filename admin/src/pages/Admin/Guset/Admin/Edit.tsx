@@ -1,18 +1,10 @@
 // import React from "react";
 
-import {
-  Form,
-  Input,
-  Button,
-  Typography,
-  InputNumber,
-  Space,
-} from "antd";
+import { Form, Input, Button, Typography, InputNumber, Space } from "antd";
 // import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link } from "react-router-dom";
 // import { useGetDetailStaffsQuery } from "../../../../api/account/staffs";
-
 
 const { Title, Text } = Typography;
 
@@ -22,22 +14,7 @@ const formItemLayout = {
 };
 
 const EditAdmin = () => {
-  
-  // const { id } = useParams();
-    
-  // const { data  : dataAdmin , isLoading} = useGetDetailStaffsQuery(id || "");
-  
-  // if(isLoading){
-  //   return <div>Loading...</div>
-  // }
-
-  // console.log(dataAdmin, "data");
-  
-  
-  const onFinish = (values: any) => {
-    console.log(values.image);
-    // Xử lý dữ liệu khi nhấn nút Submit
-  };
+  const onFinish = () => {};
 
   return (
     <div>

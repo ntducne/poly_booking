@@ -13,17 +13,19 @@ import { useState } from "react";
 import dayjs from "dayjs";
 // import type { DatePickerProps } from 'antd';
 import ChartOne from "../../../component/Charts/one";
-import { useStatisticalsChartQuery, useStatisticalsQuery } from "../../../api/statisticals";
+import {
+  useStatisticalsChartQuery,
+  useStatisticalsQuery,
+} from "../../../api/statisticals";
 import { Skeleton } from "antd";
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 import formatMoneyVN from "../../../config/formatMoneyVN";
-import moment from 'moment';
+import moment from "moment";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { MdMeetingRoom } from "react-icons/md";
 import { MdNoMeetingRoom } from "react-icons/md";
 import { MdRoomPreferences } from "react-icons/md";
-
 
 const Dashboard = () => {
   const [formatDay] = useState("DD/MM/YYYY");
@@ -39,10 +41,8 @@ const Dashboard = () => {
     day: dayjs().format("YYYY-MM-DD"),
     status: [3, 4],
   });
-  const { data : dataChart , isLoading : loadingChart } = useStatisticalsChartQuery<any>([]);
-  console.log("dataChart", dataChart);
-  
-
+  const { data: dataChart, isLoading: loadingChart } =
+    useStatisticalsChartQuery<any>([]);
   const { data: dataRevenue, isLoading } = useStatisticalsQuery({
     module: "revenue",
     ...query,
@@ -58,7 +58,6 @@ const Dashboard = () => {
     }
   );
 
-
   const [typeStat, setTypeStat] = useState("");
   const handleSelectStat = (value: string) => {
     form.setFieldsValue({ typeValue: "" });
@@ -73,10 +72,6 @@ const Dashboard = () => {
 
     const { type, typeValue } = values;
     if (type === "daily") {
-      console.log({
-        type,
-        day: dayjs(typeValue.$d).format("YYYY-MM-DD"),
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -86,11 +81,6 @@ const Dashboard = () => {
       setQuery(dataQuery);
     }
     if (type === "weekly") {
-      console.log({
-        type,
-        week: dayjs(typeValue.$d).format("w"),
-        year: dayjs(typeValue.$d).format("YYYY"),
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -101,10 +91,6 @@ const Dashboard = () => {
       setQuery(dataQuery);
     }
     if (type === "monthly") {
-      console.log({
-        type,
-        month: dayjs(typeValue.$d).format("YYYY-MM"),
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -114,10 +100,6 @@ const Dashboard = () => {
       setQuery(dataQuery);
     }
     if (type === "yearly") {
-      console.log({
-        type,
-        year: dayjs(typeValue.$d).format("YYYY"),
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -143,11 +125,6 @@ const Dashboard = () => {
       const formatDay = typeValue?.map((item: any) =>
         dayjs(item.$d).format("YYYY-w")
       );
-      console.log({
-        type,
-        fromWeek: formatDay?.[0],
-        toWeek: formatDay?.[1],
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -161,11 +138,6 @@ const Dashboard = () => {
       const formatMonth = typeValue?.map((item: any) =>
         dayjs(item.$d).format("YYYY-MM")
       );
-      console.log({
-        type,
-        fromMonth: formatMonth?.[0],
-        toMonth: formatMonth?.[1],
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -179,11 +151,6 @@ const Dashboard = () => {
       const formatYear = typeValue?.map((item: any) =>
         dayjs(item.$d).format("YYYY")
       );
-      console.log({
-        type,
-        fromYear: formatYear?.[0],
-        toYear: formatYear?.[1],
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -206,7 +173,7 @@ const Dashboard = () => {
     <>
       <Page title={`Trang chủ`}>
         <Form
-        className=""
+          className=""
           form={form}
           name="basic"
           onFinish={submitStat}
@@ -258,7 +225,9 @@ const Dashboard = () => {
                   className="w-[220px]"
                   placeholder="Chọn ngày"
                   format={formatDay}
-                  disabledDate={(current) => current && current > moment().endOf('day')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("day")
+                  }
                 />
               )}
               {typeStat === "weekly" && (
@@ -267,7 +236,9 @@ const Dashboard = () => {
                   picker="week"
                   placeholder="Chọn tuần"
                   format="w/YYYY"
-                  disabledDate={(current) => current && current > moment().endOf('week')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("week")
+                  }
                 />
               )}
               {typeStat === "monthly" && (
@@ -276,7 +247,9 @@ const Dashboard = () => {
                   className="w-[220px]"
                   placeholder="Chọn tháng"
                   format={formatMonth}
-                  disabledDate={(current) => current && current > moment().endOf('month')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("month")
+                  }
                 />
               )}
               {typeStat === "yearly" && (
@@ -284,15 +257,19 @@ const Dashboard = () => {
                   picker="year"
                   className="w-[220px]"
                   placeholder="Chọn năm"
-                  disabledDate={(current) => current && current > moment().endOf('year')}
-                  />
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("year")
+                  }
+                />
               )}
               {typeStat === "day_to_day" && (
                 <RangePicker
                   className="w-[220px]"
                   format={formatDay}
                   placeholder={["Từ ngày", "Đến ngày"]}
-                  disabledDate={(current) => current && current > moment().endOf('day')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("day")
+                  }
                 />
               )}
               {typeStat === "week_to_week" && (
@@ -301,7 +278,9 @@ const Dashboard = () => {
                   picker="week"
                   format="w/YYYY"
                   placeholder={["Từ tuần", "Đến tuần"]}
-                  disabledDate={(current) => current && current > moment().endOf('week')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("week")
+                  }
                 />
               )}
               {typeStat === "month_to_month" && (
@@ -310,7 +289,9 @@ const Dashboard = () => {
                   className="w-[220px]"
                   format={formatMonth}
                   placeholder={["Từ tháng", "Đến tháng"]}
-                  disabledDate={(current) => current && current > moment().endOf('month')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("month")
+                  }
                 />
               )}
               {typeStat === "year_to_year" && (
@@ -318,7 +299,9 @@ const Dashboard = () => {
                   picker="year"
                   className="w-[220px]"
                   placeholder={["Từ năm", "Đến năm"]}
-                  disabledDate={(current) => current && current > moment().endOf('year')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("year")
+                  }
                 />
               )}
             </Form.Item>
@@ -344,7 +327,7 @@ const Dashboard = () => {
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <FaMoneyBillTrendUp  className="text-3xl" />
+                  <FaMoneyBillTrendUp className="text-3xl" />
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
@@ -366,7 +349,9 @@ const Dashboard = () => {
                 <p className="flex gap-2 text-xs">
                   <span className="font-medium"> 67.81% </span>
 
-                  <span className="text-gray-500">Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
@@ -375,11 +360,13 @@ const Dashboard = () => {
                 <div>
                   <p className="text-sm text-gray-500">Lượng đặt phòng</p>
 
-                  <p className="text-2xl font-medium text-gray-900">{dataBooking?.book}</p>
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataBooking?.book}
+                  </p>
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MdMeetingRoom  className="text-3xl" />
+                  <MdMeetingRoom className="text-3xl" />
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
@@ -401,7 +388,10 @@ const Dashboard = () => {
                 <p className="flex gap-2 text-xs">
                   <span className="font-medium"> 67.81% </span>
 
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
@@ -410,11 +400,13 @@ const Dashboard = () => {
                 <div>
                   <p className="text-sm text-gray-500">Lượng huỷ phòng</p>
 
-                  <p className="text-2xl font-medium text-gray-900">{dataBooking?.cancel}</p>
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataBooking?.cancel}
+                  </p>
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MdNoMeetingRoom  className="text-3xl" />
+                  <MdNoMeetingRoom className="text-3xl" />
                 </span>
               </div>
 
@@ -445,7 +437,9 @@ const Dashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-500">Tổng số lượng phòng</p>
-                  <p className="text-2xl font-medium text-gray-900">{dataRoom?.total_room}</p>
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataRoom?.total_room}
+                  </p>
                 </div>
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
                   <MdRoomPreferences className="text-3xl" />
@@ -470,7 +464,10 @@ const Dashboard = () => {
                 <p className="flex gap-2 text-xs">
                   <span className="font-medium"> 67.81% </span>
 
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
@@ -478,8 +475,10 @@ const Dashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-500">Số phòng còn trống</p>
-              
-                  <p className="text-2xl font-medium text-gray-900">{dataRoom?.room_is_not_book}</p>
+
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataRoom?.room_is_not_book}
+                  </p>
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
@@ -505,7 +504,10 @@ const Dashboard = () => {
                 <p className="flex gap-2 text-xs">
                   <span className="font-medium"> 67.81% </span>
 
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
@@ -516,11 +518,13 @@ const Dashboard = () => {
                     Số lượng phòng đang đặt
                   </p>
 
-                  <p className="text-2xl font-medium text-gray-900">{dataRoom?.room_is_book}</p>
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataRoom?.room_is_book}
+                  </p>
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MdRoomPreferences  className="text-3xl" />
+                  <MdRoomPreferences className="text-3xl" />
                 </span>
               </div>
 
@@ -543,7 +547,10 @@ const Dashboard = () => {
                 <p className="flex gap-2 text-xs">
                   <span className="font-medium"> 67.81% </span>
 
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>

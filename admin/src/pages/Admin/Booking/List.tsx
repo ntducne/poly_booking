@@ -19,8 +19,6 @@ import { useGetBookingQuery } from "../../../api/booking";
 const ListBooking = () => {
   const { data: dataBooking, isLoading } = useGetBookingQuery({});
 
-  console.log(dataBooking, "dataBooking");
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -133,42 +131,7 @@ const ListBooking = () => {
       price_per_night: item.price_per_night,
     })
   );
-  console.log("data", data);
-
-  const onChange: TableProps<DataType>["onChange"] = () =>
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-    {
-      // console.log("params", pagination, filters, sorter, extra);
-    };
-
-  // const remove = (id: any) => {
-  //   try {
-  //     swal({
-  //       title: "Are you sure you want to delete?",
-  //       text: "You cannot undo after deleting!",
-  //       icon: "warning",
-  //       buttons: ["Cancel", "Delete"],
-  //       dangerMode: true,
-  //     })
-  //       .then((willDelete) => {
-  //         if (willDelete) {
-  //           // removeComment(id);
-  //           swal("You have successfully deleted", {
-  //             icon: "success",
-  //           });
-  //         }
-  //       })
-  //       .catch(() => {
-  //         swal("Error", {
-  //           icon: "error",
-  //         });
-  //       });
-  //   } catch (error) {}
-  // };
-
+  const onChange: TableProps<DataType>["onChange"] = () => {};
   return (
     <Page title={`Đặt phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">

@@ -37,23 +37,15 @@ export default function RoomBooking() {
   const [isDisabledForm, setDisableForm] = useState(false);
   const [searchRoom] = useSearchRoomMutation();
   const { data: dataRoomtype, isLoading } = useGetAllRoomTypeQuery({});
-  // const { data: dataBranches, isLoading: loadingBranch } =
-  //   useGetAllBranchesQuery({});
-  
-  const [dataDetailRoom , setDataDetailRoom] = useState(null);
+  const [dataDetailRoom, setDataDetailRoom] = useState(null);
   const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
   const [bookingRoom] = useBookingRoomMutation();
-
-  // const showModal = () => {
-  //   setIsModalOpen(true);
-  // };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
   const showModalAddPeople = (data_room: RoomInterface) => {
-    // console.log("1");
     setDataDetailRoom(null);
 
     setDataDetailRoom(data_room as any);
@@ -135,8 +127,6 @@ export default function RoomBooking() {
     setLoading(true);
     setDisableForm(true);
     setDataRoom([]);
-    console.log("1");
-
     searchRoom({
       room_type_id: values.room_type,
       amount_room: values.amount_room,
@@ -147,7 +137,6 @@ export default function RoomBooking() {
     })
       .unwrap()
       .then((res: any) => {
-        console.log("111111111");
         if (res.status === "success") {
           const valueRoom = res.data;
           setDataRoom((prevDataRoom) => [
@@ -172,7 +161,7 @@ export default function RoomBooking() {
         }
       })
       .catch((err: any) => {
-        console.log(err);        
+        console.log(err);
         message.error(err?.data?.error?.amount_room);
       })
       .finally(() => {
@@ -182,11 +171,9 @@ export default function RoomBooking() {
   };
 
   const onBooking = (values: any) => {
-    console.log("Received values of form:", values);
-    console.log("data", form.getFieldsValue());
     const dataSearch = form.getFieldsValue();
 
-    const dataBooking : any = {
+    const dataBooking: any = {
       room_id: dataDetailRoom?.id,
       checkin: dataSearch?.days[0].format("YYYY-MM-DD"),
       checkout: dataSearch?.days[1].format("YYYY-MM-DD"),

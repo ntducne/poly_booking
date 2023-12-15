@@ -167,7 +167,6 @@ const ListRoom = () => {
             deleteRoom(id)
               .unwrap()
               .then((data) => {
-                console.log(data);
                 if (data.status === "success") {
                   refetch();
                   swal("You have successfully deleted", {

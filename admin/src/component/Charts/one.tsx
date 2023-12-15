@@ -1,8 +1,6 @@
 import ReactApexChart from "react-apexcharts";
 
 export default function ChartOne(props: any) {
-  console.log("ChartOne", props?.data);
-
   function generateMonths(count: any) {
     const months = [];
     const today = new Date();

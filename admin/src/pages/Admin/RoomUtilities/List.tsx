@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Space, Table, } from "antd";
+import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
-  room_id: string
+  room_id: string;
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
@@ -16,20 +16,19 @@ import { useGetAllUtilitieQuery } from "../../../api/utilities";
 
 const ListRoomUtilities = () => {
   const { data, isLoading } = useGetAllUtilitieQuery({});
-  const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data, "data");
-
-
+  const [dataFetching, setDataFetching] = useState<any>([]);
   useEffect(() => {
-    setDataFetching(data?.data?.data?.map((item: any) => {
-      return {
-        key: item._id,
-        name: item.name,
-        room_id: item.room_id,
-      }
-      // refetch()
-    }))
-  }, [isLoading, data?.data?.data])
+    setDataFetching(
+      data?.data?.data?.map((item: any) => {
+        return {
+          key: item._id,
+          name: item.name,
+          room_id: item.room_id,
+        };
+        // refetch()
+      })
+    );
+  }, [isLoading, data?.data?.data]);
 
   const columns: ColumnsType<any> = [
     {
@@ -88,17 +87,9 @@ const ListRoomUtilities = () => {
   //   },
   // ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
   const remove = (id: any) => {
-    // console.log(id);
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -109,10 +100,6 @@ const ListRoomUtilities = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            // removeComment(id);
-
-            console.log(id);
-
             swal("You have successfully deleted", {
               icon: "success",
             });
@@ -123,7 +110,7 @@ const ListRoomUtilities = () => {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (

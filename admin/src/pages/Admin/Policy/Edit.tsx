@@ -1,15 +1,11 @@
 // import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Typography,
-  Space,
-} from "antd";
+import { Form, Input, Button, Select, Typography, Space } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useGetDetailPolicyQuery, useUpdatePolicyMutation } from "../../../api/policy";
+import {
+  useGetDetailPolicyQuery,
+  useUpdatePolicyMutation,
+} from "../../../api/policy";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { useGetRoomsQuery } from "../../../api/room";
@@ -24,40 +20,35 @@ const formItemLayout = {
 
 const EditPolicy = () => {
   const { id } = useParams();
-  console.log(id);
-
-  const navigate = useNavigate()
-  const [form] = Form.useForm()
-  const { data: dataRooms, isLoading } = useGetRoomsQuery({})
-  const { data, refetch } = useGetDetailPolicyQuery(id)
-  console.log(data);
-
-  const [updateData] = useUpdatePolicyMutation()
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const { data: dataRooms, isLoading } = useGetRoomsQuery({});
+  const { data, refetch } = useGetDetailPolicyQuery(id);
+  const [updateData] = useUpdatePolicyMutation();
 
   const onFinish = (values: any) => {
-    console.log(values);
     // Xử lý dữ liệu khi nhấn nút Submit
     const data = {
       ...values,
-    }
+    };
     const dataUpload = {
       id,
-      ...data
-    }
+      ...data,
+    };
 
     updateData(dataUpload)
       .unwrap()
       .then((result: any) => {
-        if (result.status === 'success') {
-          toast.success('Cập nhật thông tin loại phòng thành công');
-          navigate('/policy');
+        if (result.status === "success") {
+          toast.success("Cập nhật thông tin loại phòng thành công");
+          navigate("/policy");
         } else {
           toast.error(result.error.message);
         }
       })
       .catch((error) => {
         // Xử lý lỗi nếu có lỗi xảy ra trong quá trình gọi mutation hoặc xử lý kết quả
-        toast.error('Có lỗi xảy ra khi cập nhật thông tin loại phòng');
+        toast.error("Có lỗi xảy ra khi cập nhật thông tin loại phòng");
         console.error(error);
       });
   };
@@ -68,12 +59,11 @@ const EditPolicy = () => {
   }, [id]);
 
   useEffect(() => {
-    form.setFieldsValue(data?.data)
-  }, [isLoading, data?.data])
+    form.setFieldsValue(data?.data);
+  }, [isLoading, data?.data]);
   if (isLoading) {
-    return <>loading...</>
+    return <>loading...</>;
   }
-
 
   return (
     <div>
@@ -120,15 +110,22 @@ const EditPolicy = () => {
           >
             <Select>
               {dataRooms?.data?.map((item: any) => {
-                return <Option key={item.id} value={item.id}>{item.name}</Option>
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                );
               })}
             </Select>
           </Form.Item>
 
-
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-              <Button className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
+              <Button
+                className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
+                type="default"
+                htmlType="submit"
+              >
                 <AiOutlineCheck className="text-[#fff] " />
                 <Text className=" text-[#fff] ml-1">Thêm</Text>
               </Button>
