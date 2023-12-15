@@ -27,9 +27,7 @@ const formItemLayout = {
 };
 
 const AddBooking = () => {
-  const onFinish = (values: any) => {
-    // Xử lý dữ liệu khi nhấn nút Submit
-  };
+ 
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -72,7 +70,6 @@ const AddBooking = () => {
         <Form
           name="validate_other"
           {...formItemLayout}
-          onFinish={onFinish}
           initialValues={{
             "input-number": 1,
             "checkbox-group": ["A", "B"],

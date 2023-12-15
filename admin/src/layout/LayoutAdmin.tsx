@@ -57,8 +57,7 @@ const LayoutAdmin = () => {
       setPermissions(parsed ? parsed[3] : null);
     }
   }, []);
-  console.log("role",role);
-  console.log("permissions",permissions);
+
   
 
 

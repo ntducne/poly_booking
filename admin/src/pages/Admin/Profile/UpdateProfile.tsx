@@ -1,8 +1,7 @@
 import { Form, Input, message } from "antd";
-import { useEffect } from "react";
-type Props = {};
 
-const UpdateProfile = (props: any) => {
+
+const UpdateProfile = () => {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
     // updateProfile(values)
