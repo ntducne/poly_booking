@@ -58,7 +58,7 @@ const LayoutAdmin = () => {
 
   const [title, setTitle] = useState<any>(" ");
   useEffect(() => {
-    location.pathname === "/" && setTitle("Thống kê");
+    location.pathname === "/" && setTitle("Trang chủ");
     location.pathname === "/branches" && setTitle("Chi nhánh");
     location.pathname === "/room" && setTitle("Phòng");
     location.pathname === "/room/add" && setTitle("Thêm phòng");
@@ -80,7 +80,7 @@ const LayoutAdmin = () => {
 
   const items: MenuItem[] = [
     getItem(
-      "Thống kê",
+      "Trang chủ",
       "/",
       <Link to={`/`}>
         <PieChartOutlined />

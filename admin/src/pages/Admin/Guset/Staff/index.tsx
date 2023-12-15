@@ -9,19 +9,22 @@ interface DataType {
   address: string;
 }
 import Page from "../../../../component/page";
-
+import {
+  useAssignPermissionMutation,
+  useGetAllStaffsQuery,
+  useGetDetailStaffsQuery,
+} from "../../../../api/account/staffs";
 import { useGetPermissonQuery } from "../../../../api/permission";
 import { AiOutlinePlus } from "react-icons/ai";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
-import { useGetAllAdminsQuery, useGetDetailAdminsQuery,useAssignPermissionMutation } from "../../../../api/account/admin";
 
-const ListAdmin = () => {
-  const { data: staffs, isLoading } = useGetAllAdminsQuery({});
+const ListStaff = () => {
+  const { data: staffs, isLoading } = useGetAllStaffsQuery({});
   const { data: valuePermission } = useGetPermissonQuery([]);
   const [isStaff, setIsStaff] = useState("");
-  const { data: staff, isLoading: loadingStaff } = useGetDetailAdminsQuery(
+  const { data: staff, isLoading: loadingStaff } = useGetDetailStaffsQuery(
     isStaff || skipToken
   );
 
@@ -259,4 +262,4 @@ const ListAdmin = () => {
   );
 };
 
-export default ListAdmin;
+export default ListStaff;

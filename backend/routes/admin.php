@@ -48,8 +48,24 @@ Route::get('/contact', function(){
     }
     return response()->json($newContacts);
 })->name('contact');
-Route::get('/statisticals', [DashboardController::class, 'statistical']);
-Route::get('/chart', [DashboardController::class, 'chartRevenue']);
+
+Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
+
+    Route::resource('branches', BranchController::class)->except(['create', 'edit']);
+
+    Route::post('store', [AdminController::class, 'store']);
+
+    Route::get('', [AdminController::class, 'index']);
+
+    Route::get('/{id}', [AdminController::class, 'show']);
+
+    Route::put('update/{id}', [AdminController::class, 'update']);
+
+    Route::post('delete/{id}', [AdminController::class, 'destroy']);
+    
+    Route::post('assignPermissionAdmin/{id}', [AdminController::class, 'assignPermission']);
+});
+
 Route::get('/room/search', [BookingController::class, 'search'])->name('search');
 Route::middleware(CheckPermission::class)->group(function () {
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);
