@@ -7,27 +7,23 @@ import Register from "./pages/Auth/register";
 import ResetPassword from "./pages/Auth/reset-passwork";
 import Home from "./pages/Home";
 import Detail from "./pages/Room/Detail";
-import RoomBooked from "./pages/RoomBooked";
 import Rooms from "./pages/Rooms";
 import Contact from "./pages/contact";
 import Demo from "./pages/demo";
-
 import LayoutAuth from "./layouts/Auth";
 import PaymentLayout from "./layouts/Payment";
 import Edit from "./pages/InforUser/Edit";
-// import PaymentView from "./pages/Payment";
+import LayoutClient2 from "./layouts/Layout2";
+import LayoutProfile from "./layouts/LayoutProfile";
+import GoogleCallback from "./pages/Auth/googleCallback";
 import AccommodationBook from "./pages/Payment/accommodation";
 import AccommodationReview from "./pages/Payment/accommodation/review";
 import PaymentProcess from "./pages/Payment/process";
-import SearchOrder from "./pages/SearchOrder";
-import LayoutClient2 from "./layouts/Layout2";
-import DetailRoomBooked from "./pages/DetailRoomBooked";
-import LayoutProfile from "./layouts/LayoutProfile";
-import StatusPaymentVnpay from "./pages/Payment/status/vnpay";
+import StatusPayment from "./pages/Payment/status";
 import StatusPaymentMomo from "./pages/Payment/status/momo";
 import StatusPaymentPaypal from "./pages/Payment/status/paypal";
-import StatusPayment from "./pages/Payment/status";
-import GoogleCallback from "./pages/Auth/googleCallback";
+import StatusPaymentVnpay from "./pages/Payment/status/vnpay";
+import SearchOrder from "./pages/SearchOrder";
 
 function App() {
   return (
@@ -41,7 +37,6 @@ function App() {
           <Route path="search-order" element={<SearchOrder />} />
         </Route>
         <Route path="user" element={<LayoutProfile />}>
-          <Route path="room-booked" element={<RoomBooked />} />
           <Route path="profile" element={<Edit />} />
         </Route>
         <Route path="/rooms" element={<LayoutClient2 />}>
