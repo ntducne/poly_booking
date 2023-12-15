@@ -9,6 +9,7 @@ use App\Modules\Staff\Requests\UpdateAdminRequest;
 use App\Modules\Staff\Resources\StaffResource;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
@@ -51,6 +52,7 @@ class AdminController extends Controller
                 $object['role'] = $request->user()->role === 'super_admin' ? 'admin' : 'staff';
                 $object['branch_id'] = $request->user()->role === 'super_admin' ? $request->branch_id : $request->user()->branch_id;
                 $object['created_by'] = $request->user()->id;
+                $object['password'] = Hash::make($object['password']);
                 $admin = new Admin($object);
                 $admin->save();
                 $response = [

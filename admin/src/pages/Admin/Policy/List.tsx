@@ -20,11 +20,6 @@ const ListPolicy = () => {
 
   const { data, isLoading } = useGetAllPolicyQuery({});
   const [dataFetching, setDataFetching] = useState<any>([]);
-<<<<<<< HEAD
-=======
-  // console.log(data?.data?.data);
-  // console.log(dataFetching);
->>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
 
   useEffect(() => {
     setDataFetching(

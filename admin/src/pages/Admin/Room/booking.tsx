@@ -38,14 +38,7 @@ export default function RoomBooking() {
   const [isDisabledForm, setDisableForm] = useState(false);
   const [searchRoom] = useSearchRoomMutation();
   const { data: dataRoomtype, isLoading } = useGetAllRoomTypeQuery({});
-<<<<<<< HEAD
   const [dataDetailRoom, setDataDetailRoom] = useState(null);
-=======
-  // const { data: dataBranches, isLoading: loadingBranch } =
-  //   useGetAllBranchesQuery({});
-  
-  const [dataDetailRoom , setDataDetailRoom] = useState<any>(null);
->>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
   const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
   const [bookingRoom] = useBookingRoomMutation();

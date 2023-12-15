@@ -184,11 +184,6 @@ const ListAdmin = () => {
   }));
 
   const onChange: TableProps<DataType>["onChange"] = () => {};
-<<<<<<< HEAD
-
-  const handleSubmit = (values: any) => {
-    console.log(values);
-=======
 
   const [assignPermission] = useAssignPermissionMutation();
 
@@ -216,7 +211,6 @@ const ListAdmin = () => {
       .catch((err) => {
         console.log(err);
       });
->>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
   };
   return (
     <Page title={`Tài khoản quản trị`}>

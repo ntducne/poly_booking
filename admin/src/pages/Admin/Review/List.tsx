@@ -116,24 +116,9 @@ const ListReview = () => {
     },
   ];
 
-<<<<<<< HEAD
   const onChange: TableProps<DataType>["onChange"] = () => {};
 
   const remove = (id: any) => {
-=======
-  const onChange: TableProps<DataType>["onChange"] = () =>
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-    {
-      // console.log("params", pagination, filters, sorter, extra);
-    };
-
-  const remove = (id: any) => {
-    console.log(id);
-
->>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -144,12 +129,6 @@ const ListReview = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-<<<<<<< HEAD
-=======
-            // removeComment(id);
-            console.log(id);
-
->>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
             swal("You have successfully deleted", {
               icon: "success",
             });

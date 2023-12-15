@@ -24,12 +24,6 @@ import {
 const ListRoomType = () => {
   const { data, isLoading, refetch } = useGetRoomTypeQuery({});
   const [deleteRoomType] = useDeleteRoomTypeMutation();
-<<<<<<< HEAD
-=======
-
-  const [dataFetching, setDataFetching] = useState<any>([]);
-  console.log(data?.data);
->>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
 
   const [dataFetching, setDataFetching] = useState<any>([]);
   useEffect(() => {
@@ -136,19 +130,7 @@ const ListRoomType = () => {
     },
   ];
 
-<<<<<<< HEAD
   const onChange: TableProps<DataType>["onChange"] = () => {};
-=======
-  const onChange: TableProps<DataType>["onChange"] = () =>
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-    {
-      // setCurrentPage(pagination.current || 1);
-      // console.log("params", pagination, filters, sorter, extra);
-    };
->>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
 
   const remove = (id: any) => {
     try {
@@ -164,11 +146,6 @@ const ListRoomType = () => {
             deleteRoomType(id)
               .unwrap()
               .then((data) => {
-<<<<<<< HEAD
-=======
-                console.log(id);
-                console.log(data);
->>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
                 if (data.status === "success") {
                   refetch();
                   swal("You have successfully deleted", {
