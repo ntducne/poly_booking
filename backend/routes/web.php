@@ -12,11 +12,11 @@ Route::get('unauthorized', function (){ return response()->json([
     'message' => 'Unauthorized !'
 ], 401); })->name('unauthorized');
 
-// Route::get('/', function () {
-//     Billing::truncate();
-//     BookDetail::truncate();
-//     Booking::truncate();
-//     RateRoom::truncate();
-// });
+Route::get('/', function () {
+    Billing::truncate();
+    BookDetail::truncate();
+    Booking::truncate();
+    RateRoom::truncate();
+});
 
 Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');

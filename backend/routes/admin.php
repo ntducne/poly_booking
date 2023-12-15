@@ -1,6 +1,4 @@
 <?php
-
-
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\CheckPermission;
 use App\Http\Middleware\CheckRoleAdmin;
@@ -19,13 +17,11 @@ use App\Modules\Staff\Controllers\AdminController;
 use App\Modules\User\Controllers\UserController;
 use App\Modules\Utilities\Controllers\UtilitiesController;
 use Illuminate\Support\Facades\Route;
-
 Route::fallback(function () {
     return response()->json([
         'message' => 'Page Not Found'
     ], 404);
 });
-
 Route::get('/notifications', function(){
     $notification = Notification::all();
     $newNotification = [];
@@ -39,7 +35,6 @@ Route::get('/notifications', function(){
     $newNotification = array_reverse($newNotification);
     return response()->json($newNotification);
 })->name('notifications');
-
 Route::get('/contact', function(){
     $contacts = \App\Models\Contact::all();
     $newContacts = [];
@@ -53,87 +48,47 @@ Route::get('/contact', function(){
     }
     return response()->json($newContacts);
 })->name('contact');
-
-Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
-
-    Route::resource('branches', BranchController::class)->except(['create', 'edit']);
-
-    Route::post('staffs/createAdmin', [AdminController::class, 'store']);
-
-    Route::get('staffs/listAdmin', [AdminController::class, 'index']);
-
-    Route::post('staffs/updateAdmin/{id}', [AdminController::class, 'update']);
-
-    Route::post('staffs/deleteAdmin/{id}', [AdminController::class, 'destroy']);
-    
-    Route::post('staffs/assignPermissionAdmin/{id}', [AdminController::class, 'assignPermission']);
-});
-
+Route::get('/statisticals', [DashboardController::class, 'statistical']);
+Route::get('/chart', [DashboardController::class, 'chartRevenue']);
 Route::get('/room/search', [BookingController::class, 'search'])->name('search');
-
-Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
-
-Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');
-
-
 Route::middleware(CheckPermission::class)->group(function () {
-
-    Route::middleware(CheckRoleAdmin::class)->group(function () {
-    
-        Route::resource('staffs', AdminController::class)->except(['create', 'edit']);
-
-        Route::post('staffs/assignPermission/{id}', [AdminController::class, 'assignPermission'])->name('staffs.assignPermission');
-    
-    });
-
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);
-
     Route::post('rooms/deleteImage', [RoomController::class, 'deleteImageRoom'])->name('rooms.image.delete');
-
     Route::resource('rooms', RoomController::class)->except(['create', 'edit']);
-
     Route::post('rooms/updateImage/{id}', [RoomController::class, 'updateImage'])->name('rooms.image.update');
-
     Route::resource('utilities', UtilitiesController::class)->except(['create', 'edit']);
-
     Route::resource('users', UserController::class)->except(['create', 'edit']);
-
     Route::resource('rates', RatesController::class)->except(['create', 'edit', 'store']);
-
     Route::resource('policies', CancellationPolicyController::class)->except(['create', 'edit']);
-
     Route::resource('services', ServicesController::class)->except(['create', 'edit']);
-
     Route::prefix('billings')->as('billings.')->group(function () {
         Route::get('/', [BillingController::class, 'index'])->name('index');
-
         Route::get('/{id}', [BillingController::class, 'show'])->name('show');
     });
-
     Route::prefix('booking')->as('booking.')->group(function () {
-
         Route::post('/store', [BookingController::class, 'store'])->name('store');
-
         Route::post('/search', [BookingController::class, 'search'])->name('search');
-
         Route::prefix('handle')->as('handle.')->group(function (){
-
             Route::post('/cancel', [BookingController::class, 'cancel'])->name('cancel');
-
             Route::post('/checkin', [BookingController::class, 'checkin'])->name('checkin');
-
             Route::post('/checkout', [BookingController::class, 'checkout'])->name('checkout');
-
             Route::post('/addPeople', [BookingController::class, 'addPeople'])->name('addPeople');
-
             Route::post('/addService', [BookingController::class, 'addService'])->name('addService');
-
             Route::post('/giaHan', [BookingController::class, 'giaHan'])->name('giaHan');
-
         });
-
     });
-
+    Route::middleware(CheckRoleAdmin::class)->group(function () {
+        Route::resource('staffs', AdminController::class)->except(['create', 'edit']);
+        Route::post('staffs/assignPermission/{id}', [AdminController::class, 'assignPermission'])->name('staffs.assignPermission');
+    });
 });
-
+Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
+    Route::resource('branches', BranchController::class)->except(['create', 'edit']);
+    Route::post('store', [AdminController::class, 'store']);
+    Route::get('', [AdminController::class, 'index']);
+    Route::get('/{id}', [AdminController::class, 'show']);
+    Route::put('update/{id}', [AdminController::class, 'update']);
+    Route::post('delete/{id}', [AdminController::class, 'destroy']);
+    Route::post('assignPermission/{id}', [AdminController::class, 'assignPermission']);
+});
 Route::post('/logout', [AuthController::class, 'logout']);

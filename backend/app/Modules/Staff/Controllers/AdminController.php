@@ -76,12 +76,18 @@ class AdminController extends Controller
             ]);
         }
     }
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try{
-            $admin = $this->admin->where('_id', $id)
+
+            if($request->user()->role == 'admin'){
+                $admin = $this->admin->where('_id', $id)
                 ->where('branch_id', request()->user()->branch_id)
                 ->first();
+            }
+            if($request->user()->role == 'super_admin'){
+                $admin = $this->admin->where('_id', $id)->first();
+            }
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
@@ -110,7 +116,14 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request,  $id)
     {
         try{
-            $admin = $this->admin->where('_id', $id)->where('branch_id', request()->user()->branch_id)->first();
+            if($request->user()->role == 'admin'){
+                $admin = $this->admin->where('_id', $id)
+                ->where('branch_id', request()->user()->branch_id)
+                ->first();
+            }
+            if($request->user()->role == 'super_admin'){
+                $admin = $this->admin->where('_id', $id)->first();
+            }
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
@@ -142,12 +155,17 @@ class AdminController extends Controller
         }
 
     }
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try{
-            $admin = $this->admin->where('_id', $id)
+            if($request->user()->role == 'admin'){
+                $admin = $this->admin->where('_id', $id)
                 ->where('branch_id', request()->user()->branch_id)
                 ->first();
+            }
+            if($request->user()->role == 'super_admin'){
+                $admin = $this->admin->where('_id', $id)->first();
+            }
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
