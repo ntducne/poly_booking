@@ -54,7 +54,7 @@ import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
 import Welcome from "./pages/welcome";
 
 function App() {
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState<any>(null);
   useEffect(() => {
     const authUser = cookies().Get("AuthUser");
     if (authUser) {
@@ -62,6 +62,7 @@ function App() {
       return setRole(parsed ? parsed[1].role : null);
     }
   }, []);
+
   return (
     <>
       <Routes>
