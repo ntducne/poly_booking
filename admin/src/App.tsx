@@ -51,6 +51,7 @@ import { cookies } from "./config/cookies";
 import ListAdmin from "./pages/Admin/Guset/Admin/List";
 import AddAdmin from "./pages/Admin/Guset/Admin/Add";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
+import Welcome from "./pages/welcome";
 
 function App() {
   const [role, setRole] = useState(null);
@@ -61,9 +62,6 @@ function App() {
       return setRole(parsed ? parsed[1].role : null);
     }
   }, []);
-
-  console.log("role", role);
-
   return (
     <>
       <Routes>
@@ -71,18 +69,17 @@ function App() {
         <Route path="forGotPassword" element={<ForgotPasswordAdmin />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
-          <Route index element={<Dashboard />} />
+          {role === "super_admin" && (
+            <Route index element={<Welcome />} />
+          )}
+          {(role !== "super_admin" && role !== null) && (
+            <Route index element={<Dashboard />} />
+          )}
           <Route path="profile" element={<Profile />} />
-          {/* <Route path="dashboard" element={<Dashboard />} /> */}
           <Route path="billing">
             <Route index element={<AuthorizedListBillings />} />
             <Route path=":id" element={<AuthorizedStoreBillings />} />
           </Route>
-          {/* <Route path="offers">
-            <Route index element={<ListOffers />} />
-            <Route path="add" element={<AddOffers />} />
-            <Route path="edit/:id" element={<EditOffers />} />
-          </Route> */}
           <Route path="policy">
             <Route index element={<AuthorizedListPolicies />} />
             <Route path="add" element={<AuthorizedStorePolicies />} />

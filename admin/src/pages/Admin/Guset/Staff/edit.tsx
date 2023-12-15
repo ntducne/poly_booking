@@ -11,7 +11,10 @@ import {
 import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetDetailAdminsQuery, useUpdateAdminsMutation } from "../../../../api/account/admin";
+import {
+  useGetDetailStaffsQuery,
+  useUpdateStaffsMutation,
+} from "../../../../api/account/staffs";
 const { Title, Text } = Typography;
 
 const formItemLayout = {
@@ -19,11 +22,13 @@ const formItemLayout = {
   wrapperCol: { span: 14 },
 };
 
-const EditAdmin = () => {
+const EditStaff = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [form] = Form.useForm();
-  const { data: dataStaff, isLoading } = useGetDetailAdminsQuery(id || "");
+  const { data: dataStaff, isLoading } = useGetDetailStaffsQuery(id || "");
+  console.log("dataStaff", dataStaff);
+
   useEffect(() => {
     if (dataStaff) {
       form.setFieldsValue({
@@ -36,7 +41,7 @@ const EditAdmin = () => {
   }, [dataStaff]);
 
   const [updateStaffs, { isLoading: isLoadingUpdate }] =
-    useUpdateAdminsMutation();
+    useUpdateStaffsMutation();
   if (isLoading) {
     return (
       <div>
@@ -156,4 +161,4 @@ const EditAdmin = () => {
   );
 };
 
-export default EditAdmin;
+export default EditStaff;
