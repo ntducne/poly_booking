@@ -18,7 +18,6 @@ import ListContact from "./pages/Admin/Contact/List";
 import ListNotifications from "./pages/Admin/Notifications/List";
 import {
   AuthorizedListBillings,
-  AuthorizedListBranches,
   AuthorizedListPolicies,
   AuthorizedListRates,
   AuthorizedListRooms,
@@ -28,14 +27,12 @@ import {
   AuthorizedListUsers,
   AuthorizedListUtilities,
   AuthorizedStoreBillings,
-  AuthorizedStoreBranches,
   AuthorizedStorePolicies,
   AuthorizedStoreRooms,
   AuthorizedStoreServices,
   AuthorizedStoreStaffs,
   AuthorizedStoreTypes,
   AuthorizedStoreUtilities,
-  AuthorizedUpdateBranches,
   AuthorizedUpdatePolicies,
   AuthorizedUpdateRooms,
   AuthorizedUpdateServices,
@@ -44,9 +41,29 @@ import {
   AuthorizedUpdateUsers,
   AuthorizedUpdateUtilities,
 } from "./hoc/componentRole";
-import { role } from "./hoc/withAuthorization";
+// import { role } from "./hoc/withAuthorization";
 import Profile from "./pages/Admin/Profile";
+import ListBranches from "./pages/Admin/Branches/List";
+import AddBranche from "./pages/Admin/Branches/Add";
+import EditBranche from "./pages/Admin/Branches/Edit";
+import { useEffect, useState } from "react";
+import { cookies } from "./config/cookies";
+import ListAdmin from "./pages/Admin/Guset/Admin/List";
+import AddAdmin from "./pages/Admin/Guset/Admin/Add";
+import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
+
 function App() {
+  const [role, setRole] = useState(null);
+  useEffect(() => {
+    const authUser = cookies().Get("AuthUser");
+    if (authUser) {
+      const parsed = JSON.parse(cookies().Get("AuthUser") as any);
+      return setRole(parsed ? parsed[1].role : null);
+    }
+  }, []);
+
+  console.log("role", role);
+
   return (
     <>
       <Routes>
@@ -90,11 +107,6 @@ function App() {
               <Route path="add" element={<AuthorizedStoreUtilities />} />
               <Route path="edit/:id" element={<AuthorizedUpdateUtilities />} />
             </Route>
-            {/* <Route path="renew">
-              <Route index element={<ListRoomExtend />} />
-              <Route path="add" element={<AddRoomExtend />} />
-              <Route path="edit/:id" element={<EditRoomExtend />} />
-            </Route> */}
             <Route path="booking" element={<RoomBooking />} />
           </Route>
           <Route path="services">
@@ -111,20 +123,29 @@ function App() {
           <Route path="notifications">
             <Route index element={<ListNotifications />} />
           </Route>
-          <Route path="staff">
-            <Route index element={<AuthorizedListStaffs />} />
-            <Route path="edit/:id" element={<AuthorizedUpdateStaffs />} />
-            <Route path="add" element={<AuthorizedStoreStaffs />} />
-          </Route>
+          {role !== "super_admin" && (
+            <Route path="staff">
+              <Route index element={<AuthorizedListStaffs />} />
+              <Route path="edit/:id" element={<AuthorizedUpdateStaffs />} />
+              <Route path="add" element={<AuthorizedStoreStaffs />} />
+            </Route>
+          )}
           <Route path="user">
             <Route index element={<AuthorizedListUsers />} />
             <Route path="edit/:id" element={<AuthorizedUpdateUsers />} />
           </Route>
           {role === "super_admin" && (
             <Route path="branches">
-              <Route index element={<AuthorizedListBranches />} />
-              <Route path="add" element={<AuthorizedStoreBranches />} />
-              <Route path="edit/:id" element={<AuthorizedUpdateBranches />} />
+              <Route index element={<ListBranches />} />
+              <Route path="add" element={<AddBranche />} />
+              <Route path="edit/:id" element={<EditBranche />} />
+            </Route>
+          )}
+          {role === "super_admin" && (
+            <Route path="staff">
+              <Route index element={<ListAdmin />} />
+              <Route path="edit/:id" element={<EditAdmin />} />
+              <Route path="add" element={<AddAdmin />} />
             </Route>
           )}
         </Route>

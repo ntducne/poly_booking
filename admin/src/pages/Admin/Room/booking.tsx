@@ -26,6 +26,7 @@ import moment from "moment";
 // import { useGetAllBranchesQuery } from "../../../api/branches";
 // import { role } from "../../../hoc/withAuthorization";
 
+
 export default function RoomBooking() {
   const [form] = Form.useForm();
   const [formBooking] = Form.useForm();
@@ -359,7 +360,7 @@ export default function RoomBooking() {
               name="childrens"
               rules={[{ required: true, message: "Vui lòng nhập số trẻ em" }]}
             >
-              <InputNumber min={1} className="w-full" />
+              <InputNumber min={0} className="w-full" />
             </Form.Item>
             <div className="flex items-center justify-end">
               <Form.Item>

@@ -194,6 +194,7 @@ const ListRoomType = () => {
         dataSource={dataFetching}
         onChange={onChange}
         loading={isLoading}
+        pagination={{ pageSize: 10 }}
       />
     </Page>
   );

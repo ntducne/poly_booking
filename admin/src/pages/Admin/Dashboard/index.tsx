@@ -43,6 +43,8 @@ const Dashboard = () => {
   });
   const { data: dataChart, isLoading: loadingChart } =
     useStatisticalsChartQuery<any>([]);
+  console.log("dataChart", dataChart);
+
   const { data: dataRevenue, isLoading } = useStatisticalsQuery({
     module: "revenue",
     ...query,
@@ -331,24 +333,7 @@ const Dashboard = () => {
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
                   <span className="text-gray-500">
                     Ngày : {dataRevenue?.days}{" "}
                   </span>
@@ -370,24 +355,7 @@ const Dashboard = () => {
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
                   <span className="text-gray-500">
                     {" "}
                     Ngày : {dataRevenue?.days}{" "}
@@ -411,25 +379,11 @@ const Dashboard = () => {
               </div>
 
               <div className="mt-1 flex gap-1 text-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500"></span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
@@ -446,24 +400,7 @@ const Dashboard = () => {
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
                   <span className="text-gray-500">
                     {" "}
                     Ngày : {dataRevenue?.days}{" "}
@@ -486,24 +423,7 @@ const Dashboard = () => {
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
                   <span className="text-gray-500">
                     {" "}
                     Ngày : {dataRevenue?.days}{" "}
@@ -511,12 +431,10 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-            <article className="lg:col-span-1 lg:row-span-2 md:row-span rounded-lg border border-gray-100 bg-white p-6">
+            <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">
-                    Số lượng phòng đang đặt
-                  </p>
+                  <p className="text-sm text-gray-500">Số lượng phòng đang đặt</p>
 
                   <p className="text-2xl font-medium text-gray-900">
                     {dataRoom?.room_is_book}
@@ -524,29 +442,11 @@ const Dashboard = () => {
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MdRoomPreferences className="text-3xl" />
+                  <MdMeetingRoom className="text-3xl" />
                 </span>
               </div>
-
-              <div className="mt-1 flex gap-1 text-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-                  />
-                </svg>
-
+              <div className="mt-1 flex gap-1 text-green-600">
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
                   <span className="text-gray-500">
                     {" "}
                     Ngày : {dataRevenue?.days}{" "}
@@ -554,49 +454,16 @@ const Dashboard = () => {
                 </p>
               </div>
             </article>
-            {/* <article className="lg:col-span-1 lg:row-span-1 rounded-lg border border-gray-100 bg-white p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-500">Số lượng người dùng</p>
-                  <p className="text-2xl font-medium text-gray-900">$240.94</p>
-                </div>
-                <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MoneyCollectOutlined className="text-3xl" />
-                </span>
-              </div>
-              <div className="mt-1 flex gap-1 text-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-                  />
-                </svg>
-
-                <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
-                </p>
-              </div>
-            </article> */}
           </div>
           <div className="mt-4">
-            <ChartOne data={dataChart} />
+            <ChartOne data={dataChart?.revenue} />
           </div>
           <div className="grid grid-cols-1 2xl:grid-cols-2 mt-10 gap-6">
             <div>
-              <ChartFour />
+              <ChartFour data={dataChart}/>
             </div>
             <div>
-              <ChartFive />
+              <ChartFive data={dataChart?.user}/>
             </div>
           </div>
           <div className="border rounded-2xl bg-white p-6 mt-8 hidden">

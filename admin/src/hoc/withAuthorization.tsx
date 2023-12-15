@@ -18,14 +18,18 @@ export const permissions = (() => {
     const parsed = JSON.parse(cookies().Get("AuthUser") as any);
     return parsed ? parsed[3] : null;
   }
-  return null;
+  {
+    return null;
+  }
 })();
+
 export const role = (() => {
   const authUser = cookies().Get("AuthUser");
   if (authUser) {
     const parsed = JSON.parse(cookies().Get("AuthUser") as any);
     return parsed ? parsed[1].role : null;
+  } else {
+    return null;
   }
-  return null;
 })();
 export default withAuthorization;
