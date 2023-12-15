@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Image, Space, Table } from "antd";
+import { Button, Image, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { Link } from "react-router-dom";
 interface DataType {
@@ -76,20 +76,6 @@ const ListReview = () => {
         </div>
       ),
       onFilter: (value: any, record) => record.address.indexOf(value) === 0,
-    },
-    {
-      title: "Action",
-      dataIndex: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          {/* <Button type="primary" style={{ backgroundColor: "#68e365" }}>
-            <Link to={`/room/edit/${record?.key}`}>
-              <AiOutlineEdit />
-            </Link>
-          </Button> */}
-        </Space>
-      ),
-      // fixed: "right",
     },
   ];
 
