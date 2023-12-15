@@ -43,6 +43,7 @@ class Chart
         return [
             'revenue' => $arrData,
             'booking' => $booking,
+            'cancel' => $cancel,
             'user' => $user
         ];
     }

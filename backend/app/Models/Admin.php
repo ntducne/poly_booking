@@ -47,10 +47,13 @@ class Admin extends Eloquent implements AuthenticateContract
     public function syncPermission(array $permission)
     {
         foreach ($permission as $item) {
-            AdminPermission::query()->updateOrCreate([
-                'id_admin'      => $this->id,
-                'id_permission' => $item,
-            ]);
+            $permission = Permission::query()->where('name', $item)->first();
+            if($permission) {
+                AdminPermission::query()->updateOrCreate([
+                    'id_admin'      => $this->id,
+                    'id_permission' => $permission,
+                ]);
+            }
         }
     }
 }

@@ -70086,3 +70086,19 @@ PHP Fatal error:  Cannot use App\Http\Middleware\CheckRoleSuperAdmin as CheckRol
   2023-12-14 22:28:21 App\Notifications\BookRoom ............... 133.48ms FAIL
   2023-12-14 22:28:22 App\Events\Message ............................. RUNNING
   2023-12-14 22:28:23 App\Events\Message ....................... 449.53ms DONE
+  2023-12-14 23:47:45 App\Events\BookingEvent ........................ RUNNING
+  2023-12-14 23:47:46 App\Events\BookingEvent .................. 609.89ms DONE
+  2023-12-14 23:47:47 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-14 23:47:47 App\Notifications\BookRoom ............... 117.03ms FAIL
+  2023-12-14 23:47:49 App\Events\Message ............................. RUNNING
+  2023-12-14 23:47:49 App\Events\Message ....................... 396.59ms DONE
+  2023-12-15 03:39:20 App\Events\BookingEvent ........................ RUNNING
+  2023-12-15 03:39:21 App\Events\BookingEvent .................. 642.69ms DONE
+  2023-12-15 04:07:46 App\Events\BookingEvent ........................ RUNNING
+  2023-12-15 04:07:46 App\Events\BookingEvent .................. 698.31ms DONE
+  2023-12-15 04:19:56 App\Events\BookingEvent ........................ RUNNING
+  2023-12-15 04:19:57 App\Events\BookingEvent .................. 585.23ms DONE
+  2023-12-15 04:22:42 App\Events\BookingEvent ........................ RUNNING
+  2023-12-15 04:22:43 App\Events\BookingEvent .................. 602.58ms DONE
+  2023-12-15 04:31:23 App\Events\BookingEvent ........................ RUNNING
+  2023-12-15 04:31:24 App\Events\BookingEvent .................. 599.61ms DONE
