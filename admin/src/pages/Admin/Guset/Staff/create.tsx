@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Form, Input, Upload, Button, message, Typography, Space, Select } from "antd";
+import { Form, Input, Upload, Button, message, Typography, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useCreateAdminsMutation } from "../../../../api/account/admin";
-import { useGetAllBranchesQuery } from "../../../../api/branches";
+import { useCreateStaffsMutation } from "../../../../api/account/staffs";
 
 const { Title, Text } = Typography;
 
@@ -15,11 +14,11 @@ const formItemLayout = {
   wrapperCol: { span: 14 },
 };
 
-const AddAdmin = () => {
+const CreateStaff = () => {
   const navigate = useNavigate();
-  const { data: branches } = useGetAllBranchesQuery({});
 
-  const [createStaffs, { isLoading: isLoadingCreate }] = useCreateAdminsMutation();
+  const [createStaffs, { isLoading: isLoadingCreate }] =
+    useCreateStaffsMutation();
 
   const onFinish = (values: any) => {
     const formUpload = new FormData();
@@ -36,8 +35,7 @@ const AddAdmin = () => {
       email: values.email,
       password: values.password,
       image: values.images[0].originFileObj,
-      role: "admin",
-      branch_id: values.branch_id,
+      role: "staff",
     };
     delete data.image;
 
@@ -107,22 +105,6 @@ const AddAdmin = () => {
           onFinish={onFinish}
           className="mx-auto max-w-3xl grid grid-cols-1 xl:grid-cols-1"
         >
-          <Form.Item
-            label="Chi nhánh"
-            name="branch_id"
-            rules={[{ required: true, message: "Vui lòng chọn chi nhánh" }]}
-          >
-            <Select>
-              {branches?.data?.map((item: any) => {
-                return (
-                  <Select.Option value={item.id} key={item.id}>
-                    {item.name}
-                  </Select.Option>
-                );
-              })}
-            </Select>
-          </Form.Item>
-
           <Form.Item
             label="Tên"
             name="name"
@@ -240,4 +222,4 @@ const AddAdmin = () => {
   );
 };
 
-export default AddAdmin;
+export default CreateStaff;

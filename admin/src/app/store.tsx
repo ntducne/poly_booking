@@ -31,6 +31,7 @@ import statisticalsApi from '../api/statisticals';
 import contactApi from '../api/contact';
 import notificationsApi from '../api/notifications';
 '../api/account/staffs';
+import { adminsApi } from '../api/account/admin';
 
 const persistConfig = {
     key: 'root',
@@ -59,6 +60,7 @@ const rootReducer = combineReducers({
     [statisticalsApi.reducerPath]: statisticalsApi.reducer,
     [contactApi.reducerPath]: contactApi.reducer,
     [notificationsApi.reducerPath]: notificationsApi.reducer,
+    [adminsApi.reducerPath]: adminsApi.reducer
 })
 
 
@@ -81,7 +83,8 @@ const middlewares = [
     utilitiesApi.middleware,
     statisticalsApi.middleware,
     contactApi.middleware,
-    notificationsApi.middleware
+    notificationsApi.middleware,
+    adminsApi.middleware
 ]
 
 const store = configureStore({

@@ -58,15 +58,17 @@ Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
 
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);
 
-    Route::post('staffs/createAdmin', [AdminController::class, 'store']);
+    Route::post('store', [AdminController::class, 'store']);
 
-    Route::get('staffs/listAdmin', [AdminController::class, 'index']);
+    Route::get('', [AdminController::class, 'index']);
 
-    Route::post('staffs/updateAdmin/{id}', [AdminController::class, 'update']);
+    Route::get('/{id}', [AdminController::class, 'show']);
 
-    Route::post('staffs/deleteAdmin/{id}', [AdminController::class, 'destroy']);
+    Route::put('update/{id}', [AdminController::class, 'update']);
+
+    Route::post('delete/{id}', [AdminController::class, 'destroy']);
     
-    Route::post('staffs/assignPermissionAdmin/{id}', [AdminController::class, 'assignPermission']);
+    Route::post('assignPermissionAdmin/{id}', [AdminController::class, 'assignPermission']);
 });
 
 Route::get('/room/search', [BookingController::class, 'search'])->name('search');

@@ -17,7 +17,7 @@ class CheckRoleAdmin
     {
         if ($request->user()->role !== 'admin') {
             return response()->json([
-                'message' => 'You are not authorized to access this page'
+                'message' => 'Tài khoản không phải là admin'
             ], 403);
         }
         return $next($request);
