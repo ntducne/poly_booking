@@ -55,34 +55,6 @@ const ListUser = () => {
       sorter: (a, b) => a.address.localeCompare(b.address),
     },
     {
-      title: "Trạng thái",
-      dataIndex: "status",
-      filters: [
-        {
-          text: "Hoạt động",
-          value: 1,
-        },
-        {
-          text: "Không hoạt động",
-          value: 0,
-        },
-      ],
-      render: (text) => (
-        <div className="font-semibold">
-          {text === "Hoạt động" ? (
-            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#fff] bg-[#43e674]">
-              Hoạt động
-            </button>
-          ) : (
-            <button className="cursor-auto border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
-              Không hoạt động
-            </button>
-          )}
-        </div>
-      ),
-      onFilter: (value: any, record) => record?.status === value,
-    },
-    {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
@@ -130,6 +102,7 @@ const ListUser = () => {
         loading={isLoading}
         dataSource={data}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
     </Page>
   );

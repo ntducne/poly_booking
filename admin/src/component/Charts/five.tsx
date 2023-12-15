@@ -1,11 +1,23 @@
 import ReactApexChart from "react-apexcharts";
 
-export default function ChartFive() {
+export default function ChartFive(props: any) {
+  function generateMonths(count: any) {
+    const months = [];
+    const today = new Date();
+    for (let i = 0; i < count; i++) {
+      const month = new Date();
+      month.setMonth(today.getMonth() - i);
+      months.push(month.toISOString());
+    }
+    return months;
+  }
+  const userData = props?.data || [];
+
   const state = {
     series: [
       {
-        name: "Sales",
-        data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5],
+        name: "User",
+        data: userData,
       },
     ],
     options: {
@@ -22,35 +34,17 @@ export default function ChartFive() {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "1/11/2000",
-          "2/11/2000",
-          "3/11/2000",
-          "4/11/2000",
-          "5/11/2000",
-          "6/11/2000",
-          "7/11/2000",
-          "8/11/2000",
-          "9/11/2000",
-          "10/11/2000",
-          "11/11/2000",
-          "12/11/2000",
-          "1/11/2001",
-          "2/11/2001",
-          "3/11/2001",
-          "4/11/2001",
-          "5/11/2001",
-          "6/11/2001",
-        ],
+        categories: generateMonths(userData.length).reverse(),
         tickAmount: 10,
         labels: {
-          formatter: function (value: any, timestamp: any, opts: any) {
-            return opts.dateFormatter(new Date(timestamp), "dd MMM");
+          formatter: function (timestamp: any) {
+            const date = new Date(timestamp);
+            return `${date.getMonth() + 1}/${date.getFullYear()}`;
           },
         },
       },
       title: {
-        text: "New Customer",
+        text: "Người dùng",
         align: "left",
         style: {
           fontSize: "16px",
@@ -70,8 +64,13 @@ export default function ChartFive() {
         },
       },
       yaxis: {
-        // min: -10,
-        // max: 40
+        min: 0,
+        max: Math.max(...props.data),
+        labels: {
+          formatter: function (value: number) {
+            return Math.floor(value);
+          },
+        },
       },
     },
   } as any;

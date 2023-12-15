@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
@@ -9,8 +9,7 @@ interface DataType {
   penalty: string;
   room_id: string;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+import { MdDeleteForever } from "react-icons/md";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import { useGetAllPolicyQuery } from "../../../api/policy";
@@ -21,6 +20,11 @@ const ListPolicy = () => {
 
   const { data, isLoading } = useGetAllPolicyQuery({});
   const [dataFetching, setDataFetching] = useState<any>([]);
+<<<<<<< HEAD
+=======
+  // console.log(data?.data?.data);
+  // console.log(dataFetching);
+>>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
 
   useEffect(() => {
     setDataFetching(
@@ -147,25 +151,6 @@ const ListPolicy = () => {
 
   return (
     <Page title={`Chính sách`}>
-      <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <FormSearch />
-        <div className="flex flex-col md:flex-row md:ml-2">
-          <Link
-            to={`/policy/add`}
-            className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
-          >
-            <AiOutlinePlus />
-            Thêm chính sách
-          </Link>
-          <Link
-            to={`/policy`}
-            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
-          >
-            <MdOutlineDeleteOutline />
-            Thùng rác
-          </Link>
-        </div>
-      </div>
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
@@ -173,6 +158,7 @@ const ListPolicy = () => {
         columns={columns}
         dataSource={dataFetching}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
     </Page>
   );

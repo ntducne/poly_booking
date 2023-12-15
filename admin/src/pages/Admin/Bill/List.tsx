@@ -3,13 +3,10 @@ import { Button, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { GiConfirmed } from "react-icons/gi";
-import FormSearch from "../../../component/formSearch";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
 import formatMoneyVN from "../../../config/formatMoneyVN";
-import swal from "sweetalert";
 import { pusherInstance } from "../../../config/pusher";
 import { useEffect, useState } from "react";
 
@@ -30,24 +27,6 @@ const BillList = () => {
     };
   }, [dataBilings?.data]);
 
-  const onComfirm = (id: any) => {
-    swal({
-      title: "Bạn có chắc chắn xác nhận không?",
-      icon: "warning",
-      buttons: ["Hủy", "Xác nhận"],
-      dangerMode: true,
-    }).then((willDelete: any) => {
-      if (willDelete) {
-        swal("Xác nhận thành công!", {
-          icon: "success",
-        });
-      } else {
-        swal("Đã hủy xác nhận!", {
-          icon: "error",
-        });
-      }
-    });
-  };
 
   const columns: ColumnsType<any> = [
     {
@@ -184,7 +163,7 @@ const BillList = () => {
               <AiOutlineEdit />
             </Link>
           </Button>
-          {record?.status === 0 && (
+          {/* {record?.status === 0 && (
             <Button
               onClick={() => onComfirm(record?.id)}
               type="primary"
@@ -192,7 +171,7 @@ const BillList = () => {
             >
               <GiConfirmed />
             </Button>
-          )}
+          )} */}
         </Space>
       ),
       // fixed: "right",
@@ -216,9 +195,6 @@ const BillList = () => {
   return (
     <Page title={`Hóa đơn`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <div className="mb-3">
-          <FormSearch />
-        </div>
         <div className="flex flex-col md:flex-row"></div>
       </div>
       <Table

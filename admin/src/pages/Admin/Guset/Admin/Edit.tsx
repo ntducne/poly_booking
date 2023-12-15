@@ -1,11 +1,20 @@
 // import React from "react";
-
-import { Form, Input, Button, Typography, InputNumber, Space } from "antd";
-// import { BiReset } from "react-icons/bi";
-import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
-import { Link } from "react-router-dom";
-// import { useGetDetailStaffsQuery } from "../../../../api/account/staffs";
-
+import { useEffect } from "react";
+import {
+  Form,
+  Input,
+  Button,
+  Typography,
+  Space,
+  Skeleton,
+} from "antd";
+import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useGetDetailStaffsQuery,
+  useUpdateStaffsMutation,
+} from "../../../../api/account/staffs";
 const { Title, Text } = Typography;
 
 const formItemLayout = {
@@ -14,8 +23,62 @@ const formItemLayout = {
 };
 
 const EditAdmin = () => {
-  const onFinish = () => {};
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [form] = Form.useForm();
+  const { data: dataStaff, isLoading } = useGetDetailStaffsQuery(id || "");
+  console.log("dataStaff", dataStaff);
 
+  useEffect(() => {
+    if (dataStaff) {
+      form.setFieldsValue({
+        name: dataStaff?.data?.information?.name,
+        phone: dataStaff?.data?.information?.phone,
+        email: dataStaff?.data?.information?.email,
+        // image: dataStaff?.data?.information?.image,
+      });
+    }
+  }, [dataStaff]);
+
+  const [updateStaffs, { isLoading: isLoadingUpdate }] =
+    useUpdateStaffsMutation();
+  if (isLoading) {
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
+  }
+  const onFinish = (values: any) => {
+    const data = {
+      idStaff: id,
+      data: {
+        name: values.name,
+        phone: values.phone,
+        email: values.email,
+        password: values.password,
+        image: dataStaff?.data?.information?.image,
+        role: "staff",
+      },
+    };
+    
+    updateStaffs(data)
+      .unwrap()
+      .then((item: any) => {
+        if (item.status == "success") {
+          toast("sửa thành công", {
+            autoClose: 3000,
+            theme: "light",
+          });
+          navigate("/staff");
+        } else {
+          toast(item?.error?.name || "Lỗi", {
+            autoClose: 3000,
+            theme: "light",
+          });
+        }
+      });
+  };
   return (
     <div>
       <div className="max-w-[80%] mr-auto ml-10">
@@ -24,77 +87,72 @@ const EditAdmin = () => {
         </div>
 
         <Form
+          form={form}
           name="validate_other"
           {...formItemLayout}
           onFinish={onFinish}
-          initialValues={{
-            "input-number": 1,
-            "checkbox-group": ["A", "B"],
-            rate: 3.5,
-            "color-picker": null,
-          }}
-          style={{ maxWidth: 1000 }}
-          className="grid grid-cols-1 xl:grid-cols-2"
+          className="mx-auto max-w-3xl grid grid-cols-1 xl:grid-cols-1"
         >
           <Form.Item
-            label="Tên khách"
+            label="Tên"
             name="name"
-            rules={[{ required: true, message: "Vui lòng nhập tên!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập tên!" },
+              { min: 2, message: "Tên phải có ít nhất 2 ký tự!" },
+              { max: 50, message: "Tên không được vượt quá 50 ký tự!" },
+            ]}
           >
             <Input />
           </Form.Item>
-
-          <Form.Item
-            label="Email khách"
-            name="email"
-            rules={[{ required: true, message: "Vui lòng nhập email!" }]}
-          >
-            <Input />
-          </Form.Item>
-
           <Form.Item
             label="Số điện thoại"
             name="phone"
-            rules={[{ required: true, message: "Vui lòng nhập số điện thoại" }]}
-          >
-            <InputNumber />
-          </Form.Item>
-
-          <Form.Item
-            label="Địa chỉ"
-            name="address"
-            rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại!" },
+              {
+                pattern: /^(\+84|0)[3|5|7|8|9][0-9]{8}$/,
+                message: "Số điện thoại không hợp lệ!",
+              },
+            ]}
           >
             <Input />
           </Form.Item>
 
           {/* <Form.Item
-            name="status"
-            label="Trạng thái"
-            rules={[{ required: true, message: "Vui lòng chọn trạng thái" }]}
+            hidden
+            label="Ảnh"
+            name="images"
+            valuePropName="fileList"
+            rules={[{ required: true, message: "Vui lòng tải lên ảnh!" }]}
+          >
+            <Upload name="image" listType="picture" maxCount={1}>
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload>
+          </Form.Item> */}
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Vui lòng nhập email!" },
+              { type: "email", message: "Email không hợp lệ!" },
+            ]}
           >
             <Input />
-          </Form.Item> */}
-
+          </Form.Item>
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <Space className="flex flex-col md:flex-row">
+            <Space className="flex md:flex-row">
               <Button
                 className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
                 type="default"
                 htmlType="submit"
               >
-                <AiOutlineCheck className="text-[#fff] " />
-                <Text className=" text-[#fff] ml-1">Thêm</Text>
+                {isLoadingUpdate ? (
+                  <AiOutlineLoading3Quarters className="animate-spin" />
+                ) : (
+                  <AiOutlineCheck className="text-[#fff] " />
+                )}
+                <Text className=" text-[#fff] ml-1">Sửa thông tin</Text>
               </Button>
-              <Link className="text-white" to={`/services`}>
-                <Button
-                  className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
-                  htmlType="reset"
-                >
-                  <AiOutlineRollback className="text-[#fff]" />
-                  <Text className="text-[#fff] ml-1">Quay trở lại</Text>
-                </Button>
-              </Link>
             </Space>
           </Form.Item>
         </Form>

@@ -3,9 +3,9 @@
 namespace App\Modules\Branch\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Modules\Branch\Requests\StoreBranchRequest;
-use App\Http\Modules\Branch\Requests\UpdateBranchRequest;
 use App\Models\Branch;
+use App\Modules\Branch\Requests\StoreBranchRequest;
+use App\Modules\Branch\Requests\UpdateBranchRequest;
 use App\Modules\Branch\Resources\BranchResource;
 use Exception;
 use Illuminate\Support\Facades\Log;
