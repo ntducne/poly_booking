@@ -49,6 +49,18 @@ Route::get('/contact', function(){
     return response()->json($newContacts);
 })->name('contact');
 
+
+// profile
+Route::get('profile', [AdminController::class, 'profile']);
+
+// update
+Route::prefix('update')->group(function () {
+    // update profile
+    Route::post('profile', [AdminController::class, 'updateProfile']);
+    // change password
+    Route::post('password', [AdminController::class, 'changePassword']);
+});
+
 Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
 
     Route::resource('branches', BranchController::class)->except(['create', 'edit']);

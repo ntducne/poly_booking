@@ -446,3 +446,411 @@ sh: 1: cd: can't cd to admin.php
   20  [internal]:0
       Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
 
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
+
+  i   Merge conflict from branch 'b9722f6848bea144e31a743aa7ed219f68421a3a' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:60
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/web.php:23
+     19▕ Route::get('unauthorized', function (){ return response()->json([
+     20▕     'message' => 'Unauthorized !'
+     21▕ ], 401); })->name('unauthorized');
+     22▕ 
+  ➜  23▕ <<<<<<< HEAD
+     24▕ Route::get('/', function () {
+     25▕     Billing::truncate();
+     26▕     BookDetail::truncate();
+     27▕     Booking::truncate();
+sh: 1: cd: can't cd to web.php
