@@ -24,6 +24,7 @@ import StatusPaymentMomo from "./pages/Payment/status/momo";
 import StatusPaymentPaypal from "./pages/Payment/status/paypal";
 import StatusPaymentVnpay from "./pages/Payment/status/vnpay";
 import SearchOrder from "./pages/SearchOrder";
+import NotFound from "./pages/Page404";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LayoutClient />}>
           <Route index element={<Home />} />
-
+          <Route path="*" element={<NotFound />} />
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="search-order" element={<SearchOrder />} />
