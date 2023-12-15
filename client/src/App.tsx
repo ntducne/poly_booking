@@ -9,7 +9,6 @@ import Home from "./pages/Home";
 import Detail from "./pages/Room/Detail";
 import Rooms from "./pages/Rooms";
 import Contact from "./pages/contact";
-import Demo from "./pages/demo";
 import LayoutAuth from "./layouts/Auth";
 import PaymentLayout from "./layouts/Payment";
 import Edit from "./pages/InforUser/Edit";
@@ -62,7 +61,6 @@ function App() {
           <Route path="status/momo" element={<StatusPaymentMomo />} />
           <Route path="status/paypal" element={<StatusPaymentPaypal />} />
         </Route>
-        <Route path="demo" element={<Demo />} />
       </Routes>
     </>
   );
