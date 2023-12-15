@@ -15,7 +15,6 @@ import FormSearch from "../../../component/formSearch";
 import Page from "../../../component/page";
 
 const ListRoomExtend = () => {
- 
   const columns: ColumnsType<any> = [
     {
       title: "ID đặt phòng",
@@ -30,11 +29,7 @@ const ListRoomExtend = () => {
       render: (user) => (
         <div className="flex items-center">
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
-          <Image
-            className="rounded-3xl "
-            width={150}
-            src={user?.image}
-          />
+          <Image className="rounded-3xl " width={150} src={user?.image} />
           <div className="ml-3 text-gray-500">
             <p>{user?.name}</p>
           </div>
@@ -90,8 +85,9 @@ const ListRoomExtend = () => {
       dataIndex: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="primary"
-          className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" 
+          <Button
+            type="primary"
+            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
           >
             <Link to={`/room/edit/${record?.key}`}>
               <AiOutlineEdit />
@@ -103,45 +99,50 @@ const ListRoomExtend = () => {
     },
   ];
 
-  const data : any = [
+  const data: any = [
     {
       key: "1",
       booking_id: 1,
       user_id: {
         name: "Nguyễn Huy",
-        image: "https://static2.yan.vn/YanNews/2167221/202008/bang-xep-hang10-my-nam-han-dep-trai-nhat-chau-a-exo-va-bts-dan-dau-d2073ea4.jpg"
+        image:
+          "https://static2.yan.vn/YanNews/2167221/202008/bang-xep-hang10-my-nam-han-dep-trai-nhat-chau-a-exo-va-bts-dan-dau-d2073ea4.jpg",
       },
       booking_date: "2021-09-20",
       check_in: "2021-09-20",
       check_out: "2021-09-20",
       pay_date: "2021-09-20",
       room_type: "Phòng đơn",
-      amount_of_people : 2,
+      amount_of_people: 2,
     },
     {
       key: "2",
       booking_id: 2,
       user_id: {
         name: "Nguyễn Đức",
-        image: "https://static2.yan.vn/YanNews/2167221/202008/bang-xep-hang10-my-nam-han-dep-trai-nhat-chau-a-exo-va-bts-dan-dau-d2073ea4.jpg"
+        image:
+          "https://static2.yan.vn/YanNews/2167221/202008/bang-xep-hang10-my-nam-han-dep-trai-nhat-chau-a-exo-va-bts-dan-dau-d2073ea4.jpg",
       },
       booking_date: "2021-09-20",
       check_in: "2021-09-20",
       check_out: "2021-09-20",
       pay_date: "2021-09-20",
       room_type: "Phòng đôi",
-      amount_of_people : 4,
+      amount_of_people: 4,
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
+<<<<<<< HEAD
+  const onChange: TableProps<DataType>["onChange"] = () => {};
+=======
+  const onChange: TableProps<DataType>["onChange"] = () =>
     // pagination,
     // filters,
     // sorter,
     // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+    {
+      // console.log("params", pagination, filters, sorter, extra);
+    };
 
   // const remove = (id: any) => {
   //   try {
@@ -168,12 +169,12 @@ const ListRoomExtend = () => {
   //   } catch (error) {}
   // };
 
+>>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
   return (
     <Page title={`Gia hạn phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-      <FormSearch />
+        <FormSearch />
         <div className="flex flex-col md:flex-row md:ml-2">
-          
           <Link
             to={`/roomExtend`}
             className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
@@ -182,14 +183,14 @@ const ListRoomExtend = () => {
             Thùng rác
           </Link>
         </div>
-        
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
     </Page>
   );

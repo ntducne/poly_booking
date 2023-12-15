@@ -21,8 +21,6 @@ const AddAdmin = () => {
     useCreateStaffsMutation();
 
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-    
     const formUpload = new FormData();
     const uploadedFiles = values.images.map(
       (fileInfo: any) => fileInfo.originFileObj
@@ -42,23 +40,20 @@ const AddAdmin = () => {
     delete data.image;
 
     for (const [key, value] of Object.entries(data)) {
-        console.log("key", key);
-        console.log("value", value);
-        
       formUpload.append(`${key}`, `${value}`);
     }
     createStaffs(formUpload)
       .unwrap()
-      .then((item : any) => {
+      .then((item: any) => {
         if (item.status == "success") {
           toast("Thêm mới thành công", {
             autoClose: 3000,
             theme: "light",
           });
-          navigate("/room");
+          navigate("/staff");
         } else {
           console.log(item);
-          toast(item?.error?.name || "Lỗi rồi bạn", {
+          toast(item?.error?.name || "Lỗi", {
             autoClose: 3000,
             theme: "light",
           });

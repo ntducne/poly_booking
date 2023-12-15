@@ -35,8 +35,6 @@ const EditOffers = () => {
   const { data, isLoading } = useGetDetailPromotionsQuery(id || "");
   const [updatePromotions] = useUpdatePromotionsMutation();
   const navigate = useNavigate();
-  console.log("data", data);
-
   const { data: dataBranches, isLoading: loadingBranch } =
     useGetAllBranchesQuery({});
   useEffect(() => {
@@ -57,7 +55,11 @@ const EditOffers = () => {
     );
   }
   if (data?.data === null) {
-    return <div className="text-center font-semibold text-lg">Không tồn tại ưu đãi này</div>;
+    return (
+      <div className="text-center font-semibold text-lg">
+        Không tồn tại ưu đãi này
+      </div>
+    );
   }
   const onFinish = (values: any) => {
     const data = {
@@ -76,7 +78,6 @@ const EditOffers = () => {
             navigate("/offers");
           }, 3000);
         } else {
-          console.log(item);
           toast(item?.error?.name || "Lỗi rồi bạn", {
             autoClose: 3000,
             theme: "light",

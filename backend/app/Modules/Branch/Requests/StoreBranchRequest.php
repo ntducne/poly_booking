@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Modules\Branch\Requests;
+namespace App\Modules\Branch\Requests;
 
 use App\Http\Requests\Request;
 use App\Models\Branch;

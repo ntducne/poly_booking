@@ -37,7 +37,7 @@ import { BiSolidBed } from "react-icons/bi";
 import { cookies } from "../config/cookies";
 import "react-toastify/dist/ReactToastify.css";
 import { MdContactPhone } from "react-icons/md";
-import { role } from "../hoc/withAuthorization.tsx"
+// import { role } from "../hoc/withAuthorization.tsx";
 
 export const LayoutContext = createContext("");
 
@@ -47,6 +47,15 @@ const LayoutAdmin = () => {
   if (!checkLogin) {
     return <Navigate to="/login" />;
   }
+  const [role, setRole] = useState(null);
+  useEffect(() => {
+    const authUser = cookies().Get("AuthUser");
+    if (authUser) {
+      const parsed = JSON.parse(cookies().Get("AuthUser") as any);
+      return setRole(parsed ? parsed[1].role : null);
+    }
+  }, []);
+
   const [title, setTitle] = useState<any>(" ");
   useEffect(() => {
     location.pathname === "/" && setTitle("Thống kê");
@@ -68,8 +77,7 @@ const LayoutAdmin = () => {
     location.pathname === "/contact" && setTitle("Liên hệ");
     location.pathname === "/profile" && setTitle("Thông tin");
   }, [location.pathname]);
-  console.log("role",role);
-  
+
   const items: MenuItem[] = [
     getItem(
       "Thống kê",
@@ -88,74 +96,75 @@ const LayoutAdmin = () => {
     // ),
 
     ...(role === "super_admin"
-    ? [
-        getItem(
-          "Chi nhánh",
-          "/branches",
-          <Link to={`branches`}>
-            <AiTwotoneGift />
-          </Link>
-        ),
-      ]
-    : []),
+      ? [
+          getItem(
+            "Chi nhánh",
+            "/branches",
+            <Link to={`branches`}>
+              <AiTwotoneGift />
+            </Link>
+          ),
+          getItem(
+            "Tài khoản quản lý",
+            "/staff",
+            <Link to={`staff`}>
+              <AiOutlineUserSwitch />
+            </Link>
+          ),
+        ]
+      : []),
 
-    
-    getItem("Phòng", "sub1", <BiSolidBed />, [
-      getItem("Phòng", "/room", <Link to={`room`} />),
-      getItem("Loại Phòng", "/room/type", <Link to={`room/type`} />),
-      getItem(
-        "Tiện ích Phòng",
-        "/room/utilities",
-        <Link to={`room/utilities`} />
-      ),
-      getItem("Đặt Phòng", "/room/booking", <Link to={`room/booking`} />),
-    ]),
-    getItem(
-      "Hoá đơn",
-      "/billing",
-      <Link to={`billing`}>
-        <AiFillBank />
-      </Link>
-    ),
-    getItem(
-      "Dịch vụ",
-      "/services",
-      <Link to={`services`}>
-        <AiOutlineCrown />
-      </Link>
-    ),
-    // getItem(
-    //   "Khuyến mãi",
-    //   "9",
-    //   <Link onClick={() => handleTitleChange("Ưu đãi")} to={`offers`}>
-    //     <AiTwotoneGift />
-    //   </Link>
-    // ),
-    // getItem(
-    //   "Chính sách",
-    //   "/policy",
-    //   <Link to={`policy`}>
-    //     <AiTwotonePrinter />
-    //   </Link>
-    // ),
-    getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
-      getItem("Nhân viên", "/staff", <Link to={`staff`} />),
-      getItem("Người dùng", "/user", <Link to={`user`} />),
-    ]),
-    getItem(
-      "Đánh giá",
-      "/feedback",
-      <Link to={`feedback`}>
-        <VscFeedback />
-      </Link>
-    ),
-    getItem(
-      "Liên hệ",
-      "/contact",
-      <Link to={`contact`}>
-        <MdContactPhone />
-      </Link>
-    ),
+    ...(role !== "super_admin"
+      ? [
+          getItem("Phòng", "sub1", <BiSolidBed />, [
+            getItem("Phòng", "/room", <Link to={`room`} />),
+            getItem("Loại Phòng", "/room/type", <Link to={`room/type`} />),
+            getItem(
+              "Tiện ích Phòng",
+              "/room/utilities",
+              <Link to={`room/utilities`} />
+            ),
+            getItem("Đặt Phòng", "/room/booking", <Link to={`room/booking`} />),
+          ]),
+          getItem(
+            "Hoá đơn",
+            "/billing",
+            <Link to={`billing`}>
+              <AiFillBank />
+            </Link>
+          ),
+          getItem(
+            "Dịch vụ",
+            "/services",
+            <Link to={`services`}>
+              <AiOutlineCrown />
+            </Link>
+          ),
+        ]
+      : []),
+
+    ...(role !== "super_admin"
+      ? [
+          getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
+            getItem("Nhân viên", "/staff", <Link to={`staff`} />),
+            getItem("Người dùng", "/user", <Link to={`user`} />),
+          ]),
+          getItem(
+            "Đánh giá",
+            "/feedback",
+            <Link to={`feedback`}>
+              <VscFeedback />
+            </Link>
+          ),
+          getItem(
+            "Liên hệ",
+            "/contact",
+            <Link to={`contact`}>
+              <MdContactPhone />
+            </Link>
+          ),
+        ]
+      : []),
   ];
   const [collapsed, setCollapsed] = useState<any>(false);
   const {

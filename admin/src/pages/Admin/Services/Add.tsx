@@ -1,21 +1,9 @@
-// import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Typography,
-  InputNumber,
-  Space,
-} from "antd";
-import { BiReset } from "react-icons/bi";
+import { Button, Form, Input, InputNumber, Space, Typography } from "antd";
 import { AiOutlineCheck } from "react-icons/ai";
-// import { useGetAllBranchesQuery } from "../../../api/branches";
-import { useCreateServicesMutation } from "../../../api/services";
-import { toast } from "react-toastify";
+import { BiReset } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-// import { Skeleton } from "antd";
-import { role } from "../../../hoc/withAuthorization";
-// const { Option } = Select;
+import { toast } from "react-toastify";
+import { useCreateServicesMutation } from "../../../api/services";
 
 const { Title, Text } = Typography;
 
@@ -25,21 +13,8 @@ const formItemLayout = {
 };
 
 const AddServices = () => {
-  console.log("role", role);
-
   const [createServices] = useCreateServicesMutation();
-  // const { data: dataBranches, isLoading: loadingBranch } =
-  //   useGetAllBranchesQuery({});
   const navigate = useNavigate();
-
-  // if (loadingBranch) {
-  //   return (
-  //     <div>
-  //       <Skeleton />
-  //     </div>
-  //   );
-  // }
-
   const onFinish = (values: any) => {
     createServices(values)
       .unwrap()
@@ -53,7 +28,6 @@ const AddServices = () => {
             navigate("/services");
           }, 3000);
         } else {
-          console.log(item);
           toast(item?.error?.name || "Lỗi rồi bạn", {
             autoClose: 3000,
             theme: "light",

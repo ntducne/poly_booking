@@ -1,12 +1,5 @@
 // import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Typography,
-  InputNumber,
-  Space,
-} from "antd";
+import { Form, Input, Button, Typography, InputNumber, Space } from "antd";
 // import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -43,7 +36,6 @@ const EditServices = () => {
     form.setFieldsValue(serviceDetail?.data);
   }, [serviceDetail?.data]);
 
-
   const onFinish = (values: any) => {
     const data = {
       id: id,
@@ -51,7 +43,7 @@ const EditServices = () => {
     };
     updateServices(data)
       .unwrap()
-      .then((item:any) => {
+      .then((item: any) => {
         if (item.status == "success") {
           toast(item.message, {
             autoClose: 3000,
@@ -80,8 +72,6 @@ const EditServices = () => {
   if (serviceDetail?.data === null) {
     return <div>Dịch vụ này không tồn tại</div>;
   }
-  console.log("data: ", serviceDetail);
-
   return (
     <div>
       <div className="max-w-[80%] mr-auto ml-10">

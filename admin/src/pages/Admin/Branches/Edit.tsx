@@ -6,6 +6,7 @@ import {
   // Select,
   Typography,
   Space,
+  Skeleton,
 } from "antd";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -26,18 +27,13 @@ const formItemLayout = {
 
 const EditBranche = () => {
   const { id } = useParams();
-  console.log(id);
-
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { data, isLoading, refetch } = useGetDetailBranchesQuery(id);
-  console.log(data);
 
   const [updateData] = useUpdateBranchesMutation();
 
   const onFinish = (values: any) => {
-    console.log(values);
-    // Xử lý dữ liệu khi nhấn nút Submit
     const data = {
       ...values,
     };
@@ -72,7 +68,7 @@ const EditBranche = () => {
     form.setFieldsValue(data?.data);
   }, [isLoading, data?.data]);
   if (isLoading) {
-    return <>loading...</>;
+    return <><Skeleton/></>;
   }
 
   return (

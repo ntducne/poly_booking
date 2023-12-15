@@ -10,10 +10,9 @@ interface DataType {
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal , { } from "sweetalert";
+import swal from "sweetalert";
 
 const ListReview = () => {
-
   const columns: ColumnsType<DataType> = [
     {
       title: "Tên phòng",
@@ -25,9 +24,8 @@ const ListReview = () => {
     {
       title: "Loại phòng",
       dataIndex: "imageType",
-      render: (_, record :any) => (
+      render: (_, record: any) => (
         <div className="flex items-center">
-          
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
           <Image
             className="rounded-3xl "
@@ -118,18 +116,9 @@ const ListReview = () => {
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
   const remove = (id: any) => {
-    console.log(id);
-    
     try {
       swal({
         title: "Are you sure you want to delete?",
@@ -140,9 +129,6 @@ const ListReview = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            // removeComment(id);
-            console.log(id);
-            
             swal("You have successfully deleted", {
               icon: "success",
             });
@@ -173,7 +159,7 @@ const ListReview = () => {
           <Button
             className="bg-red-400	text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
             type="default"
-            icon={<MdOutlineDeleteOutline />} 
+            icon={<MdOutlineDeleteOutline />}
           >
             <Link to={`/review/add`}>Thùng rác</Link>
           </Button>
@@ -186,11 +172,12 @@ const ListReview = () => {
         </div>
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
     </div>
   );

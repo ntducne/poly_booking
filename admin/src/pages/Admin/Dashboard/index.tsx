@@ -13,17 +13,19 @@ import { useState } from "react";
 import dayjs from "dayjs";
 // import type { DatePickerProps } from 'antd';
 import ChartOne from "../../../component/Charts/one";
-import { useStatisticalsChartQuery, useStatisticalsQuery } from "../../../api/statisticals";
+import {
+  useStatisticalsChartQuery,
+  useStatisticalsQuery,
+} from "../../../api/statisticals";
 import { Skeleton } from "antd";
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 import formatMoneyVN from "../../../config/formatMoneyVN";
-import moment from 'moment';
+import moment from "moment";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { MdMeetingRoom } from "react-icons/md";
 import { MdNoMeetingRoom } from "react-icons/md";
 import { MdRoomPreferences } from "react-icons/md";
-
 
 const Dashboard = () => {
   const [formatDay] = useState("DD/MM/YYYY");
@@ -39,9 +41,9 @@ const Dashboard = () => {
     day: dayjs().format("YYYY-MM-DD"),
     status: [3, 4],
   });
-  const { data : dataChart , isLoading : loadingChart } = useStatisticalsChartQuery<any>([]);
+  const { data: dataChart, isLoading: loadingChart } =
+    useStatisticalsChartQuery<any>([]);
   console.log("dataChart", dataChart);
-  
 
   const { data: dataRevenue, isLoading } = useStatisticalsQuery({
     module: "revenue",
@@ -58,7 +60,6 @@ const Dashboard = () => {
     }
   );
 
-
   const [typeStat, setTypeStat] = useState("");
   const handleSelectStat = (value: string) => {
     form.setFieldsValue({ typeValue: "" });
@@ -73,10 +74,6 @@ const Dashboard = () => {
 
     const { type, typeValue } = values;
     if (type === "daily") {
-      console.log({
-        type,
-        day: dayjs(typeValue.$d).format("YYYY-MM-DD"),
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -86,11 +83,6 @@ const Dashboard = () => {
       setQuery(dataQuery);
     }
     if (type === "weekly") {
-      console.log({
-        type,
-        week: dayjs(typeValue.$d).format("w"),
-        year: dayjs(typeValue.$d).format("YYYY"),
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -101,10 +93,6 @@ const Dashboard = () => {
       setQuery(dataQuery);
     }
     if (type === "monthly") {
-      console.log({
-        type,
-        month: dayjs(typeValue.$d).format("YYYY-MM"),
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -114,10 +102,6 @@ const Dashboard = () => {
       setQuery(dataQuery);
     }
     if (type === "yearly") {
-      console.log({
-        type,
-        year: dayjs(typeValue.$d).format("YYYY"),
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -143,11 +127,6 @@ const Dashboard = () => {
       const formatDay = typeValue?.map((item: any) =>
         dayjs(item.$d).format("YYYY-w")
       );
-      console.log({
-        type,
-        fromWeek: formatDay?.[0],
-        toWeek: formatDay?.[1],
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -161,11 +140,6 @@ const Dashboard = () => {
       const formatMonth = typeValue?.map((item: any) =>
         dayjs(item.$d).format("YYYY-MM")
       );
-      console.log({
-        type,
-        fromMonth: formatMonth?.[0],
-        toMonth: formatMonth?.[1],
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -179,11 +153,6 @@ const Dashboard = () => {
       const formatYear = typeValue?.map((item: any) =>
         dayjs(item.$d).format("YYYY")
       );
-      console.log({
-        type,
-        fromYear: formatYear?.[0],
-        toYear: formatYear?.[1],
-      });
       const dataQuery = {
         // module: "revenue",
         type,
@@ -206,7 +175,7 @@ const Dashboard = () => {
     <>
       <Page title={`Trang chủ`}>
         <Form
-        className=""
+          className=""
           form={form}
           name="basic"
           onFinish={submitStat}
@@ -258,7 +227,9 @@ const Dashboard = () => {
                   className="w-[220px]"
                   placeholder="Chọn ngày"
                   format={formatDay}
-                  disabledDate={(current) => current && current > moment().endOf('day')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("day")
+                  }
                 />
               )}
               {typeStat === "weekly" && (
@@ -267,7 +238,9 @@ const Dashboard = () => {
                   picker="week"
                   placeholder="Chọn tuần"
                   format="w/YYYY"
-                  disabledDate={(current) => current && current > moment().endOf('week')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("week")
+                  }
                 />
               )}
               {typeStat === "monthly" && (
@@ -276,7 +249,9 @@ const Dashboard = () => {
                   className="w-[220px]"
                   placeholder="Chọn tháng"
                   format={formatMonth}
-                  disabledDate={(current) => current && current > moment().endOf('month')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("month")
+                  }
                 />
               )}
               {typeStat === "yearly" && (
@@ -284,15 +259,19 @@ const Dashboard = () => {
                   picker="year"
                   className="w-[220px]"
                   placeholder="Chọn năm"
-                  disabledDate={(current) => current && current > moment().endOf('year')}
-                  />
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("year")
+                  }
+                />
               )}
               {typeStat === "day_to_day" && (
                 <RangePicker
                   className="w-[220px]"
                   format={formatDay}
                   placeholder={["Từ ngày", "Đến ngày"]}
-                  disabledDate={(current) => current && current > moment().endOf('day')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("day")
+                  }
                 />
               )}
               {typeStat === "week_to_week" && (
@@ -301,7 +280,9 @@ const Dashboard = () => {
                   picker="week"
                   format="w/YYYY"
                   placeholder={["Từ tuần", "Đến tuần"]}
-                  disabledDate={(current) => current && current > moment().endOf('week')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("week")
+                  }
                 />
               )}
               {typeStat === "month_to_month" && (
@@ -310,7 +291,9 @@ const Dashboard = () => {
                   className="w-[220px]"
                   format={formatMonth}
                   placeholder={["Từ tháng", "Đến tháng"]}
-                  disabledDate={(current) => current && current > moment().endOf('month')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("month")
+                  }
                 />
               )}
               {typeStat === "year_to_year" && (
@@ -318,7 +301,9 @@ const Dashboard = () => {
                   picker="year"
                   className="w-[220px]"
                   placeholder={["Từ năm", "Đến năm"]}
-                  disabledDate={(current) => current && current > moment().endOf('year')}
+                  disabledDate={(current) =>
+                    current && current > moment().endOf("year")
+                  }
                 />
               )}
             </Form.Item>
@@ -344,29 +329,14 @@ const Dashboard = () => {
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <FaMoneyBillTrendUp  className="text-3xl" />
+                  <FaMoneyBillTrendUp className="text-3xl" />
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500">Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
@@ -375,33 +345,21 @@ const Dashboard = () => {
                 <div>
                   <p className="text-sm text-gray-500">Lượng đặt phòng</p>
 
-                  <p className="text-2xl font-medium text-gray-900">{dataBooking?.book}</p>
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataBooking?.book}
+                  </p>
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MdMeetingRoom  className="text-3xl" />
+                  <MdMeetingRoom className="text-3xl" />
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
@@ -410,34 +368,22 @@ const Dashboard = () => {
                 <div>
                   <p className="text-sm text-gray-500">Lượng huỷ phòng</p>
 
-                  <p className="text-2xl font-medium text-gray-900">{dataBooking?.cancel}</p>
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataBooking?.cancel}
+                  </p>
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MdNoMeetingRoom  className="text-3xl" />
+                  <MdNoMeetingRoom className="text-3xl" />
                 </span>
               </div>
 
               <div className="mt-1 flex gap-1 text-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500"></span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
@@ -445,32 +391,20 @@ const Dashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-500">Tổng số lượng phòng</p>
-                  <p className="text-2xl font-medium text-gray-900">{dataRoom?.total_room}</p>
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataRoom?.total_room}
+                  </p>
                 </div>
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
                   <MdRoomPreferences className="text-3xl" />
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
@@ -478,8 +412,10 @@ const Dashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-500">Số phòng còn trống</p>
-              
-                  <p className="text-2xl font-medium text-gray-900">{dataRoom?.room_is_not_book}</p>
+
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataRoom?.room_is_not_book}
+                  </p>
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
@@ -487,109 +423,47 @@ const Dashboard = () => {
                 </span>
               </div>
               <div className="mt-1 flex gap-1 text-green-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
-            <article className="lg:col-span-1 lg:row-span-2 md:row-span rounded-lg border border-gray-100 bg-white p-6">
+            <article className="rounded-lg border border-gray-100 bg-white p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">
-                    Số lượng phòng đang đặt
+                  <p className="text-sm text-gray-500">Số lượng phòng đang đặt</p>
+
+                  <p className="text-2xl font-medium text-gray-900">
+                    {dataRoom?.room_is_book}
                   </p>
-
-                  <p className="text-2xl font-medium text-gray-900">{dataRoom?.room_is_book}</p>
                 </div>
 
                 <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MdRoomPreferences  className="text-3xl" />
+                  <MdMeetingRoom className="text-3xl" />
                 </span>
               </div>
-
-              <div className="mt-1 flex gap-1 text-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-                  />
-                </svg>
-
+              <div className="mt-1 flex gap-1 text-green-600">
                 <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
+                  <span className="text-gray-500">
+                    {" "}
+                    Ngày : {dataRevenue?.days}{" "}
+                  </span>
                 </p>
               </div>
             </article>
-            {/* <article className="lg:col-span-1 lg:row-span-1 rounded-lg border border-gray-100 bg-white p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-500">Số lượng người dùng</p>
-                  <p className="text-2xl font-medium text-gray-900">$240.94</p>
-                </div>
-                <span className="rounded-full bg-blue-100 p-3 text-blue-600">
-                  <MoneyCollectOutlined className="text-3xl" />
-                </span>
-              </div>
-              <div className="mt-1 flex gap-1 text-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-                  />
-                </svg>
-
-                <p className="flex gap-2 text-xs">
-                  <span className="font-medium"> 67.81% </span>
-
-                  <span className="text-gray-500"> Ngày : {dataRevenue?.days} </span>
-                </p>
-              </div>
-            </article> */}
           </div>
           <div className="mt-4">
-            <ChartOne data={dataChart} />
+            <ChartOne data={dataChart?.revenue} />
           </div>
           <div className="grid grid-cols-1 2xl:grid-cols-2 mt-10 gap-6">
             <div>
-              <ChartFour />
+              <ChartFour data={dataChart}/>
             </div>
             <div>
-              <ChartFive />
+              <ChartFive data={dataChart?.user}/>
             </div>
           </div>
           <div className="border rounded-2xl bg-white p-6 mt-8 hidden">
