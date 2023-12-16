@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Client\Controllers\ClientController;
+use App\Modules\Contact\Controllers\ContactController;
 use App\Modules\Services\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,7 +12,7 @@ Route::fallback(function () {
 });
 
 
-Route::post('contact', [ClientController::class, 'contact']);
+Route::post('contact', [ContactController::class, 'store']);
 
 Route::get('branch', [ClientController::class, 'branch']);
 
