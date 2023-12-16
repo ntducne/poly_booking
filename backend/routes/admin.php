@@ -5,7 +5,9 @@ use App\Http\Middleware\CheckRoleAdmin;
 use App\Http\Middleware\CheckRoleSuperAdmin;
 use App\Models\Notification;
 use App\Modules\Branch\Controllers\BranchController;
+use App\Modules\Contact\Controllers\ContactController;
 use App\Modules\Dashboard\Controllers\DashboardController;
+use App\Modules\Notification\Controllers\NotificationController;
 use App\Modules\Orders\Controllers\BillingController;
 use App\Modules\Orders\Controllers\BookingController;
 use App\Modules\Policy\Controllers\CancellationPolicyController;
@@ -16,53 +18,22 @@ use App\Modules\Services\Controllers\ServicesController;
 use App\Modules\Staff\Controllers\AdminController;
 use App\Modules\User\Controllers\UserController;
 use App\Modules\Utilities\Controllers\UtilitiesController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 Route::fallback(function () {
     return response()->json([
         'message' => 'Page Not Found'
     ], 404);
 });
-Route::get('/notifications', function(){
-    $notification = Notification::all();
-    $newNotification = [];
-    foreach ($notification as $value) {
-        $newNotification[] = [
-            'message' => $value->message,
-            'time' => $value->time,
-        ];
-    }
-    // đảo ngược mảng
-    $newNotification = array_reverse($newNotification);
-    return response()->json($newNotification);
-})->name('notifications');
-Route::get('/contact', function(){
-    $contacts = \App\Models\Contact::all();
-    $newContacts = [];
-    foreach ($contacts as $value) {
-        $newContacts[] = [
-            'name' => $value->name,
-            'email' => $value->email,
-            'message' => $value->message,
-            'time' => $value->created_at,
-        ];
-    }
-    return response()->json($newContacts);
-})->name('contact');
-
-
-// profile
+Route::get('/notifications', [NotificationController::class, 'index']);
+Route::post('/notifications/updateIsRead', [NotificationController::class, 'updateIsRead']);
+Route::get('/contact', [ContactController::class, 'index']);
 Route::get('profile', [AdminController::class, 'profile']);
-
-// update
 Route::prefix('update')->group(function () {
-    // update profile
     Route::post('profile', [AdminController::class, 'updateProfile']);
-    // update profile
     Route::post('avatar', [AdminController::class, 'updateAvatar']);
-    // change password
     Route::post('password', [AdminController::class, 'changePassword']);
 });
-
 Route::get('/room/search', [BookingController::class, 'search'])->name('search');
 Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
 Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');

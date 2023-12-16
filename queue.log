@@ -3918,3 +3918,1123 @@ sh: 1: cd: can't cd to web.php
   20  [internal]:0
       Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
 
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+
+   ParseError 
+
+  syntax error, unexpected token "<<", expecting end of file
+
+  at routes/admin.php:28
+     24▕     return response()->json([
+     25▕         'message' => 'Page Not Found'
+     26▕     ], 404);
+     27▕ });
+  ➜  28▕ <<<<<<< HEAD
+     29▕ Route::get('/notifications', function(){
+     30▕     $notification = Notification::all();
+     31▕     $newNotification = [];
+     32▕     foreach ($notification as $value) {
+sh: 1: cd: can't cd to admin.php
+
+  i   Merge conflict from branch 'fb1c0cfccb91174c43b1926608911f5356aac691' into 'master': You have a Git merge conflict. To undo your merge do `git reset --hard HEAD` 
+
+      [2m+3 vendor frames [22m
+
+  4   app/Providers/RouteServiceProvider.php:78
+      Illuminate\Routing\RouteRegistrar::group()
+      [2m+15 vendor frames [22m
+
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+

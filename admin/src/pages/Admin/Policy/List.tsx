@@ -10,7 +10,7 @@ interface DataType {
   room_id: string;
 }
 import { MdDeleteForever } from "react-icons/md";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 import Page from "../../../component/page";
 import { useGetAllPolicyQuery } from "../../../api/policy";
 // import { useGetRoomsQuery } from "../../../api/room";
@@ -106,7 +106,7 @@ const ListPolicy = () => {
             </Link>
           </Button>
           <Button
-            onClick={() => remove(record?.key)}
+            // onClick={() => remove(record?.key)}
             type="primary"
             className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
           >
@@ -120,29 +120,29 @@ const ListPolicy = () => {
 
   const onChange: TableProps<DataType>["onChange"] = () => {};
 
-  const remove = (id: any) => {
-    try {
-      swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
-          }
-        })
-        .catch(() => {
-          swal("Error", {
-            icon: "error",
-          });
-        });
-    } catch (error) {}
-  };
+  // const remove = (id: any) => {
+  //   try {
+  //     swal({
+  //       title: "Are you sure you want to delete?",
+  //       text: "You cannot undo after deleting!",
+  //       icon: "warning",
+  //       buttons: ["Cancel", "Delete"],
+  //       dangerMode: true,
+  //     })
+  //       .then((willDelete) => {
+  //         if (willDelete) {
+  //           swal("You have successfully deleted", {
+  //             icon: "success",
+  //           });
+  //         }
+  //       })
+  //       .catch(() => {
+  //         swal("Error", {
+  //           icon: "error",
+  //         });
+  //       });
+  //   } catch (error) {}
+  // };
 
   return (
     <Page title={`Chính sách`}>

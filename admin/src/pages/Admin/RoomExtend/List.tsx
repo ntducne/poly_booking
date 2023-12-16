@@ -9,8 +9,6 @@ interface DataType {
   age: number;
   address: string;
 }
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 
@@ -132,9 +130,6 @@ const ListRoomExtend = () => {
     },
   ];
 
-<<<<<<< HEAD
-  const onChange: TableProps<DataType>["onChange"] = () => {};
-=======
   const onChange: TableProps<DataType>["onChange"] = () =>
     // pagination,
     // filters,
@@ -169,21 +164,8 @@ const ListRoomExtend = () => {
   //   } catch (error) {}
   // };
 
->>>>>>> f88c6d114a1bbde46a0eea6b9d71a5ad3cae46b1
   return (
     <Page title={`Gia hạn phòng`}>
-      <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <FormSearch />
-        <div className="flex flex-col md:flex-row md:ml-2">
-          <Link
-            to={`/roomExtend`}
-            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
-          >
-            <MdOutlineDeleteOutline />
-            Thùng rác
-          </Link>
-        </div>
-      </div>
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"

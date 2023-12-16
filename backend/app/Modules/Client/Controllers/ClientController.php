@@ -142,16 +142,4 @@ class ClientController extends Controller
     public function processRenew(RenewRequest $request) {
         return $this->roomRepository->processRenew($request);
     }
-
-    public function contact(Request $request) {
-        $value = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'message' => $request->message,
-            'time' => Carbon::now()->format('d/m/Y H:i:s')
-        ];
-        Contact::create($value);
-        event(new ContactEvent($value));
-    }
-
 }
