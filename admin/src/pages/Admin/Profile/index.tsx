@@ -8,6 +8,7 @@ import { cookies } from "../../../config/cookies";
 import {
   useGetProfileQuery,
   useUpdatePasswordMutation,
+  useUpdateProfileImageMutation,
   useUpdateProfileMutation,
 } from "../../../api/account/profile";
 import { useEffect, useState } from "react";
@@ -15,13 +16,14 @@ import { useEffect, useState } from "react";
 const Profile = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
-  const { data: data_profile, isLoading } = useGetProfileQuery({});
+  const { data: data_profile, isLoading ,  refetch} = useGetProfileQuery({});
   const [updateProfile] = useUpdateProfileMutation({});
   const [updatePassword] = useUpdatePasswordMutation({});
   const [form] = Form.useForm();
   const [formPasword] = Form.useForm();
-
+  const [updateProfileImage] = useUpdateProfileImageMutation({});
   const [initialFormValues, setInitialFormValues] = useState<any>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!JSON.parse(cookies().Get("AuthUser") as any)) {
@@ -35,35 +37,8 @@ const Profile = () => {
     };
     form.setFieldsValue(initialValues);
     setInitialFormValues(initialValues);
-  }, [data_profile?.data]);
+  }, [data_profile?.data, data_profile.data.image]);
 
-  const props: UploadProps = {
-    name: "image",
-    action: `${import.meta.env.VITE_URL_API}/update/avatar`,
-    headers: {
-      Authorization: `Bearer ${
-        JSON.parse(cookies().Get("AuthUser") as any)[2].token
-      }`,
-    },
-    method: "POST",
-    showUploadList: false,
-    accept: ".jpg,.png,.jpeg",
-    maxCount: 1,
-    beforeUpload: (file) => {
-      const isJpgOrPng =
-        file.type === "image/jpeg" || file.type === "image/png";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isJpgOrPng) {
-        message.error("Bạn chỉ có thể tải lên file JPG/PNG!");
-      } else if (!isLt2M) {
-        message.error("Ảnh phải nhỏ hơn 2MB!");
-      }
-      return isJpgOrPng && isLt2M;
-    },
-    onChange(info) {
-      console.log(info);
-    },
-  };
   const data = [
     {
       title: "Ant Design Title 1",
@@ -121,6 +96,52 @@ const Profile = () => {
       });
   };
 
+  const props: UploadProps = {
+    name: "image",
+    action: `${import.meta.env.VITE_URL_API}/update/avatar`,
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(cookies().Get("AuthUser") as any)[2].token
+      }`,
+    },
+    method: "POST",
+    showUploadList: false,
+    accept: ".jpg,.png,.jpeg",
+    maxCount: 1,
+    beforeUpload: (file) => {
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isJpgOrPng) {
+        message.error("Bạn chỉ có thể tải lên file JPG/PNG!");
+      } else if (!isLt2M) {
+        message.error("Ảnh phải nhỏ hơn 2MB!");
+      }
+      return isJpgOrPng && isLt2M;
+    },
+    onChange(info : any) {
+      if (info.file.status === "done") {
+        const reader = new FileReader();        
+        reader.onloadend = () => {
+          updateProfileImage({ image: reader.result })
+            .unwrap()
+            .then((res: any) => {
+              if (res.message && res.status === true) {
+                message.success(res.message);
+                setImageUrl(reader.result as string);
+              } else {
+                message.error("Lỗi cập nhật ảnh!");
+              }
+            })
+            .catch((error: any) => {
+              message.error(error?.data?.error?.image);
+            });
+        };
+        reader.readAsDataURL(info.file.originFileObj);
+      } 
+    },
+  };
+
   const onUpdateProfile = (profile: any) => {
     updateProfile(profile)
       .unwrap()
@@ -148,7 +169,7 @@ const Profile = () => {
           <div className="w-full sm:w-auto rounded-lg inline-flex items-center justify-center px-4 py-2.5 ">
             <img
               className="me-3 w-32 h-32 rounded-md"
-              src={data_profile?.data?.image}
+              src={imageUrl || data_profile?.data?.image}
               alt=""
             />
             <div className="text-left">
