@@ -62,28 +62,30 @@ const data = [
 ];
 const Profile = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [dataProfile, setDataProfile] = useState<any>(null);
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
-  const { data: data_profile, isLoading, refetch } = useGetProfileQuery({});
+  const { data: data_profile, isLoading } = useGetProfileQuery({});
   const [form] = Form.useForm();
   useEffect(() => {
-    refetch();
-    setDataProfile(data_profile?.data);
     setLoading(isLoading);
     form.setFieldsValue({
-      name: dataProfile?.name,
-      phone: dataProfile?.phone,
-      email: dataProfile?.email,
+      name: data_profile?.data?.name,
+      phone: data_profile?.data?.phone,
+      email: data_profile?.data?.email,
     });
-  },[])
+  },[data_profile?.data])
+
+
+  
+
+  
   return (
     <div className="flex">
       <div className="w-1/3">
         <Card loading={loading} className="items-center justify-center border rounded-xl shadow-md">
           <div className="w-full sm:w-auto rounded-lg inline-flex items-center justify-center px-4 py-2.5 ">
-            <img className="me-3 w-32 h-32 rounded-md" src={dataProfile?.image} alt="" />
+            <img className="me-3 w-32 h-32 rounded-md" src={data_profile?.data?.image} alt="" />
             <div className="text-left">
-              <div className="mb-2 text-2xl font-semibold">{dataProfile?.name}</div>
+              <div className="mb-2 text-2xl font-semibold">{data_profile?.data?.name}</div>
               <div className="mb-3 font-sans text-sm">{user?.role}</div>
               <Upload {...props}>
                 <Button icon={<UploadOutlined />}>Cập nhật ảnh đại diện</Button>
@@ -123,7 +125,7 @@ const Profile = () => {
               <Form.Item label="Họ tên" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}><Input/></Form.Item>
               <Form.Item label="Số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}><Input /></Form.Item>
             </div>
-            <Form.Item label="Email" name="email" initialValue={dataProfile?.email}  ><Input disabled /></Form.Item>
+            <Form.Item label="Email" name="email" initialValue={data_profile?.data?.email}  ><Input disabled /></Form.Item>
             <Form.Item>
               <Button 
               // loading={true}
