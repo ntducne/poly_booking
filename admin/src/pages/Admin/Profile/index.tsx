@@ -7,66 +7,18 @@ import { message, Upload } from 'antd';
 import { cookies } from '../../../config/cookies';
 import { useGetProfileQuery } from '../../../api/account/profile';
 import { useEffect, useState } from 'react';
-const props: UploadProps = {
-  name: 'image',
-  action: `${import.meta.env.VITE_URL_API}/update/avatar`,
-  headers: {
-    'Authorization': `Bearer ${JSON.parse(cookies().Get("AuthUser") as any)[2].token}`,
-  },
-  method: 'POST',
-  showUploadList: false,
-  accept: ".jpg,.png,.jpeg",
-  maxCount: 1,
-  beforeUpload: file => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isJpgOrPng) {
-      message.error('Bạn chỉ có thể tải lên file JPG/PNG!');
-    }
-    else if (!isLt2M) {
-      message.error('Ảnh phải nhỏ hơn 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-  },
-  onChange(info) {
-    console.log(info);
-    
-  },
 
-};
-const data = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-];
 const Profile = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [dataProfile, setDataProfile] = useState<any>(null);
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
+
   const { data: data_profile, isLoading, refetch } = useGetProfileQuery({});
   const [form] = Form.useForm();
   useEffect(() => {
+    if(! JSON.parse(cookies().Get("AuthUser") as any)){
+      window.location.href = '/login';
+    }
     refetch();
     setDataProfile(data_profile?.data);
     setLoading(isLoading);
@@ -76,6 +28,59 @@ const Profile = () => {
       email: dataProfile?.email,
     });
   },[])
+  const props: UploadProps = {
+    name: 'image',
+    action: `${import.meta.env.VITE_URL_API}/update/avatar`,
+    headers: {
+      'Authorization': `Bearer ${JSON.parse(cookies().Get("AuthUser") as any)[2].token}`,
+    },
+    method: 'POST',
+    showUploadList: false,
+    accept: ".jpg,.png,.jpeg",
+    maxCount: 1,
+    beforeUpload: file => {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isJpgOrPng) {
+        message.error('Bạn chỉ có thể tải lên file JPG/PNG!');
+      }
+      else if (!isLt2M) {
+        message.error('Ảnh phải nhỏ hơn 2MB!');
+      }
+      return isJpgOrPng && isLt2M;
+    },
+    onChange(info) {
+      console.log(info);
+      
+    },
+  
+  };
+  const data = [
+    {
+      title: 'Ant Design Title 1',
+    },
+    {
+      title: 'Ant Design Title 2',
+    },
+    {
+      title: 'Ant Design Title 3',
+    },
+    {
+      title: 'Ant Design Title 4',
+    },
+    {
+      title: 'Ant Design Title 1',
+    },
+    {
+      title: 'Ant Design Title 2',
+    },
+    {
+      title: 'Ant Design Title 3',
+    },
+    {
+      title: 'Ant Design Title 4',
+    },
+  ];
   return (
     <div className="flex">
       <div className="w-1/3">
@@ -116,9 +121,7 @@ const Profile = () => {
       <div className="w-2/3">
         <Card loading={loading} className="border rounded-xl shadow-md">
           <h2 className="text-base font-semibold leading-7 text-gray-900 mb-6">Thông tin tài khoản</h2>
-          <Form layout="vertical" 
-          form={form}
-          >
+          <Form layout="vertical" form={form}>
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
               <Form.Item label="Họ tên" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}><Input/></Form.Item>
               <Form.Item label="Số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}><Input /></Form.Item>

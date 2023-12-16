@@ -21,7 +21,7 @@ const ListAdmin = () => {
   const { data: staffs, isLoading } = useGetAllAdminsQuery({});
   const { data: valuePermission } = useGetPermissonQuery([]);
   const [isStaff, setIsStaff] = useState("");
-  const { data: staff, isLoading: loadingStaff } = useGetDetailAdminsQuery(
+  const { data: staff, isLoading: loadingStaff, refetch } = useGetDetailAdminsQuery(
     isStaff || skipToken
   );
 
@@ -29,6 +29,7 @@ const ListAdmin = () => {
   const formRef = useRef<any>(null);
   const [activeKey, setActiveKey] = useState<string | string[]>([]);
   useEffect(() => {
+    refetch();
     if (isStaff && staff) {
       setDataStaff(staff);
     }
