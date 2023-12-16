@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Image, Space, Table } from "antd";
+import { Button, Image, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { Link } from "react-router-dom";
 interface DataType {
@@ -8,9 +8,8 @@ interface DataType {
   age: number;
   address: string;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+import {  MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal from "sweetalert";
 
 const ListReview = () => {
   const columns: ColumnsType<DataType> = [
@@ -78,27 +77,6 @@ const ListReview = () => {
       ),
       onFilter: (value: any, record) => record.address.indexOf(value) === 0,
     },
-    {
-      title: "Action",
-      dataIndex: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          {/* <Button type="primary" style={{ backgroundColor: "#68e365" }}>
-            <Link to={`/room/edit/${record?.key}`}>
-              <AiOutlineEdit />
-            </Link>
-          </Button> */}
-          <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            style={{ backgroundColor: "#e23428" }}
-          >
-            <MdDeleteForever />
-          </Button>
-        </Space>
-      ),
-      // fixed: "right",
-    },
   ];
 
   const data = [
@@ -118,30 +96,7 @@ const ListReview = () => {
 
   const onChange: TableProps<DataType>["onChange"] = () => {};
 
-  const remove = (id: any) => {
-    try {
-      swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
-          }
-        })
-        .catch(() => {
-          swal("Error", {
-            icon: "error",
-          });
-        });
-    } catch (error) {}
-  };
-
+  
   return (
     <div className="">
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">

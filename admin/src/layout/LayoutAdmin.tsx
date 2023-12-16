@@ -47,14 +47,19 @@ const LayoutAdmin = () => {
   if (!checkLogin) {
     return <Navigate to="/login" />;
   }
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState<any>(null);
+  const [permissions, setPermissions] = useState<any>(null);
   useEffect(() => {
     const authUser = cookies().Get("AuthUser");
     if (authUser) {
       const parsed = JSON.parse(cookies().Get("AuthUser") as any);
-      return setRole(parsed ? parsed[1].role : null);
+      setRole(parsed ? parsed[1].role : null);
+      setPermissions(parsed ? parsed[3] : null);
     }
   }, []);
+
+  
+
 
   const [title, setTitle] = useState<any>(" ");
   useEffect(() => {
@@ -113,49 +118,99 @@ const LayoutAdmin = () => {
           ),
         ]
       : []),
-
+        
     ...(role !== "super_admin"
       ? [
-          getItem("Phòng", "sub1", <BiSolidBed />, [
-            getItem("Phòng", "/room", <Link to={`room`} />),
-            getItem("Loại Phòng", "/room/type", <Link to={`room/type`} />),
-            getItem(
-              "Tiện ích Phòng",
-              "/room/utilities",
-              <Link to={`room/utilities`} />
-            ),
-            getItem("Đặt Phòng", "/room/booking", <Link to={`room/booking`} />),
-          ]),
-          getItem(
-            "Hoá đơn",
-            "/billing",
-            <Link to={`billing`}>
-              <AiFillBank />
-            </Link>
-          ),
-          getItem(
-            "Dịch vụ",
-            "/services",
-            <Link to={`services`}>
-              <AiOutlineCrown />
-            </Link>
-          ),
-        ]
-      : []),
+          ...(permissions?.includes("admin.rooms.index") || permissions?.includes("admin.types.index") || permissions?.includes("admin.utilities.index") || permissions?.includes("admin.bookings.store")
+          ? [
+            getItem("Phòng", "sub1", <BiSolidBed />, [
+              ...(permissions?.includes("admin.rooms.index")
+                ? [
+                    getItem(
+                      "Danh sách Phòng",
+                      "/room",
+                      <Link to={`room`} />
+                    ),
+                  ]
+                : []),
+              ...(permissions?.includes("admin.types.index")
+                ? [
+                    getItem(
+                      "Loại Phòng",
+                      "/room/type",
+                      <Link to={`room/type`} />
+                    ),
+                  ]
+                : []),
+              ...(permissions?.includes("admin.utilities.index")
+                ? [
+                    getItem(
+                      "Tiện ích",
+                      "/room/utilities",
+                      <Link to={`room/utilities`} />
+                    ),
+                  ]
+                : []),
+              ...(permissions?.includes("admin.bookings.store")
+                ? [
+                    getItem(
+                      "Đặt Phòng",
+                      "/room/booking",
+                      <Link to={`room/booking`} />
+                    ),
+                  ]
+                : []),
+            ]),
+            ]
+          : []),
+          ...(permissions?.includes("admin.billings.index")
+            ? [
+                getItem(
+                  "Hoá đơn",
+                  "/billing",
+                  <Link to={`billing`}>
+                    <AiFillBank />
+                  </Link>
+                ),
+              ]
+            : []),
+          ...(permissions?.includes("admin.services.index")
+            ? [
+                getItem(
+                  "Dịch vụ",
+                  "/services",
+                  <Link to={`services`}>
+                    <AiOutlineCrown />
+                  </Link>
+                ),
+              ]
+            : []),
 
-    ...(role !== "super_admin"
-      ? [
-          getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
-            getItem("Nhân viên", "/staff", <Link to={`staff`} />),
-            getItem("Người dùng", "/user", <Link to={`user`} />),
-          ]),
-          getItem(
-            "Đánh giá",
-            "/feedback",
-            <Link to={`feedback`}>
-              <VscFeedback />
-            </Link>
-          ),
+          ...(permissions?.includes("admin.users.index") ||
+          permissions?.includes("admin.staffs.index")
+            ? [
+                getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
+                  ...(permissions?.includes("admin.staffs.index")
+                    ? [getItem("Nhân viên", "/staff", <Link to={`staff`} />)]
+                    : []),
+                  ...(permissions?.includes("admin.users.index")
+                    ? [getItem("Người dùng", "/user", <Link to={`user`} />)]
+                    : []),
+                ]),
+              ]
+            : []),
+
+          ...(permissions?.includes("admin.rates.index")
+            ? [
+                getItem(
+                  "Đánh giá",
+                  "/feedback",
+                  <Link to={`feedback`}>
+                    <VscFeedback />
+                  </Link>
+                ),
+              ]
+            : []),
           getItem(
             "Liên hệ",
             "/contact",
