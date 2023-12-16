@@ -57,28 +57,15 @@ Route::get('profile', [AdminController::class, 'profile']);
 Route::prefix('update')->group(function () {
     // update profile
     Route::post('profile', [AdminController::class, 'updateProfile']);
+    // update profile
+    Route::post('avatar', [AdminController::class, 'updateAvatar']);
     // change password
     Route::post('password', [AdminController::class, 'changePassword']);
 });
 
-Route::middleware(CheckRoleSuperAdmin::class)->group(function () {
-
-    Route::resource('branches', BranchController::class)->except(['create', 'edit']);
-
-    Route::post('store', [AdminController::class, 'store']);
-
-    Route::get('', [AdminController::class, 'index']);
-
-    Route::get('/{id}', [AdminController::class, 'show']);
-
-    Route::put('update/{id}', [AdminController::class, 'update']);
-
-    Route::post('delete/{id}', [AdminController::class, 'destroy']);
-    
-    Route::post('assignPermissionAdmin/{id}', [AdminController::class, 'assignPermission']);
-});
-
 Route::get('/room/search', [BookingController::class, 'search'])->name('search');
+Route::get('/statisticals', [DashboardController::class, 'statistical'])->name('statisticals.index');
+Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');
 Route::middleware(CheckPermission::class)->group(function () {
     Route::resource('rooms/types', RoomTypeController::class)->except(['create', 'edit']);
     Route::post('rooms/deleteImage', [RoomController::class, 'deleteImageRoom'])->name('rooms.image.delete');

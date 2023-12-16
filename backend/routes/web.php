@@ -20,14 +20,6 @@ Route::get('unauthorized', function (){ return response()->json([
     'message' => 'Unauthorized !'
 ], 401); })->name('unauthorized');
 
-<<<<<<< HEAD
-Route::get('/', function () {
-    Billing::truncate();
-    BookDetail::truncate();
-    Booking::truncate();
-    RateRoom::truncate();
-});
-=======
 // Route::get('/', function () {
 //     Billing::truncate();
 //     BookDetail::truncate();
@@ -43,6 +35,5 @@ Route::get('/', function () {
 //     Services::truncate();
 //     DB::table('utilities')->truncate();
 // });
->>>>>>> b9722f6848bea144e31a743aa7ed219f68421a3a
 
 Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');
