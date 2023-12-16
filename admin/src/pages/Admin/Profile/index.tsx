@@ -1,109 +1,157 @@
-// import React from "react";
-import { Tabs, TabsProps } from "antd";
-import Page from "../../../component/page";
-import UpdateProfile from "./UpdateProfile";
-import UpdatePassword from "./UpdatePassword";
-// import { Skeleton } from "antd";
+import { CheckOutlined } from '@ant-design/icons';
+import { Button, Card, Form, Input } from 'antd';
+import { List } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import type { UploadProps } from 'antd';
+import { message, Upload } from 'antd';
+import { cookies } from '../../../config/cookies';
+import { useGetProfileQuery } from '../../../api/account/profile';
+import { useEffect, useState } from 'react';
+const props: UploadProps = {
+  name: 'image',
+  action: `${import.meta.env.VITE_URL_API}/update/avatar`,
+  headers: {
+    'Authorization': `Bearer ${JSON.parse(cookies().Get("AuthUser") as any)[2].token}`,
+  },
+  method: 'POST',
+  showUploadList: false,
+  accept: ".jpg,.png,.jpeg",
+  maxCount: 1,
+  beforeUpload: file => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isJpgOrPng) {
+      message.error('Bạn chỉ có thể tải lên file JPG/PNG!');
+    }
+    else if (!isLt2M) {
+      message.error('Ảnh phải nhỏ hơn 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
+  },
+  onChange(info) {
+    console.log(info);
+    
+  },
 
+};
+const data = [
+  {
+    title: 'Ant Design Title 1',
+  },
+  {
+    title: 'Ant Design Title 2',
+  },
+  {
+    title: 'Ant Design Title 3',
+  },
+  {
+    title: 'Ant Design Title 4',
+  },
+  {
+    title: 'Ant Design Title 1',
+  },
+  {
+    title: 'Ant Design Title 2',
+  },
+  {
+    title: 'Ant Design Title 3',
+  },
+  {
+    title: 'Ant Design Title 4',
+  },
+];
 const Profile = () => {
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Thông tin cá nhân",
-      children: (
-        <UpdateProfile
-        // data={data && Object.keys(data)?.length ? data?.message : {}}
-        />
-      ),
-    },
-    {
-      key: "2",
-      label: "Cập nhật mật khẩu",
-      children: <UpdatePassword />,
-    },
-  ];
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const [dataProfile, setDataProfile] = useState<any>(null);
+  const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
+  const { data: data_profile, isLoading, refetch } = useGetProfileQuery({});
+  const [form] = Form.useForm();
+  useEffect(() => {
+    refetch();
+    setDataProfile(data_profile?.data);
+    setLoading(isLoading);
+    form.setFieldsValue({
+      name: dataProfile?.name,
+      phone: dataProfile?.phone,
+      email: dataProfile?.email,
+    });
+  },[])
   return (
-    <Page title="Thông tin cá nhân">
-      <div className="bg-bgr pt-[20px]">
-        <div className="container mx-auto px-8">
-          <h1 className="mb-6 font-normal text-[30px]">Thông tin cá nhân</h1>
-          <div className="md:flex no-wrap md:-mx-2 ">
-            <div className="w-full md:w-3/12 md:mx-2">
-              <div className="bg-white shadow-md rounded-xl p-3 border-t-8 border-b-8 border-gray-400">
-                <div>
-                  <div className="image overflow-hidden">
-                    <img
-                      className="h-auto w-36 mx-auto"
-                      alt=""
-                      // src={data?.message?.image}
-                    />
-                  </div>
-                </div>
-                <h1 className="text-gray-900 font-bold text-xl leading-8 my-1 text-center">
-                  {/* {data?.message?.name} */}
-                </h1>
-                <ul className=" text-gray-600 py-2 px-3 mt-3">
-                  <li className="flex items-center py-3">
-                    <span>Trạng thái tài khoản</span>
-                    <span className="ml-auto">
-                      <span className="bg-green-500 py-1 px-2 rounded-md text-white text-sm">
-                        Hoạt động
-                      </span>
-                    </span>
-                  </li>
-                  <li className="flex items-center py-3">
-                    <span>Thành viên từ: </span>
-                    <span className="ml-auto">23/08/2023</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="w-full md:w-9/12 lg:ml-2 mt-6 md:mt-0 overflow-hidden transition-all duration-500 ease-in-out">
-              <div className="bg-white px-5 py-4 shadow-md rounded-xl border border-gray-100">
-                <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                  <span className="text-gray-500">
-                    <svg
-                      className="h-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </span>
-                  <span className="tracking-wide">Thông tin cá nhân</span>
-                </div>
-                <div className="text-gray-700">
-                  <div className="grid md:grid-cols-2 mb-5">
-                    <div className="flex gap-2">
-                      <div className="py-2 font-semibold">Họ tên: </div>
-                      {/* <div className="py-2">{data?.message?.name}</div> */}
-                    </div>
-                    <div className="flex gap-2">
-                      <div className="py-2 font-semibold">Email: </div>
-                      {/* <div className="py-2">{data?.message?.email}</div> */}
-                    </div>
-                    <div className="flex gap-2">
-                      <div className="py-2 font-semibold">Số điện thoại: </div>
-                      {/* <div className="py-2">{data?.message?.phone}</div> */}
-                    </div>
-                  </div>
-                  <Tabs defaultActiveKey="1" items={items} />
-                </div>
-              </div>
+    <div className="flex">
+      <div className="w-1/3">
+        <Card loading={loading} className="items-center justify-center border rounded-xl shadow-md">
+          <div className="w-full sm:w-auto rounded-lg inline-flex items-center justify-center px-4 py-2.5 ">
+            <img className="me-3 w-32 h-32 rounded-md" src={dataProfile?.image} alt="" />
+            <div className="text-left">
+              <div className="mb-2 text-2xl font-semibold">{dataProfile?.name}</div>
+              <div className="mb-3 font-sans text-sm">{user?.role}</div>
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Cập nhật ảnh đại diện</Button>
+              </Upload>
             </div>
           </div>
-          {/* )} */}
-        </div>
+        </Card>
+        <Card loading={loading} title="Thông báo" extra={<>
+          <Button
+            icon={<CheckOutlined />}
+          >Đánh dấu tất cả là đã đọc</Button>
+        </>} className='rounded-xl shadow-md mt-6 h-[445px]'>
+          <div className='h-[340px] overflow-y-scroll'>
+          <List
+              itemLayout="horizontal"
+              dataSource={data}
+              renderItem={item => (
+                <List.Item>
+                  <List.Item.Meta
+                    title={item.title}
+                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                  />
+                </List.Item>
+              )}
+            />
+          </div>
+        </Card>
       </div>
-    </Page>
+      <div className="m-3"></div>
+      <div className="w-2/3">
+        <Card loading={loading} className="border rounded-xl shadow-md">
+          <h2 className="text-base font-semibold leading-7 text-gray-900 mb-6">Thông tin tài khoản</h2>
+          <Form layout="vertical" 
+          form={form}
+          >
+            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
+              <Form.Item label="Họ tên" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}><Input/></Form.Item>
+              <Form.Item label="Số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}><Input /></Form.Item>
+            </div>
+            <Form.Item label="Email" name="email" initialValue={dataProfile?.email}  ><Input disabled /></Form.Item>
+            <Form.Item>
+              <Button 
+              // loading={true}
+              className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm text-center" htmlType="submit">
+              Cập nhật
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+        <Card loading={loading} className="border rounded-xl shadow-md mt-5">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">Cập nhật mật khẩu</h2>
+          <Form layout="vertical" className='mt-6'>
+            <Form.Item label="Mật khẩu cũ" name="old_password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu cũ!' }]}><Input.Password /></Form.Item>
+            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
+              <Form.Item label="Mật khẩu mới" name="new_password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu mới!' }]}><Input.Password/></Form.Item>
+              <Form.Item label="Nhập lại mật khẩu mới" name="confirm_new_password" rules={[{ required: true, message: 'Vui lòng nhập lại mật khẩu mới!' }]}><Input.Password /></Form.Item>
+            </div>
+            <Form.Item>
+              <Button 
+              // loading={true}
+              className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm text-center" htmlType="submit">
+              Cập nhật
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+      </div>
+    </div >
   );
 };
 
