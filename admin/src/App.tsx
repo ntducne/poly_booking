@@ -55,13 +55,6 @@ import Welcome from "./pages/welcome";
 import { useSelector } from "react-redux";
 
 function App() {
-  // useEffect(() => {
-    //   const authUser = cookies().Get("AuthUser");
-  //   if (authUser) {
-  //     const parsed = JSON.parse(cookies().Get("AuthUser") as any);
-  //     return setRole(parsed ? parsed[1].role : null);
-  //   }
-  // }, [role]);
   const role1 = useSelector((state: any) => state.role).role;
   const [role, setRole] = useState<any>(role1);
   useEffect(() => {
