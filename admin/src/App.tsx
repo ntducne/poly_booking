@@ -47,7 +47,6 @@ import ListBranches from "./pages/Admin/Branches/List";
 import AddBranche from "./pages/Admin/Branches/Add";
 import EditBranche from "./pages/Admin/Branches/Edit";
 import { useEffect, useState } from "react";
-import { cookies } from "./config/cookies";
 import ListAdmin from "./pages/Admin/Guset/Admin/List";
 import AddAdmin from "./pages/Admin/Guset/Admin/Add";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
@@ -60,7 +59,6 @@ function App() {
   useEffect(() => {
     setRole(role1);
   },[role1])
-  console.log("role" , role);
   
 
   return (

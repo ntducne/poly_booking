@@ -5,7 +5,7 @@ import { useLoginMutation } from "../../api/auth";
 import { cookies } from "../../config/cookies";
 import { useState } from "react";
 import { convertFromNowToSeconds } from "../../config/convertDate";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setRole } from "../../Slices/Auth";
 
 export default function LoginAdmin() {
