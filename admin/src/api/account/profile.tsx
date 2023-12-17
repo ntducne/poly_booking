@@ -30,6 +30,14 @@ export const profileApi = createApi({
             }),
             invalidatesTags: ["Profile"],
         }),
+        updateProfileImage: builder.mutation({
+            query: (data) => ({
+                url: `/update/avatar`,
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["Profile"],
+        }),
         updatePassword: builder.mutation({
             query: (data) => ({
                 url: `/update/password`,
@@ -46,4 +54,5 @@ export const {
     useGetProfileQuery,
     useUpdateProfileMutation,
     useUpdatePasswordMutation,
+    useUpdateProfileImageMutation
 } = profileApi;
