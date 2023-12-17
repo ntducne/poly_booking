@@ -5,12 +5,16 @@ import { useLoginMutation } from "../../api/auth";
 import { cookies } from "../../config/cookies";
 import { useState } from "react";
 import { convertFromNowToSeconds } from "../../config/convertDate";
+import { useDispatch, useSelector } from "react-redux";
+import { setRole } from "../../Slices/Auth";
 
 export default function LoginAdmin() {
   const userPermissions = JSON.parse(cookies().Get("AuthUser") as any);
   if (userPermissions) {
     return <Navigate to="/" />;
   }
+  const dispatch = useDispatch();
+
   const [form] = Form.useForm();
   const [Login] = useLoginMutation();
   const navigate = useNavigate();
@@ -37,6 +41,8 @@ export default function LoginAdmin() {
             JSON.stringify(Object.values(response)),
             convertFromNowToSeconds(response.accessToken.expires_at)
           );
+          dispatch(setRole({ role: response.user?.role }));
+
           navigate("/");
         }
       }

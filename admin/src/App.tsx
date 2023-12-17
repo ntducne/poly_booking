@@ -52,16 +52,23 @@ import ListAdmin from "./pages/Admin/Guset/Admin/List";
 import AddAdmin from "./pages/Admin/Guset/Admin/Add";
 import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
 import Welcome from "./pages/welcome";
+import { useSelector } from "react-redux";
 
 function App() {
-  const [role, setRole] = useState<any>(null);
+  // useEffect(() => {
+    //   const authUser = cookies().Get("AuthUser");
+  //   if (authUser) {
+  //     const parsed = JSON.parse(cookies().Get("AuthUser") as any);
+  //     return setRole(parsed ? parsed[1].role : null);
+  //   }
+  // }, [role]);
+  const role1 = useSelector((state: any) => state.role).role;
+  const [role, setRole] = useState<any>(role1);
   useEffect(() => {
-    const authUser = cookies().Get("AuthUser");
-    if (authUser) {
-      const parsed = JSON.parse(cookies().Get("AuthUser") as any);
-      return setRole(parsed ? parsed[1].role : null);
-    }
-  }, []);
+    setRole(role1);
+  },[role1])
+  console.log("role" , role);
+  
 
   return (
     <>
@@ -70,10 +77,8 @@ function App() {
         <Route path="forGotPassword" element={<ForgotPasswordAdmin />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
-          {role === "super_admin" && (
-            <Route index element={<Welcome />} />
-          )}
-          {(role !== "super_admin" && role !== null) && (
+          {role === "super_admin" && <Route index element={<Welcome />} />}
+          {role !== "super_admin" && (
             <Route index element={<Dashboard />} />
           )}
           <Route path="profile" element={<Profile />} />

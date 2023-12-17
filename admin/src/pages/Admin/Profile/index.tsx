@@ -37,7 +37,7 @@ const Profile = () => {
     };
     form.setFieldsValue(initialValues);
     setInitialFormValues(initialValues);
-  }, [data_profile?.data, data_profile.data.image]);
+  }, [data_profile?.data, data_profile?.data?.image]);
 
   const data = [
     {

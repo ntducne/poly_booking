@@ -15,12 +15,15 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { pusherInstance } from "../../config/pusher";
 import { FaEye } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { resetRole } from "../../Slices/Auth";
 
 const { Text } = Typography;
 
 const Head = () => {
   const [newMessage, setNewMessage] = useState(0);
   const [notifications, setNotifications] = useState<any[]>([]);
+  const dispatch = useDispatch();
 
   const title: any = useContext(LayoutContext);
   const navigate = useNavigate();
@@ -101,6 +104,7 @@ const Head = () => {
       .then((res) => res.json())
       .then(() => {
         cookies().Delete("AuthUser");
+        dispatch(resetRole());
         toast("Đăng xuất thành công");
         setTimeout(() => {
           navigate("/login");
