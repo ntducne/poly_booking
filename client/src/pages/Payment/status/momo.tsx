@@ -24,7 +24,7 @@ export default function StatusPaymentMomo() {
         if (location.search) {
             Navigate("/payment/status/momo");
             fetch(
-                `${import.meta.env.VITE_URL_PAY}/pay/momo/callback${location.search}`, {
+                `${import.meta.env.VITE_URL_PAY}/momo/callback${location.search}`, {
                 method: "GET",
             })
                 .then((response) => {
