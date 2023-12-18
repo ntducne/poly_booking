@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
@@ -135,6 +135,19 @@ const ListServices = () => {
 
   return (
     <Page title={`Dịch vụ`}>
+      <div className="flex flex-col-reverse md:flex-row md:justify-between ">
+        <div></div>
+        <div className="flex flex-col md:flex-row md:ml-2">
+          <Link
+            to={`/services/add`}
+            className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
+          >
+            <AiOutlinePlus />
+            Thêm dịch vụ
+          </Link>
+      
+        </div>
+      </div>
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
