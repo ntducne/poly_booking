@@ -24,7 +24,7 @@ export default function StatusPaymentVnpay() {
         if (location.search) {
             Navigate("/payment/status/vnpay");
             fetch(
-                `${import.meta.env.VITE_URL_PAY}/pay/vnpay/callback${location.search}`, {
+                `${import.meta.env.VITE_URL_PAY}/vnpay/callback${location.search}`, {
                 method: "GET",
             })
                 .then((response) => {
