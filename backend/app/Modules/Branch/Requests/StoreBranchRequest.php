@@ -4,6 +4,7 @@ namespace App\Modules\Branch\Requests;
 
 use App\Http\Requests\Request;
 use App\Models\Branch;
+use App\Rules\PhoneRule;
 use Illuminate\Validation\Rule;
 
 class StoreBranchRequest extends Request
@@ -14,7 +15,7 @@ class StoreBranchRequest extends Request
             'address' => ['bail', 'required', 'string'],
             'name'    => ['bail','required','string','max:255',
                 Rule::unique(Branch::class, 'name')],
-            'phone'   => ['bail','required','numeric','digits:10', 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/',
+            'phone'   => ['bail','required', new PhoneRule(),
                 Rule::unique(Branch::class,'phone')]
         ];
     }
