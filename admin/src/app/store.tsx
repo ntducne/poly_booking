@@ -46,7 +46,7 @@ const rootReducer = combineReducers({
     [authApi.reducerPath]: authReducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [staffsApi.reducerPath]: staffsApi.reducer,
-    user: userSlicer,
+    role: userSlicer,
     [roomApi.reducerPath]: roomApi.reducer,
     [roomTypesApi.reducerPath]: roomTypesApi.reducer,
     [branchApi.reducerPath]: branchApi.reducer,
