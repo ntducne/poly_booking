@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 const Profile = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
-  const { data: data_profile, isLoading ,  refetch} = useGetProfileQuery({});
+  const { data: data_profile, isLoading } = useGetProfileQuery({});
   const [updateProfile] = useUpdateProfileMutation({});
   const [updatePassword] = useUpdatePasswordMutation({});
   const [form] = Form.useForm();
@@ -37,7 +37,7 @@ const Profile = () => {
     };
     form.setFieldsValue(initialValues);
     setInitialFormValues(initialValues);
-  }, [data_profile?.data, data_profile.data.image]);
+  }, [data_profile?.data, data_profile?.data?.image]);
 
   const data = [
     {
