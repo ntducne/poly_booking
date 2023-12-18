@@ -201,7 +201,7 @@ const ListAdmin = () => {
       .then((res: any) => {
         if (res.status === "success") {
           toast.success(res.message);
-          handleCancel();
+          // handleCancel();
         } else {
           toast.error(res.message);
         }

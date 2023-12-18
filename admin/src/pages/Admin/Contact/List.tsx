@@ -37,7 +37,7 @@ const ListContact = () => {
     },
   ];
 
-  const data = dataContact?.map((item :any, index : any) => ({
+  const data = dataContact?.data?.map((item :any, index : any) => ({
     key: index + 1,
     name: item.name,
     email: item.email,
