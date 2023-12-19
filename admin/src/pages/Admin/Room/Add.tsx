@@ -183,7 +183,7 @@ const AddRoom = () => {
             name="children"
             rules={[{ required: true, message: "Vui lòng nhập tối đa trẻ em" }]}
           >
-            <InputNumber min={1} className="w-full" />
+            <InputNumber min={0} className="w-full" />
           </Form.Item>
 
           <Form.Item
@@ -258,12 +258,12 @@ const AddRoom = () => {
               <Row className="">
                 <Col>
                   <Radio value="0" style={{ lineHeight: "32px" }}>
-                    Thanh toán khi nhận phòng
+                    Thẻ tín dụng
                   </Radio>
                 </Col>
                 <Col>
                   <Radio value="1" style={{ lineHeight: "32px" }}>
-                    Thanh toán trước
+                    Thanh toán tiền mặt
                   </Radio>
                 </Col>
               </Row>

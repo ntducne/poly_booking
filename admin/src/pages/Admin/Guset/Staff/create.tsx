@@ -52,12 +52,17 @@ const CreateStaff = () => {
           });
           navigate("/staff");
         } else {
-          console.log(item);
-          toast(item?.error?.name || "Lỗi", {
+          toast(item?.message || "Lỗi", {
             autoClose: 3000,
             theme: "light",
           });
         }
+      })
+      .catch((error : any) => {
+        toast(error?.data?.error?.email || "Lỗi", {
+          autoClose: 3000,
+          theme: "light",
+        });
       });
   };
 

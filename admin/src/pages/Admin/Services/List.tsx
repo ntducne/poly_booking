@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
@@ -17,8 +17,15 @@ import {
 } from "../../../api/services";
 import FormatPrice from "../../../utils/FormatPrice";
 import Page from "../../../component/page";
-import { permissions } from "../../../hoc/withAuthorization";
+import { useSelector } from "react-redux";
 const ListServices = () => {
+  const permission1 = useSelector((state: any) => state.role).permission;
+  const [permissions, setPermissions] = useState<any>(permission1);
+  useEffect(() => {
+    setPermissions(permission1);
+  },[permission1])
+  
+
   const { data: dataServices, isLoading } = useGetServicesQuery({});
 
   const [deleteServices] = useDeleteServicesMutation();
@@ -52,12 +59,6 @@ const ListServices = () => {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
-    },
-    {
-      title: "Địa điểm",
-      dataIndex: "branch_id",
-      key: "branch_id",
-      sorter: (a, b) => a.branch_id.length - b.branch_id.length,
     },
     {
       title: "Action",

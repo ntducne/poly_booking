@@ -43,8 +43,6 @@ const Dashboard = () => {
   });
   const { data: dataChart, isLoading: loadingChart } =
     useStatisticalsChartQuery<any>([]);
-  console.log("dataChart", dataChart);
-
   const { data: dataRevenue, isLoading } = useStatisticalsQuery({
     module: "revenue",
     ...query,

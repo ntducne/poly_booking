@@ -1,5 +1,5 @@
 // import React, { useState } from "react";
-import { Form, Input, Button, Select, Typography, Space } from "antd";
+import { Form, Input, Button, Select, Typography, Space, Skeleton } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ const AddRoomUtilities = () => {
   const [createUtilitie, { isLoading: isLoadingCreate }] =
     useCreateUtilitieMutation();
   if (isLoading && isLoadingCreate) {
-    return <div>Loading...</div>;
+    return <div><Skeleton/></div>;
   }
 
   const onFinish = (values: any) => {
@@ -30,15 +30,14 @@ const AddRoomUtilities = () => {
       .unwrap()
       .then((result: any) => {
         if (result.status === "success") {
-          toast.success("Thêm mới chính sách thành công");
+          toast.success("Thêm mới tiện ích phòng thành công");
           navigate("/room/utilities");
         } else {
           toast.error(result.error.message);
         }
       })
       .catch((error: any) => {
-        // Xử lý lỗi nếu có
-        toast.error("Có lỗi xảy ra khi thêm mới loại phòng");
+        toast.error("Có lỗi xảy ra khi thêm tiện tích phòng");
         console.log(error);
       });
   };

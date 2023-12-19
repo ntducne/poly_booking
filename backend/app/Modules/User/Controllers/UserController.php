@@ -216,12 +216,15 @@ class UserController extends Controller
                 'message' => 'Room not found'
             ], 404);
         }
-
         $check = false;
         if ($request->user()) {
             $userId = $request->user()->id;
             $billing = Billing::where('user_id', $userId)->where('status', 4)->get();
             foreach ($billing as $item) {
+
+                $countBookdetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->groupBy('booking_id')->count();
+                $countRate = RateRoom::where('booking_id', $item->booking_id)->where('room_id', $room->id)->where('user_id', $userId);
+
                 $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->orderBy('id', 'desc')->first();
                 if ($bookDetail) {
                     $booking = Booking::where('_id', $bookDetail->booking_id)->first();
@@ -240,10 +243,7 @@ class UserController extends Controller
                 'message' => 'Bạn không thể đánh giá phòng này !'
             ], 400);
         }
-
-
         $input = $request->all();
-
         $images = $request->file('images');
         if ($images) {
             $uploadedFileUrl = $this->UploadMultiImage($images, 'rate_room/' . $room->id . '/');
@@ -258,7 +258,4 @@ class UserController extends Controller
             'data' => $rate
         ], 201);
     }
-
-    
-
 }

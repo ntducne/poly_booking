@@ -58,8 +58,7 @@ function App() {
   const [role, setRole] = useState<any>(role1);
   useEffect(() => {
     setRole(role1);
-  },[role1])
-  
+  }, [role1]);
 
   return (
     <>
@@ -69,9 +68,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
           {role === "super_admin" && <Route index element={<Welcome />} />}
-          {role !== "super_admin" && (
-            <Route index element={<Dashboard />} />
-          )}
+          {role !== "super_admin" && <Route index element={<Dashboard />} />}
           <Route path="profile" element={<Profile />} />
           <Route path="billing">
             <Route index element={<AuthorizedListBillings />} />
@@ -117,7 +114,7 @@ function App() {
           <Route path="notifications">
             <Route index element={<ListNotifications />} />
           </Route>
-          {role !== "super_admin" && (
+          {role !== "super_admin" && role !== "staff" && (
             <Route path="staff">
               <Route index element={<AuthorizedListStaffs />} />
               <Route path="edit/:id" element={<AuthorizedUpdateStaffs />} />

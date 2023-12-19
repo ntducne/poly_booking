@@ -35,11 +35,13 @@ const ListRoom = () => {
   };
   useEffect(() => {
     setDataFetching(
-      data?.data.map((item: any) => {
+      data?.data.map((item: any, index: number) => {
         return {
+          stt: index + 1,
           key: item.id,
           name: item.name,
           num_of_bed: item.num_of_bed,
+          price: item.price,
           discount: item.discount,
           status: item.status,
           area: item.area,
@@ -51,11 +53,17 @@ const ListRoom = () => {
   }, [isLoading, data?.data]);
   const columns: ColumnsType<DataType> = [
     {
+      title: "STT",
+      dataIndex: "stt",
+      sorter: (a: any, b: any) => a.stt - b.stt,
+      sortDirections: ["descend"],
+      fixed: "left",
+    },
+    {
       title: "Tên phòng",
       dataIndex: "name",
       sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["descend"],
-      fixed: "left",
     },
     {
       title: "Ảnh phòng",
@@ -77,8 +85,8 @@ const ListRoom = () => {
     },
     {
       title: "Giá phòng",
-      dataIndex: "discount",
-      key: "discount",
+      dataIndex: "price",
+      key: "price",
       sorter: (a, b) => a.name.length - b.name.length,
       render: (text) => {
         return (

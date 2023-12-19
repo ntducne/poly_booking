@@ -37,3 +37,9 @@ Route::get('unauthorized', function (){ return response()->json([
 // });
 
 Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');
+
+
+Route::get('', function(){
+    // create_permision();
+    echo 6 % 4;
+});
