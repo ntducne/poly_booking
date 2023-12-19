@@ -10,6 +10,7 @@ use App\Modules\Staff\Resources\StaffResource;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -193,5 +194,21 @@ class AdminController extends Controller
         }
     }
 
-
+    public function getStaff(Request $request){
+        $userId = request()->cookie('user_id');
+        $user = Auth::loginUsingId($userId);
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nhân viên không tồn tại hoặc chưa đăng nhập !',
+                'data' => null
+            ]);
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nhân viên không tồn tại hoặc chưa đăng nhập !',
+                'data' => $user
+            ]);
+        }
+    }
 }
