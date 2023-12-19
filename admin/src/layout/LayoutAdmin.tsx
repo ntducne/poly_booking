@@ -151,7 +151,7 @@ const LayoutAdmin = () => {
                     ),
                   ]
                 : []),
-              ...(permissions?.includes("admin.bookings.store")
+              ...(permissions?.includes("admin.booking.store")
                 ? [
                     getItem(
                       "Đặt Phòng",
@@ -187,10 +187,10 @@ const LayoutAdmin = () => {
             : []),
 
           ...(permissions?.includes("admin.users.index") ||
-          permissions?.includes("admin.staffs.index")
+          permissions?.includes("admin.staffs.index") && role !== "staff"
             ? [
                 getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
-                  ...(permissions?.includes("admin.staffs.index")
+                  ...(permissions?.includes("admin.staffs.index") && role !== "staff"
                     ? [getItem("Nhân viên", "/staff", <Link to={`staff`} />)]
                     : []),
                   ...(permissions?.includes("admin.users.index")
