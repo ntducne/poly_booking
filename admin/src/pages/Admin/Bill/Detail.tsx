@@ -47,7 +47,6 @@ const BillDetail: React.FC = () => {
     isLoading,
     refetch,
   } = useGetDetailBilingsQuery(id || "");
-  console.log("dataBill", dataBill);
 
   const prevServicesRef = useRef();
   const { data: dataRoomType } = useGetAllRoomTypeQuery({});
@@ -75,7 +74,6 @@ const BillDetail: React.FC = () => {
   const [addPeopleBooking] = useAddPeopleBookingMutation();
 
   const onAddPeople = (values: any) => {
-    console.log("Received values of form:", values);
     const dataAddPeople = {
       billing_id: dataBill?.data?.id,
       peoples: values.users,
@@ -135,7 +133,6 @@ const BillDetail: React.FC = () => {
       billing_id: dataBill?.data?.id,
       ...values,
     };
-    console.log("dataBillNew", dataBillNew);
 
     addServiceBooking(dataBillNew)
       .unwrap()
@@ -178,7 +175,6 @@ const BillDetail: React.FC = () => {
           form.resetFields();
           formPeople.resetFields();
           setFormChanged(false);
-          console.log("Cancel");
           setOpen(false);
         },
       });
@@ -338,7 +334,7 @@ const BillDetail: React.FC = () => {
       checkin: dayjs(dataBill?.data?.booking?.checkout).format("YYYY-MM-DD"),
       checkout: new_checkoutDate,
       adult: adults,
-      children: childs,
+      child: childs,
       // branch_id: dataBill?.data?.branch?.id,
       room_type_id: room_type_id,
       amount_room: amount_room_renew,
@@ -346,16 +342,18 @@ const BillDetail: React.FC = () => {
     searchRoom(dataQuery)
       .unwrap()
       .then((data) => {
-        console.log(data?.status);
         if (data?.message == "Hết phòng !") {
           message.error(data.message);
         }
-        if (data?.status == false) {
+        if (data?.status == "error") {
           message.warning(data?.error?.amount_room || data?.message);
         } else {
           message.success(data?.message);
           setRoomSearch(data?.data);
         }
+      })
+      .catch((err) => {
+        message.error(err?.data?.error?.amount_room);
       });
   };
 
@@ -367,9 +365,7 @@ const BillDetail: React.FC = () => {
     setIdRoomNewExtend(value);
   };
 
-  const onCheckRoomExtend = (values: any) => {
-    console.log("values", values);
-  };
+  const onCheckRoomExtend = () => {};
 
   const onExtendBooking = () => {
     const { adults, childs, amount_room_renew, new_checkout } =
@@ -395,7 +391,7 @@ const BillDetail: React.FC = () => {
               icon: "success",
             });
             closeModalExtend();
-          } 
+          }
           // else if (res.message && res.status === false) {
           //   swal(res.message, {
           //     icon: "error",
@@ -414,7 +410,6 @@ const BillDetail: React.FC = () => {
       amount_room_renew < dataBill?.data?.booking?.amount_room &&
       idRoomNewExtend === null
     ) {
-      // console.log()
       const dataExtendRoom = {
         billing_id: dataBill?.data?.id,
         amount_room: amount_room_renew,
@@ -423,7 +418,6 @@ const BillDetail: React.FC = () => {
         roomNumberRenew: formRoomIdExtend.getFieldsValue().room_id,
         booking_id: dataBill?.data?.booking?.id,
       };
-      console.log("dataExtendRoom", dataExtendRoom);
       extendBooking(dataExtendRoom)
         .unwrap()
         .then((res) => {
@@ -467,8 +461,12 @@ const BillDetail: React.FC = () => {
               icon: "success",
             });
             closeModalExtend();
-          } else if (res.message && res.status === false) {
+          } else if (res.message) {
             swal(res.message, {
+              icon: "success",
+            });
+          } else if (res.status === false) {
+            swal("Lỗi gia hạn", {
               icon: "error",
             });
           }
@@ -588,7 +586,7 @@ const BillDetail: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center md:justify-end justify-start ml-5 md:ml-0 md:mr-3">
-          {dataBill?.data?.status === 0 && (
+          {/* {dataBill?.data?.status === 0 && (
             <button
               type="button"
               // onClick={() => onCancelBooking(dataBill?.data?.id)}
@@ -596,7 +594,7 @@ const BillDetail: React.FC = () => {
             >
               Chờ nhận phòng
             </button>
-          )}
+          )} */}
           {dataBill?.data?.status === 1 && (
             <button
               type="button"
@@ -755,17 +753,12 @@ const BillDetail: React.FC = () => {
                     required: true,
                     message: "Vui lòng nhập số phòng",
                   },
-                  {
-                    type: "number",
-                    min: 1,
-                    message: "Số phòng phải lớn hơn 1",
-                  },
                 ]}
               >
                 <InputNumber
                   onChange={changeRoomBook}
                   defaultValue={dataBill?.data?.booking.amount_room}
-                  min={0}
+                  min={1}
                   className="w-full"
                 />
               </Form.Item>
@@ -777,11 +770,6 @@ const BillDetail: React.FC = () => {
                   {
                     required: true,
                     message: "Vui lòng nhập số người lớn",
-                  },
-                  {
-                    type: "number",
-                    min: 1,
-                    message: "Số phòng phải lớn hơn 1",
                   },
                 ]}
               >
@@ -799,11 +787,6 @@ const BillDetail: React.FC = () => {
                   {
                     required: true,
                     message: "Vui lòng nhập số trẻ em",
-                  },
-                  {
-                    type: "number",
-                    min: 0,
-                    message: "Số phòng phải lớn hơn 1",
                   },
                 ]}
               >
@@ -952,8 +935,8 @@ const BillDetail: React.FC = () => {
                         </td>
                         <td className="px-6 py-4">{room.room_empty}</td>
                         <td>
-                          {dataBill?.data?.booking.detail[0].room_id ==
-                            room.id  &&
+                          {dataRoomBook.length == 0 && dataBill?.data?.booking.detail[0].room_id ==
+                            room.id &&
                             idRoomNewExtend == null && (
                               <button
                                 type="button"
@@ -963,7 +946,7 @@ const BillDetail: React.FC = () => {
                                 Gia hạn
                               </button>
                             )}
-                          {idRoomNewExtend != null &&
+                          {idRoomNewExtend == room.id &&
                             dataBill?.data?.booking.detail[0].room_id !=
                               room.id && (
                               <button
@@ -984,7 +967,7 @@ const BillDetail: React.FC = () => {
                               Chọn phòng mới
                             </button>
                           )}
-                          {idRoomNewExtend != null &&
+                          {idRoomNewExtend == room.id &&
                             dataBill?.data?.booking.detail[0].room_id !=
                               room.id && (
                               <button
@@ -1366,11 +1349,8 @@ const BillDetail: React.FC = () => {
                       {service?.service_name}
                     </th>
                     <td className="px-6 py-4">1</td>
-                    <td className="px-6 py-4">
-                      {formatMoneyVN(service.time)}
-                    </td>
-                    <td>
-                    </td>
+                    <td className="px-6 py-4">{formatMoneyVN(service.time)}</td>
+                    <td></td>
                     <td className="px-6 py-4">
                       {formatMoneyVN(service.price)}
                     </td>

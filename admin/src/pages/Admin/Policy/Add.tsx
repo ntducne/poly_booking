@@ -1,12 +1,5 @@
 // import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Typography,
-  Space,
-} from "antd";
+import { Form, Input, Button, Select, Typography, Space } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
 import { useCreatePolicyMutation } from "../../../api/policy";
@@ -23,19 +16,17 @@ const formItemLayout = {
 };
 
 const AddPolicy = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // const { data, isLoading } = useGetRoomTypeQuery({})
-  const { data: dataRooms, isLoading } = useGetRoomsQuery({})
-  const [createPolicy, { isLoading: isLoadingCreate }] = useCreatePolicyMutation()
-
-  console.log(dataRooms);
+  const { data: dataRooms, isLoading } = useGetRoomsQuery({});
+  const [createPolicy, { isLoading: isLoadingCreate }] =
+    useCreatePolicyMutation();
 
   if (isLoading && isLoadingCreate) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   const onFinish = (values: any) => {
-    // console.log(values.image);
     createPolicy(values)
       .unwrap()
       .then((result: any) => {
@@ -53,7 +44,6 @@ const AddPolicy = () => {
       });
     // Xử lý dữ liệu khi nhấn nút Submit
   };
-
 
   return (
     <div>
@@ -112,19 +102,29 @@ const AddPolicy = () => {
           >
             <Select>
               {dataRooms?.data?.map((item: any) => {
-                return <Option key={item.id} value={item.id}>{item.name}</Option>
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                );
               })}
             </Select>
           </Form.Item>
 
-
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex flex-col md:flex-row">
-              <Button className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center" type="default" htmlType="submit">
+              <Button
+                className="flex items-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-3 py-2.5 text-center"
+                type="default"
+                htmlType="submit"
+              >
                 <AiOutlineCheck className="text-[#fff] " />
                 <Text className=" text-[#fff] ml-1">Thêm</Text>
               </Button>
-              <Button className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5" htmlType="reset">
+              <Button
+                className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"
+                htmlType="reset"
+              >
                 <BiReset className="text-[#fff]" />
                 <Text className="text-[#fff] ml-1">Làm mới</Text>
               </Button>

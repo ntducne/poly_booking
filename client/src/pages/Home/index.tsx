@@ -22,7 +22,7 @@ import Page from "../../components/Page";
 import RoomsView from "../../sections/Home/RoomsView";
 type Props = {};
 
-export default function Home({}: Props) {
+export default function Home({ }: Props) {
   return (
     <Page title="Trang chủ">
       <HeroSlide />
@@ -140,11 +140,13 @@ export default function Home({}: Props) {
                   <span>
                     <HomeOutlined />
                   </span>
-                  <span>Conference Room</span>
+                  <span>Hiện đại</span>
                 </h1>
                 <p className="">
-                  Built purse maids cease her ham new seven among and. Pulled
-                  coming wooded tended it answer remain
+                  Với thiết kế tinh tế, trang thiết bị hiện đại và
+                  hệ thống điều khiển thông minh, khách sạn mang
+                  đến trải nghiệm sống động và thuận lợi cho du
+                  khách ngày nay.
                 </p>
               </div>
               <div className="flex justify-center flex-col lg:max-w-[400px] p-[50px] shadow-lg">
@@ -152,11 +154,13 @@ export default function Home({}: Props) {
                   <span>
                     <HomeOutlined />
                   </span>
-                  <span>Conference Room</span>
+                  <span>Tiện nghi</span>
                 </h1>
                 <p className="">
-                  Built purse maids cease her ham new seven among and. Pulled
-                  coming wooded tended it answer remain
+                  Từ những dịch vụ phòng, các
+                  nhà hàng sang trọng đến trung tâm thể
+                  dục hiện đại, sự tiện nghi được đặt lên hàng đầu
+                  để du khách có trải nghiệm tốt nhất.
                 </p>
               </div>
               <div className="flex justify-center flex-col lg:max-w-[400px] p-[50px] shadow-lg">
@@ -164,11 +168,13 @@ export default function Home({}: Props) {
                   <span>
                     <HomeOutlined />
                   </span>
-                  <span>Conference Room</span>
+                  <span>Sang trọng</span>
                 </h1>
                 <p className="">
-                  Built purse maids cease her ham new seven among and. Pulled
-                  coming wooded tended it answer remain
+                  Thiết kế nội thất độc đáo và sang trọng.
+                  Những tiện ích cao cấp như spa, nhà hàng
+                  và bể bơi riêng biệt, tất cả kết
+                  hợp để tạo ra một trải nghiệm không thể nào quên.
                 </p>
               </div>
             </div>
@@ -179,8 +185,7 @@ export default function Home({}: Props) {
           <ObserverAnimate position={{ y: -50, duration: 1 }}>
             <div className="flex flex-col justify-center items-center">
               <h3 className="max-w-[800px] font-text_2nd text-center text-h3  md:text-h1 font-medium">
-                Enjoy and join the handful of guests who already sent their best
-                photographic memories of their stay.
+                Hãy tận hưởng và tham gia cùng một số ít khách đã gửi những bức ảnh kỷ niệm đẹp nhất về kỳ nghỉ của họ.
               </h3>
             </div>
           </ObserverAnimate>

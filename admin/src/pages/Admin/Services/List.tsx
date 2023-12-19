@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
@@ -9,8 +9,7 @@ interface DataType {
   age: number;
   address: string;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+import { MdDeleteForever,  } from "react-icons/md";
 import swal from "sweetalert";
 import {
   useDeleteServicesMutation,
@@ -18,8 +17,15 @@ import {
 } from "../../../api/services";
 import FormatPrice from "../../../utils/FormatPrice";
 import Page from "../../../component/page";
-import { permissions } from "../../../hoc/withAuthorization";
+import { useSelector } from "react-redux";
 const ListServices = () => {
+  const permission1 = useSelector((state: any) => state.role).permission;
+  const [permissions, setPermissions] = useState<any>(permission1);
+  useEffect(() => {
+    setPermissions(permission1);
+  },[permission1])
+  
+
   const { data: dataServices, isLoading } = useGetServicesQuery({});
 
   const [deleteServices] = useDeleteServicesMutation();
@@ -53,12 +59,6 @@ const ListServices = () => {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
-    },
-    {
-      title: "Địa điểm",
-      dataIndex: "branch_id",
-      key: "branch_id",
-      sorter: (a, b) => a.branch_id.length - b.branch_id.length,
     },
     {
       title: "Action",
@@ -97,14 +97,7 @@ const ListServices = () => {
     branch_id: item?.branch_id,
   }));
 
-  const onChange: TableProps<DataType>["onChange"] = () =>
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-    {
-      // console.log("params", pagination, filters, sorter, extra);
-    };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
   const removeServices = (id: any) => {
     try {
@@ -144,7 +137,7 @@ const ListServices = () => {
   return (
     <Page title={`Dịch vụ`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <FormSearch />
+        <div></div>
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
             to={`/services/add`}
@@ -153,13 +146,7 @@ const ListServices = () => {
             <AiOutlinePlus />
             Thêm dịch vụ
           </Link>
-          <Link
-            to={`/services`}
-            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
-          >
-            <MdOutlineDeleteOutline />
-            Thùng rác
-          </Link>
+      
         </div>
       </div>
       <Table

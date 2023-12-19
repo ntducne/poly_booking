@@ -68,7 +68,7 @@ function create_permision(): void
             'name' => $key,
         ]);
     }
-    $admins = Admin::where('role', 'admin')->get();
+    $admins = Admin::where('role', 'admin')->where('email', 'duc@gmail.com')->get();
     AdminPermission::truncate();
     foreach ($admins as $admin){
         foreach ($permission as $value) {

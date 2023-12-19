@@ -38,8 +38,6 @@ const AddOffers = () => {
   }
 
   const onFinish = (values: any) => {
-    console.log(values.image);
-    // Xử lý dữ liệu khi nhấn nút Submit
     createPromotions(values)
       .unwrap()
       .then((result) => {

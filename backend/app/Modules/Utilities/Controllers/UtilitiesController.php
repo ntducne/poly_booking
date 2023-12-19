@@ -41,9 +41,11 @@ class UtilitiesController extends Controller
     public function store(StoreUtilitiesRequest $request)
     {
         try {
-            $object = $request->all();
-            $utilities = new Utilities($object);
-            $utilities->save();
+            $utilities = $this->utilities->create([
+                'name' => $request->name,
+                'room_id' => $request->room_id,
+                'branch_id' => $request->user()->branch_id
+            ]);
             return response()->json([
                 'status' => 'success',
                 'message'   => 'Thêm tiện ích thành công !',
@@ -99,7 +101,10 @@ class UtilitiesController extends Controller
                     'data' => null
                 ]);
             }
-            $utilities->update($request->all());
+            $utilities->update([
+                'name' => $request->name,
+                'room_id' => $request->room_id,
+            ]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Cập nhật tiện ích thành công !',

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Modules\Branch\Requests;
+namespace App\Modules\Branch\Requests;
 
 use App\Http\Requests\Request;
 use App\Models\Branch;
+use App\Rules\PhoneRule;
 use Illuminate\Validation\Rule;
 class UpdateBranchRequest extends Request
 {
@@ -29,7 +30,7 @@ class UpdateBranchRequest extends Request
                 'bail','required','string',
                 Rule::unique(Branch::class)->ignore($this->branch, $this->column_id),
             ],
-            'phone' => ['bail','required','numeric','digits:10', 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/ ',
+            'phone' => ['bail','required', new PhoneRule(),
                 Rule::unique(Branch::class,'phone')->ignore($this->branch, $this->column_id)],
         ];
     }

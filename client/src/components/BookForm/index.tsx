@@ -1,5 +1,6 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { DatePicker, Form, Select } from "antd";
+import { DatePicker, Form, Select, message } from "antd";
+import { useForm } from "antd/es/form/Form";
 import dayjs from "dayjs";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,7 @@ const { RangePicker } = DatePicker;
 export default function BookForm({}: Props) {
   const [, setCookie] = useCookies(["bookingNow", "roomSearch"]);
   const { data: dataBranches } = useGetBranchesQuery({});
+  const [form] = useForm();
   const navigate = useNavigate();
   const onFinish = (values: any) => {
     if (!values) {
@@ -19,6 +21,14 @@ export default function BookForm({}: Props) {
     }
 
     const { time, branch_id, adults, child, soLuong } = values;
+    if (adults < soLuong) {
+      form.setFieldsValue({
+        adults: undefined,
+        soLuong: undefined,
+      });
+
+      return message.error("Số phòng không thể lớn hơn số người lớn");
+    }
     const formattedDates = time?.map((item: any) =>
       dayjs(item.$d).format("YYYY-MM-DD")
     );
@@ -53,6 +63,7 @@ export default function BookForm({}: Props) {
           className="bg-white min-h-[200px] flex py-[40px] px-[40px]"
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
+          form={form}
         >
           <div className="w-full">
             <div className="lg:columns-3">
@@ -138,7 +149,7 @@ export default function BookForm({}: Props) {
               >
                 <Select
                   size={window.innerWidth < 768 ? "large" : "middle"}
-                  placeholder="Số lượng"
+                  placeholder="Số lượng phòng"
                   className="rounded-none min-h-[50px] w-full"
                 >
                   {Array.from({ length: 30 }, (_, index) => (

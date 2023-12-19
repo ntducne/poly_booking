@@ -15,18 +15,21 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { pusherInstance } from "../../config/pusher";
 import { FaEye } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { resetRole } from "../../Slices/Auth";
 
 const { Text } = Typography;
 
 const Head = () => {
   const [newMessage, setNewMessage] = useState(0);
   const [notifications, setNotifications] = useState<any[]>([]);
+  const dispatch = useDispatch();
 
   const title: any = useContext(LayoutContext);
   const navigate = useNavigate();
   const token = JSON.parse(cookies().Get("AuthUser") as any)[2].token;
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
-  const notificationSound = new Audio("./src/utils/telegram.mp3");
+  const notificationSound = new Audio("/telegram.mp3");
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_URL_API}/notifications`, {
@@ -101,6 +104,7 @@ const Head = () => {
       .then((res) => res.json())
       .then(() => {
         cookies().Delete("AuthUser");
+        dispatch(resetRole());
         toast("Đăng xuất thành công");
         setTimeout(() => {
           navigate("/login");
@@ -119,7 +123,7 @@ const Head = () => {
     },
     {
       label: (
-        <Link rel="noopener noreferrer" to="/changePass">
+        <Link rel="noopener noreferrer" to="/forGotPassword">
           <LockOutlined /> Đổi mật khẩu
         </Link>
       ),

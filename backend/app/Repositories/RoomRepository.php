@@ -58,9 +58,13 @@ class RoomRepository
         $branch_id = $request->branch_id ?? $request->user()->branch_id;
         $amount_room = $request->amount_room;
         $room_id = $request->room_id;
+
+        $adultsRatio = $adult / $amount_room;
+        $childrenRatio = $children / $amount_room;
+
         if($room_id){
             $room = $this->room->find($room_id);
-            if ($room->adults >= $adult && $room->children >= $children) {
+            if ($room->adults >= $adultsRatio && $room->children >= $childrenRatio) {
                 $room_type_id = $room->room_type_id;
                 $room_type = $this->room_type->where('branch_id', $branch_id)->where('id', $room_type_id)->first();
                 $booking = $this->booking->where('room_type', $room_type_id)->where('checkin', '<=', $checkin)->where('checkout', '>=', $checkout)->get();
@@ -106,7 +110,7 @@ class RoomRepository
         if ($room_type_id) {
             $room = $this->room->where('room_type_id', $room_type_id)->get();
             foreach ($room as $item) {
-                if ($item->adults >= $adult && $item->children >= $children) {
+                if ($item->adults >= $adultsRatio && $item->children >= $childrenRatio) {
                     $getRoom[] = $item;
                 }
             }
@@ -116,7 +120,7 @@ class RoomRepository
             foreach ($room_type as $value) {
                 $room = $this->room->where('room_type_id', $value->id)->get();
                 foreach ($room as $item) {
-                    if ($item->adults >= $adult && $item->children >= $children) {
+                    if ($item->adults >= $adultsRatio && $item->children >= $childrenRatio) {
                         $getRoom[] = $item;
                     }
                 }
@@ -132,7 +136,7 @@ class RoomRepository
             }
             $room_completed = [];
             foreach ($getRoom as $room) {
-                $room_number = $this->bookDetail->where('status', 0)->where('room_id', $room->id)->whereIn('booking_id', $booking->pluck('id'))->pluck('room_number');
+                $room_number = $this->bookDetail->whereIn('status', [0, 1])->where('room_id', $room->id)->whereIn('booking_id', $booking->pluck('id'))->pluck('room_number');
                 $newArray = [];
                 foreach ($room->room_number as $value) {
                     if (!in_array($value, $room_number->toArray())) {
@@ -255,8 +259,8 @@ class RoomRepository
             'people' => [],
             'time' => [],
         ];
-        $booking = $this->booking->where('status', 0)->where('checkin', '<=', Carbon::parse($request->checkin)->addHours(14)->format('Y-m-d H:i:s'))->where('checkout', '>=', Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s'))->get();
-        $room_number = $this->bookDetail->whereIn('booking_id', $booking->pluck('id'))->where('status', 0)->where('room_id', $room->id)->pluck('room_number');
+        $booking = $this->booking->where('checkin', '<=', Carbon::parse($request->checkin)->addHours(14)->format('Y-m-d H:i:s'))->where('checkout', '>=', Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s'))->get();
+        $room_number = $this->bookDetail->whereIn('booking_id', $booking->pluck('id'))->whereIn('status', [0, 1])->where('room_id', $room->id)->pluck('room_number');
         $dataRoomNumber = [];
         foreach ($room->room_number as $value) {
             if (!in_array($value, $room_number->toArray())) {

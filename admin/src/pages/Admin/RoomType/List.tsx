@@ -10,61 +10,62 @@ interface DataType {
   room_type_name: string;
   description: string;
   price_per_night: number;
-  status: number
+  status: number;
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useDeleteRoomTypeMutation, useGetRoomTypeQuery } from "../../../api/roomTypes";
+import {
+  useDeleteRoomTypeMutation,
+  useGetRoomTypeQuery,
+} from "../../../api/roomTypes";
 
 const ListRoomType = () => {
   const { data, isLoading, refetch } = useGetRoomTypeQuery({});
-  const [deleteRoomType] = useDeleteRoomTypeMutation()
+  const [deleteRoomType] = useDeleteRoomTypeMutation();
 
-  const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data?.data)
-
+  const [dataFetching, setDataFetching] = useState<any>([]);
   useEffect(() => {
-    setDataFetching(data?.data?.map((item: any) => {
-      return {
-        key: item.id,
-        room_type_name: item.room_type_name,
-        description: item.description,
-        price_per_night: item.price_per_night,
-        branch: item.branch,
-      }
-      refetch()
-    }))
-  }, [isLoading, data?.data])
+    setDataFetching(
+      data?.data?.map((item: any, index: number) => {
+        return {
+          stt: index + 1,
+          key: item.id,
+          room_type_name: item.room_type_name,
+          description: item.description,
+          price_per_night: item.price_per_night,
+          branch: item.branch,
+        };
+        refetch();
+      })
+    );
+  }, [isLoading, data?.data]);
 
   const columns: ColumnsType<DataType> = [
+    {
+      title: "STT",
+      dataIndex: "stt",
+      key: "stt",
+      sorter: (a:any, b: any) => a.stt - b.stt,
+      fixed: "left",
+    },
     {
       title: "Tên loại phòng",
       dataIndex: "room_type_name",
       key: "room_type_name",
-      sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
-      fixed: "left",
-    },
-    {
-      title: "Chi nhánh",
-      dataIndex: "branch",
-      key: "branch",
-      fixed: "left",
-      render: (text) => {
-        return <span className="font-bold">{text?.name}</span>
-      }
-
     },
     {
       title: "Giá mỗi đêm",
       dataIndex: "price_per_night",
       key: "price_per_night",
-      sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
+      sorter: (a, b) => a.price_per_night - b.price_per_night,
       render: (text) => {
         // Sử dụng hàm định dạng (format) ở đây để định dạng giá phòng theo ý muốn
-        return <span className="font-bold">{FormatPrice({ price: text })}</span>
-      }
+        return (
+          <span className="font-bold">{FormatPrice({ price: text })}</span>
+        );
+      },
     },
     {
       title: "Mô tả",
@@ -126,46 +127,37 @@ const ListRoomType = () => {
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-  ) => {
-    // setCurrentPage(pagination.current || 1);
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
   const remove = (id: any) => {
-    console.log(id);
     try {
       swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
+        title: "Bạn chắc chắn muốn xóa chứ ?",
+        text: "Bạn không thể hoàn tác sau khi xóa!",
         icon: "warning",
-        buttons: ["Cancel", "Delete"],
+        buttons: ["Hủy", "Xóa"],
         dangerMode: true,
       })
         .then((willDelete) => {
           if (willDelete) {
-            deleteRoomType(id).unwrap().then((data) => {
-              console.log(id);
-              console.log(data);
-              if (data.status === "success") {
-                refetch();
-                swal("You have successfully deleted", {
-                  icon: "success",
-                });
-              }
-            })
+            deleteRoomType(id)
+              .unwrap()
+              .then((data) => {
+                if (data.status === "success") {
+                  refetch();
+                  swal("Bạn đã xóa thành công", {
+                    icon: "success",
+                  });
+                }
+              });
           }
         })
         .catch(() => {
-          swal("Error", {
+          swal("Lỗi", {
             icon: "error",
           });
         });
-    } catch (error) { }
+    } catch (error) {}
   };
   // if (isLoading) {
   //   return <>loading...</>
@@ -199,6 +191,7 @@ const ListRoomType = () => {
         dataSource={dataFetching}
         onChange={onChange}
         loading={isLoading}
+        pagination={{ pageSize: 10 }}
       />
     </Page>
   );

@@ -1,15 +1,6 @@
 import { useEffect } from "react";
 
-import {
-  Form,
-  Input,
-  Button,
-  Typography,
-  InputNumber,
-  Space,
-  Radio,
-  Skeleton,
-} from "antd";
+import { Form, Input, Button, Typography, Space, Radio, Skeleton } from "antd";
 // import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck, AiOutlineRollback } from "react-icons/ai";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -34,8 +25,6 @@ const EditUser = () => {
   const [form] = useForm();
   const navigate = useNavigate();
 
-  console.log("data", data);
-
   useEffect(() => {
     form.setFieldsValue(data?.data);
   }, [data?.data]);
@@ -49,7 +38,6 @@ const EditUser = () => {
   }
 
   const onFinish = (values: any) => {
-    console.log(values.image);
     const data = { ...values };
     const updateData = {
       id: id,
@@ -75,7 +63,7 @@ const EditUser = () => {
         toast("Lỗi khi sửa", {
           autoClose: 3000,
           theme: "light",
-        })
+        });
       });
   };
 
@@ -128,7 +116,7 @@ const EditUser = () => {
             rules={[
               { required: true, message: "Vui lòng nhập số điện thoại" },
               {
-                pattern: /^[0-9]{10,11}$/,
+                pattern: /^(\+84|0)[3|5|7|8|9][0-9]{8}$/,
                 message: "Số điện thoại không hợp lệ",
               },
             ]}
@@ -142,7 +130,7 @@ const EditUser = () => {
             rules={[
               { required: true, message: "Vui lòng nhập địa chỉ" },
               {
-                validator: (_:any, value:any) =>
+                validator: (_: any, value: any) =>
                   value.trim().length === 0
                     ? Promise.reject("Vui lòng nhập địa chỉ")
                     : Promise.resolve(),

@@ -21,9 +21,8 @@ const formItemLayout = {
 };
 
 const AddBranche = () => {
-  const navigate = useNavigate()
-  const [createBranches] = useCreateBranchesMutation({})
-
+  const navigate = useNavigate();
+  const [createBranches] = useCreateBranchesMutation({});
 
   const onFinish = (values: any) => {
     createBranches(values)
@@ -84,11 +83,13 @@ const AddBranche = () => {
           <Form.Item
             label="Số điện thoại"
             name="phone"
-            rules={[{ required: true, message: "Vui lòng nhập số điện thoại" },
-            {
-              pattern: /^[0-9]{10}$/,
-              message: "Số điện thoại phải có đúng 10 số",
-            },]}
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại" },
+              {
+                pattern: /^(\+84|0)[3|5|7|8|9][0-9]{8}$/,
+                message: "Số điện thoại phải có đúng 10 số",
+              },
+            ]}
           >
             <Input />
           </Form.Item>

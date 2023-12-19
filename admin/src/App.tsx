@@ -14,12 +14,10 @@ import LoginAdmin from "./pages/Auth/login";
 import ForgotPasswordAdmin from "./pages/Auth/forgot_password";
 import Page403 from "./pages/403";
 import RoomBooking from "./pages/Admin/Room/booking";
-import Demo from "./pages/demo";
 import ListContact from "./pages/Admin/Contact/List";
 import ListNotifications from "./pages/Admin/Notifications/List";
 import {
   AuthorizedListBillings,
-  AuthorizedListBranches,
   AuthorizedListPolicies,
   AuthorizedListRates,
   AuthorizedListRooms,
@@ -29,13 +27,12 @@ import {
   AuthorizedListUsers,
   AuthorizedListUtilities,
   AuthorizedStoreBillings,
-  AuthorizedStoreBranches,
   AuthorizedStorePolicies,
   AuthorizedStoreRooms,
   AuthorizedStoreServices,
+  AuthorizedStoreStaffs,
   AuthorizedStoreTypes,
   AuthorizedStoreUtilities,
-  AuthorizedUpdateBranches,
   AuthorizedUpdatePolicies,
   AuthorizedUpdateRooms,
   AuthorizedUpdateServices,
@@ -44,8 +41,25 @@ import {
   AuthorizedUpdateUsers,
   AuthorizedUpdateUtilities,
 } from "./hoc/componentRole";
-import { role } from "./hoc/withAuthorization";
+// import { role } from "./hoc/withAuthorization";
+import Profile from "./pages/Admin/Profile";
+import ListBranches from "./pages/Admin/Branches/List";
+import AddBranche from "./pages/Admin/Branches/Add";
+import EditBranche from "./pages/Admin/Branches/Edit";
+import { useEffect, useState } from "react";
+import ListAdmin from "./pages/Admin/Guset/Admin/List";
+import AddAdmin from "./pages/Admin/Guset/Admin/Add";
+import EditAdmin from "./pages/Admin/Guset/Admin/Edit";
+import Welcome from "./pages/welcome";
+import { useSelector } from "react-redux";
+
 function App() {
+  const role1 = useSelector((state: any) => state.role).role;
+  const [role, setRole] = useState<any>(role1);
+  useEffect(() => {
+    setRole(role1);
+  }, [role1]);
+
   return (
     <>
       <Routes>
@@ -53,17 +67,13 @@ function App() {
         <Route path="forGotPassword" element={<ForgotPasswordAdmin />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<LayoutAdmin />}>
-          <Route index element={<Dashboard />} />
-          {/* <Route path="dashboard" element={<Dashboard />} /> */}
+          {role === "super_admin" && <Route index element={<Welcome />} />}
+          {role !== "super_admin" && <Route index element={<Dashboard />} />}
+          <Route path="profile" element={<Profile />} />
           <Route path="billing">
             <Route index element={<AuthorizedListBillings />} />
             <Route path=":id" element={<AuthorizedStoreBillings />} />
           </Route>
-          {/* <Route path="offers">
-            <Route index element={<ListOffers />} />
-            <Route path="add" element={<AddOffers />} />
-            <Route path="edit/:id" element={<EditOffers />} />
-          </Route> */}
           <Route path="policy">
             <Route index element={<AuthorizedListPolicies />} />
             <Route path="add" element={<AuthorizedStorePolicies />} />
@@ -88,11 +98,6 @@ function App() {
               <Route path="add" element={<AuthorizedStoreUtilities />} />
               <Route path="edit/:id" element={<AuthorizedUpdateUtilities />} />
             </Route>
-            {/* <Route path="renew">
-              <Route index element={<ListRoomExtend />} />
-              <Route path="add" element={<AddRoomExtend />} />
-              <Route path="edit/:id" element={<EditRoomExtend />} />
-            </Route> */}
             <Route path="booking" element={<RoomBooking />} />
           </Route>
           <Route path="services">
@@ -109,24 +114,33 @@ function App() {
           <Route path="notifications">
             <Route index element={<ListNotifications />} />
           </Route>
-          <Route path="staff">
-            <Route index element={<AuthorizedListStaffs />} />
-            <Route path="edit/:id" element={<AuthorizedUpdateStaffs />} />
-          </Route>
+          {role !== "super_admin" && role !== "staff" && (
+            <Route path="staff">
+              <Route index element={<AuthorizedListStaffs />} />
+              <Route path="edit/:id" element={<AuthorizedUpdateStaffs />} />
+              <Route path="add" element={<AuthorizedStoreStaffs />} />
+            </Route>
+          )}
           <Route path="user">
             <Route index element={<AuthorizedListUsers />} />
             <Route path="edit/:id" element={<AuthorizedUpdateUsers />} />
           </Route>
           {role === "super_admin" && (
             <Route path="branches">
-              <Route index element={<AuthorizedListBranches />} />
-              <Route path="add" element={<AuthorizedStoreBranches />} />
-              <Route path="edit/:id" element={<AuthorizedUpdateBranches />} />
+              <Route index element={<ListBranches />} />
+              <Route path="add" element={<AddBranche />} />
+              <Route path="edit/:id" element={<EditBranche />} />
             </Route>
-          )}  
+          )}
+          {role === "super_admin" && (
+            <Route path="staff">
+              <Route index element={<ListAdmin />} />
+              <Route path="edit/:id" element={<EditAdmin />} />
+              <Route path="add" element={<AddAdmin />} />
+            </Route>
+          )}
         </Route>
         <Route path="/403" element={<Page403 />}></Route>
-        <Route path="/demo" element={<Demo />}></Route>
       </Routes>
     </>
   );

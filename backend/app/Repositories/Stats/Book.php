@@ -16,7 +16,9 @@ class Book implements StatInterface
     }
 
     public function getDataBook($request){
-        return $this->billing->where('branch_id', '=', $request->user()->branch_id)->where('status', 4)->get();
+        return $this->billing->where('branch_id', '=', 
+            $request->user()->branch_id
+        )->whereIn('status', [3, 4])->get();
     }
 
     public function getDataCancel($request){

@@ -9,6 +9,7 @@ use App\Models\BookDetail;
 use App\Models\Booking;
 use App\Models\Branch;
 use App\Models\Contact;
+use App\Models\RateRoom;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Modules\Branch\Resources\BranchResource;
@@ -61,7 +62,7 @@ class ClientController extends Controller
         return RoomResource::collection(Room::paginate(10));
     }
 
-    public function roomDetail($id)
+    public function roomDetail(Request $request, $id)
     {
         $room = Room::where('slug', '=', $id)->first();
         if (!$room) {
@@ -70,13 +71,26 @@ class ClientController extends Controller
                 'message' => 'Phòng không tồn tại !',
             ]);
         }
-        $room_same = Room::where('room_type_id', '=', $room->room_type_id)
-            ->where('branch_id', '=', $room->branch_id)
-            ->where('_id', '!=', $id)
-            ->get();
+        $check = false;
+        if ($request->user()) {
+            $userId = $request->user()->id;
+            $billing = Billing::where('user_id', $userId)->where('status', 4)->get();
+            foreach ($billing as $item) {
+                $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->orderBy('id', 'desc')->first();
+                if ($bookDetail) {
+                    $booking = Booking::where('_id', $bookDetail->booking_id)->first();
+                    if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
+                        $check = false;
+                    } else {
+                        $check = true;
+                    }
+                    break;
+                }
+            }
+        }
         return response()->json([
             'room' => new RoomResource($room),
-            // 'room_same' => RoomResource::collection($room_same)
+            'check' => $check
         ]);
     }
 
@@ -125,16 +139,4 @@ class ClientController extends Controller
     public function processRenew(RenewRequest $request) {
         return $this->roomRepository->processRenew($request);
     }
-
-    public function contact(Request $request) {
-        $value = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'message' => $request->message,
-            'time' => Carbon::now()->format('d/m/Y H:i:s')
-        ];
-        Contact::create($value);
-        event(new ContactEvent($value));
-    }
-
 }

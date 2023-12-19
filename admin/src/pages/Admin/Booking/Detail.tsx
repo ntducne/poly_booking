@@ -1,22 +1,8 @@
-import { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Form,
-  Input,
-  Space,
-  Modal,
-  Drawer,
-  Checkbox,
-} from "antd";
-import { useGetDetailBookingQuery } from "../../../api/booking";
-import { useParams } from "react-router-dom";
+import { Button, Checkbox, Drawer, Form, Input, Modal, Space } from "antd";
+import { useState } from "react";
 
 const DetailBooking = () => {
-    const { id } = useParams()
-    const { data } = useGetDetailBookingQuery(id || "")
-    console.log( " data" , data);
-    
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
   };
@@ -43,7 +29,6 @@ const DetailBooking = () => {
   const onClose = () => {
     setOpen(false);
   };
-
 
   return (
     <div className="m-5">

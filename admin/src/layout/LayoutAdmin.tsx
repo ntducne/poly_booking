@@ -37,7 +37,7 @@ import { BiSolidBed } from "react-icons/bi";
 import { cookies } from "../config/cookies";
 import "react-toastify/dist/ReactToastify.css";
 import { MdContactPhone } from "react-icons/md";
-import { role } from "../hoc/withAuthorization.tsx"
+// import { role } from "../hoc/withAuthorization.tsx";
 
 export const LayoutContext = createContext("");
 
@@ -47,27 +47,45 @@ const LayoutAdmin = () => {
   if (!checkLogin) {
     return <Navigate to="/login" />;
   }
+  const [role, setRole] = useState<any>(null);
+  const [permissions, setPermissions] = useState<any>(null);
+  useEffect(() => {
+    const authUser = cookies().Get("AuthUser");
+    if (authUser) {
+      const parsed = JSON.parse(cookies().Get("AuthUser") as any);
+      setRole(parsed ? parsed[1].role : null);
+      setPermissions(parsed ? parsed[3] : null);
+    }
+  }, []);
+
+  
+
+
   const [title, setTitle] = useState<any>(" ");
   useEffect(() => {
-    location.pathname === "/" && setTitle("Thống kê");
+    location.pathname === "/" && setTitle("Trang chủ");
     location.pathname === "/branches" && setTitle("Chi nhánh");
     location.pathname === "/room" && setTitle("Phòng");
+    location.pathname === "/room/add" && setTitle("Thêm phòng");
     location.pathname === "/room/type" && setTitle("Loại phòng");
     location.pathname === "/room/utilities" && setTitle("Tiện ích");
+    location.pathname === "/room/utilities/add" && setTitle("Thêm tiện ích");
     location.pathname === "/room/booking" && setTitle("Đặt Phòng");
     location.pathname === "/billing" && setTitle("Hóa đơn");
     location.pathname === "/services" && setTitle("Dịch vụ");
+    location.pathname === "/services/add" && setTitle("Thêm dịch vụ");
     location.pathname === "/policy" && setTitle("Chính sách");
     location.pathname === "/staff" && setTitle("Nhân viên");
+    location.pathname === "/staff/add" && setTitle("Thêm nhân viên");
     location.pathname === "/user" && setTitle("Người dùng");
     location.pathname === "/feedback" && setTitle("Đánh giá");
     location.pathname === "/contact" && setTitle("Liên hệ");
+    location.pathname === "/profile" && setTitle("Thông tin");
   }, [location.pathname]);
-  console.log("role",role);
-  
+
   const items: MenuItem[] = [
     getItem(
-      "Thống kê",
+      "Trang chủ",
       "/",
       <Link to={`/`}>
         <PieChartOutlined />
@@ -83,74 +101,125 @@ const LayoutAdmin = () => {
     // ),
 
     ...(role === "super_admin"
-    ? [
-        getItem(
-          "Chi nhánh",
-          "/branches",
-          <Link to={`branches`}>
-            <AiTwotoneGift />
-          </Link>
-        ),
-      ]
-    : []),
+      ? [
+          getItem(
+            "Chi nhánh",
+            "/branches",
+            <Link to={`branches`}>
+              <AiTwotoneGift />
+            </Link>
+          ),
+          getItem(
+            "Tài khoản quản lý",
+            "/staff",
+            <Link to={`staff`}>
+              <AiOutlineUserSwitch />
+            </Link>
+          ),
+        ]
+      : []),
+        
+    ...(role !== "super_admin"
+      ? [
+          ...(permissions?.includes("admin.rooms.index") || permissions?.includes("admin.types.index") || permissions?.includes("admin.utilities.index") || permissions?.includes("admin.bookings.store")
+          ? [
+            getItem("Phòng", "sub1", <BiSolidBed />, [
+              ...(permissions?.includes("admin.rooms.index")
+                ? [
+                    getItem(
+                      "Danh sách Phòng",
+                      "/room",
+                      <Link to={`room`} />
+                    ),
+                  ]
+                : []),
+              ...(permissions?.includes("admin.types.index")
+                ? [
+                    getItem(
+                      "Loại Phòng",
+                      "/room/type",
+                      <Link to={`room/type`} />
+                    ),
+                  ]
+                : []),
+              ...(permissions?.includes("admin.utilities.index")
+                ? [
+                    getItem(
+                      "Tiện ích",
+                      "/room/utilities",
+                      <Link to={`room/utilities`} />
+                    ),
+                  ]
+                : []),
+              ...(permissions?.includes("admin.booking.store")
+                ? [
+                    getItem(
+                      "Đặt Phòng",
+                      "/room/booking",
+                      <Link to={`room/booking`} />
+                    ),
+                  ]
+                : []),
+            ]),
+            ]
+          : []),
+          ...(permissions?.includes("admin.billings.index")
+            ? [
+                getItem(
+                  "Hoá đơn",
+                  "/billing",
+                  <Link to={`billing`}>
+                    <AiFillBank />
+                  </Link>
+                ),
+              ]
+            : []),
+          ...(permissions?.includes("admin.services.index")
+            ? [
+                getItem(
+                  "Dịch vụ",
+                  "/services",
+                  <Link to={`services`}>
+                    <AiOutlineCrown />
+                  </Link>
+                ),
+              ]
+            : []),
 
-    
-    getItem("Phòng", "sub1", <BiSolidBed />, [
-      getItem("Phòng", "/room", <Link to={`room`} />),
-      getItem("Loại Phòng", "/room/type", <Link to={`room/type`} />),
-      getItem(
-        "Tiện ích Phòng",
-        "/room/utilities",
-        <Link to={`room/utilities`} />
-      ),
-      getItem("Đặt Phòng", "/room/booking", <Link to={`room/booking`} />),
-    ]),
-    getItem(
-      "Hoá đơn",
-      "/billing",
-      <Link to={`billing`}>
-        <AiFillBank />
-      </Link>
-    ),
-    getItem(
-      "Dịch vụ",
-      "/services",
-      <Link to={`services`}>
-        <AiOutlineCrown />
-      </Link>
-    ),
-    // getItem(
-    //   "Khuyến mãi",
-    //   "9",
-    //   <Link onClick={() => handleTitleChange("Ưu đãi")} to={`offers`}>
-    //     <AiTwotoneGift />
-    //   </Link>
-    // ),
-    // getItem(
-    //   "Chính sách",
-    //   "/policy",
-    //   <Link to={`policy`}>
-    //     <AiTwotonePrinter />
-    //   </Link>
-    // ),
-    getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
-      getItem("Nhân viên", "/staff", <Link to={`staff`} />),
-      getItem("Người dùng", "/user", <Link to={`user`} />),
-    ]),
-    getItem(
-      "Đánh giá",
-      "/feedback",
-      <Link to={`feedback`}>
-        <VscFeedback />
-      </Link>
-    ),
-    getItem(
-      "Liên hệ",
-      "/contact",
-      <Link to={`contact`}>
-        <MdContactPhone />
-      </Link>
-    ),
+          ...(permissions?.includes("admin.users.index") ||
+          permissions?.includes("admin.staffs.index") && role !== "staff"
+            ? [
+                getItem("Tài khoản", "sub2", <AiOutlineUserSwitch />, [
+                  ...(permissions?.includes("admin.staffs.index") && role !== "staff"
+                    ? [getItem("Nhân viên", "/staff", <Link to={`staff`} />)]
+                    : []),
+                  ...(permissions?.includes("admin.users.index")
+                    ? [getItem("Người dùng", "/user", <Link to={`user`} />)]
+                    : []),
+                ]),
+              ]
+            : []),
+
+          ...(permissions?.includes("admin.rates.index")
+            ? [
+                getItem(
+                  "Đánh giá",
+                  "/feedback",
+                  <Link to={`feedback`}>
+                    <VscFeedback />
+                  </Link>
+                ),
+              ]
+            : []),
+          getItem(
+            "Liên hệ",
+            "/contact",
+            <Link to={`contact`}>
+              <MdContactPhone />
+            </Link>
+          ),
+        ]
+      : []),
   ];
   const [collapsed, setCollapsed] = useState<any>(false);
   const {

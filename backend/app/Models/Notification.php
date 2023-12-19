@@ -12,6 +12,9 @@ class Notification extends Eloquent
     protected $fillable = [
         'message',
         'time',
+        'is_read'
     ];
-
+    protected $attributes = [
+        'is_read' => false,
+    ];
 }

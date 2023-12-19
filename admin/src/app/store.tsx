@@ -31,6 +31,8 @@ import statisticalsApi from '../api/statisticals';
 import contactApi from '../api/contact';
 import notificationsApi from '../api/notifications';
 '../api/account/staffs';
+import { adminsApi } from '../api/account/admin';
+import { profileApi } from '../api/account/profile';
 
 const persistConfig = {
     key: 'root',
@@ -44,7 +46,7 @@ const rootReducer = combineReducers({
     [authApi.reducerPath]: authReducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [staffsApi.reducerPath]: staffsApi.reducer,
-    user: userSlicer,
+    role: userSlicer,
     [roomApi.reducerPath]: roomApi.reducer,
     [roomTypesApi.reducerPath]: roomTypesApi.reducer,
     [branchApi.reducerPath]: branchApi.reducer,
@@ -55,11 +57,12 @@ const rootReducer = combineReducers({
     [ratesApi.reducerPath]: ratesApi.reducer,
     [permissonApi.reducerPath]: permissonApi.reducer,
     [policyApi.reducerPath]: policyApi.reducer,
-    [policyApi.reducerPath]: policyApi.reducer,
     [utilitiesApi.reducerPath]: utilitiesApi.reducer,
     [statisticalsApi.reducerPath]: statisticalsApi.reducer,
     [contactApi.reducerPath]: contactApi.reducer,
     [notificationsApi.reducerPath]: notificationsApi.reducer,
+    [adminsApi.reducerPath]: adminsApi.reducer,
+    [profileApi.reducerPath]: profileApi.reducer,
 })
 
 
@@ -82,7 +85,9 @@ const middlewares = [
     utilitiesApi.middleware,
     statisticalsApi.middleware,
     contactApi.middleware,
-    notificationsApi.middleware
+    notificationsApi.middleware,
+    adminsApi.middleware,
+    profileApi.middleware,
 ]
 
 const store = configureStore({

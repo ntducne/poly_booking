@@ -19,6 +19,9 @@ class UpdateProfileRequest extends Request
                 'bail','required', 'digits:10', new PhoneRule(),
                 Rule::unique(User::class, 'phone')->ignore(request()->user()->id,$this->column_id),
             ],
+            'image' => [
+                'bail', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'
+            ],
         ];
     }
 }

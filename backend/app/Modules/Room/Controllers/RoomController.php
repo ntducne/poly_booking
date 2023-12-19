@@ -3,13 +3,8 @@
 namespace App\Modules\Room\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Billing;
-use App\Models\BookDetail;
-use App\Models\Booking;
-use App\Models\RateRoom;
 use App\Models\Room;
 use App\Models\RoomImage;
-use App\Models\RoomType;
 use App\Modules\Room\Requests\StoreRoomRequest;
 use App\Modules\Room\Requests\UpdateRoomRequest;
 use App\Modules\Room\Resources\RoomResource;
@@ -17,7 +12,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
@@ -112,34 +106,6 @@ class RoomController extends Controller
     public function show(Request $request, $id)
     {
         try {
-            $check = false;
-
-            if ($request->user()) {
-                $userId = $request->user()->id;
-
-                // Đếm số lượng đánh giá của user
-                $reviewCount = RateRoom::where('user_id', $userId)->count();
-
-                // Lấy số billing của user và kiểm tra điều kiện
-                $billing = Billing::where('user_id', $userId)->where('status', 4)->first();
-                if ($billing && $billing->count() >= $reviewCount) {
-                    $bookDetail = BookDetail::where('booking_id', $billing->booking_id)->where('room_id', $id)->first();
-                    if ($bookDetail) {
-                        $booking = Booking::where('_id', $bookDetail->booking_id)->first();
-                        $rate = RateRoom::where('user_id', $userId)->where('room_id', $id)->first();
-
-                        if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
-                            $check = false;
-                        } else {
-                            $check = true;
-                        }
-                    }
-                }
-            }
-
-
-
-
             $room = $this->room->where('_id', $id)
                 ->where('branch_id', request()->user()->branch_id)
                 ->first();
@@ -154,7 +120,6 @@ class RoomController extends Controller
                 'status' => 'success',
                 'message' => 'Chi tiết phòng !',
                 'data' => new RoomResource($room),
-                'check' => $check
             ], 200);
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());

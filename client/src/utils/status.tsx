@@ -25,6 +25,10 @@ export const StatusOrders = {
   },
   STATUS_6: {
     id: 6,
-    value: "Hủy",
+    value: "Hủy thanh toán",
+  },
+  STATUS_7: {
+    id: 7,
+    value: "Thanh toán lỗi",
   },
 };

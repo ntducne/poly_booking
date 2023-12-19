@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Image, Space, Table } from "antd";
+import { Button, Image, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { Link } from "react-router-dom";
 interface DataType {
@@ -8,12 +8,10 @@ interface DataType {
   age: number;
   address: string;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+import {  MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal , { } from "sweetalert";
 
 const ListReview = () => {
-
   const columns: ColumnsType<DataType> = [
     {
       title: "Tên phòng",
@@ -25,9 +23,8 @@ const ListReview = () => {
     {
       title: "Loại phòng",
       dataIndex: "imageType",
-      render: (_, record :any) => (
+      render: (_, record: any) => (
         <div className="flex items-center">
-          
           {/* <img className="" src="https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_PDLK_02.jpg" alt="" /> */}
           <Image
             className="rounded-3xl "
@@ -80,27 +77,6 @@ const ListReview = () => {
       ),
       onFilter: (value: any, record) => record.address.indexOf(value) === 0,
     },
-    {
-      title: "Action",
-      dataIndex: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          {/* <Button type="primary" style={{ backgroundColor: "#68e365" }}>
-            <Link to={`/room/edit/${record?.key}`}>
-              <AiOutlineEdit />
-            </Link>
-          </Button> */}
-          <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            style={{ backgroundColor: "#e23428" }}
-          >
-            <MdDeleteForever />
-          </Button>
-        </Space>
-      ),
-      // fixed: "right",
-    },
   ];
 
   const data = [
@@ -118,44 +94,9 @@ const ListReview = () => {
     },
   ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
-  const remove = (id: any) => {
-    console.log(id);
-    
-    try {
-      swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            // removeComment(id);
-            console.log(id);
-            
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
-          }
-        })
-        .catch(() => {
-          swal("Error", {
-            icon: "error",
-          });
-        });
-    } catch (error) {}
-  };
-
+  
   return (
     <div className="">
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
@@ -173,7 +114,7 @@ const ListReview = () => {
           <Button
             className="bg-red-400	text-[#fff] hover:drop-shadow-2xl mb-2 md:ml-4"
             type="default"
-            icon={<MdOutlineDeleteOutline />} 
+            icon={<MdOutlineDeleteOutline />}
           >
             <Link to={`/review/add`}>Thùng rác</Link>
           </Button>
@@ -186,11 +127,12 @@ const ListReview = () => {
         </div>
       </div>
       <Table
-        scroll={{x : true}}
+        scroll={{ x: true }}
         className="max-w-full mt-3"
         columns={columns}
         dataSource={data}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
     </div>
   );

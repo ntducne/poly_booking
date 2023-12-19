@@ -16,15 +16,10 @@ const clientApi = createApi({
     }),
 
     getRooms: builder.query<any, any>({
-      query: (data: any) => {
-        const keys = Object.keys(data);
-        const url =
-          keys.length === 0
-            ? `/client/room`
-            : `/client/room/search?checkin=${data.checkin}&checkout=${data.checkout}&adult=${data.adult}&child=${data.child}&branch_id=${data.branch_id}&soLuong=${data.soLuong}`;
+      query: () => {
         return {
           method: "GET",
-          url: url,
+          url: `/room`,
         };
       },
       providesTags: ["Clients"],

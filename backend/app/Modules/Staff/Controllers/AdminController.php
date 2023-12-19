@@ -7,8 +7,11 @@ use App\Models\Admin;
 use App\Modules\Staff\Requests\StoreAdminRequest;
 use App\Modules\Staff\Requests\UpdateAdminRequest;
 use App\Modules\Staff\Resources\StaffResource;
+use App\Modules\User\Requests\ChangePasswordRequest;
+use App\Modules\User\Requests\UpdateProfileRequest;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,6 +52,10 @@ class AdminController extends Controller
             if ($image) {
                 $uploadImage = $this->UploadImage($image, 'admin');
                 $object['image'] = $uploadImage;
+                $object['role'] = $request->user()->role === 'super_admin' ? 'admin' : 'staff';
+                $object['branch_id'] = $request->user()->role === 'super_admin' ? $request->branch_id : $request->user()->branch_id;
+                $object['created_by'] = $request->user()->id;
+                $object['password'] = Hash::make($object['password']);
                 $admin = new Admin($object);
                 $admin->save();
                 $response = [
@@ -63,8 +70,7 @@ class AdminController extends Controller
                     'data'    => null
                 ];
             }
-//            return response()->json($response);
-            return StaffResource::collection($response);
+           return response()->json($response);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
@@ -73,12 +79,18 @@ class AdminController extends Controller
             ]);
         }
     }
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try{
-            $admin = $this->admin->where('_id', $id)
+
+            if($request->user()->role == 'admin'){
+                $admin = $this->admin->where('_id', $id)
                 ->where('branch_id', request()->user()->branch_id)
                 ->first();
+            }
+            if($request->user()->role == 'super_admin'){
+                $admin = $this->admin->where('_id', $id)->first();
+            }
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
@@ -107,9 +119,14 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request,  $id)
     {
         try{
-            $admin = $this->admin->where('_id', $id)
+            if($request->user()->role == 'admin'){
+                $admin = $this->admin->where('_id', $id)
                 ->where('branch_id', request()->user()->branch_id)
                 ->first();
+            }
+            if($request->user()->role == 'super_admin'){
+                $admin = $this->admin->where('_id', $id)->first();
+            }
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
@@ -141,12 +158,17 @@ class AdminController extends Controller
         }
 
     }
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try{
-            $admin = $this->admin->where('_id', $id)
+            if($request->user()->role == 'admin'){
+                $admin = $this->admin->where('_id', $id)
                 ->where('branch_id', request()->user()->branch_id)
                 ->first();
+            }
+            if($request->user()->role == 'super_admin'){
+                $admin = $this->admin->where('_id', $id)->first();
+            }
             if (!$admin) {
                 return response()->json([
                     'status' => 'error',
@@ -194,6 +216,7 @@ class AdminController extends Controller
         }
     }
 
+<<<<<<< HEAD
     public function getStaff(Request $request){
         $userId = request()->cookie('user_id');
         $user = Auth::loginUsingId($userId);
@@ -211,4 +234,78 @@ class AdminController extends Controller
             ]);
         }
     }
+=======
+    public function profile(Request $request)
+    {
+        try{
+            $admin = $request->user();
+            return new StaffResource($admin);
+        } catch (Exception $exception){
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status'  => false,
+                'message' => 'Lỗi !'
+            ]);
+        }
+    }
+
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        try{
+            $admin = $request->user();
+            $input = $request->validated();
+            $image = $request->file('image');
+            if ($image) {
+                $this->DeleteImage($admin['image']);
+                $uploadImage = $this->UploadImage($image, 'admin');
+                $input['image'] = $uploadImage;
+            } else {
+                $input['image'] = $admin['image'];
+            }
+            $admin->fill($input)->save();
+            return response()->json([
+                'status'   => 'success',
+                'message' => 'Cập nhập nhân viên thành công !',
+                'data'    => new StaffResource($admin)
+            ]);
+        } catch (Exception $exception){
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status'  => false,
+                'message' => 'Lỗi !'
+            ]);
+        }
+
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        try{
+            $admin = $request->user();
+            $input = $request->all();
+            if (!Hash::check($input['old_password'], $admin->password)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Mật khẩu cũ không đúng !',
+                    'data' => null
+                ]);
+            }
+            $admin->password = Hash::make($input['new_password']);
+            $admin->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Cập nhập mật khẩu thành công !',
+                'data' => null
+            ]);
+        } catch (Exception $exception){
+            Log::debug($exception->getMessage());
+            return response()->json([
+                'status'  => false,
+                'message' => 'Lỗi !'
+            ]);
+
+        }
+
+    }
+>>>>>>> 264a4780e78ce8ca6e384128668e64f2cefbabf8
 }

@@ -3,9 +3,9 @@
 namespace App\Modules\Branch\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Modules\Branch\Requests\StoreBranchRequest;
-use App\Http\Modules\Branch\Requests\UpdateBranchRequest;
 use App\Models\Branch;
+use App\Modules\Branch\Requests\StoreBranchRequest;
+use App\Modules\Branch\Requests\UpdateBranchRequest;
 use App\Modules\Branch\Resources\BranchResource;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -34,7 +34,7 @@ class BranchController extends Controller
     public function store(StoreBranchRequest $request)
     {
         try {
-            $object = $request->all();
+            $object = $request->validated();
             $branch = new Branch($object);
             $branch->save();
             return response()->json([
@@ -81,7 +81,7 @@ class BranchController extends Controller
     public function update(UpdateBranchRequest $request, $id)
     {
         try {
-            $branch = Branch::find($id);
+            $branch = $this->branch->find($id);
             if(!$branch){
                 $reponse = [
                     'status'  => 'error',
@@ -89,7 +89,7 @@ class BranchController extends Controller
                     'data'    => null,
                 ];
             }else{
-                $branch->update($request->all());
+                $branch->update($request->validated());
                 $reponse = [
                     'status'  => 'success',
                     'message' => 'Cập nhập chi nhánh thành công !',
@@ -109,7 +109,7 @@ class BranchController extends Controller
     public function destroy($id)
     {
         try {
-            $branch = Branch::find($id);
+            $branch = $this->branch->find($id);
             if(!$branch){
                 return response()->json([
                     'status' => 'error',

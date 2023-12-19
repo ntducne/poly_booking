@@ -10,13 +10,7 @@ const ListNotifications = () => {
         <Skeleton />
       </p>
     );
-  console.log("data", data);
 
-  // const items: CollapseProps["items"] = data?.map((item: any) => ({
-  //   key: item.id,
-  //   label: item.message,
-  //   children: <p>{item.time}</p>,
-  // }));
   const dataNotifications = data?.map((item: any, index: number) => ({
     key: index + 1,
     message: item.message,

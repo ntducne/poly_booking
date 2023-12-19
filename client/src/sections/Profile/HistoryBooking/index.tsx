@@ -1,36 +1,46 @@
-import { Pagination } from "antd";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetHistoryBookingQuery } from "../../../api/User";
 import FormatPrice from "../../../utils/FormatPrice";
-import { StatusOrders } from "../../../utils/status";
-import { useEffect } from "react";
 
 type Props = {};
 
-export default function HistoryBooking({ }: Props) {
-  const { data, isLoading, refetch } = useGetHistoryBookingQuery({
+export default function HistoryBooking({}: Props) {
+  const [data, setData] = useState<any>([]);
+  const {
+    data: dataRoom,
+    isLoading,
+    refetch,
+  } = useGetHistoryBookingQuery({
     userId: "someUserId",
   });
+
   useEffect(() => {
     const fetchData = async () => {
-      console.log("Before refetch");
       await refetch();
-      console.log("After refetch");
     };
-
     fetchData();
   }, []);
+  useEffect(() => {
+    if (!isLoading && data) {
+      const filteredData = dataRoom?.data.filter(
+        (item: any) => ![4, 6, 2].includes(item.status)
+      );
+      setData(filteredData);
+    }
+  }, [isLoading, dataRoom?.data]);
+
   if (isLoading) return <>loading...</>;
   return (
     <div>
-      {data && data?.data.length ? (
+      {data && data?.length ? (
         <div>
-          {data?.data.map((item: any) => (
+          {data?.map((item: any) => (
             <div className="px-5">
-              <div className="border-t pt-[30px] flex gap-[30px] pb-[30px] ">
+              <div className="border-t pt-[30px] flex-col md:flex-row  flex gap-[30px] pb-[30px] ">
                 <Link to={`/user/profile/roomBooked/${item?.id}`}>
                   <img
-                    className="max-w-[200px] max-h-[200px] overflow-hidden object-cover rounded-[10px]"
+                    className="w-full md:max-w-[200px] max-h-[200px] overflow-hidden object-cover rounded-[10px]"
                     src={
                       "https://www.imgacademy.com/sites/default/files/legacy-hotel-rendering-guest-room.jpg"
                     }
@@ -53,38 +63,17 @@ export default function HistoryBooking({ }: Props) {
                   <div className="w-full border-[#cccc] border-b h-[1px] py-2"></div>
                   <div className="mt-2">
                     <h2 className="text-[16px] font-medium">
-                      Được đặt vào ngày nào đó
+                      Được đặt vào ngày {item?.booking?.booking_date}
                     </h2>
-                    <div className="flex mt-3 h-[13px] rounded-lg bg-[#E5E7EB]">
-                      {Object.values(StatusOrders).map((status) => (
-                        <div
-                          key={status.id}
-                          className={`w-[20%] h-[13px] ${status.id <= item?.status
-                              ? "bg-[#4F46B5]"
-                              : "bg-[#E5E7EB]"
-                            }`}
-                        >
-                          <h2
-                            className={`mt-5 font-medium text-[14px] ${status.id <= item?.status ? "text-[#4F46B5]" : ""
-                              } ${window.innerWidth < 768 &&
-                                status.id !== item?.status
-                                ? "hidden"
-                                : ""
-                              }`}
-                          >
-                            {status.id == item?.status ? status.value : ""}
-                          </h2>
-                        </div>
-                      ))}
-                    </div>
+                    <div className="">Trạng thái: {item?.status_name}</div>
                   </div>
                 </div>
               </div>
             </div>
           ))}
-          <div className="flex justify-end mt-10">
+          {/* <div className="flex justify-end mt-10">
             <Pagination defaultCurrent={6} total={500} />
-          </div>
+          </div> */}
         </div>
       ) : (
         <span>

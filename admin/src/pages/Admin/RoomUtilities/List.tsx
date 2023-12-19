@@ -1,35 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { Button, Space, Table, } from "antd";
+import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
-  room_id: string
+  room_id: string;
 }
 import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 import Page from "../../../component/page";
 import { useGetAllUtilitieQuery } from "../../../api/utilities";
 
 const ListRoomUtilities = () => {
   const { data, isLoading } = useGetAllUtilitieQuery({});
-  const [dataFetching, setDataFetching] = useState<any>([])
-  console.log(data, "data");
-
-
+  const [dataFetching, setDataFetching] = useState<any>([]);
   useEffect(() => {
-    setDataFetching(data?.data?.data?.map((item: any) => {
-      return {
-        key: item._id,
-        name: item.name,
-        room_id: item.room_id,
-      }
-      // refetch()
-    }))
-  }, [isLoading, data?.data?.data])
+    setDataFetching(
+      data?.data?.data?.map((item: any) => {
+        return {
+          key: item._id,
+          name: item.name,
+          room_id: item.room_id,
+        };
+        // refetch()
+      })
+    );
+  }, [isLoading, data?.data?.data]);
 
   const columns: ColumnsType<any> = [
     {
@@ -61,7 +60,7 @@ const ListRoomUtilities = () => {
             </Link>
           </Button>
           <Button
-            onClick={() => remove(record?.key)}
+            // onClick={() => remove(record?.key)}
             type="primary"
             className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
           >
@@ -88,43 +87,31 @@ const ListRoomUtilities = () => {
   //   },
   // ];
 
-  const onChange: TableProps<DataType>["onChange"] = (
-    // pagination,
-    // filters,
-    // sorter,
-    // extra
-  ) => {
-    // console.log("params", pagination, filters, sorter, extra);
-  };
+  const onChange: TableProps<DataType>["onChange"] = () => {};
 
-  const remove = (id: any) => {
-    // console.log(id);
-    try {
-      swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
-        icon: "warning",
-        buttons: ["Cancel", "Delete"],
-        dangerMode: true,
-      })
-        .then((willDelete) => {
-          if (willDelete) {
-            // removeComment(id);
-
-            console.log(id);
-
-            swal("You have successfully deleted", {
-              icon: "success",
-            });
-          }
-        })
-        .catch(() => {
-          swal("Error", {
-            icon: "error",
-          });
-        });
-    } catch (error) { }
-  };
+  // const remove = (id: any) => {
+  //   try {
+  //     swal({
+  //       title: "Are you sure you want to delete?",
+  //       text: "You cannot undo after deleting!",
+  //       icon: "warning",
+  //       buttons: ["Cancel", "Delete"],
+  //       dangerMode: true,
+  //     })
+  //       .then((willDelete) => {
+  //         if (willDelete) {
+  //           swal("You have successfully deleted", {
+  //             icon: "success",
+  //           });
+  //         }
+  //       })
+  //       .catch(() => {
+  //         swal("Error", {
+  //           icon: "error",
+  //         });
+  //       });
+  //   } catch (error) {}
+  // };
 
   return (
     <Page title={`Tiện ích phòng`}>
@@ -153,6 +140,7 @@ const ListRoomUtilities = () => {
         columns={columns}
         dataSource={dataFetching}
         onChange={onChange}
+        pagination={{ pageSize: 10 }}
       />
     </Page>
   );

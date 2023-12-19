@@ -1,26 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit"
-
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLogin: false,
-    user: {},
+  role: null,
+  permission : [],
+  user: {}
+};
 
-}
+const roleSlicer = createSlice({
+  initialState,
+  name: "role",
+  reducers: {
+    setRole(state, action) {
+      state.role = action.payload.role;
+      state.permission = action.payload.permission;
+      state.user = action.payload.user;
+    },
+    resetRole(state) {
+      state.role = null;
+      state.permission = [];
+      state.user = {};
+    },
+  },
+});
 
-const userSlicer = createSlice({
-    initialState,
-    name: 'user',
-    reducers: {
-        signin(state, action) {
-            state.isLogin = true;
-            state.user = action.payload
-        },
-        logout(state) {
-            state.isLogin = false;
-            state.user = {}
-        }
-    }
-})
-
-export const { signin, logout } = userSlicer.actions
-export default userSlicer.reducer
+export const { setRole, resetRole } = roleSlicer.actions;
+export default roleSlicer.reducer;
