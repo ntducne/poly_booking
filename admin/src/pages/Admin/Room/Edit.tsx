@@ -12,6 +12,7 @@ import {
   Radio,
   Row,
   Select,
+  Skeleton,
   Space,
   Typography,
   Upload,
@@ -173,7 +174,7 @@ const EditRoom = () => {
     form.setFieldsValue(defaultValue);
   }, [isLoading, data?.data]);
   if (isLoading || isLoadingTypes) {
-    return <>loading...</>;
+    return <><Skeleton/></>;
   }
   return (
     <div>

@@ -205,6 +205,7 @@ const ListRoom = () => {
     <Page title={`Phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between md:items-center ">
         <FormSearch />
+        <div></div>
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
             to={`/room/add`}

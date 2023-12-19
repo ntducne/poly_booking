@@ -31,7 +31,9 @@ const AddRoomUtilities = () => {
       .then((result: any) => {
         if (result.status === "success") {
           toast.success("Thêm mới tiện ích phòng thành công");
-          navigate("/room/utilities");
+          setTimeout(() => {
+            navigate("/room/utilities");
+          }, 3000);
         } else {
           toast.error(result.error.message);
         }
@@ -78,7 +80,7 @@ const AddRoomUtilities = () => {
             hasFeedback
             rules={[{ required: true, message: "Vui lòng nhập tên phòng!" }]}
           >
-            <Select>
+            <Select mode="multiple">
               {dataRooms?.data?.map((item: any) => {
                 return (
                   <Option key={item.id} value={item.id}>
