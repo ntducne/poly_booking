@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\RateRoom;
 use App\Models\RoomType;
 use App\Models\User;
+use App\Models\Utilities;
 use App\Modules\Branch\Resources\BranchResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -30,7 +31,17 @@ class RoomResource extends JsonResource
     }
 
     public function getUtilities(){
-        
+        $arr = [];
+        $utilities = Utilities::where('branch_id', $this->branch_id)->get();
+        foreach ($utilities as $utility) {
+            // filter id in $utlities array room_id
+            if(in_array($this->id, $utility->room_id)){
+                $arr[] = [
+                    'name' => $utility->name,
+                ];
+            }
+        }
+        return $arr;
     }
 
     public function toArray($request)
