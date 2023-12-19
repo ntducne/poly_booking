@@ -259,8 +259,8 @@ class RoomRepository
             'people' => [],
             'time' => [],
         ];
-        $booking = $this->booking->where('status', 0)->where('checkin', '<=', Carbon::parse($request->checkin)->addHours(14)->format('Y-m-d H:i:s'))->where('checkout', '>=', Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s'))->get();
-        $room_number = $this->bookDetail->whereIn('booking_id', $booking->pluck('id'))->where('status', 0)->where('room_id', $room->id)->pluck('room_number');
+        $booking = $this->booking->where('checkin', '<=', Carbon::parse($request->checkin)->addHours(14)->format('Y-m-d H:i:s'))->where('checkout', '>=', Carbon::parse($request->checkout)->addHours(12)->format('Y-m-d H:i:s'))->get();
+        $room_number = $this->bookDetail->whereIn('booking_id', $booking->pluck('id'))->whereIn('status', [0, 1])->where('room_id', $room->id)->pluck('room_number');
         $dataRoomNumber = [];
         foreach ($room->room_number as $value) {
             if (!in_array($value, $room_number->toArray())) {

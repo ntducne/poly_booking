@@ -27,7 +27,7 @@ class PaymentSuccess extends Notification
     {
         return (new MailMessage)
             ->subject('Thông báo thanh toán hoá đơn đặt phòng !')
-            ->markdown('mail.PaymentSuccess', [
+            ->markdown('PaymentSuccess', [
                 'name' => $this->name,
                 'info' => $this->info,
             ]);

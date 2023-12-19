@@ -3,6 +3,7 @@
 namespace App\Modules\User\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class UserResource extends JsonResource
 {
@@ -16,6 +17,7 @@ class UserResource extends JsonResource
             'image' => $this->image,
             'address' => $this->address,
             'status' => $this->status,
+            'created_at' => Carbon::parse($this->created_at)->format('d-m-Y'),
         ];
     }
 }

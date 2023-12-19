@@ -28,7 +28,7 @@ class BookRoom extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('Thông báo thanh toán hoá đơn đặt phòng !')
-            ->markdown('mail.booking', [
+            ->markdown('booking', [
                 'name' => $this->name,
                 'info' => $this->info,
                 'url' => $this->url,

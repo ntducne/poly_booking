@@ -80,6 +80,8 @@ class BookingRepository
                         'service_name' => $service->service_name,
                         'price' => $service->price,
                         'time' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'isPay' => $request->isPay,
+                        'quantity' => $request->quantity ?? 1,
                     ];
                     $total += $service->price;
                 }
@@ -207,6 +209,17 @@ class BookingRepository
     public function processCheckOut($request)
     {
         $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
+
+        // lấy các service trong billing và kiểm tra nếu isPay = 0 thì cập nhật lên 1
+        $services = $billing->services;
+        foreach ($services as $key => $value) {
+            if($value['isPay'] == 0){
+                $services[$key]['isPay'] = 1;
+            }
+        }
+        $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
+            'services' => $services
+        ]);
         if (!$billing) {
             return response()->json([
                 'status' => 'error',
