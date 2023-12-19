@@ -151,7 +151,7 @@ const LayoutAdmin = () => {
                     ),
                   ]
                 : []),
-              ...(permissions?.includes("admin.bookings.store")
+              ...(permissions?.includes("admin.booking.store")
                 ? [
                     getItem(
                       "Đặt Phòng",
