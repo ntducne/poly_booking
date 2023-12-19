@@ -47,7 +47,7 @@ const ListRoomType = () => {
       title: "STT",
       dataIndex: "stt",
       key: "stt",
-      sorter: (a, b) => a.stt - b.stt,
+      sorter: (a:any, b: any) => a.stt - b.stt,
       fixed: "left",
     },
     {

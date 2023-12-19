@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   role: null,
-  permission : []
+  permission : [],
+  user: {}
 };
 
 const roleSlicer = createSlice({
@@ -12,10 +13,12 @@ const roleSlicer = createSlice({
     setRole(state, action) {
       state.role = action.payload.role;
       state.permission = action.payload.permission;
+      state.user = action.payload.user;
     },
     resetRole(state) {
       state.role = null;
       state.permission = [];
+      state.user = {};
     },
   },
 });
