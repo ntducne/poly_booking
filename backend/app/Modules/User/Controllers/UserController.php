@@ -134,7 +134,7 @@ class UserController extends Controller
     public function profile(Request $request)
     {
         return response()->json([
-            'message' => $request->user(),
+            'message' => new UserResource($request->user()),
         ], 200);
     }
     public function updateAvatar(UpdateAvatarRequest $request)
@@ -221,19 +221,20 @@ class UserController extends Controller
             $userId = $request->user()->id;
             $billing = Billing::where('user_id', $userId)->where('status', 4)->get();
             foreach ($billing as $item) {
-
-                $countBookdetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->groupBy('booking_id')->count();
-                $countRate = RateRoom::where('booking_id', $item->booking_id)->where('room_id', $room->id)->where('user_id', $userId);
-
-                $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->orderBy('id', 'desc')->first();
-                if ($bookDetail) {
-                    $booking = Booking::where('_id', $bookDetail->booking_id)->first();
-                    if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
-                        $check = false;
-                    } else {
-                        $check = true;
+                $countBookdetail = BookDetail::where('room_id', $room->id)->where('booking_id', $billing->booking_id)->pluck('booking_id');
+                $countBooking = Booking::whereIn('_id', $countBookdetail)->count();
+                $countRate = RateRoom::where('booking_id', $item->booking_id)->where('room_id', $room->id)->where('user_id', $userId)->count();
+                if($countBooking >= $countRate){
+                    $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->orderBy('id', 'desc')->first();
+                    if ($bookDetail) {
+                        $booking = Booking::where('_id', $bookDetail->booking_id)->first();
+                        if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
+                            $check = false;
+                        } else {
+                            $check = true;
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }

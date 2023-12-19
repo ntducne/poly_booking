@@ -3,13 +3,8 @@
 namespace App\Modules\Room\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Billing;
-use App\Models\BookDetail;
-use App\Models\Booking;
-use App\Models\RateRoom;
 use App\Models\Room;
 use App\Models\RoomImage;
-use App\Models\RoomType;
 use App\Modules\Room\Requests\StoreRoomRequest;
 use App\Modules\Room\Requests\UpdateRoomRequest;
 use App\Modules\Room\Resources\RoomResource;
@@ -17,7 +12,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
