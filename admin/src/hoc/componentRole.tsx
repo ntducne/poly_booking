@@ -15,7 +15,6 @@ import ListPolicy from "../pages/Admin/Policy/List";
 import AddRoom from "../pages/Admin/Room/Add";
 import EditRoom from "../pages/Admin/Room/Edit";
 import ListRoom from "../pages/Admin/Room/List";
-import EditRoomExtend from "../pages/Admin/RoomExtend/Edit";
 import AddRoomType from "../pages/Admin/RoomType/Add";
 import EditRoomType from "../pages/Admin/RoomType/Edit";
 import ListRoomType from "../pages/Admin/RoomType/List";

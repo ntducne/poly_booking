@@ -12,8 +12,7 @@ interface DataType {
   price_per_night: number;
   status: number;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+import { MdDeleteForever } from "react-icons/md";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import {
