@@ -11,13 +11,19 @@ interface DataType {
 import { MdDeleteForever } from "react-icons/md";
 // import swal from "sweetalert";
 import Page from "../../../component/page";
-import { useDeleteUtilitieMutation, useGetAllUtilitieQuery } from "../../../api/utilities";
+import {
+  useDeleteUtilitieMutation,
+  useGetAllUtilitieQuery,
+} from "../../../api/utilities";
 import swal from "sweetalert";
+import { useSelector } from "react-redux";
 
 const ListRoomUtilities = () => {
   const { data, isLoading } = useGetAllUtilitieQuery({});
   const [dataFetching, setDataFetching] = useState<any>([]);
-  const [ deleteUtilitie ] = useDeleteUtilitieMutation();
+  const [deleteUtilitie] = useDeleteUtilitieMutation();
+  const permission1 = useSelector((state: any) => state.role).permission;
+  const [permissions, setPermissions] = useState<any>(permission1);
   useEffect(() => {
     setDataFetching(
       data?.data?.data?.map((item: any, index: number) => {
@@ -30,9 +36,8 @@ const ListRoomUtilities = () => {
         // refetch()
       })
     );
-  }, [isLoading, data?.data?.data]);
-
-
+    setPermissions(permission1);
+  }, [isLoading, data?.data?.data, permission1]);
 
   const columns: ColumnsType<any> = [
     {
@@ -63,19 +68,20 @@ const ListRoomUtilities = () => {
               <AiOutlineEdit />
             </Link>
           </Button>
-          <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
-          >
-            <MdDeleteForever />
-          </Button>
+          {permissions?.includes("admin.utilities.destroy") && (
+            <Button
+              onClick={() => remove(record?.key)}
+              type="primary"
+              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
+            >
+              <MdDeleteForever />
+            </Button>
+          )}
         </Space>
       ),
       // fixed: "right",
     },
   ];
-
 
   const onChange: TableProps<DataType>["onChange"] = () => {};
 
@@ -90,7 +96,7 @@ const ListRoomUtilities = () => {
       })
         .then((willDelete) => {
           if (willDelete) {
-            deleteUtilitie(id)
+            deleteUtilitie(id);
             swal("Bạn đã xóa thành công", {
               icon: "success",
             });

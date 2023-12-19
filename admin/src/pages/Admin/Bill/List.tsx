@@ -1,8 +1,8 @@
 // import React from "react";
-import { Button, Space, Table } from "antd";
+import { Button, Pagination, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { AiOutlineEdit } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // import swal , { } from "sweetalert";
 import Page from "../../../component/page";
 import { useGetBilingsQuery } from "../../../api/billings";
@@ -11,8 +11,17 @@ import { pusherInstance } from "../../../config/pusher";
 import { useEffect, useState } from "react";
 
 const BillList = () => {
-  const { data: dataBilings, isLoading } = useGetBilingsQuery({});
+  const [page, setPage] = useState<number>(1);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const { data: dataBilings, isLoading, refetch } = useGetBilingsQuery<any>(page);
   const [billings, setBillings] = useState<any[]>([]);
+  const navigate = useNavigate();
+  const handlePaginationChange = (page: number) => {
+    setPage(page);
+    navigate(`/billing?page=${page}`);
+    refetch();
+  };
   useEffect(() => {
     setBillings(dataBilings?.data);
     const unsubscribe = pusherInstance().getData(
@@ -26,7 +35,6 @@ const BillList = () => {
       unsubscribe();
     };
   }, [dataBilings?.data]);
-
 
   const columns: ColumnsType<any> = [
     {
@@ -192,6 +200,13 @@ const BillList = () => {
     status: item.status,
   }));
 
+  useEffect(() => {
+    if (queryParams.get("page")) {
+      const page: any = queryParams.get("page");
+      setPage(+page);
+    }
+  }, [location?.search]);
+
   return (
     <Page title={`Hóa đơn`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
@@ -203,7 +218,16 @@ const BillList = () => {
         loading={isLoading}
         columns={columns}
         dataSource={data}
+        pagination={false}
       />
+       <div className="flex justify-end items-center mt-5">
+        <Pagination
+          defaultCurrent={1}
+          total={+dataBilings?.meta?.last_page * 10}
+          onChange={handlePaginationChange}
+          current={page}
+        />
+      </div>
     </Page>
   );
 };

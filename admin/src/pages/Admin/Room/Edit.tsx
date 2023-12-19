@@ -238,7 +238,7 @@ const EditRoom = () => {
             name="children"
             rules={[{ required: true, message: "Vui lòng nhập tối đa trẻ em" }]}
           >
-            <InputNumber min={1} className="w-full" />
+            <InputNumber min={0} className="w-full" />
           </Form.Item>
           <Form.Item
             label="Diện tích"

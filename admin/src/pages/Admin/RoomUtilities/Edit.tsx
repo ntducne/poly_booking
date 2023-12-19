@@ -68,7 +68,6 @@ const EditRoomUtilities = () => {
   if (isLoading) {
     return <><Skeleton/></>;
   }
-  console.log("data", data?.data.room_id);
   
 
   return (
