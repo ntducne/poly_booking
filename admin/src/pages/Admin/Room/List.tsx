@@ -3,8 +3,7 @@ import { Button, Image, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+import { MdDeleteForever } from "react-icons/md";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import { useDeleteRoomMutation, useGetRoomsQuery } from "../../../api/room";
@@ -195,7 +194,10 @@ const ListRoom = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      
+    }
   };
   useEffect(() => {
     if (queryParams.get("page")) {

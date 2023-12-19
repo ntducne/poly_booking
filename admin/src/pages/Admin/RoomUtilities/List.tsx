@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Space, Table } from "antd";
+import { Button, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
@@ -19,11 +19,20 @@ import swal from "sweetalert";
 import { useSelector } from "react-redux";
 
 const ListRoomUtilities = () => {
-  const { data, isLoading } = useGetAllUtilitieQuery({});
+  const [page, setPage] = useState<number>(1);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const navigate = useNavigate();
+  const { data, isLoading, refetch } = useGetAllUtilitieQuery(page);
   const [dataFetching, setDataFetching] = useState<any>([]);
   const [deleteUtilitie] = useDeleteUtilitieMutation();
   const permission1 = useSelector((state: any) => state.role).permission;
   const [permissions, setPermissions] = useState<any>(permission1);
+  const handlePaginationChange = (page: number) => {
+    setPage(page);
+    navigate(`/room/utilities?page=${page}`);
+    refetch();
+  };
   useEffect(() => {
     setDataFetching(
       data?.data?.data?.map((item: any, index: number) => {
@@ -112,6 +121,14 @@ const ListRoomUtilities = () => {
     }
   };
 
+  useEffect(() => {
+    if (queryParams.get("page")) {
+      const page: any = queryParams.get("page");
+      setPage(+page);
+    }
+  }, [location?.search]);
+  
+
   return (
     <Page title={`Tiện ích phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
@@ -132,9 +149,17 @@ const ListRoomUtilities = () => {
         columns={columns}
         dataSource={dataFetching}
         onChange={onChange}
-        pagination={{ pageSize: 10 }}
+        pagination={false}
         loading={isLoading}
       />
+       <div className="flex justify-end items-center mt-5">
+        <Pagination
+          defaultCurrent={1}
+          total={+data?.data?.last_page * 10}
+          onChange={handlePaginationChange}
+          current={page}
+        />
+      </div>
     </Page>
   );
 };
