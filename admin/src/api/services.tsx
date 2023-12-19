@@ -14,7 +14,7 @@ const serviceApi = createApi({
     }),
     endpoints: (builder) => ({
         getServices: builder.query<any, any>({
-            query: () => `services`,
+            query: (page) => `services?page=${page || 1}`,
             providesTags: ['service']
         }),
         createServices: builder.mutation<any, any>({
