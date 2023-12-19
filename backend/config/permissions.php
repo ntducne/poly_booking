@@ -65,8 +65,8 @@ return [
     'admin.billings.index' => 'Danh sách hoá đơn',
     'admin.billings.show' => 'Chi tiết hoá đơn',
 
-    'admin.bookings.store' => 'Thêm đặt phòng',
-    'admin.bookings.search' => 'Tìm kiếm đặt phòng',
+    'admin.booking.store' => 'Thêm đặt phòng',
+    'admin.booking.search' => 'Tìm kiếm đặt phòng',
     'admin.booking.handle.cancel' => 'Hủy đặt phòng',
     'admin.booking.handle.checkin' => 'Checkin đặt phòng',
     'admin.booking.handle.checkout' => 'Checkout đặt phòng  ',

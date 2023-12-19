@@ -27,7 +27,7 @@ class BookRoom extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Thông báo thanh toán hoá đơn đặt phòng !')
+            ->subject('Đặt phòng thành công !')
             ->markdown('mail.booking', [
                 'name' => $this->name,
                 'info' => $this->info,

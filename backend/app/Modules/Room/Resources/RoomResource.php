@@ -23,7 +23,8 @@ class RoomResource extends JsonResource
                 ],
                 'content' => $rate->comment,
                 'star' => $rate->rate,
-                'time'=> $rate->time
+                'time'=> $rate->time,
+                'image' => $rate->images
             ];
         }
         return $arr;

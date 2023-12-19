@@ -58,9 +58,13 @@ class RoomRepository
         $branch_id = $request->branch_id ?? $request->user()->branch_id;
         $amount_room = $request->amount_room;
         $room_id = $request->room_id;
+
+        $adultsRatio = $adult / $amount_room;
+
+
         if($room_id){
             $room = $this->room->find($room_id);
-            if ($room->adults >= $adult && $room->children >= $children) {
+            if ($room->adults >= $adultsRatio && $room->children >= $children) {
                 $room_type_id = $room->room_type_id;
                 $room_type = $this->room_type->where('branch_id', $branch_id)->where('id', $room_type_id)->first();
                 $booking = $this->booking->where('room_type', $room_type_id)->where('checkin', '<=', $checkin)->where('checkout', '>=', $checkout)->get();
@@ -106,7 +110,11 @@ class RoomRepository
         if ($room_type_id) {
             $room = $this->room->where('room_type_id', $room_type_id)->get();
             foreach ($room as $item) {
-                if ($item->adults >= $adult && $item->children >= $children) {
+
+                if (
+                    $item->adults >= $adultsRatio && 
+                    $item->children >= $children
+                ) {
                     $getRoom[] = $item;
                 }
             }
@@ -116,7 +124,10 @@ class RoomRepository
             foreach ($room_type as $value) {
                 $room = $this->room->where('room_type_id', $value->id)->get();
                 foreach ($room as $item) {
-                    if ($item->adults >= $adult && $item->children >= $children) {
+                    if (
+                        $item->adults >= $adultsRatio ||
+                        $item->children >= $children
+                    ) {
                         $getRoom[] = $item;
                     }
                 }
