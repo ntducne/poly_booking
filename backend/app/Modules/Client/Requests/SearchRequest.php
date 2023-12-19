@@ -22,7 +22,7 @@ class SearchRequest extends Request
                 'after_or_equal:checkin',
             ],
             'adult' => 'required|numeric',
-            'child' => 'required|numeric',
+            // 'child' => 'required|numeric',
             'branch_id' => [
                 'required',
                 Rule::exists(Branch::class, $this->column_id),

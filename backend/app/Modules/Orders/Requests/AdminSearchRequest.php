@@ -22,7 +22,7 @@ class AdminSearchRequest extends Request
                 'after_or_equal:checkin',
             ],
             'adult' => 'required|numeric',
-            'child' => 'required|numeric',
+            // 'child' => 'required|numeric',
             'amount_room' => [
                 'required',
                 'numeric',

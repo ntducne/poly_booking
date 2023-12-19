@@ -29,9 +29,8 @@ class RoomResource extends JsonResource
         return $arr;
     }
 
-
-    public function checkRateUser(){
-            
+    public function getUtilities(){
+        
     }
 
     public function toArray($request)
