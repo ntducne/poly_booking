@@ -3,6 +3,7 @@
 namespace App\Modules\Orders\Resources;
 
 use App\Models\BookDetail;
+use App\Models\RoomImage;
 use App\Models\RoomType;
 use App\Models\User;
 use App\Modules\User\Resources\UserResource;
@@ -52,6 +53,13 @@ class BookingResource extends JsonResource
         return $room;
     }
 
+    public function getImageRoom() {
+        $data = BookDetail::where('booking_id', $this->id)->first();
+        $roomId = $data->room_id;
+        $roomImage = RoomImage::where('room_id', $roomId)->first();
+        return $roomImage->image;
+    }
+
     public function toArray($request)
     {
         return [
@@ -68,6 +76,7 @@ class BookingResource extends JsonResource
             'people' => $this->people,
 //            'status' => $this->status,
             'detail' => $this->getBookDetail(),
+            'image' => $this->getImageRoom(),
         ];
     }
 }

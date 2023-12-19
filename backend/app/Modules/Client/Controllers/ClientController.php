@@ -74,12 +74,9 @@ class ClientController extends Controller
         $check = false;
         if ($request->user()) {
             $userId = $request->user()->id;
-            // Đếm số lượng đánh giá của user
-            $reviewCount = RateRoom::where('user_id', $userId)->count();
-            // Lấy số billing của user và kiểm tra điều kiện
-            $billing = Billing::where('user_id', $userId)->where('status', 4)->first();
-            if ($billing && $billing->count() >= $reviewCount) {
-                $bookDetail = BookDetail::where('booking_id', $billing->booking_id)->where('room_id', $id)->first();
+            $billing = Billing::where('user_id', $userId)->where('status', 4)->get();
+            foreach ($billing as $item) {
+                $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->orderBy('id', 'desc')->first();
                 if ($bookDetail) {
                     $booking = Booking::where('_id', $bookDetail->booking_id)->first();
                     if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
@@ -87,13 +84,13 @@ class ClientController extends Controller
                     } else {
                         $check = true;
                     }
+                    break;
                 }
             }
         }
         return response()->json([
             'room' => new RoomResource($room),
             'check' => $check
-            // 'room_same' => RoomResource::collection($room_same)
         ]);
     }
 

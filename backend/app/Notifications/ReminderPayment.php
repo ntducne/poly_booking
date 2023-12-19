@@ -43,7 +43,7 @@ class ReminderPayment extends Notification
     {
         return (new MailMessage)
             ->subject('Thông báo thanh toán hoá đơn đặt phòng !')
-            ->markdown('mail.reminderPayment', [
+            ->markdown('reminderPayment', [
                 'name' => $this->name,
                 'info' => $this->info,
                 'payment_url' => $this->payment_url,
