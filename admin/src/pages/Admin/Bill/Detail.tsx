@@ -345,7 +345,7 @@ const BillDetail: React.FC = () => {
         if (data?.message == "Hết phòng !") {
           message.error(data.message);
         }
-        if (data?.status == false) {
+        if (data?.status == "error") {
           message.warning(data?.error?.amount_room || data?.message);
         } else {
           message.success(data?.message);
@@ -753,11 +753,6 @@ const BillDetail: React.FC = () => {
                     required: true,
                     message: "Vui lòng nhập số phòng",
                   },
-                  {
-                    type: "number",
-                    min: 1,
-                    message: "Số phòng phải lớn hơn 1",
-                  },
                 ]}
               >
                 <InputNumber
@@ -776,11 +771,6 @@ const BillDetail: React.FC = () => {
                     required: true,
                     message: "Vui lòng nhập số người lớn",
                   },
-                  {
-                    type: "number",
-                    min: 1,
-                    message: "Số phòng phải lớn hơn 1",
-                  },
                 ]}
               >
                 <InputNumber
@@ -797,11 +787,6 @@ const BillDetail: React.FC = () => {
                   {
                     required: true,
                     message: "Vui lòng nhập số trẻ em",
-                  },
-                  {
-                    type: "number",
-                    min: 0,
-                    message: "Số phòng phải lớn hơn 1",
                   },
                 ]}
               >
