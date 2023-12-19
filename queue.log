@@ -56,3 +56,21 @@
   2023-12-19 18:47:58 App\Notifications\BookRoom ............... 118.34ms FAIL
   2023-12-19 18:47:59 App\Events\Message ............................. RUNNING
   2023-12-19 18:48:00 App\Events\Message ....................... 432.98ms DONE
+  2023-12-19 21:13:38 App\Events\BookingEvent ........................ RUNNING
+  2023-12-19 21:13:39 App\Events\BookingEvent .................. 684.60ms DONE
+  2023-12-19 21:13:40 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-19 21:13:40 App\Notifications\BookRoom ............... 124.99ms FAIL
+  2023-12-19 21:13:42 App\Events\Message ............................. RUNNING
+  2023-12-19 21:13:42 App\Events\Message ....................... 421.78ms DONE
+  2023-12-19 21:25:59 App\Events\BookingEvent ........................ RUNNING
+  2023-12-19 21:26:00 App\Events\BookingEvent .................. 618.10ms DONE
+  2023-12-19 21:26:01 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-19 21:26:01 App\Notifications\BookRoom ............... 138.89ms FAIL
+  2023-12-19 21:26:03 App\Events\Message ............................. RUNNING
+  2023-12-19 21:26:03 App\Events\Message ....................... 490.84ms DONE
+  2023-12-19 21:35:04 App\Events\BookingEvent ........................ RUNNING
+  2023-12-19 21:35:04 App\Events\BookingEvent .................. 603.30ms DONE
+  2023-12-19 21:35:06 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-19 21:35:06 App\Notifications\BookRoom ............... 170.67ms FAIL
+  2023-12-19 21:35:07 App\Events\Message ............................. RUNNING
+  2023-12-19 21:35:08 App\Events\Message ....................... 426.16ms DONE
