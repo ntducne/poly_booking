@@ -27,7 +27,6 @@ const EditStaff = () => {
   const { id } = useParams();
   const [form] = Form.useForm();
   const { data: dataStaff, isLoading } = useGetDetailStaffsQuery(id || "");
-  console.log("dataStaff", dataStaff);
 
   useEffect(() => {
     if (dataStaff) {
