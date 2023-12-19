@@ -60,9 +60,6 @@ class BookingRepository
                 $billingCode 
             );
         }
-
-
-        
     }
 
     public function addService($request)

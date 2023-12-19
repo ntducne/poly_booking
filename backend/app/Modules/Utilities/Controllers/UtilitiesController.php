@@ -41,9 +41,7 @@ class UtilitiesController extends Controller
     public function store(StoreUtilitiesRequest $request)
     {
         try {
-            $object = $request->all();
-            $utilities = new Utilities($object);
-            $utilities->save();
+            $utilities = $this->utilities->create($request->validated());
             return response()->json([
                 'status' => 'success',
                 'message'   => 'Thêm tiện ích thành công !',
