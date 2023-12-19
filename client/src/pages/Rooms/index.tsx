@@ -99,7 +99,6 @@ export default function Rooms({}: Props) {
     navigate(`/rooms?page=${page}`);
     refetch();
   };
-
   const validateQueryParams = (params: any) => {
     const requiredParams = [
       "checkin",
@@ -157,6 +156,9 @@ export default function Rooms({}: Props) {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+  useEffect(() => {
+    refetch();
   }, []);
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -353,7 +355,7 @@ export default function Rooms({}: Props) {
                     </Form.Item>
                     <Form.Item
                       name="adult"
-                      label="Người lớn"
+                      label="Tổng số người lớn"
                       rules={[
                         {
                           required: true,
@@ -376,27 +378,14 @@ export default function Rooms({}: Props) {
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item
-                      className=""
-                      name="child"
-                      label="Trẻ em"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Vui lòng số trẻ em",
-                        },
-                      ]}
-                    >
+                    <Form.Item className="" name="child" label="Trẻ em">
                       <Select
                         placeholder="Trẻ em"
                         className="rounded-none w-full"
                       >
-                        {Array.from({ length: 6 }, (_, index) => (
-                          <Select.Option
-                            key={index + 1}
-                            value={(index + 1).toString()}
-                          >
-                            {index + 1}
+                        {Array.from({ length: 7 }, (_, index) => (
+                          <Select.Option key={index} value={index.toString()}>
+                            {index}
                           </Select.Option>
                         ))}
                       </Select>

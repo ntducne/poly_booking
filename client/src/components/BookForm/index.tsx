@@ -122,7 +122,7 @@ export default function BookForm({}: Props) {
               >
                 <Select
                   size={window.innerWidth < 768 ? "large" : "middle"}
-                  placeholder="Người lớn"
+                  placeholder="Tổng số người lớn"
                   className="rounded-none min-h-[50px] w-full"
                 >
                   {Array.from({ length: 30 }, (_, index) => (
@@ -177,12 +177,9 @@ export default function BookForm({}: Props) {
                   placeholder="Trẻ em"
                   className="rounded-none min-h-[50px] w-full"
                 >
-                  {Array.from({ length: 6 }, (_, index) => (
-                    <Select.Option
-                      key={index + 1}
-                      value={(index + 1).toString()}
-                    >
-                      {index + 1}
+                  {Array.from({ length: 7 }, (_, index) => (
+                    <Select.Option key={index} value={index.toString()}>
+                      {index}
                     </Select.Option>
                   ))}
                 </Select>

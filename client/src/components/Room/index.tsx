@@ -16,6 +16,8 @@ export default function Room(props: any) {
     images,
     image,
   } = props?.data;
+  console.log("prop", props?.data);
+
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
       <div className="lg:hidden block">

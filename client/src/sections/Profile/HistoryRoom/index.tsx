@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useGetHistoryBookingQuery } from "../../../api/User";
 import FormatPrice from "../../../utils/FormatPrice";
 import { StatusOrders } from "../../../utils/status";
+import dayjs from "dayjs";
 
 type Props = {};
 
@@ -74,26 +75,23 @@ export default function HistoryRoom({}: Props) {
                       return (
                         <div className="mt-2">
                           <h2 className="text-[16px] font-medium">
-                            Được đặt vào ngày {item?.booking?.booking_date}
+                            Được đặt vào ngày{" "}
+                            {dayjs(item?.booking?.booking_date).format(
+                              "DD/MM/YYYY"
+                            )}
                           </h2>
-                          <div className="flex mt-3 h-[13px] rounded-lg bg-[#E5E7EB]">
-                            <div
-                              className={`w-[100%] h-[13px] ${
+                          <div className="flex items-center gap-2">
+                            <span>Trạng thái: </span>
+                            <h2
+                              className={`font-medium  ${
                                 status.id == 4
-                                  ? "bg-[#b3b3b3]"
-                                  : "bg-[#ff000099]"
+                                  ? "text-[#b3b3b3]"
+                                  : "text-[#ff000099]"
                               } `}
                             >
-                              <h2
-                                className={`mt-5 font-medium text-[14px] ${
-                                  status.id == 4
-                                    ? "text-[#b3b3b3]"
-                                    : "text-[#ff000099]"
-                                } `}
-                              >
-                                {status?.value}
-                              </h2>
-                            </div>
+                              {" "}
+                              {status?.value}
+                            </h2>
                           </div>
                         </div>
                       );
