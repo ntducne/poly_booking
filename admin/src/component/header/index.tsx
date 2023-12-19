@@ -29,7 +29,7 @@ const Head = () => {
   const navigate = useNavigate();
   const token = JSON.parse(cookies().Get("AuthUser") as any)[2].token;
   const user = JSON.parse(cookies().Get("AuthUser") as any)[1];
-  const notificationSound = new Audio("./src/utils/telegram.mp3");
+  const notificationSound = new Audio("/telegram.mp3");
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_URL_API}/notifications`, {

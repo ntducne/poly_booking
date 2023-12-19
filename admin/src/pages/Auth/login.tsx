@@ -41,7 +41,7 @@ export default function LoginAdmin() {
             JSON.stringify(Object.values(response)),
             convertFromNowToSeconds(response.accessToken.expires_at)
           );
-          dispatch(setRole({ role: response.user?.role }));
+          dispatch(setRole({ role: response.user?.role, permission : response.permission}));
 
           navigate("/");
         }

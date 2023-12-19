@@ -55,11 +55,17 @@ const AddAdmin = () => {
           navigate("/staff");
         } else {
           console.log(item);
-          toast(item?.error?.name || "Lỗi", {
+          toast(item?.error?.email || "Lỗi dữ liệu", {
             autoClose: 3000,
             theme: "light",
           });
         }
+      }).catch((error: any) => {
+        console.log(error);
+        toast(error?.data?.error?.email || "Lỗi", {
+          autoClose: 3000,
+          theme: "light",
+        });
       });
   };
 

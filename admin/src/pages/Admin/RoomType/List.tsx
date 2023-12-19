@@ -28,8 +28,9 @@ const ListRoomType = () => {
   const [dataFetching, setDataFetching] = useState<any>([]);
   useEffect(() => {
     setDataFetching(
-      data?.data?.map((item: any) => {
+      data?.data?.map((item: any, index: number) => {
         return {
+          stt: index + 1,
           key: item.id,
           room_type_name: item.room_type_name,
           description: item.description,
@@ -43,26 +44,22 @@ const ListRoomType = () => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: "Tên loại phòng",
-      dataIndex: "room_type_name",
-      key: "room_type_name",
-      sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
+      title: "STT",
+      dataIndex: "stt",
+      key: "stt",
+      sorter: (a, b) => a.stt - b.stt,
       fixed: "left",
     },
     {
-      title: "Chi nhánh",
-      dataIndex: "branch",
-      key: "branch",
-      fixed: "left",
-      render: (text) => {
-        return <span className="font-bold">{text?.name}</span>;
-      },
+      title: "Tên loại phòng",
+      dataIndex: "room_type_name",
+      key: "room_type_name",
     },
     {
       title: "Giá mỗi đêm",
       dataIndex: "price_per_night",
       key: "price_per_night",
-      sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
+      sorter: (a, b) => a.price_per_night - b.price_per_night,
       render: (text) => {
         // Sử dụng hàm định dạng (format) ở đây để định dạng giá phòng theo ý muốn
         return (
@@ -135,10 +132,10 @@ const ListRoomType = () => {
   const remove = (id: any) => {
     try {
       swal({
-        title: "Are you sure you want to delete?",
-        text: "You cannot undo after deleting!",
+        title: "Bạn chắc chắn muốn xóa chứ ?",
+        text: "Bạn không thể hoàn tác sau khi xóa!",
         icon: "warning",
-        buttons: ["Cancel", "Delete"],
+        buttons: ["Hủy", "Xóa"],
         dangerMode: true,
       })
         .then((willDelete) => {
@@ -148,7 +145,7 @@ const ListRoomType = () => {
               .then((data) => {
                 if (data.status === "success") {
                   refetch();
-                  swal("You have successfully deleted", {
+                  swal("Bạn đã xóa thành công", {
                     icon: "success",
                   });
                 }
@@ -156,7 +153,7 @@ const ListRoomType = () => {
           }
         })
         .catch(() => {
-          swal("Error", {
+          swal("Lỗi", {
             icon: "error",
           });
         });
