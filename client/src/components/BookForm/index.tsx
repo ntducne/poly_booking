@@ -45,7 +45,6 @@ export default function BookForm({}: Props) {
   };
 
   const handleValidateDate = (_: any, value: any) => {
-    console.log("value", value);
     const formattedDates = value?.map((item: any) =>
       dayjs(item.$d).format("YYYY-MM-DD")
     );
@@ -110,9 +109,9 @@ export default function BookForm({}: Props) {
                   className="rounded-none min-h-[50px] w-full"
                 >
                   {dataBranches &&
-                    dataBranches?.data.map((item: any) => {
+                    dataBranches?.data.map((item: any, index: number) => {
                       return (
-                        <Select.Option value={item?.id}>
+                        <Select.Option value={item?.id} key={index}>
                           {item?.name}
                         </Select.Option>
                       );

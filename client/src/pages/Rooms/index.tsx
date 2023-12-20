@@ -170,6 +170,13 @@ export default function Rooms({}: Props) {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
+    window.scrollTo({
+      top: 500,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [page]);
+  useEffect(() => {
     refetch();
     refetchBranch();
   }, []);
@@ -334,7 +341,7 @@ export default function Rooms({}: Props) {
                         {dataBranches &&
                           dataBranches?.data.map((item: any) => {
                             return (
-                              <Select.Option value={item?.id}>
+                              <Select.Option value={item?.id} key={item?.id}>
                                 {item?.name}
                               </Select.Option>
                             );

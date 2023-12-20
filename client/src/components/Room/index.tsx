@@ -2,9 +2,6 @@ import { Link } from "react-router-dom";
 import FormatPrice from "../../utils/FormatPrice";
 
 export default function Room(props: any) {
-  console.log("data", props?.data);
-  console.log(props?.data?.images?.[0]?.image);
-
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
       <div className="lg:hidden block">
@@ -30,9 +27,12 @@ export default function Room(props: any) {
             <li>Trẻ em: {props?.data?.children || 2}</li>
             <li>Mô tả: {props?.data?.description}</li>
             <li>Loại giường: Đơn</li>
-            {props?.data?.num_of_bed.map((item: any) => {
+            {props?.data?.num_of_bed.map((item: any, index: number) => {
               return (
-                <li className="text-center px-4 bg-gray-200 rounded-2xl">
+                <li
+                  key={index}
+                  className="text-center px-4 bg-gray-200 rounded-2xl"
+                >
                   Giường {item?.size}: {item?.slot}
                 </li>
               );
@@ -92,9 +92,12 @@ export default function Room(props: any) {
                 <p className="text-center px-4 bg-gray-200 rounded-2xl">
                   Người lớn: {props?.data?.adults}
                 </p>
-                {props?.data?.num_of_bed.map((item: any) => {
+                {props?.data?.num_of_bed.map((item: any, index: number) => {
                   return (
-                    <p className="text-center px-4 bg-gray-200 rounded-2xl">
+                    <p
+                      key={index}
+                      className="text-center px-4 bg-gray-200 rounded-2xl"
+                    >
                       Giường {item?.size}: {item?.slot}
                     </p>
                   );
