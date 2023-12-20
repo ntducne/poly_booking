@@ -7,10 +7,6 @@ use App\Models\Branch;
 use App\Models\HistoryHandleBooking;
 use App\Models\Notification;
 use App\Models\RateRoom;
-use App\Models\Room;
-use App\Models\RoomImage;
-use App\Models\RoomType;
-use App\Models\Services;
 use App\Modules\Dashboard\Controllers\DashboardController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -20,15 +16,14 @@ Route::get('unauthorized', function (){ return response()->json([
     'message' => 'Unauthorized !'
 ], 401); })->name('unauthorized');
 
-// Route::get('/', function () {
-//     Billing::truncate();
-//     BookDetail::truncate();
-//     Booking::truncate();
-//     RateRoom::truncate();
-//     Branch::truncate();
-//     HistoryHandleBooking::truncate();
-//     DB::table('failed_jobs')->truncate();
-//     Notification::truncate();
-// });
+Route::get('/', function () {
+    Billing::truncate();
+    BookDetail::truncate();
+    Booking::truncate();
+    RateRoom::truncate();
+    HistoryHandleBooking::truncate();
+    DB::table('failed_jobs')->truncate();
+    Notification::truncate();
+});
 
 Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');
