@@ -1,17 +1,13 @@
 // import React from "react";
 import { useEffect } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Typography,
-  Space,
-  Skeleton,
-} from "antd";
+import { Form, Input, Button, Typography, Space, Skeleton, Radio } from "antd";
 import { AiOutlineCheck, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetDetailAdminsQuery, useUpdateAdminsMutation } from "../../../../api/account/admin";
+import {
+  useGetDetailAdminsQuery,
+  useUpdateAdminsMutation,
+} from "../../../../api/account/admin";
 const { Title, Text } = Typography;
 
 const formItemLayout = {
@@ -31,6 +27,7 @@ const EditAdmin = () => {
         phone: dataStaff?.data?.information?.phone,
         email: dataStaff?.data?.information?.email,
         // image: dataStaff?.data?.information?.image,
+        status: dataStaff?.data?.information?.status || '0'
       });
     }
   }, [dataStaff]);
@@ -48,15 +45,12 @@ const EditAdmin = () => {
     const data = {
       idStaff: id,
       data: {
-        name: values.name,
-        phone: values.phone,
-        email: values.email,
-        password: values.password,
-        image: dataStaff?.data?.information?.image,
-        role: "staff",
+        new_password: values.new_password,
+        confirm_password: values.confirm_password,
+        status: values.status,
       },
     };
-    
+
     updateStaffs(data)
       .unwrap()
       .then((item: any) => {
@@ -97,7 +91,7 @@ const EditAdmin = () => {
               { max: 50, message: "Tên không được vượt quá 50 ký tự!" },
             ]}
           >
-            <Input />
+            <Input disabled />
           </Form.Item>
           <Form.Item
             label="Số điện thoại"
@@ -110,20 +104,9 @@ const EditAdmin = () => {
               },
             ]}
           >
-            <Input />
+            <Input disabled />
           </Form.Item>
 
-          {/* <Form.Item
-            hidden
-            label="Ảnh"
-            name="images"
-            valuePropName="fileList"
-            rules={[{ required: true, message: "Vui lòng tải lên ảnh!" }]}
-          >
-            <Upload name="image" listType="picture" maxCount={1}>
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
-          </Form.Item> */}
           <Form.Item
             label="Email"
             name="email"
@@ -132,8 +115,46 @@ const EditAdmin = () => {
               { type: "email", message: "Email không hợp lệ!" },
             ]}
           >
-            <Input />
+            <Input disabled />
           </Form.Item>
+
+          <div className="mt-6 grid grid-cols-1 gap-x-6 ">
+            <Form.Item
+              label="Mật khẩu mới"
+              name="new_password"
+              rules={[
+                { required: true, message: "Vui lòng nhập mật khẩu mới!" },
+                { min: 6, message: "Mật khẩu phải có ít nhất 6 ký tự" },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label="Nhập lại mật khẩu mới"
+              name="confirm_password"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập lại mật khẩu mới!",
+                },
+                { min: 6, message: "Mật khẩu phải có ít nhất 6 ký tự" },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+          </div>
+
+          <Form.Item
+            name="status"
+            label="Trạng thái"
+            rules={[{ required: true, message: "Vui lòng chọn trạng thái!" }]}
+          >
+            <Radio.Group>
+              <Radio value="0">Hoạt động</Radio>
+              <Radio value="1">Span</Radio>
+            </Radio.Group>
+          </Form.Item>
+
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Space className="flex md:flex-row">
               <Button
