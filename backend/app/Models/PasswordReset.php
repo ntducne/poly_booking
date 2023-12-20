@@ -10,6 +10,8 @@ use MongoDB\Laravel\Eloquent\SoftDeletes;
 class PasswordReset extends Eloquent
 {
     use HasFactory;
+    protected $connection = 'mongodb';
+    protected $collection = 'password_resets';
     protected $fillable = [
         'email',
         'token',

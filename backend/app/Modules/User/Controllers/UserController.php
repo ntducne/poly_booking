@@ -46,11 +46,27 @@ class UserController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            $users = $this->user->paginate(10);
+            $users = $this->user->newQuery();
+            if ($request->has('name')) {
+                $searchTerm = $request->input('name');
+                $users->where('name', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('email')) {
+                $searchTerm = $request->input('email');
+                $users->where('email', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('phone')) {
+                $searchTerm = $request->input('phone');
+                $users->where('phone', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('status')) {
+                $searchTerm = $request->input('status');
+                $users->where('status', $searchTerm);
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'Danh sách người dùng !',
-                'data' => UserResource::collection($users)
+                'data' => UserResource::collection($users->paginate(10))
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
