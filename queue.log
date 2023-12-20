@@ -98,3 +98,5 @@
   2023-12-20 00:46:16 App\Events\BookingEvent .................. 651.81ms DONE
   2023-12-20 00:48:23 App\Events\BookingEvent ........................ RUNNING
   2023-12-20 00:48:24 App\Events\BookingEvent .................. 756.51ms DONE
+  2023-12-20 12:00:25 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-20 12:00:29 App\Notifications\ResetPasswordRequest ......... 4s DONE

@@ -46,6 +46,8 @@ export default function ResetPassword({}: Props) {
   useEffect(() => {
     if (data?.status !== true) {
       navigate("/auth/login");
+      message.error("Token không hợp lệ.");
+
     }
   }, [data?.status]);
 
