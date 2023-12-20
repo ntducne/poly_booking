@@ -41,7 +41,10 @@ import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
 import dayjs from "dayjs";
 import moment from "moment";
 import { useSearchRoomMutation } from "../../../api/booking";
-import { el } from "date-fns/locale";
+interface Service {
+  id: string;
+  service_name: string;
+}
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const {
@@ -120,7 +123,7 @@ const BillDetail: React.FC = () => {
   //
 
   // Xu ly ServiceInBill
-  const [checkedServices, setCheckedServices] = useState([]);
+  const [checkedServices, setCheckedServices] = useState<any>([]);
 
   const handleCheckboxChange = (checkedValues: any) => {
     setCheckedServices(checkedValues);
@@ -160,7 +163,7 @@ const BillDetail: React.FC = () => {
           if (res.status === "success") {
             setFormChanged(false);
             setOpen(false);
-            form.setFieldValue()
+            form.resetFields()
             setCheckedServices([]);
             swal(res.message, {
               icon: "success",
@@ -1279,7 +1282,7 @@ const BillDetail: React.FC = () => {
                         <LoadingOutlined />
                       </div>
                     ) : (
-                      dataServices?.data?.map((service: any) => {
+                      dataServices?.data?.map((service: Service) => {
                         return (
                           <div key={service?.id}>
                             <Checkbox value={service?.id}>
