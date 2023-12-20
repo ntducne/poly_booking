@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FormatPrice from "../../../utils/FormatPrice";
 
 interface DataType {
@@ -22,10 +22,14 @@ import {
 import { useSelector } from "react-redux";
 
 const ListRoomType = () => {
-  const [searchName, setSearchName] = useState("");
-  const { data, isLoading, refetch } = useGetRoomTypeQuery({
-    name: searchName,
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  // const [loading, setLoading] = useState<boolean>(false);
+  const [query, setQuery] = useState<any>({
+    // page: page,
+    name: queryParams.get("name") ?? "",
   });
+  const { data, isLoading, refetch } = useGetRoomTypeQuery(query);
   const [deleteRoomType] = useDeleteRoomTypeMutation();
 
   const permission1 = useSelector((state: any) => state.role).permission;
@@ -146,7 +150,7 @@ const ListRoomType = () => {
   // }
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
-    setSearchName(searchValue);
+    setQuery({ name: searchValue });
     refetch();
   };
 
