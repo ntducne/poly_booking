@@ -165,11 +165,11 @@ const BillDetail: React.FC = () => {
                 </div>
                 <div className="mt-1 mb-3"></div>
                 <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900">
-                  Trạng thái đơn hàng
+                  Trạng thái phòng
                 </h5>
                 <div className="font-normal text-gray-700">
                   <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside">
-                    <li>Đơn hàng: {data?.data?.status_name}</li>
+                    <li>Trạng thái: {data?.data?.status_name}</li>
                   </ul>
                 </div>
                 <div className="mt-1 mb-3"></div>
