@@ -189,6 +189,9 @@ const Detail = () => {
     refetch();
   }, []);
   useEffect(() => {
+    if (data?.message == "Phòng không tồn tại !") {
+      return navigate("/404");
+    }
     form.setFieldsValue({
       branch_id: {
         label: data?.room?.branch?.name,

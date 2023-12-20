@@ -14,8 +14,6 @@ export default function LayoutClient2({}: Props) {
   const [cookies] = useCookies(["userInfo"]);
   const [logoutApi] = useProcessLogoutMutation();
   const [toggleBar, setToggleBar] = useState(false);
-  console.log(cookies);
-
   const handleToggleBar = () => {
     setToggleBar((prev) => {
       return !prev;

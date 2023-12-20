@@ -31,7 +31,7 @@ class RoomTypeController extends Controller
 
                 if ($request->has('name')) {
                     $searchTerm = $request->input('name');
-                    $query->where('room_type_name', 'LIKE', '%' . $searchTerm . '%');
+                    $roomTypes->where('room_type_name', 'LIKE', '%' . $searchTerm . '%');
                 }
 
             if($request->page){

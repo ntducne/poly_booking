@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../api/Auth";
 import { cookies } from "../../config/cookie";
 import { convertFromNowToSeconds } from "../../config/convertDate";
+import { useCookies } from "react-cookie";
 
 type Props = {};
 
@@ -11,6 +12,7 @@ export default function Login({}: Props) {
   const navigate = useNavigate();
   const [Login, { isLoading }] = useLoginMutation();
   const [form] = Form.useForm();
+  const [, setCookie] = useCookies();
 
   const onFinish = (values: any) => {
     if (values) {
@@ -23,6 +25,11 @@ export default function Login({}: Props) {
               JSON.stringify(Object.values(values)),
               convertFromNowToSeconds(values.accessToken.expires_at)
             );
+            setCookie("userBook", {
+              email: values?.user?.email,
+              phone: values?.user?.phone,
+              name: values?.user?.name,
+            });
             message.success("Đăng nhập thành công");
             setTimeout(() => {
               navigate("/");

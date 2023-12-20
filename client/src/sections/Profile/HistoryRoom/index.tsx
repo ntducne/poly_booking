@@ -43,8 +43,8 @@ export default function HistoryRoom({}: Props) {
     <div>
       {data && data?.length ? (
         <div>
-          {data?.map((item: any) => (
-            <div className="px-5">
+          {data?.map((item: any, index: number) => (
+            <div className="px-5" key={index}>
               <div className="border-t pt-[30px] flex flex-col md:flex-row gap-[30px] pb-[30px] ">
                 <Link to={`/user/profile/roomBooked/${item?.id}`}>
                   <img

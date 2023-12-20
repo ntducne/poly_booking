@@ -65,7 +65,6 @@ const Contact = () => {
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2"
-                          stroke-linecap="round"
                           strokeLinecap="round"
                           className="h-6 w-6"
                         >
@@ -93,7 +92,6 @@ const Contact = () => {
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2"
-                          stroke-linecap="round"
                           strokeLinecap="round"
                           className="h-6 w-6"
                         >
@@ -122,7 +120,6 @@ const Contact = () => {
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2"
-                          stroke-linecap="round"
                           strokeLinecap="round"
                           className="h-6 w-6"
                         >
