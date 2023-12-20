@@ -29,10 +29,8 @@ class RoomResource extends JsonResource
             ];
         }
         // reverse array
-        return array_reverse($arr);
-        
-        // return $arr;
-        
+        return array_reverse($arr); 
+        return $arr;
     }
 
     public function getUtilities(){
