@@ -222,6 +222,21 @@ class RoomRepository
         }
     }
 
+    private function calculateProvisional($price_per_night, $room_discount, $number_of_nights, $amount_room): float|int
+    {
+        if ($room_discount > 0) {
+            if ($room_discount < 95) {
+                return (($price_per_night * ($room_discount / 100)) * $number_of_nights) * $amount_room;
+            }
+            else {
+                return (($price_per_night - $room_discount) * $number_of_nights) * $amount_room;
+            }
+        }
+        else {
+            return ($price_per_night * $number_of_nights) * $amount_room;
+        }
+    }
+
     public function processBooking($request): JsonResponse|array
     {
         $searchRoom = $this->processSearchRoom($request);
@@ -385,18 +400,7 @@ class RoomRepository
         ];
     }
 
-    private function calculateProvisional($price_per_night, $room_discount, $number_of_nights, $amount_room): float|int
-    {
-        if ($room_discount > 0) {
-            if ($room_discount < 95) {
-                return (($price_per_night * ($room_discount / 100)) * $number_of_nights) * $amount_room;
-            } else {
-                return (($price_per_night - $room_discount) * $number_of_nights) * $amount_room;
-            }
-        } else {
-            return ($price_per_night * $number_of_nights) * $amount_room;
-        }
-    }
+   
 
     public function processRenew($request)
     {

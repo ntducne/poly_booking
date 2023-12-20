@@ -5,6 +5,7 @@ namespace App\Modules\Room\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Room;
 use App\Models\RoomImage;
+use App\Models\RoomType;
 use App\Modules\Room\Requests\StoreRoomRequest;
 use App\Modules\Room\Requests\UpdateRoomRequest;
 use App\Modules\Room\Resources\RoomResource;
@@ -56,7 +57,7 @@ class RoomController extends Controller
             $object['children'] = (int) $object['children'];
             $object['slug'] = convertToSlug($request->name);
             $object['amount_room'] = (int)$object['amount'];
-            $object['branch_id'] =  $request->user()->branch_id;
+            $object['branch_id'] = RoomType::find($request->room_type_id)->branch_id;
             $object['num_of_bed'] = json_decode(stripslashes($request->num_of_bed), true);
             $room_number = [];
             for ($i = 1; $i <= $object['amount_room']; $i++) {
@@ -65,13 +66,6 @@ class RoomController extends Controller
                 }
                 $room_number[] = $object['floor'] . $i;
             }
-
-            // foreach($object['amount_room'] as $key => $value){
-            //     if($value < 10){
-            //         $value = '0'.$value;
-            //     }
-            //     $room_number[] = $object['floor'] . $value;
-            // }
             $object['room_number'] = $room_number;
             $roomNew = $this->room->create($object);
             $room = $this->room->where('name', $request->name)->first();
@@ -234,6 +228,16 @@ class RoomController extends Controller
     }
     public function deleteImageRoom(Request $request)
     {
+
+        $room_image = $this->room_image->where('room_id', $request->room_id)->get();
+        if(count($room_image) == 1){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Phòng phải có ít nhất 1 ảnh !',
+                'data' => null
+            ], 404);
+        }
+
         $image = $this->room_image->where('image', $request->filePath)->where('room_id', $request->room_id)->first();
         if ($image) {
             $image->delete();
