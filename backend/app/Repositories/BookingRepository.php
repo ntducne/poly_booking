@@ -70,21 +70,16 @@ class BookingRepository
         $total = 0;
         if(count($billing->services) > 0){
             foreach ($services as $key => $value) {
-                $service = Services::where('_id', '=', $value)->where('branch_id', '=', $request->user()->branch_id)->first();
-                $existingService = array_filter($billing->services, function ($item) use ($service) {
-                    return $item['service_id'] == $service->_id;
-                });
-                if (empty($existingService)) {
+                $service = Services::where('_id', '=', $value->service_id)->where('branch_id', '=', $request->user()->branch_id)->first();
                     $arrService[] = [
                         'service_id' => $service->_id,
                         'service_name' => $service->service_name,
                         'price' => $service->price,
                         'time' => Carbon::now()->format('Y-m-d H:i:s'),
-                        'isPay' => $request->isPay,
-                        'quantity' => $request->quantity ?? 1,
+                        'isPay' => $value->isPay,
+                        'quantity' => $value->quantity ?? 1,
                     ];
                     $total += $service->price;
-                }
             }
             $newArr = array_merge($billing->services, $arrService);
             $this->billing->where('_id', '=', $request->billing_id)->update([
@@ -94,12 +89,14 @@ class BookingRepository
         }
         else {
             foreach ($services as $key => $value) {
-                $service = Services::where('_id', '=', $value)->where('branch_id', '=', $request->user()->branch_id)->first();
+                $service = Services::where('_id', '=', $value->service_id)->where('branch_id', '=', $request->user()->branch_id)->first();
                 $arrService[] = [
                     'service_id' => $service->_id,
                     'service_name' => $service->service_name,
                     'price' => $service->price,
                     'time' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'isPay' => $value->isPay,
+                    'quantity' => $value->quantity ?? 1,
                 ];
                 $total += $service->price;
             }
