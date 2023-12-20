@@ -3,6 +3,7 @@ import FormatPrice from "../../utils/FormatPrice";
 
 export default function Room(props: any) {
   console.log("data", props?.data);
+  console.log(props?.data?.images?.[0]?.image);
 
   return (
     <div className="bg-bgr overflow-hidden max-w-[804px] shadow-lg">
@@ -10,7 +11,7 @@ export default function Room(props: any) {
         <Link to={`/rooms/${props?.data?.slug}`}>
           <img
             className="group-hover:scale-110 transition-all duration-300 w-full"
-            src={props?.data?.images?.[0]?.image ?? props?.data?.image}
+            src={props?.data?.images?.[0]?.image || props?.data?.image}
             alt="img error"
           />
         </Link>
@@ -66,11 +67,11 @@ export default function Room(props: any) {
       <div className="gap-3 w-full lg:flex hidden">
         <Link
           to={`/rooms/${props?.data?.slug}`}
-          className="max-w-[300px] max-h-[200px]"
+          className="w-[300px] h-[175px]"
         >
           <img
             className="group-hover:scale-110 transition-all duration-300 w-full h-full object-cover"
-            src={props?.data?.images?.[0]?.image ?? props?.data?.image}
+            src={props?.data?.images?.[0]?.image || props?.data?.image}
             alt=""
           />
         </Link>
@@ -78,8 +79,10 @@ export default function Room(props: any) {
           <div className="py-2">
             <h1 className="text-[16px] font-bold">{props?.data?.name}</h1>
             <p className="text-[12px] mb-2 italic">Khách sạn</p>
-            <p className="text-[13px] overflow-hidden whitespace-nowrap overflow-ellipsis min-w-[350px]">
-              {props?.data?.description}
+            <p className="text-[13px] overflow-hidden whitespace-nowrap overflow-ellipsis min-w-[350px] max-w-[350px]">
+              {+props?.data?.description.length > 80
+                ? props?.data?.description.split(0, 80) + "..."
+                : props?.data?.description}
             </p>
             <div className="text-[12px] mt-3 gap-5 text-black w-full">
               <div className="flex flex-wrap max-w-[700px] gap-2">

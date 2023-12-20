@@ -107,6 +107,10 @@ export default function AccommodationReview() {
     navigate("/payment/process");
   };
 
+  useEffect(() => {
+    setCookie("paymentMethod", "vnpay", { path: "/" });
+  }, []);
+
   return (
     <>
       <div

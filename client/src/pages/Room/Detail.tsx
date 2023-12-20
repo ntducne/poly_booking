@@ -1,6 +1,7 @@
 import {
   CloseOutlined,
   FileImageOutlined,
+  LoadingOutlined,
   RedoOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
@@ -36,7 +37,7 @@ const Detail = () => {
   const [postComment, { isLoading: isLoadingCmt }] = useProcessReviewMutation();
   const [form] = useForm();
   const [commentForm] = useForm();
-  const [searchRoom] = useSearchRoomsMutation();
+  const [searchRoom, { isLoading: loadingSearch }] = useSearchRoomsMutation();
   const [dataSearch, setDataSearch] = useState<any>({});
   const handleImageChange = (e: any) => {
     const files = e.target.files;
@@ -58,7 +59,6 @@ const Detail = () => {
       });
     }
   };
-
   const handleRemoveImage = (index: any) => {
     const updatedPreviews = [...imagePreviews];
     updatedPreviews.splice(index, 1);
@@ -73,6 +73,16 @@ const Detail = () => {
   const disabledDate = (current: any) => {
     const today = dayjs().startOf("day");
     return current && current < today;
+  };
+  const handleValidateDate = (_: any, value: any) => {
+    console.log("value", value);
+    const formattedDates = value?.map((item: any) =>
+      dayjs(item.$d).format("YYYY-MM-DD")
+    );
+    if (formattedDates[0] === formattedDates[1]) {
+      return Promise.reject("Ngày trả phòng không trùng với ngày nhận");
+    }
+    return Promise.resolve();
   };
   const onFinishComment = async (values: any) => {
     if (values) {
@@ -102,9 +112,8 @@ const Detail = () => {
           refetch();
         })
         .catch((error) => {
-          console.log(error);
           if (error?.status == 400) {
-            message.error("Không thể đánh giá phòng khi chưa trải nghiệm");
+            message.error(error?.data?.message);
             commentForm.resetFields();
             setImagePreviews([]);
             return;
@@ -229,14 +238,27 @@ const Detail = () => {
                     </span>
                     /đêm
                   </h3>
-                  <ul className="flex flex-col gap-3 text-[16px] text-gray-500 mt-[20px]">
-                    <li>Người lớn: {data?.room?.adults}</li>
-                    <li>Diện tích: {data?.room?.area}</li>
-                    <li>Trẻ em: {data?.room?.children}</li>
-                    <li>Chi nhánh: {data?.room?.branch.name}</li>
-                  </ul>
+                  <div className="mt-[20px] flex flex-wrap gap-3">
+                    <ul className="flex flex-col gap-3 text-[16px] text-gray-500">
+                      <li>Người lớn: {data?.room?.adults}</li>
+                      <li>Diện tích: {data?.room?.area}</li>
+                      <li>Trẻ em: {data?.room?.children}</li>
+                      <li>Chi nhánh: {data?.room?.branch.name}</li>
+                    </ul>
+
+                    <ul className="flex flex-col gap-3 text-[16px] text-gray-500">
+                      {data?.room?.num_of_bed.map((item: any) => {
+                        return (
+                          <li>
+                            Giường {item?.size}: {item?.slot}
+                          </li>
+                        );
+                      })}
+                      <li>Loại phòng: {data?.room?.type?.room_type_name}</li>
+                    </ul>
+                  </div>
                   <div className="mt-[20px] text-gray-500 w-full">
-                    {data?.room?.description}
+                    {data?.room?.type?.description}
                   </div>
                 </div>
               </div>
@@ -274,6 +296,9 @@ const Detail = () => {
                         {
                           required: true,
                           message: "Vui lòng chọn ngày",
+                        },
+                        {
+                          validator: handleValidateDate,
                         },
                       ]}
                     >
@@ -369,8 +394,14 @@ const Detail = () => {
                         className="bg-blue-500 mt-5 flex py-5 w-full justify-center md:py-4 px-7 gap-1 items-center"
                         htmlType="submit"
                       >
-                        <SearchOutlined />
-                        <p>Tìm kiếm</p>
+                        {!loadingSearch ? (
+                          <div className="flex items-center justify-center">
+                            <SearchOutlined />
+                            <p>Tìm kiếm</p>
+                          </div>
+                        ) : (
+                          <LoadingOutlined />
+                        )}
                       </Button>
                     </Form.Item>
                   </Form>
@@ -487,7 +518,7 @@ const Detail = () => {
             </span>
           )}
           {data?.room?.rate.length > 0 &&
-            data?.room?.rate.map((item: any) => (
+            data?.room?.rate?.map((item: any) => (
               <section className="bg-bgr  pt-8 m-auto">
                 <div className="w-70% mx-auto ">
                   <article className="text-base bg-bgr rounded-lg ">
