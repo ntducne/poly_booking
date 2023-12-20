@@ -87,13 +87,9 @@ const EditRoomType = () => {
           {...formItemLayout}
           onFinish={onFinish}
           initialValues={{
-            "input-number": 1,
-            "checkbox-group": ["A", "B"],
-            rate: 3.5,
-            "color-picker": null,
           }}
           style={{ maxWidth: 1000 }}
-          className="grid grid-cols-1 xl:grid-cols-2"
+          className="grid grid-cols-1 "
         >
           <Form.Item
             label="Tên loại phòng"

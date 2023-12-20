@@ -31,7 +31,9 @@ const AddRoomUtilities = () => {
       .then((result: any) => {
         if (result.status === "success") {
           toast.success("Thêm mới tiện ích phòng thành công");
-          navigate("/room/utilities");
+          setTimeout(() => {
+            navigate("/room/utilities");
+          }, 3000);
         } else {
           toast.error(result.error.message);
         }
@@ -54,13 +56,9 @@ const AddRoomUtilities = () => {
           {...formItemLayout}
           onFinish={onFinish}
           initialValues={{
-            "input-number": 1,
-            "checkbox-group": ["A", "B"],
-            rate: 3.5,
-            "color-picker": null,
           }}
           style={{ maxWidth: 1000 }}
-          className="grid grid-cols-1 xl:grid-cols-2"
+          className="grid grid-cols-1"
         >
           <Form.Item
             label="Tên tiện ích phòng"
@@ -78,7 +76,7 @@ const AddRoomUtilities = () => {
             hasFeedback
             rules={[{ required: true, message: "Vui lòng nhập tên phòng!" }]}
           >
-            <Select>
+            <Select mode="multiple">
               {dataRooms?.data?.map((item: any) => {
                 return (
                   <Option key={item.id} value={item.id}>

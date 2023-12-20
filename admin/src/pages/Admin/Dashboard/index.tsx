@@ -199,11 +199,11 @@ const Dashboard = () => {
                 // defaultValue="daily"
                 options={[
                   { value: "daily", label: "Ngày" },
-                  { value: "weekly", label: "Tuần" },
+                  // { value: "weekly", label: "Tuần" },
                   { value: "monthly", label: "Tháng" },
                   { value: "yearly", label: "Năm" },
                   { value: "day_to_day", label: "Từ ngày đến ngày" },
-                  { value: "week_to_week", label: "Từ tuần đến tuần" },
+                  // { value: "week_to_week", label: "Từ tuần đến tuần" },
                   { value: "month_to_month", label: "Từ tháng đến tháng" },
                   { value: "year_to_year", label: "Từ năm đến năm" },
                 ]}
@@ -230,7 +230,7 @@ const Dashboard = () => {
                   }
                 />
               )}
-              {typeStat === "weekly" && (
+              {/* {typeStat === "weekly" && (
                 <DatePicker
                   className="w-[220px]"
                   picker="week"
@@ -240,7 +240,7 @@ const Dashboard = () => {
                     current && current > moment().endOf("week")
                   }
                 />
-              )}
+              )} */}
               {typeStat === "monthly" && (
                 <DatePicker
                   picker="month"
@@ -272,7 +272,7 @@ const Dashboard = () => {
                   }
                 />
               )}
-              {typeStat === "week_to_week" && (
+              {/* {typeStat === "week_to_week" && (
                 <RangePicker
                   className="w-[220px]"
                   picker="week"
@@ -282,7 +282,7 @@ const Dashboard = () => {
                     current && current > moment().endOf("week")
                   }
                 />
-              )}
+              )} */}
               {typeStat === "month_to_month" && (
                 <RangePicker
                   picker="month"

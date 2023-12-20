@@ -12,18 +12,21 @@ interface DataType {
   price_per_night: number;
   status: number;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+import { MdDeleteForever } from "react-icons/md";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import {
   useDeleteRoomTypeMutation,
   useGetRoomTypeQuery,
 } from "../../../api/roomTypes";
+import { useSelector } from "react-redux";
 
 const ListRoomType = () => {
   const { data, isLoading, refetch } = useGetRoomTypeQuery({});
   const [deleteRoomType] = useDeleteRoomTypeMutation();
+
+  const permission1 = useSelector((state: any) => state.role).permission;
+  const [permissions, setPermissions] = useState<any>(permission1);
 
   const [dataFetching, setDataFetching] = useState<any>([]);
   useEffect(() => {
@@ -40,14 +43,15 @@ const ListRoomType = () => {
         refetch();
       })
     );
-  }, [isLoading, data?.data]);
+    setPermissions(permission1);
+  }, [isLoading, data?.data, permission1]);
 
   const columns: ColumnsType<DataType> = [
     {
       title: "STT",
       dataIndex: "stt",
       key: "stt",
-      sorter: (a:any, b: any) => a.stt - b.stt,
+      sorter: (a: any, b: any) => a.stt - b.stt,
       fixed: "left",
     },
     {
@@ -114,13 +118,15 @@ const ListRoomType = () => {
               <AiOutlineEdit />
             </Link>
           </Button>
-          <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
-          >
-            <MdDeleteForever />
-          </Button>
+          {permissions?.includes("admin.types.destroy") && (
+            <Button
+              onClick={() => remove(record?.key)}
+              type="primary"
+              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
+            >
+              <MdDeleteForever />
+            </Button>
+          )}
         </Space>
       ),
       // fixed: "right",
@@ -166,7 +172,8 @@ const ListRoomType = () => {
   return (
     <Page title={`Loại phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <FormSearch />
+        {/* <FormSearch /> */}
+        <div></div>
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
             to={`/room/type/add`}
@@ -175,13 +182,13 @@ const ListRoomType = () => {
             <AiOutlinePlus />
             Thêm loại phòng
           </Link>
-          <Link
+          {/* <Link
             to={`/roomType`}
             className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
           >
             <MdOutlineDeleteOutline />
             Thùng rác
-          </Link>
+          </Link> */}
         </div>
       </div>
       <Table
