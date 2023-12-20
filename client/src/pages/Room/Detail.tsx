@@ -196,11 +196,6 @@ const Detail = () => {
       },
     });
   }, [data?.room, data, isLoading]);
-  useEffect(() => {
-    if (data.status == "error" && data.message == "Phòng không tồn tại !") {
-      navigate("/404");
-    }
-  }, [data]);
 
   return (
     <Page title={data?.room?.name || "Chi tiết phòng"}>
