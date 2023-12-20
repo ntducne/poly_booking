@@ -32,7 +32,6 @@ const ListRoomType = () => {
 
   const permission1 = useSelector((state: any) => state.role).permission;
   const [permissions, setPermissions] = useState<any>(permission1);
-  console.log("data",data);
   
 
   const [dataFetching, setDataFetching] = useState<any>([]);

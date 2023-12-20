@@ -5,7 +5,7 @@ import moment from "moment";
 // import { ColumnsType } from "antd/es/table";
 
 const ListContact = () => {
-  const { data: dataContact, isLoading } = useGetContactQuery({});
+  const { data: dataContact, isLoading } = useGetContactQuery([]);
 
   const columns : any = [
     {

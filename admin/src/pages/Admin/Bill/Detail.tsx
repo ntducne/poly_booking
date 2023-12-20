@@ -20,7 +20,8 @@ import {
   Table,
   // TableProps,
   Skeleton,
-  Radio,
+  Result,
+  // Radio,
 } from "antd";
 import {
   useAddPeopleBookingMutation,
@@ -66,10 +67,23 @@ const BillDetail: React.FC = () => {
   const [form] = Form.useForm();
   const [formRoomExtend] = Form.useForm();
 
+  if (!dataBill?.data) {
+    return <Result
+    status="404"
+    title="404"
+    subTitle="Xin lỗi, hóa đơn này không tồn tại trong hệ thống."
+  />;
+  }
+
   useEffect(() => {
     if (!_.isEqual(prevServicesRef.current, dataBill?.data?.services)) {
       refetch();
     }
+    // if (!dataBill.data) {
+    //   swal("Hóa đơn không tồn tại", {
+    //     icon: "error",
+    //   });
+    // }
     prevServicesRef.current = dataBill?.data?.services;
   }, [dataBill?.data?.status, dataBill?.data?.services, isLoading]);
 
@@ -147,7 +161,7 @@ const BillDetail: React.FC = () => {
         return {
           service_id: serviceId,
           quantity: Number(values[`quantity_${serviceId}`]),
-          isPay: Number(values[`payment_${serviceId}`]),
+          isPay: 0,
         };
       }),
     };
@@ -1310,8 +1324,8 @@ const BillDetail: React.FC = () => {
                                 >
                                   <InputNumber min={1} />
                                 </Form.Item>
-                                <Form.Item
-                                  hidden
+                                {/* <Form.Item
+                                  // hidden
                                   name={`payment_${service?.id}`}
                                   rules={[
                                     {
@@ -1321,11 +1335,11 @@ const BillDetail: React.FC = () => {
                                     },
                                   ]}
                                 >
-                                  <Radio.Group>
+                                  <Radio.Group defaultValue={0}>
                                     <Radio value="0">Chưa thanh toán</Radio>
                                     <Radio value="1">Đã thanh toán</Radio>
                                   </Radio.Group>
-                                </Form.Item>
+                                </Form.Item> */}
                               </div>
                             )}
                           </div>
