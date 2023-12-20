@@ -1294,6 +1294,7 @@ const BillDetail: React.FC = () => {
                               <div>
                                 <Form.Item
                                   name={`quantity_${service?.id}`}
+                                  label="Số lượng"
                                   rules={[
                                     {
                                       required: true,
@@ -1310,6 +1311,7 @@ const BillDetail: React.FC = () => {
                                   <InputNumber min={1} />
                                 </Form.Item>
                                 <Form.Item
+                                  hidden
                                   name={`payment_${service?.id}`}
                                   rules={[
                                     {
