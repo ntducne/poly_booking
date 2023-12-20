@@ -27,6 +27,24 @@ class AdminController extends Controller
         try{
             $role = $request->user()->role;
             $query = $this->admin->newQuery();
+            if ($request->has('name')) {
+                $searchTerm = $request->input('name');
+                $query->where('name', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('email')) {
+                $searchTerm = $request->input('email');
+                $query->where('email', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('phone')) {
+                $searchTerm = $request->input('phone');
+                $query->where('phone', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('status')) {
+                $searchTerm = $request->input('status');
+                $query->where('status', $searchTerm);
+            }
+
+
             if ($role === 'super_admin') {
                 $response = $query
                 ->where('role', 'admin')
@@ -216,7 +234,6 @@ class AdminController extends Controller
         }
     }
 
-<<<<<<< HEAD
     public function getStaff(Request $request){
         $userId = request()->cookie('user_id');
         $user = Auth::loginUsingId($userId);
@@ -234,7 +251,6 @@ class AdminController extends Controller
             ]);
         }
     }
-=======
     public function profile(Request $request)
     {
         try{
@@ -307,5 +323,4 @@ class AdminController extends Controller
         }
 
     }
->>>>>>> 264a4780e78ce8ca6e384128668e64f2cefbabf8
 }

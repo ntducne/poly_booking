@@ -34,6 +34,10 @@ class RoomController extends Controller
                 $searchTerm = $request->input('name');
                 $query->where('name', 'LIKE', '%' . $searchTerm . '%');
             }
+            if ($request->has('room_type_id')) {
+                $searchTerm = $request->input('room_type_id');
+                $query->where('room_type_id', $searchTerm);
+            }
             $rooms = $query->paginate(10);
             return RoomResource::collection($rooms);
         } catch (Exception $exception) {
