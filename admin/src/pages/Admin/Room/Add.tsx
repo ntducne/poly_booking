@@ -44,8 +44,6 @@ const AddRoom = () => {
   const [createUser, { isLoading: isLoadingCreate }] = useCreateRoomMutation();
 
   const onFinish = (values: any) => {
-    console.log("values", values);
-
     const formUpload = new FormData();
     const uploadedFiles = values.images.map(
       (fileInfo: any) => fileInfo.originFileObj
@@ -53,18 +51,16 @@ const AddRoom = () => {
     for (let i = 0; i < uploadedFiles.length; i++) {
       formUpload.append("images[]", uploadedFiles[i]);
     }
-
     const data = {
       ...values,
       pay_upon_check_in: 1,
     };
     delete data.images;
-
     for (const [key, value] of Object.entries(data)) {
       formUpload.append(`${key}`, `${value}`);
     }
-    console.log("formUpload", data);
-
+    formUpload.delete("num_of_bed");
+    formUpload.append("num_of_bed", JSON.stringify(values.num_of_bed));
     createUser(formUpload)
       .unwrap()
       .then((item) => {
