@@ -39,6 +39,8 @@ const Detail = () => {
   const [commentForm] = useForm();
   const [searchRoom, { isLoading: loadingSearch }] = useSearchRoomsMutation();
   const [dataSearch, setDataSearch] = useState<any>({});
+  console.log("data,search", data);
+
   const handleImageChange = (e: any) => {
     const files = e.target.files;
     if (files.length > 0 && imagePreviews.length < 4) {
@@ -196,6 +198,11 @@ const Detail = () => {
       },
     });
   }, [data?.room, data, isLoading]);
+  useEffect(() => {
+    if (data.status == "error" && data.message == "Phòng không tồn tại !") {
+      navigate("/404");
+    }
+  }, [data]);
 
   return (
     <Page title={data?.room?.name || "Chi tiết phòng"}>
