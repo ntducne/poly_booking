@@ -39,8 +39,6 @@ const Detail = () => {
   const [commentForm] = useForm();
   const [searchRoom, { isLoading: loadingSearch }] = useSearchRoomsMutation();
   const [dataSearch, setDataSearch] = useState<any>({});
-  console.log("data,search", data);
-
   const handleImageChange = (e: any) => {
     const files = e.target.files;
     if (files.length > 0 && imagePreviews.length < 4) {
