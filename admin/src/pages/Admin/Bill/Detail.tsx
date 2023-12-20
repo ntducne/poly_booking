@@ -1434,7 +1434,7 @@ const BillDetail: React.FC = () => {
                     >
                       {service?.service_name}
                     </th>
-                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">{service?.quantity}</td>
                     <td className="px-6 py-4">{formatMoneyVN(service.time)}</td>
                     <td></td>
                     <td className="px-6 py-4">
