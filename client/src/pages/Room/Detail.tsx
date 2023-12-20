@@ -104,7 +104,7 @@ const Detail = () => {
         .catch((error) => {
           console.log(error);
           if (error?.status == 400) {
-            message.error("Không thể đánh giá phòng khi chưa trải nghiệm");
+            message.error(error?.data?.message);
             commentForm.resetFields();
             setImagePreviews([]);
             return;

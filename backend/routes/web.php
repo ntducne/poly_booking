@@ -29,11 +29,6 @@ Route::get('unauthorized', function (){ return response()->json([
 //     HistoryHandleBooking::truncate();
 //     DB::table('failed_jobs')->truncate();
 //     Notification::truncate();
-//     RoomImage::truncate();
-//     RoomType::truncate();
-//     Room::truncate();
-//     Services::truncate();
-//     DB::table('utilities')->truncate();
 // });
 
 Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');

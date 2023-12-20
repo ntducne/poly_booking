@@ -23,7 +23,7 @@ class UpdateAdminRequest extends Request
             'branch_id' => ['bail', 'required', Rule::exists(Branch::class, $this->column_id)],
             // 'branch_id' => ['bail', 'required', Rule::exists(Branch::class, $this->column_id)],
             'role' => ['bail', 'required', 'string'],
-            'image' => ['bail', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            // 'image' => ['bail', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
     public function attributes()

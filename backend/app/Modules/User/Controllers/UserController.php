@@ -233,31 +233,37 @@ class UserController extends Controller
             ], 404);
         }
         $check = false;
+        $message = 'Bạn không thể đánh giá phòng này do chưa từng đặt phòng !';
         if ($request->user()) {
             $userId = $request->user()->id;
-            $billing = Billing::where('user_id', $userId)->where('status', 4)->get();
+            $billing = Billing::where('user_id', $userId)->where('status', 4)->orderBy('_id','desc')->get();
             foreach ($billing as $item) {
-                $countBookdetail = BookDetail::where('room_id', $room->id)->where('booking_id', $billing->booking_id)->pluck('booking_id');
+                $countBookdetail = BookDetail::where('room_id', $room->id)->where('booking_id', $item->booking_id)->pluck('booking_id');
                 $countBooking = Booking::whereIn('_id', $countBookdetail)->count();
-                $countRate = RateRoom::where('booking_id', $item->booking_id)->where('room_id', $room->id)->where('user_id', $userId)->count();
-                if($countBooking >= $countRate){
+                $countRate = RateRoom::where('room_id', $room->id)->where('user_id', $userId)->count();
+                if($countBooking > $countRate){
                     $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->orderBy('id', 'desc')->first();
                     if ($bookDetail) {
                         $booking = Booking::where('_id', $bookDetail->booking_id)->first();
                         if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
                             $check = false;
+                            $message = 'Quá thời gian đánh giá !';
                         } else {
                             $check = true;
                         }
                         break;
                     }
                 }
+                if($countBooking == $countRate){
+                    $check = false;
+                    $message = 'Bạn đã đánh giá phòng này !';
+                }
             }
         }
         if(!$check){
             return response()->json([
                 'status' => false,
-                'message' => 'Bạn không thể đánh giá phòng này !'
+                'message' => $message
             ], 400);
         }
         $input = $request->all();

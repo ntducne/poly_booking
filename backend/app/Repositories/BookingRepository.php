@@ -73,7 +73,8 @@ class BookingRepository
             }
             $billing->whereIn('booking_id', $booking_id);
         }
-        return BillingResource::collection($billing->paginate(10));
+        $dataBilling = $billing->paginate(10);
+        return BillingResource::collection($dataBilling);
     }
 
     public function orderSearchItem($request)  {
@@ -242,6 +243,7 @@ class BookingRepository
         $this->billing->where('_id', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
             'status' => 3
         ]);
+       
         $values = [
             'booking_id' => $request->billing_id,
             'admin_id' => $request->user()->id,

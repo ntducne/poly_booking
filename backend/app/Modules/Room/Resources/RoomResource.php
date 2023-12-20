@@ -27,6 +27,8 @@ class RoomResource extends JsonResource
                 'time'=> $rate->time
             ];
         }
+        // reverse array
+        return array_reverse($arr); 
         return $arr;
     }
 
