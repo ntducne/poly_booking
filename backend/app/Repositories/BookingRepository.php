@@ -30,14 +30,41 @@ class BookingRepository
 
     public function orderList($request): AnonymousResourceCollection
     {
-        return BillingResource::collection(
-            $this->billing
-                ->where('branch_id', '=', $request->user()->branch_id)
-                ->orderBy('id', 'desc')
-                ->paginate(10)
-        );
+        $billing = $this->billing->where('branch_id', '=', $request->user()->branch_id)->orderBy('id', 'desc')->newQuery();
+        if($request->billingCode){
+            $billing->where('billingCode', $request->billingCode);
+        }
+        if($request->status){
+            $billing->where('status', $request->status);
+        }
+        if($request->user_info){
+            $booking = $this->booking->where('branch_id', '=', $request->user()->branch_id)
+            ->where('representative.name', 'like', '%'.$request->user_info.'%')
+            ->orWhere('representative.email', 'like', '%'.$request->user_info.'%')
+            ->orWhere('representative.phone', 'like', '%'.$request->user_info.'%')
+            ->get();
+            $booking_id = [];
+            foreach ($booking as $key => $value) {
+                $booking_id[] = $value->_id;
+            }
+            $billing->whereIn('booking_id', $booking_id);
+        }
+        return BillingResource::collection($billing->paginate(10));
     }
-
+    public function orderSearchItem($request)  {
+        $billing = $this->billing
+        ->where('branch_id', '=', $request->user()->branch_id)
+        ->where('billingCode','=',(int)$request->billingCode)->first();
+        if (!$billing) {
+            return response()->json(
+                [
+                    'status'=>'Error',
+                    'message'=>'Mã hóa đơn không tồn tại !'
+                ]
+            );
+        }
+        return new BillingResource($billing);
+    }
     public function orderDetail($request, $id): BillingResource
     {
         $billingId =  $this->billing

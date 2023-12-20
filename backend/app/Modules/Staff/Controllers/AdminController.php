@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -26,6 +27,24 @@ class AdminController extends Controller
         try{
             $role = $request->user()->role;
             $query = $this->admin->newQuery();
+            if ($request->has('name')) {
+                $searchTerm = $request->input('name');
+                $query->where('name', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('email')) {
+                $searchTerm = $request->input('email');
+                $query->where('email', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('phone')) {
+                $searchTerm = $request->input('phone');
+                $query->where('phone', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('status')) {
+                $searchTerm = $request->input('status');
+                $query->where('status', $searchTerm);
+            }
+
+
             if ($role === 'super_admin') {
                 $response = $query
                 ->where('role', 'admin')
@@ -215,6 +234,23 @@ class AdminController extends Controller
         }
     }
 
+    public function getStaff(Request $request){
+        $userId = request()->cookie('user_id');
+        $user = Auth::loginUsingId($userId);
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nhân viên không tồn tại hoặc chưa đăng nhập !',
+                'data' => null
+            ]);
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nhân viên không tồn tại hoặc chưa đăng nhập !',
+                'data' => $user
+            ]);
+        }
+    }
     public function profile(Request $request)
     {
         try{

@@ -34,5 +34,8 @@ class BillingController extends Controller
     {
         return $this->bookingRespository->orderDetail($request, $id);
     }
-
+    
+    public function search(Request $request){
+        return $this->bookingRespository->orderSearchItem($request);
+    }
 }

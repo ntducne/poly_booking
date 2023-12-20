@@ -23,6 +23,10 @@ class UtilitiesController extends Controller
     {
         try {
             $query = $this->utilities->newQuery();
+            if ($request->has('name')) {
+                $searchTerm = $request->input('name');
+                $query->where('name', 'LIKE', '%' . $searchTerm . '%');
+            }
             $query->where('branch_id', $request->user()->branch_id);
             $utilities =  $query->paginate(10);
             return response()->json([
