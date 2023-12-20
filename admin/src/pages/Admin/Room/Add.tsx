@@ -130,7 +130,14 @@ const AddRoom = () => {
           {...formItemLayout}
           onFinish={onFinish}
           initialValues={{
-            num_of_bed: [], // or initial values
+            num_of_bed: [
+              {
+                name: 0,
+                key: 0,
+                isListField: true,
+                fieldKey: 0,
+              },
+            ], // or initial values
           }}
           layout="vertical"
           // style={{ maxWidth: 1000 }}
@@ -214,83 +221,91 @@ const AddRoom = () => {
           <div>
             <p className="mb-2">Giường</p>
             <Form.List name="num_of_bed">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      className="flex mb-2 w-[400px]"
-                      // style={{width: 400,  display: "flex", marginBottom: 4 }}
-                      align="center"
-                    >
-                      <div className="flex flex-col">
-                        <p>Kích cỡ giường</p>
-                        <Form.Item
-                          {...restField}
-                          name={[name, "size"]}
-                          rules={[
-                            {
-                              required: true,
-                              message: "Vui lòng nhập kích cỡ giường",
-                            },
-                          ]}
-                        >
-                          <Input placeholder="Kích cỡ giường" />
-                        </Form.Item>
-                      </div>
-                      <div className="flex flex-col">
-                        <p>Số giường</p>
-                        <Form.Item
-                          {...restField}
-                          name={[name, "amount_bed"]}
-                          rules={[
-                            {
-                              required: true,
-                              message: "Không được để trống",
-                            },
-                            {
-                              pattern: /^\d+$/,
-                              message: "Chỉ được nhập số",
-                            },
-                          ]}
-                        >
-                          <InputNumber min={1} />
-                        </Form.Item>
-                      </div>
-                      <div>
-                        <p>Số người</p>
-                        <Form.Item
-                          {...restField}
-                          name={[name, "slot"]}
-                          rules={[
-                            {
-                              required: true,
-                              message: "Vui lòng nhập ",
-                            },
-                            {
-                              pattern: /^\d+$/,
-                              message: "Chỉ được nhập số",
-                            },
-                          ]}
-                        >
-                          <InputNumber min={0} />
-                        </Form.Item>
-                      </div>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
-                    </Space>
-                  ))}
-                  <Form.Item>
-                    <Button
-                      type="dashed"
-                      onClick={() => add()}
-                      block
-                      icon={<PlusOutlined />}
-                    >
-                      Giường
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
+              {(fields, { add, remove }) => {
+                return (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => (
+                      <Space
+                        key={key}
+                        className="flex mb-2 w-[400px]"
+                        // style={{width: 400,  display: "flex", marginBottom: 4 }}
+                        align="center"
+                      >
+                        <div className="flex flex-col">
+                          <p>Kích cỡ giường</p>
+                          <Form.Item
+                            {...restField}
+                            name={[name, "size"]}
+                            rules={[
+                              {
+                                required: true,
+                                message: "Vui lòng nhập kích cỡ giường",
+                              },
+                            ]}
+                          >
+                            <Input placeholder="Kích cỡ giường" />
+                          </Form.Item>
+                        </div>
+                        <div className="flex flex-col">
+                          <p>Số giường</p>
+                          <Form.Item
+                            {...restField}
+                            name={[name, "amount_bed"]}
+                            rules={[
+                              {
+                                required: true,
+                                message: "Không được để trống",
+                              },
+                              {
+                                pattern: /^\d+$/,
+                                message: "Chỉ được nhập số",
+                              },
+                            ]}
+                          >
+                            <InputNumber min={1} />
+                          </Form.Item>
+                        </div>
+                        <div>
+                          <p>Số người</p>
+                          <Form.Item
+                            {...restField}
+                            name={[name, "slot"]}
+                            rules={[
+                              {
+                                required: true,
+                                message: "Vui lòng nhập ",
+                              },
+                              {
+                                pattern: /^\d+$/,
+                                message: "Chỉ được nhập số",
+                              },
+                            ]}
+                          >
+                            <InputNumber min={0} />
+                          </Form.Item>
+                        </div>
+                        <MinusCircleOutlined
+                          onClick={() => {
+                            if (fields.length > 1) {
+                              remove(name);
+                            }
+                          }}
+                        />
+                      </Space>
+                    ))}
+                    <Form.Item>
+                      <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        block
+                        icon={<PlusOutlined />}
+                      >
+                        Giường
+                      </Button>
+                    </Form.Item>
+                  </>
+                );
+              }}
             </Form.List>
           </div>
 

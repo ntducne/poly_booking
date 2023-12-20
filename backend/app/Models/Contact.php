@@ -12,6 +12,7 @@ class Contact extends Eloquent
     protected $fillable = [
         'name',
         'email',
-        'message'
+        'message',
+        'time'
     ];
 }

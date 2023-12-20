@@ -2,6 +2,8 @@
 
 namespace App\Modules\Staff\Resources;
 
+use App\Models\Branch;
+use App\Modules\Branch\Resources\BranchResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StaffResource extends JsonResource
@@ -15,8 +17,9 @@ class StaffResource extends JsonResource
             'image' => $this->image,
             'phone' => $this->phone,
             'status' => $this->status,
-            'branch_id' => $this->branch_id,
-//            'staff_permission' => $this->getAllPermission(),
+            'branch' => new BranchResource(
+                Branch::find($this->branch_id)
+            ),
         ];
     }
 }

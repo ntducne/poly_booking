@@ -55,13 +55,18 @@ const EditRoom = () => {
   const [deleteImg, { isLoading: isLoadingDeleteImg }] =
     useDeleteImgRoomMutation();
   const onFinish = (values: any) => {
+    console.log("values", values);
+
     const uploadedFiles =
       values.images &&
       values.images.map((fileInfo: any) => fileInfo.originFileObj);
 
     const data = {
       ...values,
-      room_type_id: values?.room_type_id?.id,
+      room_type_id:
+        typeof values?.room_type_id == "string"
+          ? values?.room_type_id
+          : values.room_type_id?.id,
       branch_id: values?.branch_id?.id,
       pay_upon_check_in: 1,
       status: 1,
@@ -150,7 +155,7 @@ const EditRoom = () => {
         setImgs(imgs.filter((img: any) => img.id != idCheck));
       })
       .catch((error) => {
-        message.warning("Delete image failed");
+        message.error(error?.data?.message || "Xóa ảnh bị lỗi");
         console.log(error);
       });
   };
@@ -203,7 +208,7 @@ const EditRoom = () => {
           {...formItemLayout}
           onFinish={onFinish}
           initialValues={{
-            num_of_bed: data.data.num_of_bed
+            num_of_bed: data.data.num_of_bed,
           }}
           style={{ maxWidth: 1000 }}
           className="grid grid-cols-1 xl:grid-cols-2"
@@ -322,7 +327,13 @@ const EditRoom = () => {
                           <InputNumber min={0} />
                         </Form.Item>
                       </div>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
+                      <MinusCircleOutlined
+                        onClick={() => {
+                          if (fields.length > 1) {
+                            remove(name);
+                          }
+                        }}
+                      />
                     </Space>
                   ))}
                   <Form.Item>

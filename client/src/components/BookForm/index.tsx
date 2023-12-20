@@ -44,6 +44,17 @@ export default function BookForm({}: Props) {
     );
   };
 
+  const handleValidateDate = (_: any, value: any) => {
+    console.log("value", value);
+    const formattedDates = value?.map((item: any) =>
+      dayjs(item.$d).format("YYYY-MM-DD")
+    );
+    if (formattedDates[0] === formattedDates[1]) {
+      return Promise.reject("Ngày trả phòng không trùng với ngày nhận");
+    }
+    return Promise.resolve();
+  };
+
   const disabledDate = (current: any) => {
     const today = dayjs().startOf("day");
     return current && current < today;
@@ -69,6 +80,9 @@ export default function BookForm({}: Props) {
                   {
                     required: true,
                     message: "Vui lòng chọn ngày",
+                  },
+                  {
+                    validator: handleValidateDate,
                   },
                 ]}
               >

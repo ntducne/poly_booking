@@ -1,4 +1,8 @@
-import { ReloadOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  ReloadOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { Button, DatePicker, Form, Pagination, Select, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import dayjs from "dayjs";
@@ -42,7 +46,7 @@ export default function Rooms({}: Props) {
   const [dataQuery, setDataQuery] = useState<any>(queryParams || {});
   const [data, setData] = useState<any>({});
   const { data: dataAll, isLoading, refetch } = useGetRoomsQuery(page);
-  const [searchRooms] = useSearchRoomsMutation();
+  const [searchRooms, { isLoading: loadingSearch }] = useSearchRoomsMutation();
   const { data: dataBranches } = useGetBranchesQuery({});
   const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);
   const onFinish = (values: any) => {
@@ -71,6 +75,16 @@ export default function Rooms({}: Props) {
     );
     setDataQuery(dataQuery);
     setCookie("roomSearch", dataQuery, { path: "/" });
+  };
+
+  const handleValidateDate = (_: any, value: any) => {
+    const formattedDates = value?.map((item: any) =>
+      dayjs(item.$d).format("YYYY-MM-DD")
+    );
+    if (formattedDates[0] === formattedDates[1]) {
+      return Promise.reject("Ngày trả phòng không trùng với ngày nhận");
+    }
+    return Promise.resolve();
   };
 
   const handleClickReset = () => {
@@ -171,8 +185,6 @@ export default function Rooms({}: Props) {
         child: +dataQuery?.child ? +dataQuery?.child : 0,
         amount_room: dataQuery.soLuong,
       };
-      console.log(dataUpload);
-
       delete dataUpload.soLuong;
       searchRooms(dataUpload)
         .unwrap()
@@ -297,6 +309,9 @@ export default function Rooms({}: Props) {
                           required: true,
                           message: "Vui lòng chọn ngày",
                         },
+                        {
+                          validator: handleValidateDate,
+                        },
                       ]}
                     >
                       <RangePicker
@@ -394,8 +409,14 @@ export default function Rooms({}: Props) {
                         className="bg-blue-500 flex py-5 w-full justify-center md:py-4 px-7 gap-1 items-center"
                         htmlType="submit"
                       >
-                        <SearchOutlined />
-                        <p>Tìm kiếm</p>
+                        {!loadingSearch ? (
+                          <div className="flex items-center justify-center">
+                            <SearchOutlined />
+                            <p>Tìm kiếm</p>
+                          </div>
+                        ) : (
+                          <LoadingOutlined />
+                        )}
                       </Button>
                     </Form.Item>
                   </Form>

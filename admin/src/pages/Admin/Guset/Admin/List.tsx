@@ -38,7 +38,6 @@ const ListAdmin = () => {
   const formRef = useRef<any>(null);
   const [activeKey, setActiveKey] = useState<string | string[]>([]);
   useEffect(() => {
-    // refetch();
     if (isStaff && staff) {
       setDataStaff(staff);
     }
