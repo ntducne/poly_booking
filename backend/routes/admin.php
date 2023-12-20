@@ -48,6 +48,7 @@ Route::middleware(CheckPermission::class)->group(function () {
     Route::resource('policies', CancellationPolicyController::class)->except(['create', 'edit']);
     Route::resource('services', ServicesController::class)->except(['create', 'edit']);
     Route::prefix('billings')->as('billings.')->group(function () {
+        Route::get('/search',[BillingController::class,'search']);
         Route::get('/', [BillingController::class, 'index'])->name('index');
         Route::get('/{id}', [BillingController::class, 'show'])->name('show');
     });
