@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetHistoryBookingQuery } from "../../../api/User";
 import FormatPrice from "../../../utils/FormatPrice";
+import dayjs from "dayjs";
 
 type Props = {};
 
 export default function HistoryBooking({}: Props) {
   const [data, setData] = useState<any>([]);
+  console.log(data);
+
   const {
     data: dataRoom,
     isLoading,
@@ -42,6 +45,7 @@ export default function HistoryBooking({}: Props) {
                   <img
                     className="w-full md:max-w-[200px] max-h-[200px] overflow-hidden object-cover rounded-[10px]"
                     src={
+                      item?.booking?.image ||
                       "https://www.imgacademy.com/sites/default/files/legacy-hotel-rendering-guest-room.jpg"
                     }
                     alt=""
@@ -60,10 +64,54 @@ export default function HistoryBooking({}: Props) {
                   <p className="text-[#6B7280] w-full tracking-[1px] text-[16px]">
                     Rất hân hạnh được đón tiếp bạn
                   </p>
+                  <div className="flex gap-3">
+                    <div className="flex flex-col">
+                      <p className="max-w-[200px]">
+                        Phòng số:{" "}
+                        <span className="font-bold">
+                          {item?.booking?.detail?.map(
+                            (itemData: any, index: number) => {
+                              return (
+                                itemData.room_number +
+                                (index + 1 >= item?.booking?.detail.length
+                                  ? ""
+                                  : "-")
+                              );
+                            }
+                          )}
+                        </span>
+                      </p>
+                      <p>
+                        Địa điểm:{" "}
+                        <span className="font-bold">
+                          {item?.branch?.address}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="flex flex-col">
+                      <p>
+                        Ngày nhận:{" "}
+                        <span className="font-bold">
+                          {dayjs(item?.booking?.checkin).format(
+                            "HH:mm DD/MM/YYYY"
+                          )}
+                        </span>
+                      </p>
+                      <p>
+                        Ngày trả:{" "}
+                        <span className="font-bold">
+                          {dayjs(item?.booking?.checkout).format(
+                            "HH:mm DD/MM/YYYY"
+                          )}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
                   <div className="w-full border-[#cccc] border-b h-[1px] py-2"></div>
                   <div className="mt-2">
                     <h2 className="text-[16px] font-medium">
-                      Được đặt vào ngày {item?.booking?.booking_date}
+                      Được đặt vào ngày{" "}
+                      {dayjs(item?.booking?.booking_date).format("DD/MM/YYYY")}
                     </h2>
                     <div className="">Trạng thái: {item?.status_name}</div>
                   </div>

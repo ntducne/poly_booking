@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FormatPrice from "../../../utils/FormatPrice";
 
 interface DataType {
@@ -22,7 +22,14 @@ import {
 import { useSelector } from "react-redux";
 
 const ListRoomType = () => {
-  const { data, isLoading, refetch } = useGetRoomTypeQuery({});
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  // const [loading, setLoading] = useState<boolean>(false);
+  const [query, setQuery] = useState<any>({
+    // page: page,
+    name: queryParams.get("name") ?? "",
+  });
+  const { data, isLoading, refetch } = useGetRoomTypeQuery(query);
   const [deleteRoomType] = useDeleteRoomTypeMutation();
 
   const permission1 = useSelector((state: any) => state.role).permission;
@@ -77,34 +84,7 @@ const ListRoomType = () => {
       key: "description",
       sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
     },
-    // {
-    //   title: "Trạng thái",
-    //   dataIndex: "status",
-    //   filters: [
-    //     {
-    //       text: "Còn trống",
-    //       value: "Còn",
-    //     },
-    //     {
-    //       text: "Hết phòng",
-    //       value: "Hết",
-    //     },
-    //   ],
-    //   render: (_, record) => (
-    //     < div className="font-semibold" >
-    //       {record.status !== 0 ? (
-    //         <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
-    //           Còn
-    //         </span>
-    //       ) : (
-    //         <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
-    //           Hết
-    //         </span>
-    //       )}
-    //     </div >
-    //   ),
-    //   // onFilter: (value: any, record) => record.address.indexOf(value) === 0,
-    // },
+
     {
       title: "Action",
       dataIndex: "action",
@@ -168,12 +148,23 @@ const ListRoomType = () => {
   // if (isLoading) {
   //   return <>loading...</>
   // }
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+    setQuery({ name: searchValue });
+    refetch();
+  };
 
   return (
     <Page title={`Loại phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
         {/* <FormSearch /> */}
-        <div></div>
+        <div className="flex flex-col md:flex-row">
+          <input
+            className="border border-gray-300 rounded-lg px-3 py-2 mr-2"
+            placeholder="Tìm kiếm..."
+            onChange={handleSearchChange}
+          />
+        </div>
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
             to={`/room/type/add`}

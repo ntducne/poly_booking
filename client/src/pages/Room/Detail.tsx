@@ -1,13 +1,14 @@
 import {
   CloseOutlined,
   FileImageOutlined,
+  RedoOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { Button, DatePicker, Divider, Form, Rate, Select, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Navigation } from "swiper/modules";
@@ -24,8 +25,15 @@ const Detail = () => {
   const [imagePreviews, setImagePreviews] = useState<any>([]);
   const { slug } = useParams();
   const { data, isLoading, refetch } = useGetDetailQuery(slug);
+  const rating = useMemo(() => {
+    const allStar =
+      data?.room?.rate.reduce((acc: any, r: any) => {
+        return +acc + +r?.star;
+      }, 0) || 0;
+    return allStar / data?.room?.rate?.length;
+  }, [data]);
   const [cookies] = useCookies(["userInfo"]);
-  const [postComment] = useProcessReviewMutation();
+  const [postComment, { isLoading: isLoadingCmt }] = useProcessReviewMutation();
   const [form] = useForm();
   const [commentForm] = useForm();
   const [searchRoom] = useSearchRoomsMutation();
@@ -66,8 +74,7 @@ const Detail = () => {
     const today = dayjs().startOf("day");
     return current && current < today;
   };
-
-  const onFinishComment = (values: any) => {
+  const onFinishComment = async (values: any) => {
     if (values) {
       const formData = new FormData();
       imagePreviews.forEach((preview: any, index: any) => {
@@ -84,41 +91,35 @@ const Detail = () => {
         formData.append(`images[]`, file);
       });
       formData.append(`rate`, values?.rate);
-      formData.append(`comment`, values?.commet);
-      formData.append(`room_id `, data?.room?.id);
-      postComment({ ...values, room_id: data?.room?.id })
+      formData.append(`room_id`, data.room.id);
+      formData.append(`comment`, values?.comment);
+      postComment(formData)
         .unwrap()
         .then(() => {
           message.success("Đánh giá thành công");
           commentForm.resetFields();
+          setImagePreviews([]);
           refetch();
         })
         .catch((error) => {
           console.log(error);
-          if (error?.data?.message == "Room not found") {
-            return message.error(
-              "Không thể đánh giá phòng khi chưa trải nghiệm"
-            );
+          if (error?.status == 400) {
+            message.error("Không thể đánh giá phòng khi chưa trải nghiệm");
+            commentForm.resetFields();
+            setImagePreviews([]);
+            return;
           }
           message.error("Đánh giá không thành công");
         });
     }
   };
 
-  useEffect(() => {
-    refetch();
-  }, []);
-
   const onFinishFailedComment = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
   const onFinish = (values: any) => {
-    if (!values) {
-      return;
-    }
-
     const { time, branch_id, adult, child, soLuong } = values;
-    if (soLuong > adult) {
+    if (+soLuong > +adult) {
       form.setFieldsValue({
         soLuong: undefined,
         adult: undefined,
@@ -132,7 +133,7 @@ const Detail = () => {
 
     const dataQuery = {
       adult: adult,
-      child: child,
+      child: child || 0,
       branch_id: branch_id?.value,
       amount_room: soLuong,
       checkin: formattedDates?.[0],
@@ -145,7 +146,7 @@ const Detail = () => {
         if (response.status) {
           message.success("Có phòng trống");
           setDataSearch(dataQuery);
-          setCookie("roomSearch", dataQuery, { path: "/" });
+          setCookie("roomSearch", { ...dataQuery, soLuong }, { path: "/" });
         } else {
           message.error("Đã hết phòng");
           form.resetFields();
@@ -175,7 +176,9 @@ const Detail = () => {
       message.error("Vui lòng chọn số ngày ở");
     }
   };
-
+  useEffect(() => {
+    refetch();
+  }, []);
   useEffect(() => {
     form.setFieldsValue({
       branch_id: {
@@ -184,12 +187,13 @@ const Detail = () => {
       },
     });
   }, [data?.room, data, isLoading]);
+
   return (
     <Page title={data?.room?.name || "Chi tiết phòng"}>
       <div className="px-[20px] md:px-[160px] bg-bgr">
         <div>
           <div className="pt-[140px] flex flex-col-reverse lg:flex-row justify-center gap-3">
-            {isLoading && branchLoading ? (
+            {isLoading || branchLoading ? (
               <div className="flex flex-col gap-2">
                 {Array.from({ length: 8 }).map((_, index) => (
                   <PcLoading key={index} />
@@ -205,7 +209,8 @@ const Detail = () => {
                       <Rate
                         allowHalf
                         disabled
-                        defaultValue={2.5}
+                        defaultValue={5}
+                        value={rating || 5}
                         className="text-[18px]"
                       />
                       <button
@@ -323,11 +328,11 @@ const Detail = () => {
                     </Form.Item>
                     <Form.Item
                       name="adult"
-                      label="Người lớn"
+                      label="Tổng số  người lớn"
                       rules={[
                         {
                           required: true,
-                          message: "Vui lòng chọn số lượng phòng muốn",
+                          message: "Vui lòng chọn người lớn",
                         },
                       ]}
                       validateTrigger="onChange"
@@ -346,17 +351,14 @@ const Detail = () => {
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item label="Số lượng phòng" name="child">
+                    <Form.Item label="Trẻ em" name="child">
                       <Select
                         placeholder="Trẻ em"
                         className="rounded-none w-full"
                       >
-                        {Array.from({ length: 6 }, (_, index) => (
-                          <Select.Option
-                            key={index + 1}
-                            value={(index + 1).toString()}
-                          >
-                            {index + 1}
+                        {Array.from({ length: 7 }, (_, index) => (
+                          <Select.Option key={index} value={index.toString()}>
+                            {index}
                           </Select.Option>
                         ))}
                       </Select>
@@ -378,7 +380,7 @@ const Detail = () => {
           </div>
         </div>
         <Swiper
-          slidesPerView={1}
+          slidesPerView={2}
           mousewheel={true}
           spaceBetween={20}
           pagination={{
@@ -392,7 +394,7 @@ const Detail = () => {
               return (
                 <SwiperSlide>
                   <img
-                    className="h-[600px] w-[100%] object-cover"
+                    className="h-[300px] w-[100%] object-cover"
                     src={item?.image}
                     alt=""
                   />
@@ -460,8 +462,19 @@ const Detail = () => {
               </Form.Item>
 
               <Form.Item>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                  Đánh giá
+                <button
+                  className={`bg-blue-500 flex items-center gap-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded }`}
+                >
+                  <span className={`${!isLoadingCmt ? "block" : "hidden"}`}>
+                    Đánh giá
+                  </span>
+                  <span
+                    className={`${
+                      isLoadingCmt ? "block" : "hidden"
+                    } animate-spin`}
+                  >
+                    <RedoOutlined className="text-[15px]" />
+                  </span>
                 </button>
               </Form.Item>
             </Form>
@@ -475,7 +488,7 @@ const Detail = () => {
           )}
           {data?.room?.rate.length > 0 &&
             data?.room?.rate.map((item: any) => (
-              <section className="bg-bgr  py-8 m-auto">
+              <section className="bg-bgr  pt-8 m-auto">
                 <div className="w-70% mx-auto ">
                   <article className="text-base bg-bgr rounded-lg ">
                     <footer className="flex justify-between items-center pb-2">
@@ -492,49 +505,29 @@ const Detail = () => {
                           <time title="February 8th, 2022">Feb. 8, 2022</time>
                         </p>
                       </div>
-
-                      <div
-                        id="dropdownComment1"
-                        className="hidden z-10 w-36 bg-bgr rounded divide-y divide-gray-100 shadow "
-                      >
-                        <ul
-                          className="py-1 text-sm text-gray-700 "
-                          aria-labelledby="dropdownMenuIconHorizontalButton"
-                        >
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 "
-                            >
-                              Edit
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 "
-                            >
-                              Remove
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4 hover:bg-gray-100 "
-                            >
-                              Report
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
                     </footer>
                     <div className=" pb-2">
                       <div className="flex items-center space-x-1 ">
-                        <Rate allowHalf disabled defaultValue={item.star} />
+                        <Rate
+                          allowHalf
+                          disabled
+                          defaultValue={5}
+                          value={+item?.star}
+                          className="text-[18px]"
+                        />
                       </div>
                     </div>
                     <p className="text-gray-500 ">{item.content}</p>
                   </article>
+                  {item?.image?.length && (
+                    <div className="mt-3">
+                      {item?.image?.map((item: any) => {
+                        return (
+                          <img className="max-w-[100px]" src={item} alt="" />
+                        );
+                      }) || ""}
+                    </div>
+                  )}
                 </div>
               </section>
             ))}

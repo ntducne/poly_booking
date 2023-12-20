@@ -16,7 +16,7 @@ const ratesApi = createApi({
   }),
   endpoints: (builder) => ({
     getRates: builder.query<any, any>({
-      query: () => `rates`,
+      query: (page) => `rates?page=${page}`,
       providesTags: ["rates"],
     }),
   }),

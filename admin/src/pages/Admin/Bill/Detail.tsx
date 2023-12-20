@@ -41,7 +41,10 @@ import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
 import dayjs from "dayjs";
 import moment from "moment";
 import { useSearchRoomMutation } from "../../../api/booking";
-import { el } from "date-fns/locale";
+interface Service {
+  id: string;
+  service_name: string;
+}
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const {
@@ -120,7 +123,7 @@ const BillDetail: React.FC = () => {
   //
 
   // Xu ly ServiceInBill
-  const [checkedServices, setCheckedServices] = useState([]);
+  const [checkedServices, setCheckedServices] = useState<any>([]);
 
   const handleCheckboxChange = (checkedValues: any) => {
     setCheckedServices(checkedValues);
@@ -160,7 +163,7 @@ const BillDetail: React.FC = () => {
           if (res.status === "success") {
             setFormChanged(false);
             setOpen(false);
-            form.setFieldValue()
+            form.resetFields()
             setCheckedServices([]);
             swal(res.message, {
               icon: "success",
@@ -1279,7 +1282,7 @@ const BillDetail: React.FC = () => {
                         <LoadingOutlined />
                       </div>
                     ) : (
-                      dataServices?.data?.map((service: any) => {
+                      dataServices?.data?.map((service: Service) => {
                         return (
                           <div key={service?.id}>
                             <Checkbox value={service?.id}>
@@ -1393,13 +1396,13 @@ const BillDetail: React.FC = () => {
                           case 0:
                             return (
                               <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                                Đã đặt
+                                Đã giữ
                               </span>
                             );
                           case 1:
                             return (
                               <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                                Đang ở
+                                Đang sử dụng
                               </span>
                             );
                           case 2:
@@ -1431,7 +1434,7 @@ const BillDetail: React.FC = () => {
                     >
                       {service?.service_name}
                     </th>
-                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">{service?.quantity}</td>
                     <td className="px-6 py-4">{formatMoneyVN(service.time)}</td>
                     <td></td>
                     <td className="px-6 py-4">

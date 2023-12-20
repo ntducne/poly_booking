@@ -13,7 +13,7 @@ const branchApi = createApi({
     }),
     endpoints: (builder) => ({
         getAllBranches: builder.query<any, any>({
-            query: () => `/branches`,
+            query: (body) => `/branches?page=${body?.page}`,
             providesTags: ['Branches']
         }),
 
