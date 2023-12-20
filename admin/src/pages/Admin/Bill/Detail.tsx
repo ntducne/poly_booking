@@ -160,6 +160,7 @@ const BillDetail: React.FC = () => {
           if (res.status === "success") {
             setFormChanged(false);
             setOpen(false);
+            form.setFieldValue()
             setCheckedServices([]);
             swal(res.message, {
               icon: "success",
@@ -201,8 +202,8 @@ const BillDetail: React.FC = () => {
               };
             }),
           };
-          
-          console.log("formValuesService", dataBillNew);
+
+          // console.log("formValuesService", dataBillNew);
           if (formValuesService?.services.length > 0) {
             addServiceInBill(dataBillNew);
             setCheckedServices([]);
@@ -1437,8 +1438,16 @@ const BillDetail: React.FC = () => {
                       {formatMoneyVN(service.price)}
                     </td>
                     <td>
-                      <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">
-                        Chưa thanh toán
+                      <span className="">
+                        {service?.isPay === 0 ? (
+                          <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">
+                            Chưa thanh toán
+                          </span>
+                        ) : (
+                          <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                            Đã thanh toán
+                          </span>
+                        )}
                       </span>
                     </td>
                   </tr>
