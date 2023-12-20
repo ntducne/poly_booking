@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 interface DataType {
@@ -12,7 +12,7 @@ interface DataType {
   // status: number
 }
 import { MdDeleteForever } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+// import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import {
@@ -42,6 +42,7 @@ const ListBranches = () => {
           name: item.name,
           address: item.address,
           phone: item.phone,
+          // branch: item.branch,
         };
         // refetch()
       })
@@ -151,7 +152,7 @@ const ListBranches = () => {
   return (
     <Page title={`Chi nhánh`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <FormSearch />
+        {/* <FormSearch />
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
             to={`/branches/add`}
@@ -160,7 +161,7 @@ const ListBranches = () => {
             <AiOutlinePlus />
             Thêm chi nhánh
           </Link>
-        </div>
+        </div> */}
       </div>
       <Table
         scroll={{ x: true }}

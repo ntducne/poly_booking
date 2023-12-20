@@ -1,6 +1,4 @@
-import { CheckOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, UploadProps } from "antd";
-import { List } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 // import type { UploadProps } from 'antd';
 import { message, Upload } from "antd";
@@ -44,32 +42,32 @@ const Profile = () => {
   }, [data_profile?.data, data_profile?.data?.image, user.role ]);
   
 
-  const data = [
-    {
-      title: "Ant Design Title 1",
-    },
-    {
-      title: "Ant Design Title 2",
-    },
-    {
-      title: "Ant Design Title 3",
-    },
-    {
-      title: "Ant Design Title 4",
-    },
-    {
-      title: "Ant Design Title 1",
-    },
-    {
-      title: "Ant Design Title 2",
-    },
-    {
-      title: "Ant Design Title 3",
-    },
-    {
-      title: "Ant Design Title 4",
-    },
-  ];
+  // const data = [
+  //   {
+  //     title: "Ant Design Title 1",
+  //   },
+  //   {
+  //     title: "Ant Design Title 2",
+  //   },
+  //   {
+  //     title: "Ant Design Title 3",
+  //   },
+  //   {
+  //     title: "Ant Design Title 4",
+  //   },
+  //   {
+  //     title: "Ant Design Title 1",
+  //   },
+  //   {
+  //     title: "Ant Design Title 2",
+  //   },
+  //   {
+  //     title: "Ant Design Title 3",
+  //   },
+  //   {
+  //     title: "Ant Design Title 4",
+  //   },
+  // ];
   const onUpdatePassword = (value: any) => {
     // console.log(value);
     updatePassword(value)
@@ -191,7 +189,7 @@ const Profile = () => {
               </div>
             </div>
           </Card>
-          <Card
+          {/* <Card
             loading={loading}
             title="Thông báo"
             extra={
@@ -217,7 +215,7 @@ const Profile = () => {
                 )}
               />
             </div>
-          </Card>
+          </Card> */}
         </div>
         <div className="m-3"></div>
         <div className="w-2/3">

@@ -155,6 +155,11 @@ const ListAdmin = () => {
       key: "phone",
     },
     {
+      title: "Địa chỉ",
+      dataIndex: "branch",
+      key: "branch",
+    },
+    {
       title: "Hành động",
       key: "action",
       render: (_, record) => (
@@ -186,7 +191,7 @@ const ListAdmin = () => {
     image: item?.image,
     phone: item?.phone,
     status: item?.status,
-    branch_id: item?.branch_id,
+    branch: item?.branch?.name,
     // address: item?.address,
   }));
 
