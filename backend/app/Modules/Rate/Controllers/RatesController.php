@@ -19,11 +19,14 @@ class RatesController extends Controller
     {
         $this->rates = new RateRoom();
     }
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $rate = $this->rates->paginate(10)->withQueryString();
-            return RateResource::collection($rate);
+            $rate = $this->rates->newQuery();
+            if ($request->has('room_id')) {
+                $rate->where('room_id', $request->room_id);
+            }
+            return RateResource::collection($rate->paginate(10));
         } catch (Exception $exception) {
             Log::debug($exception->getMessage());
             return response()->json([
