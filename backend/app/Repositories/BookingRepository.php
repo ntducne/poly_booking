@@ -75,6 +75,7 @@ class BookingRepository
         }
         return BillingResource::collection($billing->paginate(10));
     }
+
     public function orderSearchItem($request)  {
         $billing = $this->billing
         ->where('branch_id', '=', $request->user()->branch_id)
@@ -89,6 +90,7 @@ class BookingRepository
         }
         return new BillingResource($billing);
     }
+    
     public function orderDetail($request, $id): BillingResource
     {
         $billingId =  $this->billing
@@ -507,9 +509,4 @@ class BookingRepository
         }
         return true;
     }
-
-
-
-
-
 }
