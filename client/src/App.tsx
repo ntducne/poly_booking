@@ -1,20 +1,19 @@
 import { Route, Routes } from "react-router-dom";
+import LayoutAuth from "./layouts/Auth";
 import LayoutClient from "./layouts/Client";
+import LayoutClient2 from "./layouts/Layout2";
+import LayoutProfile from "./layouts/LayoutProfile";
+import PaymentLayout from "./layouts/Payment";
 import AboutPage from "./pages/AboutPage/about";
 import ForgotPassword from "./pages/Auth/forgot_password";
+import GoogleCallback from "./pages/Auth/googleCallback";
 import Login from "./pages/Auth/login";
 import Register from "./pages/Auth/register";
 import ResetPassword from "./pages/Auth/reset-passwork";
+import BillDetail from "./pages/DetailRoomBooked";
 import Home from "./pages/Home";
-import Detail from "./pages/Room/Detail";
-import Rooms from "./pages/Rooms";
-import Contact from "./pages/contact";
-import LayoutAuth from "./layouts/Auth";
-import PaymentLayout from "./layouts/Payment";
 import Edit from "./pages/InforUser/Edit";
-import LayoutClient2 from "./layouts/Layout2";
-import LayoutProfile from "./layouts/LayoutProfile";
-import GoogleCallback from "./pages/Auth/googleCallback";
+import NotFound from "./pages/Page404";
 import AccommodationBook from "./pages/Payment/accommodation";
 import AccommodationReview from "./pages/Payment/accommodation/review";
 import PaymentProcess from "./pages/Payment/process";
@@ -22,8 +21,10 @@ import StatusPayment from "./pages/Payment/status";
 import StatusPaymentMomo from "./pages/Payment/status/momo";
 import StatusPaymentPaypal from "./pages/Payment/status/paypal";
 import StatusPaymentVnpay from "./pages/Payment/status/vnpay";
+import Detail from "./pages/Room/Detail";
+import Rooms from "./pages/Rooms";
 import SearchOrder from "./pages/SearchOrder";
-import NotFound from "./pages/Page404";
+import Contact from "./pages/contact";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         </Route>
         <Route path="user" element={<LayoutProfile />}>
           <Route path="profile" element={<Edit />} />
+          <Route path="profile/roomBooked/:id" element={<BillDetail />} />
         </Route>
         <Route path="/rooms" element={<LayoutClient2 />}>
           <Route index element={<Rooms />} />

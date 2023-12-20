@@ -14,8 +14,6 @@ import { message } from "antd";
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const { data, refetch } = useGetDetailHistoryBookingQuery(id);
-  console.log(data);
-
   const [cancelBookingRoom] = useCancelBookingMutation();
   function getCountNights(checkin: any, checkout: any) {
     const checkinDate = dayjs(checkin);
@@ -71,8 +69,11 @@ const BillDetail: React.FC = () => {
           <div className="bg-bgr border border-gray-200 rounded-lg shadow">
             <Link to="#">
               <img
-                className="rounded-t-lg"
-                src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg"
+                className="rounded-t-lg  min-h-[400px] object-cover"
+                src={
+                  data?.data?.booking?.image ||
+                  "https://www.imgacademy.com/sites/default/files/legacy-hotel-rendering-guest-room.jpg"
+                }
                 alt=""
               />
             </Link>
@@ -98,8 +99,18 @@ const BillDetail: React.FC = () => {
                   <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
                     <li>Chi nhánh: {data?.data?.branch?.address}</li>
                     <li>Loại phòng: {data?.data?.booking?.roomType?.name}</li>
-                    <li>Nhận phòng: {data?.data?.booking?.checkin}</li>
-                    <li>Dự kiến trả phòng: {data?.data?.booking?.checkout}</li>
+                    <li>
+                      Nhận phòng:
+                      {dayjs(data?.data?.booking?.checkin).format(
+                        "HH:mm DD/MM/YYYY"
+                      )}
+                    </li>
+                    <li>
+                      Dự kiến trả phòng:{" "}
+                      {dayjs(data?.data?.booking?.checkout).format(
+                        "HH:mm DD/MM/YYYY"
+                      )}{" "}
+                    </li>
                     <li>
                       Số đêm:{" "}
                       {getCountNights(
@@ -107,8 +118,16 @@ const BillDetail: React.FC = () => {
                         data?.data?.booking?.checkout.split(" ")?.[0]
                       )}
                     </li>
-                    <li>Thời gian thanh toán: {data?.data?.payment_date}</li>
+                    <li>
+                      Thời gian thanh toán:{" "}
+                      {dayjs(data?.data?.payment_date).format(
+                        "HH:mm DD/MM/YYYY"
+                      )}{" "}
+                    </li>
                     <li>Hình thức thanh toán: {data?.data?.payment_method}</li>
+                    <li>
+                      Số phòng: {data?.data?.booking?.detail?.[0]?.room_number}
+                    </li>
                   </ul>
                 </div>
               </div>

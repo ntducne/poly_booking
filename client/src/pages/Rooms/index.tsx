@@ -46,11 +46,8 @@ export default function Rooms({}: Props) {
   const { data: dataBranches } = useGetBranchesQuery({});
   const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);
   const onFinish = (values: any) => {
-    if (!values) {
-      return;
-    }
     const { time, branch_id, adult, child, soLuong } = values;
-    if (soLuong > adult) {
+    if (+soLuong > +adult) {
       form.setFieldsValue({
         soLuong: undefined,
         adult: undefined,
@@ -63,7 +60,7 @@ export default function Rooms({}: Props) {
     );
     const dataQuery = {
       adult: adult,
-      child: child,
+      child: child || 0,
       branch_id,
       soLuong: soLuong,
       checkin: formattedDates?.[0],
@@ -99,13 +96,11 @@ export default function Rooms({}: Props) {
     navigate(`/rooms?page=${page}`);
     refetch();
   };
-
   const validateQueryParams = (params: any) => {
     const requiredParams = [
       "checkin",
       "checkout",
       "adult",
-      "child",
       "branch_id",
       "soLuong",
     ];
@@ -134,7 +129,7 @@ export default function Rooms({}: Props) {
       const bookingData = {
         room_id: id,
         adults,
-        child: children,
+        child: children || 0,
         num_of_bed,
         room_name: name,
         image: images?.[0]?.image ?? image,
@@ -159,6 +154,9 @@ export default function Rooms({}: Props) {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
+    refetch();
+  }, []);
+  useEffect(() => {
     setWidth(window.innerWidth);
   }, [window.innerWidth]);
   useEffect(() => {
@@ -170,8 +168,10 @@ export default function Rooms({}: Props) {
     if (validateQueryParams(dataQuery)) {
       const dataUpload = {
         ...dataQuery,
+        child: +dataQuery?.child ? +dataQuery?.child : 0,
         amount_room: dataQuery.soLuong,
       };
+      console.log(dataUpload);
 
       delete dataUpload.soLuong;
       searchRooms(dataUpload)
@@ -282,11 +282,11 @@ export default function Rooms({}: Props) {
                       branch_id: dataQuery?.branch_id
                         ? dataQuery?.branch_id
                         : undefined,
-                      soLuong: dataQuery?.soLuong
-                        ? dataQuery?.soLuong
+                      soLuong: +dataQuery?.soLuong
+                        ? +dataQuery?.soLuong
                         : undefined,
-                      adult: dataQuery?.adult ? dataQuery.adult : undefined,
-                      child: dataQuery?.child ? dataQuery?.child : undefined,
+                      adult: +dataQuery?.adult ? +dataQuery.adult : undefined,
+                      child: +dataQuery?.child ? +dataQuery?.child : undefined,
                     }}
                   >
                     <Form.Item
@@ -353,7 +353,7 @@ export default function Rooms({}: Props) {
                     </Form.Item>
                     <Form.Item
                       name="adult"
-                      label="Người lớn"
+                      label="Tổng số người lớn"
                       rules={[
                         {
                           required: true,
@@ -376,27 +376,14 @@ export default function Rooms({}: Props) {
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item
-                      className=""
-                      name="child"
-                      label="Trẻ em"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Vui lòng số trẻ em",
-                        },
-                      ]}
-                    >
+                    <Form.Item className="" name="child" label="Trẻ em">
                       <Select
                         placeholder="Trẻ em"
                         className="rounded-none w-full"
                       >
-                        {Array.from({ length: 6 }, (_, index) => (
-                          <Select.Option
-                            key={index + 1}
-                            value={(index + 1).toString()}
-                          >
-                            {index + 1}
+                        {Array.from({ length: 7 }, (_, index) => (
+                          <Select.Option key={index} value={index.toString()}>
+                            {index}
                           </Select.Option>
                         ))}
                       </Select>

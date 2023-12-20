@@ -48,7 +48,6 @@ export default function Edit() {
       children: <HistoryRoom />,
     },
   ];
-
   useEffect(() => {
     if (queryParams?.defaultActive) {
       setDefaultActiveKey(+queryParams?.defaultActive || 1);
@@ -76,7 +75,11 @@ export default function Edit() {
                       <img
                         className="h-auto w-36 mx-auto"
                         alt=""
-                        src={data?.message?.image}
+                        src={
+                          data?.message?.image
+                            ? data?.message?.image
+                            : "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
+                        }
                       />
                     </div>
                   </div>
