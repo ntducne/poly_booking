@@ -2,28 +2,21 @@ import type { CollapseProps } from "antd";
 import { Button, Card, Collapse, Form, Input, Modal, message } from "antd";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import {
-  useGetProfileQuery
-} from "../../../api/User";
+import { useGetProfileQuery } from "../../../api/User";
 import { useLoginMutation } from "../../../api/Auth";
 import { cookies } from "../../../config/cookie";
 import { convertFromNowToSeconds } from "../../../config/convertDate";
 import { Link, useNavigate } from "react-router-dom";
 import FormatPrice from "../../../utils/FormatPrice";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-const MySwal = withReactContent(Swal)
-
-
-
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
 
 type FieldType = {
   email?: string;
   password?: string;
   remember?: string;
 };
-
-
 
 export default function AccommodationBook() {
   const [isModalLogin, setIsModalLogin] = useState(false);
@@ -39,17 +32,17 @@ export default function AccommodationBook() {
   const [userPhone, setUserPhone] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const { data } = useGetProfileQuery({});
-  const [Login, { isLoading }] = useLoginMutation()
-  const navigate = useNavigate()
+  const [Login, { isLoading }] = useLoginMutation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setCookie("paymentPage", 0, { path: "/" });
-    if(!cookie?.bookingNow || !cookie?.roomSearch) {
-      navigate('/')
+    if (!cookie?.bookingNow || !cookie?.roomSearch) {
+      navigate("/");
     }
-    setUserName(cookie?.userBook?.name ?? '');
-    setUserEmail(cookie?.userBook?.email ?? '');
-    setUserPhone(cookie?.userBook?.phone ?? '');
+    setUserName(cookie?.userBook?.name ?? "");
+    setUserEmail(cookie?.userBook?.email ?? "");
+    setUserPhone(cookie?.userBook?.phone ?? "");
     if (cookie?.userInfo) {
       if (data && data.message) {
         setUserName(data.message.name);
@@ -64,10 +57,9 @@ export default function AccommodationBook() {
           },
           { path: "/" }
         );
-      } 
+      }
     }
   }, []);
-
 
   const itemsColapper: CollapseProps["items"] = [
     {
@@ -75,7 +67,9 @@ export default function AccommodationBook() {
       label: (
         <div className="flex justify-between items-center">
           <p className="text-xl font-bold">Thành tiền</p>
-          <p className="text-xl font-bold">{<FormatPrice price={cookie?.bookingNow?.price}/>}</p>
+          <p className="text-xl font-bold">
+            {<FormatPrice price={cookie?.bookingNow?.price} />}
+          </p>
         </div>
       ),
       children: (
@@ -83,7 +77,9 @@ export default function AccommodationBook() {
           <p className="text-sm">
             ({cookie?.roomSearch?.soLuong}x) {cookie?.bookingNow?.room_name}
           </p>
-          <p className="text-sm">{<FormatPrice price={cookie?.bookingNow?.price}/>}</p>
+          <p className="text-sm">
+            {<FormatPrice price={cookie?.bookingNow?.price} />}
+          </p>
         </div>
       ),
     },
@@ -116,7 +112,6 @@ export default function AccommodationBook() {
     );
   };
 
- 
   const showModalLogin = () => {
     setIsModalLogin(true);
   };
@@ -129,8 +124,7 @@ export default function AccommodationBook() {
     setIsModalLogin(false);
   };
 
-
-  const onSubmitLogin = (values: any) => { 
+  const onSubmitLogin = (values: any) => {
     Login(values)
       .unwrap()
       .then((values: any) => {
@@ -140,24 +134,27 @@ export default function AccommodationBook() {
             JSON.stringify(Object.values(values)),
             convertFromNowToSeconds(values.accessToken.expires_at)
           );
-          handleCancel()
+          handleCancel();
           message.success("Đăng nhập thành công");
         } else {
-          message.error("Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại.");
+          message.error(
+            "Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại."
+          );
         }
-      }).catch((error: any) => {
+      })
+      .catch((error: any) => {
         console.log(error);
         message.error(error?.data?.message || "some thing error");
-      })
-  }
+      });
+  };
 
   const accommodationReview = () => {
-    if(userName == '' || userPhone == '' || userEmail == '') {
-      message.error("Vui lòng nhập đầy đủ thông tin liên hệ")
-      return
+    if (userName == "" || userPhone == "" || userEmail == "") {
+      message.error("Vui lòng nhập đầy đủ thông tin liên hệ");
+      return;
     }
     MySwal.fire({
-      imageUrl: '/logo_light.png',
+      imageUrl: "/logo_light.png",
       imageWidth: 100,
       imageHeight: 70,
 
@@ -185,31 +182,42 @@ export default function AccommodationBook() {
       `,
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate('/accommodation/review')
+        navigate("/accommodation/review");
         setCookie("paymentPage", 1, { path: "/" });
       } else {
         // return MySwal.fire("Cancelled", "", "error");
       }
       // return MySwal.fire(<p>Shorthand works too</p>)
-    })
+    });
     // navigate('/accommodation/review')
     // setCookie("paymentPage", 1, { path: "/" });
-  }
+  };
 
-  const cancelBooking = () => { 
-    navigate('/rooms')
+  const cancelBooking = () => {
+    navigate("/rooms");
     removeCookie("paymentPage", { path: "/" });
     removeCookie("bookingNow", { path: "/" });
     removeCookie("roomSearch", { path: "/" });
-    removeCookie("userInfo", { path: "/" });
-  }
+  };
 
   return (
     <>
       {!cookie?.userInfo && (
-        <Modal title="Đăng nhập" open={isModalLogin} onOk={handleOk} onCancel={handleCancel} footer={[]}>
-          <Form name="basic" className="mt-5" onFinish={onSubmitLogin} autoComplete="off">
-            <Form.Item<FieldType> name="email"
+        <Modal
+          title="Đăng nhập"
+          open={isModalLogin}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[]}
+        >
+          <Form
+            name="basic"
+            className="mt-5"
+            onFinish={onSubmitLogin}
+            autoComplete="off"
+          >
+            <Form.Item<FieldType>
+              name="email"
               rules={[
                 { required: true, message: "Vui lòng nhập địa chỉ Email!" },
                 { type: "email", message: "Địa chỉ email không hợp lệ!" },
@@ -217,11 +225,22 @@ export default function AccommodationBook() {
             >
               <Input type="email" placeholder="Email" />
             </Form.Item>
-            <Form.Item<FieldType> name="password" rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}>
-              <Input.Password className="w-full" placeholder="Mật khẩu"/>
+            <Form.Item<FieldType>
+              name="password"
+              rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
+            >
+              <Input.Password className="w-full" placeholder="Mật khẩu" />
             </Form.Item>
             <div className="flex justify-between">
-              <Form.Item><Button htmlType="submit" className="max-w-[200px]" loading={isLoading}>Đăng nhập</Button></Form.Item>
+              <Form.Item>
+                <Button
+                  htmlType="submit"
+                  className="max-w-[200px]"
+                  loading={isLoading}
+                >
+                  Đăng nhập
+                </Button>
+              </Form.Item>
               <Link to="/auth/forGotPassword">Quên mật khẩu ?</Link>
             </div>
             <div>
@@ -275,9 +294,7 @@ export default function AccommodationBook() {
             )}
 
             <div className={`${!cookie?.userInfo && "mt-6"}`}>
-              <h1 className="text-xl font-bold mb-3">
-                Chi tiết liên hệ
-              </h1>
+              <h1 className="text-xl font-bold mb-3">Chi tiết liên hệ</h1>
               <div className="bg-white rounded-md border border-gray-200 shadow-sm">
                 <div className="p-5">
                   <div className="mb-3">
@@ -354,16 +371,24 @@ export default function AccommodationBook() {
             </div>
 
             <div className="w-full flex justify-end mt-6">
-              <button onClick={cancelBooking} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white ">
+              <button
+                onClick={cancelBooking}
+                className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white "
+              >
                 <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                   Quay lại
                 </span>
               </button>
-              <button type="button" onClick={accommodationReview} className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-blfont-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Tiếp tục</button>
+              <button
+                type="button"
+                onClick={accommodationReview}
+                className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-blfont-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                Tiếp tục
+              </button>
             </div>
-
           </div>
-          
+
           <div>
             <Card
               title={
@@ -426,24 +451,29 @@ export default function AccommodationBook() {
                 </div>
               }
             >
-              <div className="grid" style={{
-                display: 'grid',
-                gridTemplateColumns: '2fr 3fr',
-              }}>
+              <div
+                className="grid"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2fr 3fr",
+                }}
+              >
                 <p>Khách/phòng</p>
-                <p className='font-bold'>2 khách</p>
+                <p className="font-bold">2 khách</p>
               </div>
-              <div className="grid" style={{
-                display: 'grid',
-                gridTemplateColumns: '2fr 3fr',
-              }}>
+              <div
+                className="grid"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2fr 3fr",
+                }}
+              >
                 <p>Kiểu giường</p>
-                <p className='font-bold'>2 giường đôi</p>
+                <p className="font-bold">2 giường đôi</p>
               </div>
             </Card>
           </div>
         </div>
-        
       </div>
     </>
   );

@@ -14,6 +14,8 @@ import { message } from "antd";
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const { data, refetch } = useGetDetailHistoryBookingQuery(id);
+  console.log(data);
+
   const [cancelBookingRoom] = useCancelBookingMutation();
   function getCountNights(checkin: any, checkout: any) {
     const checkinDate = dayjs(checkin);
@@ -171,7 +173,7 @@ const BillDetail: React.FC = () => {
                   </ul>
                 </div>
                 <div className="mt-1 mb-3"></div>
-                <div className="font-normal text-gray-700">
+                <div className="font-normal text-gray-700 flex gap-2 flex-wrap">
                   <button
                     className={` hover:bg-red-500
                    hover:text-white  bg-transparent text-red-500 border border-red-500  text-[15px] py-1 px-4 rounded ${
@@ -183,6 +185,15 @@ const BillDetail: React.FC = () => {
                   >
                     Hủy đặt phòng
                   </button>
+                  {data?.data?.status == 4 && (
+                    <Link
+                      to={`/rooms/${data?.data?.booking?.slug}`}
+                      className="hover:bg-blue-500
+                   hover:text-white  bg-transparent text-blue-500 border border-blue-500  text-[15px] py-1 px-4 rounded"
+                    >
+                      <button>Đánh giá ngay</button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
