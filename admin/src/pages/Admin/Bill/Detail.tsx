@@ -163,7 +163,7 @@ const BillDetail: React.FC = () => {
           if (res.status === "success") {
             setFormChanged(false);
             setOpen(false);
-            form.resetFields()
+            form.resetFields();
             setCheckedServices([]);
             swal(res.message, {
               icon: "success",
@@ -230,13 +230,14 @@ const BillDetail: React.FC = () => {
   // ...
 
   // Xử lý nhận phòng
-  const [checkinBooking] = useCheckinBookingMutation();
+  const [checkinBooking, { isLoading: loadingCheckinBooking }] =
+    useCheckinBookingMutation();
   const onCheckinBooking = (data: any) => {
     try {
       swal({
         title: "Thông báo ?",
         text: "Bạn muốn nhận phòng!",
-        icon: "success",
+        icon: "warning",
         buttons: ["Quay trở lại", "Nhận phòng"],
         dangerMode: true,
       })
@@ -270,13 +271,14 @@ const BillDetail: React.FC = () => {
   //
 
   // Xử lý trả phòng
-  const [checkoutBooking] = useCheckoutBookingMutation();
+  const [checkoutBooking, { isLoading: loadingCheckoutBooking }] =
+    useCheckoutBookingMutation();
   const onCheckoutBooking = (data: any) => {
     try {
       swal({
         title: "Thông báo ?",
         text: "Bạn muốn nhận phòng!",
-        icon: "success",
+        icon: "warning",
         buttons: ["Quay trở lại", "Trả phòng"],
         dangerMode: true,
       })
@@ -647,7 +649,7 @@ const BillDetail: React.FC = () => {
               onClick={() => onCheckinBooking(dataBill?.data?.id)}
               className="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             >
-              Nhận phòng
+              {loadingCheckinBooking ? <LoadingOutlined /> : "Nhận phòng"}
             </button>
           )}
           {dataBill?.data?.status === 3 && (
@@ -664,7 +666,7 @@ const BillDetail: React.FC = () => {
                 onClick={() => onCheckoutBooking(dataBill?.data?.id)}
                 className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
               >
-                Trả phòng
+                {loadingCheckoutBooking ? <LoadingOutlined /> : "Trả phòng"}
               </button>
             </>
           )}

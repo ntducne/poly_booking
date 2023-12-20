@@ -43,8 +43,6 @@ class AdminController extends Controller
                 $searchTerm = $request->input('status');
                 $query->where('status', $searchTerm);
             }
-
-
             if ($role === 'super_admin') {
                 $response = $query
                 ->where('role', 'admin')
@@ -52,7 +50,11 @@ class AdminController extends Controller
                 return StaffResource::collection($response);
             }
             $query->where('branch_id', $request->user()->branch_id);
-            $response = $query->where('created_by', $request->user()->id)->paginate(10);
+            $response = $query
+                // ->where('created_by', $request->user()->id)
+                ->where('role', 'staff')
+                ->where('_id', '!=', $request->user()->id)
+                ->paginate(10);
             return StaffResource::collection($response);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
@@ -269,20 +271,10 @@ class AdminController extends Controller
     {
         try{
             $admin = $request->user();
-            $input = $request->validated();
-            $image = $request->file('image');
-            if ($image) {
-                $this->DeleteImage($admin['image']);
-                $uploadImage = $this->UploadImage($image, 'admin');
-                $input['image'] = $uploadImage;
-            } else {
-                $input['image'] = $admin['image'];
-            }
-            $admin->fill($input)->save();
+            $admin->fill($request->validated())->save();
             return response()->json([
-                'status'   => 'success',
-                'message' => 'Cập nhập nhân viên thành công !',
-                'data'    => new StaffResource($admin)
+                'status' => true,
+                'message' => 'Cập nhập thông tin thành công !',
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
@@ -294,6 +286,37 @@ class AdminController extends Controller
 
     }
 
+    public function updateAvatar(Request $request)
+    {
+        // try {
+            $adminId = $request->user()->id;
+            $user = Admin::find($adminId);
+            if(!$user){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Tài khoản không tồn tại !'
+                ]);
+            }
+            $image = $request->file('image');
+            if($image){
+                $this->DeleteImage($user->image);
+                $image_url = $this->UploadImage($image, 'admin/' . $adminId . '/');
+                $user->image = $image_url;
+            }
+            $user->save();
+            return response()->json([
+                'status' => true,
+                'message' => 'Cập nhập thông tin thành công !',
+            ]);
+        // } catch (Exception $e) {
+        //     Log::error($e->getMessage());
+        //     return response()->json([
+        //         'status'  => false,
+        //         'message' => 'Lỗi !'
+        //     ]);
+        // }
+    }
+
     public function changePassword(ChangePasswordRequest $request)
     {
         try{
@@ -303,15 +326,13 @@ class AdminController extends Controller
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Mật khẩu cũ không đúng !',
-                    'data' => null
                 ]);
             }
             $admin->password = Hash::make($input['new_password']);
             $admin->save();
             return response()->json([
-                'status' => 'success',
+                'status' => true,
                 'message' => 'Cập nhập mật khẩu thành công !',
-                'data' => null
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());

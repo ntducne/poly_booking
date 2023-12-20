@@ -150,7 +150,7 @@ class RoomController extends Controller
                 $object->slug = convertToSlug($request->name);
             }
             $arr = $request->all();
-            $arr['num_of_bed'] = json_decode(stripslashes($request->num_of_bed), true);
+            $arr['num_of_bed'] = $request->num_of_bed;
             $object->update($arr);
             return response()->json([
                 'status' => 'success',

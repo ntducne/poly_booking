@@ -30,7 +30,7 @@ class BookingRepository
 
     public function orderList($request): AnonymousResourceCollection
     {
-        $billing = $this->billing->where('branch_id', '=', $request->user()->branch_id)->orderBy('id', 'desc')->newQuery();
+        $billing = $this->billing->where('branch_id', '=', $request->user()->branch_id)->newQuery();
         if($request->billingCode){
             $billing->where('billingCode', +$request->billingCode);
         }
@@ -73,8 +73,7 @@ class BookingRepository
             }
             $billing->whereIn('booking_id', $booking_id);
         }
-        $dataBilling = $billing->paginate(10);
-        return BillingResource::collection($dataBilling);
+        return BillingResource::collection($billing->orderBy('id', 'desc')->paginate(10));
     }
 
     public function orderSearchItem($request)  {
@@ -130,7 +129,7 @@ class BookingRepository
                         'service_name' => $service->service_name,
                         'price' => $service->price,
                         'time' => Carbon::now()->format('Y-m-d H:i:s'),
-                        'isPay' => $value['isPay'],
+                        'isPay' => 0,
                         'quantity' => $value['quantity'] ?? 1,
                     ];
                     $total += $service->price;
@@ -149,7 +148,7 @@ class BookingRepository
                     'service_name' => $service->service_name,
                     'price' => $service->price,
                     'time' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'isPay' => $value['isPay'],
+                    'isPay' => 0,
                     'quantity' => $value['quantity'] ?? 1,
                 ];
                 $total += $service->price;
@@ -243,7 +242,10 @@ class BookingRepository
         $this->billing->where('_id', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
             'status' => 3
         ]);
-       
+        $booking_id = $billing->booking_id;
+        BookDetail::where('booking_id', $booking_id)->update([
+            'status' => 1
+        ]);
         $values = [
             'booking_id' => $request->billing_id,
             'admin_id' => $request->user()->id,
@@ -261,17 +263,6 @@ class BookingRepository
     public function processCheckOut($request)
     {
         $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
-
-        // lấy các service trong billing và kiểm tra nếu isPay = 0 thì cập nhật lên 1
-        $services = $billing->services;
-        foreach ($services as $key => $value) {
-            if($value['isPay'] == 0){
-                $services[$key]['isPay'] = 1;
-            }
-        }
-        $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
-            'services' => $services
-        ]);
         if (!$billing) {
             return response()->json([
                 'status' => 'error',
@@ -286,8 +277,22 @@ class BookingRepository
                 'data' => null
             ]);
         }
+        // lấy các service trong billing và kiểm tra nếu isPay = 0 thì cập nhật lên 1
+        $services = $billing->services;
+        foreach ($services as $key => $value) {
+            if($value['isPay'] == 0){
+                $services[$key]['isPay'] = 1;
+            }
+        }
+        $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
+            'services' => $services
+        ]);
         $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
             'status' => 4
+        ]);
+        $booking_id = $billing->booking_id;
+        BookDetail::where('booking_id', $booking_id)->update([
+            'status' => 2
         ]);
         $values = [
             'booking_id' => $request->billing_id,
@@ -316,6 +321,10 @@ class BookingRepository
         if ($billing->status == 0 || $billing->status == 1) {
             $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
                 'status' => 2
+            ]);
+            $booking_id = $billing->booking_id;
+            BookDetail::where('booking_id', $booking_id)->update([
+                'status' => 3
             ]);
             $values = [
                 'booking_id' => $request->billing_id,

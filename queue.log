@@ -1,0 +1,28 @@
+  2023-12-20 21:43:17 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 21:43:18 App\Events\BookingEvent .................. 947.04ms DONE
+  2023-12-20 21:43:20 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 21:43:21 App\Notifications\BookRoom ............... 272.41ms FAIL
+  2023-12-20 21:43:23 App\Events\Message ............................. RUNNING
+  2023-12-20 21:43:23 App\Events\Message ....................... 521.82ms DONE
+  2023-12-20 21:48:04 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 21:48:05 App\Events\BookingEvent .................. 823.36ms DONE
+  2023-12-20 21:49:16 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 21:49:17 App\Events\BookingEvent .................. 953.67ms DONE
+  2023-12-20 21:51:31 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 21:51:31 App\Events\BookingEvent .................. 833.45ms DONE
+  2023-12-20 21:51:33 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 21:51:37 App\Notifications\BookRoom ..................... 4s DONE
+  2023-12-20 21:51:39 App\Events\Message ............................. RUNNING
+  2023-12-20 21:51:39 App\Events\Message ....................... 466.41ms DONE
+  2023-12-20 21:54:07 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 21:54:08 App\Events\BookingEvent .................. 934.44ms DONE
+  2023-12-20 21:54:10 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 21:54:13 App\Notifications\BookRoom ..................... 3s DONE
+  2023-12-20 21:54:15 App\Events\Message ............................. RUNNING
+  2023-12-20 21:54:15 App\Events\Message ....................... 399.73ms DONE
+  2023-12-20 22:00:12 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-20 22:00:16 App\Notifications\ResetPasswordRequest ......... 3s DONE
+  2023-12-20 22:03:27 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-20 22:03:31 App\Notifications\ResetPasswordRequest ......... 3s DONE
+  2023-12-20 22:04:46 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-20 22:04:49 App\Notifications\ResetPasswordRequest ......... 3s DONE

@@ -19,9 +19,7 @@ Thông tin phòng:
 <x-mail::table>
     | Room              | 
     | ----------------- | 
-    @foreach ($info['rooms'] as $room)
-        | {{ $room['name'] }} |
-    @endforeach
+    | {{ $info['rooms'] }} |
 </x-mail::table>
 
 Thông tin khách hàng:
@@ -42,9 +40,9 @@ Thông tin đặt phòng:
 
 Để xem chi tiết đặt phòng, vui lòng nhấp vào nút bên dưới.
 <x-mail::button :url="$url">
-    View
+    Xem chi tiết đặt phòng
 </x-mail::button>
 
-Xin châm thành cảm ơn,<br>
+Xin chân thành cảm ơn,<br>
 {{ config('app.name') }}
 </x-mail::message>
