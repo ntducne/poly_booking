@@ -66,6 +66,8 @@ class RoomResource extends JsonResource
             'images' => $this->getImages(),
             'rate' => $this->getRate(),
             'type' => $this->getType(),
+            'utilities' => $this->getUtilities(),
+
         ];
     }
 }
