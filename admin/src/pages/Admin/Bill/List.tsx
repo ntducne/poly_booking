@@ -45,6 +45,7 @@ const BillList = () => {
     refetch,
   } = useGetBilingsQuery<any>(query);
   const [billings, setBillings] = useState<any[]>([]);
+  
   const navigate = useNavigate();
   useEffect(() => {
     setLoading(isLoading);
@@ -365,7 +366,7 @@ const BillList = () => {
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
-        loading={loading}
+        loading={loading || isLoading}
         columns={columns}
         dataSource={data}
         pagination={false}
