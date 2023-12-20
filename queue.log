@@ -74,3 +74,27 @@
   2023-12-19 21:35:06 App\Notifications\BookRoom ............... 170.67ms FAIL
   2023-12-19 21:35:07 App\Events\Message ............................. RUNNING
   2023-12-19 21:35:08 App\Events\Message ....................... 426.16ms DONE
+  2023-12-19 22:32:12 App\Events\BookingEvent ........................ RUNNING
+  2023-12-19 22:32:12 App\Events\BookingEvent .................. 739.48ms DONE
+  2023-12-19 22:32:13 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-19 22:32:14 App\Notifications\BookRoom ............... 260.99ms FAIL
+  2023-12-19 22:32:15 App\Events\Message ............................. RUNNING
+  2023-12-19 22:32:15 App\Events\Message ....................... 391.91ms DONE
+  2023-12-19 22:35:57 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-19 22:36:02 App\Notifications\ResetPasswordRequest ......... 4s DONE
+  2023-12-19 22:37:47 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-19 22:37:50 App\Notifications\ResetPasswordRequest ......... 3s DONE
+  2023-12-19 22:42:47 App\Events\ContactEvent ........................ RUNNING
+  2023-12-19 22:42:47 App\Events\ContactEvent .................. 421.19ms DONE
+  2023-12-19 22:42:57 App\Events\ContactEvent ........................ RUNNING
+  2023-12-19 22:42:58 App\Events\ContactEvent .................. 443.08ms DONE
+  2023-12-19 22:42:59 App\Events\ContactEvent ........................ RUNNING
+  2023-12-19 22:42:59 App\Events\ContactEvent .................. 425.65ms DONE
+  2023-12-19 22:44:40 App\Events\ContactEvent ........................ RUNNING
+  2023-12-19 22:44:41 App\Events\ContactEvent .................. 451.19ms DONE
+  2023-12-19 22:45:41 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-19 22:45:45 App\Notifications\ResetPasswordRequest ......... 3s DONE
+  2023-12-20 00:46:16 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 00:46:16 App\Events\BookingEvent .................. 651.81ms DONE
+  2023-12-20 00:48:23 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 00:48:24 App\Events\BookingEvent .................. 756.51ms DONE

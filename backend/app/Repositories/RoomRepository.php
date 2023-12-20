@@ -98,6 +98,8 @@ class RoomRepository
                         'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
                         'room_empty' => $roomNumberIsNotBook,
                         'pay_is_checkin' => $room->pay_is_checkin,
+                        'num_of_bed' => $room->num_of_bed,
+
                     ]
                 ];
             }
@@ -170,6 +172,8 @@ class RoomRepository
                         'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
                         'room_empty' => count($newArray),
                         'pay_is_checkin' => $room->pay_is_checkin,
+                        'num_of_bed' => $room->num_of_bed,
+
                     ];
                 }
             }
@@ -207,6 +211,8 @@ class RoomRepository
                     'image' => RoomImage::where('room_id', $room->id)->first()->image ?? '',
                     'room_empty' => count($room->room_number),
                     'pay_is_checkin' => $room->pay_is_checkin,
+                        'num_of_bed' => $room->num_of_bed,
+
                 ];
             }
             $room_completed_2 = array_filter($room_completed, function ($room) use ($amount_room) {
