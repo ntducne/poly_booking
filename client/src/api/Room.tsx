@@ -14,7 +14,7 @@ const roomApi = createApi({
       query: (page?: number) => {
         return {
           method: "GET",
-          url: `/room?page=${page || 2}`,
+          url: `/room?page=${page}`,
         };
       },
       providesTags: ["Rooms"],

@@ -168,7 +168,7 @@ export default function Rooms({}: Props) {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [page]);
   useEffect(() => {
     refetch();
     refetchBranch();
@@ -334,7 +334,7 @@ export default function Rooms({}: Props) {
                         {dataBranches &&
                           dataBranches?.data.map((item: any) => {
                             return (
-                              <Select.Option value={item?.id}>
+                              <Select.Option value={item?.id} key={item?.id}>
                                 {item?.name}
                               </Select.Option>
                             );

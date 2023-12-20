@@ -8,8 +8,6 @@ type Props = {};
 
 export default function HistoryBooking({}: Props) {
   const [data, setData] = useState<any>([]);
-  console.log(data);
-
   const {
     data: dataRoom,
     isLoading,
@@ -38,8 +36,8 @@ export default function HistoryBooking({}: Props) {
     <div>
       {data && data?.length ? (
         <div>
-          {data?.map((item: any) => (
-            <div className="px-5">
+          {data?.map((item: any, index: number) => (
+            <div className="px-5" key={index}>
               <div className="border-t pt-[30px] flex-col md:flex-row  flex gap-[30px] pb-[30px] ">
                 <Link to={`/user/profile/roomBooked/${item?.id}`}>
                   <img
