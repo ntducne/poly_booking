@@ -89,7 +89,9 @@ export default function Edit() {
                   <ul className=" text-gray-600 py-2 px-3 mt-3">
                     <li className="flex items-center py-3">
                       <span>Thành viên từ: </span>
-                      <span className="ml-auto">23/08/2023</span>
+                      <span className="ml-auto">
+                        {data?.message?.created_at}
+                      </span>
                     </li>
                   </ul>
                 </div>
