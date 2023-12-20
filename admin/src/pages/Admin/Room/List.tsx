@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 interface DataType {
   key: React.Key;
   name: string;
-  num_of_bed: number;
+  num_of_bed: any;
   address: string;
   status: number;
   area: string;
@@ -42,7 +42,7 @@ const ListRoom = () => {
           stt: index + 1,
           key: item.id,
           name: item.name,
-          num_of_bed: item.num_of_bed,
+          // num_of_bed: item.num_of_bed,
           price: item.price,
           discount: item.discount,
           status: item.status,
@@ -80,7 +80,7 @@ const ListRoom = () => {
             />
             <div className="ml-3 text-gray-500">
               <p>#68e365</p>
-              <p>{record?.num_of_bed} giường ngủ</p>
+              {/* <p>{record?.num_of_bed} giường ngủ</p> */}
             </div>
           </div>
         );
@@ -150,7 +150,7 @@ const ListRoom = () => {
               <AiOutlineEdit />
             </Link>
           </Button>
-          {permissions?.includes("admin.rooms.destro") && (
+          {permissions?.includes("admin.rooms.destroy") && (
             <Button
               className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
               onClick={() => remove(record.key)}
