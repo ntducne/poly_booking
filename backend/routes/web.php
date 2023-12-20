@@ -17,13 +17,13 @@ Route::get('unauthorized', function (){ return response()->json([
 ], 401); })->name('unauthorized');
 
 Route::get('/', function () {
-    Billing::truncate();
-    BookDetail::truncate();
-    Booking::truncate();
-    RateRoom::truncate();
-    HistoryHandleBooking::truncate();
-    DB::table('failed_jobs')->truncate();
-    Notification::truncate();
+    // Billing::truncate();
+    // BookDetail::truncate();
+    // Booking::truncate();
+    // RateRoom::truncate();
+    // HistoryHandleBooking::truncate();
+    // DB::table('failed_jobs')->truncate();
+    // Notification::truncate();
 });
 
 Route::get('/chart', [DashboardController::class, 'chartRevenue'])->name('statisticals.chart');
