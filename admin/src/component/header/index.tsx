@@ -6,7 +6,6 @@ import {
   UserOutlined,
   LogoutOutlined,
   BellFilled,
-  LockOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { LayoutContext } from "../../layout/LayoutAdmin";
@@ -120,14 +119,6 @@ const Head = () => {
         </Link>
       ),
       key: "0",
-    },
-    {
-      label: (
-        <Link rel="noopener noreferrer" to="/forGotPassword">
-          <LockOutlined /> Đổi mật khẩu
-        </Link>
-      ),
-      key: "1",
     },
     {
       type: "divider",

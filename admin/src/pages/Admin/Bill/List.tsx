@@ -20,6 +20,7 @@ import { pusherInstance } from "../../../config/pusher";
 import { useEffect, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { cookies } from "../../../config/cookies";
 
 const BillList = () => {
   const [page, setPage] = useState<number>(1);
@@ -51,8 +52,8 @@ const BillList = () => {
     setLoading(isLoading);
     setBillings(dataBilings?.data);
     const unsubscribe = pusherInstance().getData(
-      "booking",
-      "processBooking",
+      "booking" + JSON.parse(cookies().Get('AuthUser') as any)[4],
+      "processBooking" + JSON.parse(cookies().Get('AuthUser') as any)[4],
       (data: any) => {
         setBillings((prevBillings) => [...prevBillings, data.data]);
       }
@@ -61,6 +62,7 @@ const BillList = () => {
       unsubscribe();
     };
   }, [dataBilings?.data]);
+  
 
   const columns: ColumnsType<any> = [
     {
