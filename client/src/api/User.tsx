@@ -66,11 +66,13 @@ const userApi = createApi({
     }),
 
     processReview: builder.mutation({
-      query: (data) => ({
-        url: `/rate`,
-        method: "POST",
-        body: data,
-      }),
+      query: (data) => {
+        return {
+          url: `/rate`,
+          method: "POST",
+          body: data,
+        };
+      },
       invalidatesTags: ["Users"],
     }),
 

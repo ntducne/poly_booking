@@ -34,7 +34,7 @@ class BookingRepository
         if($request->billingCode){
             $billing->where('billingCode', +$request->billingCode);
         }
-        if($request->status){
+        if($request->status != ''){
             $billing->where('status', +$request->status);
         }
         if($request->checkin){
@@ -66,7 +66,7 @@ class BookingRepository
             $billing->whereIn('booking_id', $booking_id);
         }
         if($request->booking_date){
-            $booking = $this->booking->where('_id', '=', $billing->booking_id)->where('booking_date', Carbon::parse($request->booking_date)->format('Y-m-d'))->get();
+            $booking = $this->booking->where('booking_date', Carbon::parse($request->booking_date)->format('Y-m-d'))->get();
             $booking_id = [];
             foreach ($booking as $key => $value) {
                 $booking_id[] = $value->_id;
@@ -75,6 +75,7 @@ class BookingRepository
         }
         return BillingResource::collection($billing->paginate(10));
     }
+
     public function orderSearchItem($request)  {
         $billing = $this->billing
         ->where('branch_id', '=', $request->user()->branch_id)
@@ -89,6 +90,7 @@ class BookingRepository
         }
         return new BillingResource($billing);
     }
+    
     public function orderDetail($request, $id): BillingResource
     {
         $billingId =  $this->billing
@@ -121,14 +123,14 @@ class BookingRepository
         $total = 0;
         if(count($billing->services) > 0){
             foreach ($services as $key => $value) {
-                $service = Services::where('_id', '=', $value->service_id)->where('branch_id', '=', $request->user()->branch_id)->first();
+                $service = Services::where('_id', '=', $value['service_id'])->where('branch_id', '=', $request->user()->branch_id)->first();
                     $arrService[] = [
                         'service_id' => $service->_id,
                         'service_name' => $service->service_name,
                         'price' => $service->price,
                         'time' => Carbon::now()->format('Y-m-d H:i:s'),
-                        'isPay' => $value->isPay,
-                        'quantity' => $value->quantity ?? 1,
+                        'isPay' => $value['isPay'],
+                        'quantity' => $value['quantity'] ?? 1,
                     ];
                     $total += $service->price;
             }
@@ -140,14 +142,14 @@ class BookingRepository
         }
         else {
             foreach ($services as $key => $value) {
-                $service = Services::where('_id', '=', $value->service_id)->where('branch_id', '=', $request->user()->branch_id)->first();
+                $service = Services::where('_id', '=', $value['service_id'])->where('branch_id', '=', $request->user()->branch_id)->first();
                 $arrService[] = [
                     'service_id' => $service->_id,
                     'service_name' => $service->service_name,
                     'price' => $service->price,
                     'time' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'isPay' => $value->isPay,
-                    'quantity' => $value->quantity ?? 1,
+                    'isPay' => $value['isPay'],
+                    'quantity' => $value['quantity'] ?? 1,
                 ];
                 $total += $service->price;
             }
@@ -507,9 +509,4 @@ class BookingRepository
         }
         return true;
     }
-
-
-
-
-
 }

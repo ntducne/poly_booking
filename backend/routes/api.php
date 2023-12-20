@@ -1,7 +1,6 @@
 <?php
 
 use App\Modules\Client\Controllers\ClientController;
-use App\Modules\Dashboard\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
@@ -25,5 +24,5 @@ Route::get('/routes', function () {
     }
     echo "</table>";
 });
-Route::post('/chart', [DashboardController::class, 'chartRevenue']);
+Route::post('/search', [ClientController::class, 'processSearch']);
 
