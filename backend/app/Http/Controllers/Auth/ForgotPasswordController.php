@@ -49,9 +49,9 @@ class ForgotPasswordController extends Controller
             'message' => 'Chúng tôi đã gửi một email để đặt lại mật khẩu của bạn !',
         ], 200);
     }
-    public function checkToken(Request $request): JsonResponse
+    public function checkToken(Request $request)
     {
-        $token = $request->segment(4);
+        $token = $request->segment(3);
         $passwordReset = $this->passwordReset->where('token', $token)->first();
         if($passwordReset){
             if (Carbon::parse($passwordReset->updated_at)->addMinutes(10)->isPast()) {

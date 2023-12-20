@@ -43,8 +43,6 @@ class AdminController extends Controller
                 $searchTerm = $request->input('status');
                 $query->where('status', $searchTerm);
             }
-
-
             if ($role === 'super_admin') {
                 $response = $query
                 ->where('role', 'admin')
@@ -52,7 +50,11 @@ class AdminController extends Controller
                 return StaffResource::collection($response);
             }
             $query->where('branch_id', $request->user()->branch_id);
-            $response = $query->where('created_by', $request->user()->id)->paginate(10);
+            $response = $query
+                // ->where('created_by', $request->user()->id)
+                ->where('role', 'staff')
+                ->where('_id', '!=', $request->user()->id)
+                ->paginate(10);
             return StaffResource::collection($response);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());

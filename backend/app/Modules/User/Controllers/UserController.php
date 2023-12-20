@@ -223,6 +223,58 @@ class UserController extends Controller
     {
         return new BillingResource(Billing::find($id));
     }
+    // public function rate(Request $request)
+    // {
+    //     $room = $this->room->find($request->room_id);
+    //     if (!$room) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Room not found'
+    //         ], 404);
+    //     }
+    //     $check = false;
+    //     if ($request->user()) {
+    //         $userId = $request->user()->id;
+    //         $billing = Billing::where('user_id', $userId)->where('status', 4)->orderBy('_id','desc')->get();
+    //         foreach ($billing as $item) {
+    //             $countBookdetail = BookDetail::where('room_id', $room->id)->where('booking_id', $item->booking_id)->pluck('booking_id');
+    //             $countBooking = Booking::whereIn('_id', $countBookdetail)->count();
+    //             $countRate = RateRoom::where('room_id', $room->id)->where('user_id', $userId)->count();
+    //             if($countBooking > $countRate){
+    //                 $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->orderBy('id', 'desc')->first();
+    //                 if ($bookDetail) {
+    //                     $booking = Booking::where('_id', $bookDetail->booking_id)->first();
+    //                     if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
+    //                         $check = false;
+    //                     } else {
+    //                         $check = true;
+    //                     }
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if(!$check){
+    //         return response()->json([
+    //             'status' => false,
+    //             'message' => 'Bạn không thể đánh giá phòng này !'
+    //         ], 400);
+    //     }
+    //     $input = $request->all();
+    //     $images = $request->file('images');
+    //     if ($images) {
+    //         $uploadedFileUrl = $this->UploadMultiImage($images, 'rate_room/' . $room->id . '/');
+    //         $input['images'] = $uploadedFileUrl;
+    //     }
+    //     $input['user_id'] = $request->user()->id;
+    //     $input['time'] = date('Y-m-d H:i:s');
+    //     $rate = $this->rate_room->create($input);
+    //     return response()->json([
+    //         'status' => true,
+    //         'message' => 'Đánh giá thành công. Cảm ơn quý khách !',
+    //         'data' => $check
+    //     ], 201);
+    // }
     public function rate(Request $request)
     {
         $room = $this->room->find($request->room_id);
@@ -233,23 +285,34 @@ class UserController extends Controller
             ], 404);
         }
         $check = false;
+        $message = 'Bạn không thể đánh giá phòng này do chưa từng đặt phòng !';
         if ($request->user()) {
             $userId = $request->user()->id;
-            $billing = Billing::where('user_id', $userId)->where('status', 4)->get();
+            $billing = Billing::where('user_id', $userId)->where('status', 4)->orderBy('_id','desc')->get();
             foreach ($billing as $item) {
-                $countBookdetail = BookDetail::where('room_id', $room->id)->where('booking_id', $billing->booking_id)->pluck('booking_id');
-                $countBooking = Booking::whereIn('_id', $countBookdetail)->count();
-                $countRate = RateRoom::where('booking_id', $item->booking_id)->where('room_id', $room->id)->where('user_id', $userId)->count();
-                if($countBooking >= $countRate){
-                    $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->orderBy('id', 'desc')->first();
+                $countBookdetail = BookDetail::where('room_id', $room->_id)->where('booking_id', $item->booking_id)->pluck('booking_id');
+                
+                // $countBooking = Booking::whereIn('_id', $countBookdetail)->get();
+                $countBooking = count($countBookdetail);
+                
+                $countRate = RateRoom::where('room_id', $room->_id)->where('user_id', $userId)->count();
+                if($countBooking > $countRate){
+                    $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->_id)->orderBy('id', 'desc')->first();
                     if ($bookDetail) {
                         $booking = Booking::where('_id', $bookDetail->booking_id)->first();
                         if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
                             $check = false;
+                            $message = 'Quá thời gian đánh giá !';
                         } else {
                             $check = true;
                         }
                         break;
+                    }
+                }
+                if($countBooking > 0 || $countRate > 0){
+                    if($countBooking == $countRate){
+                        $check = false;
+                        $message = 'Bạn đã đánh giá phòng này !';
                     }
                 }
             }
@@ -257,7 +320,7 @@ class UserController extends Controller
         if(!$check){
             return response()->json([
                 'status' => false,
-                'message' => 'Bạn không thể đánh giá phòng này !'
+                'message' => $message
             ], 400);
         }
         $input = $request->all();

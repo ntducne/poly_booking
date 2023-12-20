@@ -308,14 +308,14 @@ class RoomRepository
             $this->billing->find($newBilling)
         )));
         if($user){
-            $user->notify(new \App\Notifications\BookRoom(
+            User::where('email', $request->email)->orWhere('phone', $request->phone)->first()->notify(new \App\Notifications\BookRoom(
                 $request->name,
                 [
                     'order_code' => $billingCode,
                     'order_date' => Carbon::now()->format('Y-m-d H:i:s'),
                     'payment' => $request->payment_method,
                     'total' => $total,
-                    'rooms' => $result,
+                    'rooms' => $room->name,
                     'customer' => [
                         'name' => $request->name,
                         'phone' => $request->phone,
@@ -325,7 +325,7 @@ class RoomRepository
                     'check_out' => $request->checkout,
                     'status' => 'Đã đặt phòng',
                 ],
-                env('FE_URL') . '/search-order/?billingCode=' . $billingCode
+                env('FE_URL') . '/search-order?billingCode=' . $billingCode
             ));
         }
         if($request->user()){

@@ -28,7 +28,11 @@ class RoomResource extends JsonResource
                 'image' => $rate->images
             ];
         }
-        return $arr;
+        // reverse array
+        return array_reverse($arr);
+        
+        // return $arr;
+        
     }
 
     public function getUtilities(){
