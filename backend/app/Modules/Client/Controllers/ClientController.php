@@ -94,7 +94,8 @@ class ClientController extends Controller
         ]);
     }
 
-    public function checkBooking(Request $request){
+    public function checkBooking(Request $request)
+    {
         try {
             return $this->bookingRepository->checkBooking($request);
         } catch (Exception $exception) {
@@ -106,37 +107,53 @@ class ClientController extends Controller
         }
     }
 
-    public function processSearch(SearchRequest $request){
+    public function processSearch(SearchRequest $request)
+    {
         $data = $this->roomRepository->processSearchRoom($request);
-        // // phân trang ( data đang trả về là dạng mảng, viết thuật toán phân trang dựa vào page và limit )
-        // $page = $request->page;
-        // $limit = $request->limit;
-        // $offset = ($page - 1) * $limit;
-        // // lấy tổng số page
-        // $total_page = ceil(count($data) / $limit);
-        // // lấy dữ liệu theo page
-        // $data = array_slice($data, $offset, $limit);
-        // // trả về dữ liệu
-        if(count($data) == 0){
+        $page = $request->page ?? 1;
+        $limit = $request->limit ?? 10;
+
+        // Tính số lượng bản ghi bằng cách sử dụng COUNT trong truy vấn cơ sở dữ liệu
+        $total_records = count($data);
+
+        // Tính toán số trang
+        $total_pages = ceil($total_records / $limit);
+
+        // Đảm bảo trang hiện tại không vượt quá số trang tổng cộng
+        $page = min($page, $total_pages);
+
+        // Tính offset cho truy vấn cơ sở dữ liệu
+        $offset = ($page - 1) * $limit;
+
+        // Truy vấn cơ sở dữ liệu với phân trang
+
+        if (count($data) == 0) {
             return response()->json([
                 'status' => false,
                 'message' => 'Không tìm thấy phòng !',
                 'data' => []
             ]);
         }
+
         return response()->json([
             'status' => true,
             'message' => 'Lấy dữ liệu thành công !',
-            'data' => $data,
-            // 'total_page' => $total_page
+            'data' => array_slice($data, $offset, $limit),
+            'meta' => [
+                'current_page' => $page,
+                'last_page' => $total_pages,
+                'total_records' => $total_records,
+            ]
         ]);
     }
 
-    public function processBooking(BookingRequest $request){
+    public function processBooking(BookingRequest $request)
+    {
         return $this->roomRepository->processBooking($request);
     }
 
-    public function processRenew(RenewRequest $request) {
+    public function processRenew(RenewRequest $request)
+    {
         return $this->roomRepository->processRenew($request);
     }
 }
