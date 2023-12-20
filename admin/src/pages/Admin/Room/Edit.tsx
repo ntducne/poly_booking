@@ -1,6 +1,8 @@
 import {
   DeleteOutlined,
   LoadingOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import {
@@ -164,6 +166,13 @@ const EditRoom = () => {
         value: data?.data.type.room_type_name,
         id: data?.data.type.id,
       },
+      num_of_bed: data?.data?.num_of_bed.map((item: any) => {
+        return {
+          size: item.size,
+          amount_bed: item.amount_bed,
+          slot: item.slot,
+        };
+      }),
       branch_id: {
         value: data?.data?.branch?.name,
         id: data?.data?.branch?.id,
@@ -174,7 +183,11 @@ const EditRoom = () => {
     form.setFieldsValue(defaultValue);
   }, [isLoading, data?.data]);
   if (isLoading || isLoadingTypes) {
-    return <><Skeleton/></>;
+    return (
+      <>
+        <Skeleton />
+      </>
+    );
   }
   return (
     <div>
@@ -190,10 +203,7 @@ const EditRoom = () => {
           {...formItemLayout}
           onFinish={onFinish}
           initialValues={{
-            "input-number": 1,
-            "checkbox-group": ["A", "B"],
-            rate: 3.5,
-            "color-picker": null,
+            num_of_bed: data.data.num_of_bed
           }}
           style={{ maxWidth: 1000 }}
           className="grid grid-cols-1 xl:grid-cols-2"
@@ -247,14 +257,89 @@ const EditRoom = () => {
           >
             <InputNumber min={1} className="w-full" />
           </Form.Item>
-          <Form.Item
-            label="Số giường"
-            name="num_of_bed"
-            rules={[{ required: true, message: "Vui lòng nhập số giường" }]}
-          >
-            <InputNumber min={1} className="w-full" />
-          </Form.Item>
-          <Form.Item name="bed_size" label="Kích cỡ giường">
+          <div>
+            <p className="mb-2">Giường</p>
+            <Form.List name="num_of_bed">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      className="flex mb-2 w-[400px]"
+                      // style={{width: 400,  display: "flex", marginBottom: 4 }}
+                      align="center"
+                    >
+                      <div className="flex flex-col">
+                        <p>Kích cỡ giường</p>
+                        <Form.Item
+                          {...restField}
+                          name={[name, "size"]}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Vui lòng nhập kích cỡ giường",
+                            },
+                          ]}
+                        >
+                          <Input placeholder="Kích cỡ giường" />
+                        </Form.Item>
+                      </div>
+                      <div className="flex flex-col">
+                        <p>Số giường</p>
+                        <Form.Item
+                          {...restField}
+                          name={[name, "amount_bed"]}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Không được để trống",
+                            },
+                            {
+                              pattern: /^\d+$/,
+                              message: "Chỉ được nhập số",
+                            },
+                          ]}
+                        >
+                          <InputNumber min={1} />
+                        </Form.Item>
+                      </div>
+                      <div>
+                        <p>Số người</p>
+                        <Form.Item
+                          {...restField}
+                          name={[name, "slot"]}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Vui lòng nhập ",
+                            },
+                            {
+                              pattern: /^\d+$/,
+                              message: "Chỉ được nhập số",
+                            },
+                          ]}
+                        >
+                          <InputNumber min={0} />
+                        </Form.Item>
+                      </div>
+                      <MinusCircleOutlined onClick={() => remove(name)} />
+                    </Space>
+                  ))}
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      Giường
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+          </div>
+          {/* <Form.Item name="bed_size" label="Kích cỡ giường">
             <Radio.Group>
               <Row className="">
                 <Col>
@@ -269,10 +354,10 @@ const EditRoom = () => {
                 </Col>
               </Row>
             </Radio.Group>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item
-            label="Giá tiền"
+            label="Giảm giá"
             name="discount"
             rules={[{ required: true, message: "Vui lòng nhập giá tiền" }]}
           >
