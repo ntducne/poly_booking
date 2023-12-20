@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Checkbox, Collapse, Form, Image, Modal, Table } from "antd";
+import { Button, Checkbox, Collapse, Form, Image, Modal, Pagination, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
@@ -21,13 +21,23 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 
 const ListStaff = () => {
-  const { data: staffs, isLoading } = useGetAllStaffsQuery({});
+  const [page, setPage] = useState<number>(1);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const navigate = useNavigate();
+
+  const { data: staffs, isLoading, refetch } = useGetAllStaffsQuery({page : page});
   const { data: valuePermission } = useGetPermissonQuery([]);
   const [isStaff, setIsStaff] = useState("");
   const { data: staff, isLoading: loadingStaff } = useGetDetailStaffsQuery(
     isStaff || skipToken
   );
 
+  const handlePaginationChange = (page: number) => {
+    setPage(page);
+    navigate(`/staff?page=${page}`);
+    refetch();
+  };
   const [dataStaff, setDataStaff] = useState<any>({});
   const formRef = useRef<any>(null);
   const [activeKey, setActiveKey] = useState<string | string[]>([]);
@@ -212,6 +222,14 @@ const ListStaff = () => {
         console.log(err);
       });
   };
+  useEffect(() => {
+    if (queryParams.get("page")) {
+      const page: any = queryParams.get("page");
+      setPage(+page);
+    }
+  }, [location?.search]);
+
+
   return (
     <Page title={`Tài khoản quản trị`}>
       <Modal
@@ -256,8 +274,16 @@ const ListStaff = () => {
         loading={isLoading}
         dataSource={data}
         onChange={onChange}
-        pagination={{ pageSize: 10 }}
+        pagination={false}
       />
+       <div className="flex justify-end items-center mt-5">
+        <Pagination
+          defaultCurrent={1}
+          total={+staffs?.meta?.last_page * 10}
+          onChange={handlePaginationChange}
+          current={page}
+        />
+      </div>
     </Page>
   );
 };

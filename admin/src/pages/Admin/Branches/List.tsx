@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Space, Table } from "antd";
+import { Button, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 interface DataType {
   key: React.Key;
@@ -11,7 +11,7 @@ interface DataType {
   phone: number;
   // status: number
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import FormSearch from "../../../component/formSearch";
 import swal from "sweetalert";
 import Page from "../../../component/page";
@@ -21,10 +21,19 @@ import {
 } from "../../../api/branches";
 
 const ListBranches = () => {
-  const { data, isLoading, refetch } = useGetAllBranchesQuery({});
+  const [page, setPage] = useState<number>(1);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const navigate = useNavigate();
+
+  const { data, isLoading, refetch } = useGetAllBranchesQuery({ page: page });
   const [dataFetching, setDataFetching] = useState<any>([]);
   const [deleteBranch] = useDeleteBranchMutation();
-
+  const handlePaginationChange = (page: number) => {
+    setPage(page);
+    navigate(`/branches?page=${page}`);
+    refetch();
+  };
   useEffect(() => {
     setDataFetching(
       data?.data?.map((item: any) => {
@@ -123,6 +132,13 @@ const ListBranches = () => {
     } catch (error) {}
   };
 
+  useEffect(() => {
+    if (queryParams.get("page")) {
+      const page: any = queryParams.get("page");
+      setPage(+page);
+    }
+  }, [location?.search]);
+
   // useEffect(() => {
   //   refetch();
   //   window.scrollTo(0, 0);
@@ -144,13 +160,6 @@ const ListBranches = () => {
             <AiOutlinePlus />
             Thêm chi nhánh
           </Link>
-          <Link
-            to={`/branches`}
-            className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
-          >
-            <MdOutlineDeleteOutline />
-            Thùng rác
-          </Link>
         </div>
       </div>
       <Table
@@ -160,7 +169,16 @@ const ListBranches = () => {
         columns={columns}
         dataSource={dataFetching}
         onChange={onChange}
+        pagination={false}
       />
+      <div className="flex justify-end items-center mt-5">
+        <Pagination
+          defaultCurrent={1}
+          total={+data?.meta?.last_page * 10}
+          onChange={handlePaginationChange}
+          current={page}
+        />
+      </div>
     </Page>
   );
 };

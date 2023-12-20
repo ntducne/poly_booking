@@ -42,7 +42,7 @@ const ListContact = () => {
     name: item.name,
     email: item.email,
     message: item.message,
-    time: moment(item.time).format("h:mm:ss    DD/MM/YYYY"),
+    time: moment(item.time, "DD/MM/YYYY HH:mm:ss").format("HH:mm:ss DD/MM/YYYY"),
   }));
   return (
     <Page title={`Đánh giá`}>

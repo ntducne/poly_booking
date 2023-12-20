@@ -48,7 +48,7 @@ const AddServices = () => {
           {...formItemLayout}
           onFinish={onFinish}
           style={{ maxWidth: 1000 }}
-          className="grid grid-cols-1 xl:grid-cols-2"
+          className="grid grid-cols-1"
         >
           <Form.Item
             label="Tên dịch vụ"

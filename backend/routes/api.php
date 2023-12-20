@@ -1,11 +1,7 @@
 <?php
 
-use App\Events\Message;
-use App\Models\Billing;
 use App\Modules\Client\Controllers\ClientController;
 use App\Modules\Dashboard\Controllers\DashboardController;
-use App\Modules\Orders\Resources\BillingResource;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
 Route::fallback(function(){ return response()->json([ 'message' => 'Page Not Found' ], 404); });
@@ -29,9 +25,5 @@ Route::get('/routes', function () {
     }
     echo "</table>";
 });
-Route::get('/testNoti', function(){
-    event(new Message(new BillingResource(Billing::find('65697362cbdded72ee00fb34'))));
-});
-
-Route::post('/search', [ClientController::class, 'processSearch']);
+Route::post('/chart', [DashboardController::class, 'chartRevenue']);
 

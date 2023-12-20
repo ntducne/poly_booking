@@ -12,18 +12,24 @@ interface DataType {
   price_per_night: number;
   status: number;
 }
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+import { MdDeleteForever } from "react-icons/md";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import {
   useDeleteRoomTypeMutation,
   useGetRoomTypeQuery,
 } from "../../../api/roomTypes";
+import { useSelector } from "react-redux";
 
 const ListRoomType = () => {
-  const { data, isLoading, refetch } = useGetRoomTypeQuery({});
+  const [searchName, setSearchName] = useState("");
+  const { data, isLoading, refetch } = useGetRoomTypeQuery({
+    name: searchName,
+  });
   const [deleteRoomType] = useDeleteRoomTypeMutation();
+
+  const permission1 = useSelector((state: any) => state.role).permission;
+  const [permissions, setPermissions] = useState<any>(permission1);
 
   const [dataFetching, setDataFetching] = useState<any>([]);
   useEffect(() => {
@@ -40,14 +46,15 @@ const ListRoomType = () => {
         refetch();
       })
     );
-  }, [isLoading, data?.data]);
+    setPermissions(permission1);
+  }, [isLoading, data?.data, permission1]);
 
   const columns: ColumnsType<DataType> = [
     {
       title: "STT",
       dataIndex: "stt",
       key: "stt",
-      sorter: (a:any, b: any) => a.stt - b.stt,
+      sorter: (a: any, b: any) => a.stt - b.stt,
       fixed: "left",
     },
     {
@@ -73,34 +80,7 @@ const ListRoomType = () => {
       key: "description",
       sorter: (a, b) => a.room_type_name.length - b.room_type_name.length,
     },
-    // {
-    //   title: "Trạng thái",
-    //   dataIndex: "status",
-    //   filters: [
-    //     {
-    //       text: "Còn trống",
-    //       value: "Còn",
-    //     },
-    //     {
-    //       text: "Hết phòng",
-    //       value: "Hết",
-    //     },
-    //   ],
-    //   render: (_, record) => (
-    //     < div className="font-semibold" >
-    //       {record.status !== 0 ? (
-    //         <span className="border px-5 py-2 rounded-xl text-[#fff]   bg-[#43e674]">
-    //           Còn
-    //         </span>
-    //       ) : (
-    //         <span className="border px-5 py-2 rounded-xl text-[#e46868] bg-[#eed6d6]">
-    //           Hết
-    //         </span>
-    //       )}
-    //     </div >
-    //   ),
-    //   // onFilter: (value: any, record) => record.address.indexOf(value) === 0,
-    // },
+
     {
       title: "Action",
       dataIndex: "action",
@@ -114,13 +94,15 @@ const ListRoomType = () => {
               <AiOutlineEdit />
             </Link>
           </Button>
-          <Button
-            onClick={() => remove(record?.key)}
-            type="primary"
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
-          >
-            <MdDeleteForever />
-          </Button>
+          {permissions?.includes("admin.types.destroy") && (
+            <Button
+              onClick={() => remove(record?.key)}
+              type="primary"
+              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
+            >
+              <MdDeleteForever />
+            </Button>
+          )}
         </Space>
       ),
       // fixed: "right",
@@ -162,11 +144,23 @@ const ListRoomType = () => {
   // if (isLoading) {
   //   return <>loading...</>
   // }
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+    setSearchName(searchValue);
+    refetch();
+  };
 
   return (
     <Page title={`Loại phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <FormSearch />
+        {/* <FormSearch /> */}
+        <div className="flex flex-col md:flex-row">
+          <input
+            className="border border-gray-300 rounded-lg px-3 py-2 mr-2"
+            placeholder="Tìm kiếm..."
+            onChange={handleSearchChange}
+          />
+        </div>
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
             to={`/room/type/add`}
@@ -175,13 +169,13 @@ const ListRoomType = () => {
             <AiOutlinePlus />
             Thêm loại phòng
           </Link>
-          <Link
+          {/* <Link
             to={`/roomType`}
             className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
           >
             <MdOutlineDeleteOutline />
             Thùng rác
-          </Link>
+          </Link> */}
         </div>
       </div>
       <Table

@@ -20,6 +20,7 @@ import {
   Table,
   // TableProps,
   Skeleton,
+  Radio,
 } from "antd";
 import {
   useAddPeopleBookingMutation,
@@ -40,6 +41,10 @@ import { useGetAllRoomTypeQuery } from "../../../api/roomTypes";
 import dayjs from "dayjs";
 import moment from "moment";
 import { useSearchRoomMutation } from "../../../api/booking";
+interface Service {
+  id: string;
+  service_name: string;
+}
 const BillDetail: React.FC = () => {
   const { id } = useParams();
   const {
@@ -118,6 +123,12 @@ const BillDetail: React.FC = () => {
   //
 
   // Xu ly ServiceInBill
+  const [checkedServices, setCheckedServices] = useState<any>([]);
+
+  const handleCheckboxChange = (checkedValues: any) => {
+    setCheckedServices(checkedValues);
+  };
+
   const [formChanged, setFormChanged] = useState(false);
   const onValuesChange = () => {
     setFormChanged(true);
@@ -131,24 +142,44 @@ const BillDetail: React.FC = () => {
   const addServiceInBill = async (values: any) => {
     const dataBillNew = {
       billing_id: dataBill?.data?.id,
-      ...values,
+      services: values?.services?.map((serviceId: any) => {
+        // console.log("item: " + item);
+        return {
+          service_id: serviceId,
+          quantity: Number(values[`quantity_${serviceId}`]),
+          isPay: Number(values[`payment_${serviceId}`]),
+        };
+      }),
     };
-
-    addServiceBooking(dataBillNew)
-      .unwrap()
-      .then((res) => {
-        if (res.status === "success") {
-          setFormChanged(false);
-          setOpen(false);
-          swal(res.message, {
-            icon: "success",
-          });
-        } else {
-          swal(res.message, {
+    if (dataBillNew.services.length === 0) {
+      swal("Vui lòng chọn ít nhất 1 dịch vụ", {
+        icon: "error",
+      });
+      return;
+    } else {
+      addServiceBooking(dataBillNew)
+        .unwrap()
+        .then((res) => {
+          if (res.status === "success") {
+            setFormChanged(false);
+            setOpen(false);
+            form.resetFields()
+            setCheckedServices([]);
+            swal(res.message, {
+              icon: "success",
+            });
+          } else {
+            swal(res.message, {
+              icon: "error",
+            });
+          }
+        })
+        .catch(() => {
+          swal("Thêm dịch vụ thất bại", {
             icon: "error",
           });
-        }
-      });
+        });
+    }
   };
 
   const onClose = () => {
@@ -163,8 +194,22 @@ const BillDetail: React.FC = () => {
         onOk() {
           const formValuesService = form.getFieldsValue();
           const formValuesPeople = formPeople.getFieldsValue();
-          if (Object.keys(formValuesService).length > 0) {
-            addServiceInBill(formValuesService);
+          const dataBillNew = {
+            billing_id: dataBill?.data?.id,
+            services: formValuesService?.services?.map((serviceId: any) => {
+              // console.log("item: " + item);
+              return {
+                service_id: serviceId,
+                quantity: Number(formValuesService[`quantity_${serviceId}`]),
+                isPay: Number(formValuesService[`payment_${serviceId}`]),
+              };
+            }),
+          };
+
+          // console.log("formValuesService", dataBillNew);
+          if (formValuesService?.services.length > 0) {
+            addServiceInBill(dataBillNew);
+            setCheckedServices([]);
           } else {
             addPeopleBooking(formValuesPeople);
           }
@@ -935,8 +980,9 @@ const BillDetail: React.FC = () => {
                         </td>
                         <td className="px-6 py-4">{room.room_empty}</td>
                         <td>
-                          {dataRoomBook.length == 0 && dataBill?.data?.booking.detail[0].room_id ==
-                            room.id &&
+                          {dataRoomBook.length == 0 &&
+                            dataBill?.data?.booking.detail[0].room_id ==
+                              room.id &&
                             idRoomNewExtend == null && (
                               <button
                                 type="button"
@@ -1214,16 +1260,18 @@ const BillDetail: React.FC = () => {
               name="validate_other"
               onFinish={addServiceInBill}
               onValuesChange={onValuesChange}
-              initialValues={{
-                services:
-                  dataBill?.data?.services &&
-                  dataBill?.data?.services.map((service: any) => {
-                    return service?.service_id;
-                  }),
-              }}
+              initialValues={
+                {
+                  // services:
+                  //   dataBill?.data?.services &&
+                  //   dataBill?.data?.services.map((service: any) => {
+                  //     return service?.service_id;
+                  //   }),
+                }
+              }
             >
               <Form.Item name="services">
-                <Checkbox.Group>
+                <Checkbox.Group onChange={handleCheckboxChange}>
                   <Space
                     direction="vertical"
                     size="middle"
@@ -1234,11 +1282,49 @@ const BillDetail: React.FC = () => {
                         <LoadingOutlined />
                       </div>
                     ) : (
-                      dataServices?.data?.map((service: any) => {
+                      dataServices?.data?.map((service: Service) => {
                         return (
-                          <Checkbox key={service?.id} value={service?.id}>
-                            {service?.service_name}
-                          </Checkbox>
+                          <div key={service?.id}>
+                            <Checkbox value={service?.id}>
+                              {service?.service_name}
+                            </Checkbox>
+                            {checkedServices.includes(service?.id) && (
+                              <div>
+                                <Form.Item
+                                  name={`quantity_${service?.id}`}
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: "Vui lòng nhập số lượng!",
+                                    },
+                                    {
+                                      type: "number",
+                                      min: 1,
+                                      message:
+                                        "Số lượng phải lớn hơn hoặc bằng 1!",
+                                    },
+                                  ]}
+                                >
+                                  <InputNumber min={1} />
+                                </Form.Item>
+                                <Form.Item
+                                  name={`payment_${service?.id}`}
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message:
+                                        "Vui lòng chọn hình thức thanh toán!",
+                                    },
+                                  ]}
+                                >
+                                  <Radio.Group>
+                                    <Radio value="0">Chưa thanh toán</Radio>
+                                    <Radio value="1">Đã thanh toán</Radio>
+                                  </Radio.Group>
+                                </Form.Item>
+                              </div>
+                            )}
+                          </div>
                         );
                       })
                     )}
@@ -1310,13 +1396,13 @@ const BillDetail: React.FC = () => {
                           case 0:
                             return (
                               <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                                Đã đặt
+                                Đã giữ
                               </span>
                             );
                           case 1:
                             return (
                               <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                                Đang ở
+                                Đang sử dụng
                               </span>
                             );
                           case 2:
@@ -1355,8 +1441,16 @@ const BillDetail: React.FC = () => {
                       {formatMoneyVN(service.price)}
                     </td>
                     <td>
-                      <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">
-                        Chưa thanh toán
+                      <span className="">
+                        {service?.isPay === 0 ? (
+                          <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">
+                            Chưa thanh toán
+                          </span>
+                        ) : (
+                          <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
+                            Đã thanh toán
+                          </span>
+                        )}
                       </span>
                     </td>
                   </tr>

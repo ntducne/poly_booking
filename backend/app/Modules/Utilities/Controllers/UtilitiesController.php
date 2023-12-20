@@ -23,6 +23,10 @@ class UtilitiesController extends Controller
     {
         try {
             $query = $this->utilities->newQuery();
+            if ($request->has('name')) {
+                $searchTerm = $request->input('name');
+                $query->where('name', 'LIKE', '%' . $searchTerm . '%');
+            }
             $query->where('branch_id', $request->user()->branch_id);
             $utilities =  $query->paginate(10);
             return response()->json([
@@ -41,9 +45,11 @@ class UtilitiesController extends Controller
     public function store(StoreUtilitiesRequest $request)
     {
         try {
-            $object = $request->all();
-            $utilities = new Utilities($object);
-            $utilities->save();
+            $utilities = $this->utilities->create([
+                'name' => $request->name,
+                'room_id' => $request->room_id,
+                'branch_id' => $request->user()->branch_id
+            ]);
             return response()->json([
                 'status' => 'success',
                 'message'   => 'Thêm tiện ích thành công !',
@@ -99,7 +105,10 @@ class UtilitiesController extends Controller
                     'data' => null
                 ]);
             }
-            $utilities->update($request->all());
+            $utilities->update([
+                'name' => $request->name,
+                'room_id' => $request->room_id,
+            ]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Cập nhật tiện ích thành công !',

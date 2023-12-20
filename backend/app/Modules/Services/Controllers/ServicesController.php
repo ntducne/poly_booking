@@ -22,6 +22,10 @@ class ServicesController extends Controller
     {
         try {
             $query = $this->services->newQuery();
+            if ($request->has('service_name')) {
+                $searchTerm = $request->input('service_name');
+                $query->where('service_name', 'LIKE', '%' . $searchTerm . '%');
+            }
             $query->where('branch_id', $request->user()->branch_id);
             $services = $query->paginate(10);
             return ServiceResource::collection($services);

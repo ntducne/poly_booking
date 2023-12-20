@@ -4,6 +4,8 @@ namespace App\Modules\User\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Billing;
+use App\Models\BookDetail;
+use App\Models\Booking;
 use App\Models\RateRoom;
 use App\Models\Room;
 use App\Models\User;
@@ -15,6 +17,7 @@ use App\Modules\User\Requests\UserUpdateRequest;
 use App\Modules\User\Resources\UserResource;
 use App\Repositories\RoomRepository;
 use App\Repositories\UserRepository;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -43,11 +46,27 @@ class UserController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            $users = $this->user->paginate(10);
+            $users = $this->user->newQuery();
+            if ($request->has('name')) {
+                $searchTerm = $request->input('name');
+                $users->where('name', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('email')) {
+                $searchTerm = $request->input('email');
+                $users->where('email', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('phone')) {
+                $searchTerm = $request->input('phone');
+                $users->where('phone', 'LIKE', '%' . $searchTerm . '%');
+            }
+            if ($request->has('status')) {
+                $searchTerm = $request->input('status');
+                $users->where('status', $searchTerm);
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'Danh sách người dùng !',
-                'data' => UserResource::collection($users)
+                'data' => UserResource::collection($users->paginate(10))
             ]);
         } catch (Exception $exception){
             Log::debug($exception->getMessage());
@@ -131,7 +150,7 @@ class UserController extends Controller
     public function profile(Request $request)
     {
         return response()->json([
-            'message' => $request->user(),
+            'message' => new UserResource($request->user()),
         ], 200);
     }
     public function updateAvatar(UpdateAvatarRequest $request)
@@ -209,11 +228,39 @@ class UserController extends Controller
         $room = $this->room->find($request->room_id);
         if (!$room) {
             return response()->json([
+                'status' => false,
                 'message' => 'Room not found'
             ], 404);
         }
+        $check = false;
+        if ($request->user()) {
+            $userId = $request->user()->id;
+            $billing = Billing::where('user_id', $userId)->where('status', 4)->get();
+            foreach ($billing as $item) {
+                $countBookdetail = BookDetail::where('room_id', $room->id)->where('booking_id', $billing->booking_id)->pluck('booking_id');
+                $countBooking = Booking::whereIn('_id', $countBookdetail)->count();
+                $countRate = RateRoom::where('booking_id', $item->booking_id)->where('room_id', $room->id)->where('user_id', $userId)->count();
+                if($countBooking >= $countRate){
+                    $bookDetail = BookDetail::where('booking_id', $item->booking_id)->where('room_id', $room->id)->orderBy('id', 'desc')->first();
+                    if ($bookDetail) {
+                        $booking = Booking::where('_id', $bookDetail->booking_id)->first();
+                        if ($booking && Carbon::parse($booking->checkout)->addDays(3)->isPast()) {
+                            $check = false;
+                        } else {
+                            $check = true;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        if(!$check){
+            return response()->json([
+                'status' => false,
+                'message' => 'Bạn không thể đánh giá phòng này !'
+            ], 400);
+        }
         $input = $request->all();
-
         $images = $request->file('images');
         if ($images) {
             $uploadedFileUrl = $this->UploadMultiImage($images, 'rate_room/' . $room->id . '/');
@@ -223,11 +270,9 @@ class UserController extends Controller
         $input['time'] = date('Y-m-d H:i:s');
         $rate = $this->rate_room->create($input);
         return response()->json([
+            'status' => true,
             'message' => 'Rate room successfully',
             'data' => $rate
         ], 201);
     }
-
-    
-
 }

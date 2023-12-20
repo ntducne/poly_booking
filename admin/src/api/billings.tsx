@@ -16,7 +16,7 @@ const billingApi = createApi({
   }),
   endpoints: (builder) => ({
     getBilings: builder.query<any, any>({
-      query: () => `billings`,
+      query: (param) => `billings?page=${param.page || 1}&billingCode=${param.billingCode || ""}&status=${param.status || ""}&user_info=${param.user_info || ""}&booking_date=${param.booking_date || ""}&checkin=${param.checkin || ""}&checkout=${param.checkout || ""}`,
       providesTags: ["billings"],
     }),
     getDetailBilings: builder.query<any, any>({

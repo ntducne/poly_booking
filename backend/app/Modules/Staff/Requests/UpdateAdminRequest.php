@@ -15,11 +15,12 @@ class UpdateAdminRequest extends Request
     {
         return [
             'name' => ['bail', 'required', 'string'],
-            'email' => ['bail', 'required', 'email', Rule::unique(Admin::class, 'email')->ignore($this->admin, $this->column_id)],
+            'email' => ['bail', 'required', 'email', Rule::unique(Admin::class)->ignore($this->admin, $this->column_id)],
             'new_password' => ['bail', 'nullable', 'string', 'min:6'],
             'confirm_password' => ['bail', 'nullable', 'string', 'min:6', 'same:new_password'],
-            'phone' => ['bail', 'required', 'numeric', 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/', Rule::unique(Admin::class, 'phone')->ignore($this->admin, $this->column_id)],
+            'phone' => ['bail', 'required', 'numeric', 'regex:/(84|0[3|5|7|8|9])+([0-9]{8})\b/', Rule::unique(Admin::class)->ignore($this->admin, $this->column_id)],
             'status' => ['bail', 'nullable', 'integer', Rule::in(StatusEnum::asArray())],
+            'branch_id' => ['bail', 'required', Rule::exists(Branch::class, $this->column_id)],
             // 'branch_id' => ['bail', 'required', Rule::exists(Branch::class, $this->column_id)],
             'role' => ['bail', 'required', 'string'],
             'image' => ['bail', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],

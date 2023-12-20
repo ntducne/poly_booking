@@ -15,7 +15,7 @@ const utilitiesApi = createApi({
     endpoints: (builder) => ({
         getAllUtilitie: builder.query<any, any>({
             // query: (query) => `admin/rooms/types?page=${query.page || 1}`,
-            query: () => `utilities`,
+            query: (page) => `utilities?page=${page || 1}`,
             providesTags: ['Utilities']
         }),
         createUtilitie: builder.mutation<any, any>({

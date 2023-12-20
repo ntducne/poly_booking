@@ -39,6 +39,7 @@ class ForgotPasswordController extends Controller
         $passwordReset = $this->passwordReset->create([
             'email' => $user->email,
             'token' => Str::random(50),
+            'exp' => Carbon::now()->addMinutes(10),
         ], 200);
         if ($passwordReset) {
             $user->notify(new ResetPasswordRequest($passwordReset->token));
@@ -68,7 +69,7 @@ class ForgotPasswordController extends Controller
         else {
             return response()->json([
                 'status' => false,
-                'message' => 'Token is invalid.',
+                'message' => 'Token không hợp lệ !',
             ], 422);
         }
 
