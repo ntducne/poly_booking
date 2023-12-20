@@ -46,11 +46,8 @@ export default function Rooms({}: Props) {
   const { data: dataBranches } = useGetBranchesQuery({});
   const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);
   const onFinish = (values: any) => {
-    if (!values) {
-      return;
-    }
     const { time, branch_id, adult, child, soLuong } = values;
-    if (soLuong > adult) {
+    if (+soLuong > +adult) {
       form.setFieldsValue({
         soLuong: undefined,
         adult: undefined,
@@ -63,7 +60,7 @@ export default function Rooms({}: Props) {
     );
     const dataQuery = {
       adult: adult,
-      child: child,
+      child: child || 0,
       branch_id,
       soLuong: soLuong,
       checkin: formattedDates?.[0],
@@ -104,7 +101,6 @@ export default function Rooms({}: Props) {
       "checkin",
       "checkout",
       "adult",
-      "child",
       "branch_id",
       "soLuong",
     ];
@@ -133,7 +129,7 @@ export default function Rooms({}: Props) {
       const bookingData = {
         room_id: id,
         adults,
-        child: children,
+        child: children || 0,
         num_of_bed,
         room_name: name,
         image: images?.[0]?.image ?? image,
@@ -172,8 +168,10 @@ export default function Rooms({}: Props) {
     if (validateQueryParams(dataQuery)) {
       const dataUpload = {
         ...dataQuery,
+        child: +dataQuery?.child ? +dataQuery?.child : 0,
         amount_room: dataQuery.soLuong,
       };
+      console.log(dataUpload);
 
       delete dataUpload.soLuong;
       searchRooms(dataUpload)
@@ -284,11 +282,11 @@ export default function Rooms({}: Props) {
                       branch_id: dataQuery?.branch_id
                         ? dataQuery?.branch_id
                         : undefined,
-                      soLuong: dataQuery?.soLuong
-                        ? dataQuery?.soLuong
+                      soLuong: +dataQuery?.soLuong
+                        ? +dataQuery?.soLuong
                         : undefined,
-                      adult: dataQuery?.adult ? dataQuery.adult : undefined,
-                      child: dataQuery?.child ? dataQuery?.child : undefined,
+                      adult: +dataQuery?.adult ? +dataQuery.adult : undefined,
+                      child: +dataQuery?.child ? +dataQuery?.child : undefined,
                     }}
                   >
                     <Form.Item

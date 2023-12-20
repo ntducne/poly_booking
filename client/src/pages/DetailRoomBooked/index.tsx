@@ -69,8 +69,11 @@ const BillDetail: React.FC = () => {
           <div className="bg-bgr border border-gray-200 rounded-lg shadow">
             <Link to="#">
               <img
-                className="rounded-t-lg"
-                src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg"
+                className="rounded-t-lg  min-h-[400px] object-cover"
+                src={
+                  data?.data?.booking?.image ||
+                  "https://www.imgacademy.com/sites/default/files/legacy-hotel-rendering-guest-room.jpg"
+                }
                 alt=""
               />
             </Link>

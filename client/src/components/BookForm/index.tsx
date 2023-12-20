@@ -16,12 +16,8 @@ export default function BookForm({}: Props) {
   const [form] = useForm();
   const navigate = useNavigate();
   const onFinish = (values: any) => {
-    if (!values) {
-      return;
-    }
-
     const { time, branch_id, adults, child, soLuong } = values;
-    if (adults < soLuong) {
+    if (+adults < +soLuong) {
       form.setFieldsValue({
         adults: undefined,
         soLuong: undefined,
@@ -162,16 +158,7 @@ export default function BookForm({}: Props) {
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item
-                className=""
-                name="child"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng số trẻ em",
-                  },
-                ]}
-              >
+              <Form.Item className="" name="child">
                 <Select
                   size={window.innerWidth < 768 ? "large" : "middle"}
                   placeholder="Trẻ em"

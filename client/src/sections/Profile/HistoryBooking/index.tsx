@@ -45,6 +45,7 @@ export default function HistoryBooking({}: Props) {
                   <img
                     className="w-full md:max-w-[200px] max-h-[200px] overflow-hidden object-cover rounded-[10px]"
                     src={
+                      item?.booking?.image ||
                       "https://www.imgacademy.com/sites/default/files/legacy-hotel-rendering-guest-room.jpg"
                     }
                     alt=""
@@ -65,10 +66,19 @@ export default function HistoryBooking({}: Props) {
                   </p>
                   <div className="flex gap-3">
                     <div className="flex flex-col">
-                      <p>
+                      <p className="max-w-[200px]">
                         Phòng số:{" "}
                         <span className="font-bold">
-                          {item?.booking?.detail?.[0]?.room_number}
+                          {item?.booking?.detail?.map(
+                            (itemData: any, index: number) => {
+                              return (
+                                itemData.room_number +
+                                (index + 1 >= item?.booking?.detail.length
+                                  ? ""
+                                  : "-")
+                              );
+                            }
+                          )}
                         </span>
                       </p>
                       <p>

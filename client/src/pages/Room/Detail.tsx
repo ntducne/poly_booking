@@ -25,8 +25,6 @@ const Detail = () => {
   const [imagePreviews, setImagePreviews] = useState<any>([]);
   const { slug } = useParams();
   const { data, isLoading, refetch } = useGetDetailQuery(slug);
-  console.log(data);
-
   const rating = useMemo(() => {
     const allStar =
       data?.room?.rate.reduce((acc: any, r: any) => {
@@ -34,8 +32,6 @@ const Detail = () => {
       }, 0) || 0;
     return allStar / data?.room?.rate?.length;
   }, [data]);
-  console.log(rating);
-
   const [cookies] = useCookies(["userInfo"]);
   const [postComment, { isLoading: isLoadingCmt }] = useProcessReviewMutation();
   const [form] = useForm();
@@ -118,20 +114,12 @@ const Detail = () => {
     }
   };
 
-  useEffect(() => {
-    refetch();
-  }, []);
-
   const onFinishFailedComment = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
   const onFinish = (values: any) => {
-    if (!values) {
-      return;
-    }
-
     const { time, branch_id, adult, child, soLuong } = values;
-    if (soLuong > adult) {
+    if (+soLuong > +adult) {
       form.setFieldsValue({
         soLuong: undefined,
         adult: undefined,
@@ -145,7 +133,7 @@ const Detail = () => {
 
     const dataQuery = {
       adult: adult,
-      child: child,
+      child: child || 0,
       branch_id: branch_id?.value,
       amount_room: soLuong,
       checkin: formattedDates?.[0],
@@ -188,7 +176,9 @@ const Detail = () => {
       message.error("Vui lòng chọn số ngày ở");
     }
   };
-
+  useEffect(() => {
+    refetch();
+  }, []);
   useEffect(() => {
     form.setFieldsValue({
       branch_id: {
@@ -197,12 +187,13 @@ const Detail = () => {
       },
     });
   }, [data?.room, data, isLoading]);
+
   return (
     <Page title={data?.room?.name || "Chi tiết phòng"}>
       <div className="px-[20px] md:px-[160px] bg-bgr">
         <div>
           <div className="pt-[140px] flex flex-col-reverse lg:flex-row justify-center gap-3">
-            {isLoading && branchLoading ? (
+            {isLoading || branchLoading ? (
               <div className="flex flex-col gap-2">
                 {Array.from({ length: 8 }).map((_, index) => (
                   <PcLoading key={index} />
@@ -389,7 +380,7 @@ const Detail = () => {
           </div>
         </div>
         <Swiper
-          slidesPerView={1}
+          slidesPerView={2}
           mousewheel={true}
           spaceBetween={20}
           pagination={{
@@ -403,7 +394,7 @@ const Detail = () => {
               return (
                 <SwiperSlide>
                   <img
-                    className="h-[600px] w-[100%] object-cover"
+                    className="h-[300px] w-[100%] object-cover"
                     src={item?.image}
                     alt=""
                   />
