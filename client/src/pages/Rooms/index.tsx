@@ -168,16 +168,7 @@ export default function Rooms({}: Props) {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-  useEffect(() => {
-    if (queryParams?.page && !isLoading) {
-      window.scrollTo({
-        top: 500,
-        left: 0,
-        behavior: "smooth",
-      });
-    }
-  }, [queryParams?.page, isLoading]);
+  }, [page]);
   useEffect(() => {
     refetch();
     refetchBranch();
