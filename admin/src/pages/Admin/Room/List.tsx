@@ -3,13 +3,13 @@ import { Button, Image, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import { MdDeleteForever, MdOutlineDeleteOutline } from "react-icons/md";
-import FormSearch from "../../../component/formSearch";
+import { MdDeleteForever } from "react-icons/md";
 import swal from "sweetalert";
 import Page from "../../../component/page";
 import { useDeleteRoomMutation, useGetRoomsQuery } from "../../../api/room";
 import FormatPrice from "../../../utils/FormatPrice";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 interface DataType {
   key: React.Key;
   name: string;
@@ -28,6 +28,8 @@ const ListRoom = () => {
   const navigate = useNavigate();
   const [dataFetching, setDataFetching] = useState<any>([]);
   const [deleteRoom] = useDeleteRoomMutation();
+  const permission1 = useSelector((state: any) => state.role).permission;
+  const [permissions, setPermissions] = useState<any>(permission1);
   const handlePaginationChange = (page: number) => {
     setPage(page);
     navigate(`/room?page=${page}`);
@@ -50,7 +52,8 @@ const ListRoom = () => {
         };
       })
     );
-  }, [isLoading, data?.data]);
+    setPermissions(permission1);
+  }, [isLoading, data?.data, permission1]);
   const columns: ColumnsType<DataType> = [
     {
       title: "STT",
@@ -147,13 +150,15 @@ const ListRoom = () => {
               <AiOutlineEdit />
             </Link>
           </Button>
-          <Button
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
-            onClick={() => remove(record.key)}
-            type="primary"
-          >
-            <MdDeleteForever />
-          </Button>
+          {permissions?.includes("admin.rooms.destro") && (
+            <Button
+              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5 "
+              onClick={() => remove(record.key)}
+              type="primary"
+            >
+              <MdDeleteForever />
+            </Button>
+          )}
         </Space>
       ),
     },
@@ -189,7 +194,10 @@ const ListRoom = () => {
             icon: "error",
           });
         });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      
+    }
   };
   useEffect(() => {
     if (queryParams.get("page")) {
@@ -204,7 +212,8 @@ const ListRoom = () => {
   return (
     <Page title={`Phòng`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between md:items-center ">
-        <FormSearch />
+        {/* <FormSearch /> */}
+        <div></div>
         <div className="flex flex-col md:flex-row md:ml-2">
           <Link
             to={`/room/add`}
@@ -213,13 +222,13 @@ const ListRoom = () => {
             <AiOutlinePlus />
             Thêm phòng
           </Link>
-          <Link
+          {/* <Link
             to={`/room`}
             className="flex items-center text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-3 py-2.5 text-center md:ml-2 my-1 md:my-0"
           >
             <MdOutlineDeleteOutline />
             Thùng rác
-          </Link>
+          </Link> */}
         </div>
       </div>
       <Table

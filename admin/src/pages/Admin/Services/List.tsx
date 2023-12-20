@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Space, Table } from "antd";
+import { Button, Pagination, Space, Table } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 interface DataType {
   key: React.Key;
   name: string;
   age: number;
   address: string;
 }
-import { MdDeleteForever,  } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import swal from "sweetalert";
 import {
   useDeleteServicesMutation,
@@ -23,12 +23,22 @@ const ListServices = () => {
   const [permissions, setPermissions] = useState<any>(permission1);
   useEffect(() => {
     setPermissions(permission1);
-  },[permission1])
-  
+  }, [permission1]);
 
-  const { data: dataServices, isLoading } = useGetServicesQuery({});
+  const [page, setPage] = useState<number>(1);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const navigate = useNavigate();
+
+  const { data: dataServices, isLoading, refetch } = useGetServicesQuery(page);
 
   const [deleteServices] = useDeleteServicesMutation();
+
+  const handlePaginationChange = (page: number) => {
+    setPage(page);
+    navigate(`/services?page=${page}`);
+    refetch();
+  };
 
   const columns: ColumnsType<any> = [
     {
@@ -134,6 +144,12 @@ const ListServices = () => {
     }
   };
 
+  useEffect(() => {
+    if (queryParams.get("page")) {
+      const page: any = queryParams.get("page");
+      setPage(+page);
+    }
+  }, [location?.search]);
   return (
     <Page title={`Dịch vụ`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
@@ -146,7 +162,6 @@ const ListServices = () => {
             <AiOutlinePlus />
             Thêm dịch vụ
           </Link>
-      
         </div>
       </div>
       <Table
@@ -156,8 +171,16 @@ const ListServices = () => {
         columns={columns}
         dataSource={data}
         onChange={onChange}
-        pagination={{ pageSize: 10 }}
+        pagination={false}
       />
+      <div className="flex justify-end items-center mt-5">
+        <Pagination
+          defaultCurrent={1}
+          total={+dataServices?.meta?.last_page * 10}
+          onChange={handlePaginationChange}
+          current={page}
+        />
+      </div>
     </Page>
   );
 };

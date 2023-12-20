@@ -401,9 +401,7 @@ class RoomRepository
     public function processRenew($request)
     {
         $room_id = $request->room_id;
-        $billing = $this->billing->where('booking_id', $request->booking_id)
-            ->where('branch_id', $request->user()->branch_id)
-            ->first();
+        $billing = $this->billing->where('booking_id', $request->booking_id)->where('branch_id', $request->user()->branch_id)->first();
         $booking = $this->booking->find($billing->booking_id);
         $bookDetail = $this->bookDetail->where('booking_id', $booking->id)->first();
         if ($room_id == $bookDetail->room_id) {
@@ -417,7 +415,7 @@ class RoomRepository
             $newCheckout = Carbon::parse($request->newCheckout)->addHours(12)->format('Y-m-d H:i:s');
             $number_of_nights = Carbon::parse($newCheckIn)->diffInDays(Carbon::parse($newCheckout));
             $provisional = $this->calculateProvisional($price_per_night, $room_discount, $number_of_nights, $newAmountRoom);
-//            // Trường hợp 1: Số lượng phòng gia hạn không thay đổi
+            // Trường hợp 1: Số lượng phòng gia hạn không thay đổi
             if ($count_room_detail == $newAmountRoom) {
                 $this->bookDetail
                     ->where('booking_id', $booking->id)
@@ -426,7 +424,7 @@ class RoomRepository
                         'is_checkout' => $newCheckout,
                     ]);
             }
-            // Trường hợp 1: Số lượng phòng gia hạn nhỏ hơn số lượng phòng ban đầu
+            // Trường hợp 2: Số lượng phòng gia hạn nhỏ hơn số lượng phòng ban đầu
             if ($count_room_detail > $newAmountRoom) {
                 $roomNumberRenew = $request->roomNumberRenew;
                 if (Carbon::parse(Carbon::now()->format('Y-m-d H:i:s'))->eq($newCheckout))  // ngày hiện tại bằng ngày checkout mới
@@ -456,7 +454,7 @@ class RoomRepository
                         ]);
                 }
             }
-            // Trường hợp 2: Số lượng phòng gia hạn lớn hơn số lượng phòng ban đầu
+            // Trường hợp 3: Số lượng phòng gia hạn lớn hơn số lượng phòng ban đầu
             if ($count_room_detail < $newAmountRoom) {
                 $searchRoom = $this->processSearchRoom($request);
                 if (count($searchRoom) > 0) {
@@ -494,13 +492,13 @@ class RoomRepository
                         'is_checkout' => $newCheckout,
                     ]);
             }
-            $booking->update([
+            $this->booking->where('booking_id', $request->booking_id)->update([
                 'checkout' => $newCheckout,
                 'provisional' => $booking->provisional + $provisional,
                 'amount_room' => $newAmountRoom,
             ]);
             $newTotal = $billing->total + $provisional;
-            $billing->update([
+            $this->billing->where('booking_id', $request->booking_id)->where('branch_id', $request->user()->branch_id)->update([
                 'total' => $newTotal,
             ]);
             $this->history_handle->create([

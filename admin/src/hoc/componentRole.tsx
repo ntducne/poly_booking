@@ -15,7 +15,6 @@ import ListPolicy from "../pages/Admin/Policy/List";
 import AddRoom from "../pages/Admin/Room/Add";
 import EditRoom from "../pages/Admin/Room/Edit";
 import ListRoom from "../pages/Admin/Room/List";
-import EditRoomExtend from "../pages/Admin/RoomExtend/Edit";
 import AddRoomType from "../pages/Admin/RoomType/Add";
 import EditRoomType from "../pages/Admin/RoomType/Edit";
 import ListRoomType from "../pages/Admin/RoomType/List";
@@ -25,6 +24,7 @@ import AddServices from "../pages/Admin/Services/Add";
 import EditServices from "../pages/Admin/Services/Edit";
 import ListServices from "../pages/Admin/Services/List";
 import withAuthorization from "./withAuthorization";
+import EditRoomUtilities from "../pages/Admin/RoomUtilities/Edit";
 
 const AuthorizedListBranches = withAuthorization(ListBranches, 'admin.branches.index');
 const AuthorizedStoreBranches = withAuthorization(AddBranche, 'admin.branches.store');
@@ -36,7 +36,7 @@ const AuthorizedUpdateTypes = withAuthorization(EditRoomType, 'admin.types.updat
 
 const AuthorizedListUtilities = withAuthorization(ListRoomUtilities, 'admin.utilities.index');
 const AuthorizedStoreUtilities = withAuthorization(AddRoomUtilities, 'admin.utilities.store');
-const AuthorizedUpdateUtilities = withAuthorization(EditRoomExtend, 'admin.utilities.update');
+const AuthorizedUpdateUtilities = withAuthorization(EditRoomUtilities, 'admin.utilities.update');
 
 const AuthorizedListRooms = withAuthorization(ListRoom, 'admin.rooms.index');
 const AuthorizedStoreRooms = withAuthorization(AddRoom, 'admin.rooms.store');

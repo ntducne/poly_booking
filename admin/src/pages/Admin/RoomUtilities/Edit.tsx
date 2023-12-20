@@ -1,5 +1,5 @@
 // import React, { useState } from "react";
-import { Form, Input, Button, Select, Typography, Space } from "antd";
+import { Form, Input, Button, Select, Typography, Space, Skeleton } from "antd";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCheck } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
@@ -52,7 +52,7 @@ const EditRoomUtilities = () => {
       })
       .catch((error) => {
         // Xử lý lỗi nếu có lỗi xảy ra trong quá trình gọi mutation hoặc xử lý kết quả
-        toast.error("Có lỗi xảy ra khi cập nhật thông tin loại phòng");
+        toast.error("Có lỗi xảy ra khi cập nhật thông tin tiện ích phòng");
         console.error(error);
       });
   };
@@ -66,8 +66,9 @@ const EditRoomUtilities = () => {
     form.setFieldsValue(data?.data);
   }, [isLoading, data?.data]);
   if (isLoading) {
-    return <>loading...</>;
+    return <><Skeleton/></>;
   }
+  
 
   return (
     <div>
@@ -82,13 +83,10 @@ const EditRoomUtilities = () => {
           {...formItemLayout}
           onFinish={onFinish}
           initialValues={{
-            "input-number": 1,
-            "checkbox-group": ["A", "B"],
-            rate: 3.5,
-            "color-picker": null,
+            "room_id" : data?.data?.room_id
           }}
           style={{ maxWidth: 1000 }}
-          className="grid grid-cols-1 xl:grid-cols-2"
+          className="grid grid-cols-1"
         >
           <Form.Item
             label="Tiện ích phòng"
@@ -106,7 +104,7 @@ const EditRoomUtilities = () => {
             hasFeedback
             rules={[{ required: true, message: "Vui lòng nhập tên phòng!" }]}
           >
-            <Select>
+            <Select mode="multiple">
               {dataRooms?.data?.map((item: any) => {
                 return (
                   <Option key={item.id} value={item.id}>
@@ -125,7 +123,7 @@ const EditRoomUtilities = () => {
                 htmlType="submit"
               >
                 <AiOutlineCheck className="text-[#fff] " />
-                <Text className=" text-[#fff] ml-1">Thêm</Text>
+                <Text className=" text-[#fff] ml-1">Sửa</Text>
               </Button>
               <Button
                 className="flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-4 py-2.5"

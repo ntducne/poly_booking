@@ -12,6 +12,7 @@ import {
   Radio,
   Row,
   Select,
+  Skeleton,
   Space,
   Typography,
   Upload,
@@ -173,7 +174,7 @@ const EditRoom = () => {
     form.setFieldsValue(defaultValue);
   }, [isLoading, data?.data]);
   if (isLoading || isLoadingTypes) {
-    return <>loading...</>;
+    return <><Skeleton/></>;
   }
   return (
     <div>
@@ -237,7 +238,7 @@ const EditRoom = () => {
             name="children"
             rules={[{ required: true, message: "Vui lòng nhập tối đa trẻ em" }]}
           >
-            <InputNumber min={1} className="w-full" />
+            <InputNumber min={0} className="w-full" />
           </Form.Item>
           <Form.Item
             label="Diện tích"

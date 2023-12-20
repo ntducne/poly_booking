@@ -12,7 +12,7 @@ import {
   Modal,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useBookingRoomMutation,
   useSearchRoomMutation,
@@ -23,9 +23,9 @@ import Page from "../../../component/page";
 import formatMoneyVN from "../../../config/formatMoneyVN";
 import { DetailRoomModal } from "../../../component/Modal/DetailRoomModal";
 import moment from "moment";
+import { useSelector } from "react-redux";
 // import { useGetAllBranchesQuery } from "../../../api/branches";
 // import { role } from "../../../hoc/withAuthorization";
-
 
 export default function RoomBooking() {
   const [form] = Form.useForm();
@@ -42,6 +42,13 @@ export default function RoomBooking() {
   const [dataRoom, setDataRoom] = useState([] as RoomInterface[]);
 
   const [bookingRoom] = useBookingRoomMutation();
+
+  const permission1 = useSelector((state: any) => state.role).permission;
+  const [permissions, setPermissions] = useState<any>(permission1);
+
+  useEffect(() => {
+    setPermissions(permission1);
+  }, [permission1]);
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -364,13 +371,15 @@ export default function RoomBooking() {
             </Form.Item>
             <div className="flex items-center justify-end">
               <Form.Item>
-                <Button
-                  htmlType="submit"
-                  className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l font-medium rounded-lg text-sm px-8  text-center mb-2"
-                  icon={<SearchOutlined />}
-                >
-                  Tìm
-                </Button>
+                {permissions?.includes("admin.booking.search") && (
+                  <Button
+                    htmlType="submit"
+                    className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l font-medium rounded-lg text-sm px-8  text-center mb-2"
+                    icon={<SearchOutlined />}
+                  >
+                    Tìm
+                  </Button>
+                )}
               </Form.Item>
             </div>
           </Card>
