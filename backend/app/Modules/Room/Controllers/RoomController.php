@@ -53,8 +53,8 @@ class RoomController extends Controller
             $object['slug'] = convertToSlug($request->name);
             $object['amount_room'] = (int)$object['amount'];
             $object['branch_id'] =  $request->user()->branch_id;
+            $object['num_of_bed'] = json_decode(stripslashes($request->num_of_bed), true);
             $room_number = [];
-
             for ($i = 1; $i <= $object['amount_room']; $i++) {
                 if ($i < 10) {
                     $i = '0' . $i;
@@ -146,7 +146,8 @@ class RoomController extends Controller
                 $object->slug = convertToSlug($request->name);
             }
             $arr = $request->all();
-            $room = $object->update($arr);
+            $arr['num_of_bed'] = json_decode(stripslashes($request->num_of_bed), true);
+            $object->update($arr);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Update phòng thành công!',
