@@ -37,7 +37,20 @@ class BookingRepository
                 ->paginate(10)
         );
     }
-
+    public function orderSearchItem($request)  {
+        $billing = $this->billing
+        ->where('branch_id', '=', $request->user()->branch_id)
+        ->where('billingCode','=',(int)$request->billingCode)->first();
+        if (!$billing) {
+            return response()->json(
+                [
+                    'status'=>'Error',
+                    'message'=>'Mã hóa đơn không tồn tại !'
+                ]
+            );
+        }
+        return new BillingResource($billing);
+    }
     public function orderDetail($request, $id): BillingResource
     {
         $billingId =  $this->billing
