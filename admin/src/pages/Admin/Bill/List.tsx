@@ -1,5 +1,14 @@
 // import React from "react";
-import { Button, DatePicker, Form, Input, Pagination, Select, Space, Table } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  Pagination,
+  Select,
+  Space,
+  Table,
+} from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -25,7 +34,11 @@ const BillList = () => {
     booking_date: queryParams.get("booking_date") ?? "",
   });
 
-  const { data: dataBilings, isLoading, refetch } = useGetBilingsQuery<any>(query);
+  const {
+    data: dataBilings,
+    isLoading,
+    refetch,
+  } = useGetBilingsQuery<any>(query);
   const [billings, setBillings] = useState<any[]>([]);
   const navigate = useNavigate();
   const handlePaginationChange = (page: number) => {
@@ -223,28 +236,51 @@ const BillList = () => {
       setPage(+page);
     }
   }, [location?.search]);
-  const filterOption = (input: string, option?: { label: string; value: string }) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   const processSearch = (values: any) => {
     setBillings([]);
     // refetch();
     setLoading(true);
-    values.booking_date = values.booking_date ? dayjs(values.booking_date.$d).format("YYYY-MM-DD") : null;
-    values.checkin = values.checkin ? dayjs(values.checkin.$d).format("YYYY-MM-DD") : null;
-    values.checkout = values.checkout ? dayjs(values.checkout.$d).format("YYYY-MM-DD") : null;
+    values.booking_date = values.booking_date
+      ? dayjs(values.booking_date.$d).format("YYYY-MM-DD")
+      : null;
+    values.checkin = values.checkin
+      ? dayjs(values.checkin.$d).format("YYYY-MM-DD")
+      : null;
+    values.checkout = values.checkout
+      ? dayjs(values.checkout.$d).format("YYYY-MM-DD")
+      : null;
     values.status = values.status ? +values.status : null;
     values.billingCode = values.billingCode ? +values.billingCode : null;
     values.user_info = values.user_info ? values.user_info : null;
     setQuery({
       page: 1,
       ...values,
-    })
-  }
+    });
+  };
 
   return (
     <Page title={`Hóa đơn`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <div className="flex flex-col md:flex-row"></div>
+        {/* <div className="flex flex-col md:flex-row">
+          <input
+            className="border border-gray-300 rounded-lg px-3 py-2 mr-2"
+            placeholder="Tìm kiếm..."
+            onChange={handleSearchChange}
+          />
+          <select
+            className="border border-gray-300 rounded-lg px-3 py-2"
+            onChange={handleFilterChange}
+          >
+            <option value="">Lọc theo...</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+          </select>
+        </div> */}
       </div>
       <div>
         <Form name="horizontal_login" layout="inline" onFinish={processSearch}>
@@ -265,7 +301,7 @@ const BillList = () => {
           </Form.Item>
           <Form.Item name="status">
             <Select
-            className="w-[200px]"
+              className="w-[200px]"
               showSearch
               placeholder="Trạng thái"
               optionFilterProp="children"
@@ -273,45 +309,55 @@ const BillList = () => {
               options={[
                 {
                   value: "0",
-                  label: 'Giữ phòng',
+                  label: "Giữ phòng",
                 },
                 {
                   value: "1",
-                  label: 'Chờ nhận phòng',
+                  label: "Chờ nhận phòng",
                 },
                 {
-                  value: '2',
-                  label: 'Huỷ đặt phòng',
+                  value: "2",
+                  label: "Huỷ đặt phòng",
                 },
                 {
-                  value: '3',
-                  label: 'Đã nhận phòng',
+                  value: "3",
+                  label: "Đã nhận phòng",
                 },
                 {
-                  value: '4',
-                  label: 'Đã trả phòng',
+                  value: "4",
+                  label: "Đã trả phòng",
                 },
                 {
-                  value: '6',
-                  label: 'Huỷ thanh toán',
+                  value: "6",
+                  label: "Huỷ thanh toán",
                 },
                 {
-                  value: '7',
-                  label: 'Thanh toán lỗi',
-                }
+                  value: "7",
+                  label: "Thanh toán lỗi",
+                },
               ]}
             />
           </Form.Item>
 
           <Form.Item shouldUpdate>
             {() => (
-              <Button
-              loading={loading}
-                icon={<SearchOutlined />}
-                htmlType="submit"
-              >
-                Tìm
-              </Button>
+              <>
+                <Button
+                  loading={loading}
+                  icon={<SearchOutlined />}
+                  htmlType="submit"
+                >
+                  Tìm
+                </Button>
+                <Button
+                  className="ml-1"
+                  loading={loading}
+                  // icon={< />}
+                  htmlType="reset"
+                >
+                  Làm mới
+                </Button>
+              </>
             )}
           </Form.Item>
         </Form>
