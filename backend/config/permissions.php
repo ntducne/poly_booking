@@ -4,13 +4,13 @@ return [
     // 'admin.notifications.index' => 'Danh sách thông báo',
     // 'admin.contact.index' => 'Danh sách liên hệ',
     
-    'admin.statisticals.index' => 'Xem thống kê',
+    // 'admin.statisticals.index' => 'Xem thống kê',
 
-    'admin.branches.index' => 'Danh sách chi nhánh',
-    'admin.branches.store' => 'Thêm chi nhánh',
-    'admin.branches.show' => 'Chi tiết chi nhánh',
-    'admin.branches.update' => 'Cập nhật chi nhánh',
-    'admin.branches.destroy' => 'Xóa chi nhánh',
+    // 'admin.branches.index' => 'Danh sách chi nhánh',
+    // 'admin.branches.store' => 'Thêm chi nhánh',
+    // 'admin.branches.show' => 'Chi tiết chi nhánh',
+    // 'admin.branches.update' => 'Cập nhật chi nhánh',
+    // 'admin.branches.destroy' => 'Xóa chi nhánh',
 
     'admin.staffs.index' => 'Danh sách nhân viên',
     'admin.staffs.store' => 'Thêm nhân viên',
@@ -50,11 +50,11 @@ return [
     'admin.rates.update' => 'Cập nhật đánh giá',
     'admin.rates.destroy' => 'Xóa đánh giá',
 
-    'admin.policies.index' => 'Danh sách chính sách hủy',
-    'admin.policies.store' => 'Thêm chính sách hủy',
-    'admin.policies.show' => 'Chi tiết chính sách hủy',
-    'admin.policies.update' => 'Cập nhật chính sách hủy',
-    'admin.policies.destroy' => 'Xóa chính sách hủy',
+    // 'admin.policies.index' => 'Danh sách chính sách hủy',
+    // 'admin.policies.store' => 'Thêm chính sách hủy',
+    // 'admin.policies.show' => 'Chi tiết chính sách hủy',
+    // 'admin.policies.update' => 'Cập nhật chính sách hủy',
+    // 'admin.policies.destroy' => 'Xóa chính sách hủy',
 
     'admin.services.index' => 'Danh sách dịch vụ',
     'admin.services.store' => 'Thêm dịch vụ',
@@ -65,8 +65,8 @@ return [
     'admin.billings.index' => 'Danh sách hoá đơn',
     'admin.billings.show' => 'Chi tiết hoá đơn',
 
-    'admin.bookings.store' => 'Thêm đặt phòng',
-    'admin.bookings.search' => 'Tìm kiếm đặt phòng',
+    'admin.booking.store' => 'Thêm đặt phòng',
+    'admin.booking.search' => 'Tìm kiếm đặt phòng',
     'admin.booking.handle.cancel' => 'Hủy đặt phòng',
     'admin.booking.handle.checkin' => 'Checkin đặt phòng',
     'admin.booking.handle.checkout' => 'Checkout đặt phòng  ',

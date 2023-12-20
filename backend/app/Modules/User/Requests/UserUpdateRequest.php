@@ -36,7 +36,7 @@ class UserUpdateRequest extends Request
             ],
             'phone' => [
                 'bail', 'required', new PhoneRule(),
-                Rule::unique(User::class, 'phone')->ignore($this->user,$this->column_id),
+                Rule::unique(User::class, 'phone')->ignore($this->user, $this->column_id),
             ],
             'address' => [ 'required' ],
             'status' => [

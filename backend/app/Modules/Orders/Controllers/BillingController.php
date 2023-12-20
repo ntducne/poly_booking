@@ -31,7 +31,7 @@ class BillingController extends Controller
     }
 
     public function show(Request $request, $id)
-    {
+    {   
         return $this->bookingRespository->orderDetail($request, $id);
     }
     

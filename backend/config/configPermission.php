@@ -9,14 +9,14 @@ return [
     //     'name' => 'contact',
     //     'label' => 'Liên hệ'
     // ],
-    [
-        'name' => 'statisticals',
-        'label' => 'Thống kê'
-    ],
-    [
-        'name' => 'branches',
-        'label' => 'Chi nhánh'
-    ],
+    // [
+    //     'name' => 'statisticals',
+    //     'label' => 'Thống kê'
+    // ],
+    // [
+    //     'name' => 'branches',
+    //     'label' => 'Chi nhánh'
+    // ],
     [
         'name' => 'staffs',
         'label' => 'Nhân viên'
@@ -42,10 +42,10 @@ return [
         'name' => 'rates',
         'label' => 'Đánh giá'
     ],
-    [
-        'name' => 'policies',
-        'label' => 'Chính sách huỷ/đặt phòng'
-    ],
+    // [
+    //     'name' => 'policies',
+    //     'label' => 'Chính sách huỷ/đặt phòng'
+    // ],
     // [
     //     'name' => 'promotions',
     //     'label' => 'Khuyến mãi'

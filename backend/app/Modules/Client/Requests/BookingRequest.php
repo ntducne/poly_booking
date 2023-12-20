@@ -48,7 +48,7 @@ class BookingRequest extends Request {
             ],
 
             'email' => [
-                'required',
+                'nullable',
                 new MailRule(),
             ],
 

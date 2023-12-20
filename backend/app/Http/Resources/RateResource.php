@@ -22,10 +22,10 @@ class RateResource extends JsonResource
         [
             'id' => $this->id,
             'user' => new UserResource(User::find($this->user_id)),
-            'content'=>$this->content,
-            'rate_at'=>$this->rate_at,
+            'content'=>$this->comment,
+            'rate_at'=>$this->time,
             'images'=>$this->images,
-            'star'=> $this->star,
+            'star'=> $this->rate,
             'room' => new RoomResource(Room::find($this->room_id)),
         ];
     }

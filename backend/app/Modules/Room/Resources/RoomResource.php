@@ -24,10 +24,15 @@ class RoomResource extends JsonResource
                 ],
                 'content' => $rate->comment,
                 'star' => $rate->rate,
-                'time'=> $rate->time
+                'time'=> $rate->time,
+                'image' => $rate->images
             ];
         }
-        return $arr;
+        // reverse array
+        return array_reverse($arr);
+        
+        // return $arr;
+        
     }
 
     public function getUtilities(){
@@ -57,10 +62,10 @@ class RoomResource extends JsonResource
             'pay_is_checkin' => $this->pay_is_checkin,
             'description' => $this->description,
             'discount' => $this->discount,
-            'status' => $this->status,
+            // 'status' => $this->status,
             // 'policies_and_information' => $this->policies_and_information,
             'num_of_bed' => $this->num_of_bed,
-            'bed_size' => $this->bed_size,
+            // 'bed_size' => $this->bed_size,
             'branch' => new BranchResource(Branch::find($this->branch_id)->first()),
             'images' => $this->getImages(),
             'rate' => $this->getRate(),
