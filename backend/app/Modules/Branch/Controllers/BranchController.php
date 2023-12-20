@@ -8,6 +8,7 @@ use App\Modules\Branch\Requests\StoreBranchRequest;
 use App\Modules\Branch\Requests\UpdateBranchRequest;
 use App\Modules\Branch\Resources\BranchResource;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class BranchController extends Controller
@@ -17,11 +18,14 @@ class BranchController extends Controller
     public function __construct(){
         $this->branch = new Branch();
     }
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $branches = $this->branch->paginate(10);
-            return BranchResource::collection($branches);
+            $branches = $this->branch->newQuery();
+            if($request->name){
+                $branches->where('name', 'LIKE', '%' . $request->name . '%');
+            }
+            return BranchResource::collection($branches->paginate(10));
         } catch(Exception $exception){
             Log::debug($exception->getMessage());
             return response()->json([
