@@ -100,3 +100,45 @@
   2023-12-20 00:48:24 App\Events\BookingEvent .................. 756.51ms DONE
   2023-12-20 12:00:25 App\Notifications\ResetPasswordRequest ......... RUNNING
   2023-12-20 12:00:29 App\Notifications\ResetPasswordRequest ......... 4s DONE
+  2023-12-20 14:19:13 App\Notifications\ResetPasswordRequest ......... RUNNING
+  2023-12-20 14:19:18 App\Notifications\ResetPasswordRequest ......... 4s DONE
+  2023-12-20 16:48:50 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:48:51 App\Events\BookingEvent .................. 850.56ms DONE
+  2023-12-20 16:48:52 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:48:52 App\Notifications\BookRoom ............... 162.18ms FAIL
+  2023-12-20 16:49:21 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:49:22 App\Events\BookingEvent .................. 629.19ms DONE
+  2023-12-20 16:49:23 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:49:23 App\Notifications\BookRoom ............... 205.30ms FAIL
+  2023-12-20 16:49:42 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:49:43 App\Events\BookingEvent .................. 683.74ms DONE
+  2023-12-20 16:49:44 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:49:44 App\Notifications\BookRoom ............... 159.88ms FAIL
+  2023-12-20 16:49:58 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:49:59 App\Events\BookingEvent .................. 712.92ms DONE
+  2023-12-20 16:50:00 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:50:01 App\Notifications\BookRoom ............... 173.26ms FAIL
+  2023-12-20 16:50:24 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:50:25 App\Events\BookingEvent .................. 714.79ms DONE
+  2023-12-20 16:50:26 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:50:26 App\Notifications\BookRoom ............... 176.64ms FAIL
+  2023-12-20 16:50:49 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:50:50 App\Events\BookingEvent .................. 674.39ms DONE
+  2023-12-20 16:50:51 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:50:51 App\Notifications\BookRoom ............... 201.27ms FAIL
+  2023-12-20 16:51:01 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:51:02 App\Events\BookingEvent .................. 693.65ms DONE
+  2023-12-20 16:51:03 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:51:03 App\Notifications\BookRoom ............... 147.63ms FAIL
+  2023-12-20 16:51:05 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:51:05 App\Events\BookingEvent .................. 630.80ms DONE
+  2023-12-20 16:51:07 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:51:07 App\Notifications\BookRoom ............... 162.14ms FAIL
+  2023-12-20 16:54:58 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:54:59 App\Events\BookingEvent .................. 724.48ms DONE
+  2023-12-20 16:55:00 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:55:00 App\Notifications\BookRoom ............... 217.89ms FAIL
+  2023-12-20 16:55:15 App\Events\BookingEvent ........................ RUNNING
+  2023-12-20 16:55:16 App\Events\BookingEvent .................. 665.58ms DONE
+  2023-12-20 16:55:17 App\Notifications\BookRoom ..................... RUNNING
+  2023-12-20 16:55:17 App\Notifications\BookRoom ............... 154.32ms FAIL

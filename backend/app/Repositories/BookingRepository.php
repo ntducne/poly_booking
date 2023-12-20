@@ -32,17 +32,41 @@ class BookingRepository
     {
         $billing = $this->billing->where('branch_id', '=', $request->user()->branch_id)->orderBy('id', 'desc')->newQuery();
         if($request->billingCode){
-            $billing->where('billingCode', $request->billingCode);
+            $billing->where('billingCode', +$request->billingCode);
         }
-        if($request->status){
-            $billing->where('status', $request->status);
+        if($request->status != ''){
+            $billing->where('status', +$request->status);
+        }
+        if($request->checkin){
+            $booking = $this->booking->where('checkin', Carbon::parse($request->checkin)->addHour(14)->format('Y-m-d H:i:s'))->get();
+            $booking_id = [];
+            foreach ($booking as $key => $value) {
+                $booking_id[] = $value->_id;
+            }
+            $billing->whereIn('booking_id', $booking_id);
+        }
+        if($request->checkout){
+            $booking = $this->booking->where('checkout', Carbon::parse($request->checkout)->addHour(12)->format('Y-m-d H:i:s'))->get();
+            $booking_id = [];
+            foreach ($booking as $key => $value) {
+                $booking_id[] = $value->_id;
+            }
+            $billing->whereIn('booking_id', $booking_id);
         }
         if($request->user_info){
-            $booking = $this->booking->where('branch_id', '=', $request->user()->branch_id)
+            $booking = $this->booking
             ->where('representative.name', 'like', '%'.$request->user_info.'%')
             ->orWhere('representative.email', 'like', '%'.$request->user_info.'%')
             ->orWhere('representative.phone', 'like', '%'.$request->user_info.'%')
             ->get();
+            $booking_id = [];
+            foreach ($booking as $key => $value) {
+                $booking_id[] = $value->_id;
+            }
+            $billing->whereIn('booking_id', $booking_id);
+        }
+        if($request->booking_date){
+            $booking = $this->booking->where('booking_date', Carbon::parse($request->booking_date)->format('Y-m-d'))->get();
             $booking_id = [];
             foreach ($booking as $key => $value) {
                 $booking_id[] = $value->_id;
@@ -94,12 +118,6 @@ class BookingRepository
         $services = $request->services;
         $arrService = [];
         $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
-        if($billing->status !== 3){
-            return [
-                'status' => 'error',
-                'message' => 'Không thể thêm dịch vụ !',
-            ];
-        }
         $total = 0;
         if(count($billing->services) > 0){
             foreach ($services as $key => $value) {
@@ -159,12 +177,14 @@ class BookingRepository
             return response()->json([
                 'status' => 'error',
                 'message' => 'Không tìm thấy hóa đơn !',
+                'data' => null
             ]);
         }
         if ($billing->status != 3) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Chưa nhận phòng không thể thêm người !'
+                'message' => 'Chưa nhận phòng không thể thêm người !',
+                'data' => null
             ]);
         }
         $booking = $this->booking->where('_id', '=', $billing->booking_id)->first();
@@ -196,12 +216,12 @@ class BookingRepository
 
     public function processCheckIn($request)
     {
-        
         $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
         if (!$billing) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Không tìm thấy hóa đơn !',
+                'data' => null
             ]);
         }
         if (
@@ -213,15 +233,12 @@ class BookingRepository
         ) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Không thể nhận phòng !'
+                'message' => 'Không thể nhận phòng !',
+                'data' => null
             ]);
         }
         $this->billing->where('_id', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
             'status' => 3
-        ]);
-        $booking_id = $billing->booking_id;
-        BookDetail::where('booking_id', $booking_id)->update([
-            'status' => 1
         ]);
         $values = [
             'booking_id' => $request->billing_id,
@@ -240,18 +257,7 @@ class BookingRepository
     public function processCheckOut($request)
     {
         $billing = $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->first();
-        if (!$billing) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Không tìm thấy hóa đơn !',
-            ]);
-        }
-        if ($billing->status != 3) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Không thể trả phòng !',
-            ]);
-        }
+
         // lấy các service trong billing và kiểm tra nếu isPay = 0 thì cập nhật lên 1
         $services = $billing->services;
         foreach ($services as $key => $value) {
@@ -262,12 +268,22 @@ class BookingRepository
         $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
             'services' => $services
         ]);
+        if (!$billing) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Không tìm thấy hóa đơn !',
+                'data' => null
+            ]);
+        }
+        if ($billing->status != 3) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Không thể trả phòng !',
+                'data' => null
+            ]);
+        }
         $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
             'status' => 4
-        ]);
-        $booking_id = $billing->booking_id;
-        BookDetail::where('booking_id', $booking_id)->update([
-            'status' => 2
         ]);
         $values = [
             'booking_id' => $request->billing_id,
@@ -297,10 +313,6 @@ class BookingRepository
             $this->billing->where('_id', '=', $request->billing_id)->where('branch_id', '=', $request->user()->branch_id)->update([
                 'status' => 2
             ]);
-            $booking_id = $billing->booking_id;
-            BookDetail::where('booking_id', $booking_id)->update([
-                'status' => 3
-            ]);
             $values = [
                 'booking_id' => $request->billing_id,
                 'admin_id' => $request->user()->id,
@@ -323,7 +335,10 @@ class BookingRepository
 
     public function checkBooking($request){
         $billing_id = $request->billing_id;
-        $billing = $this->billing->where('_id', '=', $billing_id)->orWhere('billingCode', '=', $billing_id)->first();
+        $billing = $this->billing
+            ->where('_id', '=', $billing_id)
+            ->orWhere('billingCode', '=', $billing_id)
+            ->first();
         if (!$billing) {
             return response()->json([
                 'status' => 'error',

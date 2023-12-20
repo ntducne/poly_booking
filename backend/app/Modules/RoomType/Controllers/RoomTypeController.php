@@ -24,9 +24,16 @@ class RoomTypeController extends Controller
     public function index(Request $request): JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         try {
+            
             $roomTypes = $this->roomType
                 ->where('branch_id', $request->user()->branch_id)
                 ->orderBy('id', 'desc');
+
+                if ($request->has('name')) {
+                    $searchTerm = $request->input('name');
+                    $query->where('room_type_name', 'LIKE', '%' . $searchTerm . '%');
+                }
+
             if($request->page){
                 if($request->page == 'all') {
                     $roomTypes = $roomTypes->get();
