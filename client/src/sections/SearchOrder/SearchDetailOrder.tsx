@@ -10,6 +10,8 @@ type Props = {};
 export default function SearchDetailOrder({}: Props) {
   const [searchBillingId, { isLoading }] = useSearchOrdersMutation();
   const [dataSearch, setDataSearch] = useState<any>({});
+  console.log(dataSearch);
+
   const onFinish = (values: any) => {
     if (values) {
       searchBillingId({ billing_id: values.billing_id })
@@ -95,9 +97,17 @@ export default function SearchDetailOrder({}: Props) {
                     <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside ">
                       <li>Chi nhánh: {dataSearch?.branch?.name}</li>
                       <li>Loại phòng: {dataSearch?.booking?.roomType?.name}</li>
-                      <li>Nhận phòng: {dataSearch?.booking?.checkin}</li>
                       <li>
-                        Dự kiến trả phòng: {dataSearch?.booking?.checkout}
+                        Nhận phòng:{" "}
+                        {dayjs(dataSearch?.booking?.checkin).format(
+                          "HH:mm DD/MM/YYYY"
+                        )}{" "}
+                      </li>
+                      <li>
+                        Dự kiến trả phòng:{" "}
+                        {dayjs(dataSearch?.booking?.checkout).format(
+                          "HH:mm DD/MM/YYYY"
+                        )}
                       </li>
                       <li>
                         Số đêm:{" "}
@@ -106,7 +116,12 @@ export default function SearchDetailOrder({}: Props) {
                           dataSearch?.booking?.checkout.split(" ")?.[0]
                         )}
                       </li>
-                      <li>Thời gian thanh toán: {dataSearch.payment_date}</li>
+                      <li>
+                        Thời gian thanh toán:{" "}
+                        {dayjs(dataSearch.payment_date).format(
+                          "HH:mm DD/MM/YYYY"
+                        )}
+                      </li>
                       <li>Hình thức thanh toán: {dataSearch.payment_method}</li>
                     </ul>
                   </div>

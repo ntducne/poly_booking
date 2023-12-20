@@ -47,7 +47,9 @@ export default function Rooms({}: Props) {
   const [data, setData] = useState<any>({});
   const { data: dataAll, isLoading, refetch } = useGetRoomsQuery(page);
   const [searchRooms, { isLoading: loadingSearch }] = useSearchRoomsMutation();
-  const { data: dataBranches } = useGetBranchesQuery({});
+  const { data: dataBranches, refetch: refetchBranch } = useGetBranchesQuery(
+    {}
+  );
   const [cookie, setCookie] = useCookies(["bookingNow", "roomSearch"]);
   const onFinish = (values: any) => {
     const { time, branch_id, adult, child, soLuong } = values;
@@ -169,6 +171,7 @@ export default function Rooms({}: Props) {
   }, []);
   useEffect(() => {
     refetch();
+    refetchBranch();
   }, []);
   useEffect(() => {
     setWidth(window.innerWidth);
@@ -229,9 +232,6 @@ export default function Rooms({}: Props) {
         </div>
         <div className="pt-primary px-6 md:px-[120px]">
           <div className="container mx-auto w-full flex flex-col justify-start lg:px-0">
-            <div className="mb-[20px] font-bold text-[18px]">
-              Đã tìm được tổng cộng là {data?.data?.length || 0} phòng
-            </div>
             <div className="flex lg:flex-row lg:justify-center flex-col-reverse justify-start lg:max-w-none lg:px-2 relative">
               <div className="flex flex-col gap-[30px]">
                 {isLoading ? (

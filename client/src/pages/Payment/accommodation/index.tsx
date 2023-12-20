@@ -60,7 +60,6 @@ export default function AccommodationBook() {
       }
     }
   }, []);
-
   const itemsColapper: CollapseProps["items"] = [
     {
       key: "1",
