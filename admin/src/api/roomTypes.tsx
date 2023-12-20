@@ -18,7 +18,7 @@ const roomTypesApi = createApi({
             providesTags: ['RoomType']
         }),
         getRoomType: builder.query<any, any>({
-            query: (query) => `rooms/types?name=${query.name}`,
+            query: (query) => `rooms/types`,
             // query: () => `rooms/types`,
             providesTags: ['RoomType']
         }),
