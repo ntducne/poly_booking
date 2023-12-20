@@ -11,7 +11,7 @@ type Props = {};
 export default function Header({}: Props) {
   const navigate = useNavigate();
   const headerRef = useRef<any>(null);
-  const [cookies] = useCookies(["userInfo"]);
+  const [cookies, setCookie] = useCookies(["userInfo", "userBook"]);
   const [header, setHeader] = useState(false);
   const [logoutApi] = useProcessLogoutMutation();
   const [toggleBar, setToggleBar] = useState(false);
@@ -28,6 +28,7 @@ export default function Header({}: Props) {
   const handleLogout = async () => {
     await logoutApi({});
     cookies2().Delete("userInfo");
+    setCookie("userBook", {});
     navigate("/auth/login");
   };
   const items: MenuProps["items"] = [
