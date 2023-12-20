@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -215,6 +216,25 @@ class AdminController extends Controller
         }
     }
 
+<<<<<<< HEAD
+    public function getStaff(Request $request){
+        $userId = request()->cookie('user_id');
+        $user = Auth::loginUsingId($userId);
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nhân viên không tồn tại hoặc chưa đăng nhập !',
+                'data' => null
+            ]);
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nhân viên không tồn tại hoặc chưa đăng nhập !',
+                'data' => $user
+            ]);
+        }
+    }
+=======
     public function profile(Request $request)
     {
         try{
@@ -287,4 +307,5 @@ class AdminController extends Controller
         }
 
     }
+>>>>>>> 264a4780e78ce8ca6e384128668e64f2cefbabf8
 }

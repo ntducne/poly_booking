@@ -54,7 +54,7 @@ const AddAdmin = () => {
           });
           navigate("/staff");
         } else {
-          console.log(item);
+          // console.log(item);
           toast(item?.error?.email || "Lỗi dữ liệu", {
             autoClose: 3000,
             theme: "light",

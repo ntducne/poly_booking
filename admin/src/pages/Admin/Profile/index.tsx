@@ -71,7 +71,7 @@ const Profile = () => {
     },
   ];
   const onUpdatePassword = (value: any) => {
-    console.log(value);
+    // console.log(value);
     updatePassword(value)
       .unwrap()
       .then((res: any) => {
