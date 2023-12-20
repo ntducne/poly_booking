@@ -26,6 +26,11 @@ const BillList = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [loading, setLoading] = useState<boolean>(false);
+  const handlePaginationChange = (page: number) => {
+    setQuery({page: page});
+    navigate(`/billing?page=${page}`);
+    refetch();
+  };
   const [query, setQuery] = useState<any>({
     page: page,
     billingCode: queryParams.get("billingCode") ?? "",
@@ -40,12 +45,8 @@ const BillList = () => {
     refetch,
   } = useGetBilingsQuery<any>(query);
   const [billings, setBillings] = useState<any[]>([]);
+  
   const navigate = useNavigate();
-  const handlePaginationChange = (page: number) => {
-    setPage(page);
-    navigate(`/billing?page=${page}`);
-    refetch();
-  };
   useEffect(() => {
     setLoading(isLoading);
     setBillings(dataBilings?.data);
@@ -365,7 +366,7 @@ const BillList = () => {
       <Table
         scroll={{ x: true }}
         className="max-w-full mt-3"
-        loading={loading}
+        loading={loading || isLoading}
         columns={columns}
         dataSource={data}
         pagination={false}
