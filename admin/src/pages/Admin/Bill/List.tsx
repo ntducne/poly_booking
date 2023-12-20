@@ -14,7 +14,11 @@ const BillList = () => {
   const [page, setPage] = useState<number>(1);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const { data: dataBilings, isLoading, refetch } = useGetBilingsQuery<any>(page);
+  const {
+    data: dataBilings,
+    isLoading,
+    refetch,
+  } = useGetBilingsQuery<any>(page);
   const [billings, setBillings] = useState<any[]>([]);
   const navigate = useNavigate();
   const handlePaginationChange = (page: number) => {
@@ -207,10 +211,37 @@ const BillList = () => {
     }
   }, [location?.search]);
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+    console.log(searchValue);
+    // Add your search logic here
+  };
+  
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const filterValue = e.target.value;
+    console.log(filterValue);
+    // Add your filter logic here
+  };
+
   return (
     <Page title={`Hóa đơn`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between ">
-        <div className="flex flex-col md:flex-row"></div>
+        <div className="flex flex-col md:flex-row">
+          <input
+            className="border border-gray-300 rounded-lg px-3 py-2 mr-2"
+            placeholder="Tìm kiếm..."
+            onChange={handleSearchChange}
+          />
+          <select
+            className="border border-gray-300 rounded-lg px-3 py-2"
+            onChange={handleFilterChange}
+          >
+            <option value="">Lọc theo...</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            {/* Add more options as needed */}
+          </select>
+        </div>
       </div>
       <Table
         scroll={{ x: true }}
@@ -220,7 +251,7 @@ const BillList = () => {
         dataSource={data}
         pagination={false}
       />
-       <div className="flex justify-end items-center mt-5">
+      <div className="flex justify-end items-center mt-5">
         <Pagination
           defaultCurrent={1}
           total={+dataBilings?.meta?.last_page * 10}

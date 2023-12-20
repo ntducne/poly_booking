@@ -1,5 +1,5 @@
 // import React from "react";
-import { Image, Rate, Table } from "antd";
+import { Image, Pagination, Rate, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 // interface DataType {
 //   key: React.Key;
@@ -11,9 +11,21 @@ import type { ColumnsType } from "antd/es/table";
 // import FormSearch from "../../../component/formSearch";
 import Page from "../../../component/page";
 import { useGetRatesQuery } from "../../../api/rate";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ListFeedback = () => {
-  const { data: dataRates, isLoading } = useGetRatesQuery({});
+  const [page, setPage] = useState<number>(1);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const { data: dataRates, isLoading, refetch } = useGetRatesQuery(page);
+  const navigate = useNavigate();
+
+  const handlePaginationChange = (page: number) => {
+    setPage(page);
+    navigate(`/feedback?page=${page}`);
+    refetch();
+  };
 
 
   const columns: ColumnsType<any> = [
@@ -43,20 +55,13 @@ const ListFeedback = () => {
       title: "Tên phòng",
       dataIndex: "room",
       key: "room",
-      render: (room) => (
-        <div>{room?.name}</div>
-      ),
+      render: (room) => <div>{room?.name}</div>,
     },
     {
       title: "Hình ảnh",
       dataIndex: "images",
       key: "images",
-      render: (images) => (
-        <Image
-          width={200}
-          src={images}
-        />
-      ),
+      render: (images) => <Image width={200} src={images} />,
     },
     {
       title: "Nội dung",
@@ -81,12 +86,17 @@ const ListFeedback = () => {
     ...item,
   }));
 
+  useEffect(() => {
+    if (queryParams.get("page")) {
+      const page: any = queryParams.get("page");
+      setPage(+page);
+    }
+  }, [location?.search]);
+
   return (
     <Page title={`Đánh giá`}>
       <div className="flex flex-col-reverse md:flex-row md:justify-between  ">
-        <div className="">
-          {/* <FormSearch /> */}
-        </div>
+        <div className="">{/* <FormSearch /> */}</div>
         {/* <div className="flex flex-col md:flex-row">
           <Link
             to={`/Feedback`}
@@ -103,8 +113,16 @@ const ListFeedback = () => {
         loading={isLoading}
         columns={columns}
         dataSource={data}
-        pagination={{ pageSize: 10 }}
+        pagination={false}
       />
+        <div className="flex justify-end items-center mt-5">
+        <Pagination
+          defaultCurrent={1}
+          total={+dataRates?.meta?.last_page * 10}
+          onChange={handlePaginationChange}
+          current={page}
+        />
+      </div>
     </Page>
   );
 };

@@ -16,8 +16,8 @@ export const staffsApi = createApi({
   }),
   endpoints: (builder) => ({
     getAllStaffs: builder.query({
-      query: () => ({
-        url: `/staffs`,
+      query: (body) => ({
+        url: `/staffs?page=${body?.page}`,
         method: "GET",
       }),
       providesTags: ["Staffs"],
