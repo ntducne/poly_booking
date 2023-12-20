@@ -1393,13 +1393,13 @@ const BillDetail: React.FC = () => {
                           case 0:
                             return (
                               <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                                Đã đặt
+                                Đã giữ
                               </span>
                             );
                           case 1:
                             return (
                               <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">
-                                Đang ở
+                                Đang sử dụng
                               </span>
                             );
                           case 2:
